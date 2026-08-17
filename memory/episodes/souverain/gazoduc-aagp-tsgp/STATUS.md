@@ -1,6 +1,6 @@
 # Gazoduc AAGP vs TSGP — STATUS
 
-**Mis à jour** : 2026-08-16
+**Mis à jour** : 2026-08-17
 
 ## 🏁 ACTE 4 — COMPLET : mouvements A, B et C tous FINAUX (2026-08-16)
 
@@ -28,6 +28,42 @@ conduite s'éteint** : « un seul suffirait », sans un mot pour le dire.
    cartes, entonnoir, cartogramme, trajectoires croisées) tous écartés par Aziz au profit d'un simple
    graphe — « parfois faire simple est la manière la plus efficace d'expliquer un concept ».
 
+## 🏁 ACTE 5 — FINAL (2026-08-17) — DERNIER ACTE DE L'ÉPISODE
+
+Livrable : `out/episodes/gazoduc-aagp-tsgp/acte5-FINAL.mp4` (46,17 s / 1385 frames / audio -18,7 dB /
+12 frames échantillonnées distinctes = aucun gel). Commit `2dc1464c`. Breakdown : `breakdown-acte5/`.
+
+| Segment | Contenu | Composant |
+|---|---|---|
+| 0→10,4 s | maison en coupe + flamme + courbe de la facture | `GazoducActe5Maison.tsx` (mix Fable 5 + tracé de fil greffé de Kimi K3) |
+| 10,4→29 s | UNE vanne + bifurcation en Y | `GazoducActe5Vannes2.tsx` (dessin GPT-5.5) |
+| 29→42,1 s | négocier vs creuser | `GazoducActe5Negocier.tsx` (Fable 5, recalé) |
+| 42,1→46,2 s | la faille finale | `GazoducActe5Faille.tsx` (dessin GPT-5.5) |
+
+⚠️ **3 DÉCISIONS À NE PAS DÉFAIRE**
+1. **La MAIN a été retirée** du segment 2. Elle répétait la narration (« qui aura la main sur le
+   robinet »), portait le mauvais sujet (le script dit « et SURTOUT, selon quel MODÈLE ») — et surtout
+   **DEUX robinets contredisaient le texte qui dit « LE prochain grand robinet », au SINGULIER**.
+   Diagnostic issu de la review downstream. Versions abandonnées conservées et annotées :
+   `GazoducActe5Vannes.tsx` / `GazoducActe5VannesGPT.tsx` — ⛔ ne pas les reprendre.
+   ⭐ **Élargissement de la règle 4C** : ce n'est plus seulement « le TEXTE ne répète pas la
+   narration » — **rien à l'écran, texte OU geste, ne redit ce que la voix dit au même instant**
+   (2 cas le prouvent : les 4 plaques du 4C, la main de l'Acte 5).
+2. **Refonte du segment 2 en UNE vanne + bifurcation** : activité mesurée 0,3 → 18,15.
+3. **Coupes posées dans les silences**, jamais sur l'ancre d'un mot (voir § RESTE, leçon de méthode).
+
+## ⏭️ RESTE DE L'ÉPISODE (2026-08-17)
+
+1. ⛔ **PRIORITÉ 1 — ACTE 3** : seul acte non validé. Gel du 14/08 **LEVÉ** (sa condition — produire
+   4 et 5 d'abord — est remplie). Repartir de l'état gelé mesuré, § « ACTE 3 — GELÉ EN WIP » plus bas.
+2. ⚠️ **Acte 4 à ASSEMBLER** : 3 fichiers séparés (124,68 s cumulées pour 124,04 s d'audio, marges de
+   300 ms à rogner). ⛔ Filtre `concat=n=N:v=1:a=0`, jamais `-f concat` par liste.
+3. 🆕 **CTA de fin** : non commencé. L'épisode s'arrête net sur « CREUSER ». ⛔ Jamais d'interpellation
+   directe ni de « abonnez-vous » frontal — « de manière classe ». Nouvelle voix vs carton à trancher.
+4. **Passe finale** : re-render Actes 1/2/3 en palette sombre `PAL_GPT`, ⛔ PAS acte par acte.
+
+---
+
 ## ⭐ Mouvements A et B — FINAUX (2026-08-15)
 
 **Mouvement A** « une ressource, deux tuyaux » (0→41.1s) : **FINAL**, palette sombre `PAL_GPT` portée
@@ -52,7 +88,10 @@ codée puis écartée pour lisibilité).
 
 ---
 
-## ⛔⛔ ACTE 3 — GELÉ EN WIP (décision Aziz, 2026-08-14). NE PAS LE REPRENDRE EN L'ÉTAT.
+## ⛔ ACTE 3 — GEL LEVÉ (2026-08-17), C'EST LA PRIORITÉ 1. État gelé mesuré ci-dessous.
+
+> Le gel du 2026-08-14 avait UNE condition : produire les Actes 4 et 5 d'abord (un acte du milieu se
+> juge par rapport à ses voisins). **C'est fait.** On repart de l'état mesuré ci-dessous, pas de zéro.
 
 **L'Acte 3 n'est PAS validé.** Il reste beaucoup de travail dessus. Décision explicite d'Aziz :
 on arrête de s'acharner, on le met de côté, **on produit les Actes 4 et 5 d'abord**, et on revient
@@ -97,7 +136,7 @@ d'abord, revenir sur 3 ensuite.
 
 ---
 
-## 🧭 OÙ ON EN EST (2026-08-14, fin de session) — lire ceci en premier
+## 🧭 (ARCHIVE — état au 2026-08-14) OÙ ON EN EST — ⚠️ PÉRIMÉ, voir le § RESTE DE L'ÉPISODE en tête
 
 **Commit de référence** : `9e302fb2` sur `feat/gazoduc-acte1-hook-globe`. Tout est versionné
 (breakdowns V5, breakdown caméra, clip H3, audio p3 — ils étaient non suivis par git avant ce commit).

@@ -125,51 +125,54 @@ storyboard multi-panneaux également testés. Détail complet : `tools/minimax-h
 
 ---
 
-## ⭐⭐⭐ GAZODUC — ACTE 4 COMPLET (A+B+C FINAUX). PROCHAINE ACTION = ACTE 5 (2026-08-16)
+## ⭐⭐⭐ GAZODUC — ACTES 4 ET 5 FINAUX. PROCHAINE ACTION = ACTE 3 (2026-08-17)
 
-**ACTE 4 TERMINÉ ET VALIDÉ AZIZ** — 3 mouvements FINAUX dans `out/episodes/gazoduc-aagp-tsgp/` :
-`acte4-mouvementA-FINAL.mp4` · `acte4-mouvementB-FINAL.mp4` · `acte4-mouvementC-FINAL.mp4`.
-Code : `GazoducActe4RessourceUnique.tsx` · `GazoducActe4Objectifs.tsx` · `GazoducActe4Calendrier.tsx`.
-Palette sombre `PAL_GPT` = Acte 4 **et la suite** ; Actes 1/2/3 re-rendus à la passe finale, ⛔ PAS
-acte par acte.
+**Acte 5 FINAL** (dernier acte de l'épisode) : `out/episodes/gazoduc-aagp-tsgp/acte5-FINAL.mp4`
+(46,17s / 1385 frames / 4 segments), commit `2dc1464c`. Breakdown : `breakdown-acte5/`.
+Acte 4 : les 3 mouvements A/B/C sont FINAUX (voir STATUS pour le détail des décisions de goût).
 
-**⏭️ PROCHAINE ACTION = ACTE 5** (implication, dernier acte) : **robinet géant + mains stylisées**
-(`PLAN-ACTES2-5.md` L118). Rien n'existe : ni storyboard, ni code. Audio `narration-p5.mp3` présent
-(`out/episodes/gazoduc-aagp-tsgp/`), timing à dériver du forced-align comme pour l'Acte 4.
+**⏭️ PRIORITÉ 1 = ACTE 3** — c'est le SEUL acte non validé, le dernier morceau manquant.
+Le gel du 2026-08-14 est **LEVÉ** : sa condition était « produire les Actes 4 et 5 d'abord » (un acte
+du milieu se juge par rapport à ses voisins) — c'est fait. Voir la section Acte 3 ci-dessous pour
+l'état gelé mesuré et les acquis à ne pas refaire.
 
-⭐ **3 leçons du 4C à rejouer sur l'Acte 5** (elles ont produit le résultat validé) :
-1. **Le texte ne répète jamais la narration** — écrire à l'écran ce que la voix dit au même instant est
-   du sous-titrage déguisé. Ne garder que l'indéductible (repère, identité, source) ; le reste passe
-   au GESTE graphique.
-2. **Zéro tremblement/flash** — pas de scale du cadre, pas de pulse permanent, pas d'onde d'impact.
-   Un graphe premium ne tremble pas.
-3. **Le simple gagne** — 2 rounds de storyboards LLM (sablier, château de cartes, entonnoir,
-   cartogramme, trajectoires) écartés au profit d'un simple graphe. Proposer le simple TÔT.
-⚠️ **Limite d'outil à connaître** : le détecteur d'immobilité (diff de vignettes 320px) est aveugle aux
-mouvements LENTS et LOCALISÉS — il a signalé 10s « figées » là où 400-1000 px changeaient à chaque
-frame. Utile pour trouver un vrai trou, mais mesurer finement + REGARDER avant d'itérer sur son verdict.
+**⚠️ Acte 4 NON ASSEMBLÉ** : 3 fichiers séparés (A 41,45s + B 33,40s + C 49,83s = 124,68s cumulées
+pour 124,04s d'audio). Les marges de sécurité de 300ms se cumulent → à rogner au montage.
+⛔ Assembler avec le FILTRE `concat=n=N:v=1:a=0`, jamais `-f concat` par liste (cf `tools/remotion.md`).
 
-**Méthode qui a produit A et B** (la rejouer) : storyboard libre créative 2 modèles → validation Aziz →
-breakdown → code → 3e appel comparatif rendu-vs-storyboard → corrections. Gabarits :
-`episodes/souverain/gazoduc-aagp-tsgp/breakdown-acte4/` (dont `4B/` : brief v3 + prompt d'insert SVG).
-⭐ Les 4 leviers pour cadrer un brief (ne PAS écrire les concepts soi-même · montrer une frame RÉELLE de
-notre SVG · exiger « un geste unique par panneau » · contraindre le MATÉRIAU jamais l'AMBITION) :
-`doctrines/STORYBOARD-MAPBOX.md` § CADRER UN BRIEF.
+**🆕 CTA DE FIN — chantier ouvert, non commencé.** L'épisode s'arrête net sur « CREUSER ». Aziz :
+il faut quelque chose, mais ⛔ **jamais d'interpellation directe du spectateur ni de « abonnez-vous »
+frontal** — « de manière classe ». À trancher : nouvelle voix vs carton visuel discret.
 
-⛔ **Gate actif depuis le 2026-08-15** : tout nouveau `.tsx` de scène doit déclarer
-`// MOTEUR: <registre> — <pourquoi>` en en-tête, sinon l'écriture est BLOQUÉE
-(`.claude/hooks/moteur-visuel-gate.sh`, 19 tests dans `tests/hooks/`). Idem un brief de storyboard bridé.
+⭐ Palette sombre `PAL_GPT` = Actes 4 et 5. Actes 1/2/3 re-rendus à la **passe finale**, ⛔ PAS acte par acte.
+
+⛔ **Gate actif** : tout nouveau `.tsx` de scène doit déclarer `// MOTEUR: <registre> — <pourquoi>`
+(`.claude/hooks/moteur-visuel-gate.sh`).
 
 ⚠️ **Décision de goût à ne pas défaire** : 4B v3 (arcs schématiques) a été PRÉFÉRÉE à v4 (géométrie
-réelle Medgaz Hassi R'Mel→Beni Saf→Almería, codée puis écartée) — le vrai tracé part de l'intérieur des
-terres et se lit moins bien. Choix de LISIBILITÉ, pas un oubli d'exactitude.
+réelle Medgaz) — choix de LISIBILITÉ, pas un oubli d'exactitude.
 
-## ⛔⛔ GAZODUC — ACTE 3 GELÉ EN WIP (décision Aziz 2026-08-14). L'ACTE 4 PASSE AVANT.
+⭐ **3 leçons de méthode de la session Acte 5** (détail : STATUS.md) :
+1. **Renvoyer un SVG à son propre modèle** pour qu'il le prépare à l'animation (pièces séparées, axe
+   documenté). Seuil : 2 essais infructueux sur un pivot → déléguer. Gain mesuré : 4 essais ratés
+   remplacés par 1 appel juste (mon axe manuel était faux de 29px).
+2. **Boucle d'amélioration** : renvoyer à un agent SON rendu + une cible enrichie.
+3. **Concours SVG multi-modèles** (`svg-concours-vision.py`) — il n'y a PAS de meilleur modèle absolu,
+   le classement s'inverse par élément → mix-and-match des groupes `<g id>`.
 
-**NE PAS reprendre l'Acte 3 à la prochaine session.** Aziz a explicitement décidé de l'arrêter en
-l'état : il n'est pas validé, il reste beaucoup de travail, et on s'acharne dessus depuis trop de
-sessions (même pattern que le **Soudan Acte 4** : doute + non-avancement sur un acte du milieu).
-**On produit les Actes 4 et 5 d'abord, on revient compléter l'Acte 3 après.**
+⛔⛔ **RÈGLE DE DÉCOUPAGE** (erreur commise 2× dans la même session, trouvée par Aziz les 2 fois) :
+**une frontière de plan se pose APRÈS la fin d'un mot, jamais sur son ancre.** Le forced-align donne
+`start` ET `end` — poser la coupe dans le SILENCE qui suit. Doctrine : `AUDIO-PAUSES-DETERMINISTES.md`.
+
+⚠️ **Limite d'outil** : le détecteur d'immobilité (vignettes 320px) est aveugle aux mouvements lents
+et localisés — 2 faux positifs consécutifs. Mesurer finement + REGARDER avant d'itérer sur son verdict.
+
+## ⛔ GAZODUC — ACTE 3 : GEL LEVÉ, C'EST LA PRIORITÉ 1 (2026-08-17)
+
+**Le gel du 2026-08-14 avait UNE condition : produire les Actes 4 et 5 d'abord**, pour qu'un acte du
+milieu puisse se juger par rapport à ses voisins. **C'est fait** (4 et 5 FINAUX) → on peut rouvrir
+l'Acte 3, et c'est la priorité 1. ⛔ Repartir de l'état gelé MESURÉ (ci-dessous), pas de zéro.
+⚠️ Le motif du gel reste une leçon de méthode valable : un acte du milieu ne se juge pas dans le vide.
 
 Raison structurelle (pas seulement de la fatigue) : un acte du milieu se juge par rapport à ses
 voisins. L'Acte 3 est coincé entre un Acte 2 validé et des Actes 4/5 inexistants, donc sa fin se
@@ -180,17 +183,17 @@ preuve directe, et il se tranchera bien mieux une fois le climax de l'Acte 4 éc
 STATUS.md` § "ACTE 3 — GELÉ EN WIP" (en tête de fichier). Rendu de référence :
 `out/episodes/gazoduc-aagp-tsgp/versions/acte3-segmentA-suite-V12-WIP.mp4`.
 Commit `9e302fb2` (`feat/gazoduc-acte1-hook-globe`).
-⚠️ Le starter `memory/starters/STARTER-PROMPT-gazoduc-acte3-suite.md` est PÉRIMÉ (il fait reprendre
-l'Acte 3) — ne pas l'utiliser tel quel à la reprise.
+✅ Le starter `memory/starters/STARTER-PROMPT-gazoduc-acte3-suite.md` est **RÉACTIVÉ** — son corps
+(contraintes, protocole de vérification par mesure, briques) reste exact. ⛔ Seul son § final
+« Après l'Acte 3 » est faux (il dit que 4 et 5 n'existent pas).
 
 **Acquis à ne PAS refaire** : Beat 1 validé (caméra continue) · Beat 2 = vrai insert composé (clip H3,
 jauge, badge, connecteur) — le principe de l'insert composé est le gain de ces sessions · Segment B
 décor Fable5 porté.
 
-**Actes 4 et 5 : rien n'existe** (vérifié — aucun fichier, aucune composition). Acte 4 = conséquences,
-avec les **70% de production siphonnée en pic de rupture de forme** carte→insert physique. Acte 5 =
-implication, avec **le robinet géant + mains stylisées** (`PLAN-ACTES2-5.md` L118). ⚠️ Avant de croire
-l'audio manquant : `narration.mp3` (516s) couvre probablement les 5 parties.
+⚠️ (Ligne périmée retirée le 2026-08-17 : elle disait « Actes 4 et 5 : rien n'existe » — les deux sont
+FINAUX depuis. Leurs pics narratifs sont consommés : les 70% siphonnés sont dans 4A, le robinet est
+devenu UNE vanne + bifurcation dans l'Acte 5, sans mains.)
 
 **Leçon caméra (3 itérations perdues)** : un mouvement « par à-coups » n'est presque jamais un problème
 de dosage. `easeInOut` appliqué PAR SEGMENT met la vitesse à exactement 0 à chaque point de passage.

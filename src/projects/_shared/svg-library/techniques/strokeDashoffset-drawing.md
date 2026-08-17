@@ -94,6 +94,23 @@ export const DrawingExample: React.FC = () => {
 
 ## Pièges connus
 
+### ⛔⛔ Le dash pose sur le `<g>` PARENT n'atteint PAS les `<path>` enfants (2 occurrences)
+
+`strokeDasharray` / `strokeDashoffset` poses sur un groupe **ne sont pas herites** par les enfants qui
+portent deja leurs propres attributs de trait. Symptome : le trace apparait **complet des la 1re frame**,
+aucune propagation — et le code a l'air juste.
+**Mesure de diagnostic** : `pixels dont |delta| > 6` entre 2 frames rapprochees → **0** = rien ne bouge.
+**Fix** : injecter les attributs **sur CHAQUE path**.
+Vecu 2× : fissures de l'Acte 4C, puis flux de l'Acte 5 (Gazoduc, 2026-08-16/17).
+
+### ⭐ Propagation en 2 VAGUES = ce qui fait lire "ca se propage" plutot que "ca se dessine"
+
+Un reseau de fissures tracé d'un bloc se lit comme un dessin. Le decalage fait la propagation :
+failles **maitresses** d'abord (traits epais), **ramifications** ensuite, avec chevauchement.
+Ex. prouve (`GazoducActe5Faille.tsx`) : `crackMain` f26→96, `crackBranch` f46→110, 36 traces animes.
+⚠️ Le **glow** doit etre un path DUPLIQUE portant le MEME dash — sinon la lueur precede la fissure.
+
+
 - **`strokeDasharray` doit être une string** : `strokeDasharray={DASH}` (number) peut fonctionner selon le navigateur/moteur, mais `strokeDasharray={\`${DASH}\`}` (string) est la forme correcte et garantie en SVG.
 - **`strokeDasharray` et `strokeDashoffset` sur un même élément** : les deux attributs sont nécessaires. `strokeDashoffset` seul sans `strokeDasharray` n'a aucun effet.
 - **La valeur 0 de `strokeDashoffset` ne garantit pas l'affichage complet si DASH < longueur du path** : si le path mesure 5000px et que DASH=4200, une portion restera invisible. Toujours sur-dimensionner DASH.

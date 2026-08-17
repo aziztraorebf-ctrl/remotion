@@ -122,3 +122,39 @@ quota OpenAI est épuisé** (429 constaté 2026-07-25) — `forced-align.py` (El
 **Gotcha** : normaliser casse, ponctuation **ET ACCENTS** avant de chercher un mot dans un alignement.
 Un repère tapé « devaluer » sur une VO qui dit « dévaluer » ressort INTROUVABLE — faux négatif silencieux
 (corrigé dans l'outil, mais le réflexe vaut pour toute recherche de mot dans un script/sous-titre FR).
+
+---
+
+## ⛔⛔ RÈGLE DE DÉCOUPAGE — UNE FRONTIÈRE DE PLAN SE POSE **APRÈS LA FIN D'UN MOT**, JAMAIS SUR SON ANCRE
+
+> Ajouté le 2026-08-17 (Gazoduc Acte 5). **Erreur commise DEUX FOIS dans la même session**, repérée les
+> deux fois par Aziz à l'oreille, jamais par une vérification automatique. C'est le piège n°1 du montage
+> sur forced-align.
+
+**Le piège** : le forced-align donne le `start` d'un mot. On le lit comme « le moment du mot » et on pose
+la frontière du plan dessus. Or un mot a une **durée** — et souvent un **silence après lui**.
+
+**Les 2 cas vécus (mesurés)** :
+| Mot | start | end | durée | ce que je faisais | conséquence |
+|---|---|---|---|---|---|
+| « SOUVERAINS » | 27.041s | 28.741s | **1.70s** | coupe à 27.041 | le mot le plus important de l'épisode **coupé net à son attaque** |
+| « facture. » | 9.321s | 9.861s | 0.54s | coupe à 9.321 | coupe brutale ; **1.08s de silence** (jusqu'à 10.941s) gaspillées |
+
+**La règle** :
+1. Prendre le **`end`** du dernier mot du segment, jamais son `start`.
+2. Regarder le **silence** jusqu'au `start` du mot suivant. Poser la coupe **dans ce silence**, pas à son
+   bord — c'est là que le plan respire et que la voix reprend son souffle.
+3. Corollaire de mise en scène : un geste visuel qui doit « tomber sur » un mot long (>1s) doit **se
+   poursuivre pendant** qu'il est prononcé, pas s'achever à son attaque.
+
+**Vérification avant tout assemblage** (3 lignes, à faire systématiquement) :
+```python
+# pour chaque frontiere de segment envisagee :
+#   - le mot qui precede finit-il AVANT ma coupe ?  (w['end'] < cut)
+#   - quel silence jusqu'au mot suivant ?           (next['start'] - w['end'])
+#   - ma coupe tombe-t-elle DANS ce silence ?
+```
+
+⚠️ **Aucun de nos outils ne détecte ça** : le rendu est techniquement valide, l'audio est présent, aucune
+mesure d'immobilité ni de gel ne bronche. Seule l'écoute le révèle. → l'inscrire dans le breakdown AVANT
+de coder, pas après le rendu.

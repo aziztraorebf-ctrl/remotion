@@ -140,6 +140,13 @@ elle remonte (elle habille le vide au lieu de laisser un trou).
 
 ### ⭐⭐ ASSEMBLAGE MULTI-BEATS : `atrim` l'audio AVANT le `concat=` (grave 2026-07-26, CFA)
 
+> ⚠️ **2e preuve, 2026-08-17 (Gazoduc Acte 5)** — j'ai rebute sur cette regle deja ecrite ici faute de
+> l'avoir consultee. Symptome EXACT a grepper si ca se reproduit : `-f concat` par liste de fichiers a
+> produit **8131 frames / 271 s** au lieu de **1385 frames / 46 s** (timestamps corrompus), et une piste
+> audio parasite. Le filtre `concat=n=4:v=1:a=0` a regle ca du 1er coup.
+> ⛔ **Verification obligatoire apres tout assemblage** : `ffprobe -show_entries stream=nb_frames` sur le
+> flux VIDEO. La duree `format=duration` seule ne voit PAS le probleme (elle affichait 271 s sans alerter).
+
 Le filtre `concat=` est OBLIGATOIRE pour assembler des beats (jamais le concat demuxer — DTS casses =
 image gelee avec audio normal, vecu Soudan 4 min). **Mais il ne suffit pas.**
 

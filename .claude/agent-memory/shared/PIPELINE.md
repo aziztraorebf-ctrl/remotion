@@ -89,7 +89,7 @@ revalider 6 planches).
 repo principal** (`14990278`, branche courante, PAS ce worktree) — distinct des 6 scènes sources,
 voir `src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` brique n°7 + `NEXT-ACTION.md`.
 
-### Gazoduc — Actes 1+2+4 TERMINÉS · ⛔ Acte 3 GELÉ · ⏭️ Acte 5 = PROCHAINE PRIORITÉ (rien n'existe)
+### Gazoduc — Actes 1+2+4+5 TERMINÉS · ⛔ Acte 3 = PRIORITÉ 1 (gel levé) · CTA de fin ouvert
 Acte 1 (hook, 84.68s, globe D3) validé par Aziz (render v6, 2026-08-03). Acte 2 **produit et validé en
 finale (2026-08-04)** : `out/episodes/gazoduc-aagp-tsgp/acte2-FINAL.mp4` (127.4s).
 
@@ -127,7 +127,14 @@ H3 + jauge + connecteur) · Segment B (aéroport) fait. État complet + ce qui r
   Aziz → breakdown JSON → code → **3e appel comparatif rendu-vs-storyboard** → corrections. Gabarits de
   prompts prêts : `memory/episodes/souverain/gazoduc-aagp-tsgp/breakdown-acte4/`. Doctrine :
   `memory/doctrines/STORYBOARD-MAPBOX.md` § LA BOUCLE FERMÉE.
-- **Acte 5 : n'existe pas** (robinet géant + mains stylisées, cf `PLAN-ACTES2-5.md` L118).
+- **Acte 5 — FINAL (2026-08-17)** : `out/episodes/gazoduc-aagp-tsgp/acte5-FINAL.mp4` (46,17 s, 1385
+  frames, 4 segments). La MAIN a été retirée du segment 2 (elle répétait la narration ; et DEUX
+  robinets contredisaient « LE prochain grand robinet » au singulier) → refondu en UNE vanne +
+  bifurcation en Y. ⭐ Règle élargie : rien à l'écran, texte OU geste, ne redit ce que la voix dit.
+- ⚠️ **Acte 4 NON ASSEMBLÉ** : 3 mp4 séparés (124,68 s cumulées pour 124,04 s d'audio, marges à rogner).
+- 🆕 **CTA de fin OUVERT** : l'épisode s'arrête net sur « CREUSER ». ⛔ jamais d'interpellation directe
+  ni de « abonnez-vous » frontal — « de manière classe ». Nouvelle voix vs carton visuel à trancher.
+- ⛔ **PRIORITÉ 1 = ACTE 3** : gel levé, sa condition (produire 4 et 5) est remplie.
 - ⭐ **Gate outillé "moteur visuel"** créé cette session : `.claude/hooks/moteur-visuel-gate.sh` +
   test de non-régression `tests/hooks/test-moteur-visuel-gate.sh`. Doctrine associée enrichie :
   `memory/doctrines/MOTEURS-VISUELS-ET-SOCLE.md` (5 moteurs + amplitude prouvée + 8 trous).

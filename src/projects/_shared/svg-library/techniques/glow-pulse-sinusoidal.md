@@ -119,3 +119,14 @@ export const GlowPulseExample: React.FC = () => {
 - Voir aussi : `../techniques/sway-houppier.md` (autre usage de `Math.sin` pour un mouvement)
 - Voir aussi : `../techniques/strokeDashoffset-drawing.md` (autre technique d'animation continue)
 - Éléments qui l'utilisent : B7MosaiqueFinal.tsx (soleil `sunPulse`, `glowR`, `glowOpacity`), B4Demilune.tsx (`sunHaloR`, `rayPulse`), B5LaPreuve.tsx (`haloR`, `rayLen`), GgwHookEncreVivant.tsx (glow ardent avec `filter: blur`)
+
+---
+
+## ⛔ PIEGE MESURE — une opacite qui oscille AUTOUR de 1 est VISUELLEMENT MORTE (2026-08-17)
+
+L'opacite SVG est **plafonnee a 1**. Une pulsation ecrite `1 + sin(...) * 0.16` passe donc la moitie du
+temps au-dessus du plafond et le reste imperceptiblement sous : **mesure = 0 pixel change entre 2 frames.**
+✅ **Osciller SOUS 1** : `0.74 + sin(f*0.09)*0.20 + sin(f*0.043+1.9)*0.06` → **79 717 pixels** changent.
+⭐ Deux sinusoides a periodes **non harmoniques** (0.09/0.043) donnent un battement irregulier, vivant —
+une seule sinusoide fait "clignotant". Cas prouve : lueur de braises dans les fissures,
+`GazoducActe5Faille.tsx` (Gazoduc Acte 5, monte dans le FINAL).

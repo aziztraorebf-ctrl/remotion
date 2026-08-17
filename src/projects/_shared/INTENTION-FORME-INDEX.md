@@ -148,11 +148,20 @@ ci-dessus). ⚠️ Ne PAS coder une 4e variante sans extraire.
 
 **Ce qui va DANS le cadre** — familles identifiées, seule la n°1 est testée :
 1. ⭐ **La matière** (testé, validé) : ce qui transite dans le tuyau — gaz, pétrole, minerai, grain.
-2. Le mécanisme en coupe : vanne, compresseur, turbine, écluse (cf `STRUCTURE-OBJET-MECANISME`).
+2. ⭐ **Le mécanisme en coupe** (TESTÉ ET VALIDÉ 2026-08-17, Gazoduc Acte 5) : vanne, compresseur,
+   turbine, écluse. **Brique de référence** : `souverain/gazoduc-aagp-tsgp/GazoducActe5Vannes2.tsx`
+   — UNE vanne en coupe + **bifurcation en Y** (2 branches asymétriques), volant qui s'ouvre, flux
+   animés. Intention : *une ressource unique dont la destination n'est pas encore tranchée*.
+   ⛔ **Rotation d'un volant vu de PROFIL** : un `rotate()` 2D le fait basculer dans le plan de
+   l'écran. Se rend par **squash horizontal `scaleX` autour de l'axe de la tige** (ou par défilement
+   de stries hélicoïdales clippées pour un cône/mèche — 2 usages : `GazoducActe5Faille` + `…Negocier`).
+   Statut : **prouvé** (monté dans `acte5-FINAL.mp4`, validé Aziz). À extraire en composant au 2e usage.
 3. L'échelle humaine ponctuelle : silhouette qui donne la mesure — ⛔ jamais de visage lisible, jamais
    de dialogue (écarté par Aziz : « faudrait faire attention avec ça »).
-4. La conséquence (contrechamp) : compteur, facture, station à sec — la carte montre la cause,
-   l'insert montre l'effet chez les gens.
+4. ⭐ **La conséquence (contrechamp)** (TESTÉ 2026-08-17) : compteur, facture, station à sec — la carte
+   montre la cause, l'insert montre l'effet chez les gens. **Brique** : `GazoducActe5Maison.tsx`
+   (maison en coupe + chaudière + flamme + courbe de facture qui monte, reliées par un fil conducteur).
+   ⚠️ Non extractible en l'état : la géométrie de jonction flamme→origine de courbe est le composant.
 5. Transition d'échelle carte → insert plein cadre → carte : **climax de rythme, à garder rare**.
 
 **Produire l'asset** : chaîne **Gemini 3.1 Flash image (composition verrouillée) → MiniMax H3 R2V

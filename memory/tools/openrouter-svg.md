@@ -63,7 +63,7 @@
 
 | Modele | ID OpenRouter | Prix /M tok (in/out) | Vision |
 |---|---|---|---|
-| **GLM-5.2** (adopte) | `z-ai/glm-5.2` | $1.40 / $4.40 | ❌ TEXT-ONLY |
+| **GLM-5.2** (adopte) | `z-ai/glm-5.2` | $1.40 / $4.40 | ❌ TEXT-ONLY — HTTP 404 `No endpoints found that support image input` (confirme 2026-08-17) |
 | GPT-5.5 (principal) | `openai/gpt-5.5` | $5 / $30 | oui |
 | Gemini 3.1 Pro (principal) | (API Google directe) | frontier | oui |
 
@@ -786,3 +786,27 @@ pour comparer 4 propositions SVG sur les memes 2 scenes (inserts narratifs Gazod
 `gemini-3.1-pro-preview`, `openai/gpt-5.6-sol`, `z-ai/glm-5.2`, `moonshotai/kimi-k3` (Kimi K3 avec
 `max_tokens=16000` + `reasoning.max_tokens=2000`, sinon `content=null` — cf [[kimi-k3-reasoning-borne]]).
 Pattern reutilisable pour toute future comparaison a 4 voix sur une meme scene SVG.
+
+---
+
+## ⭐ CONCOURS VISION (image cible → SVG) — `scripts/tools/svg-concours-vision.py` (2026-08-17)
+
+Outil cree pour le Gazoduc Acte 5. Differe de `llm-gen-svg.py` (qui part d'une description TEXTE) :
+ici les modeles **REGARDENT une image cible** et la restituent en SVG code, avec groupes `<g id>` animables.
+```bash
+python3 scripts/tools/svg-concours-vision.py --image cible.png --brief-file brief.txt \
+    --out-dir /tmp/concours --label p4 --models gpt,gemini,kimi
+```
+
+**2 enseignements durs du 1er usage reel** :
+1. ⛔ **GLM-5.2 ne peut PAS participer** (text-only, cf tableau ci-dessus). Le lancer coute un appel pour rien.
+   Il reste bon en mode TEXTE SEUL avec une description ecrite — teste le meme jour, resultat coherent.
+2. ⭐⭐ **IL N'Y A PAS DE MEILLEUR MODELE SVG ABSOLU — le classement s'inverse PAR ELEMENT.** Sur la meme
+   session : Kimi K3 a produit le MEILLEUR trace de fil (panneau maison) et la PIRE main des 4 (doigts
+   identiques et paralleles = mitaine) ; GPT-5.5 la meilleure STRUCTURE (groupes, axes documentes) mais des
+   doigts bombes ; Fable 5 la meilleure MAIN ; Gemini au milieu partout.
+   → **le mix-and-match des groupes `<g id>` par element n'est pas une option de confort, c'est LA methode.**
+   Preuve : le panneau 1 final = base animee Fable + trace de fil greffe de Kimi.
+
+⚠️ Corollaire : ne jamais choisir un modele "par reputation" sur ce type de tache — lancer le concours,
+comparer les rendus rasterises, greffer element par element.
