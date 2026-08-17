@@ -352,6 +352,16 @@ règles du §3 viennent d'études sur des dizaines de milliers de vidéos ; cell
 séance de travail. **Le premier test réel est le CFA re-titré.** Si les commentaires ne décollent
 pas, c'est le gabarit qu'il faut changer — pas la question.
 
+⭐ **Variante à tester : demander une DONNÉE, pas un avis.** Cas de référence mesuré le 2026-08-17
+(Adam Ivy, https://youtu.be/klYbu-sVWFA — **601 commentaires pour 11 785 vues, soit 5,1 %**) :
+> « How many watch hours do you actually have right now? **Drop the real number below, no rounding
+> up**, and tell me if this update changed anything about your plan. »
+
+Une donnée personnelle précise est **plus facile à honorer** qu'une opinion : chacun connaît déjà sa
+réponse et n'a rien à fabriquer. Notre gabarit demande un avis ; celui-ci demande un chiffre.
+→ À comparer sur nos deux prochaines publications, pas à substituer d'office (un seul cas observé).
+Analyse complète des 5 mécanismes de cette vidéo : `memory/NEXT-ACTION.md` § CAS DE RÉFÉRENCE.
+
 **Choisir la question** : reprendre celle que le CONTENU pose déjà mais ne retourne jamais au public.
 Sur le CFA, elle était littéralement dans la conclusion (« qui va payer le prix ? »).
 ⭐ Signal fort : les commentaires des concurrents disent ce que le public réclame — sur le CFA,

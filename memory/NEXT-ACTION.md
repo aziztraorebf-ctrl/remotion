@@ -70,6 +70,78 @@ analyse économique. ⛔ Chercher HORS géopolitique — c'est tout l'intérêt 
 
 **Livrable concret** : appliquer un format choisi au sujet **FMI**, en SCRIPT SEULEMENT, zéro production.
 
+### 📌 CAS DE RÉFÉRENCE À ÉTUDIER EN PREMIER (analysé le 2026-08-17)
+
+**Adam Ivy — « Most Of You Will Never Get Monetized Now | YouTube Monetization Update »**
+→ https://youtu.be/klYbu-sVWFA · chaîne : https://www.youtube.com/@TheAdamIvy
+⭐ **Regarder la vidéo et lire les commentaires soi-même** — ce résumé ne remplace pas le visionnage
+(demande explicite d'Aziz : « en regardant la vidéo, on en saura beaucoup mieux que n'importe quel résumé »).
+
+**Chiffres (4 jours après publication)** : 11 785 vues · 657 likes · **601 commentaires (5,1 %)**.
+Nos vidéos : **0 %**. C'est l'écart le plus violent mesuré dans toute la session.
+
+⛔ **Le fait le plus important** : sa production est **inférieure à la nôtre**. Un homme assis qui
+parle 9 min face caméra, zéro animation/carte/graphique, des hésitations dans le transcript, et un
+**bug audio de désynchronisation** (42 likes sur le commentaire qui le signale). Il fait 11 785 vues
+avec une vidéo techniquement défaillante. **La qualité de production n'est pas la variable.**
+
+**Structure de titre à voler telle quelle** : `Accroche | Mot-clé cherchable`.
+« Most Of You Will Never Get Monetized Now **| YouTube Monetization Update** » — il obtient la
+tension ET l'indexation, sans sacrifier l'un pour l'autre. Transposable immédiatement (§3 règle 7
+de PACKAGING-YOUTUBE : ne jamais retirer le mot-clé cherchable).
+
+**Le titre tient sa promesse en s'y opposant** : titre = panique maximale ; contenu = « take a
+breath, nobody is getting removed tomorrow ». Tension à l'entrée, apaisement raisonné à l'intérieur.
+
+#### Les 5 mécanismes qui tiennent le spectateur pendant la partie explicative
+
+1. ⭐⭐ **OUVRIR SUR UNE PERSONNE, PAS SUR UN SUJET.** « J'ai eu une cliente qui m'a écrit ce matin,
+   elle était sincèrement bouleversée. » Un humain avec une émotion AVANT toute donnée.
+   Notre CFA ouvre sur « des millions d'Africains » = une abstraction. **Une personne bat un million
+   de personnes.** ⚠️ Nuance d'Aziz : **à utiliser avec parcimonie**, parfois ouvrir sur le sujet
+   reste meilleur. Le principe réel derrière : le spectateur qui clique est déjà dans un état
+   (énervé, curieux, inquiet) — lui montrer quelqu'un dans CE MÊME état le fait se reconnaître
+   immédiatement, au lieu de recevoir un cours magistral.
+2. ⭐⭐⭐ **RENDRE LES CHIFFRES RÉELS ET INCARNÉS.** Il expose SON revenu : « 12 000 heures de
+   visionnage en 28 jours → 858 $ ». Risqué, et c'est ce qui rend tout le reste crédible.
+   **Position d'Aziz, à appliquer au-delà du choix de format** : « tout le monde s'en fout si on ne
+   peut pas le voir, l'imaginer, et surtout si ça n'a pas d'effet réel ». **C'est un de nos gros
+   problèmes passés** — et le risque n°1 du sujet **FMI**, qui est une machine à chiffres abstraits.
+   Aucun graphisme ne sauve un chiffre auquel on ne peut pas se rattacher.
+3. **QUESTION RHÉTORIQUE QUI RELANCE.** « La ligne d'arrivée d'une course que tu ne cours pas, ça
+   change quoi ? » → le spectateur répond mentalement, donc reste ACTIF au lieu d'écouter passivement.
+   ⚠️ **Le plus difficile à transposer chez nous** (voix off, pas d'humain à l'écran) : risque de
+   sonner robotique. Piste d'Aziz : s'en servir pour **annoncer ce qui vient sans y basculer** —
+   activer le cerveau à la charnière entre deux parties, là où on retombe d'habitude en cours magistral.
+4. **TRAITER L'OBJECTION AVANT QU'ELLE ARRIVE.** « Il y a un contre-argument valide, je veux le
+   partager avant que vous me hurliez dessus dans les commentaires. » Désamorce ET invite en même
+   temps. ⚠️ Chez lui ça passe par une adresse directe au spectateur (4e mur) — chez nous, trouver
+   la forme équivalente, et surtout **le placer au bon endroit**, organiquement.
+5. **PRENDRE UN RISQUE D'OPINION.** « C'est là que je vais en perdre certains d'entre vous. »
+   Résultat : 4 des commentaires les plus likés sont des **désaccords argumentés** de créateurs
+   d'animation. **Le désaccord est du carburant** ; une nuance parfaite ne donne à personne une
+   raison d'écrire.
+   ⭐ **Comment il le fait sans prendre parti** (vérifié dans le transcript, question d'Aziz) — il
+   sépare visiblement trois niveaux : (a) un **mécanisme expliqué** = le *pool* AdSense (« l'argent
+   des annonceurs va dans un bassin, chaque chaîne y boit ; ajoutez des centaines de milliers de
+   chaînes, le verre de chacun rétrécit ») — c'est lui qui porte l'argument ; (b) des **chiffres
+   officiels YouTube** (200 Md de vues Shorts/jour, 1 Md d'heures sur TV) ; (c) une **opinion
+   attribuée et distanciée** (« Dylan's words, and I'm quoting him » + « je ne suis pas assez naïf
+   pour croire que vous serez tous d'accord »). **Il ne prend pas parti — il rend le désaccord
+   possible.** C'est pour ça qu'on lui répond avec des arguments et non avec de la colère.
+   → Cohérent avec notre charte déjà modifiée : **la neutralité absolue est une illusion**.
+
+#### 🔍 Son commentaire épinglé — remet notre gabarit en question
+> « How many watch hours do you actually have right now? **Drop the real number below, no rounding
+> up**, and tell me if this update changed anything about your plan. » (11 likes)
+
+Il ne demande PAS une opinion — il demande **une donnée personnelle précise**. Beaucoup plus facile
+à honorer qu'un « vous en pensez quoi ? », parce que chacun connaît déjà sa réponse et n'a pas à
+fabriquer un avis.
+→ ⚠️ **Piste à TESTER contre notre gabarit du §6 de PACKAGING-YOUTUBE, pas à substituer d'office** :
+un seul cas observé. Aziz : « on y arrive quand même avec les commentaires qu'on a choisis, mais
+il y a peut-être lieu à amélioration. »
+
 ### ⛔ Corrections factuelles à ne pas reperdre
 - **PixelLab ≠ outil de recherche YouTube.** C'est notre générateur de pixel art (sprites, tilesets).
   L'outil de recherche est **TubeLab**. Confusion faite 2× le 2026-08-17.
