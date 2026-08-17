@@ -8,9 +8,14 @@
 >   19 066 frames @30fps, -16,9 LUFS). Validé par Aziz ("presque parfaite" + correctif de raccord final).
 >   Détail complet de la v7 (dynamisation globe, 13 retours de visionnage, vérifications) :
 >   `out/PRET-PUBLICATION/soudan-midform-FINAL.PUBLICATION-NOTE.md`.
-> - **Titre, miniature, description, programmation YouTube : FAITS (2026-07-31)**. Titre :
->   « L'empire de l'or qui rend la guerre au Soudan impossible à arrêter ». Miniature : concept
->   "Machine à guerre" (`public/_shared/thumbnails-library/soudan-midform/machine-a-guerre-final.png`).
+> - ⭐ **Titre et miniature REMPLACES le 2026-08-17, appliques dans Studio par Aziz** :
+>   Titre = « **La guerre au Soudan n'a aucune raison de s'arreter** » (50 c., formulation d'Aziz).
+>   Miniature = **Serpent retouche** (`.../soudan-midform/serpent-de-lor-SANS-TEXTE.png`).
+>   ⛔ Ecartes : l'ancien titre « L'empire de l'or qui rend la guerre au Soudan impossible a arreter »
+>   (titre-these) et la miniature « Machine a guerre » (aucun ancrage geographique).
+>   ⛔⛔ Ne JAMAIS ressortir « ...et ce n'est pas politique » : factuellement FAUX (veto russe a l'ONU,
+>   Egypte/Nil, Emirats dans le script). Contexte : `memory/doctrines/PACKAGING-YOUTUBE.md`.
+> - **Description, programmation YouTube : FAITS (2026-07-31)**, sortie **2026-08-20**.
 >   Programmée le 2026-08-20 (4e position). Détail pipeline complet dans PUBLICATION-NOTE.md ci-dessus.
 > - **Reste à faire** : Short Soudan (boucle NotebookLM, cf `memory/tools/notebooklm-boucle-short.md`)
 >   — n'existe pas encore.

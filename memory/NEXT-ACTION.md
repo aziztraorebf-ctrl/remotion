@@ -104,10 +104,18 @@ parle 9 min face caméra, zéro animation/carte/graphique, des hésitations dans
 **bug audio de désynchronisation** (42 likes sur le commentaire qui le signale). Il fait 11 785 vues
 avec une vidéo techniquement défaillante. **La qualité de production n'est pas la variable.**
 
-**Structure de titre à voler telle quelle** : `Accroche | Mot-clé cherchable`.
-« Most Of You Will Never Get Monetized Now **| YouTube Monetization Update** » — il obtient la
-tension ET l'indexation, sans sacrifier l'un pour l'autre. Transposable immédiatement (§3 règle 7
-de PACKAGING-YOUTUBE : ne jamais retirer le mot-clé cherchable).
+**Structure de titre `Accroche | Mot-clé cherchable`** — ⛔ **NE PAS la voler telle quelle.**
+« Most Of You Will Never Get Monetized Now **| YouTube Monetization Update** » obtient la tension ET
+l'indexation… mais ⚠️ **correction d'Aziz (2026-08-17)** : il n'utilise cette structure QUE parce que
+son accroche ne contient **aucun** mot cherchable (ni « YouTube », ni « monétisation ») — la barre
+**compense un manque propre à sa phrase**. C'est une rustine, pas un modèle. Aziz : « je n'ai jamais
+vu personne mettre le mot-clé à la toute fin, ce n'est pas du SEO traditionnel ».
+→ Nos titres du patron « créer le manque » portent **déjà** le mot-clé dans l'accroche (« La guerre
+**au Soudan** n'a aucune raison de s'arrêter ») : y ajouter « | Soudan » serait redondant et
+violerait la règle 8 (§3 PACKAGING-YOUTUBE). Vérifier au cas par cas si notre accroche manque
+d'ancrage AVANT d'envisager cette forme.
+⭐ Leçon de méthode générale tirée de ce raté :
+[[feedback_generaliser-un-seul-cas-isoler-la-condition-pas-juste-l-effet]].
 
 **Le titre tient sa promesse en s'y opposant** : titre = panique maximale ; contenu = « take a
 breath, nobody is getting removed tomorrow ». Tension à l'entrée, apaisement raisonné à l'intérieur.

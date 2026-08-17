@@ -100,10 +100,15 @@ travail de la vidéo. Nos 3 échecs sont tous des titres-thèses élégants.
 
 **(a) LE PARADOXE FACTUEL** — ⭐ la plus sûre, à préférer par défaut.
 Un fait vrai dont le mécanisme n'est pas évident. Le manque naît du « comment est-ce possible ? ».
-- Soudan → **« Le même or paie les deux armées du Soudan »** (41 c.) — reprend une phrase littérale
-  du script (« le même or paie les deux côtés du front »). **Un titre qui cite ne peut pas mentir.**
-- CFA → « Ils dormaient. Le Franc CFA a été divisé par deux. » (50 c.)
+- Soudan (candidat du jury, **écarté au profit du (b)**) → « Le même or paie les deux armées du
+  Soudan » (41 c.) — reprend une phrase littérale du script (« le même or paie les deux côtés du
+  front »). **Un titre qui cite ne peut pas mentir.**
+- CFA (**APPLIQUÉ**) → « Ils dormaient. Le Franc CFA a été divisé par deux. » (50 c.)
 - Transposable → « Cette monnaie peut être divisée par deux en une nuit. C'est déjà arrivé. »
+
+⚠️ **Le paradoxe factuel est le plus sûr, pas toujours le plus fort** : il énonce déjà le mécanisme,
+donc il **referme** une partie du manque. Sur le Soudan, Aziz lui a préféré un titre du patron (b),
+plus ouvert (voir ci-dessous).
 
 **(b) LA NÉGATION DE L'EXPLICATION ATTENDUE** — plus puissante, mais **risquée**.
 Format `[fait] + [et ce n'est pas X]`. La seconde moitié écarte l'explication que le spectateur
@@ -114,6 +119,17 @@ de l'Égypte et du Nil, des Émirats. Rattrapé par Aziz au moment de l'applique
 → **Nier est une affirmation factuelle.** La moitié négative doit être vérifiée dans le script avec
 la même rigueur que la moitié positive — et c'est celle qu'on oublie, parce qu'on la juge sur sa
 mécanique au lieu de son contenu. Procédure obligatoire : §3 règle 10 et §4 fact-check.
+
+✅ **Le titre Soudan RÉELLEMENT APPLIQUÉ (2026-08-17), formulation d'Aziz** :
+> **« La guerre au Soudan n'a aucune raison de s'arrêter »** (50 c.)
+
+Il relève du patron (b) mais **sans négation explicite** : « aucune raison » installe l'anomalie et
+garde l'explication pour la vidéo, là où le paradoxe factuel (a) l'aurait déjà livrée. Sujet nommé
+dès le 2e mot, donc cherchable. Factuellement exact — le script établit qu'aucun des deux camps ne
+manque jamais d'argent, donc rien n'oblige mécaniquement la guerre à finir.
+⭐ **La leçon de forme** : la variante la plus forte du patron (b) n'est pas forcément « …et ce n'est
+pas X ». Un simple « n'a aucune raison de » suffit à creuser le manque, **sans prendre le risque
+factuel d'une négation explicite**.
 
 ### Précision sur « déclaratif > question »
 
@@ -216,9 +232,11 @@ Issues d'études sur 60 000 à 800 000 vidéos. **Ce sont des mesures, pas des o
     mécanique (« ça crée bien un manque ») au lieu de son contenu.
     ⛔ **Procédure obligatoire avant de présenter un titre** : `grep -i` les mots-clés de la négation
     dans le script complet. Si le script contient ce qu'on prétend nier → titre disqualifié.
-    ⭐ **Le meilleur titre est souvent une CITATION du script.** Le titre finalement retenu pour le
-    Soudan — « Le même or paie les deux armées du Soudan » — reprend une phrase littérale du script
-    (« Et pourtant, le même or paie les deux côtés du front »). Un titre qui cite ne peut pas mentir.
+    ⭐ **Le meilleur titre est souvent une CITATION du script.** Le titre de repli proposé après le
+    rattrapage — « Le même or paie les deux armées du Soudan » — reprend une phrase littérale du
+    script (« Et pourtant, le même or paie les deux côtés du front »). **Un titre qui cite ne peut
+    pas mentir.** (Aziz lui a finalement préféré « La guerre au Soudan n'a aucune raison de
+    s'arrêter », plus ouvert — les deux sont exacts, c'est un choix de force, pas de véracité.)
 
 **Test rapide** : date ? → retirer · >55 car. ? → compresser ou justifier · formule morte ? → réécrire
 · les 2 faits en tension dans les 48 premiers car. ? · sujet matériel ? · mot-clé cherchable présent
