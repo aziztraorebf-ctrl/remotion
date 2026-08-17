@@ -90,25 +90,30 @@ On clique quand on découvre **qu'il manque une pièce précise** d'un puzzle qu
 
 | | Puzzle complet ❌ | Puzzle troué ✅ |
 |---|---|---|
-| Exemple | « L'or achète les armes qui protègent l'or » | « Cette guerre ne peut pas s'arrêter, et ce n'est pas politique » |
-| Effet | on comprend tout → satisfaction → **pas de clic** | on sait exactement ce qu'on ignore → **clic** |
+| Exemple | « L'or achète les armes qui protègent l'or » | « Le même or paie les deux armées du Soudan » |
+| Effet | on comprend tout → satisfaction → **pas de clic** | on sait exactement ce qu'on ignore (*comment est-ce possible ?*) → **clic** |
 
 ⛔ **Anti-pattern n°1 de la chaîne : le titre-thèse.** Un titre qui énonce la conclusion fait le
 travail de la vidéo. Nos 3 échecs sont tous des titres-thèses élégants.
 
-### Le patron validé (transposable)
+### Deux façons de creuser le manque
 
-```
-[Fait ou état contre-intuitif]  +  [négation de l'explication attendue]
-```
-
-- Soudan → « La guerre au Soudan ne peut pas s'arrêter, et ce n'est pas politique »
-- CFA → « Ils dormaient. Le Franc CFA a été divisé par deux. »
+**(a) LE PARADOXE FACTUEL** — ⭐ la plus sûre, à préférer par défaut.
+Un fait vrai dont le mécanisme n'est pas évident. Le manque naît du « comment est-ce possible ? ».
+- Soudan → **« Le même or paie les deux armées du Soudan »** (41 c.) — reprend une phrase littérale
+  du script (« le même or paie les deux côtés du front »). **Un titre qui cite ne peut pas mentir.**
+- CFA → « Ils dormaient. Le Franc CFA a été divisé par deux. » (50 c.)
 - Transposable → « Cette monnaie peut être divisée par deux en une nuit. C'est déjà arrivé. »
 
-La seconde moitié (« et ce n'est pas politique ») **écarte activement l'explication que le spectateur
-allait fournir tout seul**. C'est elle qui crée la tension, et c'est aussi elle qui nous différencie
-des chaînes d'indignation.
+**(b) LA NÉGATION DE L'EXPLICATION ATTENDUE** — plus puissante, mais **risquée**.
+Format `[fait] + [et ce n'est pas X]`. La seconde moitié écarte l'explication que le spectateur
+allait fournir seul, ce qui crée une tension forte.
+⛔⛔ **Piège vécu le 2026-08-17** : « La guerre au Soudan ne peut pas s'arrêter, **et ce n'est pas
+politique** » — proposé par le jury, validé par moi, **faux**. Le script parle du veto russe à l'ONU,
+de l'Égypte et du Nil, des Émirats. Rattrapé par Aziz au moment de l'appliquer.
+→ **Nier est une affirmation factuelle.** La moitié négative doit être vérifiée dans le script avec
+la même rigueur que la moitié positive — et c'est celle qu'on oublie, parce qu'on la juge sur sa
+mécanique au lieu de son contenu. Procédure obligatoire : §3 règle 10 et §4 fact-check.
 
 ### Précision sur « déclaratif > question »
 
@@ -195,9 +200,25 @@ Issues d'études sur 60 000 à 800 000 vidéos. **Ce sont des mesures, pas des o
    raison de cliquer ? ⚠️ Ce test demande d'**AJOUTER un enjeu universel**, jamais de **SUPPRIMER
    l'ancrage local** (cf. règle 7).
 
-10. **Fidélité factuelle** — un titre qui exagère, affirme une causalité que le script nuance, ou
-    annonce un événement qui n'a pas eu lieu tel quel est **disqualifié**, même s'il est accrocheur.
-    Vécu : « Son gouvernement vient de tomber » était faux, le script disait le contraire.
+10. ⛔⛔ **Fidélité factuelle — VÉRIFIER DANS LE SCRIPT, PAS DANS SA TÊTE.** Un titre qui exagère,
+    affirme une causalité que le script nuance, ou annonce un événement qui n'a pas eu lieu tel quel
+    est **disqualifié**, même s'il est accrocheur. Vécu 2× :
+    - 2026-07-30 : « Son gouvernement vient de tomber » — faux, le script disait le contraire.
+    - **2026-08-17 : « La guerre au Soudan ne peut pas s'arrêter, et ce n'est pas politique »** —
+      **faux**, le script parle du veto russe au Conseil de sécurité, de l'Égypte et du Nil, des
+      Émirats, d'un rapport des Nations unies. C'est de la politique de bout en bout. Titre validé
+      par moi, puis **rattrapé par Aziz au moment de l'appliquer dans Studio**.
+
+    ⭐⭐ **La leçon, spécifique au patron « créer le manque » (§1)** : ce patron fonctionne en NIANT
+    l'explication attendue (« …et ce n'est pas X »). **Nier est une affirmation factuelle**, donc
+    la moitié « négative » du titre doit être vérifiée dans le script **au même titre que la moitié
+    positive** — c'est précisément celle qu'on oublie de vérifier, parce qu'on la juge sur sa
+    mécanique (« ça crée bien un manque ») au lieu de son contenu.
+    ⛔ **Procédure obligatoire avant de présenter un titre** : `grep -i` les mots-clés de la négation
+    dans le script complet. Si le script contient ce qu'on prétend nier → titre disqualifié.
+    ⭐ **Le meilleur titre est souvent une CITATION du script.** Le titre finalement retenu pour le
+    Soudan — « Le même or paie les deux armées du Soudan » — reprend une phrase littérale du script
+    (« Et pourtant, le même or paie les deux côtés du front »). Un titre qui cite ne peut pas mentir.
 
 **Test rapide** : date ? → retirer · >55 car. ? → compresser ou justifier · formule morte ? → réécrire
 · les 2 faits en tension dans les 48 premiers car. ? · sujet matériel ? · mot-clé cherchable présent
@@ -230,7 +251,24 @@ Leçon coûteuse (Soudan v1, 2026-07-31) : un contexte sans la doctrine complèt
 
 **Preuve d'efficacité (2026-08-17)** : sur le Soudan, le jury v2 (sans diagnostic) produisait des
 titres « acteur étranger + objet ». Le jury v3, avec le diagnostic injecté, a fait converger les
-4 modèles vers le paradoxe d'autofinancement, en 41-51 car. contre 67.
+4 modèles vers le paradoxe d'autofinancement, en 41-51 car. contre 66.
+
+### ⛔⛔ APRÈS le jury, AVANT de présenter : le FACT-CHECK dans le script
+
+Le jury juge la mécanique du titre, **jamais sa véracité** — les modèles n'ont pas de raison de
+vérifier qu'une négation est vraie, et le script qu'on leur donne ne les en empêche pas.
+**C'est à l'orchestrateur de le faire, et c'est non négociable :**
+
+1. Pour CHAQUE titre présenté à Aziz : `grep -i` dans le script complet les mots-clés de ce qu'il
+   affirme **et de ce qu'il nie**.
+2. Le titre contient une négation (« ce n'est pas X ») ? → chercher X dans le script. S'il y est →
+   **disqualifié**.
+3. Compter les caractères par script (§3.2).
+4. Privilégier un titre qui **cite** une phrase du script : il ne peut pas mentir.
+
+⚠️ **Ne pas sauter cette étape parce que le jury a convergé.** Le 2026-08-17, les 4 modèles ont
+convergé vers une mécanique juste, j'ai validé la mécanique, et j'ai présenté à Aziz un titre dont
+la seconde moitié était fausse. **La convergence du jury valide la forme, jamais le fond.**
 
 ---
 
