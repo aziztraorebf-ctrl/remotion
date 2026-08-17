@@ -60,6 +60,17 @@ devient une occasion de détection.
 qui n'est dans aucune fiche (mouvement de caméra validé/rejeté, technique nouvelle, valeur qui a
 marché). C'est le **chroniqueur** : il capture le JUGEMENT, pas seulement l'existence.
 
+**⛔ Couche 0 — le garde-fou contre l'OUBLI de capitaliser** (ajouté 2026-08-17, sur constat d'Aziz).
+Les couches 3 (chroniqueur) et l'EXTRACTOR ne tournent **qu'en clôture, via `/wrap`**. Leur oubli est
+SILENCIEUX — et le projet a deux précédents : le « Mécanisme 1 Gardien » conçu en détail puis oublié
+des semaines, le circuit-breaker codé puis **mort le 2026-07-12 sans que personne ne le remarque
+pendant un mois**. Un mécanisme de fin de session dont l'oubli ne fait aucun bruit finit par être oublié.
+→ `scripts/tools/check-capitalisation.py` compare la date du dernier travail de production à celle de
+la dernière capitalisation. Au-delà de **8 fichiers de scène ou 3 jours**, il alerte.
+→ `.claude/hooks/session-start-capitalisation.sh` (branché sur `SessionStart`) l'injecte **au DÉBUT
+de session** — là où on peut encore agir, pas en clôture quand le contexte est plein. Silencieux
+quand tout est à jour, pour ne pas créer de bruit à chaque démarrage. Ne bloque jamais.
+
 ⚠️ Ne pas confondre avec l'**Extracteur** (`STUDIO-REUTILISABLE-GATE.md`, Mécanisme 2) : celui-là
 parcourt le code pour remplir les catalogues de composants — un inventoriste. Il **n'existe pas
 encore** sur disque (vérifié 2026-08-17). Les fiches ne dépendent pas de lui.

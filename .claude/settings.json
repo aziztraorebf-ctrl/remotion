@@ -162,6 +162,17 @@
           }
         ]
       }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/session-start-capitalisation.sh",
+            "timeout": 15
+          }
+        ]
+      }
     ]
   }
 }
