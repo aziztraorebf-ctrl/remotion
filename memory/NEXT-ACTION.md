@@ -27,6 +27,67 @@
 
 ---
 
+## ⭐⭐⭐ PROCHAINE SESSION — EXPLORATION DES FORMATS NARRATIFS (décidé 2026-08-17)
+
+> **Le principe qui cadre tout ce chantier, mots d'Aziz** : « On est sur YouTube, on est sur les
+> réseaux sociaux, adaptons-nous à ce que les gens veulent voir. **Et le défi, c'est de ne pas perdre
+> son âme.** » — c'est-à-dire ne pas virer MrBeast ni TikTok-agressif-toutes-les-2-secondes, mais
+> **regarder pourquoi les gens aiment ça et le modifier pour nous**. Emprunter la MÉCANIQUE, pas le TON.
+> Preuve que ce n'est pas un compromis mais une compétence : le titre « Most of you will never get
+> monetized now » utilise tous les codes du genre (interpellation, enjeu personnel, promesse) sur un
+> contenu nuancé et chiffré — Aziz a cliqué, et la vidéo n'avait rien perdu de sa substance.
+> **Rester flexible** est la consigne explicite.
+
+### Pourquoi ce chantier existe
+Le pipeline actuel va : sujet → script → storyboard → **moteur visuel** → code. Le **FORMAT NARRATIF
+n'est jamais choisi explicitement** — il est hérité par défaut, et ce défaut est le documentaire
+explicatif. C'est exactement le mécanisme que la doctrine des moteurs visuels a déjà corrigé pour
+l'image : sauter l'étape = retomber sur ce qu'on a déjà en tête.
+⭐ Constat d'Aziz : nos scripts SONT devenus plus narratifs (le CFA ouvre sur une nuit, un
+basculement, des gens qui dorment). Mais **le format est amorcé et pas tenu** — abandonné après 30 s
+pour repasser en explication.
+
+### ⛔ La question à poser (mesurée, pas supposée)
+Sur l'AES, le décrochage n'est **PAS dans le hook** mais entre **30 s et 3 min** — précisément là où
+nos vidéos quittent le récit pour entrer en explication (source : rétention seconde-par-seconde,
+`DIAGNOSTIC-FLOP-VIDEO.md`). Donc la question n'est pas « quelle accroche » mais :
+> **Qu'est-ce qui tient un spectateur PENDANT la partie explicative, sans donner un cours magistral ?**
+
+Et le cadrage de recherche, plus étroit que « les formats viraux » (qui ramène du bruit non
+transposable) :
+> **Quels formats fonctionnent sur des sujets où il ne se passe RIEN visuellement ?**
+> (ni action, ni personnage, ni archives — c'est notre vraie contrainte)
+Niches qui l'ont déjà résolu : true crime (enquête sur faits froids), vulgarisation scientifique,
+analyse économique. ⛔ Chercher HORS géopolitique — c'est tout l'intérêt du niche bending.
+
+### Les 3 temps de la session
+1. **CHERCHER** — TubeLab (**566 crédits**, vérifié), outliers sur sujets sans matière visuelle dans
+   des niches adjacentes. Compléter avec vidIQ (**154 crédits**) si besoin.
+2. **DÉCORTIQUER** — transcripts des gagnants : comment ils OUVRENT, comment ils TIENNENT la minute
+   1→3, comment ils RELANCENT. C'est la minute 1-3 qui compte, pas l'accroche.
+3. **FORMALISER** — un **registre de formats** (sur le modèle du registre des moteurs visuels), plus
+   une **étape de choix explicite insérée dans le pipeline, entre le sujet et le script**.
+
+**Livrable concret** : appliquer un format choisi au sujet **FMI**, en SCRIPT SEULEMENT, zéro production.
+
+### ⛔ Corrections factuelles à ne pas reperdre
+- **PixelLab ≠ outil de recherche YouTube.** C'est notre générateur de pixel art (sprites, tilesets).
+  L'outil de recherche est **TubeLab**. Confusion faite 2× le 2026-08-17.
+- **Aucun achat d'outil nécessaire** (1of10 / ViewStats / Spotter Studio) : TubeLab + vidIQ suffisent.
+- **Compte réel des vidéos** : 3 longues PUBLIÉES (Sénégal, AES, CFA) + Soudan (sort le 20/08) +
+  Gazoduc (en cours) = 5. Le FMI n'existe pas encore.
+- **FMI** : ⛔ ne PAS le lancer dans le moule actuel. Le sujet est excellent — le problème serait de
+  le produire AVANT d'avoir choisi son format. Il devient le premier test de la méthode.
+- Le concept « niche bending » = **niche = MARCHÉ + FORMAT**, on transplante un format éprouvé
+  ailleurs sur son propre marché. ⚠️ L'écosystème autour du terme est saturé de vendeurs de formation
+  « chaîne faceless à 10 000 $/mois » : le concept est bon, l'emballage marketing est du bruit.
+
+→ Socle de cette session : **[PACKAGING-YOUTUBE.md](memory/doctrines/PACKAGING-YOUTUBE.md)** (le
+packaging AVANT publication) · **[DIAGNOSTIC-FLOP-VIDEO.md](memory/doctrines/DIAGNOSTIC-FLOP-VIDEO.md)**
+(la mesure APRÈS — c'est lui qui donne la rétention seconde-par-seconde).
+
+---
+
 ## 🎬 Showcase des capacités — VIRAGE : source = production vivante publiée (2026-08-15 soir)
 
 ⛔ **L'arbitrage des 2 planches-contact est ANNULÉ** — ne PAS le redemander à Aziz. Les 53 templates

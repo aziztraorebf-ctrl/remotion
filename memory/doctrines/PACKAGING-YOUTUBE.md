@@ -418,8 +418,17 @@ les 30 premières secondes — le hook n'était donc PAS le problème, c'était 
   (titre/miniature). Ne pas dire « l'algorithme a arrêté la distribution » : il distribue, personne
   ne clique. La conclusion pratique reste la même, la mécanique est différente.
 - **Format long dense sans figure incarnée** : nos vidéos supposent une audience captive qu'on n'a
-  pas encore. Piste ouverte le 2026-08-17 (niche bending) : garder le marché, emprunter un format
-  éprouvé ailleurs (récit d'enquête, « une nuit, une décision »). Non tranché.
+  pas encore. ⭐ **Chantier ACTÉ le 2026-08-17, prochaine session** — voir `memory/NEXT-ACTION.md`
+  § EXPLORATION DES FORMATS NARRATIFS. En résumé : le pipeline choisit explicitement un moteur
+  VISUEL mais jamais un format NARRATIF, qui est donc hérité par défaut (= documentaire explicatif).
+  Le décrochage mesuré est entre 30 s et 3 min, pas dans le hook — donc la question est « qu'est-ce
+  qui tient pendant la partie explicative ? ».
+  ⛔ **Le garde-fou de ce chantier, mots d'Aziz : « le défi, c'est de ne pas perdre son âme ».**
+  Emprunter la MÉCANIQUE d'un format qui marche, jamais le TON. Ni MrBeast, ni TikTok agressif —
+  mais ne pas refuser d'adapter les codes non plus : refuser, c'est rester invisible (3 vidéos l'ont
+  prouvé). Le titre de référence (« Most of you will never get monetized now ») applique tous les
+  codes du genre sur un contenu nuancé et chiffré : la preuve que ce n'est pas un compromis mais une
+  compétence.
 - **La miniature n'a jamais été A/B testée.** Aucune donnée ne dit laquelle de nos 2 miniatures
   Soudan performe. Les jugements du §5.3 reposent sur la lisibilité en vignette et l'ancrage, pas
   sur des mesures.
