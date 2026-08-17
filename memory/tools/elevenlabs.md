@@ -1,6 +1,15 @@
 # ElevenLabs TTS — Guide complet V3 GeoAfrique
 > Mise a jour : 2026-05-12. Modele actif : `eleven_v3`
 > Structure : Règles critiques (lire chaque session) → Référence complète (consulter au besoin)
+>
+> ⛔⛔ **PIPELINE DE VOIX PERIME DANS CE FICHIER — CORRIGE 2026-08-17.**
+> Ce guide date du 2026-05-12 et décrit encore la génération DIRECTE en V3 sur la
+> Narratrice v2. **Ce n'est plus le pipeline actif.** Le pipeline validé (2026-08-01/02,
+> tranché par Aziz) est **Harmonie → STS GéoAfrique**, détaillé dans
+> `memory/tools/PIPELINE-VOIX-VIVANTE-VALIDE.md` — **c'est LUI qui fait foi pour la voix.**
+> Repartir de la config directe ci-dessous = RÉGRESSION vers une voix qu'on a abandonnée.
+> Ce qui reste 100 % valide ici : les **règles de français** (scan participes/liaisons/
+> chiffres/accents), les audio tags, et la référence API.
 
 ---
 
@@ -11,10 +20,13 @@
 - [ ] Tous les chiffres en lettres (`1311` → `treize cent onze`)
 - [ ] Tous les accents ecrits (e, a, c cedille) — sinon prononciation fausse
 - [ ] Audio tags places AVANT le mot/phrase (pas apres)
-- [ ] Config max-style si voix Narratrice v2 (`stability: 0.22, style: 0.55`)
-- [ ] Voix = Narratrice v2 (`z3gESu49naEZW8Af2Upm`) ou autre voix validee
+- [ ] ⛔ **Voix : PIPELINE HARMONIE → STS** — source Harmonie `obmcfXCePmPgsNsLIWIj` (V3, stab 0.30)
+      puis STS GéoAfrique `z3gESu49naEZW8Af2Upm` (`eleven_multilingual_sts_v2`, **stability 0.45**).
+      Détail : `memory/tools/PIPELINE-VOIX-VIVANTE-VALIDE.md`.
+      ~~Config max-style Narratrice v2 (`stability: 0.22, style: 0.55`)~~ → PÉRIMÉ, ne plus utiliser.
 - [ ] **Forced Alignment apres generation** pour timestamps mot-par-mot
-- [ ] Musique de fond : volume par defaut **0.07** (ajuster par paliers de 0.02-0.03)
+- [ ] Musique de fond : volume de départ **0.13** (harmonisé 2026-08-17 sur la valeur du code réel ;
+      ajuster à la hausse ou à la baisse à l'oreille si besoin). ~~0.07~~ → périmé.
 
 ---
 

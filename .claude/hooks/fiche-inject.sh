@@ -46,6 +46,12 @@ $(cat "$f")"
 # est un appel de script, l'assemblage est un ffmpeg/render. Sans cette branche,
 # ces 2 fiches existeraient sans jamais se declencher (signale par 2 agents).
 if [ -n "$BASH_CMD" ]; then
+  # ⛔ Exclure git/echo/cat : un `git commit -m "...narration..."` matchait le TEXTE du
+  # message et injectait la fiche audio pour rien (faux positif reel, 2026-08-17).
+  # On ne veut matcher que de VRAIES actions de production.
+  case "$BASH_CMD" in
+    git\ *|*"git commit"*|echo\ *|cat\ *|grep\ *|ls\ *) exit 0 ;;
+  esac
   if printf '%s' "$BASH_CMD" | grep -qE 'storyboard-dual-gen|openrouter-img2img|openrouter-vision-breakdown|da-brief\.py|da-compare\.py'; then
     add_fiche "FICHE-STORYBOARD.md" "FICHE STORYBOARD" "bash-storyboard"
   fi

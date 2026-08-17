@@ -581,13 +581,13 @@ IMPORTANT : sans --resolve-assets, --phase review sera BLOQUE.
     print(f"       1. Lire ce JSON + ouvrir storyboard image")
     print(f"       2. Coder {episode}/Beat{beat_num}*.tsx — Tailwind OBLIGATOIRE (h-[X%] + flex, tokens text-gold/text-ivory/bg-navy)")
     print(f"       3. Render -> {gate['wip_dir']}/beat{beat_num}_v1.mp4")
-    print(f"       4. Auto-review OBLIGATOIRE (score >= 19/23 requis) :")
+    print(f"       4. Auto-review OBLIGATOIRE (score >= 19/25 requis) :")
     print(f"          python3 scripts/beat-session.py --episode {episode} --beat {beat_num} --phase self-review --video {gate['wip_dir']}/beat{beat_num}_v1.mp4")
     print(f"       5. Si self-review OK → Appel Gemini 2 :")
     print(f"          python3 scripts/beat-session.py --episode {episode} --beat {beat_num} --phase review --video {gate['wip_dir']}/beat{beat_num}_v1.mp4")
     print(f"       6. Après corrections post-review → notifier Aziz :")
     print(f"          python3 scripts/beat-session.py --episode {episode} --beat {beat_num} --phase upload --video {gate['wip_dir']}/beat{beat_num}_vFinal.mp4")
-    print(f"\n[!] NE PAS presenter le render a Aziz avant self-review >= 19/23 ET --phase review.")
+    print(f"\n[!] NE PAS presenter le render a Aziz avant self-review >= 19/25 ET --phase review.")
     # Pas de ntfy ici — Claude continue seul, aucune action requise d'Aziz
     return breakdown
 
@@ -762,7 +762,7 @@ def phase_self_review(episode: str, beat_num: int, video_path: str, is_post_corr
     G7 (Tailwind) : verifie automatiquement par grep — pas de biais possible.
     Atlas patterns (A1-A3) : vérifiés automatiquement.
     G1-G6 : interactif apres extraction de frames automatique.
-    Bloque si score < 19/23.
+    Bloque si score < 19/25.
     Bloque si spec-table absente (--phase spec-table requis avant).
     """
     beat = f"beat{beat_num}"

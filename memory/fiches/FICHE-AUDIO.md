@@ -39,7 +39,7 @@ Musique : `fal-ai/minimax-music/v2.6`, `{prompt, is_instrumental:true}`, PAS de 
    ⚠️ Bug connu NON corrigé dans le script : si `words[0].start == words[1].start` → alignement v1 corrompu, basculer manuellement sur `/v2/forced-alignment`.
 6. **Timing** : `durationInFrames` dérivé de l'audio mesuré, JAMAIS hardcodé. Pauses ajoutées après coup → `F_new = F + 30*Σ(sil_s − gap_naturel)` (pas la formule brute : désync jusqu'à +5.5 s).
 7. **Garde-fou** : re-aligner, vérifier que tous les mots sont présents. Prouve l'absence de perte de TEXTE — jamais la qualité SONORE.
-8. **Mix** : SFX plancher **0.50** (jusqu'à 0.60 sur gros moment) · musique **0.10-0.15** · SFX ponctuels uniquement, jamais de nappe continue. Musique tardive : si `(durée_piste − startFrom) < durée_beat` → 2e `<Audio startFrom={0}>` en relais.
+8. **Mix** : SFX plancher **0.50** (jusqu'à 0.60 sur gros moment) · **musique = 0.13 au départ** (valeur harmonisée par Aziz le 2026-08-17 sur le code réel — les anciennes 0.07 / 0.12-0.15 / 0.10-0.14 sont périmées ; on part de 0.13 et on monte ou descend à l'oreille) · SFX ponctuels uniquement, jamais de nappe continue. Musique tardive : si `(durée_piste − startFrom) < durée_beat` → 2e `<Audio startFrom={0}>` en relais.
 
 ## SI ÇA RATE 2×
 **Symptôme audio ≠ cause audio.** Avant de retoucher le son, MESURER :

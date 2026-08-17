@@ -29,12 +29,15 @@ Coût documenté : Soudan mid-form v4 (2026-07-22), **image figée ~4 minutes** 
   3 pièges qui coûtent des tours : (1) l'override vaut pour le mp4 **exact** nommé (un `-compressed.mp4` a besoin du sien) ; (2) l'override doit être **plus récent** que le mp4 — le créer APRÈS le dernier encodage (`stat -f "%m %N"`) ; (3) un `ffmpeg` + un upload dans **la même commande Bash** sont bloqués avant l'encodage → séparer en 2 commandes.
   Faux positif Gemini (il réclame des labels volontairement retirés) → écrire `<mp4-sans-ext>.review-override.md` justifiant chaque point ignoré, puis relancer.
 - **`.claude/hooks/pre-final-promotion.sh`** se déclenche sur tout `cp`/`mv` vers `*-FINAL.mp4`. **Bloquant (exit 2)** : source citée absente du TSX du beat. **Informatif** : self-review `/tmp/<ep>-beat<N>-self-review.json` ≥ 19, flag d'upload, rappel `trace-livrable.py`. Doute sur quelle version de script a produit un rendu : `python3 scripts/tools/trace-livrable.py <rendu.mp4> --episode-dir <dossier>`.
-  ⚠️ **Divergence d'échelle non tranchée** : CLAUDE.md dit « ≥19/23 », le hook teste `>= 19` et affiche « /25 ». À arbitrer par Aziz.
+  ✅ **Échelle tranchée 2026-08-17** : la liste `SELF_REVIEW_CRITERIA` compte **25 critères** (comptés dans le code) — le « /23 » était un vestige, corrigé partout (CLAUDE.md, beat-session.py). Seuil = **19/25**.
+  ⚠️ Effet de bord non décidé : passer de 23 à 25 critères a fait descendre l'exigence de 83 % à **76 %** sans que personne ne le choisisse. Remonter le seuil à 21/25 (= 84 %) rétablirait l'exigence d'origine — **décision d'Aziz en attente**, seuil laissé à 19.
 - **Hygiène out/** : `wip/beatN_v3.mp4` → présenté `beatN_V3.mp4` → validé `beatN-FINAL.mp4` → `out/PRET-PUBLICATION/<ep>-FINAL.mp4`. Jamais de fichier à la racine de `out/`, jamais de dossier par date. À validation : promouvoir `versions/` → FINAL, purger `wip/` + `versions/`.
 
 ## PRÉSENTER À AZIZ (il est sur mobile)
-- **Uploader AVANT de présenter, jamais un chemin local.** MP4/PNG → `python3 scripts/tools/upload-to-blob.py <fichier> --folder <dossier>` (Vercel Blob) **par défaut**, même pour un proto regardé en différé. ⛔ uguu (~3 h), ⛔ tmpfiles (redirige). catbox instable (HTTP 200 + `content-length: 0` silencieux) → vérifier `curl -sI <url> | grep content-length`.
-  ⚠️ CLAUDE.md § Communication mobile dit encore « catbox → Imgur → uguu » : **périmé**, le GATE de MEMORY.md fait foi.
+- **Uploader AVANT de présenter, jamais un chemin local.** ⛔⛔ **QUOTA VERCEL BLOB : le plan gratuit est à 75 % de sa limite mensuelle** (décision Aziz 2026-08-17) — Vercel Blob est réservé aux **MP4 / rendus vidéo**, PAS aux images ni au reste.
+  - **MP4 / rendu vidéo → Vercel Blob** : `python3 scripts/tools/upload-to-blob.py <fichier> --folder <dossier>`.
+  - **PNG / image / autre → catbox → Imgur → uguu → Litterbox** (ordre CLAUDE.md § Communication mobile, TOUJOURS valide). catbox est instable (HTTP 200 + `content-length: 0` silencieux) → **vérifier `curl -sI <url> | grep content-length` avant de donner le lien**. uguu ~3 h de rétention, Litterbox 72 h.
+  - **Page HTML → ni Blob ni catbox** (voir ligne suivante).
 - **Page HTML → ⛔ JAMAIS Vercel Blob ni catbox** (confirmé 2×) → `~/.claude/skills/atlas-video-preproduction/scripts/publish-here-now.sh`. Page autonome (CSS/JS inline, images `data:`).
 - **Plein format seul d'abord**, jamais une vignette côte-à-côte rapetissée : un render jugé à 540 px a fait « corriger » un problème inexistant en plein écran. Le côte-à-côte sert à MESURER, le plein format à JUGER.
 - **Un agent qui rapporte « terminé » n'a pas forcément produit le fichier** : `ls -la` sur le chemin annoncé avant d'accepter le succès. Un agent peut aussi s'arrêter juste AVANT `git commit`.
