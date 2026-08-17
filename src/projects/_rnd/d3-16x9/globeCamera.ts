@@ -26,6 +26,20 @@ export interface CamKey {
 const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
 /**
+ * ⛔⛔ ATTENTION — camAt applique easeInOut PAR SEGMENT.
+ * La derivee de easeInOut est nulle a ses DEUX extremites, donc la camera s'arrete
+ * COMPLETEMENT a chaque keypoint intermediaire ("elle approche, stop, elle approche,
+ * stop"). Mesure sur le cas reel : v = 0.00 px/f aux 7 keypoints (Gazoduc Acte 3 Beat 1,
+ * 3 iterations de dosage perdues avant d'identifier la cause STRUCTURELLE).
+ *
+ * ⛔ NE PAS corriger cette fonction en place : 12 fichiers en dependent, dont des
+ * compositions DEJA VALIDEES ET PUBLIEES (Soudan Actes 3-6). La corriger changerait
+ * le rendu de vidéos livrees.
+ *
+ * ✅ Pour tout NOUVEAU mouvement : utiliser camAtContinu() ci-dessous.
+ * Verification : python3 scripts/tools/measure-camera.py speed cam.json
+ * Detail : memory/fiches/FICHE-CAMERA.md
+ *
  * Interpole l'etat camera a une frame donnee entre les keyframes (tries par frame croissant).
  * lon/lat/scale lisses par easeInOut sur chaque segment.
  */
@@ -44,6 +58,48 @@ export function camAt(keys: CamKey[], frame: number): { lon: number; lat: number
     lon: a.lon + (b.lon - a.lon) * e,
     lat: a.lat + (b.lat - a.lat) * e,
     scaleMul: a.scaleMul + (b.scaleMul - a.scaleMul) * e,
+  };
+}
+
+/**
+ * ✅ VERSION CONTINUE — a utiliser pour tout NOUVEAU mouvement de camera globe.
+ *
+ * Corrige le defaut structurel de camAt() : au lieu d'un easeInOut PAR SEGMENT (qui
+ * remet la vitesse a zero a chaque keypoint), applique un smoothstep ATTENUE. La
+ * camera garde une vitesse non nulle aux points de passage tout en conservant un
+ * demarrage et une fin doux sur l'ENSEMBLE du trajet.
+ *
+ * Porte le fix paye 3 iterations sur le Gazoduc Acte 3, et deja valide en production
+ * dans GazoducActe4Objectifs.tsx:290-303 (lerp pur) et
+ * GazoducActe4RessourceUnique.tsx:181-195 (smoothstep attenue).
+ *
+ * @param softness 0 = lerp pur (vitesse constante, aucun arret possible)
+ *                 0.25 = defaut, leger arrondi aux passages (valeur validee Acte 4)
+ *                 1 = easeInOut complet par segment = le BUG de camAt(), ne pas utiliser
+ *
+ * Verifier apres usage : python3 scripts/tools/measure-camera.py speed cam.json
+ */
+export function camAtContinu(
+  keys: CamKey[],
+  frame: number,
+  softness = 0.25,
+): { lon: number; lat: number; scaleMul: number } {
+  if (frame <= keys[0].frame) return { lon: keys[0].lon, lat: keys[0].lat, scaleMul: keys[0].scaleMul };
+  const last = keys[keys.length - 1];
+  if (frame >= last.frame) return { lon: last.lon, lat: last.lat, scaleMul: last.scaleMul };
+  let i = 0;
+  while (i < keys.length - 1 && keys[i + 1].frame <= frame) i++;
+  const a = keys[i];
+  const b = keys[i + 1];
+  const raw = Math.max(0, Math.min(1, (frame - a.frame) / (b.frame - a.frame)));
+  // smoothstep attenue : raw + s*(smoothstep(raw) - raw).
+  // A s=0 -> lerp pur. A s=1 -> smoothstep plein (derivee nulle aux bouts = le bug).
+  const s = Math.max(0, Math.min(1, softness));
+  const t = raw + s * (raw * raw * (3 - 2 * raw) - raw);
+  return {
+    lon: a.lon + (b.lon - a.lon) * t,
+    lat: a.lat + (b.lat - a.lat) * t,
+    scaleMul: a.scaleMul + (b.scaleMul - a.scaleMul) * t,
   };
 }
 
