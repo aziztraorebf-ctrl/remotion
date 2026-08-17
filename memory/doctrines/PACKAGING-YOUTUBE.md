@@ -21,11 +21,16 @@ Trois vidéos longues publiées, trois sujets différents, trois formats différ
 | War-Map Sahel AES | 42 | 7 min 31 | 0 |
 | Franc CFA | 48 | 4 min 29 | 0 |
 
-Distribution **arrêtée par YouTube en 4-5 jours** à chaque fois (CFA : 0 vue/jour dès J+4).
+Vues **à plat en 4-5 jours** à chaque fois (CFA : 0 vue/jour dès J+4).
+
+⚠️ **Ne pas dire « YouTube a arrêté la distribution »** — c'est le raccourci que j'ai fait le
+2026-08-17, et la mesure du 2026-08-12 le contredit : **1800-3600 impressions par vidéo**, CTR
+« Suggested » stable à 1,5-1,8 %. YouTube MONTRE les vidéos. Ce n'est pas un problème de reach,
+c'est **100 % un problème de conversion** — les gens voient la vignette et ne cliquent pas.
 
 **Lecture** : quand la variance est nulle sur trois essais, la cause n'est pas dans ce qui varie
 (sujet, script, durée, traitement) mais dans ce qui ne varie pas — **le packaging**.
-Le contenu n'a jamais été jugé : personne n'est entré.
+Le contenu n'a jamais été jugé : presque personne n'est entré.
 
 **Contre-preuve mesurée le même jour** (vidIQ + TubeLab, sujets identiques aux nôtres) :
 
@@ -37,6 +42,31 @@ Le contenu n'a jamais été jugé : personne n'est entré.
 
 Ces chaînes ont une production **très inférieure** à la nôtre (caméra fixe, zéro animation).
 ⛔ **Le problème n'a jamais été la qualité de production. C'est l'emballage.**
+
+---
+
+## 0 bis. STATUT DE CHAQUE RÈGLE — ce qui est MESURÉ vs ce qui est SUPPOSÉ
+
+⛔ **À lire avant d'invoquer une règle de ce fichier comme argument d'autorité.** Tout n'a pas le
+même poids, et dans six mois plus rien ne les distinguera si ce n'est pas écrit ici.
+
+| Élément | Statut | Sur quoi il repose |
+|---|---|---|
+| Règles de format §3 (longueur, date, chiffre, formules mortes) | ✅ **MESURÉ** | études sur 60 000 à 800 000 vidéos |
+| Sujet matériel > méta (§3.6) | ✅ **MESURÉ** | écart ×157 à production identique, chaîne concurrente |
+| Problème = conversion, pas reach (§0) | ✅ **MESURÉ** | `vidiq_channel_analytics` 2026-08-12, impressions + CTR réels |
+| Hook non coupable sur AES (§8) | ✅ **MESURÉ** | rétention seconde-par-seconde AES vs Sénégal |
+| Jury 4 modèles > jugement solo (§4) | ✅ **ÉPROUVÉ** | 3 séries rejetées + 1 titre faux quand fait en solo |
+| Miniature SVG > génération IA (§5.1) | ✅ **ÉPROUVÉ** | échec documenté du Pipeline C sur le CFA |
+| Édition générative dégrade une image validée (§5.2) | ✅ **MESURÉ** | 2026-08-17, composition et résolution dégradées |
+| **Patron « le titre crée le manque » (§1)** | ⚠️ **HYPOTHÈSE FORTE** | raisonnement + convergence de 4 modèles + 1 exemple vécu par Aziz. **Jamais testé en publication.** |
+| **Gabarit de commentaire épinglé (§6)** | ⚠️ **HYPOTHÈSE** | une seule séance de travail, jamais publié |
+| **Serpent > Machine à Guerre (§5.3)** | ⚠️ **JUGEMENT** | lisibilité en vignette + ancrage géographique. Aucun A/B test. |
+| **Pipeline C relégué en exception (§5.2)** | ⚠️ **ARBITRÉ PAR CLAUDE, non validé par Aziz** | voir l'encadré du §5.2 |
+
+**Le premier test réel de tout le bloc « hypothèse » est le CFA re-titré**, puis Soudan à sa sortie.
+Tant que ces mesures ne sont pas revenues, présenter ces points comme des paris raisonnés — jamais
+comme des acquis.
 
 ---
 
@@ -127,11 +157,18 @@ Issues d'études sur 60 000 à 800 000 vidéos. **Ce sont des mesures, pas des o
 2. **Cible 50 caractères, maximum 55** — courbe monotone : plus court = mieux distribué et mieux
    affiché sur mobile. 60-70 car. = déjà −59 % vs un titre sous 20 car.
    - **Dépassement possible** si le sujet est structurellement dense (plusieurs acteurs/mécanismes
-     imbriqués) **ET** validé explicitement par Aziz. Précédents : Soudan 67 car. (2026-07-31),
-     puis 66 car. (2026-08-17, patron « manque » — la longueur porte **deux manques**, pas une thèse).
+     imbriqués) **ET** validé explicitement par Aziz.
    - ⛔ **Ne JAMAIS sur-filtrer les options d'un jury avant de les montrer à Aziz.** Vécu : des titres
      >55 car. écartés d'office comme « trop universitaires » — Aziz les préférait, et le titre retenu
      venait de ce lot. La longueur est un défaut, pas un couperet ; l'arbitrage appartient à Aziz.
+   - ⚠️ **COMPTER les caractères par script, jamais à l'œil.** Vécu le 2026-08-17 : deux titres
+     annoncés à Aziz avec un compte faux (l'actuel Soudan répété à « 67 » depuis le 07-31 alors qu'il
+     fait 66 ; le nouveau annoncé à « 66 » alors qu'il fait 68). Une erreur de comptage change
+     l'arbitrage longueur-vs-richesse, donc elle n'est jamais anodine.
+     `python3 -c "print(len('…'))"` avant toute présentation.
+   - ⚠️ **Un dépassement n'est jamais un gain en soi** : le titre Soudan du patron « manque » (68 car.)
+     est PLUS LONG que la thèse qu'il remplace (66 car.). On ne gagne pas en longueur, on gagne en
+     mécanique (§1). Ne pas justifier un dépassement par « le nouveau patron l'autorise ».
 
 3. **Chiffre précis en unités quotidiennes** — +23 % en niche éducative, mais physiquement
    compréhensible : « 9 centimes sur l'euro » pas « 9,2 % ».
@@ -225,12 +262,31 @@ se capitalise).
 
 ### 5.2 Quand utiliser la génération d'image (Pipeline C)
 
+> ⚠️ **ARBITRAGE NON VALIDÉ PAR AZIZ — le seul point de cette doctrine dans ce cas.**
+> Deux fichiers antérieurs se contredisaient (« Pipeline C en premier réflexe » du 2026-07-10 vs
+> « on COMPOSE en SVG, on ne génère pas » du 2026-07-30) sans arbitrage explicite. J'ai tranché seul
+> le 2026-08-17 en faveur du SVG, sur la base que le fichier SVG est **postérieur** et documente
+> précisément l'échec du Pipeline C sur le CFA (textes fautifs gravés, rupture de registre,
+> 2 concepts sur 4 accusateurs). **C'est un raisonnement, pas une décision d'Aziz — à confirmer.**
+
 Exception, pas défaut : sujet exigeant une matière que le SVG ne rend pas (photoréalisme d'objet,
 texture, visage). Alors : script complet + brief court demandant PLUSIEURS concepts → interface web
 gratuite (Aziz colle lui-même) → 1-2 concepts retenus → correction ciblée par API
 (`gemini-3.1-flash-image-preview` REST direct).
+
 ⚠️ **Vérifier le CONTENU réel des fichiers téléchargés, jamais leur nom** (2 appels API perdus sur
 le Soudan : les fichiers « machine » et « serpent » étaient inversés dès le départ).
+
+⛔⛔ **L'ÉDITION GÉNÉRATIVE D'UNE MINIATURE VALIDÉE EST À PROSCRIRE — préférer la retouche locale**
+(mesuré le 2026-08-17). Retirer un texte du Serpent via `gemini-i2i.py` a bien retiré le texte,
+mais le modèle **repasse sur toute l'image** : composition rétrécie (sujet 70 % → 55 % de la hauteur)
+et résolution dégradée (1920×1080 → 1376×768). Une image validée ne doit pas repasser par un modèle
+génératif pour une correction locale.
+→ **Méthode qui marche** : masquage en Python/PIL — reconstruire le fond ligne par ligne depuis les
+pixels situés de part et d'autre de la zone, puis recentrer le sujet. Résultat mesuré : 0 pixel
+résiduel, **0 altération** hors zone (octet pour octet), résolution intacte.
+→ **Vérifier par des mesures, pas à l'œil** : compter les pixels de la couleur retirée, et calculer
+`abs(après − avant).max()` sur la région à préserver — il doit valoir 0.
 
 ### 5.3 Règles de composition (transposables, mesurées à l'usage)
 
@@ -272,10 +328,16 @@ commentaires, dont un débat de fond.
 2. **Une question en fin de description.**
 
 ⛔ **Registre du commentaire épinglé** (corrigé par Aziz le 2026-08-17) : **conversationnel et court**,
-3-4 lignes max. Pas un paragraphe structuré, pas de « donc », pas de résumé de la description —
-personne n'écrit comme ça sous une vidéo, et ça se lit comme de la documentation.
+3-4 lignes max.
 
-Gabarit validé (Soudan/CFA) :
+**L'erreur que j'ai commise, pour ne pas la refaire** : mon premier jet faisait 3 paragraphes, avec
+une structure argumentative (contexte → nuance → « donc » → question). Verdict d'Aziz : « on dirait
+un résumé de la description ! Personne n'écrit de cette manière sur YouTube, même les créateurs. »
+**Cause** : j'ai écrit de la documentation au lieu d'écrire une parole. Un commentaire n'argumente
+pas, il lance. Signes d'alerte : plus de 2 phrases avant la question · un « donc » · une information
+déjà présente dans la vidéo ou la description · un ton neutre d'exposé.
+
+Gabarit (Soudan/CFA — validé par Aziz **en lecture**, ⚠️ pas encore éprouvé en publication) :
 ```
 Tout le monde débat de « [la question évidente] ».
 Presque personne ne parle de [l'angle mort réel].
@@ -284,6 +346,11 @@ Vous en pensez quoi ?
 ```
 Nommer un angle mort (« presque personne n'en parle ») donne une raison de répondre **sans accuser
 personne**, et installe la différence éditoriale de la chaîne.
+
+⚠️ **Statut de ce gabarit : hypothèse, pas règle mesurée.** Il n'a encore jamais été publié. Les
+règles du §3 viennent d'études sur des dizaines de milliers de vidéos ; celle-ci vient d'une seule
+séance de travail. **Le premier test réel est le CFA re-titré.** Si les commentaires ne décollent
+pas, c'est le gabarit qu'il faut changer — pas la question.
 
 **Choisir la question** : reprendre celle que le CONTENU pose déjà mais ne retourne jamais au public.
 Sur le CFA, elle était littéralement dans la conclusion (« qui va payer le prix ? »).
