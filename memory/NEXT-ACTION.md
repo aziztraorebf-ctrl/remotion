@@ -27,6 +27,25 @@
 
 ---
 
+## ✅ PACKAGING APPLIQUÉ DANS YOUTUBE STUDIO — FAIT PAR AZIZ LE 2026-08-17
+
+**CFA** (publiée, était à 48 vues / 0 commentaire / 0 vue-jour depuis J+4) :
+titre → « Ils dormaient. Le Franc CFA a été divisé par deux. » (50 c.) · commentaire épinglé
+(registre conversationnel) · question en fin de description · sous-titres `.srt` propres importés.
+
+**SOUDAN** (sortie 20 août) : titre → « **La guerre au Soudan n'a aucune raison de s'arrêter** »
+(50 c., formulation d'Aziz) · miniature → **Serpent retouché** (`serpent-de-lor-SANS-TEXTE.png`),
+Machine à Guerre écartée. Détail + titres écartés : `out/PRET-PUBLICATION/soudan-midform-FINAL.PUBLICATION-NOTE.md`.
+
+⏭️ **À RELEVER À J+3 ET J+7** (point de départ : CFA 48 vues / 0 comm. · Sénégal 93 / 0 · AES 42 / 0) —
+outil et méthode : `memory/doctrines/DIAGNOSTIC-FLOP-VIDEO.md` (`vidiq_channel_analytics` donne
+impressions, CTR et rétention seconde-par-seconde). ⚠️ Si le CTR ne bouge pas après 7 jours, le
+levier suivant est la **miniature**, pas un nouveau titre — ne pas re-titrer en boucle.
+⚠️ Deux variables changent en même temps (CFA re-titré ET Soudan qui sort) : ne pas attribuer trop
+vite un effet à une seule cause.
+
+---
+
 ## ⭐⭐⭐ PROCHAINE SESSION — EXPLORATION DES FORMATS NARRATIFS (décidé 2026-08-17)
 
 > **Le principe qui cadre tout ce chantier, mots d'Aziz** : « On est sur YouTube, on est sur les
