@@ -79,6 +79,11 @@ import { ProtoCartePaletteGPT, ProtoCartePaletteNous, ProtoCartePaletteGPTSeule,
 import { GazoducActe4Objectifs } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe4Objectifs";
 import { GazoducActe4Calendrier } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe4Calendrier";
 import { GazoducActe5Faille } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe5Faille";
+import { GazoducActe5Negocier } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe5Negocier";
+import { GazoducActe5Vannes2 } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe5Vannes2";
+import { GazoducActe5VannesGPT } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe5VannesGPT";
+import { GazoducActe5Maison } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe5Maison";
+import { GazoducActe5Vannes } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe5Vannes";
 import { GAZODUC_A4_SEGA_FRAMES, GAZODUC_A4_SEGB_FRAMES, GAZODUC_A4_SEGC_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe4Timing";
 import { GazoducActe3InsertSecurite } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3InsertSecurite";
 import { GazoducActe3InsertParadoxe } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3InsertParadoxe";
@@ -1260,7 +1265,56 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="D3-Gazoduc-Acte5-Faille"
           component={GazoducActe5Faille}
-          durationInFrames={240}
+          durationInFrames={123}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Acte 5 segment 3 — "negocier vs creuser" (29.041 -> 42.081s, coupe sur "payer..."). */}
+        <Composition
+          id="D3-Gazoduc-Acte5-Negocier"
+          component={GazoducActe5Negocier}
+          durationInFrames={391}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Acte 5 segment 2 — LES DEUX ROBINETS SEULS (la main retiree, decision Aziz 2026-08-16). */}
+        <Composition
+          id="D3-Gazoduc-Acte5-Vannes2"
+          component={GazoducActe5Vannes2}
+          durationInFrames={559}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Acte 5 segment 2 — TEST d'animation sur le dessin de GPT-5.5 (concours SVG 4 modeles). */}
+        <Composition
+          id="D3-Gazoduc-Acte5-VannesGPT"
+          component={GazoducActe5VannesGPT}
+          durationInFrames={530}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Gazoduc Acte 5 — OUVERTURE : retour vers le spectateur ("votre facture"). Maison en coupe
+            + flamme ambre + courbe qualitative qui culmine sur le mot "facture" (frame 280). */}
+        <Composition
+          id="D3-Gazoduc-Acte5-Maison"
+          component={GazoducActe5Maison}
+          durationInFrames={312}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Gazoduc Acte 5 — SOMMET THEMATIQUE : une main, deux robinets identiques, un choix.
+            "Qui aura la main sur le prochain grand robinet de l'Europe, et selon quel modele."
+            Ancres forced-align : f260 "robinet" (orientation), f383 "modele" (distinction),
+            f~525 "SOUVERAINS" (la main se pose sur le robinet de droite). */}
+        <Composition
+          id="D3-Gazoduc-Acte5-Vannes"
+          component={GazoducActe5Vannes}
+          durationInFrames={530}
           fps={30}
           width={1920}
           height={1080}

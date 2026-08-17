@@ -25,24 +25,69 @@ export const GazoducActe5Faille: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Le coin s'enfonce : course courte et decidee (pas de rebond comique).
-  const drive = spring({ frame, fps, config: { damping: 200, stiffness: 90, mass: 1.1 } });
-  const drillY = interpolate(drive, [0, 1], [-190, 0], clampB);
+  // ⭐ CHRONOLOGIE (demande Aziz 2026-08-16) : la foreuse TOURNE DEJA en l'air avant de toucher la
+  // terre, puis elle CONTINUE de tourner pendant qu'elle fore et que les fissures se propagent.
+  // Sans ca, elle se lit comme un pieu qu'on enfonce, pas comme un forage.
+  //
+  // 1. f0-38   : suspendue au-dessus du sol, elle tourne (stries qui defilent) — descente lente.
+  // 2. f38-96  : elle entre dans la terre et fore, toujours en rotation.
+  // 3. f60-150 : les fissures se propagent autour du point d'entree.
+  // 4. f150+   : tout se fige. C'est la derniere image du film.
+  // ⭐ RECALAGE POUR LE MONTAGE (2026-08-17) : ce plan ferme l'episode, du raccord a 42.081s jusqu'a
+  // la fin de l'audio (46.161s) = 122 frames seulement. "CREUSER", DERNIER MOT du film, tombe a la
+  // frame 110 — et la fin du mot a f119.
+  // ⛔ On ne peut donc PAS declencher les fissures SUR le mot : il ne resterait que 12 frames pour les
+  // propager. On fait l'inverse, et c'est plus juste narrativement : la faille se propage PENDANT la
+  // montee vers le mot ("...d'autres ont deja commence a"), et le mot CREUSER tombe sur son
+  // ACHEVEMENT — l'image est deja faite quand il est prononce. C'est un fait accompli, pas une
+  // illustration synchrone.
+  //
+  // ⛔ CONTRAINTE DU DESSIN (mesuree) : le puits est DECOUPE DANS LE TRACE MEME du sol (`ground-base`),
+  // il n'est pas separable. La meche ne tombe donc pas du ciel : elle TOURNE DEJA dans l'amorce du
+  // puits des la premiere frame (le forage est en cours quand on coupe sur ce plan), et s'enfonce sur
+  // une course courte.
+  const approach = interpolate(frame, [0, 18], [-96, -78], clampB);
+  const boreDrive = spring({ frame: frame - 18, fps, config: { damping: 200, stiffness: 90, mass: 1 } });
+  const drillY = frame < 18 ? approach : interpolate(boreDrive, [0, 1], [-78, 0], clampB);
 
-  // Propagation en 2 vagues : les failles maitresses d'abord, les ramifications ensuite.
-  // C'est ce decalage qui fait lire une fracture qui SE PROPAGE, pas un dessin qui apparait.
-  const crackMain = interpolate(frame, [22, 82], [0, 1], clampB);
-  const crackBranch = interpolate(frame, [46, 112], [0, 1], clampB);
+  // ROTATION : stries helicoidales qui defilent (convention 2D, technique validee sur le plan Fable).
+  // Elle tourne VITE a l'approche, un peu moins une fois dans la matiere (la terre resiste), et ne
+  // s'arrete QUE lorsque l'image se fige.
+  const spinSpeed = interpolate(frame, [0, 60, 100, 122], [3.4, 3.0, 1.6, 0], clampB);
+  const spinPhase = interpolate(frame, [0, 122], [0, 1], clampB);
+  const STRIPE_PERIOD = 30;
+  const stripeShift = ((frame * 2.6 * (spinSpeed > 0 ? 1 : 0)) % STRIPE_PERIOD);
+
+  // Propagation en 2 vagues, APRES l'entree en terre (f38) : les failles maitresses d'abord,
+  // les ramifications ensuite. C'est ce decalage qui fait lire une fracture qui SE PROPAGE.
+  const crackMain = interpolate(frame, [26, 96], [0, 1], clampB);   // failles maitresses
+  const crackBranch = interpolate(frame, [46, 110], [0, 1], clampB); // ramifications, achevees SUR "CREUSER" (f110)
   const dashMain = DASH * (1 - crackMain);
   const dashBranch = DASH * (1 - crackBranch);
 
   // Les eclats se posent en dernier, puis restent.
-  const debrisIn = interpolate(frame, [70, 104], [0, 1], clampB);
+  const debrisIn = interpolate(frame, [60, 100], [0, 1], clampB);
+
+  // ⭐ LUEUR VIVANTE DES FISSURES (demande Aziz 2026-08-16) : une fois tracees, elles ne doivent pas
+  // rester figees. Braises qui respirent — 2 sinusoides dephasees d'amplitude FAIBLE, jamais un
+  // clignotement ni un flash (interdits). Le glow suit la propagation : il n'existe pas avant elle.
+  // ⚠️ L'opacite SVG est PLAFONNEE a 1 : osciller autour de 1 (1 +/- 0.16) ne produit AUCUNE
+  // variation visible (mesure : 0 pixel change entre 2 frames). Il faut osciller SOUS 1.
+  const emberA = 0.74 + Math.sin(frame * 0.09) * 0.20 + Math.sin(frame * 0.043 + 1.9) * 0.06;
+  const emberB = 0.80 + Math.sin(frame * 0.075 + 2.7) * 0.16 + Math.sin(frame * 0.051 + 0.6) * 0.04;
+  const glowOn = interpolate(frame, [30, 84], [0, 1], clampB);
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#050c1a" }}>
       <svg width={W} height={H} viewBox="0 0 1920 1080" style={{ position: "absolute" }}>
         <defs>
+          <clipPath id="a5-bit-clip">
+            <path d="M848 382 C857 462 879 566 907 690 L956 932 L1006 690 C1034 562 1053 460 1058 382 Z"/>
+          </clipPath>
+          <clipPath id="a5-shell-clip">
+            <path d="M848 -28 L1062 -28 L1059 55 L1050 123 L1058 157 L1058 386 L848 386 L848 157 L856 123 L849 55 Z"/>
+          </clipPath>
+
         <linearGradient id="background-gradient" x1="0" y1="0" x2="0" y2="1080" gradientUnits="userSpaceOnUse">
         <stop offset="0" stopColor="#0d1f38"/>
         <stop offset="1" stopColor="#050c1a"/>
@@ -126,7 +171,7 @@ export const GazoducActe5Faille: React.FC = () => {
         <path d="M1267 388 L1297 441 L1340 493" fill="none" stroke="#050c1a" strokeOpacity="0.72" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" strokeDasharray={DASH} strokeDashoffset={dashMain}/>
         <path d="M1335 661 L1325 742 L1316 866" fill="none" stroke="#050c1a" strokeOpacity="0.72" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" strokeDasharray={DASH} strokeDashoffset={dashMain}/>
         </g>
-        <g id="crack-glow">
+        <g id="crack-glow" opacity={glowOn * emberA}>
         <path d="M744 244 C742 281 774 301 792 324 L819 353 L796 381 L751 425 L708 440 L680 474 L670 533 L617 602 L641 653 L613 697 L643 748 L594 825" fill="none" stroke="#FFC742" strokeOpacity="0.22" strokeWidth="58" strokeLinecap="round" strokeLinejoin="round" strokeDasharray={DASH} strokeDashoffset={dashMain}/>
         <path d="M744 244 C742 281 774 301 792 324 L819 353 L796 381 L751 425 L708 440 L680 474 L670 533 L617 602 L641 653 L613 697 L643 748 L594 825" fill="none" stroke="#FFC742" strokeOpacity="0.35" strokeWidth="30" strokeLinecap="round" strokeLinejoin="round" strokeDasharray={DASH} strokeDashoffset={dashMain}/>
         <path d="M1169 236 C1159 271 1139 309 1127 351 L1155 390 L1138 431 L1160 483 L1133 526 L1116 588 L1074 650 L1105 706 L1076 762 L1039 888 L1001 1080" fill="none" stroke="#FFC742" strokeOpacity="0.22" strokeWidth="60" strokeLinecap="round" strokeLinejoin="round" strokeDasharray={DASH} strokeDashoffset={dashMain}/>
@@ -138,7 +183,7 @@ export const GazoducActe5Faille: React.FC = () => {
         <path d="M1140 431 L1194 393 L1267 388 L1295 334 L1360 349 L1390 303 L1432 261" fill="none" stroke="#FFC742" strokeOpacity="0.18" strokeWidth="34" strokeLinecap="round" strokeLinejoin="round" strokeDasharray={DASH} strokeDashoffset={dashMain}/>
         <path d="M1117 588 L1169 699 L1269 708 L1335 661 L1383 742 L1490 758" fill="none" stroke="#FFC742" strokeOpacity="0.18" strokeWidth="36" strokeLinecap="round" strokeLinejoin="round" strokeDasharray={DASH} strokeDashoffset={dashMain}/>
         </g>
-        <g id="crack-lines">
+        <g id="crack-lines" opacity={interpolate(glowOn, [0, 1], [1, emberB], clampB)}>
         <path d="M744 244 C742 281 774 301 792 324 L819 353 L796 381 L751 425 L708 440 L680 474 L670 533 L617 602 L641 653 L613 697 L643 748 L594 825" fill="none" stroke="#FFC742" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" strokeDasharray={DASH} strokeDashoffset={dashMain}/>
         <path d="M744 244 C742 281 774 301 792 324 L819 353 L796 381 L751 425 L708 440 L680 474 L670 533 L617 602 L641 653 L613 697 L643 748 L594 825" fill="none" stroke="#ffe08a" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" strokeDasharray={DASH} strokeDashoffset={dashBranch}/>
         <path d="M1169 236 C1159 271 1139 309 1127 351 L1155 390 L1138 431 L1160 483 L1133 526 L1116 588 L1074 650 L1105 706 L1076 762 L1039 888 L1001 1080" fill="none" stroke="#FFC742" strokeWidth="13" strokeLinecap="round" strokeLinejoin="round" strokeDasharray={DASH} strokeDashoffset={dashMain}/>
@@ -194,6 +239,47 @@ export const GazoducActe5Faille: React.FC = () => {
           <path d="M956 932 L956 806" fill="none" stroke="#fff0a3" strokeOpacity="0.42" strokeWidth="3" strokeLinecap="round"/>
           <path d="M907 690 C879 566 857 462 848 382" fill="none" stroke="#fff0a3" strokeOpacity="0.23" strokeWidth="4" strokeLinecap="round"/>
           </g>
+          </g>
+          {/* ROTATION DE LA MECHE — stries helicoidales qui defilent dans la silhouette.
+              En SVG plat on ne peut pas faire tourner un cone en 3D : la convention (validee sur le
+              plan Fable de cet acte) est de faire DEFILER des obliques a l'interieur de la forme.
+              Confine par clipPath : la silhouette d'origine de GPT-5.5 reste intacte. */}
+          <g id="drill-spin" clipPath="url(#a5-bit-clip)" opacity={0.55}>
+            {/* 22 stries : la pointe du dessin GPT descend jusqu'a y=932, il en faut assez pour
+                couvrir TOUTE la meche jusqu'au bout (defaut mesure : elles s'arretaient a ~720,
+                la pointe paraissait immobile alors que le corps tournait). */}
+            {Array.from({ length: 22 }).map((_, i) => {
+              const y = 340 + i * STRIPE_PERIOD + stripeShift;
+              return (
+                <line
+                  key={`bit${i}`}
+                  x1={820}
+                  y1={y}
+                  x2={1090}
+                  y2={y - 34}
+                  stroke="#8a6410"
+                  strokeWidth={interpolate(y, [340, 932], [9, 4], clampB)}
+                  opacity={interpolate(y, [340, 700, 932], [0.75, 0.7, 0.5], clampB)}
+                />
+              );
+            })}
+          </g>
+          <g id="drill-shell-spin" clipPath="url(#a5-shell-clip)" opacity={0.32}>
+            {Array.from({ length: 10 }).map((_, i) => {
+              const y = -40 + i * STRIPE_PERIOD + stripeShift;
+              return (
+                <line
+                  key={`shell${i}`}
+                  x1={830}
+                  y1={y}
+                  x2={1080}
+                  y2={y - 30}
+                  stroke="#8a6410"
+                  strokeWidth={7}
+                  opacity={0.6}
+                />
+              );
+            })}
           </g>
         </g>
       </svg>

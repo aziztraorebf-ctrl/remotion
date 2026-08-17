@@ -1,0 +1,12 @@
+integrated_multimodal_description:
+
+[Shot 1] Flat vector technical illustration on a dark navy background, thin cyan outlines, no shading, no texture — the style of <Picture 1> is fully preserved for the entire shot. Wide symmetrical framing, locked camera, no zoom and no pan. Two identical industrial plumbing taps face each other, one at the far left and one at the far right, each mounted on a horizontal pipe running off frame. Between them, dead centre, a single human hand drawn as a thin cyan outline hovers in mid-air, fingers extended, palm facing down, reaching toward neither tap. The hand drifts very slightly and slowly in place, hesitating between the two taps — it never touches either of them, it never closes, it never grips. The fingers stay extended throughout. Both taps remain perfectly still and equally lit for the entire shot: nothing distinguishes one from the other. The background grid stays static. The motion is minimal, slow and continuous, like a held breath.
+
+overall_soundscape:
+A low continuous room tone with a faint metallic resonance, as if inside a large empty pumping station. A distant, very soft hum of pressurised pipes. No footsteps, no voices, no mechanical clicks.
+
+non_diegetic_music:
+Sparse sustained synth pad, very slow, minor key, no percussion, no vocals. Tense and suspended, holding on an unresolved chord.
+
+negative_keywords:
+hand grips, hand touches tap, fingers close, fist, camera zoom, camera pan, extra hands, extra fingers, face, person, text, watermark, photorealistic, 3d render, shading
