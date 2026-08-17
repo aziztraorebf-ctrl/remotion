@@ -43,6 +43,45 @@ load_dotenv(ROOT / ".env")
 API_URL = "https://api.elevenlabs.io/v1/forced-alignment"
 
 
+def detect_stuck_timestamps(words: list) -> str | None:
+    """Detecte le bug 'timestamps figes' de l'API forced-alignment (cf memory/tools/elevenlabs.md).
+
+    Symptome : l'API repond 200 avec une loss BASSE (donc les garde-fous existants ne voient rien),
+    mais des mots consecutifs partagent le meme start/end. Les reperes tombent alors tous sur la
+    meme frame. Deja subi en production : src/projects/souverain/senegal-petrole-gaz/beats/Beat4.tsx
+    ("Le forced-alignment v1 a des timestamps bloques sur cette phrase").
+
+    ATTENTION au critere : la memoire proposait `words[0].start == words[1].start` — c'est un
+    FAUX POSITIF verifie. Deux alignements SAINS du repo (memory/episodes/warmap-sahel/audio-fixes/
+    aes-v6-acte1 et -actes234) ont 3+ starts identiques en tete, simplement parce que des en-tetes
+    markdown non retires ("### PARTIE 0 —") sont tasses en une fraction de seconde. Leur alignement
+    est bon a 97-98%. On raisonne donc sur la MASSE (ratio de starts distincts, plus longue serie
+    consecutive, amplitude totale), jamais sur les 2-3 premiers mots.
+
+    Seuils valides sur les 23 alignments reels du repo : 0 faux positif.
+    Retourne un message d'alerte, ou None si l'alignement est sain.
+    """
+    n = len(words)
+    if n < 3:
+        return None
+    starts = [w["start"] for w in words]
+    ratio_uniq = len(set(starts)) / n
+    longest = cur = 1
+    for i in range(1, n):
+        cur = cur + 1 if starts[i] == starts[i - 1] else 1
+        longest = max(longest, cur)
+    span = words[-1]["end"] - words[0]["start"]
+
+    if span <= 0.01:
+        return f"l'alignement couvre {span:.3f}s au total — tous les mots sont sur le meme instant"
+    if ratio_uniq < 0.5:
+        return (f"seulement {ratio_uniq * 100:.0f}% des mots ont un timestamp distinct "
+                f"({len(set(starts))}/{n})")
+    if longest >= max(10, 0.5 * n):
+        return f"{longest} mots consecutifs partagent le meme timestamp"
+    return None
+
+
 def norm(s: str) -> str:
     """Comparaison tolerante : sans casse, sans ponctuation, SANS ACCENTS.
     Les accents doivent sauter : on tape les reperes au terminal ("devaluer") alors que la VO
@@ -95,6 +134,25 @@ def main() -> int:
 
     loss = result.get("loss", "n/a")
     end = words[-1]["end"]
+
+    # Bug 'timestamps figes' : l'API repond 200 avec une loss basse mais un alignement inutilisable.
+    # A verifier AVANT d'annoncer OK, sinon on grave des frames fausses dans un timing.ts.
+    stuck = detect_stuck_timestamps(words)
+    if stuck:
+        print(f"ERREUR : alignement CORROMPU (timestamps figes) — {stuck}")
+        print(f"  loss={loss} (basse = trompeur, elle ne detecte PAS ce bug)")
+        print(f"  Reponse brute conservee pour inspection : {out}")
+        print()
+        print("  ⛔ NE PAS deriver de frames de cet alignement — elles tomberaient toutes au meme endroit.")
+        print("  Il n'existe PAS d'endpoint /v2/forced-alignment de secours : verifie 2026-08-17,")
+        print("  api.elevenlabs.io/v2/forced-alignment repond 404 (alors que /v2/voices repond bien).")
+        print("  Le contournement note dans memory/tools/elevenlabs.md est donc INAPPLICABLE.")
+        print("  Contournements reels, par ordre :")
+        print("    1. relancer — le bug est intermittent sur un meme MP3")
+        print("    2. re-encoder l'audio (ffmpeg -i in.mp3 -c:a libmp3lame -ar 44100 out.mp3) puis relancer")
+        print("    3. decouper la VO en segments plus courts et aligner segment par segment")
+        return 1
+
     print(f"OK {len(words)} mots · loss={loss} -> {out.name}")
     print(f"FIN VO : {end:.2f}s = frame {round(end * a.fps)}")
     if isinstance(loss, (int, float)) and loss > 0.25:

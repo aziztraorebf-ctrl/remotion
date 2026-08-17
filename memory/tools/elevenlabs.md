@@ -404,13 +404,34 @@ APRES : Audio -> Forced Alignment (duree + timestamps en 1 appel) -> storyboarde
 
 **L'agent audio-director DOIT utiliser Forced Alignment apres chaque generation TTS.**
 
-### Bug Forced Alignment v1 — timestamps bloques (2026-05-14)
+### Bug Forced Alignment v1 — timestamps bloques (2026-05-14, REMEDE CORRIGE 2026-08-17)
 
-**Symptome** : tous les timestamps retournes sont identiques (ex: `start: 6.56, end: 6.56` pour chaque mot). L'audio est correct mais l'alignement est corrompu.
+**Symptome** : tous les timestamps retournes sont identiques (ex: `start: 6.56, end: 6.56` pour chaque mot). L'audio est correct mais l'alignement est corrompu. Le symptome est REEL et reconnu en amont (elevenlabs-python#607, "timestamp stagnation").
 
-**Cause** : endpoint v1 (`/v1/forced-alignment`) peut retourner des resultats defectueux sur certains fichiers MP3.
+**Cause** : endpoint v1 (`/v1/forced-alignment`) peut retourner des resultats defectueux sur certains fichiers MP3. Le bug est INTERMITTENT.
 
-**Solution** : regenerer via endpoint v2 (`/v2/forced-alignment`). Le v2 retourne des timestamps corrects.
+⛔⛔ **LE REMEDE ECRIT ICI DEPUIS MAI ETAIT FAUX — `/v2/forced-alignment` N'EXISTE PAS.**
+Verifie par sondage reseau le 2026-08-17 : `/v1/forced-alignment` → 422 (existe) · `/v2/forced-alignment`
+→ **404** · `/v2/voices` en controle → 401 (donc `/v2/` existe bien chez ElevenLabs, le test distingue
+"route absente" de "cle invalide"). Doc officielle et SDK Python ne connaissent que `v1`.
+**Basculer sur v2 quand v1 deraille transformerait un resultat degrade en PANNE DURE** — sur le seul
+alignement qui marche encore (quota OpenAI epuise depuis 2026-07-25). Ne JAMAIS re-tenter ce remede.
+
+⛔ **Le critere de detection ecrit ici etait AUSSI faux** : `words[0].start == words[1].start == words[2].start`
+declenche a tort sur 2 alignements SAINS du repo (`aes-v6-acte1`, `aes-v6-actes234`) — des en-tetes markdown
+non retires (`### PARTIE 0 —`) sont tasses en tete alors que l'alignement est bon a 97-98 %.
+
+✅ **CE QU'IL FAUT FAIRE** : `scripts/tools/forced-align.py` detecte desormais la corruption sur la MASSE
+(span ≈ 0 · moins de 50 % de starts distincts · ≥10 mots consecutifs figes) et sort en erreur au lieu
+d'afficher un faux `OK`. Non-regression verifiee sur les 23 `.alignment.json` reels du repo (23/23 identiques).
+**Contournements reels** : (1) relancer — le bug est intermittent ; (2) re-encoder l'audio en libmp3lame ;
+(3) decouper la VO en segments plus courts.
+⚠️ Avant ce fix, une reponse corrompue affichait `OK 6 mots · loss=0.12` et sortait en succes — le garde-fou
+`loss > 0.25` ne voit rien (la loss reste basse). C'est ainsi que `Beat4.tsx` (Senegal) a herite d'un mauvais
+timing, cicatrice encore en commentaire dans le fichier.
+
+~~**Solution** : regenerer via endpoint v2 (`/v2/forced-alignment`).~~ ⛔ PERIME, route inexistante.
+Le code ci-dessous est conserve pour memoire du symptome, PAS comme remede :
 
 ```python
 # v1 (peut etre corrompu)
@@ -421,16 +442,15 @@ response = requests.post(
     data={"text": plain_text}
 )
 
-# v2 (si v1 corrompu)
-response = requests.post(
-    "https://api.elevenlabs.io/v2/forced-alignment",
-    headers={"xi-api-key": ELEVENLABS_API_KEY},
-    files={"file": open(audio_path, "rb")},
-    data={"text": plain_text}
-)
+# ⛔⛔ NE PAS COPIER CE BLOC — /v2/forced-alignment renvoie 404, la route n'existe pas.
+# Conserve uniquement pour qu'on reconnaisse le faux remede s'il ressurgit ailleurs.
+# response = requests.post("https://api.elevenlabs.io/v2/forced-alignment", ...)  # 404
 ```
 
-**Detection automatique du bug** : si `words[0].start == words[1].start == words[2].start` → timestamps bloques → passer en v2 immediatement.
+**Detection automatique du bug** : ⛔ le critere `words[0].start == words[1].start == words[2].start` est un
+FAUX POSITIF (declenche sur 2 alignements sains du repo, cf. plus haut). La detection correcte raisonne sur la
+MASSE et vit desormais dans `scripts/tools/forced-align.py` (`detect_stuck_timestamps`) — le script sort en
+erreur tout seul, il n'y a plus rien a faire manuellement.
 
 ### Whisper — regles d'utilisation (2026-05-14)
 
