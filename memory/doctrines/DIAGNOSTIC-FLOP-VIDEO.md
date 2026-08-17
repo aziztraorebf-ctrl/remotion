@@ -3,6 +3,10 @@
 > Source de vérité pour "une vidéo publiée ne décolle pas, pourquoi ?". Prouvé sur War-Map Sahel AES
 > (2026-08-06) : 3 causes indépendantes coexistaient sur le même flop, aucune n'excluait les autres.
 
+> ⭐ **Doctrine soeur — `memory/doctrines/PACKAGING-YOUTUBE.md`** : elle decide le packaging
+> (titre/miniature/description/engagement) AVANT publication ; ce fichier-ci mesure APRES et dit
+> laquelle des 4 dimensions a lache. Toujours enchainer les deux, ne pas les fusionner.
+
 ## LE TRIAGE — 4 dimensions indépendantes à scorer SÉPARÉMENT avant de conclure
 
 Ne JAMAIS s'arrêter au premier problème repéré. Sur l'AES : titre vidIQ 81/100 (bon), miniature vidIQ
