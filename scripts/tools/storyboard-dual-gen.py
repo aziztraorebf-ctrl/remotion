@@ -97,18 +97,50 @@ def gen_gemini(prompt: str, refs: list, out: Path, edit: bool = False):
     r = requests.post(GEMINI_URL, json=payload, timeout=180)
     if r.status_code != 200:
         print(f"  [gemini] ERROR {r.status_code}: {r.text[:200]}"); return
+    # ⛔ 2 BUGS CORRIGES LE 2026-08-17 (diagnostic : 36 appels API reels) :
+    #  1. L'ancien code faisait `return` sur la 1re image. Or Gemini renvoie SOUVENT 3 images
+    #     (1 par concept, entrelacees de texte) — on jetait 2 planches sur 3, silencieusement.
+    #     Mesure : `parts=7 img=3` sur un appel typique. On ecrit maintenant TOUTES les images
+    #     (out.png, out-2.png, out-3.png...).
+    #  2. Le modele renvoie du image/JPEG mais on ecrivait toujours en `.png` -> fichier mal
+    #     etiquete (gotcha "bandes vertes/jaunes" deja documente dans memory/tools/gemini.md,
+    #     fixe dans gemini-genimg-ipv4.sh mais jamais retro-porte ici). On choisit desormais
+    #     l'extension d'apres les MAGIC BYTES reels, jamais d'apres le nom demande.
+    written = []
     for c in r.json().get("candidates", []):
         for p in c.get("content", {}).get("parts", []):
             inl = p.get("inlineData") or p.get("inline_data")
-            if inl and inl.get("data"):
-                out.write_bytes(base64.b64decode(inl["data"])); print(f"  [gemini] -> {out.name} ({out.stat().st_size//1024}KB)"); return
-    print("  [gemini] no image")
+            if not (inl and inl.get("data")):
+                continue
+            raw = base64.b64decode(inl["data"])
+            ext = ".jpg" if raw[:3] == b"\xff\xd8\xff" else ".png"
+            dest = out.with_suffix(ext) if not written else out.with_name(f"{out.stem}-{len(written)+1}{ext}")
+            dest.write_bytes(raw)
+            written.append(dest)
+            print(f"  [gemini] -> {dest.name} ({dest.stat().st_size//1024}KB)")
+    if written:
+        return written[0]
+    # Diagnostic : sans ca on perdait la raison de l'echec. Le texte renvoye dit presque toujours
+    # pourquoi (le modele a redige au lieu de dessiner -> revoir la DERNIERE LIGNE du brief, qui
+    # doit interdire la prose : cf memory/fiches/FICHE-STORYBOARD.md).
+    data = r.json()
+    for c in data.get("candidates", []):
+        fr = c.get("finishReason")
+        txt = "".join(p.get("text", "") for p in c.get("content", {}).get("parts", []))
+        print(f"  [gemini] no image (finishReason={fr}, {len(txt)} car. de texte)")
+        if txt:
+            print(f"  [gemini] debut du texte recu : {txt[:300]}...")
+    return None
 
 
 def gen_gpt(prompt: str, out: Path):
     # prompt = EXACTEMENT ce qui part au modele (text-to-image, aucun registre injecte).
     # Rappel biais GPT : mettre le FOND en 1ere phrase + formule negatif si fond clair voulu.
-    payload = {"prompt": prompt, "image_size": "1536x1024", "num_images": 1}
+    # `quality` (low|medium|high, defaut "auto") etait accepte par fal.ai mais jamais envoye.
+    # ⚠️ Gain modeste et NON prouve isolement (2026-08-17) : sur une planche chargee de texte il ne
+    # rattrape rien — la vraie variable est la quantite de texte demandee au modele. On l'envoie
+    # quand meme, c'est gratuit.
+    payload = {"prompt": prompt, "image_size": "1536x1024", "num_images": 1, "quality": "high"}
     r = requests.post(FAL_URL, headers={"Authorization": f"Key {FAL_KEY}", "Content-Type": "application/json"}, json=payload, timeout=240)
     if r.status_code != 200:
         print(f"  [gpt] ERROR {r.status_code}: {r.text[:200]}"); return

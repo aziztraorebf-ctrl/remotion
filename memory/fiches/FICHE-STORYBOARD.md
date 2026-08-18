@@ -53,10 +53,44 @@ par le Sahara alors qu'il **est** côtier : erreur factuelle + cohérence de sé
 ⭐ Après tout appel comparatif, TOUJOURS proposer le 2e appel génératif (« comment on corrige, avec notre
 arsenal ? ») — c'est lui qui produit la valeur actionnable (`memory/doctrines/DA-BRIEF-GATE.md` § PATTERN 2 APPELS).
 
+## ⛔⛔ LA DERNIÈRE LIGNE DU BRIEF DÉCIDE SI TU REÇOIS UNE IMAGE (prouvé 2026-08-17, 36 appels réels)
+
+> Cause racine de ~50 % d'échecs de storyboard, **diagnostiquée 2× et jamais appliquée** : le gotcha
+> existait depuis le 2026-08-14 dans `memory/tools/openrouter-gpt-image-et-breakdown.md`, mais rien
+> ne l'ouvrait au moment d'écrire un brief. C'est pour ça qu'il est ICI maintenant.
+
+⛔ **CONCEVOIR et DESSINER sont 2 compétences — ne JAMAIS les demander au même appel.**
+Un appel qui demande « les images **+ ton analyse écrite** » laisse le modèle choisir la sortie la
+moins chère : Gemini écrit 8 000 caractères de markdown et 0 image ; GPT dessine une PAGE DE TEXTE
+(vignettes à 120 px, titres corrompus « Lee routes croisées », « CONCEEPT », 3e concept hors cadre).
+
+**Le tail décide, et il n'est PAS le même selon le modèle** (⚠️ le fix de l'un aggrave l'autre) :
+- **Gemini image** — mesuré **1/6 → 3/3** en ne changeant QUE la dernière ligne. Il faut la négation
+  explicite : `DELIVERABLE — GENERATE AN IMAGE (not a text description). […] Do not reply with prose.
+  Output the image now.` Une formulation molle (« GENERATE THE STORYBOARD IMAGES NOW ») ne suffit pas : 1/4.
+  ⛔ `responseModalities:["image"]` SEUL n'est pas le fix — testé, ça dégrade (`finishReason=NO_IMAGE`,
+  `parts=[]`, plus aucun diagnostic possible). Garder `["image","text"]`.
+- **GPT image** — la corruption du texte est **proportionnelle à la quantité de texte demandée**.
+  Réduit aux SEULS timecodes → « 0,0s » « 3,5s », zéro faute. Lui demander ses notes DANS l'image →
+  le pire résultat mesuré. ⛔ Ne jamais lui faire écrire d'analyse dans une planche.
+- **Contenu coupé au bord** : ajouter `Leave a clear empty margin of at least 5% on ALL FOUR sides —
+  nothing may touch or be cut off by the edge.` (sans : coupé ; avec : propre).
+
+✅ **Méthode en 2 temps (défaut à partir de maintenant)** — `scripts/tools/storyboard-concepts-texte.py` :
+1. **CONCEPTION en TEXTE**, N modèles en parallèle → débloque **Kimi** (meilleure vision artistique)
+   et **Grok** (instinct accroche), jusque-là exclus parce qu'ils ne dessinent pas. Chacun rend ses
+   concepts + la **description case par case** du concept qu'il défend, prête à dessiner.
+2. **CHOIX HUMAIN** (Aziz tranche) — ⛔ pas forcément le concept que le modèle défend.
+3. **DESSIN** : 1 concept = 1 planche, 4 cases horizontales, **timecodes comme seul texte**.
+   ⛔ Ne PAS faire 1 appel par case : le problème était la charge de TEXTE, pas le nombre de cases.
+
 ## INTERDITS — erreurs déjà payées
 ⛔ **Coder avant validation de la direction.** Le modèle PROPOSE, Aziz valide, PUIS breakdown (prouvé 4×).
 ⛔ **1 image = 1 concept.** Un montage 3-concepts en 1024×1024 est illisible — et vérifier la résolution
 RÉELLE reçue (`PIL Image.size`) avant de conclure à un échec de contenu.
+⛔ **`storyboard-dual-gen.py` perdait 2 images sur 3** (retour au 1er `inlineData` alors que Gemini en
+renvoie souvent 3) et écrivait du **JPEG dans un `.png`** — corrigé le 2026-08-17. Si tu retrouves ce
+motif ailleurs : boucler sur toutes les parts, écrire l'extension d'après les magic bytes.
 ⛔ **Un DA-brief textuel ne remplace pas un storyboard IMAGE** (rendu Acte 3 plat malgré un brief écrit soigné).
 ⛔ **Le breakdown TRANSCRIT, il ne CRÉE pas** — et le demander au MODÈLE QUI A GÉNÉRÉ L'IMAGE, pas à Claude
 qui interprète (un breakdown écrit par Claude a réintroduit un widget HUD déjà interdit → code rejeté).

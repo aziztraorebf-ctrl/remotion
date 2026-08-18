@@ -1,0 +1,131 @@
+You are a senior motion designer / storyboard artist working on a premium French-language
+geopolitics documentary channel (register: Vox, Johnny Harris, PolyMatter, Bloomberg Originals).
+
+Your task: propose THREE DISTINCT visual concepts for one 17.3-second beat, then say which one you
+defend and why. Do not illustrate an idea we give you — we are deliberately not giving you one.
+
+========================================================================
+THE BEAT — what the voice says (French, this is the locked audio)
+========================================================================
+"C'est le paradoxe de cette course. Le Maroc mise sur un tracé pacifié mais suspendu à un accord de
+financement international. L'Algérie mise sur ses propres fonds, mais va devoir construire et
+protéger une infrastructure géante en pleine zone de conflit."
+
+Literal translation for your understanding:
+"That is the paradox of this race. Morocco is betting on a PACIFIED route, but one SUSPENDED on an
+international financing agreement. Algeria is betting on ITS OWN MONEY, but will have to build and
+protect a giant piece of infrastructure IN THE MIDDLE OF A CONFLICT ZONE."
+
+Timing that is LOCKED (derived from the real audio, do not renegotiate):
+- 0.0s -> 7.8s   : the Morocco clause
+- 7.8s -> 17.3s  : the Algeria clause
+- Total: 17.3 s. This is the FINAL beat of Act 3 — it closes the act.
+
+The narrative content is a TWO-AXIS paradox. Each country has a strength AND a matching weakness,
+and the two are mirror images of each other:
+- Morocco : SECURE route (strength) / financing NOT secured, suspended (weakness)
+- Algeria : financing SECURED, its own money (strength) / route NOT secure, conflict zone (weakness)
+The whole point of the beat is that neither country has both. Whatever you propose must let a viewer
+FEEL that crossed symmetry without being told it in writing.
+
+========================================================================
+IMAGE 1 (attached) — OUR CURRENT DISPOSITIF, STRIPPED
+========================================================================
+A 5-panel contact sheet of what we currently have, after we removed two things our director rejected:
+ (a) four labelled progress bars ("SECURITY - PACIFIED", "FINANCING - SUSPENDED", "AUTONOMY - OWN
+     FUNDS", "SECURITY - CONFLICT ZONE"). Rejected because a bar filling to 52% represents nothing
+     real — financing and security are not quantities that fill a gauge. It read as a PowerPoint slide.
+ (b) a screen-shake on the Algerian side meant to signal "danger". Rejected as gimmicky: a territory
+     does not shake.
+
+What you see in IMAGE 1 is therefore DELIBERATELY INCOMPLETE. With the bars gone, two maps sit side
+by side and the paradox is no longer said at all. That gap IS the problem you are being asked to solve.
+
+What we want to KEEP from it (it works, and it is why we chose this over an alternative):
+- The SPLIT NAMES THE SUBJECT BY THE FRAME. When the voice says "Morocco", a panel appears and the
+  viewer instantly knows what they are looking at. We tested a version with both routes on one shared
+  map and it failed precisely here: two lines coexisted and nothing said which was which.
+You are NOT required to keep the split. If you can name the subject as unambiguously by another
+means, propose it — but if you drop the split, your concept must solve the attribution problem.
+
+========================================================================
+IMAGE 2 (attached) — OUR REAL MAP, at production quality
+========================================================================
+This is an actual frame from the finished Act 4 of the same episode. It shows the material you are
+actually working with: flat vector map, dark navy radial background, country name plates, glowing
+routes, active countries lifted by luminance. THIS is our visual standard.
+Note it is a PURE MAP with no framed inset panel — we attach it on purpose, so that you do not
+assume every idea must arrive inside a bordered card.
+
+Palette (use it, do not invent another):
+  background #0d1f38 -> #050c1a (radial)   inactive land #16304f    borders #58809f
+  active country #2E9FD4 / #7FD8FF         Morocco route gold #FFC742
+  Algeria route cyan #00C4FF               alert/conflict red #FF4B45
+
+========================================================================
+MATERIAL CONSTRAINTS — what our images are made of
+========================================================================
+Everything is coded: React + Remotion + D3 + SVG, frame-driven, real GeoJSON geography.
+ALLOWED: flat fills, simple linear/radial gradients, strokes, dash patterns, opacity, blur/glow,
+masks and clipping, camera pan/zoom on a real projection, elements drawing themselves on
+(strokeDashoffset), staggered reveals.
+FORBIDDEN — these have cost us before and are NOT codable in our stack:
+  - 3D, extrusion, volumetric lighting, bevels, metallic or glassy materials
+  - photoreal textures, raster photographs, lens effects
+  - perspective interiors, crowds, detailed human figures
+  - anything that would need After Effects / GeoLayers
+Geography must stay REAL (no invented coastlines). In your storyboard, approximate geography is fine
+— it is a direction, not the deliverable.
+
+⛔ Do NOT self-assess feasibility ("100% codable in SVG"). Instead, for EACH panel, name THE SINGLE
+VISUAL GESTURE that carries it ("the territory fills", "the outline hardens", "the colour drains
+away", "the camera pulls back to reveal"). If a panel needs three gestures to describe, it is too
+expensive — simplify it before you draw it.
+
+========================================================================
+WHICH ENGINE? — this beat does NOT have to stay on the map
+========================================================================
+We work with six visual engines. We are listing them because a beat that stays on the map by default
+tends to repeat the beat before it — and the two preceding segments of this act are already map-based
+(a route being drawn) and a location scene (an airport at night). Any of these is legitimate here:
+
+ 1. MAP (D3 / real geography) — spatial and causal relations, territory, routes.
+ 2. GEOMETRIC DATA-VIZ (D3) — quantity, time, proportion. Not a map: axes, curves, volumes.
+    (Precedent in this same episode: Act 4 left the map entirely for a time-axis and two stacked
+    volumes, and it was the right call because that beat was about time and money, not space.)
+ 3. OBJECT / METAPHOR (drawn SVG) — one built thing that carries the idea: a valve, a lever, a
+    ledger, a scale, a lock, a pipe in cross-section.
+ 4. FIGURE (stylised stick-figure actors) — used sparingly, for human scale.
+ 5. FILMED MATTER (short looping stylised clips, flat-vector rendered) — texture, ground truth.
+ 6. ⭐ THE CUT / EDITING — you are allowed to LEAVE the map, cut away, alternate between two
+    registers, or hold on something else entirely and come back.
+
+Say explicitly which engine each concept uses. At least ONE of your three concepts must NOT be
+map-based — we want to see what this paradox looks like when it is not two territories side by side.
+
+========================================================================
+WHAT WE ARE ASKING
+========================================================================
+Ambition is NOT constrained. Only the material is. We would rather receive a bold proposal in flat
+vector than a safe one. Specifically, we are tired of "flat routes that do not mean much" — if a
+concept wants to pull the camera way back, change scale, reframe the whole continent, break the
+symmetry, leave the map, or hold on a single detail, propose it.
+
+For EACH of your 3 concepts give us:
+ 1. A NAME and the core idea in one sentence.
+ 2. A 4-to-6 PANEL storyboard covering the full 17.3 s, with a timecode on each panel.
+    Draw it. One clear image per panel, evolution from panel to panel (beginning -> end).
+ 3. For each panel: THE SINGLE VISUAL GESTURE that carries it.
+ 4. How the concept expresses the CROSSED symmetry (strength/weakness on both sides) WITHOUT
+    explanatory text labels on screen.
+ 5. What holds the viewer's attention across the full 17 seconds — where the beat would go flat if
+    you did nothing, and what you do there.
+
+Then: state which of the three you would defend, and why.
+
+⛔ HARD RULE ON TEXT: this beat must land WITHOUT status labels. Country name plates (MAROC, ALGÉRIE)
+are allowed — they identify, they do not explain. Anything that spells out the argument
+("PACIFIED", "SUSPENDED", "CONFLICT ZONE", percentages, gauges) is banned: the voice already says it,
+and repeating it on screen is what we just removed.
+
+Output: the storyboard images, plus your written analysis in French.

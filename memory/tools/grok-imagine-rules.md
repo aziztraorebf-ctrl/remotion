@@ -1,4 +1,9 @@
 # Grok Imagine Video 1.5 — Regles de Prompt & Gotchas
+
+> ⚠️ **CETTE FICHE NE COUVRE QUE LA VIDÉO** (`grok-imagine-video*`). Grok génère AUSSI des
+> **IMAGES** — 3 modèles, endpoint `/v1/images/generations`, 0,02-0,05 $/image. On l'a ignoré
+> pendant des mois et Grok était exclu de nos storyboards pour rien. Détail, prix et
+> comparatif vs GPT-image : `memory/tools/grok.md` § « Grok GÉNÈRE DES IMAGES ».
 > Consulter AVANT d'ecrire un prompt Grok Imagine. Regles marquees [PROUVE] = nos tests API du 2026-07-04.
 > Regles marquees [RAPPORTE] = recherche Tavily/communaute, non teste par nous — verifier avant de s'y fier a 100%.
 > Mise a jour : 2026-07-04 (session R&D pecheur, 4 tests API + recherche approfondie)

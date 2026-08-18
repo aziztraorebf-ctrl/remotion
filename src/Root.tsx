@@ -50,6 +50,7 @@ import { ProtoTroisGisementsInserts, PROTO_TROIS_GISEMENTS_FRAMES } from "./proj
 import { PortDecorStatique } from "./projects/_rnd/svg-scenes/PortDecorStatique";
 import { LevierPouvoirFable } from "./projects/_rnd/svg-scenes/LevierPouvoirFable";
 import { GazoducAeroportFable5Test, GAZODUC_AEROPORT_FABLE5_FRAMES } from "./projects/_rnd/svg-scenes/GazoducAeroportFable5Test";
+import { GazoducActe3SplitDepouille, GAZODUC_A3_SPLIT_DEPOUILLE_FRAMES } from "./projects/_rnd/svg-scenes/GazoducActe3SplitDepouille";
 import { Acte5NegocierCreuserFable } from "./projects/_rnd/svg-scenes/Acte5NegocierCreuserFable";
 import { Acte5FailleFinaleFable } from "./projects/_rnd/svg-scenes/Acte5FailleFinaleFable";
 import { PortVivant16x9, PORT_VIVANT_FRAMES } from "./projects/_rnd/svg-scenes/PortVivant16x9";
@@ -87,6 +88,7 @@ import { GazoducActe5Vannes } from "./projects/souverain/gazoduc-aagp-tsgp/Gazod
 import { GAZODUC_A4_SEGA_FRAMES, GAZODUC_A4_SEGB_FRAMES, GAZODUC_A4_SEGC_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe4Timing";
 import { GazoducActe3InsertSecurite } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3InsertSecurite";
 import { GazoducActe3InsertParadoxe } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3InsertParadoxe";
+import { GazoducActe3ParadoxeDivergence } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3ParadoxeDivergence";
 import { GazoducActe3Montage, GAZODUC_A3_MONTAGE_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3Montage";
 import { GAZODUC_A3_CARTE_TSGP_FRAMES, GAZODUC_A3_INSERT_SECURITE_FRAMES, GAZODUC_A3_INSERT_PARADOXE_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3Timing";
 import { ProtoA2CameraProche, ProtoA2VoisinsVisibles, ProtoA2Mix, ProtoA2CameraContinueSurMix, ProtoA2CameraContinue13Jalons, PROTO_A2_COMPARE_FRAMES, PROTO_A2_13JALONS_FRAMES } from "./projects/_rnd/d3-16x9/ProtoGazoducA2CameraVsVoisins";
@@ -1336,6 +1338,18 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="D3-Gazoduc-Acte3-InsertParadoxe"
           component={GazoducActe3InsertParadoxe}
+          durationInFrames={GAZODUC_A3_INSERT_PARADOXE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Gazoduc Acte 3 — SEGMENT C, OPTION B soumise a arbitrage (2026-08-17) : le paradoxe dit
+            par l'ETAT DES LIGNES (Maroc dore stable / Algerie rouge casse + boucliers) au lieu des
+            jauges etiquetees du split-screen ci-dessus. Palette sombre PAL_GPT pour etre comparable
+            aux Actes 4/5. ⛔ Ne PAS supprimer l'option A avant la decision d'Aziz. */}
+        <Composition
+          id="D3-Gazoduc-Acte3-ParadoxeDivergence"
+          component={GazoducActe3ParadoxeDivergence}
           durationInFrames={GAZODUC_A3_INSERT_PARADOXE_FRAMES}
           fps={30}
           width={1920}
@@ -3024,6 +3038,10 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-WhiteboardTest" component={WhiteboardTest} durationInFrames={200} fps={30} width={1080} height={1920} />
         <Composition id="RND-FoyerColorTest" component={FoyerColorTest} durationInFrames={180} fps={30} width={1080} height={1920} />
         <Composition id="RND-GazoducAeroportFable5Test" component={GazoducAeroportFable5Test} durationInFrames={GAZODUC_AEROPORT_FABLE5_FRAMES} fps={30} width={1920} height={1080} />
+        {/* MATERIAU DE BRIEF (2026-08-17) — split-screen Acte 3 Segment C depouille de ses 4 barres
+            etiquetees et de son tremblement (verdict Aziz). Sert de reference jointe au brief de
+            storyboard : montre le dispositif NU, volontairement incomplet. ⛔ Jamais monte. */}
+        <Composition id="RND-GazoducActe3SplitDepouille" component={GazoducActe3SplitDepouille} durationInFrames={GAZODUC_A3_SPLIT_DEPOUILLE_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-GazoducH3IntegrationTest" component={GazoducH3IntegrationTest} durationInFrames={GAZODUC_H3_INTEGRATION_TEST_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-GazoducH3IntegrationTestReal" component={GazoducH3IntegrationTestReal} durationInFrames={GAZODUC_H3_INTEGRATION_TEST_REAL_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-Acte5-NegocierCreuser-Fable" component={Acte5NegocierCreuserFable} durationInFrames={450} fps={30} width={1920} height={1080} />
