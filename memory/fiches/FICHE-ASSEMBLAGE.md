@@ -7,6 +7,19 @@
 - **D3 / SVG pur → `npx remotion render` local classique.** ⛔ `scripts/tools/render-on-vercel.py` = POC ABANDONNÉ, ne JAMAIS l'utiliser (repo Vercel figé au 2026-03-27, 3 compos de démo, ne verra jamais nos compositions).
 - **Netteté = `scale=1` uniquement.** Un render 0.4–0.5 est flou par construction et fait douter à tort. Avant de conclure « flou/moche » → 1 frame full HD.
 - **Render multi-segments** (`--frames=X-Y`) : `python3 scripts/tools/check-frame-continuity.py 2055-2939 3196-5699 …` AVANT (bornes prévues) ET APRÈS (bornes réelles). Coût de ne pas l'avoir fait : War-Map Sahel 2026-07-01, trous entre segments, narration sautée, détecté après livraison.
+- ⛔⛔ **`<OffthreadVideo>` SANS `<Sequence>` lit la frame ABSOLUE de la composition.** Posé à la frame
+  1292 d'un plan, un clip de 154 frames est fini depuis longtemps et affiche sa **dernière image FIGÉE** —
+  sans erreur, sans warning, une image plausible et immobile qu'on confond avec un gel de rendu.
+  → toujours l'envelopper : `<Sequence from={DEBUT} durationInFrames={DUR}>` lui donne son propre
+  référentiel (sa frame 0 = début du plan). Même mécanisme que `<Loop>`.
+  ⚠️ Piège symétrique : si le plan **gèle** le fond (`const frame = actif ? START-1 : rawFrame`), tout ce
+  qui pilote la vidéo se calcule sur **`rawFrame`**, jamais sur `frame` — sinon on fige aussi le clip.
+  *Coût : bug livré à Aziz et repéré par lui (Gazoduc A3, 2026-08-18), 1 aller-retour + 1 re-render.*
+- ⛔ **Avant tout `<Loop>` sur un clip généré (H3/Seedance/Kling), MESURER son écart de boucle** :
+  extraire 1re et dernière frame, diffuser un diff de pixels. Mesuré sur le clip pelleteuse : **7,4 % de
+  pixels sautent** → bouclé sur 32,8 s il aurait produit 6,3 raccords visibles. Décision prise : **une
+  seule passe + hard cut**. ⛔ Ne jamais « prolonger un peu » un tel plan. Hypothèse par défaut : un clip
+  génératif **ne boucle pas**. (`scripts/tools/measure-insert-clip.py` calcule déjà ce ratio.)
 - **Chaque clip vidéo importé se mesure INDIVIDUELLEMENT** (`ffprobe -v error -show_entries format=duration …`), jamais par analogie avec un voisin du même dossier (5.875 s vs 5.167 s constatés). Une durée surestimée dans un `<Loop>` gèle l'image sans aucune erreur.
 - ⭐ **GAZODUC passe finale** : Actes 1/2/3 se re-rendent en palette sombre `PAL_GPT` **à la passe finale, ⛔ PAS acte par acte** (`memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md`). L'Acte 4 est en **3 fichiers séparés** à assembler (124,68 s cumulées pour 124,04 s d'audio → 300 ms de marges à rogner).
 
@@ -20,7 +33,6 @@ Coût documenté : Soudan mid-form v4 (2026-07-22), **image figée ~4 minutes** 
 - **Échantillonnage DENSE obligatoire** (1 frame / 2 s sur **toute** la durée, pas aux « points d'intérêt ») :
   `ffmpeg -i out.mp4 -vf fps=0.5 -q:v 5 /tmp/chk/f%04d.jpg && md5 /tmp/chk/*.jpg | awk '{print $NF}' | uniq -c | sort -rn | head`
   Deux hashs consécutifs identiques = gel. Des frames isolées NE PROUVENT RIEN.
-  ⚠️ Commande dérivée de la règle écrite, **non exécutée sur un vrai fichier** — vérifier son comportement au 1er usage.
 - **Après tout changement de STRUCTURE** (raccord, concat, refactor d'un composant partagé) : revérifier la séquence narrative de **chaque scène touchée**, pas seulement le point de couture (vécu CFA : jonction parfaite, scène suivante détruite).
 - ⚠️ `check-frame-continuity.py` couvre les **trous entre segments de render**, PAS le gel de concat. Deux problèmes distincts.
 
@@ -33,8 +45,6 @@ Coût documenté : Soudan mid-form v4 (2026-07-22), **image figée ~4 minutes** 
   **Informatif partout** : self-review `/tmp/<ep>-beat<N>-self-review.json` ≥ 19, flag d'upload, rappel `trace-livrable.py` (`python3 scripts/tools/trace-livrable.py <rendu.mp4> --episode-dir <dossier>`).
   ⚠️ **Un gate qui « passe » ne prouve pas qu'il a testé.** `pre-final-promotion.sh` sort en 0 dès que le TSX est introuvable ; `pre-presentation-review.sh` sort en 0 avec un simple WARNING si le score du review.json est illisible (clé API absente, L174-181), et un `.review-override.md` plus récent que le mp4 le court-circuite AVANT même la recherche du review.json (L136-148). **Lire le texte imprimé, pas le seul code de sortie.**
   ✅ **Échelle tranchée 2026-08-17** : `SELF_REVIEW_CRITERIA` compte **25 critères** (comptés dans le code). Seuil = **19/25**. Corrigé dans CLAUDE.md + beat-session.py.
-  ⛔ **La correction est PARTIELLE** : le « 19/23 » survit dans 5 fichiers (`SOUVERAIN-REMOTION-PLAYBOOK.md:115`, `SCRIPTS-INDEX.md:124`, `PIPELINE.md:207`, `.claude/commands/beat.md:35`, `SOUVERAIN-INDEX.md:32`). **Non corrigés volontairement** : à faire en une passe une fois qu'Aziz aura tranché 19 vs 21, sinon double passe.
-  ⚠️ Effet de bord non décidé : passer de 23 à 25 critères a fait descendre l'exigence de 83 % à **76 %** sans que personne ne le choisisse. 21/25 (= 84 %) rétablirait l'origine — **décision d'Aziz en attente**.
   ⭐ **Leçon** : corriger une valeur chiffrée = **grep du chiffre dans TOUT le repo** (`.md` ET code ET `.claude/`), jamais fichier par fichier de mémoire. Écrire « corrigé partout » sans avoir greppé fabrique une fiche qui ment — arrivé ici le jour même de la création de cette fiche.
 - **Hygiène out/** : `wip/beatN_v3.mp4` → présenté `beatN_V3.mp4` → validé `beatN-FINAL.mp4` → `out/PRET-PUBLICATION/<ep>-FINAL.mp4`. Jamais de fichier à la racine de `out/`, jamais de dossier par date. À validation : promouvoir `versions/` → FINAL, purger `wip/` + `versions/`.
 

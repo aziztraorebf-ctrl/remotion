@@ -166,6 +166,13 @@ au très dynamique) beaucoup plus vite qu'en re-codant à l'aveugle.
 
 ### ⭐⭐⭐ VERDICT GPT Image 2 vs Gemini 3.1 Flash — GPT SUPÉRIEUR pour le storyboard carte annoté
 
+> ⚠️⚠️ **VERDICT RENVERSÉ À L'USAGE LE 2026-08-18 — lire avant de s'y fier.** Ce comparatif date du
+> 13/08 et a été établi **SANS Grok** (on ignorait alors qu'il génère des images). Depuis :
+> Grok (`grok-imagine-image-2.0`) a produit le concept du Segment C **FINAL**, et GPT a rendu une
+> planche **inexploitable** sur le test de méthode (2 cases au lieu de 4, composition floue).
+> ⛔ Méthode en vigueur : `memory/fiches/FICHE-STORYBOARD.md`. Le verdict ci-dessous reste vrai
+> **dans son contexte de 2 modèles**, il n'est plus vrai comme classement général.
+
 Sur un MÊME brief exact (texte identique, même image de référence jointe), GPT Image 2
 (`openrouter-img2img.py --model openai/gpt-5.4-image-2`) a produit un storyboard nettement plus
 exploitable que Gemini 3.1 Flash Image sur ce cas précis :

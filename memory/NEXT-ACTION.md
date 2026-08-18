@@ -53,7 +53,7 @@ vite un effet à une seule cause.
 
 ---
 
-## ✅ DETTE MÉMOIRE A/B — SOLDÉE (2026-08-18)
+## ✅ SYSTÈME GRAVÉ — Dette mémoire A/B soldée (outil : `check-memoire-doublons.py`, relancer après tout ajout)
 
 **9 doublons traités, 0 collision restante** (`check-memoire-doublons.py` → exit 0).
 ⛔ La leçon qui reste : les 2 arborescences peuvent TOUTES DEUX être à jour, mais l'index ne pointe
@@ -302,7 +302,7 @@ packaging AVANT publication) · **[DIAGNOSTIC-FLOP-VIDEO.md](memory/doctrines/DI
 ⛔ **L'arbitrage des 2 planches-contact est ANNULÉ** — ne PAS le redemander à Aziz. Les 53 templates
 sont **archivés** (consultables, pas supprimés) : ils ne sont plus la source de la showcase (« des
 templates qui défilent sans intention ne veulent rien dire »). Nouvelle source = **production vivante
-publiée** (Sénégal, Soudan, AES, CFA, Gazoduc Actes 1-2 ; ⛔ Acte 3 exclu, gelé non validé).
+publiée** (Sénégal, Soudan, AES, CFA, Gazoduc Actes 1-2-4-5 ; ⛔ Acte 3 exclu tant que l'acte ENTIER n'est pas validé (son Segment C est FINAL depuis le 18/08, mais l'acte ne l'est pas)).
 ⏭️ **PROCHAINE ACTION = écrire la CHARTE DE DA** (palette 4 couleurs + 1 typo + fond en dégradé
 vivant à halos au lieu d'aplat `#16213a`) — ~1/2 journée, ⛔ **zéro composant neuf à coder**. C'est le
 chaînon manquant du cut vente, identifié par le benchmark de 3 références Fiverr. Ensuite seulement :
@@ -358,20 +358,9 @@ du workflow, à retester sur plusieurs styles/registres dans une session dédié
 davantage — mais déjà utilisable au cas par cas dès maintenant (2 preuves suffisantes pour un test
 ponctuel, pas encore pour une automatisation).
 
-**⭐⭐⭐ Storyboard cartographique multi-modèles (Gemini+GPT) — méthode NOUVELLE, documentée, 1er usage réel en cours (2026-08-13)**
-Découverte majeure de session : un DA-brief textuel seul (3 voix, `da-brief.py`) ne suffit PAS à éviter
-un rendu de carte plat — le storyboard VISUEL reste nécessaire même après un brief écrit soigné (constat
-direct d'Aziz sur l'Acte 3 Gazoduc, "tracés plats qui ne représentent pas grand-chose" malgré 3 DA-briefs
-déjà faits). Méthode découverte et validée : donner à Gemini/GPT une frame réelle de NOTRE carte +
-nos capacités techniques listées explicitement + le texte du script + des références de chaînes connues
-(Vox Atlas "montrer le terrain", discipline Kurzgesagt "peu d'éléments bien timés") → 3 concepts
-DISTINCTS (1 image = 1 concept, jamais un montage multi-concepts en une image basse résolution) →
-Aziz choisit/mix-and-match les meilleures idées → Claude écrit directement le breakdown de fusion
-(pas de 3e aller-retour image). **Verdict comparatif GPT Image 2 vs Gemini** : GPT supérieur pour ce
-type de storyboard annoté (français propre, annotations caméra réalisateur explicites et utiles —
-ne PAS les brider, les encourager explicitement dans le prompt). Doctrine complète mise à jour :
-`doctrines/STORYBOARD-MAPBOX.md` § "EXTENSION D3 + VERDICT GPT vs GEMINI" (2026-08-13) — **à proposer
-systématiquement dès qu'une scène carte D3/Mapbox est jugée plate/statique**, référencé dans ROUTAGE.md.
+**⭐ Storyboard multi-modèles** → ⚠️ **méthode REFONDUE le 2026-08-18**, version en vigueur :
+`memory/fiches/FICHE-STORYBOARD.md` (audit du brief obligatoire · 3 dessinateurs dont Grok · le modèle
+pose un liseré au lieu d'écrire). Le bloc du 13/08 décrivait Gemini+GPT seuls — Grok manquait.
 
 ---
 

@@ -4,7 +4,7 @@
 > journée**, commit « refonte premium complète sur modèle 2.4 validé » — le modèle validé est arrivé APRÈS le code.
 > Le storyboard déplace le jugement de goût d'APRÈS le code (cher) vers AVANT le code (gratuit).
 > ⚠️ Si ce que tu lis ici ne correspond PAS au réel sous tes yeux : **c'est la fiche qui a tort**. Corrige-la.
-> Dernière vérification des chemins : 2026-08-17.
+> Dernière vérification des chemins : 2026-08-18 (⚠️ § « méthode en vigueur » : décision non outillée, voir son encadré).
 
 ## L'ORDRE — ne jamais l'inverser
 ⚠️ **AVANT l'intention de scène, il y a la FORME NARRATIVE de la vidéo** (non déclarée = héritée par
@@ -53,6 +53,18 @@ activité visuelle 5,75 % → 10,28 % de pixels modifiés.
 Recette : 5-6 frames aux ÉTATS du storyboard → planche 2×3 → image A/B verticale (cible en haut, rendu en bas)
 → `scripts/tools/openrouter-vision-breakdown.py --model openai/gpt-5.5`. Gabarit à copier tel quel :
 `memory/episodes/souverain/gazoduc-aagp-tsgp/breakdown-acte4/PROMPT-comparatif-rendu-vs-storyboard.txt`.
+⛔⛔ **4e règle (2026-08-18) — un rapport de gap CHIFFRÉ peut porter sur un objet qui n'aurait jamais
+dû exister.** Vécu : Grok a classé **priorité 2/5** un gap sur la « tranchée », avec 8 valeurs chiffrées
+(ratio 16.5x, `edgeNoiseAmplitude: 13.5 px`, `noiseFrequency: 0.042 km⁻¹`) — sur un objet supprimé le
+jour même parce que le script n'en parle pas. Le modèle auditait fidèlement un storyboard déjà
+contaminé par mon brief : **un gap peut être rigoureusement mesuré ET porter sur une erreur en amont.**
+Un chiffre à 3 décimales sur un objet imaginaire coûte plus cher qu'une remarque vague — il
+court-circuite le jugement.
+→ Ne retenir que la **LECTURE D'ÉCART** (« le tracé occupe 5 % du cadre au lieu de 50 % ») ; jeter les
+valeurs prescrites et re-dériver dans NOS unités (celles de Grok étaient des coordonnées Mapbox sur une
+scène D3 — inapplicables). Et avant de trier : **vérifier que chaque gap porte sur un élément que le
+SCRIPT justifie**. Un gap hors-script se supprime, il ne s'implémente pas.
+
 3 règles payées : (1) déclarer le HORS-SCOPE (« the base map is FIXED and untouchable ») sinon il critique le
 fond de carte ; (2) exiger des NOMBRES (*« not "make it more vivid" but the actual values to type »*) ;
 (3) ⛔⛔ **vérifier chaque gap contre nos décisions** — sur 4A, un gap HIGH proposait de faire passer l'AAGP
@@ -60,61 +72,36 @@ par le Sahara alors qu'il **est** côtier : erreur factuelle + cohérence de sé
 ⭐ Après tout appel comparatif, TOUJOURS proposer le 2e appel génératif (« comment on corrige, avec notre
 arsenal ? ») — c'est lui qui produit la valeur actionnable (`memory/doctrines/DA-BRIEF-GATE.md` § PATTERN 2 APPELS).
 
-## ⛔⛔ LA MÉTHODE STORYBOARD — VERSION EN VIGUEUR (2026-08-18, décision d'Aziz)
+## ⛔⛔ LA MÉTHODE STORYBOARD — DÉCISION DU 2026-08-18 (⚠️ pas encore outillée)
 
-> Remplace la méthode « 2 temps » (conception texte puis dessin) du 2026-08-17. Celle-ci avait été
-> adoptée parce qu'on croyait que seuls GPT et Gemini dessinaient. **Faux** : Grok dessine aussi
-> (`grok-imagine-image-2.0`). Avec 3 dessinateurs, l'étape texte devient un détour coûteux.
+> **Statut honnête** : décidée avec Aziz et testée UNE fois à la main (Grok conforme · Gemini conforme
+> mais a écrit des titres interdits · GPT inexploitable, 2 cases au lieu de 4). ⛔ **Aucun script du
+> repo n'implémente l'appel image xAI** — `storyboard-dual-gen.py` ne connaît que Gemini et GPT.
+> À requalifier en « règle payée » une fois outillée et re-testée. La chaîne réellement exécutée à ce
+> jour reste la conception TEXTE (`storyboard-concepts-texte.py`), **Kimi inclus**.
 
-### 1. ⛔ AUDIT DU BRIEF — OBLIGATOIRE AVANT TOUT ENVOI
-**Faire relire le brief par un modèle tiers** (`openai/gpt-5.5` via OpenRouter) avec une seule
-consigne : *« détecte tout ce qui souffle une réponse »*. Puis corriger.
-⭐ **Payé cher le 2026-08-18** : mon brief contenait `trench` dans une liste d'exemples,
-`it has started digging` comme cœur dramatique, `underground` comme piste — **3 modèles sur 4 ont
-proposé une tranchée**. Je croyais poser une question ouverte ; je leur avais soufflé la réponse.
-Le concept a été codé, rendu, puis jeté par Aziz : *« on n'en parle pas dans la vidéo, ça complique
-les choses pour rien »*.
-⚠️ Le gate `moteur-visuel-gate.sh` n'attrape PAS ce biais-là : il cherche des concepts pré-écrits
-(« OPTION A / OPTION B »), pas un **vocabulaire** glissé dans les exemples. D'où l'audit humain+LLM.
-Biais que l'audit a trouvés et que je n'avais pas vus :
- - citer le CONTENU des actes qui marchent (« l'Acte 5 est une coupe de conduite avec deux vannes »)
-   = souffler l'objet technique ;
- - décrire le défaut actuel en image (« une ligne qui se dessine ») = souffler l'image, même en négatif ;
- - sanctuariser l'existant (« validé, à garder ») = le rendre obligatoire de fait ;
- - un mot en CAPITALES dans le contexte (« VIRTUAL ») = orienter vers un registre.
+### ⛔⛔ 1. AUDIT DU BRIEF PAR UN MODÈLE TIERS — OBLIGATOIRE (seule partie déjà payée)
+Faire relire le brief par `openai/gpt-5.5`, consigne unique : *« détecte tout ce qui souffle une
+réponse »*. Puis corriger. **Le levier « ne pas écrire les concepts soi-même » ne suffit pas** : un
+VOCABULAIRE glissé dans les exemples suffit. Payé le 18/08 — `trench`, `it has started digging`,
+`underground` dans mon brief → **3 modèles sur 4** ont proposé une tranchée, codée, rendue, jetée.
+⚠️ `moteur-visuel-gate.sh` n'attrape PAS ce biais (il cherche « OPTION A/B », pas un lexique).
+Autres biais trouvés par l'audit : citer le CONTENU des actes qui marchent · décrire le défaut actuel
+en image (souffle l'image même en négatif) · sanctuariser l'existant (« validé, à garder ») · un mot
+en CAPITALES.
+⭐ Après réception : **grepper le brief avec les mots-clés des concepts reçus.** S'ils y sont, la
+convergence est un ARTEFACT — pas un signal. Relancer avec un brief lavé.
 
-### 2. UN SEUL APPEL PAR MODÈLE, 3 MODÈLES, 2 CONCEPTS PAR PLANCHE
-| Modèle | Endpoint | Note |
-|---|---|---|
-| `grok-imagine-image-2.0` | `/v1/images/generations` (xAI) | ⭐ le meilleur sur planche annotée, 0,04 $ |
-| GPT-image via fal.ai | `fal-ai/gpt-image-1/text-to-image` | matière plus riche, cadrage moins fiable |
-| `gemini-3.1-flash-image-preview` | Google | ⛔ exige le tail anti-prose (voir § plus bas) |
-⛔ **Kimi est SORTI de la chaîne storyboard** : il ne génère pas d'images. Il reste excellent en
-conception texte pure si on a besoin d'un avis écrit, mais il n'a plus sa place ici.
-
-**2 concepts par planche, pas 3.** 3 concepts × 3 modèles = 9 planches et 12 cases par planche :
-chaque case tombe sous 400 px et redevient illisible (`1 image = 1 concept` plus bas). 2 × 3 = 6
-propositions, 8 cases lisibles, arbitrage encore humainement tenable.
-
-### 3. LE MODÈLE NE RÉDIGE PAS — IL POSE UN REPÈRE
-Ne JAMAIS lui demander son analyse écrite dans l'image (c'est ce qui produit « Lee routes croisées »,
-« CONCEEPT », les vignettes à 120 px). À la place :
-> *« Mark the concept you would defend with a thin bright border around its row. No explanation, no
-> title, no caption. The only text allowed is the timecode under each panel. »*
-On récupère son choix sans lui faire dépenser sa capacité à écrire.
-
-### 4. APRÈS LE CHOIX D'AZIZ — DEMANDER LA DESCRIPTION AU MODÈLE QUI A DESSINÉ
-⭐ C'est le seul mérite de l'ancienne méthode qu'il faut conserver : la **description case par case**
-sert ensuite à briefer le modèle SVG (Fable 5) sans que Claude réinjecte son interprétation.
-→ Renvoyer **l'image retenue** à son auteur : *« décris chaque case assez précisément pour qu'un
-illustrateur la dessine sans te poser de question »*. Un appel, sur le seul concept retenu.
-⛔ Ne PAS écrire cette description soi-même : c'est exactement le biais corrigé au point 1.
+### 2. LA FORME VISÉE (à outiller)
+3 dessinateurs, 1 appel chacun, **2 concepts par planche** (3 → 12 cases sous 400 px = illisible) :
+Grok `grok-imagine-image-2.0` (`/v1/images/generations`, 0,04 $) · GPT-image (fal.ai) · Gemini
+flash-image (⛔ exige le tail anti-prose, voir § suivant). Kimi ne dessine pas : il reste en conception
+texte. Le modèle **ne rédige pas** — il pose un liseré sur la rangée qu'il défend.
+⭐ **Après le choix d'Aziz** : demander la description case-par-case **au modèle qui a dessiné** (jamais
+l'écrire soi-même — c'est le biais du point 1), pour briefer ensuite le modèle SVG.
 
 ## ⛔⛔ LA DERNIÈRE LIGNE DU BRIEF DÉCIDE SI TU REÇOIS UNE IMAGE (prouvé 2026-08-17, 36 appels réels)
 
-> Cause racine de ~50 % d'échecs de storyboard, **diagnostiquée 2× et jamais appliquée** : le gotcha
-> existait depuis le 2026-08-14 dans `memory/tools/openrouter-gpt-image-et-breakdown.md`, mais rien
-> ne l'ouvrait au moment d'écrire un brief. C'est pour ça qu'il est ICI maintenant.
 
 ⛔ **CONCEVOIR et DESSINER sont 2 compétences — ne JAMAIS les demander au même appel.**
 Un appel qui demande « les images **+ ton analyse écrite** » laisse le modèle choisir la sortie la

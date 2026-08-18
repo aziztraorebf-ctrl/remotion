@@ -82,6 +82,15 @@ Ouvrir dans cet ordre, **lire chaque liste jusqu'au bout** (une brique en fin de
 - **Épaisseurs de trait à diviser par le zoom** (`width / camScale`), et construire la scène PLUS LARGE que le cadre final.
 
 ## SI ÇA RATE 2×
+⛔ **0. 3-4 itérations de DOSAGE sur le MÊME geste = le geste n'a pas de RAISON D'ÊTRE**, pas un mauvais
+réglage. Vérifier d'abord que le SCRIPT le porte : **quelle phrase exacte la scène rend-elle visible ?**
+Si la réponse demande une reformulation, le geste est hors-script et se supprime. Vécu (tranchée,
+Gazoduc A3, 2026-08-18) : 4 dosages (trop fine → invisible → trop large → tache ovale) sur un geste
+que le script ne mentionne jamais — il dit « il traverse, remonte, se connecte » : un TRACÉ et un
+RACCORDEMENT, jamais un creusement. Codé, rendu, jeté.
+⚠️ Distinct de FICHE-CAMERA (« pas un dosage → MESURER ») : ici la mesure n'aurait rien donné, la
+cause est ÉDITORIALE.
+
 Au **2e échec sur le même défaut** (y compris un rendu rejeté 2× sur le même symptôme décrit) : ⛔ STOP, ne pas re-doser une 3e valeur (amplitude, timing, pivot).
 1. **Mesurer objectivement** plutôt que juger à l'œil : script qui chiffre le symptôme (bbox projetée, diamètre sur N frames, écart d'ancrage par cycle). Vécu : 4 itérations de dosage caméra alors qu'un câblage figé se mesurait en une passe.
 2. **Reverse engineering d'abord** : `git log --all`, grep du registre/doctrine — le problème a souvent déjà été résolu ici.

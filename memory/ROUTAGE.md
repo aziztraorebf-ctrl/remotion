@@ -133,7 +133,7 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | Doctrine design War-Map (Mapbox, géo réelle — voie de production assumée, voir note) | `memory/doctrines/WARMAP-PLAYBOOK.md` |
 | Doctrine données War-Map (recherche OSINT) | `memory/doctrines/WARMAP-RESEARCH-PLAYBOOK.md` |
 | Overlays géo-ancrés sur carte (jetons, drapeaux, plaques, RÈGLE ZÉRO anti-dérive) | `memory/doctrines/CARTO-OVERLAYS-PRINCIPES.md` ⭐⭐ |
-| **Une scène CARTE (Mapbox OU D3) déjà codée est jugée plate/statique/pas assez vivante — avant de recoder à l'aveugle** | `memory/doctrines/STORYBOARD-MAPBOX.md` ⭐⭐⭐ le modèle propose un storyboard visuel (Gemini + GPT en parallèle, comparer — GPT souvent supérieur pour les annotations réalisateur/mouvements caméra explicites), Aziz valide la direction, PUIS breakdown→code. Vaut aussi en amont d'un nouveau beat carte, pas seulement en réparation. Un DA-brief textuel seul ne suffit pas à éviter un rendu plat — le storyboard IMAGE reste nécessaire. |
+> Storyboard carte → **méthode en vigueur : `memory/fiches/FICHE-STORYBOARD.md`** (refondue 2026-08-18). 3 dessinateurs — Grok `grok-imagine-image-2.0` · GPT-image (fal.ai) · Gemini flash-image. ⛔ **Audit du brief par un modèle tiers OBLIGATOIRE avant envoi** (un vocabulaire glissé dans les exemples suffit à souffler la réponse : 3 modèles sur 4 ont proposé une tranchée en 08/2026). ⚠️ L'ancien verdict « GPT supérieur » (13/08) a été établi SANS Grok dans le comparatif.
 | Quel outil pour animer quel objet War-Map (SVG/Gemini/PixelLab) | `memory/doctrines/WARMAP-ANIMER-OBJETS.md` |
 | « Quelle brique War-Map pour X ? » | `src/projects/warmap/WARMAP-COMPOSANTS-INDEX.md` (+ LINKING mapanimation) |
 

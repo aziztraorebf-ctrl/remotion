@@ -1,3 +1,9 @@
+> ⛔⛔ **CONCEPT « TRANCHÉE » REJETÉ le 2026-08-18** — codé, rendu, puis retiré. Le script ne parle
+> JAMAIS de creusement. La convergence de 3 modèles sur 4 n'était pas un signal : c'était l'écho
+> d'un biais de MON brief (`trench`, `it has started digging`, `underground` glissés dans les
+> exemples). ⛔ Ne pas la reprendre en lisant les plaidoyers ci-dessous.
+> Voir `feedback_brief-souffle-la-reponse-par-son-vocabulaire.md`.
+
 # Concepts de storyboard — PHASE 1 (texte, sans dessin)
 
 > Brief source : `memory/episodes/souverain/gazoduc-aagp-tsgp/PROMPT-storyboard-segmentA-v1.txt`

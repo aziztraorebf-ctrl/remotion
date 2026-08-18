@@ -418,3 +418,25 @@ bow and stern at the same horizontal pixel positions, it is tied up, not underwa
 - `src/projects/warmap/WARMAP-COMPOSANTS-INDEX.md` · `src/projects/atlas/_shared/ATLAS-COMPOSANTS.md`
 - `memory/tools/CATALOGUE-GEMINI.md` — assets data-viz Gemini
 - Protos Hera (motion-design validé) : `src/projects/_proto-16-9/ProtoHera_*` + `ProtoHeraFidele_*`
+
+### ⭐ QUITTER LA CARTE — la RUPTURE D'ÉCHELLE (prouvé, 2026-08-18)
+**Quand un moment doit faire ressentir que « ça se passe VRAIMENT, sur le terrain »** alors que la
+scène vit sur une carte → **on quitte la carte**, plein écran sur la matière, puis on revient.
+`RuptureChantier` — `src/projects/souverain/gazoduc-aagp-tsgp/GazoducActe3CarteTSGP.tsx`
+- déclencheur **dans la voix** (forced-align), jamais placé au jugé
+- fond **gelé** pendant le plan (`frame = actif ? START-1 : rawFrame`), sinon le retour saute
+- entrée ≠ sortie : flash blanc 80 %→0 en 4f · **hard cut** à 0f en sortie
+- minimap circulaire géo-ancrée : elle dit OÙ on est, puisqu'on a quitté la carte
+- ⛔ **ce qu'on a montré en grand ne se remontre pas en vignette** (l'encart ne revient pas)
+- ⛔ durée = **1 passe du clip**, jamais un `<Loop>` (mesurer l'écart de boucle avant)
+*Preuve : Acte 3 Segment A, activité médiane 10,33 % (min 7,42 %) contre 0,57 % avant. A débloqué un
+acte gelé depuis des semaines.* ⚠️ À l'extraction : paramétrer `{countryPath, markerFrac}` (la minimap
+hardcode Adrar en fraction de bbox).
+
+### RÉSEAU PRÉEXISTANT QUI S'ILLUMINE (proto, 1 usage)
+**Quand une nouvelle infrastructure doit se lire comme REJOIGNANT quelque chose de déjà là** (et non
+comme le créant) → un réseau qui s'allume à l'arrivée du tracé.
+`ReseauAlgerien` — même fichier. Branches **+ transversales** (ce qui fait un réseau et non un
+bouquet), pulse déphasé par branche, épaisseur ancrée au zoom (`sw = 9.0 / camScale`).
+⚠️ Mesuré : à `sw=1.6` le réseau était bien dessiné (967 px comptés au rendu) mais **invisible à
+l'œil** — sur une carte dézoomée, un trait écran-constant fin disparaît.

@@ -234,6 +234,17 @@ liée à l'ordre de layers ou à une sous-couche non identifiée par `l.id.inclu
 3 regles NON-NEGOTIABLES :
 1. `<Video>` INTERDIT en headless render -> frames noires. Toujours `<OffthreadVideo>`.
 2. `<OffthreadVideo>` DOIT etre dans `<Sequence from={BEATS.xxx.start}>` — sans Sequence = freeze.
+  ⭐ **LE MÉCANISME (2026-08-18) — la règle ci-dessus existait et n'a PAS empêché le bug**, parce
+  qu'elle donne l'interdit sans expliquer quoi reconnaître. `<OffthreadVideo>` lit la frame **ABSOLUE**
+  de la composition, pas la frame locale du plan. À la frame 1292 d'un plan qui commence à 1292, un
+  clip de 154 frames est fini depuis longtemps et affiche sa **dernière image figée** : pas de crash,
+  pas d'écran noir — une image plausible et immobile, qu'on confond avec un gel de rendu.
+  La `<Sequence>` ne sert pas à POSITIONNER le clip, elle lui DONNE SON RÉFÉRENTIEL (sa frame 0 =
+  début de la Sequence). Fix réel utilisé : `<Sequence from={0}>` **à l'intérieur** du sous-composant,
+  déjà rendu dans une Sequence parente.
+  ⚠️ **Piège symétrique** : si le plan gèle le fond (`const frame = actif ? START-1 : rawFrame`), tout
+  ce qui pilote la vidéo se calcule sur **`rawFrame`** — sur `frame` gelé, on fige aussi le clip.
+  *Coût : bug livré à Aziz, repéré par lui (Gazoduc A3).*
 3. Toujours `muted` — Kling/Seedance generent toujours une piste audio parasite.
 
 ### beatFade + OffthreadVideo

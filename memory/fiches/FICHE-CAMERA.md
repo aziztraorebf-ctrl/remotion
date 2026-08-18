@@ -70,6 +70,13 @@ glissante du tracé (`windowBBox`, back 45% / ahead 10%, `scaleFit` borné 1.3-2
   `measure-insert-clip.py` = clips d'insert (ne mesure PAS la caméra).
 - Juger la netteté uniquement sur `scale=1`. Frames isolées ne prouvent rien sur le mouvement.
 
+⛔ **Un effet dont la RAISON D'ÊTRE a disparu se SUPPRIME, il ne se re-dose pas.** Vécu 2026-08-18
+(Gazoduc A3) : un voile d'assombrissement à 0.7 servait à faire ressortir un encart ; l'encart a été
+retiré de la scène, le voile est resté piloté par le même repère de temps et n'éteignait plus que la
+carte. Aziz l'a signalé comme un défaut non attribué (« pourquoi la carte est-elle assombrie ? »).
+→ Quand un effet est signalé comme gênant, chercher d'abord **ce qu'il servait** : si sa cible
+n'existe plus, mettre à 0 et retirer le calcul — ne pas chercher « la bonne valeur ».
+
 ## SI ÇA RATE 2×
 Au **2e rejet du même symptôme de mouvement** : STOP. Ne pas retoucher une 3e valeur — aucune des 3 boucles caméra
 du projet n'était un problème de dosage. Mesurer (ci-dessus), puis déléguer à un agent dédié frais

@@ -36,6 +36,19 @@ liste de choix : lire l'intention d'abord, puis venir chercher quel registre sai
 | **⭐ LA MATIÈRE** — ce qu'on ne peut ni dessiner ni cartographier : une texture, un geste physique, un lieu filmé, la matière elle-même | **MiniMax H3** (matière filmée générée) | Le seul moteur qui produit du PHOTOGRAPHIQUE/FILMÉ. Sert quand le sujet doit être *vu*, pas schématisé (gaz qui circule dans une conduite, pelleteuse sur un chantier). ⚠️ Coût réel + non déterministe → jamais pour ce qu'un SVG fait aussi bien. Plafond narratif : un insert qui revient toutes les 20 s cesse de faire rupture. |
 | **LE LIANT** — texte, chiffre-choc, transition, rythme | **Remotion** (socle) | Toujours |
 | **⭐ LE RACCORD** — passer d'un registre à un autre, couper, alterner, rompre l'échelle | **Remotion** (socle) — mais c'est une DÉCISION, pas un réglage | Le montage EST une capacité expressive. Une scène de 30 s n'est pas tenue d'être un seul plan continu : on peut quitter la carte pour un plein écran SVG, revenir, alterner. ⚠️ Trou n°8 du catalogue : aujourd'hui carte→scène SVG se fait au **cut sec** ; le seul vrai raccord inter-registre prouvé est `GlobeToParchemin`. |
+  ⭐⭐ **2e RACCORD PROUVÉ (2026-08-18) — et le premier vers de la MATIÈRE FILMÉE** : la RUPTURE
+  D'ÉCHELLE carte → plein écran → carte (Gazoduc A3, `RuptureChantier`). Sa mécanique, en 5 pièces
+  indissociables :
+  1. **le déclencheur est dans la VOIX** (calé au forced-align sur le moment où la narration passe de
+     la géographie au chantier) — jamais un effet de rythme placé au jugé ;
+  2. **on QUITTE, on ne surimpose pas** — un encart sur la carte ne produit pas la rupture ;
+  3. **le fond est GELÉ** pendant le plan (`frame = actif ? START-1 : rawFrame`), sinon le retour saute ;
+  4. **entrée ≠ sortie** : flash blanc 80 % → 0 en 4 frames à l'entrée, hard cut à 0 frame en sortie
+     (le hard cut est ce qui esquive le non-bouclage du clip) ;
+  5. ⛔ **ce qu'on a montré en grand ne se remontre pas en vignette** (décision d'Aziz) — au retour, on
+     reprend la carte vivante, l'encart ne revient pas.
+  Mesuré : activité médiane **10,33 %** (min 7,42 %, aucun creux) contre 0,57 % avant. C'est ce geste
+  qui a débloqué un acte gelé depuis des semaines.
 
 ⚠️ **PIÈGE VÉCU — la géo réutilisée qui contourne cette table** (beat 4 CFA, 2026-07-26).
 Un texte **purement CONCEPTUEL** (une garantie financière, une contrepartie, une réforme juridique)

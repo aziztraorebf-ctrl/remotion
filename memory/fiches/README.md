@@ -77,7 +77,7 @@ parcourt le code pour remplir les catalogues de composants — un inventoriste. 
 encore** sur disque (vérifié 2026-08-17). Les fiches ne dépendent pas de lui.
 
 ## Budget par fiche
-**55 lignes par défaut.** Exceptions assumées, **chiffres re-mesurés le 2026-08-18** (`wc -l`) :
+**55 lignes par défaut.** Exceptions assumées, **chiffres re-mesurés le 2026-08-18 (fin de session)** (`wc -l`) :
 `FICHE-CAMERA` **77** · `FICHE-SVG-DESSINE` **89** · `FICHE-STORYBOARD` **114**.
 ⚠️ Le budget d'exception affiché ici était de 80 et **deux fiches le dépassaient sans que ce soit
 écrit** — un README qui annonce un budget que les fiches contredisent est la même classe d'erreur

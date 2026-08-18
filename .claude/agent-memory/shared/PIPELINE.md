@@ -89,7 +89,12 @@ revalider 6 planches).
 repo principal** (`14990278`, branche courante, PAS ce worktree) — distinct des 6 scènes sources,
 voir `src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` brique n°7 + `NEXT-ACTION.md`.
 
-### Gazoduc — Actes 1+2+4+5 TERMINÉS · ⛔ Acte 3 = PRIORITÉ 1 (gel levé) · CTA de fin ouvert
+⭐⭐ **GAZODUC** — Actes 1+2+4+5 FINAUX. **Acte 3 en cours** (2026-08-18) :
+  · Segment C (105,8→123,1 s) ✅ **FINAL** — `acte3-segmentC-verrou-FINAL.mp4` (le verrou croisé)
+  · Segment A / Beats 1-2 (0→55 s) — rendu V3, **à faire valider par Aziz**
+  · Segment A / Beat 3 (55→72,3 s) ⏭️ **PROCHAINE ACTION** (spec V5 complète, codée à moitié)
+  · Segment B (73,9→105,8 s) — porter l'animation sur le décor Fable 5
+  Puis : assemblage Acte 4 · CTA de fin · passe finale palette sombre.
 Acte 1 (hook, 84.68s, globe D3) validé par Aziz (render v6, 2026-08-03). Acte 2 **produit et validé en
 finale (2026-08-04)** : `out/episodes/gazoduc-aagp-tsgp/acte2-FINAL.mp4` (127.4s).
 

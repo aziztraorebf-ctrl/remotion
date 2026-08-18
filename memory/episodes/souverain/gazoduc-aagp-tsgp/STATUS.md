@@ -132,9 +132,8 @@ forced-align (règle Aziz : compréhensible en moins de 2 s → un élément app
 Livrables : `out/episodes/gazoduc-aagp-tsgp/acte4-mouvementA-FINAL.mp4` + `acte4-mouvementB-FINAL.mp4`.
 Code : `GazoducActe4RessourceUnique.tsx` + `GazoducActe4Objectifs.tsx`.
 
-**RESTE de l'épisode** : **ACTE 5** (implication — robinet géant + mains stylisées, `PLAN-ACTES2-5.md`
-L118) : rien n'existe, ni storyboard ni code. Puis l'Acte 3 gelé (voir plus bas) et la passe finale
-d'assemblage (re-render des Actes 1/2/3 en palette sombre — ⛔ PAS acte par acte).
+*(⚠️ Ligne « RESTE de l'épisode » du 15/08 retirée le 18/08 : elle disait que l'Acte 5 n'existait pas
+— il est FINAL depuis le 17/08, voir son § plus haut. L'état réel de l'épisode est en tête de fichier.)*
 
 ⚠️ 2 décisions à ne pas défaire : (1) palette sombre = Acte 4 **et la suite**, Actes 1/2/3 re-rendus
 seulement à la passe finale ; (2) 4B **v3 (arcs schématiques) préférée à v4** (géométrie réelle Medgaz,
@@ -142,7 +141,11 @@ codée puis écartée pour lisibilité).
 
 ---
 
-## ⛔ ACTE 3 — GEL LEVÉ (2026-08-17), C'EST LA PRIORITÉ 1. État gelé mesuré ci-dessous.
+## (ARCHIVE — état gelé au 2026-08-17) ⚠️ PÉRIMÉ, voir le § en tête (2026-08-18)
+> ⛔⛔ **NE PAS AGIR SUR CE § .** Son point 4 recommande de coder le Beat 4 dans le Segment C —
+> **CADUC** : le Segment C a été codé comme LE VERROU CROISÉ et il est FINAL/validé. Suivre cette
+> reco reviendrait à refaire un livrable validé (mode d'échec documenté :
+> [[feedback_lire-verdict-rejet-breakdown-avant-reprendre-version]]).
 
 > Le gel du 2026-08-14 avait UNE condition : produire les Actes 4 et 5 d'abord (un acte du milieu se
 > juge par rapport à ses voisins). **C'est fait.** On repart de l'état mesuré ci-dessous, pas de zéro.
@@ -464,7 +467,10 @@ c'est le texte qui a produit l'audio validé — signalé pour info, pas bloquan
 
 ---
 
-## ⭐ ACTE 3 — ARBITRAGE SVG DU 2026-08-18 (nuit) — travail NON COMMITÉ au moment d'écrire
+## (ARCHIVE) ACTE 3 — ARBITRAGE SVG DU 2026-08-18 (nuit) — ⚠️ écrit AVANT le render final
+> ✅ Réconcilié le 18/08 : le livrable existe et est commité —
+> `out/episodes/gazoduc-aagp-tsgp/acte3-segmentC-verrou-FINAL.mp4` (4,3 Mo, vérifié sur disque).
+> Ce § décrit l'état de la nuit, avant rendu. La source de vérité est le § en tête.
 
 Deux variantes d'insert SVG codées et rendues pour l'Acte 3, puis arbitrées par Aziz :
 
