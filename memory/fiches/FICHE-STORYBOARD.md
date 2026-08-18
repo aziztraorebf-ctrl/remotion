@@ -60,6 +60,56 @@ par le Sahara alors qu'il **est** côtier : erreur factuelle + cohérence de sé
 ⭐ Après tout appel comparatif, TOUJOURS proposer le 2e appel génératif (« comment on corrige, avec notre
 arsenal ? ») — c'est lui qui produit la valeur actionnable (`memory/doctrines/DA-BRIEF-GATE.md` § PATTERN 2 APPELS).
 
+## ⛔⛔ LA MÉTHODE STORYBOARD — VERSION EN VIGUEUR (2026-08-18, décision d'Aziz)
+
+> Remplace la méthode « 2 temps » (conception texte puis dessin) du 2026-08-17. Celle-ci avait été
+> adoptée parce qu'on croyait que seuls GPT et Gemini dessinaient. **Faux** : Grok dessine aussi
+> (`grok-imagine-image-2.0`). Avec 3 dessinateurs, l'étape texte devient un détour coûteux.
+
+### 1. ⛔ AUDIT DU BRIEF — OBLIGATOIRE AVANT TOUT ENVOI
+**Faire relire le brief par un modèle tiers** (`openai/gpt-5.5` via OpenRouter) avec une seule
+consigne : *« détecte tout ce qui souffle une réponse »*. Puis corriger.
+⭐ **Payé cher le 2026-08-18** : mon brief contenait `trench` dans une liste d'exemples,
+`it has started digging` comme cœur dramatique, `underground` comme piste — **3 modèles sur 4 ont
+proposé une tranchée**. Je croyais poser une question ouverte ; je leur avais soufflé la réponse.
+Le concept a été codé, rendu, puis jeté par Aziz : *« on n'en parle pas dans la vidéo, ça complique
+les choses pour rien »*.
+⚠️ Le gate `moteur-visuel-gate.sh` n'attrape PAS ce biais-là : il cherche des concepts pré-écrits
+(« OPTION A / OPTION B »), pas un **vocabulaire** glissé dans les exemples. D'où l'audit humain+LLM.
+Biais que l'audit a trouvés et que je n'avais pas vus :
+ - citer le CONTENU des actes qui marchent (« l'Acte 5 est une coupe de conduite avec deux vannes »)
+   = souffler l'objet technique ;
+ - décrire le défaut actuel en image (« une ligne qui se dessine ») = souffler l'image, même en négatif ;
+ - sanctuariser l'existant (« validé, à garder ») = le rendre obligatoire de fait ;
+ - un mot en CAPITALES dans le contexte (« VIRTUAL ») = orienter vers un registre.
+
+### 2. UN SEUL APPEL PAR MODÈLE, 3 MODÈLES, 2 CONCEPTS PAR PLANCHE
+| Modèle | Endpoint | Note |
+|---|---|---|
+| `grok-imagine-image-2.0` | `/v1/images/generations` (xAI) | ⭐ le meilleur sur planche annotée, 0,04 $ |
+| GPT-image via fal.ai | `fal-ai/gpt-image-1/text-to-image` | matière plus riche, cadrage moins fiable |
+| `gemini-3.1-flash-image-preview` | Google | ⛔ exige le tail anti-prose (voir § plus bas) |
+⛔ **Kimi est SORTI de la chaîne storyboard** : il ne génère pas d'images. Il reste excellent en
+conception texte pure si on a besoin d'un avis écrit, mais il n'a plus sa place ici.
+
+**2 concepts par planche, pas 3.** 3 concepts × 3 modèles = 9 planches et 12 cases par planche :
+chaque case tombe sous 400 px et redevient illisible (`1 image = 1 concept` plus bas). 2 × 3 = 6
+propositions, 8 cases lisibles, arbitrage encore humainement tenable.
+
+### 3. LE MODÈLE NE RÉDIGE PAS — IL POSE UN REPÈRE
+Ne JAMAIS lui demander son analyse écrite dans l'image (c'est ce qui produit « Lee routes croisées »,
+« CONCEEPT », les vignettes à 120 px). À la place :
+> *« Mark the concept you would defend with a thin bright border around its row. No explanation, no
+> title, no caption. The only text allowed is the timecode under each panel. »*
+On récupère son choix sans lui faire dépenser sa capacité à écrire.
+
+### 4. APRÈS LE CHOIX D'AZIZ — DEMANDER LA DESCRIPTION AU MODÈLE QUI A DESSINÉ
+⭐ C'est le seul mérite de l'ancienne méthode qu'il faut conserver : la **description case par case**
+sert ensuite à briefer le modèle SVG (Fable 5) sans que Claude réinjecte son interprétation.
+→ Renvoyer **l'image retenue** à son auteur : *« décris chaque case assez précisément pour qu'un
+illustrateur la dessine sans te poser de question »*. Un appel, sur le seul concept retenu.
+⛔ Ne PAS écrire cette description soi-même : c'est exactement le biais corrigé au point 1.
+
 ## ⛔⛔ LA DERNIÈRE LIGNE DU BRIEF DÉCIDE SI TU REÇOIS UNE IMAGE (prouvé 2026-08-17, 36 appels réels)
 
 > Cause racine de ~50 % d'échecs de storyboard, **diagnostiquée 2× et jamais appliquée** : le gotcha
@@ -83,7 +133,8 @@ moins chère : Gemini écrit 8 000 caractères de markdown et 0 image ; GPT dess
 - **Contenu coupé au bord** : ajouter `Leave a clear empty margin of at least 5% on ALL FOUR sides —
   nothing may touch or be cut off by the edge.` (sans : coupé ; avec : propre).
 
-✅ **Méthode en 2 temps (défaut à partir de maintenant)** — `scripts/tools/storyboard-concepts-texte.py` :
+⚠️ **Méthode en 2 temps — REMPLACÉE le 2026-08-18** (voir § LA MÉTHODE EN VIGUEUR ci-dessus ;
+conservée pour mémoire, et parce que l'étape texte reste utile si on veut un avis de Kimi) — `scripts/tools/storyboard-concepts-texte.py` :
 1. **CONCEPTION en TEXTE**, N modèles en parallèle → débloque **Kimi** (meilleure vision artistique)
    et **Grok** (instinct accroche), jusque-là exclus parce qu'ils ne dessinent pas. Chacun rend ses
    concepts + la **description case par case** du concept qu'il défend, prête à dessiner.

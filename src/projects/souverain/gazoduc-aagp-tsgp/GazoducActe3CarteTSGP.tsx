@@ -348,6 +348,69 @@ const CadranComparateur: React.FC<{ frame: number; startFrame: number; countUp: 
   );
 };
 
+// ⛔ LA TRANCHEE A ETE RETIREE (2026-08-18) — decision d'Aziz, et elle vaut comme REGLE.
+// Le concept (le sol qui s'ouvre le long du trace) avait ete propose par 3 modeles sur 4 et dessine
+// en storyboard. Verdict : "le concept meme de tranchee ne fait pas de sens, vu qu'on n'en parle pas
+// dans la video. Ca complique les choses pour rien."
+// ⭐ Ce qu'il faut en retenir : le script dit "il traverse le Niger, remonte le Sahara, et se
+// connecte aux reseaux algeriens" — un TRACE et un RACCORDEMENT, jamais un creusement. Le geste
+// ajoutait une information que la voix ne portait pas.
+// ⚠️ 2 signaux qu'on aurait pu lire plus tot :
+//   1. le mot "trench" figurait dans MON brief (liste des moteurs) — les modeles ne l'ont pas
+//      invente, ils ont repris ce que je leur avais souffle ;
+//   2. 4 iterations de DOSAGE (trop fine -> invisible -> trop large -> tache ovale) : quand un geste
+//      demande autant de reglage, c'est en general qu'il n'a pas de raison d'etre, pas qu'il est mal
+//      dose. Cf feedback_camera-a-coups-easeinout-par-segment (meme schema).
+// Le Segment A repose donc sur : le TRACE qui se dessine + la CAMERA + le RESEAU ALGERIEN + l'encart.
+
+// ===== Le RESEAU ALGERIEN DEJA EN SERVICE — "qui pompent deja du gaz vers l'Europe depuis des
+// decennies". Il doit PREEXISTER a notre arrivee : c'est ce que le trace vient rejoindre. =====
+// ⛔ CYAN CLAIR / BLANC, jamais dore (voir note de la Tranchee).
+const ReseauAlgerien: React.FC<{ reveal: number; frame: number; camScale: number; anchorPt: [number, number] }> = ({
+  reveal, frame, camScale, anchorPt,
+}) => {
+  if (reveal <= 0.01) return null;
+  const [ax, ay] = anchorPt;
+  // ⚠️ Meme mesure : a 1.6 le reseau etait bien dessine (967 px comptes au rendu) mais en fils de
+  // 1.6 px repartis sur 1100x800 — invisible a l'oeil.
+  const sw = 9.0 / camScale;
+  // Branches vers la Mediterranee (nord), depuis le point de raccordement.
+  // ⭐ GAP-03 : "3-4 branches famelique, aucun poids". Le reseau doit dire "ils pompent DEJA vers
+  // l'Europe depuis des decennies" — il doit donc peser plus que ce qu'on vient de tracer.
+  const branches: Array<[number, number][]> = [
+    [[ax, ay], [ax - 10, ay - 22], [ax - 26, ay - 44], [ax - 34, ay - 62]],
+    [[ax, ay], [ax - 4, ay - 26], [ax - 8, ay - 50], [ax - 12, ay - 68]],
+    [[ax, ay], [ax + 3, ay - 28], [ax + 6, ay - 52], [ax + 5, ay - 70]],
+    [[ax, ay], [ax + 12, ay - 24], [ax + 26, ay - 42], [ax + 38, ay - 58]],
+    [[ax, ay], [ax + 20, ay - 18], [ax + 42, ay - 30], [ax + 58, ay - 40]],
+    // transversales : ce qui fait un RESEAU et non un bouquet
+    [[ax - 26, ay - 44], [ax - 8, ay - 50], [ax + 6, ay - 52]],
+    [[ax + 6, ay - 52], [ax + 26, ay - 42], [ax + 42, ay - 30]],
+  ];
+  return (
+    <g opacity={reveal}>
+      {branches.map((pts, i) => {
+        const d = `M ${pts.map((q) => q.join(" ")).join(" L ")}`;
+        const pulse = 0.55 + 0.45 * (0.5 + 0.5 * Math.sin(frame * 0.11 - i * 1.2));
+        return (
+          <g key={`br-${i}`}>
+            <path d={d} fill="none" stroke="#7FD8FF" strokeWidth={sw * 2.6}
+              strokeOpacity={0.16 * pulse} strokeLinecap="round" />
+            <path d={d} fill="none" stroke="#7FD8FF" strokeWidth={sw}
+              strokeOpacity={0.92} strokeLinecap="round" />
+            {pts.slice(1).map((q, j) => (
+              <circle key={`n-${j}`} cx={q[0]} cy={q[1]} r={sw * 1.5} fill="#F4F8FF" opacity={0.9} />
+            ))}
+          </g>
+        );
+      })}
+      {/* le point de raccordement lui-meme */}
+      <circle cx={ax} cy={ay} r={sw * 2.2} fill="#F4F8FF" />
+      <circle cx={ax} cy={ay} r={sw * 5} fill="#7FD8FF" opacity={0.2} />
+    </g>
+  );
+};
+
 // ===== Triangle d'alerte — apparaît en stagger le long du tracé algérien (Beat 4). =====
 const TriangleAlerte: React.FC<{ x: number; y: number; opacity: number; frame: number }> = ({ x, y, opacity, frame }) => {
   if (opacity <= 0.01) return null;
@@ -449,7 +512,12 @@ export const GazoducActe3CarteTSGP: React.FC = () => {
     //  - le zoom est une fonction MONOTONE du temps (jamais de palier, jamais de retour en arrière) ;
     //  - le centre glisse du Nigeria vers la tête du tracé, qui est elle-même continue.
     // La vitesse ne peut donc jamais tomber à zéro en cours de route.
-    const zoom = interpolate(frame, [0, TRACE_START, B.traceSaharaStart], [1.0, 2.2, 3.0], {
+    // ⭐ GAP-01 (appel comparatif Grok, severite HIGH — l'ecart le plus grave) : "vue continentale
+    // ultra-large quasi-constante (Afrique + Amerique du Sud visibles), le trace et la tranchee sont
+    // minuscules, l'impact dramatique est totalement perdu". Dans le storyboard le trace occupe
+    // 45-65 % de la hauteur du cadre. On part donc DEJA serre sur l'Afrique de l'Ouest (2.4 au lieu
+    // de 1.0) et on monte plus haut. ⚠️ Ne pas revenir a 1.0 : c'est ce qui rendait la scene plate.
+    const zoom = interpolate(frame, [0, TRACE_START, B.traceSaharaStart], [2.4, 3.4, 4.2], {
       ...clampB,
       easing: (t) => 1 - Math.pow(1 - t, 2.2), // un seul easing, sur toute la plage
     });
@@ -709,6 +777,14 @@ export const GazoducActe3CarteTSGP: React.FC = () => {
             );
           })()}
 
+
+          {/* LE RESEAU ALGERIEN — il PREEXISTE : il apparait quand la voix dit "reseaux algeriens",
+              et notre trace vient s'y raccorder. Ancre sur le dernier jalon (Algerie). */}
+          <ReseauAlgerien
+            reveal={interpolate(frame, [B.traceAlgerieApproach, B.traceAlgerieApproach + S(1.4)], [0, 1], clampB)}
+            frame={frame} camScale={cam.scale} anchorPt={tsgpJalons[tsgpJalons.length - 1]}
+          />
+
           {tsgpJalons.slice(0, -1).map((a, i) => {
             const b = tsgpJalons[i + 1];
             const segT0 = tsgpSegStarts[i], segT1 = tsgpSegStarts[i + 1];
@@ -723,11 +799,13 @@ export const GazoducActe3CarteTSGP: React.FC = () => {
             return (
               <g key={`tsgp-seg-${i}`} opacity={strokeOp}>
                 {beat4Active && (
-                  <path d={quadD(a, ctrl, b)} fill="none" stroke={strokeColor} strokeWidth={9} strokeLinecap="round"
+                  <path d={quadD(a, ctrl, b)} fill="none" stroke={strokeColor} strokeWidth={30 / cam.scale} strokeLinecap="round"
                     strokeDasharray={len} strokeDashoffset={len * (1 - segReveal)} opacity={0.35} />
                 )}
+                {/* ⚠️ ECRAN-CONSTANT (12/cam.scale) et non 3.6 en dur : sinon le tuyau gonfle a 25 px
+                    au zoom Adrar pendant que la tranchee reste fine, et il la recouvre entierement. */}
                 <path d={quadD(a, ctrl, b)} fill="none" stroke={strokeColor}
-                  strokeWidth={3.6} strokeLinecap="round"
+                  strokeWidth={9 / cam.scale} strokeLinecap="round"
                   strokeDasharray={len} strokeDashoffset={len * (1 - segReveal)} />
               </g>
             );
