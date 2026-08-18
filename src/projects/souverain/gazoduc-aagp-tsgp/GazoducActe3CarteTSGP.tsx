@@ -20,7 +20,7 @@
 // + Dispositif financement/banques ANCRÉ SUR LA CARTE (jetons Lucide aux coordonnées géographiques),
 //   remplace la jauge coin d'écran de la V1 — jamais un widget déconnecté de la géographie.
 import React from "react";
-import { AbsoluteFill, useCurrentFrame, interpolate, spring, useVideoConfig, Loop, OffthreadVideo, staticFile } from "remotion";
+import { AbsoluteFill, useCurrentFrame, interpolate, spring, useVideoConfig, Loop, OffthreadVideo, Sequence, staticFile } from "remotion";
 import geoData from "../../_rnd/d3-16x9/gazoducGeoElargie.json";
 import { GeoCountryPlaque } from "../../_shared/mapbox/GeoCountryPlaque";
 import { BEATS_A, GAZODUC_A3_CARTE_TSGP_FRAMES } from "./GazoducActe3Timing";
@@ -348,6 +348,79 @@ const CadranComparateur: React.FC<{ frame: number; startFrame: number; countUp: 
   );
 };
 
+// ===== LA RUPTURE D'ECHELLE (2026-08-18) — concept Gemini, breakdown par Gemini lui-meme =====
+//
+// Le probleme resolu : 55 s de carte d'affilee = plat (verdict d'Aziz, cause du gel de l'acte).
+// Le geste : quand la voix passe de la GEOGRAPHIE au CHANTIER ("les pelleteuses sont deja sur le
+// terrain"), on ne pose pas un encart timide sur la carte — ON QUITTE LA CARTE. Plein ecran sur la
+// matiere, puis retour. Mots de Gemini : "le beat retombe a plat si on reste a 10 000 km d'altitude
+// pour parler d'un chantier".
+//
+// ⛔ DUREE NON NEGOCIABLE — 155 frames, UNE SEULE PASSE DU CLIP.
+// Mesure : le clip fait 5,18 s / 154 frames et NE BOUCLE PAS (7,4 % des pixels sautent entre sa
+// derniere et sa premiere frame). Le boucler en plein ecran sur les 32,8 s du beat produirait
+// 6,3 raccords visibles. On le joue donc une fois, et on coupe AVANT qu'il ne reboucle.
+// ⛔ Ne pas "prolonger un peu" ce plan : c'est exactement ce qui reintroduirait le saut.
+//
+// Entree : flash blanc 80 % qui tombe a 0 en 4 frames (impact du cut, sans mouvement de camera).
+// Sortie : hard cut a 0 frame — c'est LUI qui esquive le probleme de boucle.
+const RuptureChantier: React.FC<{ localFrame: number; durF: number }> = ({ localFrame, durF }) => {
+  const flash = interpolate(localFrame, [0, 4], [0.8, 0], clampB);
+  return (
+    <AbsoluteFill style={{ background: "#000" }}>
+      {/* ⛔ BUG CORRIGE (2026-08-18) : sans <Sequence>, <OffthreadVideo> lit la frame ABSOLUE de la
+          composition. A la frame 1292 le clip (154 frames) etait fini depuis longtemps et affichait
+          sa DERNIERE IMAGE FIGEE. Le <Sequence from={RUPTURE_START}> lui donne son propre
+          referentiel : la video repart a sa frame 0 quand la rupture commence.
+          (Meme mecanisme que le <Loop> utilise pour l'encart plus bas.) */}
+      <Sequence from={0} durationInFrames={durF}>
+        <OffthreadVideo
+          src={staticFile("_rnd/minimax-h3-tests/gazoduc-pelleteuse/pelleteuse-1080p-v1.mp4")}
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          muted
+        />
+      </Sequence>
+      {/* Minimap : la seule chose qui dit OU on est, puisqu'on a quitte la carte. */}
+      <div style={{
+        position: "absolute", top: 40, right: 40,
+        width: H * 0.18, height: H * 0.18, borderRadius: "50%",
+        border: `2px solid ${CYAN}`, background: BG_BOT, overflow: "hidden",
+      }}>
+        <svg width="100%" height="100%" viewBox="0 0 100 100">
+          {(() => {
+            const alg = tsgpCountries[tsgpCountries.length - 1];
+            if (!alg) return null;
+            const nums = alg.d.match(/-?\d+\.?\d*/g)?.map(Number) ?? [];
+            let mnX = Infinity, mnY = Infinity, mxX = -Infinity, mxY = -Infinity;
+            for (let i = 0; i < nums.length - 1; i += 2) {
+              const x = nums[i], y = nums[i + 1];
+              if (x < mnX) mnX = x; if (x > mxX) mxX = x;
+              if (y < mnY) mnY = y; if (y > mxY) mxY = y;
+            }
+            const s = 74 / Math.max(mxX - mnX, mxY - mnY);
+            const tx = 50 - ((mnX + mxX) / 2) * s, ty = 50 - ((mnY + mxY) / 2) * s;
+            // Adrar : centre-ouest algerien, exprime en fraction de la bbox du pays.
+            const adX = (mnX + (mxX - mnX) * 0.34) * s + tx;
+            const adY = (mnY + (mxY - mnY) * 0.58) * s + ty;
+            const pulse = 1 + 0.2 * Math.sin(localFrame * 0.22);
+            return (
+              <g>
+                <path d={alg.d} transform={`translate(${tx} ${ty}) scale(${s})`}
+                  fill={CYAN} fillOpacity={0.16} stroke={CYAN} strokeOpacity={0.7} strokeWidth={0.9 / s} />
+                <circle cx={adX} cy={adY} r={3.4 * pulse} fill={CYAN} />
+                <circle cx={adX} cy={adY} r={6.5 * pulse} fill={CYAN} opacity={0.25} />
+              </g>
+            );
+          })()}
+        </svg>
+      </div>
+      {flash > 0.005 && (
+        <AbsoluteFill style={{ background: "#FFFFFF", opacity: flash, pointerEvents: "none" }} />
+      )}
+    </AbsoluteFill>
+  );
+};
+
 // ⛔ LA TRANCHEE A ETE RETIREE (2026-08-18) — decision d'Aziz, et elle vaut comme REGLE.
 // Le concept (le sol qui s'ouvre le long du trace) avait ete propose par 3 modeles sur 4 et dessine
 // en storyboard. Verdict : "le concept meme de tranchee ne fait pas de sens, vu qu'on n'en parle pas
@@ -426,7 +499,12 @@ const TriangleAlerte: React.FC<{ x: number; y: number; opacity: number; frame: n
 };
 
 export const GazoducActe3CarteTSGP: React.FC = () => {
-  const frame = useCurrentFrame();
+  const rawFrame = useCurrentFrame();
+  // ⛔ Pendant la rupture plein ecran, la carte est GELEE sur son dernier etat (breakdown Gemini :
+  // "le niveau de zoom de la carte est exactement celui d'avant la coupure"). Sans ce gel, elle
+  // continuerait d'evoluer derriere la video et le retour produirait un saut de cadrage.
+  const _rs = BEATS_A.pelleteusesStart;
+  const frame = (rawFrame >= _rs && rawFrame < _rs + 155) ? _rs - 1 : rawFrame;
   const { fps } = useVideoConfig();
 
   const globalFadeIn = interpolate(frame, [0, S(0.5)], [0, 1], clampB);
@@ -640,12 +718,14 @@ export const GazoducActe3CarteTSGP: React.FC = () => {
   const beat2GestureEnd = B.coutEmphaseStart - S(0.8); // le geste $ doit finir AVANT que le comparateur ne prenne le relais
   // Vignette/darkening — même principe que `darkenOverlay` de GazoducActe3InsertSecurite.tsx : le reste
   // de la carte s'assombrit pour focaliser l'œil sur Adrar seul pendant le chantier.
-  const chantierDarken = interpolate(
-    frame,
-    [beat2Start, beat2Start + S(1), beat2GestureEnd, beat2GestureEnd + S(0.6)],
-    [0, 0.7, 0.7, 0],
-    clampB,
-  );
+  // ⛔ VOILE SUPPRIME (2026-08-18, retour d'Aziz : "quand on revient sur la carte, pourquoi est-elle
+  // assombrie ? elle devrait rester normale").
+  // Cause : ce voile existait pour faire ressortir l'encart Adrar, et il etait pilote par
+  // `beat2Start` = pelleteusesStart — c'est-a-dire EXACTEMENT le moment de la rupture plein ecran.
+  // Depuis que l'encart s'efface a la rupture et ne revient plus, le voile n'avait plus rien a
+  // mettre en valeur : il ne faisait qu'eteindre la carte pendant toute la fin du segment.
+  // ⚠️ Le retirer, et non le re-doser : un effet dont la RAISON a disparu se supprime.
+  const chantierDarken = 0;
   const chantierReveal = interpolate(frame, [beat2Start, beat2Start + S(0.8)], [0, 1], clampB);
 
   // ===== Insert chantier COMPOSÉ (storyboard V5 beat2-chantier-libre.png, panneau TURNING_POINT) =====
@@ -658,7 +738,13 @@ export const GazoducActe3CarteTSGP: React.FC = () => {
   const insertEnd = beat2GestureEnd;
   const insertCardIn = interpolate(frame, [insertStart, insertStart + S(0.45)], [0, 1], clampB);
   const insertCardOut = interpolate(frame, [insertEnd - S(0.35), insertEnd], [1, 0], clampB);
-  const insertCardOpacity = frame < insertEnd - S(0.35) ? insertCardIn : insertCardOut;
+  const insertCardOpacityRaw = frame < insertEnd - S(0.35) ? insertCardIn : insertCardOut;
+  // ⛔ L'encart s'EFFACE a l'entree de la rupture plein ecran et NE REVIENT PAS (decision d'Aziz) :
+  // apres avoir vu le chantier en grand, le remontrer en vignette est une redite — "on revient a la
+  // carte, on garde les lignes actives, pas besoin de remontrer l'insert". Le segment finit donc sur
+  // la carte vivante. Fondu court avant le cut pour ne pas le faire disparaitre brutalement.
+  const insertOutRupture = interpolate(rawFrame, [BEATS_A.pelleteusesStart - S(0.5), BEATS_A.pelleteusesStart], [1, 0], clampB);
+  const insertCardOpacity = insertCardOpacityRaw * insertOutRupture;
   const insertCardScale = interpolate(insertCardIn, [0, 1], [0.94, 1]);
   const insertConnectorDraw = interpolate(frame, [insertStart, insertStart + S(0.4)], [0, 1], clampB);
   // Jauge : 0 -> 37% (chiffre du storyboard V5, "TRAVAUX EN COURS").
@@ -730,6 +816,15 @@ export const GazoducActe3CarteTSGP: React.FC = () => {
   const alertStaggerStep = S(0.22);
   const label1Opacity = interpolate(frame, [beat4Start + S(0.5), beat4Start + S(0.8), beat4End - S(0.5), beat4End], [0, 1, 1, 0], clampB);
   const label2Opacity = interpolate(frame, [beat4Start + S(0.75), beat4Start + S(1.05), beat4End - S(0.5), beat4End], [0, 1, 1, 0], clampB);
+
+  // ===== RUPTURE D'ECHELLE — calee sur "les pelleteuses sont deja sur le terrain" (forced-align) =====
+  // 155 frames = 1 passe du clip. ⛔ Ne pas allonger : le clip ne boucle pas (cf RuptureChantier).
+  const RUPTURE_START = B.pelleteusesStart;
+  const RUPTURE_DUR = 155;
+  // ⚠️ base sur rawFrame, PAS sur frame : `frame` est justement gele pendant la rupture, donc
+  // l'utiliser ici figerait aussi la video sur sa premiere image.
+  const ruptureLocal = rawFrame - RUPTURE_START;
+  const ruptureActive = ruptureLocal >= 0 && ruptureLocal < RUPTURE_DUR;
 
   return (
     <AbsoluteFill style={{ background: `linear-gradient(180deg, ${BG_TOP} 0%, ${BG_BOT} 100%)`, opacity: globalFadeIn * globalFadeOut }}>
@@ -1041,7 +1136,14 @@ export const GazoducActe3CarteTSGP: React.FC = () => {
           }}>ZONE ACTIVE</div>
         </>
       )}
-    </AbsoluteFill>
+    
+      {/* LA RUPTURE — par-dessus tout le reste, elle REMPLACE l'image pendant 155 frames. */}
+      {ruptureActive && (
+        <Sequence from={RUPTURE_START} durationInFrames={RUPTURE_DUR} layout="none">
+          <RuptureChantier localFrame={ruptureLocal} durF={RUPTURE_DUR} />
+        </Sequence>
+      )}
+</AbsoluteFill>
   );
 };
 

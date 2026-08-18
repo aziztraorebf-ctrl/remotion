@@ -395,88 +395,37 @@ storyboard multi-panneaux également testés. Détail complet : `tools/minimax-h
 
 ---
 
-## ⭐⭐⭐ GAZODUC — ACTES 4 ET 5 FINAUX. PROCHAINE ACTION = ACTE 3 (2026-08-17)
+## ⭐⭐⭐ GAZODUC — ACTE 3 EN COURS, 2 SEGMENTS SUR 3 FAITS (2026-08-18)
 
-**Acte 5 FINAL** (dernier acte de l'épisode) : `out/episodes/gazoduc-aagp-tsgp/acte5-FINAL.mp4`
-(46,17s / 1385 frames / 4 segments), commit `2dc1464c`. Breakdown : `breakdown-acte5/`.
-Acte 4 : les 3 mouvements A/B/C sont FINAUX (voir STATUS pour le détail des décisions de goût).
+**Actes 1, 2, 4, 5 : FINAUX.** L'Acte 3 est le dernier en chantier, et il a été DÉBLOQUÉ le 18/08
+après des semaines de gel.
 
-**⏭️ PRIORITÉ 1 = ACTE 3** — c'est le SEUL acte non validé, le dernier morceau manquant.
-Le gel du 2026-08-14 est **LEVÉ** : sa condition était « produire les Actes 4 et 5 d'abord » (un acte
-du milieu se juge par rapport à ses voisins) — c'est fait. Voir la section Acte 3 ci-dessous pour
-l'état gelé mesuré et les acquis à ne pas refaire.
+| Segment | État |
+|---|---|
+| A / Beats 1-2 (0→55 s) | ⭐ **débloqué, à faire valider** — `versions/acte3-segmentA-beats12-V3.mp4` |
+| A / Beat 3 (55→72,3 s) | ⏭️ **PROCHAINE ACTION** — spec V5 complète, codée à moitié |
+| B (73,9→105,8 s) | ⏭️ porter l'animation sur le décor Fable 5 |
+| C (105,8→123,1 s) | ✅ **FINAL** — `acte3-segmentC-verrou-FINAL.mp4` |
 
-**⚠️ Acte 4 NON ASSEMBLÉ** : 3 fichiers séparés (A 41,45s + B 33,40s + C 49,83s = 124,68s cumulées
-pour 124,04s d'audio). Les marges de sécurité de 300ms se cumulent → à rogner au montage.
-⛔ Assembler avec le FILTRE `concat=n=N:v=1:a=0`, jamais `-f concat` par liste (cf `tools/remotion.md`).
+**⏭️ PAR QUOI REPRENDRE — le Beat 3 (panneau financement).** C'est le morceau le plus prêt : la spec
+existe au pixel près dans `breakdown-v5-json/beat3-breakdown.json`, aucune décision de goût à prendre,
+l'image-cible a déjà été montrée à Aziz. Manquent la banque barrée DANS le panneau, le trio
+ALGÉRIE → vanne ← NIGERIA, et les cylindres comparatifs. Détail : STATUS.md § ACTE 3.
 
-**🆕 CTA DE FIN — chantier ouvert, non commencé.** L'épisode s'arrête net sur « CREUSER ». Aziz :
-il faut quelque chose, mais ⛔ **jamais d'interpellation directe du spectateur ni de « abonnez-vous »
-frontal** — « de manière classe ». À trancher : nouvelle voix vs carton visuel discret.
+⛔ **NE PAS ressortir la TRANCHÉE** (codée puis retirée le 18/08) : le script ne parle jamais de
+creusement, et c'est MON brief qui l'avait soufflée aux modèles.
+⛔ **NE PAS prolonger la rupture plein écran** au-delà de 155 frames : le clip ne boucle pas.
+⛔ **NE PAS remettre l'encart Adrar après la rupture** : décision d'Aziz, ce serait une redite.
 
-⭐ Palette sombre `PAL_GPT` = Actes 4 et 5. Actes 1/2/3 re-rendus à la **passe finale**, ⛔ PAS acte par acte.
+**Reste ensuite** : assemblage de l'Acte 4 (3 fichiers, 300 ms de marges à rogner, filtre
+`concat=n=N:v=1:a=0`) · CTA de fin (jamais commencé, ⛔ pas d'interpellation directe) · passe finale
+en palette sombre `PAL_GPT` pour les Actes 1/2/3, ⛔ PAS acte par acte.
 
-⛔ **Gate actif** : tout nouveau `.tsx` de scène doit déclarer `// MOTEUR: <registre> — <pourquoi>`
-(`.claude/hooks/moteur-visuel-gate.sh`).
-
-⚠️ **Décision de goût à ne pas défaire** : 4B v3 (arcs schématiques) a été PRÉFÉRÉE à v4 (géométrie
-réelle Medgaz) — choix de LISIBILITÉ, pas un oubli d'exactitude.
-
-⭐ **3 leçons de méthode de la session Acte 5** (détail : STATUS.md) :
-1. **Renvoyer un SVG à son propre modèle** pour qu'il le prépare à l'animation (pièces séparées, axe
-   documenté). Seuil : 2 essais infructueux sur un pivot → déléguer. Gain mesuré : 4 essais ratés
-   remplacés par 1 appel juste (mon axe manuel était faux de 29px).
-2. **Boucle d'amélioration** : renvoyer à un agent SON rendu + une cible enrichie.
-3. **Concours SVG multi-modèles** (`svg-concours-vision.py`) — il n'y a PAS de meilleur modèle absolu,
-   le classement s'inverse par élément → mix-and-match des groupes `<g id>`.
-
-⛔⛔ **RÈGLE DE DÉCOUPAGE** (erreur commise 2× dans la même session, trouvée par Aziz les 2 fois) :
-**une frontière de plan se pose APRÈS la fin d'un mot, jamais sur son ancre.** Le forced-align donne
-`start` ET `end` — poser la coupe dans le SILENCE qui suit. Doctrine : `AUDIO-PAUSES-DETERMINISTES.md`.
-
-⚠️ **Limite d'outil** : le détecteur d'immobilité (vignettes 320px) est aveugle aux mouvements lents
-et localisés — 2 faux positifs consécutifs. Mesurer finement + REGARDER avant d'itérer sur son verdict.
-
-## ⛔ GAZODUC — ACTE 3 : GEL LEVÉ, C'EST LA PRIORITÉ 1 (2026-08-17)
-
-**Le gel du 2026-08-14 avait UNE condition : produire les Actes 4 et 5 d'abord**, pour qu'un acte du
-milieu puisse se juger par rapport à ses voisins. **C'est fait** (4 et 5 FINAUX) → on peut rouvrir
-l'Acte 3, et c'est la priorité 1. ⛔ Repartir de l'état gelé MESURÉ (ci-dessous), pas de zéro.
-⚠️ Le motif du gel reste une leçon de méthode valable : un acte du milieu ne se juge pas dans le vide.
-
-Raison structurelle (pas seulement de la fatigue) : un acte du milieu se juge par rapport à ses
-voisins. L'Acte 3 est coincé entre un Acte 2 validé et des Actes 4/5 inexistants, donc sa fin se
-juge dans le vide — le conflit de budget du Beat 4 (15.2s demandés vs 1.9s disponibles) en est la
-preuve directe, et il se tranchera bien mieux une fois le climax de l'Acte 4 écrit.
-
-État gelé complet (acquis + ce qui reste cassé, mesuré) : `episodes/souverain/gazoduc-aagp-tsgp/
-STATUS.md` § "ACTE 3 — GELÉ EN WIP" (en tête de fichier). Rendu de référence :
-`out/episodes/gazoduc-aagp-tsgp/versions/acte3-segmentA-suite-V12-WIP.mp4`.
-Commit `9e302fb2` (`feat/gazoduc-acte1-hook-globe`).
-✅ Le starter `memory/starters/STARTER-PROMPT-gazoduc-acte3-suite.md` est **RÉACTIVÉ** — son corps
-(contraintes, protocole de vérification par mesure, briques) reste exact. ⛔ Seul son § final
-« Après l'Acte 3 » est faux (il dit que 4 et 5 n'existent pas).
-
-**Acquis à ne PAS refaire** : Beat 1 validé (caméra continue) · Beat 2 = vrai insert composé (clip H3,
-jauge, badge, connecteur) — le principe de l'insert composé est le gain de ces sessions · Segment B
-décor Fable5 porté.
-
-⚠️ (Ligne périmée retirée le 2026-08-17 : elle disait « Actes 4 et 5 : rien n'existe » — les deux sont
-FINAUX depuis. Leurs pics narratifs sont consommés : les 70% siphonnés sont dans 4A, le robinet est
-devenu UNE vanne + bifurcation dans l'Acte 5, sans mains.)
-
-**Leçon caméra (3 itérations perdues)** : un mouvement « par à-coups » n'est presque jamais un problème
-de dosage. `easeInOut` appliqué PAR SEGMENT met la vitesse à exactement 0 à chaque point de passage.
-**Mesurer la vitesse frame à frame avant de retoucher une valeur**, et chercher la brique existante
-(le mécanisme continu était déjà dans l'Acte 2 validé + un prototype dédié).
-
-(ARCHIVE — approche abandonnée, ne pas repartir dessus) Le rendu v2 et le plan de refonte v3 par 4 agents
-vierges (`PLAN-ACTES2-5.md` § "TEST STUDIO RÉUTILISABLE") ont été DÉPASSÉS le 2026-08-14 : on repart
-désormais du storyboard V5 + ses 4 breakdowns JSON, directement. Le v3 a été explicitement rejeté par
-Aziz. Point de goût Segment B : tranché (décor Fable5 porté, fait).
-
-Repère sujet : `projects/GAZODUC-MEGAPROJETS-SUJET.md`. Tests client-sim (Flowdesk/NorthShield/MOCH-IT)
-TOUS CLOS, détail isolé `client-sim-tests/INDEX.md`.
+⭐ **MÉTHODE STORYBOARD REFONDUE cette session** (`memory/fiches/FICHE-STORYBOARD.md`) : audit du
+brief par un modèle tiers OBLIGATOIRE · 3 modèles dessinateurs (Grok/GPT/Gemini), 1 appel chacun,
+2 concepts par planche · le modèle pose un LISERÉ au lieu d'écrire · description case-par-case
+demandée APRÈS le choix, au modèle qui a dessiné. Testée le 18/08 : marche sur Grok et Gemini,
+GPT a rendu une planche inexploitable (à corriger en imposant « 4 colonnes par rangée »).
 
 ---
 

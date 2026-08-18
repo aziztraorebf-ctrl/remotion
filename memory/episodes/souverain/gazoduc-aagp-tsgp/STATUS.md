@@ -1,6 +1,60 @@
 # Gazoduc AAGP vs TSGP — STATUS
 
-**Mis à jour** : 2026-08-17
+**Mis à jour** : 2026-08-18
+
+## 🏁 ACTE 3 — SEGMENT C **FINAL** + SEGMENT A **DÉBLOQUÉ** (2026-08-18)
+
+### ✅ SEGMENT C (105,8 → 123,1 s) — « LE VERROU CROISÉ », validé Aziz
+Livrable : `out/episodes/gazoduc-aagp-tsgp/acte3-segmentC-verrou-FINAL.mp4` (17,26 s, activité
+médiane 2,94 %, aucun creux). Code : `GazoducActe3Verrou.tsx` (compo `D3-Gazoduc-Acte3-Verrou`).
+Décor SVG : `src/projects/_rnd/svg-scenes/GazoducVerrouCroise.svg` (Fable 5, 20 groupes animables).
+Concept : Grok · planche : Grok Imagine 2.0.
+
+Une conduite en coupe, deux vannes. Côté Maroc la sécurité est grande ouverte mais le financement
+verrouillé par un mécanisme arachnéen ; côté Algérie l'inverse exact (disques verrouillés, puis
+barbelés + fissures). Le fluide pousse et ne passe jamais — c'est lui qui tient les 17 s.
+SFX : `impact.mp3` ×2, `ui/stamp-dossier.mp3` ×3, `ui/vault-lock.mp3`, + `impact/metal-crack.mp3`
+(généré pour cette scène). Tous via `<Sequence>`.
+
+⛔ **VARIANTE REJETÉE — `GazoducActe3Ponts.tsx`** (conservée pour trace, ne pas la reprendre).
+Les 2 variantes ont été codées et rendues exprès : une scène de mouvement ne se juge qu'en mouvement.
+Motif du rejet, qui vaut comme RÈGLE : la métaphore était **importée** au lieu d'être prise dans le
+monde du sujet. Une conduite avec une vanne EST un gazoduc ; un pont REPRÉSENTE une infrastructure
+(2 traductions mentales). ⚠️ C'était la plus belle planche des quatre — la beauté ne rachète pas le
+coût de décodage. → `feedback_metaphore-dans-le-monde-du-sujet.md`
+
+### ⭐ SEGMENT A / Beats 1-2 (0 → 55 s) — DÉBLOQUÉ, à faire valider
+Rendu : `out/.../versions/acte3-segmentA-beats12-V3.mp4` (activité médiane **10,33 %**, minimum
+7,42 %, aucun creux — contre 0,57 % sur les premiers jets). Code : `GazoducActe3CarteTSGP.tsx`.
+
+Ce qui a débloqué l'acte, après des semaines de gel :
+- **0 → 22 s** (breakdown Grok) : les deux tracés partent du MÊME point au Nigeria et divergent —
+  l'or contourne par la côte, le cyan perce au nord. Idée tirée du script (« son point de départ est
+  le même… mais au lieu de faire le grand tour »), jamais exploitée jusque-là.
+- **22 s** : raccordement au **réseau algérien existant** (cyan pâle `#7FD8FF`, jamais doré — le doré
+  est réservé au rival), qui dit « ils pompent déjà vers l'Europe depuis des décennies ».
+- **43 s** (breakdown Gemini, calé sur `pelleteusesStart`) : **RUPTURE D'ÉCHELLE**. On quitte la
+  carte, plein écran sur le chantier + minimap d'Algérie. Flash blanc 4 frames en entrée, hard cut en
+  sortie. ⛔ **155 frames, UNE seule passe** : le clip fait 5,18 s et NE BOUCLE PAS (7,4 % de saut) —
+  le hard cut esquive le problème. Ne jamais « prolonger un peu » ce plan.
+- **Retour carte** : l'encart Adrar s'efface à la rupture et NE REVIENT PAS (décision d'Aziz : après
+  l'avoir vu en grand, le remontrer en vignette est une redite). Le segment finit sur la carte vivante.
+
+⛔ **LA TRANCHÉE A ÉTÉ CODÉE PUIS RETIRÉE** — ne pas la ressortir. Le script ne parle jamais de
+creusement. Cause racine : **mon brief de storyboard l'avait soufflée** (`trench`, `it has started
+digging`, `underground`) et 3 modèles sur 4 me l'ont renvoyée. 2e signal manqué : 4 itérations de
+DOSAGE sur ce geste — quand un geste demande autant de réglage, c'est qu'il n'a pas de raison d'être.
+
+### ⏭️ CE QUI RESTE SUR L'ACTE 3
+1. **Beat 3 — panneau financement (55 → 72,3 s)** : ⭐ le plus prêt à coder. La spec existe au pixel
+   près (`breakdown-v5-json/beat3-breakdown.json`) et n'a été codée qu'à moitié. Manquent : la banque
+   barrée DANS le panneau (1170, 640), le trio ALGÉRIE → vanne ← NIGERIA (y≈700), les cylindres
+   comparatifs. ⚠️ Le donut « 13 Mds$ » actuel n'est PAS dans la spec (elle demande du texte nu 104 px).
+   Image-cible déjà composée, montrée à Aziz le 2026-08-17.
+2. **Segment B (73,9 → 105,8 s)** : porter l'animation de `GazoducActe3InsertSecurite.tsx` sur le
+   décor Fable 5 `GazoducAeroportFable5Test.tsx`. Timing/beats/extinction déjà résolus — seul le
+   DÉCOR change. ⛔ Aucune figuration humaine.
+3. Validation Aziz du Segment A.
 
 ## 🏁 ACTE 4 — COMPLET : mouvements A, B et C tous FINAUX (2026-08-16)
 
