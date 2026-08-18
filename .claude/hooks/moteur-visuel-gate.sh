@@ -87,6 +87,18 @@ EOF
       PROBLEMES="$PROBLEMES\n  - FERMETURE d'un registre entier : \"$FERM\""
     fi
 
+    # (0) PORTE DE SORTIE — BRIEF DE RE-DESSIN, PAS DE CONCEPTION (ajoutee 2026-08-18)
+    # Le gate cherche un brief BRIDE. Mais une fois le concept ARBITRE par Aziz, on renvoie
+    # legitimement au modele une planche a REDESSINER avec des corrections precises : la, ecrire le
+    # concept n'est pas un biais, c'est la consigne. Vecu ce jour : le gate a bloque un re-dessin
+    # legitime (planche "tranchee" v2, 3 defauts de lisibilite a corriger), contourne par un chemin
+    # de fichier hors surveillance — un contournement n'est pas un fix.
+    # ⚠️ Cette porte NE dispense PAS de l'audit du brief par un modele tiers (FICHE-STORYBOARD.md) :
+    # elle dit seulement "ce brief n'est pas une conception", pas "ce brief est bon".
+    if grep -qiE "REDRAW|RE-?DESSIN|ALREADY (SELECTED|CHOSEN|ARBITRATED)|concepts? (are|is) already (chosen|selected)|MISTAKES? FROM THE PREVIOUS ATTEMPT" "$PROMPT_FILE"; then
+      exit 0
+    fi
+
     # (2) CONCEPTS PRE-MACHES : on donne au modele les options a illustrer au lieu de les lui demander
     if grep -qiE "OPTION [AB][ ]*[-—:]|OPTION [AB] *$" "$PROMPT_FILE"; then
       PROBLEMES="$PROBLEMES\n  - CONCEPTS DEJA ECRITS PAR NOUS (\"OPTION A / OPTION B\") : le modele ILLUSTRE nos idees\n    au lieu d'en proposer. C'est la cause n°1 d'un storyboard qui redit la scene precedente."
