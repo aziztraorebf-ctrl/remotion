@@ -1,0 +1,113 @@
+You are a senior motion designer working on a premium French-language geopolitics documentary
+channel (register: Vox, Johnny Harris, PolyMatter, Bloomberg Originals).
+
+Propose THREE DISTINCT visual concepts for a 55-second stretch of one act, then say which one you
+defend and why. Do not illustrate an idea we give you — we are deliberately not giving you one.
+
+========================================================================
+THE PROBLEM WE ARE TRYING TO SOLVE — read this first, it is the whole brief
+========================================================================
+This act has been FROZEN for weeks because we could not make this stretch work. Our director's
+words: "from beginning to end, whether for the financing or for the routes on the map, I found it
+flat. I could not unlock the scene."
+
+Here is why, diagnosed precisely:
+- Act 2 (which works) is NOT a map act. Over 127 seconds it is: an SVG signature scene, a flashback,
+  a financing scene — and only 20 seconds of actual map.
+- Act 4 (which works) LEAVES the map entirely for a time-axis and stacked volumes.
+- Act 5 (which works) is a valve and a bifurcation. No map.
+- THIS stretch is 55 uninterrupted seconds of map: routes drawing themselves across territory, with
+  name plates appearing. Nothing else. That is the flatness.
+
+⛔ So the brief is NOT "make the map prettier". It is: **what carries these 55 seconds?**
+You may keep the map, but if you keep it you must justify what makes it live for that long.
+
+========================================================================
+THE NARRATION — locked audio, French, with exact timings
+========================================================================
+BEAT 1 — 0 → 22.2 s
+"Ce que peu de médias racontent, c'est que ce projet a un concurrent direct. Et ce concurrent, lui,
+n'attend plus. Il s'appelle le gazoduc transsaharien. Son point de départ est le même que le gazoduc
+atlantique africain : le Nigeria. Mais au lieu de faire le grand tour par la côte, il traverse le
+Niger, remonte le Sahara, et se connecte directement aux réseaux algériens, qui pompent déjà du gaz
+vers l'Europe depuis des décennies."
+→ "What few media outlets report is that this project has a direct competitor. And this competitor
+is not waiting. It is called the Trans-Saharan pipeline. Its starting point is the same as the
+Atlantic pipeline: Nigeria. But instead of taking the long way around the coast, it crosses Niger,
+climbs the Sahara, and connects directly to the ALGERIAN NETWORKS, WHICH HAVE ALREADY BEEN PUMPING
+GAS TO EUROPE FOR DECADES."
+
+BEAT 2 — 22.2 → 55 s
+"Le quatre juin deux mille vingt-six, l'Algérie annonce officiellement le début des travaux sur son
+tronçon, dans la région d'Adrar. Les pelleteuses sont déjà sur le terrain, et Sonatrach, la
+compagnie nationale, l'a confirmé elle-même."
+→ "On June 4th 2026, Algeria officially announces the start of construction on its section, in the
+Adrar region. THE EXCAVATORS ARE ALREADY ON THE GROUND, and Sonatrach, the national company, has
+confirmed it itself."
+
+The dramatic core of these 55 seconds, in one sentence: **one of the two rivals is no longer talking
+— it has started digging, and it plugs into infrastructure that already exists.**
+The previous act ended on the opposite: the other project is diplomatically mature but "its pipes
+remain, for now, VIRTUAL". So this stretch must feel like the arrival of something REAL and ALREADY
+MOVING, against something that only exists on paper.
+
+========================================================================
+WHAT WE ALREADY HAVE (and what is worth keeping)
+========================================================================
+- A continuous camera move across the map, already validated — smooth, never static.
+- A composed inset for the Adrar construction site: a framed card holding a looping stylised clip of
+  an excavator, a date badge, a 37% progress gauge, a connector line down to a pin on the map.
+  Our director explicitly called this composed inset "the main gain of these sessions" — it works.
+⛔ Do not throw these away casually. If your concept replaces them, say why it is worth it.
+
+========================================================================
+WHICH ENGINE? — you are NOT required to stay on the map
+========================================================================
+Six engines are available to us:
+ 1. MAP (D3, real geography) — spatial and causal relations.
+ 2. GEOMETRIC DATA-VIZ (D3) — quantity, time, proportion. Axes, curves, volumes. No map.
+ 3. OBJECT / METAPHOR (drawn SVG) — one built thing carrying the idea: a valve, a pipe in
+    cross-section, a ledger, a gauge, a machine. ⭐ This engine just rescued another stretch of this
+    same act: a cutaway pipe with two valves and a fluid that pushes but never passes.
+ 4. FIGURE (stylised stick-figure actors) — sparingly, for human scale.
+ 5. FILMED MATTER (short looping stylised clips, flat-vector rendered) — texture, ground truth.
+    We already have an excavator clip of this kind.
+ 6. ⭐ THE CUT / EDITING — you may LEAVE the map, cut away, alternate registers, and come back.
+
+State which engine each concept uses. **At least ONE of your three concepts must not be map-based.**
+⭐ Strong hint from what has worked on this episode: concepts built on an object that LITERALLY
+belongs to the world of gas (pipe, valve, compressor, meter, trench, weld) beat imported metaphors
+(bridge, scale, tower) — an imported metaphor forces the viewer to translate before understanding,
+and we have measured that cost.
+
+========================================================================
+MATERIAL CONSTRAINTS
+========================================================================
+Everything is coded: React + Remotion + D3 + SVG, frame-driven, real GeoJSON geography.
+ALLOWED: flat fills, simple gradients, strokes, dash patterns, opacity, blur/glow, masks and
+clipping, camera pan/zoom on a real projection, elements drawing themselves on, staggered reveals,
+short looping stylised video clips inside a frame.
+FORBIDDEN: 3D, extrusion, volumetric lighting, bevels, metallic or glassy materials, photoreal
+textures, perspective interiors, crowds, detailed human figures, anything needing After Effects.
+Geography must stay REAL.
+
+Palette (use it, do not invent another):
+  background #0d1f38 → #050c1a (radial)   inactive land #16304f    borders #58809f
+  active country #2E9FD4 / #7FD8FF        gold #FFC742 (the rival Atlantic route)
+  cyan #00C4FF (the Trans-Saharan route)  alert red #FF4B45        white #F4F8FF
+
+⛔ Do NOT self-assess feasibility. Instead, for EACH panel, name THE SINGLE VISUAL GESTURE that
+carries it ("the territory fills", "the camera pulls back", "the trench opens"). If a panel needs
+three gestures to describe, it is too expensive — simplify it before describing it.
+
+⛔ HARD RULE ON TEXT: no status labels on screen. Country name plates and a date are allowed — they
+identify, they do not explain. Anything spelling out the argument is banned: the voice already says
+it, and repeating it on screen is our most-repeated mistake.
+
+========================================================================
+WHAT WE ARE ASKING
+========================================================================
+Ambition is NOT constrained — only the material is. We would rather receive a bold proposal in flat
+vector than a safe one. Specifically: we are tired of "flat routes that do not mean much". If a
+concept wants to pull the camera way back, change scale, cut away from the map, go inside the pipe,
+underground, or hold on a single detail, propose it.

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  GazoducDeuxPonts.svg — 1920x1080 — plan fixe "LES DEUX PONTS" (fin acte 3, 17.3 s)
+  SVG statique pur : aucune animation, aucun style global, aucun JS. Nous animons dans Remotion.
+
+  GROUPES (ordre de peinture = ordre du fichier) :
+
+  fond                    Fond radial #0d1f38 -> #050c1a. Statique.
+  maroc_vide              Zone sombre sous le pont dore (absence d'appui). Fade-in lent, puis leger
+                          "respir" d'opacite (0.9 -> 1.0) pour rendre le vide oppressant.
+  maroc_arches            Arcade doree sous le tablier (4 arches regulieres, jambes finissant dans
+                          le vide). Peut recevoir la meme oscillation verticale douce que le tablier.
+  maroc_tablier           Tablier dore continu (ne casse JAMAIS). Animer : translation verticale
+                          sinusoidale de +/-4 px (le pont "flotte", suspendu), synchronisee avec
+                          maroc_arches et le bas des fils.
+  maroc_fils              Les 3 fils de suspension — LE SENS DU PLAN. Sous-groupes fil_1, fil_2,
+                          fil_3, chacun avec origine locale (0,0) SUR son ancrage haut (y=0 du
+                          cadre) : un simple rotate(+/-0.6deg) dephase (fil_1 a t, fil_2 a t+8f,
+                          fil_3 a t+16f) les fait vibrer en decale. Ne jamais les masquer.
+  algerie_sol             Sol massif + rochers. Statique (c'est la force : rien ne bouge).
+  algerie_piles           4 piles massives + semelles ancrees dans le sol. Statique.
+  algerie_lueur_rouge     Lueur rouge dans la fracture. Livree opacity="0". Fade-in puis pulsation
+                          d'opacite 0.5 <-> 1.0 (periode ~1.5 s).
+  algerie_tablier_gauche  Demi-tablier gauche. Origine locale (0,0) = sommet de la pile x=1300
+                          (dernier appui avant la breche) : rotate(+1 a +2 deg) fait plonger le
+                          bord casse dans la breche.
+  algerie_tablier_droit   Demi-tablier droit. Origine locale (0,0) = sommet de la pile x=1500 :
+                          rotate(-1 a -2 deg), symetrique du gauche, pour OUVRIR la fracture.
+  algerie_fragments       Eclats detaches dans la breche. Livre opacity="0". Sous-groupes
+                          fragment_1/2/3, origine locale au centroide de chaque eclat : reveler
+                          puis translation lente vers le bas + rotate propre (chute decalee).
+  plaque_maroc            Plaque "MAROC" sous le pont DORE SUSPENDU (gauche). Fade-in.
+  plaque_algerie          Plaque "ALGÉRIE" sous le pont CYAN ROMPU (droite). Fade-in.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+
+  <defs>
+    <radialGradient id="bgRadial" cx="50%" cy="46%" r="75%">
+      <stop offset="0%" stop-color="#0d1f38"/>
+      <stop offset="100%" stop-color="#050c1a"/>
+    </radialGradient>
+    <linearGradient id="goldDeck" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFE38A"/>
+      <stop offset="100%" stop-color="#FFC742"/>
+    </linearGradient>
+    <linearGradient id="goldArch" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFC742" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#FFC742" stop-opacity="0.45"/>
+    </linearGradient>
+    <linearGradient id="cyanDeck" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#00C4FF"/>
+      <stop offset="100%" stop-color="#00C4FF" stop-opacity="0.62"/>
+    </linearGradient>
+    <linearGradient id="stoneGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#16304f"/>
+      <stop offset="100%" stop-color="#050c1a"/>
+    </linearGradient>
+    <radialGradient id="voidGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#050c1a" stop-opacity="0.95"/>
+      <stop offset="60%" stop-color="#050c1a" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#050c1a" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="redGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FF4B45" stop-opacity="0.85"/>
+      <stop offset="55%" stop-color="#FF4B45" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#FF4B45" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- ================= FOND ================= -->
+  <g id="fond">
+    <rect x="0" y="0" width="1920" height="1080" fill="url(#bgRadial)"/>
+  </g>
+
+  <!-- ============ MAROC — LE VIDE SOUS LE PONT ============ -->
+  <g id="maroc_vide">
+    <ellipse cx="520" cy="800" rx="310" ry="115" fill="url(#voidGrad)"/>
+    <ellipse cx="520" cy="795" rx="180" ry="60" fill="#050c1a" fill-opacity="0.8"/>
+  </g>
+
+  <!-- ============ MAROC — ARCHES (jambes finissant dans le vide) ============ -->
+  <g id="maroc_arches">
+    <path fill="url(#goldArch)" fill-rule="evenodd" d="
+      M 220 574 H 820 V 690 H 220 Z
+      M 244 690 V 634 A 60 60 0 0 1 364 634 V 690 Z
+      M 388 690 V 634 A 60 60 0 0 1 508 634 V 690 Z
+      M 532 690 V 634 A 60 60 0 0 1 652 634 V 690 Z
+      M 676 690 V 634 A 60 60 0 0 1 796 634 V 690 Z"/>
+    <line x1="220" y1="690" x2="820" y2="690" stroke="#FFC742" stroke-opacity="0.35" stroke-width="2"/>
+  </g>
+
+  <!-- ============ MAROC — TABLIER (continu, parfait) ============ -->
+  <g id="maroc_tablier">
+    <rect x="200" y="540" width="640" height="34" rx="6" fill="url(#goldDeck)"/>
+    <rect x="212" y="544" width="616" height="4" rx="2" fill="#FFE38A" fill-opacity="0.9"/>
+    <rect x="194" y="532" width="14" height="46" rx="4" fill="#FFE38A"/>
+    <rect x="832" y="532" width="14" height="46" rx="4" fill="#FFE38A"/>
+  </g>
+
+  <!-- ============ MAROC — LES 3 FILS DE SUSPENSION (le sens du plan) ============
+       Chaque fil : origine locale (0,0) = ancrage haut, ligne dessinee vers le bas.
+       rotate() sur fil_N suffit pour le faire vibrer. -->
+  <g id="maroc_fils">
+    <g id="fil_1" transform="translate(320 0)">
+      <line x1="0" y1="-40" x2="0" y2="540" stroke="#FFE38A" stroke-opacity="0.18" stroke-width="7"/>
+      <line x1="0" y1="-40" x2="0" y2="540" stroke="#FFE38A" stroke-width="2.5"/>
+      <rect x="-8" y="534" width="16" height="8" rx="2" fill="#FFE38A"/>
+      <circle cx="0" cy="540" r="5" fill="#FFE38A"/>
+    </g>
+    <g id="fil_2" transform="translate(520 0)">
+      <line x1="0" y1="-40" x2="0" y2="540" stroke="#FFE38A" stroke-opacity="0.18" stroke-width="7"/>
+      <line x1="0" y1="-40" x2="0" y2="540" stroke="#FFE38A" stroke-width="2.5"/>
+      <rect x="-8" y="534" width="16" height="8" rx="2" fill="#FFE38A"/>
+      <circle cx="0" cy="540" r="5" fill="#FFE38A"/>
+    </g>
+    <g id="fil_3" transform="translate(720 0)">
+      <line x1="0" y1="-40" x2="0" y2="540" stroke="#FFE38A" stroke-opacity="0.18" stroke-width="7"/>
+      <line x1="0" y1="-40" x2="0" y2="540" stroke="#FFE38A" stroke-width="2.5"/>
+      <rect x="-8" y="534" width="16" height="8" rx="2" fill="#FFE38A"/>
+      <circle cx="0" cy="540" r="5" fill="#FFE38A"/>
+    </g>
+  </g>
+
+  <!-- ============ ALGERIE — SOL MASSIF ============ -->
+  <g id="algerie_sol">
+    <path fill="url(#stoneGrad)" d="M 1040 794 L 1092 780 L 1182 787 L 1300 778 L 1420 785 L 1540 779 L 1662 786 L 1742 780 L 1780 794 L 1780 900 L 1040 900 Z"/>
+    <polyline points="1040,794 1092,780 1182,787 1300,778 1420,785 1540,779 1662,786 1742,780 1780,794" fill="none" stroke="#58809f" stroke-width="2.5"/>
+    <polygon points="1108,820 1146,812 1160,834 1116,840" fill="#16304f" stroke="#58809f" stroke-width="1.5" stroke-opacity="0.6"/>
+    <polygon points="1594,824 1636,816 1652,840 1602,846" fill="#16304f" stroke="#58809f" stroke-width="1.5" stroke-opacity="0.6"/>
+    <line x1="1240" y1="852" x2="1330" y2="848" stroke="#58809f" stroke-opacity="0.35" stroke-width="2"/>
+    <line x1="1460" y1="860" x2="1560" y2="856" stroke="#58809f" stroke-opacity="0.35" stroke-width="2"/>
+  </g>
+
+  <!-- ============ ALGERIE — PILES ET FONDATIONS MASSIVES ============ -->
+  <g id="algerie_piles">
+    <rect x="1060" y="792" width="120" height="28" rx="3" fill="#16304f" stroke="#58809f" stroke-width="2"/>
+    <polygon points="1090,574 1150,574 1166,796 1074,796" fill="url(#stoneGrad)" stroke="#58809f" stroke-width="2"/>
+    <rect x="1086" y="574" width="68" height="8" fill="#00C4FF" fill-opacity="0.9"/>
+    <rect x="1240" y="792" width="120" height="28" rx="3" fill="#16304f" stroke="#58809f" stroke-width="2"/>
+    <polygon points="1270,574 1330,574 1346,796 1254,796" fill="url(#stoneGrad)" stroke="#58809f" stroke-width="2"/>
+    <rect x="1266" y="574" width="68" height="8" fill="#00C4FF" fill-opacity="0.9"/>
+    <rect x="1440" y="792" width="120" height="28" rx="3" fill="#16304f" stroke="#58809f" stroke-width="2"/>
+    <polygon points="1470,574 1530,574 1546,796 1454,796" fill="url(#stoneGrad)" stroke="#58809f" stroke-width="2"/>
+    <rect x="1466" y="574" width="68" height="8" fill="#00C4FF" fill-opacity="0.9"/>
+    <rect x="1620" y="792" width="120" height="28" rx="3" fill="#16304f" stroke="#58809f" stroke-width="2"/>
+    <polygon points="1650,574 1710,574 1726,796 1634,796" fill="url(#stoneGrad)" stroke="#58809f" stroke-width="2"/>
+    <rect x="1646" y="574" width="68" height="8" fill="#00C4FF" fill-opacity="0.9"/>
+  </g>
+
+  <!-- ============ ALGERIE — LUEUR ROUGE DANS LA FRACTURE (a reveler + pulser) ============ -->
+  <g id="algerie_lueur_rouge" opacity="0">
+    <circle cx="1398" cy="578" r="115" fill="url(#redGlow)"/>
+    <circle cx="1398" cy="572" r="52" fill="#FF4B45" fill-opacity="0.35"/>
+    <ellipse cx="1398" cy="570" rx="24" ry="38" fill="#FF4B45" fill-opacity="0.9"/>
+  </g>
+
+  <!-- ============ ALGERIE — DEMI-TABLIER GAUCHE ============
+       Origine locale (0,0) = (1300, 574), sommet de la derniere pile avant la breche.
+       rotate() positif = le bord casse plonge. -->
+  <g id="algerie_tablier_gauche" transform="translate(1300 574)">
+    <path fill="url(#cyanDeck)" d="M -214 -34 Q -220 -34 -220 -28 V -6 Q -220 0 -214 0 H 58 L 82 -7 L 55 -12 L 74 -20 L 50 -26 L 66 -34 Z"/>
+    <rect x="-210" y="-30" width="252" height="4" rx="2" fill="#F4F8FF" fill-opacity="0.35"/>
+    <rect x="-226" y="-42" width="14" height="46" rx="4" fill="#00C4FF"/>
+  </g>
+
+  <!-- ============ ALGERIE — DEMI-TABLIER DROIT ============
+       Origine locale (0,0) = (1500, 574), sommet de la premiere pile apres la breche.
+       rotate() negatif = le bord casse plonge, symetrique du gauche. -->
+  <g id="algerie_tablier_droit" transform="translate(1500 574)">
+    <path fill="url(#cyanDeck)" d="M 214 -34 Q 220 -34 220 -28 V -6 Q 220 0 214 0 H -62 L -86 -6 L -57 -13 L -78 -21 L -52 -27 L -70 -34 Z"/>
+    <rect x="-42" y="-30" width="252" height="4" rx="2" fill="#F4F8FF" fill-opacity="0.35"/>
+    <rect x="212" y="-42" width="14" height="46" rx="4" fill="#00C4FF"/>
+  </g>
+
+  <!-- ============ ALGERIE — FRAGMENTS DANS LA BRECHE (a reveler) ============
+       Chaque fragment : origine locale = son centroide, pour rotate() en chute. -->
+  <g id="algerie_fragments" opacity="0">
+    <g id="fragment_1" transform="translate(1382 615)">
+      <polygon points="-14,-10 12,-16 16,2 -4,12" fill="#00C4FF" fill-opacity="0.9"/>
+    </g>
+    <g id="fragment_2" transform="translate(1414 656)">
+      <polygon points="-10,-12 14,-6 8,12 -12,8" fill="#00C4FF" fill-opacity="0.75"/>
+    </g>
+    <g id="fragment_3" transform="translate(1394 700)">
+      <polygon points="-8,-8 10,-10 12,6 -10,10" fill="#00C4FF" fill-opacity="0.6"/>
+    </g>
+  </g>
+
+  <!-- ============ PLAQUES DE NOMS ============
+       MAROC sous le pont DORE SUSPENDU (gauche) — ALGÉRIE sous le pont CYAN ROMPU (droite). -->
+  <g id="plaque_maroc">
+    <rect x="400" y="936" width="240" height="62" rx="8" fill="#16304f" stroke="#FFC742" stroke-width="2"/>
+    <text x="524" y="978" text-anchor="middle" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="32" font-weight="700" letter-spacing="8" fill="#F4F8FF">MAROC</text>
+  </g>
+  <g id="plaque_algerie">
+    <rect x="1266" y="936" width="268" height="62" rx="8" fill="#16304f" stroke="#00C4FF" stroke-width="2"/>
+    <text x="1404" y="978" text-anchor="middle" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="32" font-weight="700" letter-spacing="8" fill="#F4F8FF">ALGÉRIE</text>
+  </g>
+
+</svg>

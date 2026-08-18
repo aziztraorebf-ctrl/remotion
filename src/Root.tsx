@@ -89,6 +89,8 @@ import { GAZODUC_A4_SEGA_FRAMES, GAZODUC_A4_SEGB_FRAMES, GAZODUC_A4_SEGC_FRAMES 
 import { GazoducActe3InsertSecurite } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3InsertSecurite";
 import { GazoducActe3InsertParadoxe } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3InsertParadoxe";
 import { GazoducActe3ParadoxeDivergence } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3ParadoxeDivergence";
+import { GazoducActe3Verrou, GAZODUC_A3_VERROU_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3Verrou";
+import { GazoducActe3Ponts, GAZODUC_A3_PONTS_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3Ponts";
 import { GazoducActe3Montage, GAZODUC_A3_MONTAGE_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3Montage";
 import { GAZODUC_A3_CARTE_TSGP_FRAMES, GAZODUC_A3_INSERT_SECURITE_FRAMES, GAZODUC_A3_INSERT_PARADOXE_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3Timing";
 import { ProtoA2CameraProche, ProtoA2VoisinsVisibles, ProtoA2Mix, ProtoA2CameraContinueSurMix, ProtoA2CameraContinue13Jalons, PROTO_A2_COMPARE_FRAMES, PROTO_A2_13JALONS_FRAMES } from "./projects/_rnd/d3-16x9/ProtoGazoducA2CameraVsVoisins";
@@ -1347,6 +1349,28 @@ export const RemotionRoot: React.FC = () => {
             par l'ETAT DES LIGNES (Maroc dore stable / Algerie rouge casse + boucliers) au lieu des
             jauges etiquetees du split-screen ci-dessus. Palette sombre PAL_GPT pour etre comparable
             aux Actes 4/5. ⛔ Ne PAS supprimer l'option A avant la decision d'Aziz. */}
+        {/* Gazoduc Acte 3 — SEGMENT C, cloture "LE VERROU CROISE" (2026-08-18). Decor SVG Fable 5
+            (GazoducVerrouCroise.svg, 20 groupes animables), concept Grok. Split-screen ABANDONNE
+            sur decision d'Aziz : le paradoxe est dit par un objet mecanique, plus par 2 cartes. */}
+        {/* Gazoduc Acte 3 — SEGMENT C, variante B "LES DEUX PONTS" (2026-08-18). Decor SVG
+            Fable 5 (GazoducDeuxPonts.svg), concept Kimi. Codee EN PARALLELE du verrou pour
+            arbitrage sur le rendu anime, le SVG etant deja produit (decision d'Aziz). */}
+        <Composition
+          id="D3-Gazoduc-Acte3-Ponts"
+          component={GazoducActe3Ponts}
+          durationInFrames={GAZODUC_A3_PONTS_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="D3-Gazoduc-Acte3-Verrou"
+          component={GazoducActe3Verrou}
+          durationInFrames={GAZODUC_A3_VERROU_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
         <Composition
           id="D3-Gazoduc-Acte3-ParadoxeDivergence"
           component={GazoducActe3ParadoxeDivergence}

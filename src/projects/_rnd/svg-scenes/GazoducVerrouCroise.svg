@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  LE VERROU CROISE : conduite de gaz en coupe, deux vannes, paradoxe Maroc/Algerie (17,3 s).
+  SVG statique 1920x1080. Aucune animation ici : chaque piece animable est un <g id> independant.
+  Etat livre = temps 1 (cas MAROC) visible ; les etats temps 2 sont superposes en opacity="0".
+
+  GROUPES (ordre de dessin = ordre z) :
+    fond                  decor radial fixe. Ne pas animer.
+    ambiance_or           halo ambiant dore (temps 1). Crossfade opacity 1>0 vers 7,8 s.
+    ambiance_cyan         halo ambiant cyan (temps 2). opacity 0>1 a 7,8 s.
+    conduite_interieur    volume creux de la conduite, zone sombre au-dela de la vanne 2.
+                          Fixe. Le clipPath id="clip_interieur" (defs) reprend sa geometrie
+                          et clippe deja le wrapper zone_fluides.
+    zone_fluides          wrapper clippe par clip_interieur. Ne pas animer lui-meme.
+    fluide_cyan           fluide cyan PLEIN sur toute la longueur utile (x=60 a x=1266).
+                          opacity 0. Temps 2 : opacity 1 puis reveler de gauche a droite
+                          par clip/mask anime (7,8 s -> 13 s), le front bute sur l'opercule.
+    fluide_or             fluide dore PLEIN (x=60 a x=1266). Temps 1 : reveler de gauche a
+                          droite par clip/mask anime (0 -> 4,5 s), front bute sur l'opercule
+                          a 1266 ; micro-oscillation x de +-6 px ensuite (il pousse, ne passe
+                          pas). Fade out opacity 1>0 entre 7,0 et 7,8 s.
+    conduite_corps        parois, brides, chants de coupe. Fixe.
+    vanne1_corps          corps de la vanne 1 (x=640), passage OUVERT. Fixe.
+    vanne1_volant         volant seul, origine locale (0,0) = axe de rotation, place par
+                          translate(640 258). Animer par rotate() seul : temps 1, rotation
+                          lente continue (~35 deg/s) pendant que le fluide avance ; stop net
+                          quand le front bute (4,5 s).
+    disques_verrouilles   etat temps 2 de la vanne 1 (financement acquis, Algerie) :
+                          disques cyan verrouilles sur la tige. opacity 0 ; reveal 7,8 -> 9 s
+                          (opacity + petit scale 0.9>1 depuis son origine translate(640 390)).
+    vanne2_corps          corps de la vanne 2 (x=1280), fin. Fixe.
+    vanne2_opercule       lame qui FERME le passage. Fixe (fermee dans les deux temps).
+                          Option : tremblement y de 2 px quand le fluide pousse.
+    vanne2_mecanisme_fin  filaments arachneens dores (etat temps 1, financement bloque,
+                          Maroc). Visible au depart ; fade out 7,0 -> 7,8 s. Option reveal
+                          initial par stroke-dashoffset.
+    vanne2_volant         volant fin seul, origine (0,0) = axe, place par translate(1280 252).
+                          Temps 1 : petites tentatives de rotation avortees (+-8 deg, spring)
+                          quand le fluide bute. Ne tourne jamais en continu.
+    barbeles              barbeles autour de la vanne 2 (temps 2). opacity 0 ; reveler
+                          10 -> 12 s (opacity, ou stroke-dashoffset fil par fil).
+    fissures_rouges       fissures rouges + halo (temps 2). opacity 0 ; reveler 12 -> 14 s
+                          (opacity par saccades, avec le SFX craquement).
+    plaque_maroc          plaque nom MAROC, origine translate(960 122). Visible temps 1 ;
+                          fade out a 7,8 s.
+    plaque_algerie        plaque nom ALGERIE, meme position. opacity 0 ; fade in a 7,8 s.
+
+  Regles respectees : aucun style inline, presentation en attributs XML ; pas de <style>,
+  pas de classes, pas de <animate>, pas de script ; degrades a 3 arrets max ; palette stricte.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <radialGradient id="gradFond" cx="50%" cy="46%" r="72%">
+      <stop offset="0%" stop-color="#0d1f38"/>
+      <stop offset="100%" stop-color="#050c1a"/>
+    </radialGradient>
+    <linearGradient id="gradInterieur" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0d1f38"/>
+      <stop offset="100%" stop-color="#050c1a"/>
+    </linearGradient>
+    <linearGradient id="gradVide" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#050c1a" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#050c1a" stop-opacity="0.95"/>
+    </linearGradient>
+    <linearGradient id="gradOr" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFE38A"/>
+      <stop offset="45%" stop-color="#FFC742"/>
+      <stop offset="100%" stop-color="#FFC742"/>
+    </linearGradient>
+    <radialGradient id="gradHaloOr" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFC742" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#FFC742" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gradHaloCyan" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00C4FF" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#00C4FF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gradHaloRouge" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FF4B45" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#FF4B45" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="clip_interieur">
+      <rect x="60" y="482" width="1800" height="116"/>
+    </clipPath>
+  </defs>
+
+  <g id="fond">
+    <rect x="0" y="0" width="1920" height="1080" fill="url(#gradFond)"/>
+  </g>
+
+  <g id="ambiance_or" opacity="0.5">
+    <ellipse cx="520" cy="540" rx="600" ry="320" fill="url(#gradHaloOr)"/>
+  </g>
+  <g id="ambiance_cyan" opacity="0">
+    <ellipse cx="620" cy="540" rx="640" ry="330" fill="url(#gradHaloCyan)"/>
+  </g>
+
+  <g id="conduite_interieur">
+    <rect x="60" y="482" width="1800" height="116" fill="url(#gradInterieur)"/>
+    <rect x="1294" y="482" width="566" height="116" fill="url(#gradVide)"/>
+  </g>
+
+  <g id="zone_fluides" clip-path="url(#clip_interieur)">
+    <g id="fluide_cyan" opacity="0">
+      <path d="M 60 484 L 1236 484 Q 1266 484 1266 540 Q 1266 596 1236 596 L 60 596 Z" fill="#00C4FF"/>
+      <rect x="76" y="496" width="1120" height="13" rx="6.5" fill="#F4F8FF" opacity="0.45"/>
+      <circle cx="320" cy="556" r="5" fill="#F4F8FF" opacity="0.4"/>
+      <circle cx="540" cy="532" r="4" fill="#F4F8FF" opacity="0.4"/>
+      <circle cx="780" cy="560" r="4.5" fill="#F4F8FF" opacity="0.4"/>
+      <circle cx="1000" cy="534" r="4" fill="#F4F8FF" opacity="0.4"/>
+      <circle cx="1160" cy="556" r="5" fill="#F4F8FF" opacity="0.4"/>
+      <ellipse cx="1256" cy="540" rx="56" ry="68" fill="url(#gradHaloCyan)" opacity="0.9"/>
+    </g>
+    <g id="fluide_or" opacity="1">
+      <path d="M 60 484 L 1236 484 Q 1266 484 1266 540 Q 1266 596 1236 596 L 60 596 Z" fill="url(#gradOr)"/>
+      <rect x="76" y="496" width="1120" height="13" rx="6.5" fill="#FFE38A" opacity="0.5"/>
+      <circle cx="300" cy="556" r="5" fill="#FFE38A" opacity="0.45"/>
+      <circle cx="520" cy="530" r="4" fill="#FFE38A" opacity="0.45"/>
+      <circle cx="760" cy="560" r="4.5" fill="#FFE38A" opacity="0.45"/>
+      <circle cx="980" cy="534" r="4" fill="#FFE38A" opacity="0.45"/>
+      <circle cx="1150" cy="556" r="5" fill="#FFE38A" opacity="0.45"/>
+      <ellipse cx="1256" cy="540" rx="56" ry="68" fill="url(#gradHaloOr)" opacity="0.9"/>
+    </g>
+  </g>
+
+  <g id="conduite_corps">
+    <rect x="60" y="452" width="1800" height="30" fill="#16304f" stroke="#58809f" stroke-width="2.5"/>
+    <rect x="60" y="598" width="1800" height="30" fill="#16304f" stroke="#58809f" stroke-width="2.5"/>
+    <rect x="57" y="452" width="6" height="30" fill="#58809f" opacity="0.9"/>
+    <rect x="57" y="598" width="6" height="30" fill="#58809f" opacity="0.9"/>
+    <rect x="1857" y="452" width="6" height="30" fill="#58809f" opacity="0.9"/>
+    <rect x="1857" y="598" width="6" height="30" fill="#58809f" opacity="0.9"/>
+    <rect x="119" y="444" width="22" height="192" rx="5" fill="#16304f" stroke="#58809f" stroke-width="2.5"/>
+    <circle cx="130" cy="472" r="3.5" fill="#58809f"/>
+    <circle cx="130" cy="540" r="3.5" fill="#58809f"/>
+    <circle cx="130" cy="608" r="3.5" fill="#58809f"/>
+    <rect x="409" y="444" width="22" height="192" rx="5" fill="#16304f" stroke="#58809f" stroke-width="2.5"/>
+    <circle cx="420" cy="472" r="3.5" fill="#58809f"/>
+    <circle cx="420" cy="540" r="3.5" fill="#58809f"/>
+    <circle cx="420" cy="608" r="3.5" fill="#58809f"/>
+    <rect x="534" y="444" width="22" height="192" rx="5" fill="#16304f" stroke="#58809f" stroke-width="2.5"/>
+    <circle cx="545" cy="472" r="3.5" fill="#58809f"/>
+    <circle cx="545" cy="540" r="3.5" fill="#58809f"/>
+    <circle cx="545" cy="608" r="3.5" fill="#58809f"/>
+    <rect x="724" y="444" width="22" height="192" rx="5" fill="#16304f" stroke="#58809f" stroke-width="2.5"/>
+    <circle cx="735" cy="472" r="3.5" fill="#58809f"/>
+    <circle cx="735" cy="540" r="3.5" fill="#58809f"/>
+    <circle cx="735" cy="608" r="3.5" fill="#58809f"/>
+    <rect x="949" y="444" width="22" height="192" rx="5" fill="#16304f" stroke="#58809f" stroke-width="2.5"/>
+    <circle cx="960" cy="472" r="3.5" fill="#58809f"/>
+    <circle cx="960" cy="540" r="3.5" fill="#58809f"/>
+    <circle cx="960" cy="608" r="3.5" fill="#58809f"/>
+    <rect x="1169" y="444" width="22" height="192" rx="5" fill="#16304f" stroke="#58809f" stroke-width="2.5"/>
+    <circle cx="1180" cy="472" r="3.5" fill="#58809f"/>
+    <circle cx="1180" cy="540" r="3.5" fill="#58809f"/>
+    <circle cx="1180" cy="608" r="3.5" fill="#58809f"/>
+    <rect x="1341" y="444" width="22" height="192" rx="5" fill="#16304f" stroke="#58809f" stroke-width="2.5"/>
+    <circle cx="1352" cy="472" r="3.5" fill="#58809f"/>
+    <circle cx="1352" cy="540" r="3.5" fill="#58809f"/>
+    <circle cx="1352" cy="608" r="3.5" fill="#58809f"/>
+    <rect x="1639" y="444" width="22" height="192" rx="5" fill="#16304f" stroke="#58809f" stroke-width="2.5"/>
+    <circle cx="1650" cy="472" r="3.5" fill="#58809f"/>
+    <circle cx="1650" cy="540" r="3.5" fill="#58809f"/>
+    <circle cx="1650" cy="608" r="3.5" fill="#58809f"/>
+  </g>
+
+  <g id="vanne1_corps">
+    <rect x="632" y="264" width="16" height="132" fill="#16304f" stroke="#58809f" stroke-width="2.5"/>
+    <rect x="602" y="388" width="76" height="16" rx="5" fill="#16304f" stroke="#58809f" stroke-width="2.5"/>
+    <path d="M 610 404 L 670 404 L 682 444 L 598 444 Z" fill="#16304f" stroke="#58809f" stroke-width="2.5"/>
+    <rect x="630" y="410" width="20" height="28" fill="#58809f" opacity="0.55"/>
+    <rect x="578" y="440" width="124" height="48" rx="6" fill="#16304f" stroke="#58809f" stroke-width="3"/>
+    <rect x="578" y="592" width="124" height="48" rx="6" fill="#16304f" stroke="#58809f" stroke-width="3"/>
+    <path d="M 624 488 L 656 488 L 648 506 L 632 506 Z" fill="#16304f" stroke="#58809f" stroke-width="2"/>
+    <path d="M 624 592 L 656 592 L 648 574 L 632 574 Z" fill="#16304f" stroke="#58809f" stroke-width="2"/>
+    <circle cx="592" cy="464" r="3.5" fill="#58809f"/>
+    <circle cx="688" cy="464" r="3.5" fill="#58809f"/>
+    <circle cx="592" cy="616" r="3.5" fill="#58809f"/>
+    <circle cx="688" cy="616" r="3.5" fill="#58809f"/>
+  </g>
+
+  <g id="vanne1_volant" transform="translate(640 258)">
+    <circle cx="0" cy="0" r="62" fill="none" stroke="#58809f" stroke-width="12"/>
+    <circle cx="0" cy="0" r="62" fill="none" stroke="#F4F8FF" stroke-width="1.5" opacity="0.22"/>
+    <line x1="0" y1="0" x2="0" y2="-56" stroke="#58809f" stroke-width="10" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="56" y2="0" stroke="#58809f" stroke-width="10" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="0" y2="56" stroke="#58809f" stroke-width="10" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="-56" y2="0" stroke="#58809f" stroke-width="10" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="40" y2="-40" stroke="#58809f" stroke-width="5" stroke-linecap="round" opacity="0.8"/>
+    <line x1="0" y1="0" x2="40" y2="40" stroke="#58809f" stroke-width="5" stroke-linecap="round" opacity="0.8"/>
+    <line x1="0" y1="0" x2="-40" y2="40" stroke="#58809f" stroke-width="5" stroke-linecap="round" opacity="0.8"/>
+    <line x1="0" y1="0" x2="-40" y2="-40" stroke="#58809f" stroke-width="5" stroke-linecap="round" opacity="0.8"/>
+    <circle cx="0" cy="-62" r="8" fill="#FFC742"/>
+    <circle cx="62" cy="0" r="8" fill="#58809f"/>
+    <circle cx="0" cy="62" r="8" fill="#58809f"/>
+    <circle cx="-62" cy="0" r="8" fill="#58809f"/>
+    <circle cx="0" cy="0" r="16" fill="#16304f" stroke="#58809f" stroke-width="3"/>
+    <circle cx="0" cy="0" r="5.5" fill="#FFC742"/>
+  </g>
+
+  <g id="disques_verrouilles" transform="translate(640 390)" opacity="0">
+    <ellipse cx="0" cy="0" rx="150" ry="120" fill="url(#gradHaloCyan)"/>
+    <rect x="-54" y="-58" width="108" height="24" rx="12" fill="#16304f" stroke="#00C4FF" stroke-width="3.5"/>
+    <rect x="-36" y="-50" width="72" height="8" rx="4" fill="#00C4FF" opacity="0.9"/>
+    <circle cx="-54" cy="-46" r="6" fill="#00C4FF"/>
+    <circle cx="54" cy="-46" r="6" fill="#00C4FF"/>
+    <rect x="-54" y="-12" width="108" height="24" rx="12" fill="#16304f" stroke="#00C4FF" stroke-width="3.5"/>
+    <rect x="-36" y="-4" width="72" height="8" rx="4" fill="#00C4FF" opacity="0.9"/>
+    <circle cx="-54" cy="0" r="6" fill="#00C4FF"/>
+    <circle cx="54" cy="0" r="6" fill="#00C4FF"/>
+    <rect x="-54" y="34" width="108" height="24" rx="12" fill="#16304f" stroke="#00C4FF" stroke-width="3.5"/>
+    <rect x="-36" y="42" width="72" height="8" rx="4" fill="#00C4FF" opacity="0.9"/>
+    <circle cx="-54" cy="46" r="6" fill="#00C4FF"/>
+    <circle cx="54" cy="46" r="6" fill="#00C4FF"/>
+  </g>
+
+  <g id="vanne2_corps">
+    <rect x="1276" y="260" width="8" height="138" fill="#16304f" stroke="#58809f" stroke-width="2"/>
+    <rect x="1252" y="396" width="56" height="12" rx="4" fill="#16304f" stroke="#58809f" stroke-width="2"/>
+    <path d="M 1262 408 L 1298 408 L 1306 444 L 1254 444 Z" fill="#16304f" stroke="#58809f" stroke-width="2"/>
+    <rect x="1236" y="440" width="88" height="46" rx="6" fill="#16304f" stroke="#58809f" stroke-width="2.5"/>
+    <rect x="1236" y="594" width="88" height="46" rx="6" fill="#16304f" stroke="#58809f" stroke-width="2.5"/>
+    <circle cx="1248" cy="462" r="3" fill="#58809f"/>
+    <circle cx="1312" cy="462" r="3" fill="#58809f"/>
+    <circle cx="1248" cy="618" r="3" fill="#58809f"/>
+    <circle cx="1312" cy="618" r="3" fill="#58809f"/>
+  </g>
+
+  <g id="vanne2_opercule">
+    <rect x="1266" y="478" width="28" height="124" rx="4" fill="#16304f" stroke="#58809f" stroke-width="2.5"/>
+    <line x1="1280" y1="486" x2="1280" y2="594" stroke="#58809f" stroke-width="1.5" opacity="0.7"/>
+    <rect x="1270" y="484" width="5" height="112" fill="#58809f" opacity="0.35"/>
+  </g>
+
+  <g id="vanne2_mecanisme_fin" opacity="0.9">
+    <circle cx="1280" cy="252" r="50" fill="none" stroke="#FFC742" stroke-width="1" stroke-dasharray="4 6" opacity="0.7"/>
+    <line x1="1244" y1="260" x2="1256" y2="398" stroke="#FFC742" stroke-width="1.5" opacity="0.8"/>
+    <line x1="1316" y1="260" x2="1304" y2="398" stroke="#FFC742" stroke-width="1.5" opacity="0.8"/>
+    <line x1="1280" y1="294" x2="1250" y2="400" stroke="#FFC742" stroke-width="1.5" opacity="0.8"/>
+    <line x1="1280" y1="294" x2="1310" y2="400" stroke="#FFC742" stroke-width="1.5" opacity="0.8"/>
+    <line x1="1240" y1="340" x2="1320" y2="300" stroke="#FFC742" stroke-width="1.2" opacity="0.7"/>
+    <line x1="1240" y1="300" x2="1320" y2="345" stroke="#FFC742" stroke-width="1.2" opacity="0.7"/>
+    <line x1="1230" y1="452" x2="1268" y2="402" stroke="#FFC742" stroke-width="1.2" opacity="0.7"/>
+    <line x1="1330" y1="452" x2="1292" y2="402" stroke="#FFC742" stroke-width="1.2" opacity="0.7"/>
+    <circle cx="1250" cy="330" r="2.5" fill="#FFE38A"/>
+    <circle cx="1310" cy="318" r="2.5" fill="#FFE38A"/>
+    <circle cx="1280" cy="294" r="3" fill="#FFE38A"/>
+    <circle cx="1262" cy="368" r="2.5" fill="#FFE38A"/>
+    <circle cx="1298" cy="372" r="2.5" fill="#FFE38A"/>
+  </g>
+
+  <g id="vanne2_volant" transform="translate(1280 252)">
+    <circle cx="0" cy="0" r="40" fill="none" stroke="#58809f" stroke-width="3"/>
+    <line x1="0" y1="0" x2="0" y2="-38" stroke="#58809f" stroke-width="2" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="33" y2="19" stroke="#58809f" stroke-width="2" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="-33" y2="19" stroke="#58809f" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="0" cy="0" r="7" fill="#16304f" stroke="#58809f" stroke-width="2"/>
+  </g>
+
+  <g id="barbeles" opacity="0">
+    <path d="M 1214 466 C 1252 486 1306 452 1346 474" fill="none" stroke="#58809f" stroke-width="3.5"/>
+    <path d="M 1216 540 C 1256 560 1304 522 1344 546" fill="none" stroke="#58809f" stroke-width="3.5"/>
+    <path d="M 1218 612 C 1258 630 1306 596 1342 618" fill="none" stroke="#58809f" stroke-width="3.5"/>
+    <path d="M 1240 416 C 1266 432 1294 404 1320 422" fill="none" stroke="#58809f" stroke-width="3"/>
+    <path d="M 1242 468 l 12 12 M 1254 468 l -12 12 M 1274 462 l 12 12 M 1286 462 l -12 12 M 1312 457 l 12 12 M 1324 457 l -12 12" fill="none" stroke="#58809f" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M 1244 543 l 12 12 M 1256 543 l -12 12 M 1276 534 l 12 12 M 1288 534 l -12 12 M 1314 530 l 12 12 M 1326 530 l -12 12" fill="none" stroke="#58809f" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M 1246 613 l 12 12 M 1258 613 l -12 12 M 1280 606 l 12 12 M 1292 606 l -12 12 M 1312 602 l 12 12 M 1324 602 l -12 12" fill="none" stroke="#58809f" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M 1258 416 l 10 10 M 1268 416 l -10 10 M 1292 410 l 10 10 M 1302 410 l -10 10" fill="none" stroke="#58809f" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <g id="fissures_rouges" opacity="0">
+    <ellipse cx="1280" cy="540" rx="160" ry="140" fill="url(#gradHaloRouge)" opacity="0.8"/>
+    <path d="M 1280 482 L 1271 508 L 1283 530 L 1272 556 L 1281 584" fill="none" stroke="#FF4B45" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 1250 444 L 1258 462 L 1246 478" fill="none" stroke="#FF4B45" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 1306 444 L 1300 464 L 1312 480" fill="none" stroke="#FF4B45" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 1296 598 L 1288 616 L 1300 634" fill="none" stroke="#FF4B45" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 1262 408 L 1270 424 L 1260 440" fill="none" stroke="#FF4B45" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 1283 530 L 1296 538" fill="none" stroke="#FF4B45" stroke-width="2" stroke-linecap="round"/>
+    <path d="M 1272 556 L 1260 564" fill="none" stroke="#FF4B45" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <g id="plaque_maroc" transform="translate(960 122)">
+    <rect x="-200" y="-50" width="400" height="100" rx="18" fill="#0d1f38" stroke="#FFC742" stroke-width="3"/>
+    <rect x="-176" y="-30" width="8" height="60" rx="4" fill="#FFC742"/>
+    <text x="18" y="17" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="50" font-weight="700" letter-spacing="12" fill="#F4F8FF">MAROC</text>
+  </g>
+  <g id="plaque_algerie" transform="translate(960 122)" opacity="0">
+    <rect x="-200" y="-50" width="400" height="100" rx="18" fill="#0d1f38" stroke="#00C4FF" stroke-width="3"/>
+    <rect x="-176" y="-30" width="8" height="60" rx="4" fill="#00C4FF"/>
+    <text x="18" y="17" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="44" font-weight="700" letter-spacing="10" fill="#F4F8FF">ALGÉRIE</text>
+  </g>
+</svg>

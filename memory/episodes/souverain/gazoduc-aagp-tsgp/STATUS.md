@@ -407,3 +407,26 @@ c'est le texte qui a produit l'audio validé — signalé pour info, pas bloquan
   qu'un silence splicé après-coup (`sil_s` mécanique, collage sec) — Aziz préfère nettement cette
   méthode. Pour les futures pauses : privilégier `[pause]` dans le texte dès la génération plutôt que
   `pauses-sur-original.py`, sauf réparation chirurgicale sur un audio déjà validé par ailleurs.
+
+---
+
+## ⭐ ACTE 3 — ARBITRAGE SVG DU 2026-08-18 (nuit) — travail NON COMMITÉ au moment d'écrire
+
+Deux variantes d'insert SVG codées et rendues pour l'Acte 3, puis arbitrées par Aziz :
+
+| Variante | Fichier | Verdict |
+|---|---|---|
+| Deux ponts (suspendu / rompu) | `src/projects/souverain/gazoduc-aagp-tsgp/GazoducActe3Ponts.tsx` | ⛔⛔ **REJETÉ** — « la métaphore est importée au lieu d'être prise dans le monde du sujet ». Verdict écrit dans l'en-tête du fichier. **Ne pas la reprendre, ne pas la monter.** |
+| Double verrou croisé | `src/projects/souverain/gazoduc-aagp-tsgp/GazoducActe3Verrou.tsx` | ✅ **RETENUE** |
+
+- Briefs associés : `BRIEF-SVG-PONTS.md` · `BRIEF-SVG-VERROU.md`
+- SVG sources : `src/projects/_rnd/svg-scenes/GazoducDeuxPonts.svg` · `GazoducVerrouCroise.svg`
+- `src/Root.tsx` : 2 compositions ajoutées (`D3-Gazoduc-Acte3-Ponts`, `D3-Gazoduc-Acte3-Verrou`)
+- Leçon capitalisée : [[feedback_metaphore-dans-le-monde-du-sujet]]
+- ⭐ La variante retenue a été **indexée** comme 2e usage du « mécanisme en coupe » dans
+  `src/projects/_shared/INTENTION-FORME-INDEX.md` → le seuil d'extraction en composant partagé est atteint
+  (sous-composant `FluideClip` déjà propre ; le parent lit `BEATS_C` en dur, à paramétrer avant extraction).
+
+⚠️ **AUCUN RENDER LOCAL RETROUVÉ** sous `out/` alors que les commentaires du code mentionnent des
+corrections faites « au rendu » et « au still frame 90 ». Cf. [[feedback_upload-nest-pas-une-archive-garder-le-render-local]]
+— si le rendu a été uploadé sans être gardé, il faudra re-rendre pour juger.
