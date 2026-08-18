@@ -146,6 +146,19 @@ s'affole) est passée du 1er coup : causalité VISIBLE, pas symbolique.
    → un seul monde d'objets, causalité visible (§ 5).
 1. **Intention** : ce moment doit faire ressentir QUOI ? (1 verbe dominant)
 2. **Continuité** : quel monde est déjà à l'écran ? Je le PROLONGE (je ne le remplace pas).
+2bis. ⛔ **ANTI-REDONDANCE DE SCÈNE — l'excès inverse de la continuité** (2026-07-26, cas beat 4 CFA).
+   ⚠️ *À ne pas confondre avec le point 5 « Épure » : là c'est l'écran qui ne répète pas LA VOIX ; ici
+   c'est une scène qui ne rejoue pas UNE AUTRE SCÈNE.* Prolonger ne veut PAS dire REFAIRE.
+   Question explicite : *« est-ce que cette scène ressemble à une autre de l'épisode ? »* Comparer les
+   **3 mêmes choses** avec les beats précédents — **GÉO** (même fichier ?) · **CAMÉRA** (même cadrage/
+   échelle ?) · **GESTE** (même mouvement ?). Si les 3 coïncident, c'est la même scène sous un autre
+   nom, quel que soit le texte. Vérif mécanique en 10 s : `grep -n "^import geo" src/.../Beat*.tsx`.
+   ⚠️ **Une vérification technique complète (code lu, timings justes, rendu correct, zéro bug) ne
+   détecte JAMAIS cette redondance** — vécu beat 4 CFA : tout était juste, la scène rejouait le beat 2
+   (même `cfaGeoWide`, même caméra, mêmes arcs France→zones) en renommant « laisse » en « garantie ».
+   Cause racine à re-vérifier : le moment est-il vraiment SPATIAL ? (forcer du conceptuel sur une carte
+   produit ce faux-semblant). Détail : [[feedback_pourquoi-le-beat4-cfa-a-marche-repartition-jugement]].
+   <!-- RAPATRIÉ le 2026-08-18 : cette règle n'existait QUE dans la copie auto-memory (2026-07-26). -->
 3. **Forme** : quel geste porte l'intention ? (ne pas penser « composant » encore)
 4. **Template** : a-t-on déjà cette forme ? oui→adapter / non→coder (mais je sais quoi).
 5. **Épure** : qu'est-ce que la voix dit déjà ? → je le retire de l'écran.

@@ -88,3 +88,28 @@ en `.md` libre, pas en `.review.json` produit par `visual_review.py`).
 
 ⛔ **Ne JAMAIS invoquer ce cas** quand le rendu a été RE-RENDU (frames recalculées), même si « le
 changement est minime » — là, les frames diffèrent et la review doit être refaite.
+
+<!-- RAPATRIÉ le 2026-08-18 depuis .claude/.../memory/feedback_review-mp4-avant-presentation.md (racine).
+     Même RÈGLE, autre INCIDENT : ce fichier portait le cas Zimbabwe Beat 5, la copie portait le cas
+     Empire Ghana. Zéro recouvrement factuel — les deux sont gardés. -->
+
+## Cas fondateur — Empire Ghana Beat 3 v2 et v3 (2026-05-03) : annoncer une INTENTION comme un FAIT
+J'ai annoncé DEUX FOIS (« marchands qui déposent », puis « empire qui pulse + routes qui s'illuminent »)
+des features comme livrées, **sans avoir vérifié visuellement le MP4**. Aziz a dû pointer le bug à chaque
+fois. Le rendu réel : un `radialGradient` à opacity 0.18 (quasi invisible) et des routes noyées sous le
+hachurage de l'empire.
+
+⛔ **L'anti-pattern à nommer** : « le code semble bon, donc le rendu est bon » = **FAUX**. Le code peut
+compiler et s'exécuter sans erreur tout en produisant un rendu invisible (opacité trop basse, z-order,
+taille adaptative ratée).
+
+**Le coût** : lire une frame = 5 secondes. Économise une itération entière (15-20 min). Une review v1
+aurait supprimé v2 ET v3.
+**Ce que ça produit sinon** : (1) friction — Aziz vérifie ce que j'aurais dû vérifier ; (2) perte de
+confiance — dire « fait » quand ça ne l'est pas dévalue toutes mes affirmations futures ; (3) itérations
+en cascade.
+
+**Le point de contrôle** : pour CHAQUE feature annoncée — « est-ce que je la VOIS dans la frame ? »
+« empire qui pulse » → je vois l'empire pulser ? Si l'intention ne matche pas le rendu : ne pas présenter
+comme livré — corriger, ou dire honnêtement « j'ai codé X mais visuellement il manque Y ».
+

@@ -22,3 +22,14 @@ Le script `client.files.upload()` puis attend l'état `ACTIVE` (vidéo = quelque
 - Review d'un beat rendu (mouvement/synchro/son).
 
 Liens : [[openrouter-gpt-image-et-breakdown]] (comparatif Gemini vs GPT-5.5 sur breakdown) · [[feedback_gemini-video-review-pattern]] (Gemini analyse MP4).
+
+<!-- RAPATRIÉ le 2026-08-18 depuis .claude/.../memory/gemini-video-upload-fiable.md (racine, 2026-06-16).
+     Ces paramètres n'existaient QUE dans cette copie. -->
+## Paramètres durs (mesurés 2026-06-16, vidéo Sénégal 79 Mo)
+- **Limite inline = 20 Mo** → au-delà, Files API OBLIGATOIRE. **Limite Files API = 2 Go.**
+- Poll de l'état `ACTIVE` toutes les 5 s : ~21 s pour 79 Mo (4 s pour une vidéo de 39 s).
+- `max_output_tokens` ≥ **4000** pour un vrai breakdown — sinon la réponse est coupée.
+- ⚠️ `da-brief.py` ne gère QUE les frames JPEG — pour la vidéo, passer par un script séparé.
+- Clé : `GEMINI_API_KEY` dans le `.env` racine.
+- Précision validée : timecode + chiffre exacts restitués, zéro hallucination.
+

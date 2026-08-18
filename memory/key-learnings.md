@@ -1115,3 +1115,294 @@ par Aziz ("ne pas conclure que le format seul a causé ce gain").
 SAUF quand Aziz demande explicitement de voir l'effet cumulé de plusieurs apprentissages à la fois — dans
 ce cas, suivre sa demande même si ça sacrifie la capacité à identifier quelle variable précise a produit
 le gain.
+
+---
+
+<!-- RAPATRIÉ le 2026-08-18 depuis .claude/.../memory/key-learnings.md.
+     ⛔ Ce n'était PAS une version ancienne du même fichier : deux CORPUS DISJOINTS.
+     Ici = 2026-02 → 2026-04 (ère Seedance/Atlas/Mansa), jamais présent côté repo.
+     12 sondes de mots-clés à 0 dans ce fichier avant rapatriement (is_instrumental,
+     Ken Burns, OffthreadVideo, premountFor, Beat-by-Frame...). -->
+
+# 🗄️ CORPUS HÉRITÉ 2026-02 → 2026-04 (Seedance / Atlas / Mansa)
+
+> Chapitres antérieurs à la bascule Souverain/Mapbox. À garder pour tout retour à un pipeline
+> Seedance/i2v. ⚠️ Vérifier les chemins avant de s'en servir : ce corpus est antérieur à plusieurs
+> réorganisations.
+
+# Key Learnings - Accumulated Project Wisdom
+
+> Mise a jour : 2026-04-21. Learnings archives (Godot, Phaser, PixelLab sprites) dans `memory/archive/`.
+
+---
+
+## Session 2026-04-21 PM — 3 lecons (scene 8 Mansa + Charte)
+
+### L1 : generate_audio vs "No music" dans le prompt = conflit
+`generate_audio: true` dans les params + "No music, no words, no dialogue" dans le prompt = comportement inconsistant. Seedance respecte parfois l'un, parfois l'autre (8A = pas d'audio, 8B = audio genere, memes params). **Regle** : si on VEUT de l'audio ambiance, retirer la clause anti-audio du prompt. Si on n'en veut PAS, mettre `generate_audio: false`.
+
+### L2 : Deleguer au visual-producer pour Seedance (TOUJOURS)
+Tenter de soumettre/recuperer des jobs Seedance via fal.ai manuellement = risque de relancer des jobs ($10+ gaspilles potentiels). Le visual-producer connait le workflow prouve. Regle : JAMAIS soumettre de jobs Seedance en direct, TOUJOURS deleguer au visual-producer.
+
+**L2bis (2026-08-08)** : le principe se confirme au-dela de Seedance, sur MiniMax H3 aussi — mais
+pour une raison DIFFERENTE de L2 (pas le risque financier de jobs relances, plutot la QUALITE du
+prompt lui-meme). Test A/B controle (meme image, meme mouvement demande, seule variable = rigueur
+du prompt) : un prompt ecrit rapidement par Claude a hallucine un objet absent de l'image de
+reference (batons/bequille inexistant) et desynchronise le timing dramatique (reaction de foule
+avant que le mouvement declencheur soit termine). Le meme prompt recompose par visual-producer avec
+sa discipline Seedance (sequencage temporel par tranches de 2s, clause negative explicite et
+repetee pour tout element a NE PAS faire apparaitre, decor verrouille explicitement) a produit un
+resultat sans aucun defaut, timing respecte a la seconde pres. **Regle etendue** : deleguer a
+visual-producer pour composer TOUT prompt video generative a enjeu narratif (pas seulement Seedance
+mais aussi H3/Comfy Cloud et probablement tout futur outil similaire) — sa discipline de prompt
+generalise au-dela d'un seul modele. Detail complet du test : `memory/tools/minimax.md` (Comfy
+Cloud) et `.claude/agent-memory/visual-producer/GOTCHAS-TOOLS.md`.
+
+### L3 : ElevenLabs V2 multilingual prononce les tags [pause]
+`[pause]` et `[short pause]` sont des tags V3 (eleven_turbo_v2). En mode `eleven_multilingual_v2`, ces tags sont lus a voix haute. Utiliser `...` (points de suspension) pour creer une pause naturelle.
+
+### L4 : Minimax Music via fal.ai — RESOLU 2026-04-22 (utiliser v2.6 + is_instrumental)
+Bug historique : endpoint `fal-ai/minimax-music` (sans version, ou v1.5) attend `reference_audio_url` et/ou champs paroles. String vide = 422 au fetch.
+**Solution validee** : utiliser `fal-ai/minimax-music/v2.6` avec payload `{"prompt": str, "is_instrumental": true}`. Pas de `reference_audio_url`, pas de `generate_audio`, pas de `lyrics_prompt`.
+**Schema v2.6** : prompt 10-2000 chars, lyrics optionnel max 3500 chars, lyrics_optimizer bool, is_instrumental bool, audio_setting obj.
+**Donnees test 2026-04-22 prompt A (sonjata)** : duree generee = 335s (5:35) pour un prompt de 180 chars. Temps job = 230s. Cout $0.10. Un seul appel couvre largement un Short 146s (truncate + fade-out).
+**Gotcha prompt** : NE PAS mettre le mot "instrumental" dans le prompt si `is_instrumental: true` est deja passe en parametre — possible conflit de validation observe.
+
+**FORMULE PROMPT VALIDEE (checkpoint 2026-04-12, reconfirmee 2026-04-22 apres echec V1 sonjata)** :
+Les prompts generiques ("Epic West African orchestral, cinematic, 95 BPM") produisent une sortie ELECTRONIQUE non-africaine. Le modele empile des synthes par defaut quand le prompt est trop generique.
+
+La formule qui marche :
+1. **Nommer un artiste specifique** (ex: "Style of Toumani Diabate" pour kora Mande)
+2. **Limiter a 1-2 instruments principaux** (ex: "Solo kora with slow balafon melody", PAS 5 instruments empiles)
+3. **Specifier le rythme precis** (ex: "gentle 6/8 rhythm", BPM)
+4. **Texture organique explicite** ("warm, acoustic, organic")
+5. **Interdictions directes** : "No synthesizers, no electronic sounds" — OBLIGATOIRE
+6. **Origine culturelle precise** ("Traditional Mande griot music from Mali", PAS "West African")
+
+Prompt V2 valide (historical-map 2026-04-12) :
+"Traditional Mande griot music from Mali. Solo kora with slow balafon melody. Acoustic djembe and dundun in gentle 6/8 rhythm. Style of Toumani Diabate. Warm, acoustic, organic. No synthesizers, no electronic sounds."
+
+Anti-pattern : "Epic West African orchestral, kora melody, djembe and dunun, balafon, majestic warm tones, cinematic, 95 BPM" — trop generique, trop d'instruments, "orchestral/cinematic" pousse le modele vers les synthes.
+
+### L5 : Ken Burns sur image statique = percu "cheap" par le viewer
+Scene 5A barre de fer pliee : le seul freeze du Short (Ken Burns zoom sur image). Aziz l'a identifie comme le point faible de la video. Meme un clip Seedance simple de 6s serait plus naturel. Regle : eviter les Ken Burns sauf si c'est un moment de respiration volontaire (parchemin scene 9 = OK car c'est du texte).
+
+### L6 : Musique de fond = must-have pour un Short
+Sans musique, les scenes sans SFX (5A, 9, 10A, 10C) ont des trous sonores entre les mots de la narration. La musique lie toutes les scenes et masque les transitions audio entre clips. Volume cible : -18dB sous la voix.
+
+---
+
+## Session 2026-04-21 — 5 lecons (scene 7 Kirina)
+
+### L1 : V2 > V1 Pro pour style paper-craft dot-eyes
+V1 Pro degrade les dot-eyes en yeux realistes (iris visible) apres 3s de camera rapprochee. V2 avec clause "MAINTAIN dot-eyes throughout, small black dot pupils, NO realistic eyes, NO visible iris" les maintient sur toutes les frames. V2 = endpoint par defaut pour paper-craft.
+
+### L2 : i2v classique > start/end frame pour action dynamique
+Start/end frame interpole doucement entre 2 poses = quasi-statique. Scene 7C arc bande → relache = aucun tir visible en start/end. Meme scene en i2v classique (1 image + verbes explosifs) = tir dynamique, fleche qui part, corps qui recule. **Regle** : start/end = transitions camera. Action = i2v classique.
+
+### L3 : ElevenLabs SFX API = audio ambiance sans Seedance V2
+`POST /v1/sound-generation`, model `eleven_text_to_sound_v2`, 0.5-30s. Prompts en anglais descriptif. Valide pour flammes (scene 6C) et tambours de guerre (scene 7A). Alternative quand clip genere sans audio (V1 Pro ou start/end frame).
+
+### L4 : Seedance V2 peut animer une dissolution dans la brume
+Scene 7D : Soumaoro se dissout progressivement dans le brouillard des montagnes. Transition d'etat "visible → invisible" reussie avec prompt explicite SECONDS par SECONDS. La transition chromatique (gris-froid → ambre-dore) a aussi fonctionne. Les transitions d'etat abstraites sont possibles si decrites en etapes concretes.
+
+### L5 : Vetements historiques = toujours specifier epoque + culture
+Gemini genere des soldats en armures Vikings par defaut. Corriger avec description explicite : "13th century West African Mande warriors, cotton tunics, leather armor with geometric patterns, cowrie shell decorations, turbans, leather war caps, gris-gris amulets, wooden spears with iron tips."
+
+---
+
+## Session 2026-04-17 — 5 lecons ($5.44 de tuition)
+
+### L1 : Storyboard JAMAIS from scratch (Gate 13)
+Gemini generation pure sans refs canoniques en input = Seedance copie le style du storyboard au lieu des refs canon. Cout : $2.74.
+**Regle** : tout storyboard doit etre genere en edition chirurgicale avec les refs canoniques comme images source. Sauvegarder un `.refs.txt` a cote pour prouver les inputs.
+
+### L2 : Continuite age entre actes adjacents (Gate 12)
+Acte II (enfant qui rampe) et Acte III (enfant qui se leve avec barre de fer) = MEME personnage, MEME age (~7-8 ans). Utiliser `soundjata-baby-ref.png` (toddler 2-3 ans) pour l'Acte II = rupture de continuite avec Acte III. Cout : $2.70.
+**Regle** : verifier `character_ages_by_acte` dans le manifest. En cas de doute, regarder le clip adjacent deja valide.
+
+### L3 : Self-review agent compare au prompt, pas au style existant
+L'agent a donne 9.5/10 a un clip dont le style etait different des clips existants de la serie. Le self-review est necessaire mais insuffisant — le checkpoint humain (REVIEW-BEFORE-SPEND) est obligatoire.
+
+### L4 : Pipeline gates =/= direction artistique
+Les gates attrapent les erreurs mecaniques (prompt court, mauvais format, biais reverse). Ils n'attrapent pas les erreurs de jugement (mauvaise ref, style drift). La couche manquante = review humaine structuree avant l'appel payant.
+
+### L5 : Seedance max 9 images, pas 4
+L'ancienne constante MAX_SEEDANCE_IMAGE_REFS = 4 etait fausse. Seedance 2.0 reference-to-video accepte jusqu'a 9 images. Corrige dans le code et la memoire.
+
+---
+
+## Seedance Production Pipeline (2026-03 a 04)
+
+### Separation Kimi DA / Claude dynamisation (CRITIQUE)
+- Kimi pense en cinema contemplatif (plans-tableaux, orbites lentes) = videos statiques dans Seedance
+- Claude traduit la vision Kimi en langage Seedance (verbes explosifs, multi-camera, Format 3 SECONDS)
+- Teste sur Thiaroye : prompts Kimi directs = 3-5/10, Claude dynamises = 9-9.5/10
+- **Regle** : NE JAMAIS donner les prompts Kimi directement a Seedance
+
+### Ref image Gemini = ancrage style (CRITIQUE)
+- Sans ref image, Seedance ignore "2D flat" dans le prompt et genere du photorealisme
+- Ref Gemini generee depuis `frame-03.jpg` (style anchor) + description scene = ancre le style BD
+- Script : `scripts/generate-styleref.py`
+- La ref est plus forte que le prompt pour le style ET les couleurs
+
+### Frame chaining = continuite entre clips
+- Derniere frame clip N = ref image clip N+1
+- Script : `scripts/extract-lastframe.sh clip_N.mp4`
+- La ref Gemini sert pour le clip 1 ou si le style drift
+
+### Audio Seedance = TOUJOURS remplacer
+- Seedance re-synthetise l'audio (mots deformes meme si timing/lip sync correct)
+- Workflow : strip audio ffmpeg -> overlay ElevenLabs dans Remotion
+- Offset lip sync ~0.3s (9 frames @30fps)
+
+---
+
+## Seedance Prompting (regles 1-41 documentees dans tools/seedance-rules.md)
+
+### Top 5 gotchas les plus couteux
+1. **"POINTS at X" = pointe vers camera** — specifier direction physique ("turns LEFT, points at chiefs")
+2. **Ref image = position de DEPART** — si le perso doit etre assis, ref doit montrer assis
+3. **Zero metaphore lumineuse** — "glow/beacon/catches light" = halo magique en 2D flat
+4. **Propagation couleur = VFX artificiel** — changer de plan plutot que propager dans un meme plan
+5. **"slight push in" = zoom avorte** — soit camera STEADY soit mouvement ENGAGE
+
+---
+
+## SVG Enluminure/Gravure - Peste 1347 (2026-02)
+
+### Architecture validee
+- Dual-style : enluminure (couleur) pour vie/espoir, gravure (monochrome) pour mort/crise
+- Transition : `feColorMatrix type="saturate"` de 1->0 via Remotion `interpolate()`
+- Helpers : `lerpColor(a,b,t)`, `etatTint(color, etat)`
+- Zero assets externes = elimine les echecs compositing
+
+### Systeme 3-overlays
+- Type 1 Permanent discret (coin haut-gauche, compteur progressif)
+- Type 2 Pause narrative (parchemin centre, 5-8s, stroke-dasharray)
+- Type 3 Portrait flash (coin haut-droit, 2-3s)
+
+---
+
+## ElevenLabs TTS francais (regles obligatoires)
+
+- Accents complets TOUJOURS (e, e, e, a, u, c) — fonctionnel pas cosmetique
+- Pauses V3 : `[pause]` et `[short pause]` (pas SSML `<break>`)
+- Participes passes en "e/ee" = accent final drop — reformuler
+- "ont + voyelle" = liaison bizarre — passe simple
+- Scanner CHAQUE mot en "e/ee" AVANT generation (regle feedback)
+
+---
+
+## Audio Design
+
+### Stack valide scenes narratives courtes
+1. Voix-off (100%) — toujours dominante
+2. 1 seule musique de fond (5-10%) — pas 2 couches redondantes
+3. SFX ponctuels lies aux evenements visuels (30-50%)
+
+### Regles
+- Demarrage differe musique : 1-2s de voix seule au debut
+- Etirement audio max 15% (atempo) au-dela = voix artificielle
+- SFX narratifs (lies a un evenement) > SFX atmospheriques (ambiance generale)
+
+---
+
+## Production Workflow
+
+### Beat-by-Frame (methode obligatoire)
+1. Ouvrir le storyboard AVANT de coder
+2. Coder 1 beat a la fois
+3. Mini-render `--frames=START-END`
+4. Valider -> passer au suivant
+- Anti-pattern : coder 8 beats sans storyboard ouvert = resultat tres eloigne
+
+### Audio-first (NON-NEGOTIABLE)
+- Generer audio -> mesurer ffprobe -> PUIS coder
+- Voice reads faster than expected (script 4min -> 2min20 actual)
+
+### Prototype 3-5s AVANT version finale
+- Identifier 2-3 elements visuels risques
+- Render `--frames=0-150` -> valider -> PUIS version complete
+- Economie : evite 2-3h de corrections sur version finale
+
+---
+
+## QA Pipeline
+
+### Seuil Kimi
+- 8.5/10 minimum pour presenter a Aziz
+- Iterer render -> Kimi -> corrections jusqu'a 8.5/10
+- Si "publication-ready" = s'arreter meme si < 9/10
+
+### Envoyer FRAMES PNG a Kimi (pas video compressee)
+- `npx remotion still src/index.ts Composition --frame=N output.png`
+- 4-5 frames cles a 1920px natif
+- Mentionner explicitement les elements ANIMES dans le prompt Kimi
+
+### Pipeline review : Claude analyse AVANT Kimi
+- Claude regarde lui-meme tout render/image AVANT d'envoyer a Kimi
+- Former son propre jugement, puis envoyer a Kimi avec brief precis
+- Hierarchie : score Kimi = reference technique, jugement Aziz = verdict final
+
+---
+
+## Remotion Best Practices
+
+### Animation Timing
+- Audio-derived timing OBLIGATOIRE : `const x = TIMING.beat01.start`
+- spring() > interpolate() pour mouvements naturels
+- Clamp obligatoire : `extrapolateRight: 'clamp', extrapolateLeft: 'clamp'`
+- premountFor sur tous les Sequence
+
+### Anti-patterns (INTERDIT)
+- CSS transition -> useCurrentFrame() + interpolate()
+- setTimeout/setInterval -> frames Remotion
+- @keyframes -> spring() ou interpolate()
+- requestAnimationFrame -> useCurrentFrame()
+- Hardcoder numeros de frames -> deriver de constantes timing
+
+### OffthreadVideo (clips Seedance/Kling)
+1. `<Video>` INTERDIT en headless — frames noires. Toujours `<OffthreadVideo>`
+2. DOIT etre dans `<Sequence from={BEATS.xxx.start}>` — sans Sequence = freeze
+3. Toujours `muted` — audio = piste separee ElevenLabs
+
+---
+
+## Gemini chirurgical = correcteur universel
+- Meilleur outil pour corrections precises (oeil, bijou, couronne, silhouette, pieds)
+- Preserve l'image source intacte — TOUJOURS essayer avant de regenerer
+- Nano Banana Pro (`gemini-3-pro-image-preview`) = meilleur modele Google ($0.134/img)
+
+---
+
+## ⛔ PÉRIMÉ — Vercel Renderer (2026-03-27) — POC ABANDONNÉ, NE PAS UTILISER (cf. CLAUDE.md)
+- `npx create-video@latest --vercel` pour setup
+- Blob store connecte au projet AVANT premier deploy
+- Rendering via Sandbox : ~30s pour 3s 1080p
+- Le template hardcode compositionId — modifie pour accepter dynamique
+
+---
+
+## Anti-patterns documentes (erreurs couteuses)
+
+1. **Presenter le brouillon a Aziz** — Kimi detecte les problemes AVANT qu'Aziz soit dans la boucle
+2. **Coder sans storyboard ouvert** — derive de contexte = resultat tres eloigne
+3. **Incrementer un prototype rejete** — reconstruire from zero
+4. **Sprites CSS sur background peint** — 10+ echecs, zero ancrage machine-readable
+5. **Affirmer "X ne peut pas Y" sans consulter la doc** — PixelLab side-view, Aseprite CLI
+6. **Confondre connaissance generale vs etat local** — toujours verifier avec Bash pour l'etat machine
+7. **Soumettre des jobs Seedance sans le visual-producer** — risque de relancer des jobs via mauvais endpoint, cout multiplie (incident scene 8, $10+ potentiels)
+
+## Session 2026-07-12 (Soudan Acte 4/5, session 10) — 1 lecon methode
+
+### L : bug visuel silencieux (rien ne crash, rien ne s'affiche) — instrumenter avant de re-deviner
+2 bugs de masque parchemin dans la meme session (Russie puis Egypte) qui SEMBLAIENT etre la meme erreur
+au premier coup d'oeil (calque invisible) mais avaient des causes differentes (Russie = mauvaise strategie
+de calque ; Egypte = un drapeau a 92% opacite qui ecrasait le masque, code du masque lui-meme correct). Le
+2e bug a ete diagnostique correctement en ajoutant un indicateur de debug temporaire affiche a l'ecran
+(texte "DEBUG paths=N op=X" directement dans le rendu, confirme puis retire) plutot qu'en re-devinant par
+analogie avec le 1er bug. **Regle** : face a 2 bugs visuellement similaires, ne pas assumer la meme cause
+racine — un indicateur visuel temporaire dans le rendu lui-meme est plus rapide qu'inspecter le code seul
+pour un defaut qui ne crash pas (proche de `systematic-debugging`/`root-cause-tracing`, cas d'application
+concret pour du rendu Remotion/Mapbox).

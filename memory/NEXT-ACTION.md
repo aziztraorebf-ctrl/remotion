@@ -53,35 +53,20 @@ vite un effet à une seule cause.
 
 ---
 
-## 🧹 DETTE MÉMOIRE — DOUBLONS INTER-ARBORESCENCES (identifié 2026-08-18, ~8 restants)
+## ✅ DETTE MÉMOIRE A/B — SOLDÉE (2026-08-18)
 
-⛔ **Mode d'échec confirmé 2× cette session** : notre mémoire vit dans DEUX arborescences
-(`Workspace/remotion/memory/` et `.claude/projects/.../memory/`). Un même basename dans les deux ne crée
-PAS un doublon inoffensif — **il crée un fragment PRÉSENT MAIS INVISIBLE**, parce que MEMORY.md ne peut
-pointer que vers un seul chemin. Le contenu n'est pas perdu : il est faux-négatif à toute recherche par l'index.
+**9 doublons traités, 0 collision restante** (`check-memoire-doublons.py` → exit 0).
+⛔ La leçon qui reste : les 2 arborescences peuvent TOUTES DEUX être à jour, mais l'index ne pointe
+que vers UNE → un même nom des deux côtés crée un fragment **présent mais INVISIBLE**.
+**5 fichiers sur 9 contenaient du contenu unique introuvable ailleurs** — dont 2 doctrines à interdits
+durs (la règle « drapeau ≠ compagnie » de CARTO, le point 2bis anti-redondance de scène de CONTINUITÉ)
+et un corpus entier de 400 lignes dans `key-learnings` (ère Seedance/Atlas 2026-02→04, disjoint).
+⛔ **La date et la taille ne disent RIEN** : plusieurs fois la version la plus ancienne/petite portait
+l'unique exemplaire.
 
-**2 cas déjà traités (patron à réutiliser : fusionner vers le chemin pointé par l'index + laisser un stub)** :
-- `feedback_worktree-git-isolation-gotchas.md` — un gotcha (« fichier absent du worktree ») invisible 3 semaines
-- `tools/openrouter-gpt-image-et-breakdown.md` — **les 2 versions étaient COMPLÉMENTAIRES** (slugs de modèles
-  + gotcha alpha d'un côté, tests de breakdown de l'autre) et MEMORY.md pointait vers la plus pauvre. Fusionné,
-  pointeur corrigé.
-
-**Restants, par priorité** (⛔ toujours DIFFER avant de supprimer — 2 fichiers sont PLUS GROS côté auto-memory
-malgré une date plus ancienne, donc contenu unique probable) :
-1. `key-learnings.md` — 1228 lignes de divergence, **cible d'écriture nommée par CLAUDE.md** → risque max
-2. `CARTO-OVERLAYS-PRINCIPES.md` · `CONTINUITE-SCENE-INTENTION-DABORD.md` — versions courtes périmées de
-   doctrines à interdits durs citées par CLAUDE.md
-3. `gemini-video-upload-fiable.md` · `methode-test-reproductibilite-agent-vierge.md` — **plus gros côté
-   auto-memory** → diff obligatoire
-4. `apis-and-tools.md` (21 lignes) · `feedback_review-mp4-avant-presentation.md` · `decode-hera-templates.md`
-5. Copies identiques à l'octet, supprimables une fois les pointeurs MEMORY.md redirigés :
-   `remotion-effects-rack-natif.md` · `render-background-gel-sleeps.md` · `sfx-reveal-mp3-banni.md` ·
-   `feedback_vox-generation-vs-composition-deterministe-moat.md`
-
-**Commande de détection** : `comm -12 <(ls .../.claude/.../memory/feedbacks|sort) <(ls memory/feedbacks|sort)`
-⚠️ Faux positifs connus (même nom, sujets différents — ne pas re-signaler) : `BEAT-1-COMPLETE.md`,
-`PIXELLAB-WALK-PIPELINE.md`, `current-project.md`, `CLAUDE.md`.
-→ **Mérite une passe dédiée, pas un bout de fin de session.**
+🚦 **Outillé** : `python3 scripts/tools/check-memoire-doublons.py` (référencé dans CLAUDE.md) — scanne
+les 2 arborescences, écarte les collisions résolues (stub/identiques) et les faux positifs connus.
+**À relancer après tout ajout de fichier mémoire.**
 
 ---
 

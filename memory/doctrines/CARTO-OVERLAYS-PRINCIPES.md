@@ -27,6 +27,14 @@ le re-render). JAMAIS de `left/top` fixe en pixels. Sinon l'élément DÉRIVE qu
 - **P4 — marqueurs gros + pulse rapide**, viser au-delà du cercle (sonar qui se propage).
 - **P5 — drift continu** : la caméra n'est JAMAIS parfaitement immobile (micro-oscillation, intégrée dans CartoSouverainV5).
 
+<!-- RAPATRIÉ le 2026-08-18 depuis .claude/.../memory/doctrines/CARTO-OVERLAYS-PRINCIPES.md (version 2026-06-21).
+     Ces 2 règles n'existaient QUE dans cette copie — invisibles depuis l'index. -->
+- **Exception unique au P1** : le TITRE d'état en coin d'écran (ex. « THREE FIELDS ») n'est pas un
+  label de lieu — il n'a pas besoin de plaque. Toute autre écriture (nom de lieu, label, donnée) passe
+  par une géoplaque, sans exception.
+- ⛔ **Un drapeau de pays ne désigne JAMAIS une COMPAGNIE** (confusion « annexion » — tranché
+  2026-06-21). Le drapeau dit l'État, pas l'opérateur privé qui exploite sur son sol.
+
 ---
 
 ## 🎯 JETONS GÉO-ANCRÉS — le système (prouvé 2026-06-21)

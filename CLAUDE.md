@@ -63,6 +63,8 @@ Ne JAMAIS dire « je ne peux pas / je n'ai pas accès » sans avoir consulté la
 
 **Après tout déplacement/renommage de fichier mémoire OU script** : lancer `python3 scripts/tools/check-links.py` (garde-fou liens morts dans les fichiers de navigation). Corriger les `.md` ET les chemins en dur dans le CODE (.py/.sh) — une réorg casse les deux.
 
+**⛔⛔ Avant d'écrire un fichier mémoire, vérifier qu'il n'existe pas DÉJÀ dans l'AUTRE arborescence** : `python3 scripts/tools/check-memoire-doublons.py`. Les 2 arborescences (`memory/` et `.claude/projects/.../memory/`) peuvent TOUTES DEUX être à jour, mais l'index ne pointe que vers UNE — un même nom des deux côtés crée un fragment **présent mais INVISIBLE**. 2 cas réels le 2026-08-17/18 (un gotcha invisible 3 semaines ; 2 versions complémentaires dont l'index visait la plus pauvre). ⛔ Ne JAMAIS trancher sur la date ou la taille : diffuser le contenu, rapatrier vers le chemin pointé par MEMORY.md, laisser un STUB de redirection (jamais une suppression sèche).
+
 ---
 
 ## ⛔ RÈGLES DE TRAVAIL NON-NEGOTIABLES (résumé dense — détail en pointeur)
