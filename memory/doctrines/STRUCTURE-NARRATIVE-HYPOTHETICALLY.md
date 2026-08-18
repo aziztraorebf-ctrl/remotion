@@ -6,6 +6,10 @@
 > (écriture phrase par phrase). Frames sources : `out/_rnd/hypothetically-analysis/*/frames_sample/`.
 > ⚠️ Hypothèses de studio tiers, pas encore testées sur notre propre matière.
 
+> ⭐ **RATTACHÉ À [[FORMES-NARRATIVES]] (2026-08-17)** — les 2 architectures ci-dessous sont les
+> **formes 7A et 7B** du registre unifié des formes narratives. Aller d'abord à FORMES-NARRATIVES pour
+> CHOISIR (7 formes, conditions d'usage, arbre de décision) ; revenir ici pour le détail de ces deux-là.
+
 ## 2 architectures, à choisir selon le sujet
 
 **A — Boucle+escalade** (sujet à message/révélation unique) : cold-open choc (montrer la conséquence finale,

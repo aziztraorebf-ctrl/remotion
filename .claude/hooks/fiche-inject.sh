@@ -65,6 +65,12 @@ if [ -n "$BASH_CMD" ]; then
   if printf '%s' "$BASH_CMD" | grep -qE 'generate-narration|generate-sfx|forced-align|splice-segment|elevenlabs|minimax-music'; then
     add_fiche "FICHE-AUDIO.md" "FICHE AUDIO" "bash-audio"
   fi
+  # PACKAGING (titre/miniature/description) : le pipeline s'arretait au render/upload alors que
+  # c'est LA que se joue la conversion (CTR 1,5-1,8 % mesure = probleme de conversion, pas de reach).
+  # ⛔ jury-titres, PAS jury-script : jury-script-llm.py juge le SCRIPT, autre moment.
+  if printf '%s' "$BASH_CMD" | grep -qE 'jury-titres|jury-thumbnail|gemini-thumbnail-(create|edit)|gemini-cover-vertical'; then
+    add_fiche "FICHE-PACKAGING.md" "FICHE PACKAGING" "bash-packaging"
+  fi
   [ -z "$PARTS" ] && exit 0
   jq -n --arg ctx "$PARTS" '{hookSpecificOutput:{hookEventName:"PreToolUse",additionalContext:$ctx}}'
   exit 0
@@ -73,8 +79,18 @@ fi
 # ---------------------------------------------------------------- BRANCHE FICHIER
 [ -z "$FILE_PATH" ] && exit 0
 # Un PROMPT-*.txt = un brief de storyboard en cours d'ecriture.
-if printf '%s' "$FILE_PATH" | grep -qE 'PROMPT-.*\.(txt|md)$|breakdown.*\.(json|md)$'; then
+# ⚠️ -i OBLIGATOIRE : BREAKDOWN-SEGMENT-A-STORYBOARD-FUSION.md etait RATE (majuscules).
+# + STORYBOARD-*/PLAN-* : 21 fichiers reels sous memory/episodes/ ne declenchaient RIEN alors
+#   que c'est LA ou dorment les verdicts de rejet (feedback_lire-verdict-rejet-breakdown-...).
+if printf '%s' "$FILE_PATH" | grep -qiE 'PROMPT-.*\.(txt|md)$|breakdown.*\.(json|md)$|/(STORYBOARD|PLAN)-[^/]*\.(md|txt)$'; then
   add_fiche "FICHE-STORYBOARD.md" "FICHE STORYBOARD" "$FILE_PATH"
+  [ -n "$PARTS" ] && jq -n --arg ctx "$PARTS" '{hookSpecificOutput:{hookEventName:"PreToolUse",additionalContext:$ctx}}'
+  exit 0
+fi
+# Miniature : source composable (.svg autant que .tsx) sous thumbnails-library/.
+# ⚠️ DOIT etre AVANT le filtre .tsx : un .svg y serait rejete (bug reel, corrige 2026-08-17).
+if printf '%s' "$FILE_PATH" | grep -qE 'thumbnails-library/.*\.(svg|tsx)$'; then
+  add_fiche "FICHE-PACKAGING.md" "FICHE PACKAGING" "$FILE_PATH"
   [ -n "$PARTS" ] && jq -n --arg ctx "$PARTS" '{hookSpecificOutput:{hookEventName:"PreToolUse",additionalContext:$ctx}}'
   exit 0
 fi

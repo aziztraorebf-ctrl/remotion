@@ -43,3 +43,37 @@ obligatoire** : après tout appel storyboard/breakdown visuel, vérifier qu'un f
 sur disque (pas seulement un `.response.json`) avant de considérer l'appel réussi — même logique que
 "un agent qui rapporte terminé n'a pas forcément produit le fichier", mais au niveau d'un appel API
 individuel plutôt que d'un agent.
+
+---
+
+<!-- Fusionné le 2026-08-18 depuis la copie auto-memory (datée 2026-06-17), qui contenait des
+     informations ABSENTES d'ici : slugs de modèles vérifiés via l'API live, patterns d'appel,
+     et le gotcha alpha. MEMORY.md pointait vers CETTE copie — donc les tests ci-dessus étaient
+     invisibles depuis l'index. Pointeur corrigé le même jour. -->
+
+# OpenRouter — GPT image & vision (eval 2026-06-17)
+
+Cle `OPENROUTER_API_KEY` dans `.env` racine. Endpoint `https://openrouter.ai/api/v1/chat/completions`.
+
+## Modeles verifies via l'API live (pas la doc, qui 404 souvent)
+- **Image generation** (out: image+text) : `openai/gpt-5-image`, `openai/gpt-5-image-mini`, **`openai/gpt-5.4-image-2`** (= ce qu'Aziz appelle "GPT Image 2"). Aussi `google/gemini-3.1-flash-image-preview`. ⚠️ PAS de slug `gpt-image-2` tout court.
+- **Vision -> JSON** (in: image+text, out: text) : flagship `openai/gpt-5.5`, `gpt-5.4`, `gpt-5.2-pro`, `o3`, etc.
+
+## Pattern d'appel
+- Image : `modalities:["image","text"]`, image renvoyee dans `choices[0].message.images[].image_url.url` (data URL base64). Script : `scripts/tools/openrouter-gen-image.py`.
+- Vision : message `content:[{type:text},{type:image_url,image_url:{url:dataURL}}]`. Script : `scripts/tools/openrouter-vision-breakdown.py`.
+- Cote Gemini equivalents : `scripts/tools/gemini-gen-image.py` (image) + `scripts/tools/gemini-vision-breakdown.py` (breakdown, modele `gemini-3.1-pro-preview`).
+
+## VERDICT comparatif (hook Senegal, meme prompt/image)
+- **Generation storyboard** : Gemini 3.1 Flash Image GAGNE pour un plan de travail (lisible, fidele, planche large). GPT 5.4-image-2 = plus cinema/sombre/grain mais sortie petite + labels illisibles -> bon pour DIRECTION d'ambiance, pas comme plan.
+- **Breakdown vision->JSON** : **GPT-5.5 SUPERIEUR** sur ce cas (geometrie au pixel, spring {damping,stiffness} chiffres, vraie comprehension de la contrainte "graphe continu", crash detaille). Gemini = plus generique mais concis/eprouve. GPT verbeux (36KB vs 13KB) -> elaguer avant de coder.
+- A garder : GPT-5.5 = concurrent serieux pour breakdowns techniques exigeants, meme si le pipeline defaut reste Gemini. Voir [[gemini]].
+
+## ⛔ GOTCHA CRITIQUE — GPT-image 2 ne sort PAS de vrai alpha (2026-06-17)
+`openai/gpt-5.4-image-2` retourne du **RGB sans canal alpha** : quand on demande "transparent background", il PEINT un damier de transparence (gris/blanc 243-255 neutre) DANS les pixels. Inexploitable tel quel comme PNG detoure (`<Img>` Remotion affiche le damier). Verif : `Image.open(p).mode` == 'RGB' = pas d'alpha.
+- **FIX qui marche** : detourer via **Recraft `remove_background`** (MCP) — propre, bords nets, vrai alpha. Bien superieur a un detourage par seuil maison (`scripts/tools/dechecker-damier.py` = halo residuel, abandonne).
+- **Overlays diffus** (particules, glow, embers, flare) : NE PAS generer en image — les refaire en SVG natif (transparent garanti, plus net, anti-AI-slop). Garder gpt-image seulement pour OBJETS nets (goutte 3D) + fonds OPAQUES (textures).
+- **Gemini `gemini-3.1-flash-image-preview`** sort un VRAI alpha (RGBA) quand on demande transparent — repli fiable.
+- Cout : gpt-image consomme beaucoup de credits OpenRouter (HTTP 402 "more credits" apres ~6 images). Surveiller le solde.
+
+Modeles verrouilles projet : [[gemini]] (Gemini reste signal, jamais juge).

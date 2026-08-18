@@ -35,7 +35,14 @@ titre → « Ils dormaient. Le Franc CFA a été divisé par deux. » (50 c.) ·
 
 **SOUDAN** (sortie 20 août) : titre → « **La guerre au Soudan n'a aucune raison de s'arrêter** »
 (50 c., formulation d'Aziz) · miniature → **Serpent retouché** (`serpent-de-lor-SANS-TEXTE.png`),
-Machine à Guerre écartée. Détail + titres écartés : `out/PRET-PUBLICATION/soudan-midform-FINAL.PUBLICATION-NOTE.md`.
+Machine à Guerre écartée · sous-titres importés. Détail + titres écartés :
+`out/PRET-PUBLICATION/soudan-midform-FINAL.PUBLICATION-NOTE.md`.
+
+📁 **Sous-titres propres des 2 vidéos** : `out/PRET-PUBLICATION/sous-titres/franc-cfa-midform-FR.srt`
+(54 segments) et `soudan-midform-FR.srt` (179 segments). ⚠️ `out/` est **gitignoré** → ces fichiers
+ne sont PAS versionnés, ce pointeur est leur seule trace. Le Soudan a été produit par **alignement
+forcé sur l'audio de la vidéo finale** (aucune transcription n'existait, la vidéo n'étant pas
+publiée) — méthode complète : `memory/doctrines/PACKAGING-YOUTUBE.md` §7.
 
 ⏭️ **À RELEVER À J+3 ET J+7** (point de départ : CFA 48 vues / 0 comm. · Sénégal 93 / 0 · AES 42 / 0) —
 outil et méthode : `memory/doctrines/DIAGNOSTIC-FLOP-VIDEO.md` (`vidiq_channel_analytics` donne
@@ -46,7 +53,52 @@ vite un effet à une seule cause.
 
 ---
 
+## 🧹 DETTE MÉMOIRE — DOUBLONS INTER-ARBORESCENCES (identifié 2026-08-18, ~8 restants)
+
+⛔ **Mode d'échec confirmé 2× cette session** : notre mémoire vit dans DEUX arborescences
+(`Workspace/remotion/memory/` et `.claude/projects/.../memory/`). Un même basename dans les deux ne crée
+PAS un doublon inoffensif — **il crée un fragment PRÉSENT MAIS INVISIBLE**, parce que MEMORY.md ne peut
+pointer que vers un seul chemin. Le contenu n'est pas perdu : il est faux-négatif à toute recherche par l'index.
+
+**2 cas déjà traités (patron à réutiliser : fusionner vers le chemin pointé par l'index + laisser un stub)** :
+- `feedback_worktree-git-isolation-gotchas.md` — un gotcha (« fichier absent du worktree ») invisible 3 semaines
+- `tools/openrouter-gpt-image-et-breakdown.md` — **les 2 versions étaient COMPLÉMENTAIRES** (slugs de modèles
+  + gotcha alpha d'un côté, tests de breakdown de l'autre) et MEMORY.md pointait vers la plus pauvre. Fusionné,
+  pointeur corrigé.
+
+**Restants, par priorité** (⛔ toujours DIFFER avant de supprimer — 2 fichiers sont PLUS GROS côté auto-memory
+malgré une date plus ancienne, donc contenu unique probable) :
+1. `key-learnings.md` — 1228 lignes de divergence, **cible d'écriture nommée par CLAUDE.md** → risque max
+2. `CARTO-OVERLAYS-PRINCIPES.md` · `CONTINUITE-SCENE-INTENTION-DABORD.md` — versions courtes périmées de
+   doctrines à interdits durs citées par CLAUDE.md
+3. `gemini-video-upload-fiable.md` · `methode-test-reproductibilite-agent-vierge.md` — **plus gros côté
+   auto-memory** → diff obligatoire
+4. `apis-and-tools.md` (21 lignes) · `feedback_review-mp4-avant-presentation.md` · `decode-hera-templates.md`
+5. Copies identiques à l'octet, supprimables une fois les pointeurs MEMORY.md redirigés :
+   `remotion-effects-rack-natif.md` · `render-background-gel-sleeps.md` · `sfx-reveal-mp3-banni.md` ·
+   `feedback_vox-generation-vs-composition-deterministe-moat.md`
+
+**Commande de détection** : `comm -12 <(ls .../.claude/.../memory/feedbacks|sort) <(ls memory/feedbacks|sort)`
+⚠️ Faux positifs connus (même nom, sujets différents — ne pas re-signaler) : `BEAT-1-COMPLETE.md`,
+`PIXELLAB-WALK-PIPELINE.md`, `current-project.md`, `CLAUDE.md`.
+→ **Mérite une passe dédiée, pas un bout de fin de session.**
+
+---
+
 ## ⭐⭐⭐ PROCHAINE SESSION — EXPLORATION DES FORMATS NARRATIFS (décidé 2026-08-17)
+
+> ✅ **LIVRABLE PRODUIT LE 2026-08-17 : [`memory/doctrines/FORMES-NARRATIVES.md`]
+> (doctrines/FORMES-NARRATIVES.md)** — 7 formes narratives, conditions d'usage, arbre de décision,
+> dosage mesuré. **C'est LUI qu'on ouvre pour choisir une forme** ; il est inscrit dans `ROUTAGE.md`,
+> pointé depuis `DOCTRINE-SCRIPT-UNIFIEE` et `HOOK-PREMIERE-MINUTE`, et devient le 7e réflexe de MEMORY.
+> ⛔ **Correction de cadrage (Aziz, 2026-08-17)** : la session avait produit surtout des **mécanismes
+> d'écriture**, pas des formats. Les deux sont maintenant SÉPARÉS dans la doctrine (§ formes vs
+> § boîte à outils). Reste ouvert : chercher d'autres FORMES (pas d'autres techniques).
+>
+> 📂 **Dossier de recherche (sources, 9 transcripts, niveaux de preuve)** :
+> **`memory/recherche-formats/REGISTRE-FORMATS-NARRATIFS.md`** — cas étudiés, transcripts sauvegardés,
+> 3 mécaniques convergentes, leçons de méthode TubeLab, état d'avancement. **L'ouvrir en premier**
+> pour reprendre ce chantier ; le présent § garde le cadrage et le cas Adam Ivy.
 
 > **Le principe qui cadre tout ce chantier, mots d'Aziz** : « On est sur YouTube, on est sur les
 > réseaux sociaux, adaptons-nous à ce que les gens veulent voir. **Et le défi, c'est de ne pas perdre
@@ -84,10 +136,80 @@ analyse économique. ⛔ Chercher HORS géopolitique — c'est tout l'intérêt 
    des niches adjacentes. Compléter avec vidIQ (**154 crédits**) si besoin.
 2. **DÉCORTIQUER** — transcripts des gagnants : comment ils OUVRENT, comment ils TIENNENT la minute
    1→3, comment ils RELANCENT. C'est la minute 1-3 qui compte, pas l'accroche.
+   ⭐ **+ 4e question à mesurer sur les mêmes transcripts (ajoutée 2026-08-17)** : **à quelle FRÉQUENCE,
+   et par quel GESTE, ramènent-ils l'abstrait à une expérience vécue ?** Compter les occurrences, ne pas
+   supposer. Hypothèse à valider ou tuer : c'est une des réponses à « qu'est-ce qui tient pendant
+   l'explication ». Voir § ÉCHELLE HUMAINE ci-dessous.
 3. **FORMALISER** — un **registre de formats** (sur le modèle du registre des moteurs visuels), plus
    une **étape de choix explicite insérée dans le pipeline, entre le sujet et le script**.
+   Si la mesure du temps 2 confirme : l'échelle humaine entre dans le registre comme **composant de
+   format** (fréquence + geste), pas comme une note de style.
 
 **Livrable concret** : appliquer un format choisi au sujet **FMI**, en SCRIPT SEULEMENT, zéro production.
+
+---
+
+### ⭐⭐⭐ FMI — CE QUI RESTE À FAIRE (consigné 2026-08-17, rien n'est commencé)
+
+⛔ **État réel vérifié** : **AUCUNE recherche FMI n'existe.** Le sujet n'apparaît que comme EXEMPLE dans
+des doctrines, plus un composant R&D `src/projects/_rnd/svg-scenes/DetteFmiMecanismeSVG.tsx` (test, pas
+un acquis). **La phase A entière est à faire.** Ne pas croire qu'on a de l'avance.
+
+**Faire le tout PROPREMENT = suivre [[RECHERCHE-PRESCRIPT-UNIFIEE]] de bout en bout** (9 étapes,
+3 phases). Ne PAS sauter directement à l'écriture — c'est la leçon racine déjà documentée dans cette
+doctrine (§ « pourquoi j'ai sauté des étapes »).
+
+**PHASE A — valider le sujet (étapes 0-6)** → [[SUJET-PRIME-SUR-PRODUCTION]]
+- 1 **TubeLab** (566 crédits) · 2 **`last30days`** ⚠️ *jamais TubeLab sans lui* · 3 **yt-dlp**
+  transcripts + TOP COMMENTAIRES (gratuit — mine d'or à angle)
+- ⛔ **Croiser 2 seeds** (leçon n°0 : un seed unique pollue tout le résultat)
+- 4 synthèse angle · 5 verdict GO/NO-GO · 6 **étoile polaire de positionnement**
+- ⭐ **Point de départ déjà acquis (session 2026-08-17)** : la demande est PROUVÉE — Hidden Capital fait
+  **805 K vues** dont la dernière partie porte sur la dette africaine (53 pays qui paient plus en dette
+  qu'en santé, Zambie, Sri Lanka, Djibouti à 77 % du PIB). **Le sujet n'a pas de problème de demande.**
+  Reste à trouver NOTRE angle, pas à prouver le sujet.
+
+**PHASE B — écrire (étape 7)**, précédée de **6 bis : choisir la forme narrative** → [[FORMES-NARRATIVES]]
+- ⭐ **Reco de forme : n°2 « la question que personne ne résout »** — la mieux étayée du corpus pour ce
+  sujet (2 chaînes, la même question sur ce terrain exact, 1,5 M de vues cumulées). Condition remplie :
+  la question est déjà dans la tête du spectateur.
+- ⚠️ **NE PAS prendre la forme 3 (révision du récit officiel)** ici : plus puissante mais elle glisse
+  très vite vers « on vous cache la vérité » sur le FMI. Le doublet Lorenzana (823 likes complotistes)
+  vs Hidden Capital (question de fond) est la démonstration du risque.
+- ⛔⛔ **LE VRAI RISQUE DU SUJET — machine à chiffres abstraits.** La forme ne sauvera rien seule. 3 points
+  non négociables : (1) **incarner chaque chiffre dans un corps** (l'équivalent des ingénieurs grecs
+  devenus chauffeurs Uber) · (2) **une métaphore physique unique tenue 10 min** à la place des graphiques
+  · (3) **rester sur le MÉCANISME**, jamais sur les intentions cachées.
+- 🚦 Le gate `forme-narrative-gate.sh` bloquera la création du fichier de script sans `FORME:` — c'est voulu.
+
+**PHASE C — blinder (étapes 8-9)** : jury créatif **PUIS** fact-check (ordre inversé prouvé sur Gazoduc).
+
+**Livrable visé : SCRIPT SEULEMENT, zéro production.** Le FMI est le premier test de la méthode.
+⭐ **Le FMI est le terrain d'essai idéal de l'échelle humaine** : sujet 100 % chiffres abstraits, sans
+matière visuelle ni personnage. Si le geste ne se prouve pas là, il ne se prouve nulle part.
+
+### ⭐⭐ ÉCHELLE HUMAINE — pourquoi c'est rattaché ici et pas un chantier à part (2026-08-17)
+
+**Le constat** : c'est le **trou n°1** du catalogue des moteurs visuels (`MOTEURS-VISUELS-ET-SOCLE.md`,
+convergence de plusieurs voix) — *« rien ne rapporte un chiffre à une expérience vécue »*. Il n'était
+cadré dans AUCUNE session : simple note passive dans 2 fichiers, donc rien ne le déclenchait.
+
+⛔ **Ce N'EST PAS un trou de doctrine script — vérifié le 2026-08-17.** La règle existe et elle est
+déjà concrète : `DOCTRINE-SCRIPT-UNIFIEE.md` **Règle 7** porte une table de traduction
+(« 20 GWh/an » → « de quoi équiper 300 000 voitures par an »). `DECODE-INFOGRAPHICS-SHOW.md` la
+formule 2× (« chiffre toujours converti, jamais nu »). **C'est un trou d'APPLICATION, pas d'écriture** —
+le pattern exact de [[feedback_regle-ecrite-insuffisante-sans-gate-outille]].
+
+**Les 2 questions ouvertes que la session doit trancher (ne pas les préjuger)** :
+1. **Fréquence** — la Règle 7 dit *quoi* traduire, jamais *à quelle cadence*. Un chiffre traduit toutes
+   les 3 min ne tient pas une minute 1→3. C'est ce que la mesure du temps 2 doit donner.
+2. **Statut** — la Règle 7 vit en section **A. CLARTÉ** (confort de lecture). Si la mesure montre que
+   c'est un levier de **rétention**, elle doit remonter en section **C**. ⛔ Ne PAS déplacer avant
+   d'avoir la mesure : on ne réorganise pas une doctrine sur une intuition.
+
+**Au-delà du script** : le trou reste aussi VISUEL (aucun composant ne porte le geste — silhouette
+d'échelle, comparaison corporelle, destinataire). Traitement séparé et PLUS TARD : **1 prototype sur
+une scène réelle, jamais une abstraction générique** (règle projet : ne pas généraliser sur un seul cas).
 
 ### 📌 CAS DE RÉFÉRENCE À ÉTUDIER EN PREMIER (analysé le 2026-08-17)
 
@@ -172,6 +294,9 @@ il y a peut-être lieu à amélioration. »
 ### ⛔ Corrections factuelles à ne pas reperdre
 - **PixelLab ≠ outil de recherche YouTube.** C'est notre générateur de pixel art (sprites, tilesets).
   L'outil de recherche est **TubeLab**. Confusion faite 2× le 2026-08-17.
+  ⭐ **CAUSE IDENTIFIÉE (2026-08-17, Aziz)** : c'est la **dictée vocale** qui transcrit « TubeLab » en
+  « PixelLab » — pas une erreur de raisonnement. → Quand Aziz écrit « PixelLab » dans un contexte de
+  recherche YouTube/formats/outliers, lire **TubeLab** sans demander confirmation.
 - **Aucun achat d'outil nécessaire** (1of10 / ViewStats / Spotter Studio) : TubeLab + vidIQ suffisent.
 - **Compte réel des vidéos** : 3 longues PUBLIÉES (Sénégal, AES, CFA) + Soudan (sort le 20/08) +
   Gazoduc (en cours) = 5. Le FMI n'existe pas encore.

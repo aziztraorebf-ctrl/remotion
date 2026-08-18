@@ -432,9 +432,34 @@ La transcription automatique déraille sur la voix TTS et **YouTube s'en sert po
 Relevé sur le CFA : « monnaes », « la stabilité se pautonomie », « les plus pauvres qui pè les
 premiers », « Un an circule » (pour « Un nom circule »), « Burtina Faso ».
 
-→ **Générer un `.srt` propre depuis le texte exact du script**, calé sur les timings réels
-(récupérables via `mcp__claude_ai_TubeLab__get_video_transcript`, qui donne des timings justes avec
-un texte fautif). Vérifier : zéro chevauchement, zéro durée négative, fin ≈ durée réelle.
+→ **Générer un `.srt` propre depuis le texte exact du script.** Deux méthodes selon l'état :
+
+**(a) Vidéo DÉJÀ PUBLIÉE** → récupérer les timings via `mcp__claude_ai_TubeLab__get_video_transcript`
+(les timings sont justes, seul le texte est fautif) et y recoller le texte exact du script.
+
+**(b) Vidéo PAS ENCORE PUBLIÉE** (aucune transcription n'existe) → partir de **l'audio de la vidéo
+finale elle-même** :
+```bash
+ffmpeg -v error -i <FINAL.mp4> -vn -ac 1 -ar 16000 -c:a libmp3lame -q:a 4 audio.mp3
+python3 scripts/tools/forced-align.py audio.mp3 texte-propre.txt
+```
+puis découper sur la ponctuation et les silences (`gap >= 0.45 s`), 6 s et ~84 car. max par bloc.
+⭐ **Avantage décisif de l'alignement forcé sur une transcription libre** : il reçoit le texte
+ATTENDU en entrée, donc il **ne peut pas se tromper sur un nom propre** (Hemedti, Darfour, Dubaï
+sont exacts par construction).
+⚠️ Sur un audio **mixé** (voix + musique + SFX), le `loss` monte à ~0,19 au lieu de 0,04-0,09 —
+c'est attendu et sans conséquence sur les timings, ne pas le lire comme un échec.
+
+**Contrôles obligatoires avant livraison** (par script, pas à l'œil) : zéro chevauchement · zéro
+durée ≤ 0 · **zéro mot perdu** (comparer le nombre de mots alignés à la somme des blocs) · fin ≈
+durée réelle · longueur du texte identique à la source.
+
+📁 **Les `.srt` vivent dans `out/PRET-PUBLICATION/sous-titres/<episode>-FR.srt`** — ⚠️ `out/` est
+**gitignoré**, donc ces fichiers ne sont pas versionnés : ne pas les laisser dans un dossier
+temporaire (scratchpad), qui est purgé.
+
+**Import Studio** : Contenu → la vidéo → Sous-titres → Français → AJOUTER → Importer un fichier →
+**« Avec minutage »**. ⚠️ Impossible depuis l'appli mobile Studio : passer par studio.youtube.com.
 
 ---
 

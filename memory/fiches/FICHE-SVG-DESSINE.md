@@ -3,6 +3,49 @@
 > ⚠️ Si ce que tu lis ici ne correspond PAS au code que tu as sous les yeux : **c'est la fiche qui a tort**. Corrige-la immédiatement, ne contourne pas.
 > Dernière vérification contre le code : 2026-08-17.
 
+## ⛔⛔ CONTRAT « PRÊT À ANIMER » — À EXIGER DÈS LE PREMIER APPEL, QUEL QUE SOIT LE MODÈLE
+
+> **Décision d'Aziz, 2026-08-18 : cette exigence s'applique DÉSORMAIS À CHAQUE FOIS** qu'on demande à
+> un modèle — interne (Fable 5) ou externe (GPT, Gemini, Kimi, GLM, Grok) — un objet destiné à être
+> animé, que la demande parte d'un TEXTE ou d'une IMAGE de référence.
+> **Prouvé 2× le 2026-08-18** (verrou croisé + deux ponts, Fable 5) : les 2 SVG sont arrivés
+> animables **du premier coup, zéro aller-retour**, axes de rotation corrects.
+> Le coût de ne PAS le demander est connu : un SVG monolithique magnifique = tout à refaire, et un
+> axe recalculé à la main s'est déjà révélé faux de **29 px** (4 essais perdus).
+
+**Le principe** : le modèle livre le DÉCOR ET SES PIÈCES, jamais l'animation. Nous animons.
+Un SVG « beau mais d'un seul tenant » est un échec complet, pas un demi-succès.
+
+**Les 6 règles à copier telles quelles dans le brief** (elles ont produit les 2 succès) :
+
+1. **Un `<g id="...">` par élément qui devra bouger séparément.** Lister les groupes attendus dans le
+   brief, avec leur nom exact. Ne pas laisser le modèle choisir le découpage seul.
+2. **Tout élément destiné à TOURNER a son origine locale (0,0) SUR son axe** — via
+   `transform="translate(cx cy)"` sur le groupe, enfants dessinés autour de l'origine. Ainsi un
+   simple `rotate()` suffit et nous n'avons aucun centre à recalculer.
+3. **Chaque état alternatif est un groupe SÉPARÉ superposé** (ouvert/fermé, sain/fissuré), jamais un
+   seul dessin « moyen ». On bascule par opacité.
+4. **Les éléments à révéler sont livrés `opacity="0"`.**
+5. **Ce qui progresse (fluide, tracé) est dessiné PLEIN** sur toute sa longueur utile — nous en
+   révélons une portion par clip/masque. ⛔ Ne jamais demander un dessin « à moitié rempli ».
+6. **Zéro `<animate>`, zéro `<style>` global, zéro classe CSS, zéro JS, zéro `style=""` inline** sur
+   un attribut à animer : tout en ATTRIBUTS XML, sinon la surcharge depuis React devient pénible.
+
+**+ exiger un commentaire XML en tête** listant chaque groupe : ce qu'il est, et comment on est censé
+l'animer. C'est ce commentaire qui a permis de coder les 2 scènes sans relire tout le fichier.
+
+⚠️ **Vérifier soi-même, pas sur parole** (le rapport de l'agent n'est pas une preuve) :
+```bash
+grep -o 'id="[a-z_0-9]*"' fichier.svg | sort -u          # les groupes annoncés existent-ils ?
+grep -o 'id="<groupe_animable>"[^>]*' fichier.svg        # l'origine locale est-elle posée ?
+xmllint --noout fichier.svg                              # XML valide
+```
+⚠️ Piège de vérification : `grep -c '<animate'` compte aussi le mot écrit dans un COMMENTAIRE —
+lire les occurrences avant de conclure à une violation (faux positif vécu le jour même).
+
+Gabarits de briefs qui ont marché : `/tmp/BRIEF-SVG-VERROU.md`, `/tmp/BRIEF-SVG-PONTS.md`
+(recopiés dans `memory/episodes/souverain/gazoduc-aagp-tsgp/`).
+
 ## BRIQUES EXISTANTES — vérifier AVANT de coder
 Ouvrir dans cet ordre, **lire chaque liste jusqu'au bout** (une brique en fin de liste a été ratée par 3 agents sur 3) :
 1. `src/projects/_shared/INTENTION-FORME-INDEX.md` — porte d'entrée, APRÈS avoir déduit l'intention (1 verbe).

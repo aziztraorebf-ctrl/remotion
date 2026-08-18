@@ -155,7 +155,19 @@ ci-dessus). ⚠️ Ne PAS coder une 4e variante sans extraire.
    ⛔ **Rotation d'un volant vu de PROFIL** : un `rotate()` 2D le fait basculer dans le plan de
    l'écran. Se rend par **squash horizontal `scaleX` autour de l'axe de la tige** (ou par défilement
    de stries hélicoïdales clippées pour un cône/mèche — 2 usages : `GazoducActe5Faille` + `…Negocier`).
-   Statut : **prouvé** (monté dans `acte5-FINAL.mp4`, validé Aziz). À extraire en composant au 2e usage.
+   Statut : **prouvé** (monté dans `acte5-FINAL.mp4`, validé Aziz).
+   ⭐ **2e USAGE ATTEINT (2026-08-18)** → `souverain/gazoduc-aagp-tsgp/GazoducActe3Verrou.tsx` :
+   **double verrou croisé** (fluide clippé + volant à tentatives avortées). Intention distincte de la
+   bifurcation : *dire un paradoxe MÉCANIQUE, pas spatial* — deux blocages inversés d'un camp à l'autre,
+   quelque chose pousse et n'arrive jamais, mais pas au même endroit. Statut : **prouvé** (arbitrage
+   d'Aziz sur rendu entre 2 variantes, 2026-08-18).
+   🔧 **Le seuil d'extraction est donc atteint.** Sous-composant déjà propre et directement réutilisable :
+   `FluideClip({id, frontX, children, opacity})`. ⚠️ Le composant parent, lui, ne prend AUCUNE prop et lit
+   `BEATS_C` en dur (15 références) — paramétrer les beats + la paire de couleurs avant extraction.
+   ⛔ **Contre-exemple daté du même arbitrage** : `GazoducActe3Ponts.tsx` (deux ponts suspendu/rompu) a été
+   **REJETÉ par Aziz le 2026-08-18** — « la métaphore est importée au lieu d'être prise dans le monde du
+   sujet ». Le fichier porte le verdict dans son en-tête. **Ne pas l'indexer, ne pas le reprendre.**
+   Leçon : [[feedback_metaphore-dans-le-monde-du-sujet]].
 3. L'échelle humaine ponctuelle : silhouette qui donne la mesure — ⛔ jamais de visage lisible, jamais
    de dialogue (écarté par Aziz : « faudrait faire attention avec ça »).
 4. ⭐ **La conséquence (contrechamp)** (TESTÉ 2026-08-17) : compteur, facture, station à sec — la carte

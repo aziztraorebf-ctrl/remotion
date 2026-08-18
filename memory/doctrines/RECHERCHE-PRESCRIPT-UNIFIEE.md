@@ -23,6 +23,16 @@ Ne pas recopier ici. Résumé pointeur :
 - Sortie phase A : SUJET validé + ANGLE libre + pré-TITRE + positionnement (1 ligne pour un short).
 
 ### PHASE B — ÉCRIRE LE SCRIPT (étape 7)
+
+> ⭐⭐⭐ **6 bis — CHOISIR LA FORME NARRATIVE, entre l'étoile polaire et le script** (ajouté 2026-08-17)
+> → [[FORMES-NARRATIVES]] : 7 formes, conditions d'usage, arbre de décision.
+> **Pourquoi ICI et pas avant** : la forme se choisit avec l'ANGLE et l'ÉTOILE POLAIRE en main (étapes 4
+> et 6) — la choisir plus tôt, c'est choisir à vide. La choisir plus tard, c'est ne pas la choisir du
+> tout : elle est alors **héritée par défaut** (= documentaire explicatif), ce qui est l'angle mort que
+> cette étape corrige.
+> 🚦 **Gate outillé** `.claude/hooks/forme-narrative-gate.sh` : bloque la création d'un fichier de script
+> sans ligne `FORME: <nom> — <raison>`. Il se déclenche donc exactement à l'entrée de l'étape 7.
+
 **7. SCRIPT V1 → conforme [[DOCTRINE-SCRIPT-UNIFIEE]] DÈS la 1re version (pas en correction après).**
    - Structure du PILIER (Souverain/Atlas/War-Map) pour le QUOI/ordre ; couche orale unifiée pour le COMMENT.
    - ⛔ GATE D'ÉCRITURE (les 4 règles le plus souvent violées — checklist AVANT de présenter un script) :

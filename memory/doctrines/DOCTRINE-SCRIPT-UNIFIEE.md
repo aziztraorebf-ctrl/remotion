@@ -14,6 +14,11 @@
 > CETTE doctrine te dit COMMENT l'écrire pour que ça s'écoute bien. Les DEUX ensemble, toujours.
 > S'applique à TOUTES les chaînes (Kora et Cartes ET futures chaînes hors catégorie), TOUS les formats.
 >
+> ⭐⭐⭐ **AVANT D'ÉCRIRE : CHOISIR LA FORME NARRATIVE** → [[FORMES-NARRATIVES]] (ajouté 2026-08-17).
+> Ce fichier dit COMMENT écrire pour l'oreille ; la doctrine de PILIER dit quoi raconter pour un pilier
+> donné ; **FORMES-NARRATIVES dit dans QUEL ORDRE raconter et quelle promesse tenir** — le choix qui
+> n'était jamais fait explicitement (défaut hérité = documentaire explicatif). Le choisir AU SCRIPT.
+>
 > ⭐⭐ **AU MOMENT DU SCRIPT, poser aussi le MOTEUR VISUEL de chaque acte/scène** →
 > `memory/doctrines/MOTEURS-VISUELS-ET-SOCLE.md` (§ « QUAND appliquer : AU SCRIPT, pas à la production »).
 > Le moteur dominant devient une **COLONNE du script/storyboard**, décidée ici — pas découverte au

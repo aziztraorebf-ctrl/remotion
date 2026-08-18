@@ -149,3 +149,23 @@ metadata:
   et ne jamais les emporter dans son propre commit.
 
 Lié : [[chercher-outil-existant-avant-improviser]] · voir aussi `memory/tools/mapbox-effets-et-tests.md` (render-mapbox.sh + still WebGL).
+
+<!-- Section rapatriee le 2026-08-17 depuis la copie .claude/.../feedbacks/ (datee 2026-07-26).
+     Elle n'existait QUE la-bas : MEMORY.md pointe vers CE fichier, donc ce gotcha etait invisible. -->
+
+## GOTCHA — un fichier/script peut etre TOTALEMENT ABSENT du worktree (branche non mergee)
+
+Distinct des cas ci-dessus (fichiers qui DIVERGENT entre worktree et repo principal) : ici le fichier
+**n'existe dans aucune version du worktree**, parce qu'il a ete ajoute par une AUTRE branche non
+mergee. Vecu 2026-07-26 depuis le worktree `remotion-cfa` : `memory/doctrines/AUDIO-PAUSES-DETERMINISTES.md`
+et `scripts/tools/soudan-audio/` (ajoutes par la branche Soudan) sont introuvables — alors qu'ils sont
+bien presents dans le repo principal.
+
+**Consequences a connaitre :**
+- ⛔ **Ne PAS conclure « l'outil n'existe pas » ni « la doctrine n'existe pas »** et improviser un
+  remplacement. Verifier d'abord dans le repo principal (`ls /Users/clawdbot/Workspace/remotion/<chemin>`).
+- `check-links.py` lance DEPUIS le worktree produit des **FAUX POSITIFS** de liens morts sur ces
+  fichiers. Le lancer depuis le **repo principal** pour un verdict fiable (verifie : 0 lien mort cote
+  principal, 2 « morts » cote worktree pour les memes fichiers).
+- Pour s'en servir sans merger : `git checkout <branche> -- <chemin>` dans le worktree, ou simplement
+  lire/executer depuis le repo principal.

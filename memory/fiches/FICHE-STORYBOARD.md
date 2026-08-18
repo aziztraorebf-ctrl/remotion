@@ -7,6 +7,13 @@
 > Dernière vérification des chemins : 2026-08-17.
 
 ## L'ORDRE — ne jamais l'inverser
+⚠️ **AVANT l'intention de scène, il y a la FORME NARRATIVE de la vidéo** (non déclarée = héritée par
+défaut = documentaire explicatif). Chaîne : **SUJET → FORME NARRATIVE → script → intention de scène →
+forme visuelle → MOTEUR → code**. 7 formes, **UNE SEULE par vidéo**. Gate `.claude/hooks/forme-narrative-gate.sh`
+(**bloque en exit 2** un nouveau fichier de script sans ligne `FORME:`). Doctrine : `memory/doctrines/FORMES-NARRATIVES.md`.
+⚠️ *Statut : gate ACTIF, coût pas encore mesuré (doctrine du 2026-08-17). Inscrit ici parce qu'un gate
+bloquant sans fiche qui prévienne est précisément le mode d'échec que ce système corrige — à requalifier
+en « règle payée » au premier blocage réel.*
 **INTENTION (1 verbe : ce qu'on veut faire RESSENTIR) → FORME (le geste visuel) → ⛔MOTEUR → TEMPLATE.**
 Partir du catalogue = le piège des ~10 essais (`memory/doctrines/CONTINUITE-SCENE-INTENTION-DABORD.md`). Le catalogue
 (`src/projects/_shared/INTENTION-FORME-INDEX.md`) s'ouvre APRÈS l'intention, comme question binaire
@@ -96,7 +103,14 @@ motif ailleurs : boucler sur toutes les parts, écrire l'extension d'après les 
 qui interprète (un breakdown écrit par Claude a réintroduit un widget HUD déjà interdit → code rejeté).
 ⚠️ La doctrine contient encore l'ANCIENNE méthode (« Claude écrit le breakdown ») AVANT sa correction — c'est
 la version corrigée qui fait foi.
-Avant d'écrire un breakdown : relire les DA-briefs déjà actés sur CE segment, `grep "VERDICT\|REJET"`.
+⛔⛔ **REPRENDRE un STORYBOARD/PLAN/breakdown HÉRITÉ : chercher son VERDICT DE REJET AVANT de le rendre
+ou de le présenter.** `grep -n "VERDICT\|REJET\|ne PAS repartir\|rejeté"` sur le breakdown, le STATUS **et**
+le doc de fusion de l'épisode. Un livrable dont le rejet est documenté ne se « vérifie » pas — il se
+**refait depuis la source approuvée**. Vécu 2026-08-14 (Gazoduc Acte 3) : v3 rendue et présentée à Aziz
+en la croyant à jour, alors que `BREAKDOWN-SEGMENT-A-STORYBOARD-FUSION.md` contenait déjà « VERDICT AZIZ
+— REJETÉ » avec les 3 défauts et « Ne PAS repartir du code v3 actuel ». Coût : 1 aller-retour complet +
+un rendu invalide présenté. ⭐ Corollaire : un beat refait ne valide pas ses voisins — **un fichier n'est
+jamais homogène en qualité**.
 ⛔ **Hériter d'une géo par continuité** : un texte sans relation spatiale réelle codé en carte = redite du beat
 précédent, renommée. Aucune vérification technique ne détecte ça.
 ⛔ **Ajouter un geste pour « dépasser »** une référence éprouvée → confusion. Mieux EXÉCUTER le même geste.

@@ -19,7 +19,10 @@ Mécanique : on pose une **boucle ouverte** (open loop) dans les 3 premières se
 ## 1. LES 4 RÈGLES NON-NÉGOCIABLES (terrain + modèles convergent → fiable)
 
 1. **Open loop posé tôt, résolu tard.** Une question/promesse non résolue dans les 3 premières secondes, maintenue par un élément visuel persistant non résolu (ex : tracé en pointillés qui n'arrive pas à destination ; zone non identifiée qui pulse). Ne jamais tout dire d'emblée.
-2. **Re-hook toutes les 8-12 secondes.** Un NOUVEL élément visuel net à CHAQUE phrase narrative. Jamais plus de 3 éléments simultanés. Ex : la voix dit « trois acteurs » → 3 jetons/icônes pop en cascade (stagger ~3 frames).
+2. **Re-hook toutes les 8-12 secondes.** ⚠️ **NE PAS CONFONDRE avec les « 2-3 relances » de
+[[FORMES-NARRATIVES]]** (ajout 2026-08-17) : ICI c'est un **re-hook VISUEL** (un élément d'image neuf
+à chaque phrase, rythme de la 1re minute) ; là-bas c'est une **RELANCE NARRATIVE de section** (rouvrir
+une question, 2-3 fois sur 10 min). **Les deux coexistent, ils ne se contredisent pas.** Un NOUVEL élément visuel net à CHAQUE phrase narrative. Jamais plus de 3 éléments simultanés. Ex : la voix dit « trois acteurs » → 3 jetons/icônes pop en cascade (stagger ~3 frames).
 3. **Tuer le plan d'ouverture mou.** Bannir la carte qui dérive sans intention (= notre statisme). L'ouverture frappe frame 0. « Most hooks fail in the first 2 seconds — not the topic, the boring opening shot. »
 4. **Vendre le POURQUOI CA COMPTE avant le COMMENT.** ⛔ Piège n°1 des petites chaînes : expliquer chronologiquement (« pour comprendre, remontons à 1884… ») = drop immédiat. On montre l'enjeu ACTUEL (sanglant/financier) d'abord ; l'histoire vient vers 1:30.
 

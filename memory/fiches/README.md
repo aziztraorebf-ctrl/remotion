@@ -11,13 +11,14 @@ manquante entre les deux — elles arrivent au bon moment, sans bloquer.
 Cause d'échec n°1 mesurée par audit (2026-08-17) : **« brique existante non trouvée »**
 (6 cas documentés, ~20 itérations perdues). Les règles existaient ; elles n'étaient pas retrouvées.
 
-## Les fiches actuelles (6)
+## Les fiches actuelles (7)
 | Fiche | Se déclenche quand | Source du déclenchement |
 |---|---|---|
 | `FICHE-SVG-DESSINE.md` | on écrit du SVG dessiné dans un `.tsx` | ≥4 primitives OU un `d={`/`d="M`, avec ≥2 primitives (garde-fou anti-icône) |
 | `FICHE-CAMERA.md` | on touche du code de caméra (D3, Mapbox ou SVG) | ≥2 motifs parmi `camAt`, `scaleMul`, `getCam`, `lerpCam`, `camFor`, `jumpTo`, `bearing`, `pitch:`, `interpolate(` |
 | `FICHE-SHORT-VERTICAL.md` | on travaille sur une composition 9:16 | chemin contenant `short`/`9x16`/`vertical`, ou dimensions verticales |
-| `FICHE-STORYBOARD.md` | on écrit un brief/breakdown, ou on lance un storyboard | fichier `PROMPT-*.txt|.md` / `breakdown*.json|.md`, OU commande `storyboard-dual-gen`/`openrouter-img2img`/`openrouter-vision-breakdown`/`da-brief.py`/`da-compare.py` |
+| `FICHE-STORYBOARD.md` | on écrit un brief/breakdown, on lance un storyboard, **ou on reprend un STORYBOARD/PLAN hérité** | fichier `PROMPT-*`, `breakdown*` (**casse indifférente**, `-i` ajouté 2026-08-18) ou **`STORYBOARD-*`/`PLAN-*.md\|.txt`**, OU commande `storyboard-dual-gen`/`openrouter-img2img`/`openrouter-vision-breakdown`/`da-brief.py`/`da-compare.py` |
+| `FICHE-PACKAGING.md` | on prépare le **titre / la miniature / la description** | commande `jury-titres`/`jury-thumbnail`/`gemini-thumbnail-(create\|edit)`/`gemini-cover-vertical`, OU fichier `thumbnails-library/*.{svg,tsx}` |
 | `FICHE-ASSEMBLAGE.md` | on rend ou on concatène | commande `ffmpeg`/`render-mapbox.sh`/`remotion render`/`-FINAL.mp4`/`upload-to-blob`/`concat=` |
 | `FICHE-AUDIO.md` | on génère/aligne de l'audio, ou on cale un timing | commande `generate-narration`/`generate-sfx`/`forced-align`/`splice-segment`/`elevenlabs`/`minimax-music`, OU fichier `timing.ts`/`whisper-words*.ts`, OU contenu `<Audio`/`staticFile(*.mp3`/`sfx/`/`startFrom={` |
 
@@ -76,8 +77,11 @@ parcourt le code pour remplir les catalogues de composants — un inventoriste. 
 encore** sur disque (vérifié 2026-08-17). Les fiches ne dépendent pas de lui.
 
 ## Budget par fiche
-**55 lignes par défaut.** Deux exceptions assumées le 2026-08-17, budget porté à **80** :
-`FICHE-CAMERA` (77) et `FICHE-STORYBOARD` (80). Raison : la caméra est le pain point n°1 mesuré du
+**55 lignes par défaut.** Exceptions assumées, **chiffres re-mesurés le 2026-08-18** (`wc -l`) :
+`FICHE-CAMERA` **77** · `FICHE-SVG-DESSINE` **89** · `FICHE-STORYBOARD` **114**.
+⚠️ Le budget d'exception affiché ici était de 80 et **deux fiches le dépassaient sans que ce soit
+écrit** — un README qui annonce un budget que les fiches contredisent est la même classe d'erreur
+que les fiches qui mentent. Plafond d'exception porté à **115**, à re-mesurer à chaque ajout. Raison : la caméra est le pain point n°1 mesuré du
 projet (3 des 5 boucles les plus chères) et le storyboard est le levier qui déplace le jugement avant
 le code (49 % de re-travail). Tailler la fiche la plus rentable pour respecter un budget rond serait
 retirer de la valeur là où elle sert le plus. **Ces 2 exceptions ne se généralisent pas** : toute

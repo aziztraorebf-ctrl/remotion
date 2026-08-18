@@ -127,3 +127,27 @@ Premier passage end-to-end du gate [[SUJET-PRIME-SUR-PRODUCTION]]. Validé : le 
   mégaprojet-pur a convergé propre. Croiser 2 seeds = correction du biais. Confirme la règle, ne jamais 1 seul seed.
 
 Liens : [[SUJET-PRIME-SUR-PRODUCTION]] · [[GAZODUC-MEGAPROJETS-SUJET]] · [[DECODE-modeles-fr-afrique]] · [[DECODE-sahel-chronicles]] · [[feedback_tubelab-editorial-filters]] · skill `last30days`.
+
+## ⛔ GOTCHAS `search_channels` + LIMITE DU RATIO (2026-08-17)
+- ⚠️ **`joinedDateFrom` casse `search_channels` (erreur 400)** — même famille que `publishedAtFrom` sur
+  `search_outliers`. Ne pas l'utiliser pour isoler les chaînes récentes.
+- ⚠️ **`search_channels` renvoie `subscribers: 0` et `averageViews: 0`** dans les hits (confirmé 2026-08-17,
+  déjà pressenti en 2026-07-11). Seuls le **ratio** et `semantic.niches` sont exploitables tels quels.
+  → Repasser par **`get_channel`** sur chaque candidat pour les vraies stats.
+- ⚠️ Résultat volumineux (~88 K caractères sur 20 hits) → tronqué à l'affichage, parser le fichier tool-result.
+
+### ⛔⛔ LE RATIO VUES/ABONNÉS SEUL MENT — le croiser avec `viewVariationCoefficient`
+TubeLab enseigne le ratio vues/abonnés comme détecteur de niche chaude (cf. audit ci-dessus). **Vrai mais
+insuffisant** : le ratio ne distingue pas une NICHE QUI MONTE d'une chaîne à UN SEUL COUP DE CHANCE.
+**Cas vécu** — `@Matthis-B` (FR, history/geopolitics) remonte avec un ratio de **7,0**. Vérification
+`get_channel` : 3 270 abonnés, 8 vidéos, moyenne 22 960 vues mais **médiane 3 800**. Une seule vidéo à
+127 000 vues porte tout le ratio ; les autres font 674 à 19 000. `viewVariationCoefficient` = **1,87**,
+`positiveOutliersCount` = 1.
+> **RÈGLE** : ratio élevé + `viewVariationCoefficient` > ~1,5 = **coup isolé**, PAS une niche chaude.
+> Toujours regarder la **MÉDIANE** (`medianViewsEstimate`), jamais la moyenne seule.
+
+### ℹ️ Pas d'outil « niches qui explosent » dans le MCP (vérifié 2026-08-17)
+Question posée par Aziz. **Réponse : non.** Les 11 outils cherchent des VIDÉOS ou des CHAÎNES, jamais des
+niches comme objet. Ce qui s'en rapproche (Collections, rapports hebdo de tendance, Rank Tracker) est
+**web-only, non exposé au MCP** (déjà listé dans l'audit ci-dessus). Le seul proxy disponible côté MCP =
+le ratio vues/abonnés + `semantic.niches` dans les résultats — avec la limite ci-dessus.
