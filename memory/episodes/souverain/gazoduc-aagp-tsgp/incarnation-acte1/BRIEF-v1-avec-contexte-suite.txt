@@ -1,0 +1,101 @@
+Tu analyses l'ACTE 1 d'un documentaire animé de vulgarisation géopolitique (chaîne YouTube
+francophone, format 16:9, voix off + animation). Ta réponse sera lue par l'équipe de production.
+
+=== CE QUE TU DOIS RÉPONDRE ===
+
+Nous avons acquis une capacité technique nouvelle : produire des plans de 8 à 10 secondes montrant
+des ÊTRES HUMAINS en situation, animés, dans un style illustré cohérent avec le reste de la vidéo.
+Jusqu'ici notre grammaire visuelle était presque exclusivement cartographique et schématique.
+
+LA QUESTION : dans cet Acte 1, quel(s) moment(s) du script gagnerait le plus à être porté par une
+scène incarnée par un humain plutôt que par la carte ou le schéma ?
+
+Pour chaque moment que tu proposes (2 à 4 propositions, classées de la plus forte à la moins forte) :
+1. Le moment exact — cite la phrase du script et le beat concerné.
+2. POURQUOI ce moment précis appelle l'humain — qu'est-ce que la carte ne peut structurellement PAS
+   faire ressentir ici ? Sois précis : si ta raison marche aussi bien pour trois autres moments,
+   c'est que ce n'est pas la bonne raison.
+3. Ce qu'on voit — la scène, en 2-3 phrases. Qui, où, quel geste, quelle progression.
+4. Comment ça s'INTÈGRE — qu'est-ce qui précède, qu'est-ce qui suit, et pourquoi la couture est
+   organique plutôt qu'un placage.
+5. Ce qu'on PERD en remplaçant ce qui existe déjà à cet endroit (il y a déjà une intention visuelle
+   partout — voir la description des beats).
+
+Termine par : s'il ne fallait en garder QU'UNE SEULE, laquelle, et pourquoi.
+
+=== CONTRAINTES DURES ===
+
+- L'Acte 1 est TERMINÉ, VALIDÉ et rendu. On ne le refait pas. On cherche où INSÉRER 8-10 secondes,
+  ou bien où SUBSTITUER un passage court, en gardant tout le reste intact.
+- Un plan incarné dure 8 à 10 secondes, sans coupe interne. Ce n'est pas une séquence.
+- L'insertion doit être chirurgicale. On ne veut PAS transformer la vidéo en film d'animation :
+  la carte reste le moteur principal de cet épisode.
+- Zéro texte à l'écran dans ces plans, zéro dialogue : la voix off continue par-dessus.
+- Rien à l'écran ne doit redire ce que la voix dit au même instant. Si la voix dit "deux tuyaux",
+  montrer deux tuyaux est une redite, pas une illustration.
+- La scène doit appartenir au MONDE DU SUJET (gaz, chantiers, énergie, les pays concernés). Une
+  métaphore empruntée à un autre domaine nous a déjà coûté un rejet.
+- Toute action humaine montrée doit avoir un BUT et une PROGRESSION visible : après le geste, l'état
+  du monde a changé. Un geste en boucle qui ne mène à rien est disqualifiant.
+
+=== LE SCRIPT DE L'ACTE 1 (texte intégral de la voix off, 84,7 secondes) ===
+
+"Imaginez deux immenses tuyaux qui partent du même pays. Ils partent exactement du même endroit :
+les immenses réserves du Nigeria. Ils visent exactement le même client : le marché européen, qui
+cherche en urgence de nouveaux fournisseurs de gaz.
+
+MÊME point de départ. MÊME destination. MÊME urgence.
+
+Et pourtant… ces deux projets ne se parlent pas. Ils ne partagent quasiment aucun kilomètre de
+trajet. Et pour couronner le tout, ils se font une guerre silencieuse. Selon toute logique, un seul
+des deux verra vraiment le jour.
+
+C'est l'histoire de deux paris radicalement opposés l'un à l'autre. L'un a misé sur les grands
+partenaires internationaux, les banques occidentales, et un long détour par la côte atlantique.
+L'autre a misé sur ses voisins, sur la vitesse, et sur un tracé droit à travers le Sahara.
+
+Un SEUL de ces deux tuyaux a vraiment des chances d'exister. Voici la course secrète pour devenir
+le futur maître du gaz africain."
+
+=== CE QUI EXISTE DÉJÀ À L'ÉCRAN, BEAT PAR BEAT ===
+
+Le support est un GLOBE terrestre en projection orthographique, vu de l'espace, avec une caméra
+continue qui se déplace et zoome sans jamais s'arrêter. Palette : ocre/sable sur bleu nuit profond.
+
+b1 (0-7,5 s) "Imaginez deux immenses tuyaux qui partent du même pays."
+   → Globe vu de loin, approche ample vers le Nigeria.
+b2 (7,5-14,5 s) "Ils partent exactement du même endroit : les immenses réserves du Nigeria."
+   → Le Nigeria s'isole en couleur, contour qui pulse. Le reste du globe reste neutre.
+b3 (14,5-22 s) "Ils visent exactement le même client : le marché européen…"
+   → Grand pull-back caméra, le contour du continent européen s'illumine comme zone-marché.
+b4 (22-29 s) "MÊME point de départ. MÊME destination. MÊME urgence."
+   → Trois accents marqués par une pulsation de caméra sur chaque "MÊME". Aucun texte à l'écran
+     (une version avec texte a été essayée puis retirée : lisait "PowerPoint scolaire").
+b5 (29-38 s) "Et pourtant… ces deux projets ne se parlent pas…"
+   → Les deux tracés se déploient depuis le Nigeria et divergent visiblement.
+b6 (38-47 s) "…une guerre silencieuse. Un seul des deux verra vraiment le jour."
+   → Pic de tension caméra, les deux tracés s'opposent.
+b7 (47-56 s) "L'un a misé sur les grands partenaires internationaux… la côte atlantique."
+   → Volet AAGP : le tracé doré suit la vraie côte atlantique jusqu'au Maroc, drapeau à l'arrivée.
+b8 (56-65 s) "L'autre a misé sur ses voisins, la vitesse, un tracé droit à travers le Sahara."
+   → Volet TSGP : le tracé corail perce droit vers l'Algérie.
+b9 (65-77 s) "Un SEUL de ces deux tuyaux a vraiment des chances d'exister."
+   → Pic de tension finale. Un encart chiffré (25 milliards $ contre 13 milliards $) apparaît
+     brièvement vers 68-75 s.
+b10 (77-84,7 s) "Voici la course secrète pour devenir le futur maître du gaz africain."
+   → Titre de l'épisode en fondu.
+
+=== CONTEXTE FACTUEL UTILE (issu de la suite du documentaire) ===
+- Le gazoduc atlantique (Maroc/Nigeria, ~6900 km, ~25 Mds $) est diplomatiquement mûr mais AUCUN
+  financement n'est signé : ses tuyaux sont, à ce jour, virtuels.
+- Le gazoduc transsaharien (Algérie/Niger/Nigeria, ~13 Mds $) a commencé ses travaux le 4 juin 2026
+  dans la région d'Adrar : les pelleteuses sont sur le terrain, financé par les États eux-mêmes.
+- Le tronçon nigérien traverse une zone où des groupes armés sont actifs ; une attaque a frappé
+  l'aéroport de Niamey le 25 juin 2026.
+- Le Nigeria n'a pas la capacité de remplir les deux gazoducs : ils se battent pour la même ressource.
+- La demande européenne de gaz est vouée à décliner d'ici 2030.
+
+=== FORMAT DE RÉPONSE ===
+Prose structurée, en français. Pas de JSON, pas de tableau. Sois franc : si tu penses que l'Acte 1
+n'a PAS besoin d'incarnation humaine et que la carte y suffit, dis-le et argumente — c'est une
+réponse acceptable et utile.
