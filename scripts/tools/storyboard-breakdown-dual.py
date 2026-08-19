@@ -18,7 +18,6 @@ SB = Path("/tmp/storyboard-gen")
 
 GEMINI_MODEL = "gemini-3.1-pro-preview"  # vision breakdown (pas le flash image)
 GEMINI_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_KEY}"
-GPT_MODEL = "openai/gpt-5.4-image-2"  # ou un vision GPT via OpenRouter
 GPT_VISION = "openai/gpt-5.5"  # vision breakdown
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 

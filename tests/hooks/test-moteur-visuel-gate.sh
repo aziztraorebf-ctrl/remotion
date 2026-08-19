@@ -40,7 +40,7 @@ cat > /tmp/brief-etroit.txt <<'EOF'
 The map carries this beat. Use routes that draw progressively, pulses that travel
 along a route, and cartographic pins anchored to geo coordinates. Mapbox style.
 EOF
-run "brief 2 familles" BLOCK '{"tool_name":"Bash","tool_input":{"command":"python3 scripts/tools/gemini-storyboard-panels-with-ref.py --prompt-file /tmp/brief-etroit.txt --ref-image /tmp/x.png --out /tmp/y.png"}}'
+run "brief 2 familles" BLOCK '{"tool_name":"Bash","tool_input":{"command":"python3 scripts/tools/storyboard-dual-gen.py --prompt-file /tmp/brief-etroit.txt --ref-image /tmp/x.png --out /tmp/y.png"}}'
 
 echo "=== E. Bash storyboard — NE DOIT PAS BLOQUER (brief large) ==="
 cat > /tmp/brief-large.txt <<'EOF'
@@ -50,7 +50,7 @@ filmed matter (MiniMax H3 footage), or CUT away from the map to a full-screen sc
 Montage is a capability: you are allowed to leave the map.
 TASK: propose 3 distinct concepts of your own, and say which one you defend.
 EOF
-run "brief 6 familles + question ouverte" PASS '{"tool_name":"Bash","tool_input":{"command":"python3 scripts/tools/gemini-storyboard-panels-with-ref.py --prompt-file /tmp/brief-large.txt --ref-image /tmp/x.png --out /tmp/y.png"}}'
+run "brief 6 familles + question ouverte" PASS '{"tool_name":"Bash","tool_input":{"command":"python3 scripts/tools/storyboard-dual-gen.py --prompt-file /tmp/brief-large.txt --ref-image /tmp/x.png --out /tmp/y.png"}}'
 
 # Le meme brief large SANS question ouverte doit bloquer (c'est le defaut n°1 du 4B reel)
 cat > /tmp/brief-large-sans-question.txt <<'EOF'
@@ -59,16 +59,16 @@ You may also use SVG illustration, a cross-section cutaway, a human character,
 filmed matter (MiniMax H3 footage), or CUT away from the map to a full-screen scene.
 Montage is a capability: you are allowed to leave the map.
 EOF
-run "brief large SANS question ouverte" BLOCK '{"tool_name":"Bash","tool_input":{"command":"python3 scripts/tools/gemini-storyboard-panels-with-ref.py --prompt-file /tmp/brief-large-sans-question.txt --ref-image /tmp/x.png --out /tmp/y.png"}}'
+run "brief large SANS question ouverte" BLOCK '{"tool_name":"Bash","tool_input":{"command":"python3 scripts/tools/storyboard-dual-gen.py --prompt-file /tmp/brief-large-sans-question.txt --ref-image /tmp/x.png --out /tmp/y.png"}}'
 
 # ⭐ NON-REGRESSION : le VRAI brief 4B qui a produit les fleches DOIT etre attrape
-run "LE VRAI brief 4B fautif" BLOCK '{"tool_name":"Bash","tool_input":{"command":"python3 scripts/tools/gemini-storyboard-panels-with-ref.py --prompt-file memory/episodes/souverain/gazoduc-aagp-tsgp/breakdown-acte4/4B/PROMPT-storyboard-4B.txt --ref-image x.png --out y.png"}}'
+run "LE VRAI brief 4B fautif" BLOCK '{"tool_name":"Bash","tool_input":{"command":"python3 scripts/tools/storyboard-dual-gen.py --prompt-file memory/episodes/souverain/gazoduc-aagp-tsgp/breakdown-acte4/4B/PROMPT-storyboard-4B.txt --ref-image x.png --out y.png"}}'
 
 echo "=== F. Bash — hors scope, NE DOIT PAS BLOQUER ==="
 run "commande quelconque" PASS '{"tool_name":"Bash","tool_input":{"command":"ls -la"}}'
 run "render remotion" PASS '{"tool_name":"Bash","tool_input":{"command":"npx remotion render src/index.ts Comp out/x.mp4"}}'
 run "storyboard sans --prompt-file" PASS '{"tool_name":"Bash","tool_input":{"command":"python3 scripts/tools/storyboard-dual-gen.py --help"}}'
-run "prompt-file inexistant" PASS '{"tool_name":"Bash","tool_input":{"command":"python3 scripts/tools/gemini-storyboard-panels-with-ref.py --prompt-file /tmp/nexistepas-xyz.txt"}}'
+run "prompt-file inexistant" PASS '{"tool_name":"Bash","tool_input":{"command":"python3 scripts/tools/storyboard-dual-gen.py --prompt-file /tmp/nexistepas-xyz.txt"}}'
 
 echo "=== G. Autres tools — jamais bloquer ==="
 run "Read" PASS '{"tool_name":"Read","tool_input":{"file_path":"x.tsx"}}'

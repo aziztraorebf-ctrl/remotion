@@ -67,7 +67,7 @@
 | R&D SVG génératif — registre découplé (test nouveaux registres, harnais `_rnd/svg-scenes/`) | `scripts/tools/rnd-svg-scene-gen.py` | `--registre encre\|schema\|tactique --brief "..."`. |
 | Générer jetons / assets SVG ponctuels (drapeaux, icônes, symbols) | `scripts/tools/llm-gen-svg.py` | `--provider gemini\|gpt\|glm --brief "..." --out x.svg`. |
 | Générer une image RASTER (portrait, texture, fond) via Gemini | `scripts/tools/gemini-gen-image.py` | `--prompt "..." --output x.png`. |
-| Générer une image raster depuis une ref de style (Gemini) | `scripts/tools/gemini-gen-image-ref.py` | `--ref REF.png --prompt "..." --output OUT.png`. |
+| Générer une image raster depuis une ou N refs de style (Gemini) | `scripts/tools/gemini-gen-image-ref.py` | `--refs a.png,b.png --prompt "..." --output OUT.png`. **Le prompt mène, la ref calibre** (parts = texte puis image). Accepte N refs. Pour ÉDITER une image plutôt que la calibrer → `gemini-i2i.py`. |
 
 ---
 
@@ -76,10 +76,11 @@
 | Quand tu veux... | Script | Usage / note |
 |---|---|---|
 | Générer une image text-to-image | `scripts/tools/gemini-gen-image.py` | `--prompt "..." --output x.png`. |
-| Générer une variation image-to-image (garde le style d'une ref) | `scripts/tools/gemini-i2i.py` | `--ref REF.png --prompt "..." --output OUT.png`. |
+| Éditer une image existante (i2i chirurgical, 1 ref) | `scripts/tools/gemini-i2i.py` | `--ref REF.png --prompt "CHANGE ONLY: ... PRESERVE EXACTLY: ..." --output OUT.png`. **L'image mène, le prompt modifie** (parts = image puis texte) — ⛔ ne PAS confondre avec `gemini-gen-image-ref.py`, l'ordre des parts n'est pas le même. ⛔ Jamais sur une miniature VALIDÉE (repasse toute l'image : cf `PACKAGING-YOUTUBE.md`). |
 | Générer des refs de style i2i en série (style anchor + table de clips) | `scripts/tools/generate-styleref.py` | 9:16 vertical, un par clip. |
 | Générer un storyboard VISUEL multi-panels (pipeline Beat) | `scripts/tools/gemini-storyboard-panels.py` | `--episode X --beat N --prompt-file f.txt`. NON-NEGOTIABLE avant code. |
-| Générer un storyboard en DUAL (Gemini + GPT/fal en parallèle) | `scripts/tools/storyboard-dual-gen.py` | Pipeline dual-gen validé 2026-06-19. |
+| **Storyboard PHASE 1 — CONCEVOIR en TEXTE (N modèles en parallèle)** | `scripts/tools/storyboard-concepts-texte.py` | `--prompt-file f.txt [--models kimi,grok,gemini,gpt]` (défaut `kimi,grok`). Les modèles proposent des concepts + le découpage case par case. Rend éligibles Kimi/Grok, qui ne dessinent pas. Puis CHOIX HUMAIN avant la phase 2. |
+| **Storyboard PHASE 2 — DESSINER (3 dessinateurs en parallèle)** | `scripts/tools/storyboard-dual-gen.py` | `--prompt-file f.txt --out-prefix p [--ref a.png --ref b.png] [--models gemini,gpt,grok]` (défaut = les 3). Refs d'ancrage acceptées par les 3 dessinateurs. Sort `<prefix>-gemini.png` / `-gpt.png` / `-grok.png`. |
 | Générer une image text-to-image via GPT-image (OpenRouter) | `scripts/tools/openrouter-gen-image.py` | `gpt-5.4-image-2`. Comparer à Gemini selon le besoin. |
 | Éditer chirurgicalement une thumbnail Souverain | `scripts/tools/gemini-thumbnail-edit.py` | `--input --output --brief senegal\|niger`. |
 | Créer une thumbnail guidée par croquis + refs d'esthétique | `scripts/tools/gemini-thumbnail-create-from-refs.py` | `--croquis --refs ... --output --brief`. |

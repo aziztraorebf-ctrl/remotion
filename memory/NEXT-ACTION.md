@@ -70,6 +70,20 @@ les 2 arborescences, écarte les collisions résolues (stub/identiques) et les f
 
 ---
 
+## 🐛 BUG OUVERT — le gate `moteur-visuel` ne rattrape plus son cas de référence (2026-08-18)
+
+`bash tests/hooks/test-moteur-visuel-gate.sh` → **18 ok / 1 échec**, et l'échec est le test de
+NON-RÉGRESSION : « LE VRAI brief 4B fautif » (attendu BLOCK, obtenu PASS).
+⚠️ **Vérifié indépendamment que l'échec est PRÉEXISTANT** (la version commitée du test échoue aussi) —
+ce n'est pas une régression de la session du 18/08.
+**Ce qui est écarté** : la fixture `memory/episodes/souverain/gazoduc-aagp-tsgp/breakdown-acte4/4B/PROMPT-storyboard-4B.txt`
+EXISTE (6969 o), et le hook lit bien `--prompt-file` (`.claude/hooks/moteur-visuel-gate.sh:69-72`).
+→ C'est donc la **logique de détection** du gate qui ne matche plus ce brief.
+**Enjeu** : le garde-fou anti-brief-bridé est inopérant sur l'incident même qui l'a fait naître
+(storyboard Gazoduc 4B, 2026-08-15, tout en flèches/tracés parce que le brief n'ouvrait aucune porte).
+⛔ Ne PAS "corriger" en assouplissant le test : c'est le HOOK qui doit re-bloquer ce brief.
+Dernier commit touchant le hook : `658fdfcd fix(gate): moteur-visuel distingue CONCEVOIR de REDESSINER`.
+
 ## ⭐⭐ CHANTIER OUVERT — MINIMAX H3 : STYLE VECTOR POSTER / SUNJATA (décidé 2026-08-18 par Aziz)
 > ⚠️ **Priorité 1 reste GAZODUC Acte 3** (seul chantier avec un livrable bloquant + une action spécifiée au pixel près). Ce chantier-ci est exploratoire : le prendre quand l'Acte 3 est soldé, ou dans une session dédiée comme Aziz les mène d'habitude.
 
