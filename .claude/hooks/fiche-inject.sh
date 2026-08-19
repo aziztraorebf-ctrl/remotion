@@ -65,6 +65,11 @@ if [ -n "$BASH_CMD" ]; then
   if printf '%s' "$BASH_CMD" | grep -qE 'generate-narration|generate-sfx|forced-align|splice-segment|elevenlabs|minimax-music'; then
     add_fiche "FICHE-AUDIO.md" "FICHE AUDIO" "bash-audio"
   fi
+  # CLIP GENERE (MiniMax H3 / Comfy Cloud) : 3 pieges ont coute un essai chacun
+  # (input_overrides non fiable, parole non demandee, gros plan qui casse le style).
+  if printf '%s' "$BASH_CMD" | grep -qE 'mkgraphs|mkprevis|graph-plan|previs.*\.gif|minimax_h3|MiniMaxH3|submit_workflow|comfy'; then
+    add_fiche "FICHE-CLIP-GENERE.md" "FICHE CLIP GENERE" "bash-clip-genere"
+  fi
   # PACKAGING (titre/miniature/description) : le pipeline s'arretait au render/upload alors que
   # c'est LA que se joue la conversion (CTR 1,5-1,8 % mesure = probleme de conversion, pas de reach).
   # ⛔ jury-titres, PAS jury-script : jury-script-llm.py juge le SCRIPT, autre moment.

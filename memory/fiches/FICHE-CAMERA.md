@@ -88,6 +88,12 @@ carte. Aziz l'a signalé comme un défaut non attribué (« pourquoi la carte es
 → Quand un effet est signalé comme gênant, chercher d'abord **ce qu'il servait** : si sa cible
 n'existe plus, mettre à 0 et retirer le calcul — ne pas chercher « la bonne valeur ».
 
+
+## ↔ CAMÉRA SUR CLIP GÉNÉRÉ (MiniMax H3) — AUTRE FICHE
+Cette fiche couvre la caméra **codée** (Remotion / D3 / Mapbox). Pour piloter la caméra d'un **clip
+généré** (previs → `ref_videos`), voir **`memory/fiches/FICHE-CLIP-GENERE.md`** — déclencheur distinct.
+En une ligne : on ne décrit PAS un mouvement de caméra à H3 en mots, on le MONTRE via un previs.
+
 ## SI ÇA RATE 2×
 Au **2e rejet du même symptôme de mouvement** : STOP. Ne pas retoucher une 3e valeur — aucune des 3 boucles caméra
 du projet n'était un problème de dosage. Mesurer (ci-dessus), puis déléguer à un agent dédié frais

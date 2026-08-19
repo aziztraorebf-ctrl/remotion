@@ -90,3 +90,20 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+
+# --- ajout 2026-08-19 : un chemin qui EXISTE mais est GITIGNORE est une bombe a retardement ---
+# Vecu : les generateurs de previs cites par FICHE-CLIP-GENERE vivaient sous out/ (gitignore +
+# purge 7j). check-fiches disait [OK] car il testait l'existence sur disque, pas le versionnement.
+def check_gitignored(paths):
+    import subprocess
+    flagged = []
+    for c in paths:
+        r = subprocess.run(['git', 'check-ignore', '-q', c], capture_output=True)
+        if r.returncode == 0:
+            flagged.append(c)
+    if flagged:
+        print("\n⛔ CHEMINS CITES MAIS GITIGNORES (existent ici, disparaitront ailleurs) :")
+        for c in flagged:
+            print(f"   {c}")
+        print("   -> rapatrier en zone versionnee (scripts/tools/, src/, memory/) avant de les citer.")
+    return flagged

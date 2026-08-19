@@ -1,4 +1,8 @@
 # Seedance 2.0 — Regles de Prompt
+> ⛔ **PORTÉE : ces règles concernent SEEDANCE (fal.ai) UNIQUEMENT — ne PAS extrapoler à MiniMax H3.**
+> En particulier les règles 75/83/86 (« reference-to-video = échec ») : **H3 exploite très bien `ref_videos`**
+> — c'est le principe du previs, validé 2026-08-18/19. Voir `memory/fiches/FICHE-CLIP-GENERE.md`.
+
 > 94 regles + anti-patterns. Consulter AVANT d'ecrire un prompt Seedance.
 > Mise a jour : 2026-04-26
 

@@ -31,6 +31,27 @@ yt-dlp --force-ipv4 -f "bv*[height<=720]+ba/best[height<=720]/best" --merge-outp
 
 **Si un format échoue en 403 malgré --force-ipv4** : ne pas insister sur `-f "best[height<=720]"` fixe (résout parfois vers un stream expiré/bloqué) — relancer avec sélection automatique `-f "bv*[height<=720]+ba/best[height<=720]/best" --merge-output-format mp4`, qui laisse yt-dlp re-négocier les formats disponibles et merge audio+vidéo proprement.
 
+### ⛔⛔ 403 PERSISTANT malgré les 2 fixes ci-dessus → c'est le PLAYER CLIENT (2026-08-18)
+
+**Réflexe n°1 sur un 403 qui résiste : `--extractor-args "youtube:player_client=android"`** (ou `mweb`). Le client par défaut de yt-dlp (`android vr`) est rejeté côté Google.
+
+```bash
+yt-dlp --force-ipv4 --extractor-args "youtube:player_client=android" \
+  -f "bv*[height<=720]+ba/best[height<=720]/best" --merge-output-format mp4 \
+  -o "%(id)s.%(ext)s" "<url>"
+```
+
+Test A/B qui isole la cause (mesuré, pas supposé) : `android` → **200** · `mweb` → **200** · `android vr` (défaut) → **403**.
+
+- ⛔ **Mettre yt-dlp à jour ne corrige PAS ce cas** — vérifié en installant la 2026.07.04 à côté : échec identique avec le client par défaut. Ne pas perdre de temps sur `pip install -U`.
+- ⛔ **Ce n'est PAS le gotcha IPv6** documenté plus haut : celui-ci se manifeste par un blocage SANS erreur (>30s), alors qu'un 403 est une réponse serveur immédiate. Vérifier `curl -6` avant d'invoquer IPv6 — il était vivant le jour du diagnostic.
+- ⛔ `player_client=web,tv` → "The page needs to be reloaded". Ne pas retenter ces deux-là.
+- Diagnostic décisif si doute : `--get-url` puis tester l'URL avec `curl` seul. Si curl renvoie 403, le problème est l'URL signée par le client, pas le downloader.
+
+**⚠️ Plafond 360p** : sans PO Token, `android` comme `mweb` retombent sur le format 18 (640×360), même avec un yt-dlp à jour. Suffisant pour juger composition/rythme/montage — ⛔ **jamais pour juger la netteté ou la texture** (cf. règle « netteté = full HD only »). Pour du 720p+ : PO Token ou `--cookies-from-browser`.
+
+**Gotcha extraction de frames** : une frame noire n'est pas forcément un bug — ça peut être un vrai fondu au noir de la vidéo. Sonder seconde par seconde autour du timecode AVANT de conclure à un échec d'extraction, puis resampler à côté.
+
 ## Fix 2 — tout autre script Python (gemini-vision-breakdown.py, openrouter-*.py, etc.)
 
 Ces scripts n'ont pas de flag IPv4 natif. Ne PAS modifier le script source (partagé par d'autres workflows) — l'exécuter via un wrapper qui monkeypatch `socket.getaddrinfo` avant de lancer le script cible.

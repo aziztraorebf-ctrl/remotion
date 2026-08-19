@@ -7,6 +7,15 @@
 > Toute nouvelle section de session s'insère APRÈS lui, jamais avant — sinon l'avertissement descend
 > et se fait enterrer, et un état périmé est annoncé à Aziz malgré l'avertissement présent et lu.
 
+## ⭐⭐⭐ R&D CLIPS GÉNÉRÉS (H3) — session 2026-08-18/19, CONCLUANTE
+
+**Débloqué** : mouvements de caméra (previs), mouvements d'action (previs), action+caméra dans un même
+clip 10 s, seed reproductible, raccords par changement d'échelle. Le tout sur GPU gratuit.
+→ **Prochaine action : sortir du test** — produire 8-10 s dans un ÉPISODE RÉEL, en insertion
+chirurgicale (hook / relance), là où la couche humaine manque à nos vidéos cartographiques.
+→ Détail complet, défauts restants et paliers : `memory/episodes/_rnd/scribe-tombouctou/STATUS.md`
+→ Doctrine (auto-injectée) : `memory/fiches/FICHE-CLIP-GENERE.md` · livrables : `out/_r-and-d/scribe-tombouctou/MANIFESTE.md`
+
 ## ⛔⛔ AVANT DE LIRE QUOI QUE CE SOIT — LES CHANTIERS VIVANTS SONT DANS DES WORKTREES
 
 > **Ce fichier (repo principal) est structurellement EN RETARD** sur les chantiers qui vivent ailleurs.

@@ -394,7 +394,7 @@ vs À CODER + timecode". Ça force les modèles à TRADUIRE ("brouillard de guer
 **Preuve de valeur (2026-07-21)** : convergence Gemini/Kimi ~95% sur les 2 prospectifs (les 2 modèles, sans se voir,
 proposent les MÊMES effets avec les MÊMES implémentations SVG → signal très fiable). A produit un plan de 6 lots
 exécutables (souffle de frontière, anneaux de siège, inner glow, convoi de points, caméra D3, muscler le début,
-densif chiffres, salle ONU incarnée, audio complet). Starter d'exécution : `starters/STARTER-PROMPT-soudan-midform-passe-finale-6lots.md`.
+densif chiffres, salle ONU incarnée, audio complet). Starter d'exécution : `archive/starters-perimes-2026-08-19/STARTER-PROMPT-soudan-midform-passe-finale-6lots.md`.
 Rapports bruts archivés : `episodes/soudan-midform/da-briefs-passe-llm-2026-07-21/` (01-06 + briefs). RÈGLE D'OR
 inchangée : LLM=SIGNAL jamais juge, vérifier chaque effet contre le code réel (écarter le déjà-fait), appliquer, STOP.
 

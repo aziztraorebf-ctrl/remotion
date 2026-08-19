@@ -1821,3 +1821,215 @@ préservée/étendue sans repartir de zéro (cas de Mariama Bâ ici — charshee
 dans des productions, ne pas la regénérer au risque de dériver le personnage) — dans ce cas, l'edit i2i
 en 2e appel reste la bonne méthode, mais s'attendre à devoir corriger labels/layout par edit chirurgical
 en 3e appel si besoin (méthode CHANGE-ONLY-PRESERVE-EXACTLY déjà validée ailleurs dans ce fichier).
+
+## ⛔⛔⭐⭐⭐ H3 GENERE DE LA PAROLE NON DEMANDEE → BOUCHE ANIMEE (mesure 2026-08-18)
+
+**Symptome** (repere par Aziz au visionnage, invisible sur frames extraites) : sur un plan ou le
+personnage devait juste lever les yeux et souffler, **il ouvre clairement la bouche pour dire quelque
+chose**. Lu a raison comme « un dialogue a ete coupe ».
+
+**Cause mesuree** : H3 est un modele AUDIO-VIDEO. Sans consigne explicite sur le son, il **invente une
+bande-son parlee** et anime la bouche pour la justifier. Piste audio du clip mesuree :
+| clip | mean_volume | lecture |
+|---|---|---|
+| clip1 (souffle/poussiere) | **-58,1 dB** | quasi silence |
+| clip3 (leve les yeux) | **-39,8 dB** | **parole generee** (+18 dB) |
+
+⛔ **Retirer l'audio au montage (`-an`) NE CORRIGE PAS le probleme** — la piste son disparait, mais
+**l'animation labiale reste**. Le defaut est dans l'image, pas dans le son.
+
+**Fix a appliquer dans TOUT prompt H3 sans dialogue voulu** (le negatif seul `no mouth opening` n'a PAS
+suffi — il etait deja present dans le prompt fautif) :
+```
+AUDIO: no speech, no dialogue, no voice, no talking. The character never speaks.
+His lips stay closed and still for the entire clip — no lip movement, no mouth opening,
+no jaw movement, no visible breathing through the mouth.
+```
++ dans STRICT NEGATIVE : `no speech, no dialogue, no lip sync, no talking, no mouth movement`
+→ Verifier apres coup avec `ffmpeg -i clip.mp4 -af volumedetect -f null /dev/null` : au-dessus de
+~-45 dB de moyenne sur un plan cense etre muet, il y a de la parole → la bouche bouge, regenerer.
+
+⚠️ **Corollaire methode** : ce defaut ne se voit PAS sur des frames extraites (une bouche entrouverte
+sur 1 frame passe pour une expression). Il se voit en LECTURE, et s'entend a la mesure. Encore un cas
+de [[animation-vs-image-fixe-mesurer-frames-uniques]] : mesurer, ne pas juger sur frames seules.
+
+## ⭐⭐⭐⭐ PREVIS — PILOTER LA CAMERA H3 PAR UNE VIDEO DE REFERENCE (VALIDE 2026-08-18)
+
+**Ce que ca debloque** : nos clips H3 etaient TOUS en camera fixe (on decrivait le mouvement en mots,
+H3 l'ignorait). Avec un previs, on **MONTRE** la trajectoire au lieu de la decrire. C'est la methode
+d'Animistry (previs Blender → Seedance), reproduite chez nous a cout nul.
+
+**RESULTAT MESURE — ecart premiere/derniere frame** :
+| clip | ecart | lecture |
+|---|---|---|
+| clip1 camera fixe | **0,68**/255 (0,3 %) | rien ne bouge |
+| clip3 camera fixe | 2,15/255 (0,8 %) | rien ne bouge |
+| previs source (verite terrain) | 16,93/255 (6,6 %) | push-in demande |
+| **clip guide par previs** | **38,55/255 (15,1 %)** | **push-in execute** |
+→ **57× plus de mouvement de camera qu'un clip fixe.** Verifie visuellement : le sujet grossit
+progressivement, la camera se recentre, style 100 % preserve (aucun bloc de couleur du previs).
+
+**⛔⛔ 2 GOTCHAS BLOQUANTS (chacun a coute un essai)** :
+1. **`upload_file` REFUSE les .mp4** (images seules : jpg/png/webp/gif). **Fix : encoder le previs en
+   GIF anime** (`ffmpeg -i previs.mp4 -vf "fps=24,scale=W:H" previs.gif`) → accepte, et `LoadImage`
+   le lit comme une SEQUENCE de frames. `LoadVideo` ne sert a rien ici : son `file` est un COMBO ferme
+   sur les mp4 deja presents cote serveur, on ne peut pas y injecter un fichier.
+2. **`ref_videos.ref_video_0` attend un `IMAGE`, PAS un `VIDEO`** (tooltip : *"Reference video frames
+   at 24 fps (2-15s)"*). Brancher un `CreateVideo` dessus → **erreur 400 `return_type_mismatch`**.
+   ✅ Brancher `LoadImage` (le GIF) DIRECTEMENT sur `ref_videos.ref_video_0`.
+
+**Recette complete** :
+```python
+g["140"] = {"class_type":"LoadImage","inputs":{"image":"<previs.gif uploade>"}}
+g["136"]["inputs"]["ref_videos.ref_video_0"] = ["140", 0]   # PAS de CreateVideo entre les deux
+```
++ dans le prompt, separer explicitement les deux roles :
+```
+<Picture 1> defines the ART STYLE, the character and the room.
+<Video 1> is a rough grey-box PREVIS carrying NO style information. Use it ONLY as the CAMERA
+BLUEPRINT: reproduce its camera movement, framing evolution and timing exactly.
+[+ mapper les blocs : "the blue block is the scribe, the brown block is the table..."]
+STYLE LOCK: the look comes ONLY from <Picture 1>. NEVER adopt the grey-box look of <Video 1>.
+STRICT NEGATIVE: no grey boxes, no colored placeholder blocks, no flat geometric shapes
+```
+
+**Fabriquer le previs** : geometrie plate color-codee, 1 couleur par role, anime par interpolation
+deterministe (easeInOutCubic), MEME longueur que le clip cible (124 frames = 5,167 s). Script reutilisable :
+`scratchpad/scribe-test/mkprevis.py`. Le previs doit etre LAID — il ne porte que la camera.
+Livrables : previs https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/rnd/scribe-tombouctou/previs-TAnxaCOLLiMGZAMV8FPutUyWQZ2KHj.mp4
+· resultat https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/rnd/scribe-tombouctou/clip-previs-fCLXCd8WApSQwL2z9FHMortwNBT2Lp.mp4
+
+### ⛔⛔ LIMITE DU PREVIS — l'ORBITE 180 fait DECROCHER le modele (teste 2026-08-18)
+
+3 mouvements testes avec la meme recette previs. **2 reussites, 1 echec net** :
+| mouvement | amplitude (ecart 1re/derniere frame) | verdict |
+|---|---|---|
+| push-in large | 38,55/255 | ✅ |
+| push-in **serre** (zoom 1.00→1.75) | 43,19/255 | ✅ passe du plan large au plan rapproche |
+| travelling lateral | 45,52/255 | ✅ parallaxe correcte (jarres avant-plan plus rapides que le mur) |
+| **orbite 180°** | 47,80/255 | ⛔⛔ **ECHEC** |
+
+**Ce qui rate sur l'orbite** : ~2 s correctes, puis H3 **copie litteralement le previs** — blocs bleus,
+rectangle brun, aplats noirs remplacent l'illustration. STYLE LOCK + negatifs (`no grey boxes, no
+colored placeholder blocks, no black empty areas`) **n'ont PAS suffi**.
+
+**Cause racine** : push-in et travelling ne demandent qu'un RE-CADRAGE d'information DEJA presente dans
+`<Picture 1>`. Une orbite exige d'INVENTER des faces cachees (profil, dos du personnage, murs
+hors-champ) a partir d'une illustration 2D plate. Sans cette matiere, le modele se rabat sur la seule
+source qui montre ces angles : le previs lui-meme.
+
+⭐ **Regle generale** : le previs pilote un **RE-CADRAGE** (push-in, pull-back, travelling, panoramique,
+tilt), **jamais un changement de POINT DE VUE 3D**. Pour changer d'angle sur un sujet : generer une
+NOUVELLE image sous le bon angle et COUPER (le raccord par changement d'echelle, deja valide, le cache).
+
+⚠️ **Piege de mesure** : l'orbite a la PLUS FORTE amplitude (47,80) et c'est l'echec. L'amplitude mesure
+le changement, pas la qualite — toujours regarder les frames avant de conclure.
+
+Rendus : push serre https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/rnd/scribe-tombouctou/cam-push-kWBniGpl5qGOULxQHOhGBG5gjcXEUu.mp4
+· lateral https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/rnd/scribe-tombouctou/cam-lat-Zbr4gPc90X9Z8RdirWaSnSwttuha7G.mp4
+· orbite (echec) https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/rnd/scribe-tombouctou/cam-orbit-DLIxi9QxaOj7zbsmgM9EqtVNOIw92m.mp4
+
+### ⚠️⚠️ CORRECTION (2e passe, meme jour) — l'orbite n'est PAS impossible, c'est un DECROCHAGE DE STYLE
+
+⛔ **La conclusion de la section precedente ("previs = re-cadrage, jamais changement de point de vue")
+etait TROP CATEGORIQUE.** Repere par Aziz : sur l'orbite v1, les 2 premieres secondes sont bonnes — le
+decor pivote, la lumiere se deplace, le style tient. Le modele SAIT faire le mouvement.
+
+**Cause reelle mesuree** : le previs v1 laissait **17-19 % de zones VIDES** (fond noir) quand la camera
+sortait du decor — sauf a la frame du milieu (0 %). Push-in et travelling : **0 % sur toutes les frames**.
+Face a une zone vide, le modele se raccroche a la seule chose visible dans la reference : ses blocs.
+
+**Fix applique (previs v3)** : decor **CYLINDRIQUE 360** (le mur fait le tour, la camera ne peut pas
+"sortir"), verifie **0,00 % de vide sur toutes les frames**. Script : `mkprevis3.py`.
+
+**Resultat : le decrochage se DEPLACE mais ne disparait pas.** Gradient par frame (illustration saine
+≈ 11-14, aplat previs ≈ 3-4) :
+| clip | f5 | f40 | f80 | f118 |
+|---|---|---|---|---|
+| orbite v1 (previs troue) | 11,2 | 10,6 | **3,8** | **3,4** |
+| orbite v3 (previs plein) | **4,0** | **3,7** | 11,9 | 11,0 |
+| **crane-up v3** | **2,8** | 10,6 | **14,2** | **14,2** |
+
+⭐ **Le CRANE-UP est un vrai succes** : apres ~1 s ratee, plongee 3/4 magnifique sur le scribe, sol +
+natte + table reveles comme demande, gradient 14,2 (plus riche que l'image source). **4 s exploitables
+sur 5** — utilisable en production en coupant la premiere seconde.
+
+**Ce qui aide (applique en v3)** : previs sans aucune zone vide · qualifier `<Video 1>` de *"CAMERA PATH
+DIAGRAM, not an image to imitate"* · *"if the camera reveals something not in `<Picture 1>`, INVENT it
+in the same drawn style"*.
+**Pistes non testees** : previs en NIVEAUX DE GRIS (retirer les couleurs saturees qui appellent la
+copie) · previs texture au lieu d'aplats · 2 clips de 2,5 s · garder la portion reussie et couper.
+
+Rendus : orbite v3 https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/rnd/scribe-tombouctou/orbit-v3-Y8oSTvsDiKMf4NbDReVvazspdcMh6N.mp4
+· **crane-up** https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/rnd/scribe-tombouctou/crane-v3-lcHwLRQFdEU1rSKmpuxt2uj8VZ7dQ3.mp4
+
+
+## 📎 ANNEXE — récit de mise au point du PREVIS (déversé de FICHE-CLIP-GENERE, 2026-08-19)
+
+> Sorti de la fiche injectée pour la garder actionnable. Ici : le détail du débogage, utile pour comprendre
+> POURQUOI les réglages par défaut sont ce qu'ils sont. La fiche garde la recette, cette annexe garde l'histoire.
+
+## ⛔ H3 NE SUIT PAS LE *RYTHME* DU PREVIS, seulement sa direction
+
+Test duo 10 s (push-in 0-5 s PUIS latéral 5-10 s). **Progression du mouvement mesurée** :
+| | 10 % | 25 % | 50 % | 75 % | 100 % |
+|---|---|---|---|---|---|
+| previs demandé | 1 % | 25 % | 51 % | 114 % | 100 % |
+| **H3 produit** | **37 %** | **75 %** | **89 %** | 92 % | 100 % |
+
+H3 a **précipité 75 % du mouvement dans le premier quart**, puis n'avait plus rien à faire — d'où la
+2e phase (latéral) quasi absente. Le clip reste beau (plan continu 10 s, style parfait), mais
+**l'enchaînement de 2 mouvements n'est PAS acquis**.
+
+**Pistes non testées** : (a) marqueur visuel de phase dans le previs (un repère qui change à la
+bascule), (b) contraste plus franc entre les 2 mouvements (vraie sortie latérale, pas un glissement),
+(c) prompt avec timecodes explicites `0-4s / 4-10s`, (d) 2 clips séparés raccordés — solution de repli
+toujours disponible.
+
+## ⭐⭐⭐⭐ PREVIS D'ACTION — piloter le GESTE, pas seulement la caméra (validé 2026-08-19)
+
+**Le même mécanisme que le previs de caméra fonctionne pour l'ACTION du personnage.** Previs gris,
+caméra volontairement FIXE : tout ce qui bouge à l'écran vient alors du geste.
+
+**Mesure** (bords = décor : si ça bouge, la caméra a bougé · centre = le sujet) :
+| test | bords (caméra) | centre (geste) | gradient |
+|---|---|---|---|
+| se lever puis se rasseoir | **0,58** | **9,59** | 11,8 / 11,8 / 11,7 |
+| tendre le bras vers un objet | **1,13** | **6,88** | 11,7 / 11,9 / 11,7 |
+→ caméra immobile + geste exécuté + style parfaitement tenu.
+
+**Résultat visuel** : le scribe assis se lève **entièrement debout**, marque un temps, se rassoit. Le
+modèle a **INVENTÉ son corps debout** (robe complète, ceinture, jambes) qui n'existait nulle part dans
+l'image source. Le geste bras : le bras se tend vers la droite, atteint l'objet, revient.
+
+⭐⭐ **Portée** : notre mémoire documente que « attraper un objet » est un **échec systématique en prompt
+texte**, même avec 5 étapes détaillées (cf `minimax-h3-styles-tests.md` § pluie de pièces — le modèle
+saute à l'état final, main déjà fermée). **Le MONTRER contourne cette limite.**
+⛔ Ne pas confondre avec les règles Seedance 83/86 (« reference-to-video = échec ») : elles concernent
+SEEDANCE. H3 exploite bien `ref_videos` — c'est tout l'objet de cette fiche.
+
+**Recette identique au previs caméra** : gris pur, 0 % de vide, `<Video 1>` qualifié de *« GREYSCALE
+
+### ⚠️ DÉFAUT RESTANT SUR L'ORBITE — la caméra TRAVERSE LE MUR (à corriger, session future)
+
+**Repéré par Aziz** au visionnage, **confirmé par mesure** : sur l'orbite gris, le contraste de la zone
+du sujet chute à **14,4 à t=2,5 s** (contre 37-42 sur tout le reste du clip) — le scribe **disparaît
+derrière un mur qui passe devant la caméra**, puis réapparaît. Un seul point de rupture, au milieu.
+
+**Cause** : notre previs cylindrique place la caméra à l'INTÉRIEUR d'un tube de murs. Quand elle tourne,
+elle finit par passer *au travers* d'un pan de mur au lieu de rester dans le volume de la pièce. H3
+traduit fidèlement ce qu'on lui montre — le défaut est dans le PREVIS, pas dans le modèle.
+
+**Ce qui doit rester vrai** (règle de mise en scène, pas de technique) : dans une orbite, le sujet
+**ne sort JAMAIS du champ** et rien ne passe entre lui et la caméra. La caméra tourne autour de lui en
+restant dans le même volume.
+
+**Pistes de correction (non testées)** : (a) previs avec un mur seulement sur ~270° et une ouverture
+côté caméra, (b) rayon d'orbite plus court que la distance aux murs, (c) orbite partielle (90-120°) au
+lieu de 180°, (d) clause de prompt explicite : *"the scribe remains fully visible at all times, nothing
+ever passes between the camera and him, the camera never goes through a wall"*.
+
+⭐ **À noter malgré ce défaut** : l'animation du personnage CONTINUE pendant toute l'orbite (il écrit,
+il vit) et reste cohérente au retour — le modèle ne fige pas le sujet pour gérer le mouvement de caméra.
+C'est ce qui rend l'orbite exploitable une fois le previs corrigé.
+

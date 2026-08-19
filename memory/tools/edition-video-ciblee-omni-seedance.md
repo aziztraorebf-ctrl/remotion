@@ -102,3 +102,56 @@ Les deux acceptent des références vidéo. ⭐ Toujours vérifier `api_node` av
 - Clips + assets sources RAPATRIÉS : `out/_r-and-d/omni-edit-test/` — les 3 clips, l'image source éditée
   (`anansi-source-verte.jpg`), le prompt validé (`prompt-verte.txt`) et les 3 scripts de test
   (`edit_image.py`, `omni_edit.py`, `seedance_edit.py`). Planches storyboard 3 modèles : `out/_r-and-d/storyboard-grok/`.
+
+## ⚠️ NUANCE MESUREE (2026-08-18) — "edition chirurgicale" vaut pour un OBJET, pas pour l'ECLAIRAGE
+
+Test : image de scene (scribe Tombouctou, style Sonjata), edition IMAGE-puis-TEXTE demandant de
+deplacer un rai de lumiere pour qu'il tombe sur le sujet au lieu du sol vide. Prompt explicite
+"keep everything else pixel-identical".
+
+**Resultat : redessin global, PAS une retouche locale.** Delta mesure par zone :
+| zone | delta |
+|---|---|
+| niches a livres (non ciblee) | **10,1 %** |
+| jarres (non ciblee) | **11,7 %** |
+| table + manuscrit (CIBLE) | 7,2 % |
+| visage scribe (CIBLE) | 10,8 % |
+| global | 8,6 % |
+
+⛔ Les zones NON ciblees ont bouge AUTANT que la cible — a comparer aux **0,0-0,1 %** obtenus sur
+l'edition d'un objet (robe indigo→emeraude, cf § CHEMIN GAGNANT). Le rendu reste beau et coherent,
+donc **acceptable quand on peut encore changer d'image source** ; inacceptable si un clip a deja ete
+genere depuis l'image d'origine et qu'on veut garder le raccord.
+
+**Regle** : la chirurgie fiable porte sur un OBJET LOCALISE (vetement, accessoire, couleur d'un item).
+Un changement d'ECLAIRAGE est global par nature — le modele recalcule ombres et valeurs partout.
+→ Fixer la lumiere AVANT de generer les clips, jamais apres. Et toujours MESURER par zone plutot que
+juger a l'oeil : ici l'image "avait l'air" chirurgicale, la mesure dit l'inverse.
+
+## ⭐⭐⭐ TEST REINSERTION DANS UN MONTAGE (2026-08-18) — la chirurgie marche, MAIS le raccord CASSE
+
+**Question testee** (jamais testee avant) : un clip MODIFIE se reinsere-t-il proprement dans un
+assemblage deja monte, sans casser les raccords voisins ? C'est LE cas d'usage production (corriger
+un detail sans tout refaire).
+
+**Protocole** : montage 4 clips (scribe Tombouctou). Robe indigo -> emeraude sur le SEUL clip 3.
+Edition de l'IMAGE source (chemin gagnant), puis regeneration H3 avec **prompt ET seed IDENTIQUES**
+(522011) — seule l'image change. Reassemblage.
+
+**Ce qui MARCHE** :
+- Edition image chirurgicale : cible (robe) **7,3 %**, hors-cible **1,1-1,3 %** (visage, niches, mur).
+- **Choregraphie preservee : correlation des courbes de mouvement = 0,823**, mouvement moyen
+  0,110 (indigo) vs 0,118 (vert). Meme seed + meme prompt = meme animation. Le clip modifie est
+  interchangeable *techniquement* (124 frames, 5,167 s, montage a 496 frames, 0 gel).
+
+**⛔ Ce qui CASSE — et c'est le vrai enseignement** : le raccord **3->4** devient incoherent. Le
+personnage porte une robe VERTE au plan 3 puis REDEVIENT INDIGO au plan 4. Le raccord 2->3 tient
+(le plan 2 est un gros plan sur les mains, la manche verte y est... restee indigo = incoherent aussi).
+
+**Regle a retenir** : modifier un element d'UN clip ne suffit jamais si cet element est VISIBLE dans
+les clips voisins. La chirurgie est locale, la continuite est globale.
+→ Avant d'editer un clip d'un montage, lister TOUS les plans ou l'element cible apparait, et les
+regenerer TOUS. Ici il aurait fallu editer les 4 images (la manche est visible au plan 2 en gros plan).
+→ Le gain de temps reste reel (pas besoin de re-storyboarder, de re-prompter ni de rechercher le
+mouvement — seed+prompt inchanges suffisent), mais il se compte en **nombre de plans concernes**,
+pas en 1 clip.

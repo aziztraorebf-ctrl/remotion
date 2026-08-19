@@ -15,6 +15,7 @@ Cause d'échec n°1 mesurée par audit (2026-08-17) : **« brique existante non 
 | Fiche | Se déclenche quand | Source du déclenchement |
 |---|---|---|
 | `FICHE-SVG-DESSINE.md` | on écrit du SVG dessiné dans un `.tsx` | ≥4 primitives OU un `d={`/`d="M`, avec ≥2 primitives (garde-fou anti-icône) |
+| `FICHE-CLIP-GENERE.md` | on lance/prépare une génération de clip (MiniMax H3, Comfy Cloud) | commande `mkgraphs`/`mkprevis`/`graph-plan`/`previs*.gif`/`minimax_h3`/`MiniMaxH3`/`submit_workflow`/`comfy` |
 | `FICHE-CAMERA.md` | on touche du code de caméra (D3, Mapbox ou SVG) | ≥2 motifs parmi `camAt`, `scaleMul`, `getCam`, `lerpCam`, `camFor`, `jumpTo`, `bearing`, `pitch:`, `interpolate(` |
 | `FICHE-SHORT-VERTICAL.md` | on travaille sur une composition 9:16 | chemin contenant `short`/`9x16`/`vertical`, ou dimensions verticales |
 | `FICHE-STORYBOARD.md` | on écrit un brief/breakdown, on lance un storyboard, **ou on reprend un STORYBOARD/PLAN hérité** | fichier `PROMPT-*`, `breakdown*` (**casse indifférente**, `-i` ajouté 2026-08-18) ou **`STORYBOARD-*`/`PLAN-*.md\|.txt`**, OU commande `storyboard-dual-gen`/`openrouter-img2img`/`openrouter-vision-breakdown`/`da-brief.py`/`da-compare.py` |
@@ -78,7 +79,7 @@ encore** sur disque (vérifié 2026-08-17). Les fiches ne dépendent pas de lui.
 
 ## Budget par fiche
 **55 lignes par défaut.** Exceptions assumées, **chiffres re-mesurés le 2026-08-18 (fin de session)** (`wc -l`) :
-`FICHE-CAMERA` **77** · `FICHE-SVG-DESSINE` **89** · `FICHE-STORYBOARD` **114**.
+`FICHE-CAMERA` **102** · `FICHE-CLIP-GENERE` **132** · `FICHE-SVG-DESSINE` **89** · `FICHE-STORYBOARD` **114**.
 ⚠️ Le budget d'exception affiché ici était de 80 et **deux fiches le dépassaient sans que ce soit
 écrit** — un README qui annonce un budget que les fiches contredisent est la même classe d'erreur
 que les fiches qui mentent. Plafond d'exception porté à **115**, à re-mesurer à chaque ajout. Raison : la caméra est le pain point n°1 mesuré du
