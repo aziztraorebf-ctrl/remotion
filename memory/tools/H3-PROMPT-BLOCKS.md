@@ -30,6 +30,57 @@ une phrase « No horizon line, no ground » est ignorée ; `negative_keywords: h
 
 ---
 
+## 🆕 FORMAT OFFICIEL R2V « 6 SECTIONS » — multi-références (⚠️ NON ENCORE TESTÉ CHEZ NOUS)
+
+> **Découvert 2026-08-19** dans le repo MIT `github.com/benjiyaya/Calliope` (`agent/prompts.py`), qui
+> le déclare condensé du guide officiel MiniMax `VIDEO_PROMPT_WRITING_GUIDE_ref_en.md`.
+> ⛔ **STATUT : non vérifié contre le guide MiniMax original, jamais essayé sur notre pipeline Comfy
+> Cloud.** À tester sur un clip réel AVANT de le graver comme doctrine. Ne pas le présenter comme acquis.
+> **Registre différent de l'ossature ci-dessus** : celle-ci anime UNE image de départ ; ce format-ci sert
+> les clips à PLUSIEURS sujets référencés (personnages + lieu).
+
+Six sections, dans cet ordre imposé, chaque en-tête sur sa propre ligne :
+
+```
+subject_definitions:
+<Subject N> is the <description> in <Picture N>, with <traits visuels à préserver>.
+
+summary:
+[reference generation] <ce qui se passe, en utilisant les labels <Subject N>>
+
+retention_analysis:
+<Subject N> (appears in [Shot 1]…): fully_preserved - <quels traits définis sont retenus>
+
+detailed_description:
+<1-2 phrases de STYLE (lumière, palette, medium) AVANT [Shot 1]>
+[Shot 1] <corps principal, 120-300 mots. Pas de timestamp sur Shot 1 ;
+les coupes suivantes : [Shot N] At MM:SS.mmm, …>
+
+overall_soundscape:
+<ambiance et sons physiques>   ou   N/A
+
+non_diegetic_music:
+<musique hors-diégèse : instrumentation, tempo>   ou   N/A
+```
+
+**Les 3 apports qu'on n'avait pas** :
+1. ⭐ **`retention_analysis` = une section DÉDIÉE à dire ce qui doit être préservé.** C'est exactement
+   notre problème récurrent de dérive d'identité entre clips — on n'avait aucun canal explicite pour ça.
+2. ⭐ **« Pour un clip < ~8 s, préférer UNE SEULE prise »** — recoupe notre gotcha maison mesuré
+   indépendamment (« 155 frames, UNE seule passe », plan chantier Acte 3 Gazoduc).
+3. **Le style se pose AVANT `[Shot 1]`**, pas dedans.
+
+⛔ **Gotcha de câblage (ComfyUI)** : les slots d'images de référence sont remplis **dans l'ordre des
+node-id**, et CET ORDRE définit la numérotation `<Subject N>`. Se tromper = mélanger silencieusement les
+personnages. ComfyUI ne permet pas de slots dynamiques → Calliope livre 5 workflows séparés (1 à 5 réfs),
+`example_ComfyUI_workflows/video_minimax_h3_r2v_{,2,3,4,5}ref_API.json`.
+
+**Dialogue** : ID stable par locuteur dans l'ordre de première parole —
+`<Subject N> (S1) says, <d>[English] …</d>`. Langue d'origine conservée DANS les balises `<d>` et taguée.
+Tout le reste s'écrit en anglais.
+
+---
+
 ## ⭐ SIZE LOCK — quand une QUANTITÉ doit rester constante
 
 **Symptôme sans ce bloc** : le niveau baisse tout seul, la flamme s'éteint, le tas se vide.
