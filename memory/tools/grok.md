@@ -27,7 +27,9 @@ r = requests.post("https://api.x.ai/v1/images/generations",
     json={"model": "grok-imagine-image-2.0", "prompt": prompt, "n": 1}, timeout=200)
 url = r.json()["data"][0]["url"]          # URL temporaire imgen.x.ai -> télécharger tout de suite
 ```
-⚠️ Pas de champ `image_size` documenté : il rend du 1280×720 sur nos prompts 16:9.
+✅ **Le format se pilote** : `aspect_ratio` (`"16:9"`) + `resolution` (`"2k"`) fonctionnent — c'est ce
+qu'utilise `storyboard-dual-gen.py` par défaut. Il n'y a pas de champ `image_size` ; SANS ces 2 champs,
+il retombe sur du 1280×720.
 ⚠️ Le prompt est long (5-6 Ko) → **passer par Python**, pas par `curl -d` en shell : l'échappement
 casse le JSON silencieusement (vécu le jour même).
 
@@ -42,8 +44,25 @@ factuelles** que GPT commettait :
 dernier panneau — or ces fils portaient tout le sens. Vérifier que le geste-clé survit à la
 dernière case, c'est le contrôle à faire sur ses sorties.
 
-→ À ajouter dans la chaîne storyboard à côté de GPT (`storyboard-dual-gen.py`). Coût dérisoire :
-5 planches = ~0,20 $.
+✅ **FAIT le 2026-08-18** — intégré à `storyboard-dual-gen.py` (`gen_grok()`, actif par défaut via
+`--models gemini,gpt,grok`). Coût dérisoire : 5 planches = ~0,20 $ (coût réel mesuré 0,047-0,053 $/image,
+l'input est facturé en plus du prix affiché).
+
+### ⭐⭐ ÉDITION MULTI-RÉFÉRENCES — `/v1/images/edits` (vérifié par appel réel 2026-08-18)
+
+Les 3 modèles image déclarent **`input_modalities: ["text","image"]`** — ils acceptent donc des images
+de référence, pas seulement du texte (la fiche l'ignorait).
+```python
+POST https://api.x.ai/v1/images/edits
+{"model":"grok-imagine-image-2.0","prompt":"...",
+ "images":[{"url":"data:image/png;base64,...","type":"image_url"}, ...]}
+```
+⛔ Champ **PLURIEL `images`** — le singulier `image` renvoie **422** sur une liste. **4 refs acceptées**
+(la doc officielle en annonce 3). ⚠️ Downscaler les refs (1280 px) : un payload base64 de 1,6 Mo a fait
+**timeout à 2 min**.
+⛔⛔ **En mode `edits`, la référence ÉCRASE le style demandé** (un rendu crayon a été ignoré au profit
+de l'image source). → Dire explicitement dans le prompt que la ref sert de **REGISTRE**, jamais de
+modèle à copier — sinon le modèle recopie la scène au lieu d'en proposer une neuve.
 
 ## Grok vision — confirmé fonctionnel (2026-08-07)
 

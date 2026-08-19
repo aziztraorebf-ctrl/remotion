@@ -21,7 +21,6 @@
   seule passe + hard cut**. ⛔ Ne jamais « prolonger un peu » un tel plan. Hypothèse par défaut : un clip
   génératif **ne boucle pas**. (`scripts/tools/measure-insert-clip.py` calcule déjà ce ratio.)
 - **Chaque clip vidéo importé se mesure INDIVIDUELLEMENT** (`ffprobe -v error -show_entries format=duration …`), jamais par analogie avec un voisin du même dossier (5.875 s vs 5.167 s constatés). Une durée surestimée dans un `<Loop>` gèle l'image sans aucune erreur.
-- ⭐ **GAZODUC passe finale** : Actes 1/2/3 se re-rendent en palette sombre `PAL_GPT` **à la passe finale, ⛔ PAS acte par acte** (`memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md`). L'Acte 4 est en **3 fichiers séparés** à assembler (124,68 s cumulées pour 124,04 s d'audio → 300 ms de marges à rogner).
 
 ## ⛔ VÉRIFIER UN CONCAT — le gel invisible
 Coût documenté : Soudan mid-form v4 (2026-07-22), **image figée ~4 minutes** (2:55→7:00) avec audio normal. « Vérifié » par frames isolées : toutes plausibles. Aziz l'a vu en regardant.
@@ -34,6 +33,7 @@ Coût documenté : Soudan mid-form v4 (2026-07-22), **image figée ~4 minutes** 
   `ffmpeg -i out.mp4 -vf fps=0.5 -q:v 5 /tmp/chk/f%04d.jpg && md5 /tmp/chk/*.jpg | awk '{print $NF}' | uniq -c | sort -rn | head`
   Deux hashs consécutifs identiques = gel. Des frames isolées NE PROUVENT RIEN.
 - **Après tout changement de STRUCTURE** (raccord, concat, refactor d'un composant partagé) : revérifier la séquence narrative de **chaque scène touchée**, pas seulement le point de couture (vécu CFA : jonction parfaite, scène suivante détruite).
+- ⛔⛔ **Un diff de pixels entre DEUX fichiers ré-encodés séparément ne mesure PAS une différence de mouvement — il mesure du BRUIT D'ENCODAGE.** Contrôle qui l'a prouvé (2026-08-18) : la zone de ciel **statique** différait autant (7,25) que la zone du personnage qui gesticule (7,51). J'ai conclu « le mouvement diffère » sur une corrélation de 0,56 ; Aziz a regardé les 2 vidéos et tranché : **quasi-copie, artefact d'origine compris**. Coût : un verdict FAUX présenté à Aziz sur un résultat qui était le succès recherché. → Le diff de pixels ne vaut qu'À L'INTÉRIEUR d'un même encodage (frames consécutives : gel, boucle, saut). Entre 2 fichiers : poser une zone de CONTRÔLE statique, exiger que la zone jugée la dépasse NETTEMENT, sinon ne rien conclure — et faire REGARDER.
 - ⚠️ `check-frame-continuity.py` couvre les **trous entre segments de render**, PAS le gel de concat. Deux problèmes distincts.
 
 ## GATES BLOQUANTS (tu seras bloqué — voici pourquoi)

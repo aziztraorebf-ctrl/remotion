@@ -47,6 +47,29 @@ liste de choix : lire l'intention d'abord, puis venir chercher quel registre sai
      (le hard cut est ce qui esquive le non-bouclage du clip) ;
   5. ⛔ **ce qu'on a montré en grand ne se remontre pas en vignette** (décision d'Aziz) — au retour, on
      reprend la carte vivante, l'encart ne revient pas.
+
+  ### ⭐ LA RÈGLE DES 3 PLANS — PISTE CADRÉE, PAS ENCORE UNE RÈGLE (posée 2026-08-18)
+
+  **Ce que c'est** : faire voyager le spectateur entre 3 ÉCHELLES au lieu de rester bloqué sur une seule —
+  **MACRO** (le système : carte Mapbox, territoire) → **MESO** (la preuve : courbe, chiffre, D3/Remotion) →
+  **MICRO** (l'humain : stick-figure ou H3, ce que ça change pour quelqu'un).
+  ⛔ **Ce n'est NI une forme narrative** (elle ne dit pas QUOI raconter → [[FORMES-NARRATIVES]]) **NI un
+  moteur nouveau** : c'est une règle d'ALTERNANCE entre moteurs déjà catalogués. Sa place est ici, sous
+  LE RACCORD, dont l'intitulé porte déjà « rompre l'échelle ».
+  **Le mal qu'elle vise** : le « cours magistral illustré » — 3 graphiques d'affilée, le spectateur décroche.
+  Notre décrochage mesuré est à **30 s-3 min** ([[DIAGNOSTIC-FLOP-VIDEO]]), pile cette zone.
+
+  ⚠️ **STATUT HONNÊTE — 1 SEUL CAS, ET IL EST PARTIEL.** `RuptureChantier` (ci-dessus) prouve le saut
+  **macro→micro**, jamais le triptyque complet : **le plan MESO n'a jamais été traversé**. Notre règle
+  « ne pas généraliser sur un seul cas » ([[feedback_generaliser-un-seul-cas-isoler-la-condition-pas-juste-l-effet]])
+  s'applique — **ne pas l'appliquer comme une checklist**, la tester.
+  **Ce qui manque pour la graver** : un 2e cas, et surtout un cas qui traverse le MESO.
+  **Ce qui la rend crédible malgré ça** : 3e convergence indépendante — 2 analyses internes ont nommé
+  « L'ÉCHELLE HUMAINE » comme **trou n°1** du catalogue (§ 8 TROUS), et une 3e source externe l'a désignée
+  sans connaître nos fichiers. Nous avions donc la preuve du geste **avant** d'avoir le mot.
+  ⚠️ **Piège de dosage** : le plan MICRO en H3 s'use — « un insert qui revient toutes les 20 s cesse de
+  faire rupture ». Le stick-figure, lui, peut revenir (gratuit, déterministe, calable sur la voix).
+
   Mesuré : activité médiane **10,33 %** (min 7,42 %, aucun creux) contre 0,57 % avant. C'est ce geste
   qui a débloqué un acte gelé depuis des semaines.
 

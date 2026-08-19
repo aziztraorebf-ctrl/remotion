@@ -27,6 +27,16 @@ OUT = Path("/tmp/storyboard-gen"); OUT.mkdir(exist_ok=True)
 GEMINI_MODEL = "gemini-3.1-flash-image-preview"
 GEMINI_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_KEY}"
 FAL_URL = "https://fal.run/fal-ai/gpt-image-1/text-to-image"
+FAL_EDIT_URL = "https://fal.run/fal-ai/gpt-image-1/edit-image"  # accepte des refs (image_urls)
+
+# --- xAI / Grok images (branche 2026-08-18, audit) ---
+# VERIFIE PAR APPEL REEL : les 3 modeles image declarent input_modalities=["text","image"].
+# Sans refs -> /v1/images/generations ; avec refs -> /v1/images/edits, champ PLURIEL "images"
+# (le singulier "image" renvoie 422 sur une liste). 4 refs acceptees (la doc annonce 3).
+XAI_KEY = os.getenv("XAI_API_KEY")
+XAI_MODEL = "grok-imagine-image-2.0"   # 0.04 $/image (prix officiel verifie 2026-08-18)
+XAI_GEN_URL = "https://api.x.ai/v1/images/generations"
+XAI_EDIT_URL = "https://api.x.ai/v1/images/edits"
 
 REF_NOKIA = Path("/tmp/ref-mpesa-nokia.jpg")  # pivot Nokia + data greffees
 REF_COIN = Path("/tmp/ref-mpesa-coin.jpg")    # pivot piece + comparaison 5%/0.22%
@@ -133,7 +143,40 @@ def gen_gemini(prompt: str, refs: list, out: Path, edit: bool = False):
     return None
 
 
-def gen_gpt(prompt: str, out: Path):
+def gen_gpt(prompt: str, out: Path, refs: list | None = None):
+    # ⭐ 2026-08-18 : jusqu'ici gen_gpt tapait TOUJOURS le text-to-image et IGNORAIT --ref en
+    # silence — l'appelant croyait envoyer ses refs aux 2 modeles, seul Gemini les recevait.
+    # fal-ai/gpt-image-1/edit-image accepte image_urls (data URI) + input_fidelity.
+    if refs:
+        imgs = []
+        for r in refs:
+            r = Path(r)
+            if not r.exists():
+                print(f"  [gpt] ref absente, ignoree : {r}"); continue
+            raw = _downscale_ref(r.read_bytes())
+            mime = "image/png" if raw[:4] == b"\x89PNG" else "image/jpeg"
+            imgs.append(f"data:{mime};base64,{base64.b64encode(raw).decode()}")
+        if imgs:
+            payload = {"prompt": prompt, "image_urls": imgs, "image_size": "1536x1024",
+                       "num_images": 1, "quality": "high", "input_fidelity": "high"}
+            try:
+                r = requests.post(FAL_EDIT_URL, headers={"Authorization": f"Key {FAL_KEY}",
+                                  "Content-Type": "application/json"}, json=payload, timeout=300)
+            except requests.exceptions.RequestException as e:
+                print(f"  [gpt] ERREUR reseau : {e}"); return
+            if r.status_code != 200:
+                print(f"  [gpt] ERROR {r.status_code}: {r.text[:200]}"); return
+            imgs_out = r.json().get("images", [])
+            if imgs_out:
+                out.write_bytes(requests.get(imgs_out[0]["url"], timeout=120).content)
+                print(f"  [gpt] -> {out.name} ({out.stat().st_size//1024}KB, edit-image {len(imgs)} ref)")
+            else:
+                print(f"  [gpt] no image: {r.text[:200]}")
+            return
+    _gen_gpt_t2i(prompt, out)
+
+
+def _gen_gpt_t2i(prompt: str, out: Path):
     # prompt = EXACTEMENT ce qui part au modele (text-to-image, aucun registre injecte).
     # Rappel biais GPT : mettre le FOND en 1ere phrase + formule negatif si fond clair voulu.
     # `quality` (low|medium|high, defaut "auto") etait accepte par fal.ai mais jamais envoye.
@@ -153,6 +196,74 @@ def gen_gpt(prompt: str, out: Path):
         print(f"  [gpt] no image: {r.text[:200]}")
 
 
+def _downscale_ref(raw: bytes, max_px: int = 1280) -> bytes:
+    """Reduit une ref avant envoi. Un payload base64 de 1.6 Mo a fait timeout a 2 min (audit 2026-08-18)."""
+    try:
+        from PIL import Image
+        import io
+        im = Image.open(io.BytesIO(raw))
+        if max(im.size) <= max_px:
+            return raw
+        im.thumbnail((max_px, max_px))
+        buf = io.BytesIO()
+        im.convert("RGB").save(buf, format="JPEG", quality=88)
+        return buf.getvalue()
+    except Exception:
+        return raw  # Pillow absent ou format exotique : on envoie tel quel
+
+
+def gen_grok(prompt: str, refs: list, out: Path, aspect: str = "16:9", resolution: str = "2k"):
+    """Grok images (xAI). refs vides -> generation ; refs fournies -> edition multi-references.
+
+    ⚠️ En mode edits la REFERENCE PESE TRES LOURD : sur le test d'audit elle a ecrase le style
+    demande (un rendu crayon a ete ignore au profit de l'image source). Pour une PROPOSITION de
+    scene, dire explicitement dans le prompt que la ref sert de REGISTRE et non de modele a copier.
+    """
+    if not XAI_KEY:
+        print("  [grok] XAI_API_KEY absente — skip"); return
+    headers = {"Authorization": f"Bearer {XAI_KEY}", "Content-Type": "application/json"}
+    body = {"model": XAI_MODEL, "prompt": prompt, "n": 1}
+    if refs:
+        imgs = []
+        for r in refs:
+            r = Path(r)
+            if not r.exists():
+                print(f"  [grok] ref absente, ignoree : {r}"); continue
+            raw = _downscale_ref(r.read_bytes())
+            mime = "image/png" if raw[:4] == b"\x89PNG" else "image/jpeg"
+            b64 = base64.b64encode(raw).decode()
+            imgs.append({"url": f"data:{mime};base64,{b64}", "type": "image_url"})
+        if imgs:
+            body["images"] = imgs
+        url = XAI_EDIT_URL if imgs else XAI_GEN_URL
+        if not imgs:
+            body |= {"aspect_ratio": aspect, "resolution": resolution}
+    else:
+        body |= {"aspect_ratio": aspect, "resolution": resolution}
+        url = XAI_GEN_URL
+    try:
+        r = requests.post(url, headers=headers, json=body, timeout=300)
+    except requests.exceptions.RequestException as e:
+        print(f"  [grok] ERREUR reseau : {e}"); return
+    if r.status_code != 200:
+        print(f"  [grok] ERROR {r.status_code}: {r.text[:200]}"); return
+    d = r.json()
+    ticks = d.get("usage", {}).get("cost_in_usd_ticks", 0)
+    if ticks:
+        print(f"  [grok] cout ~{ticks/15e9:.3f} $")
+    data = (d.get("data") or [{}])[0]
+    if data.get("b64_json"):
+        raw = base64.b64decode(data["b64_json"])
+    elif data.get("url"):
+        raw = requests.get(data["url"], timeout=120).content  # URL imgen.x.ai TEMPORAIRE
+    else:
+        print(f"  [grok] no image: {str(d)[:200]}"); return
+    dest = out.with_suffix(".jpg" if raw[:3] == b"\xff\xd8\xff" else ".png")
+    dest.write_bytes(raw)
+    print(f"  [grok] -> {dest.name} ({dest.stat().st_size//1024}KB)")
+    return dest
+
+
 def _run_demo_senegal():
     """Historique : les 2 storyboards Senegal M-Pesa (registre navy hardcode, refs M-Pesa)."""
     for key, prompt in MOMENTS.items():
@@ -170,8 +281,8 @@ if __name__ == "__main__":
     ap.add_argument("--prompt-file", type=Path, help="Fichier texte du prompt complet (registre + contenu, palette au choix).")
     ap.add_argument("--prompt", type=str, help="Prompt inline (alternative a --prompt-file).")
     ap.add_argument("--out-prefix", type=str, help="Prefixe de sortie : <prefix>-gemini.png / <prefix>-gpt.png")
-    ap.add_argument("--ref", action="append", default=[], help="Image(s) d'ancrage de fond/registre (Gemini). Repetable.")
-    ap.add_argument("--models", default="gemini,gpt", help="Modeles a lancer (defaut: gemini,gpt).")
+    ap.add_argument("--ref", action="append", default=[], help="Image(s) d'ancrage de fond/registre (Gemini, GPT, Grok). Repetable.")
+    ap.add_argument("--models", default="gemini,gpt,grok", help="Modeles a lancer (defaut: gemini,gpt,grok).")
     ap.add_argument("--demo-senegal", action="store_true", help="Rejoue les storyboards historiques Senegal M-Pesa.")
     args = ap.parse_args()
 
@@ -188,5 +299,7 @@ if __name__ == "__main__":
     if "gemini" in models:
         print("--- Gemini ---"); gen_gemini(prompt, args.ref, Path(f"{out_prefix}-gemini.png"))
     if "gpt" in models:
-        print("--- GPT-image ---"); gen_gpt(prompt, Path(f"{out_prefix}-gpt.png"))
+        print("--- GPT-image ---"); gen_gpt(prompt, Path(f"{out_prefix}-gpt.png"), args.ref)
+    if "grok" in models:
+        print("--- Grok ---"); gen_grok(prompt, args.ref, Path(f"{out_prefix}-grok.png"))
     print(f"-> {out_prefix.parent}")

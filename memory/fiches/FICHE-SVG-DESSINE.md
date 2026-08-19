@@ -79,6 +79,15 @@ Ouvrir dans cet ordre, **lire chaque liste jusqu'au bout** (une brique en fin de
 - **Juger un mouvement sur des frames CONSÉCUTIVES** (33 ms à 30 fps), jamais une frame isolée : la dérive est invisible sur une image fixe.
 - **Réutiliser = importer le composant/les VALEURS exacts** (grep les amplitudes déjà validées), pas recopier le principe. Si le composant n'est pas exporté, l'exporter depuis la source plutôt que dupliquer.
 - **Avant de réutiliser une brique héritée : la RENDRE et la REGARDER**, et grep `VERDICT|REJET` dans le breakdown de l'épisode. Un décor jamais vu est une dette, pas un acquis.
+- ⭐⭐ **UN COSTUME DESSINÉ POUR UNE POSE STATIQUE PEUT RENDRE LA MARCHE ILLISIBLE** (prouvé 2026-08-18,
+  workflow Fable+nos persos). Fable habille correctement une figure DEBOUT, mais son pagne descendait à
+  hanche+17 (règle du registre : max ~6) → **65 % de la jambe masquée**, la marcheuse se lisait comme une
+  COLONNE QUI GLISSE. Invisible sur toute frame fixe, évident dès la 1re seconde d'animation.
+  → **Toute tenue importée d'un modèle se re-valide EN MOUVEMENT**, jamais sur la planche. Vérifier que le
+  ciseau des jambes reste lisible ; raccourcir l'ourlet plutôt que ralentir la marche.
+- ⚠️ **`<Figure>` n'a PAS de cou** : le buste s'arrête à l'épaule, la tête est posée ~12 unités plus haut
+  → ~3,4 unités nues (10 px à scale 3). Invisible debout, **tête détachée dès que le buste s'incline** (mesuré
+  à 32°). Ajouter un segment de cou pour tout personnage habillé qui se penche.
 - **Épaisseurs de trait à diviser par le zoom** (`width / camScale`), et construire la scène PLUS LARGE que le cadre final.
 
 ## SI ÇA RATE 2×

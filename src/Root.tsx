@@ -524,6 +524,9 @@ import { P2Workflow } from "./projects/_client-sim/mochit/P2Workflow";
 import { P3Cta } from "./projects/_client-sim/mochit/P3Cta";
 import { MochItComplete, MI_TOTAL_FRAMES, MI_TOTAL_FPS } from "./projects/_client-sim/mochit/MochItComplete";
 import { MI_WIDTH, MI_HEIGHT, MI_FPS } from "./projects/_client-sim/mochit/theme";
+import { Vendeuse16x9, VENDEUSE_FRAMES } from "./projects/_rnd/stick-figures/Vendeuse16x9";
+import { IdentiteV2_16x9, IDENTITE_V2_FRAMES } from "./projects/_shared/stick-figure-svg/identite/IdentiteV2_16x9";
+import { PlageFableAnimee16x9, PLAGE_FABLE_FRAMES } from "./projects/_rnd/fable-scene-animee/PlageFableAnimee16x9";
 
 const WordExplodeDemo: React.FC = () => <WordExplode />;
 
@@ -4812,6 +4815,15 @@ export const RemotionRoot: React.FC = () => {
         width={1920}
         height={1080}
       />
+
+
+      {/* VERIF SOCLE STICK-FIGURE (2026-08-18) — recuperees de master pour re-render de controle */}
+      <Composition id="Stick-Vendeuse" component={Vendeuse16x9} durationInFrames={VENDEUSE_FRAMES} fps={30} width={1920} height={1080} />
+      <Composition id="Stick-IdentiteV2" component={IdentiteV2_16x9} durationInFrames={IDENTITE_V2_FRAMES} fps={30} width={1920} height={1080} />
+
+      {/* TEST R&D (2026-08-18) — scene SVG de Fable ANIMEE : le decor vit (parallaxe 3 plans),
+          les 3 personnages sont rebranches sur le socle stick-figure. Test de MOTEUR. */}
+      <Composition id="RND-Fable-Plage" component={PlageFableAnimee16x9} durationInFrames={PLAGE_FABLE_FRAMES} fps={30} width={1920} height={1080} />
 
     </>
   );

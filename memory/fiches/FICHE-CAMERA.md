@@ -41,7 +41,7 @@ orbit 200-600f ; tilt 100-300f ; blur CSS pic **12-16px à mi-course**.
 glissante du tracé (`windowBBox`, back 45% / ahead 10%, `scaleFit` borné 1.3-2.0), puis ralentit et HOLD au climax.
 ⛔ `getPointAtLength`/heuristique de longueur de path : jamais fiable, échantillonner.
 
-## MÉCANISMES — les 3 pièges structurels
+## MÉCANISMES — les 4 pièges structurels
 
 1. **easeInOut PAR SEGMENT = vitesse 0 à chaque keypoint.** Dérivée nulle aux 2 extrémités → « elle approche,
    stop, elle approche, stop ». Position continue, aucun gel détectable au hash. Mesuré : v=0.00 px/f aux 7 keypoints
@@ -52,7 +52,18 @@ glissante du tracé (`windowBBox`, back 45% / ahead 10%, `scaleFit` borné 1.3-2
    pendant que l'intérieur bouge. Mesuré : diamètre 868px ±1px sur 85s alors que scaleMul allait de 1.2 à 4.0 (4 itérations).
    **Grep obligatoire** : après avoir calculé `globeR`, aucun `GLOBE_R` ne doit rester hors import+calcul.
    Symétrique : tout élément DANS le `<g>` zoomé dont l'épaisseur écran doit rester constante se contre-échelonne `/ cam.scale`.
-3. **Mapbox frame-driven obligatoire** : `useCurrentFrame` + `interpolate` + `map.jumpTo()`. ⛔ `flyTo`/`easeTo`
+3. ⛔⛔ **NE JAMAIS ARRONDIR UNE ÉCHELLE (ni une rotation) — l'erreur est multipliée par le bras de levier.**
+   Arrondir une TRANSLATION est sans danger (1 px max). Arrondir un `scale()` à 2 décimales via un helper
+   `r2()` posé par réflexe sur tous les nombres : chaque marche d'arrondi déplace les éléments LOIN DU PIVOT
+   d'un coup. Mesuré (scène plage, 2026-08-18) : `scale(r2(zoom))` avec 790 px entre pivot et bord →
+   **7,53 px de saut EN UNE FRAME** sur un aplat pourtant IMMOBILE ; sans l'arrondi, 0,33 px/f.
+   ⚠️ **Le symptôme trompe** : Aziz a décrit « l'image saute quand le personnage se penche » — le personnage
+   n'y était pour rien, c'était une pirogue statique d'avant-plan, et le saut coïncidait avec son geste.
+   2 fixes plausibles (secousse en escalier, bouclage de cycle) appliqués AVANT de mesurer n'ont RIEN changé.
+   → **Localiser le saut dans l'IMAGE (diff par zone) avant de corriger l'animation qu'on soupçonne.**
+   Corollaire : une oscillation se juge sur sa VARIATION PAR FRAME, jamais sur son amplitude (2,17 °/frame
+   de secousse = vibration, pas geste).
+4. **Mapbox frame-driven obligatoire** : `useCurrentFrame` + `interpolate` + `map.jumpTo()`. ⛔ `flyTo`/`easeTo`
    (incompatibles headless). Render : `scripts/render-mapbox.sh` (pas Vercel).
    Un `interpolate` qui sature (`Math.min(1,p)` convergé en 2-3s sur un beat de 15s) laisse la caméra strictement immobile.
 

@@ -72,13 +72,18 @@ par le Sahara alors qu'il **est** côtier : erreur factuelle + cohérence de sé
 ⭐ Après tout appel comparatif, TOUJOURS proposer le 2e appel génératif (« comment on corrige, avec notre
 arsenal ? ») — c'est lui qui produit la valeur actionnable (`memory/doctrines/DA-BRIEF-GATE.md` § PATTERN 2 APPELS).
 
-## ⛔⛔ LA MÉTHODE STORYBOARD — DÉCISION DU 2026-08-18 (⚠️ pas encore outillée)
+## ⛔⛔ LA MÉTHODE STORYBOARD — DÉCISION DU 2026-08-18 (✅ outillée le 18/08)
 
-> **Statut honnête** : décidée avec Aziz et testée UNE fois à la main (Grok conforme · Gemini conforme
-> mais a écrit des titres interdits · GPT inexploitable, 2 cases au lieu de 4). ⛔ **Aucun script du
-> repo n'implémente l'appel image xAI** — `storyboard-dual-gen.py` ne connaît que Gemini et GPT.
-> À requalifier en « règle payée » une fois outillée et re-testée. La chaîne réellement exécutée à ce
-> jour reste la conception TEXTE (`storyboard-concepts-texte.py`), **Kimi inclus**.
+> **Statut** : décidée avec Aziz, testée à la main (Grok conforme · Gemini conforme mais a écrit des
+> titres interdits · GPT inexploitable, 2 cases au lieu de 4). ✅ **OUTILLÉE le 2026-08-18** :
+> `storyboard-dual-gen.py` lance les **3 dessinateurs** (`--models` défaut `gemini,gpt,grok`, `gen_grok`).
+> ⛔ **Une ref passée en CLI n'est PAS une ref reçue par le modèle** : `gen_gpt` a ignoré `--ref` EN
+> SILENCE (endpoint text-to-image pur) — on croyait briefer 2 modèles sur la même référence, seul
+> Gemini la voyait. Corrigé (routage `edit-image` + `input_fidelity`). → **Après tout appel avec
+> `--ref`, lire la console : chaque modèle doit annoncer ses refs** (`[gpt] … edit-image N ref`).
+> ⚠️ Grok en mode `edits` : la ref **écrase le style demandé** — la présenter comme REGISTRE, pas
+> comme modèle à copier. À requalifier en « règle payée » après un 2e test réel de la chaîne outillée.
+> L'étape conception TEXTE (`storyboard-concepts-texte.py`, **Kimi inclus**) reste utile en amont.
 
 ### ⛔⛔ 1. AUDIT DU BRIEF PAR UN MODÈLE TIERS — OBLIGATOIRE (seule partie déjà payée)
 Faire relire le brief par `openai/gpt-5.5`, consigne unique : *« détecte tout ce qui souffle une
@@ -92,7 +97,7 @@ en CAPITALES.
 ⭐ Après réception : **grepper le brief avec les mots-clés des concepts reçus.** S'ils y sont, la
 convergence est un ARTEFACT — pas un signal. Relancer avec un brief lavé.
 
-### 2. LA FORME VISÉE (à outiller)
+### 2. LA FORME VISÉE
 3 dessinateurs, 1 appel chacun, **2 concepts par planche** (3 → 12 cases sous 400 px = illisible) :
 Grok `grok-imagine-image-2.0` (`/v1/images/generations`, 0,04 $) · GPT-image (fal.ai) · Gemini
 flash-image (⛔ exige le tail anti-prose, voir § suivant). Kimi ne dessine pas : il reste en conception

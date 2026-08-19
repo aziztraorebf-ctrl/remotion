@@ -169,3 +169,20 @@ bien presents dans le repo principal.
   principal, 2 « morts » cote worktree pour les memes fichiers).
 - Pour s'en servir sans merger : `git checkout <branche> -- <chemin>` dans le worktree, ou simplement
   lire/executer depuis le repo principal.
+
+## ⭐⭐ UN `.alignment.json` SANS SON `.mp3` = AUDIO MANGÉ PAR `.gitignore`, PAS UN BUG DE CODE (2026-08-18)
+
+Le re-rendu de `Stick-Vendeuse` plantait. Cause réelle : `public/_rnd/stick-figures/vendeuse/narration.mp3`
+**absent du disque** — `.gitignore:9` contient `*.mp3`. Le `narration.alignment.json` (versionné, lui) était
+bien là. Le rig stick-figure n'y était pour rien.
+⭐ **LE TELL** : les DÉRIVÉS d'un audio sont versionnés, l'audio ne l'est pas. Un `.alignment.json` orphelin
+est la signature exacte d'un audio perdu — **chercher ce qui MANQUE avant de corriger ce qu'on soupçonne**.
+
+⛔ **ET NE PAS SUR-DIAGNOSTIQUER** : j'ai d'abord cru à une nouvelle occurrence de
+[[feedback_registre-canonique-branche-rnd-jamais-mergee-pattern-recurrent]] (« les scènes vivent sur master,
+absentes de ma branche »). **FAUX, vérifié** : `git branch -a --contains d38afc9c` → `master` (donc mergé),
+et `git ls-files` liste les 2 fichiers sur HEAD. C'était une branche de travail **non rebasée**, rien d'autre.
+→ **Avant d'incrémenter le compteur d'un pattern connu, vérifier `git branch --contains`.** Gonfler un
+pattern récurrent avec un cas qui n'en est pas un rend le feedback moins fiable — l'EFFET se ressemblait
+(fichier absent de ma branche), la CONDITION (jamais mergé) n'était pas remplie.
+Cf. [[feedback_generaliser-un-seul-cas-isoler-la-condition-pas-juste-l-effet]].

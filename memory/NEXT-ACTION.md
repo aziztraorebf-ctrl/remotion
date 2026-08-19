@@ -70,7 +70,23 @@ les 2 arborescences, écarte les collisions résolues (stub/identiques) et les f
 
 ---
 
-## ⭐⭐⭐ PROCHAINE SESSION — EXPLORATION DES FORMATS NARRATIFS (décidé 2026-08-17)
+## ⭐⭐ CHANTIER OUVERT — MINIMAX H3 : STYLE VECTOR POSTER / SUNJATA (décidé 2026-08-18 par Aziz)
+> ⚠️ **Priorité 1 reste GAZODUC Acte 3** (seul chantier avec un livrable bloquant + une action spécifiée au pixel près). Ce chantier-ci est exploratoire : le prendre quand l'Acte 3 est soldé, ou dans une session dédiée comme Aziz les mène d'habitude.
+
+**Enjeu** : on tient peut-être la voie pour produire de VRAIS inserts animés de scènes (cf. règle des
+3 plans → [MOTEURS-VISUELS-ET-SOCLE](../doctrines/MOTEURS-VISUELS-ET-SOCLE.md) § LE RACCORD, statut PISTE CADRÉE : 1 seul cas, MESO jamais traversé), **sans passer par les modèles propriétaires** (Seedance 2.5 à 4,17 $, Omni à 1,10 $).
+**Acquis de la session du 18/08** : éditer l'image source (Gemini, ~0,10 $) + régénérer H3 avec le seed
+d'origine (GPU Comfy, **0 crédit**) donne un clip jugé par Aziz *« quasiment une copie image par image »*
+— artefact d'origine compris. Recette complète : [edition-video-ciblee-omni-seedance](../tools/edition-video-ciblee-omni-seedance.md).
+**À tester la prochaine fois** : le style **Vector Poster** et le style **storyboard Sunjata** sur ce même
+chemin. Si ça tient → argument B2B/freelance direct (scène quasi-identique reproductible, coût ~0 $).
+**⛔ La seule limite connue à lever** : l'audio est RÉGÉNÉRÉ (corrélation 0,46, la voix change).
+Piste ouverte : injecter NOTRE audio via `reference_audio_urls` (existe sur `minimax/h3/reference-to-video`,
+jamais testé) plutôt que de subir celui de H3.
+**⭐ Prérequis non négociable** : archiver `.prompt.txt` + `.meta.json` (avec le **SEED**) à côté de chaque
+clip — sans le seed, ce chemin est impossible.
+
+## ✅ SYSTÈME GRAVÉ — FORMES NARRATIVES (livré 2026-08-17) · reliquat : chercher d'autres FORMES
 
 > ✅ **LIVRABLE PRODUIT LE 2026-08-17 : [`memory/doctrines/FORMES-NARRATIVES.md`]
 > (doctrines/FORMES-NARRATIVES.md)** — 7 formes narratives, conditions d'usage, arbre de décision,

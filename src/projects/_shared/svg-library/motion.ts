@@ -78,3 +78,22 @@ export const sequenceExclusive = (transitionProgress: number, outThreshold = 0.8
  * "1er plan" par-dessus une portion qui tombe visuellement DANS l'objet.
  */
 export const objectVisualBottom = (objectRefY: number, hullOffset: number) => objectRefY + hullOffset;
+
+/**
+ * Fenetre a bords adoucis : 0 hors de [a,b], 1 au coeur, avec une rampe smoothstep de largeur `ramp`
+ * a l'entree ET a la sortie.
+ *
+ * ⛔ POURQUOI (bug reel, 2026-08-18, scene PlageFableAnimee) : une enveloppe d'effet ecrite en
+ * ESCALIER (`u >= a && u < b ? 1 : 0`) allume et eteint l'effet d'un coup. Sur une secousse ajoutee
+ * au buste ET aux mains d'un personnage, tout le haut du corps sautait d'un cran a chaque bascule.
+ * ⭐ REGLE : une enveloppe d'effet ne s'allume JAMAIS en escalier — elle monte et redescend.
+ * ⚠️ Corollaire : adoucir les BORDS ne suffit pas — verifier aussi la VARIATION PAR FRAME au coeur
+ * de la fenetre (2.17 deg/frame mesures = vibration, pas geste).
+ */
+export const smoothWindow = (u: number, a: number, b: number, ramp: number): number => {
+  const ss = (t: number) => {
+    const c = Math.min(1, Math.max(0, t));
+    return c * c * (3 - 2 * c);
+  };
+  return ss((u - a) / ramp) * ss((b - u) / ramp);
+};
