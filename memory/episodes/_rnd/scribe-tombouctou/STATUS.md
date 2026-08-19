@@ -47,7 +47,16 @@ Montage final https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/rnd/scribe
 
 ## PROCHAINE SESSION — décidé avec Aziz (2026-08-19)
 
-### ⭐ Priorité 1 — SORTIR DU TEST : un vrai plan dans un épisode réel
+### ✅ Priorité 1 — FAITE (2026-08-19) : 1er plan dans un épisode RÉEL
+**Hook d'ouverture du Gazoduc — l'ouvrier de nuit d'Adrar, 10,2 s action+caméra.**
+Livrable + mesures + décision narrative : `out/_r-and-d/gazoduc-hook-ouvrier/MANIFESTE.md`.
+Généré : bords 4,31 (fixe) → 35,90 (push) · gradient 10,7-11,8 sur 10 s · 52/52 frames distinctes.
+⭐ **Le morphing des jambes est RÉSOLU** (décomposition en 3 temps + blocs de jambes distincts) et se
+mesure : pic net dans la zone des jambes à la poussée = vrai lever, courbe lisse = morphing.
+Générateur : `scripts/tools/mkprevis-chantier.py` (2e cas d'usage réel de la méthode).
+⏭️ Reste à faire : monter ce clip devant l'Acte 1 et le faire valider par Aziz.
+
+### (contexte d'origine de cette priorité)
 Prendre un moment d'un épisode existant (Gazoduc ou autre) **où la couche humaine manque**, et produire
 8-10 s pour de bon. C'est ce qui dira si la méthode survit à une contrainte narrative réelle.
 **Usage visé (décision Aziz)** : insertion **chirurgicale** — hook d'ouverture, relance à mi-parcours,

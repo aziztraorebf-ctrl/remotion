@@ -129,3 +129,45 @@ sur ses appuis. Subtil mais visible, et c'est typiquement ce qui « crie l'IA »
 ne décrit aucune étape intermédiaire de jambes.
 → Piste : décomposer le lever dans le previs en 3 temps explicites (décroiser → un genou au sol →
 pousser/se redresser), avec des blocs de jambes distincts, comme on a décomposé la caméra.
+
+## ⭐⭐⭐ LE MORPHING DES JAMBES EST RÉSOLU — et il se MESURE (validé 2026-08-19, hook Gazoduc)
+
+**Le fix** : décomposer le lever dans le previs en **3 temps explicites avec des BLOCS DE JAMBES
+DISTINCTS** (cuisse + tibia séparés, deux appuis écartés latéralement) : genoux fléchis → la jambe
+avant pousse et se tend → la jambe arrière suit. Exactement la même logique que la décomposition de
+la caméra. ⛔ Ne PAS se contenter du Δhauteur du bloc-corps — c'était la cause du fondu sur le scribe.
+
+**⭐ Comment JUGER un lever sans se fier à l'œil** — mesurer la variation de la ZONE DES JAMBES frame
+par frame pendant le geste :
+| courbe observée | verdict |
+|---|---|
+| montée progressive → **PIC net** (la poussée sur les appuis) → décrue | ✅ vrai lever |
+| courbe **LISSE et continue**, sans pic | ⛔ morphing/fondu |
+Mesuré sur le hook Gazoduc : montée 5,5→6,5 s, **pic à 6,7-6,9 s**, décrue jusqu'à 8,5 s. ✅
+
+## ⚠️ `AUDIO: no speech` + `MOUTH LOCK` n'empêchent PAS la génération audio (2026-08-19)
+Mesuré -31,0 dB malgré les deux blocs (seuil de la fiche : -45 dB). **MAIS la bouche ne s'animait pas**
+(variation de la zone du visage 1,25 de moyenne, max 3,91) — donc le contrôle `volumedetect` seul
+**sur-diagnostique** : un son généré n'implique pas une bouche animée.
+→ Contrôler les DEUX : `volumedetect` pour le son, ET la variation de la zone du visage pour l'image.
+C'est l'image qui est bloquante (l'audio est remplacé par la narration au montage).
+
+## ⛔ Le graphe archivé `scribe-tombouctou/graphes/graph-previs.json` contient l'ESSAI RATÉ
+Il a un node 141 `CreateVideo` branché sur `ref_videos` — c'est la version qui a produit l'erreur 400
+`return_type_mismatch`, PAS celle qui marche. Le recopier tel quel refait l'erreur.
+✅ **Graphe correct de référence : `out/_r-and-d/gazoduc-hook-ouvrier/graph-hook.json`** (LoadImage
+branché directement sur `ref_videos.ref_video_0`, node 141 supprimé). Validé `dry_run` + généré.
+
+## ⭐ 2e cas d'usage réel : `scripts/tools/mkprevis-chantier.py`
+Le décor de `mkprevis.py` est celui du scribe (défaut surchargeable, son en-tête le dit). Le hook
+Gazoduc est le 2e cas : **même mécanique, décor et geste différents** — extérieur nocturne, tranchée,
+geste de creuser puis se redresser. On ne généralise toujours PAS en moteur unique (règle : documenter
+la méthode avant d'abstraire ; deux cas concrets ne font pas encore une abstraction éprouvée).
+
+**⭐ 2 corrections de previs à faire d'office sur un DÉCOR EXTÉRIEUR** (chacune aurait coûté un essai) :
+1. **Un décor en bandes horizontales pures rend le push-in invisible autour du sujet** (mesuré 7,29 sur
+   la bande médiane contre 45 sur le sol). → semer des volumes de TAILLES et PROFONDEURS différentes
+   (jalons, tas, objets au sol) : 7,29 → 13,28.
+2. **Sujet qui grandit + zoom = tête coupée**. Un personnage qui se redresse grandit DÉJÀ ; le zoom s'y
+   ajoute. → dimensionner par le CALCUL (viser ~45 px de marge au-dessus du crâne à la frame finale),
+   jamais à l'estime, et faire suivre le centre de visée.
