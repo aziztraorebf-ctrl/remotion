@@ -1,4 +1,14 @@
 # Gemini — Couche critique (modèles, SDK, gotchas universels)
+
+> ⛔⛔ **MISE A JOUR 2026-08-20 — la variante `preview` est MORTE.**
+> Google a annonce son shutdown au **2026-06-25** (date deja depassee ; elle repond encore, en sursis).
+> Le remplacant est **`gemini-3.1-flash-image`** : meme modele en GA, **meme prix** (0,067 $/image en 1K), aucune
+> difference de qualite (verifie par appel reel + comparatif a l'aveugle valide par Aziz le 2026-08-19).
+> ⛔ **Ne plus jamais ecrire un identifiant de modele en dur** : importer depuis
+> `scripts/tools/gemini_models.py` (`IMAGE_MODEL`). L'identifiant etait duplique **188 fois dans
+> 121 fichiers** — c'est ce qui rendait cette mise a jour couteuse.
+> Pistes d'economie NON adoptees (a tester) : **mode Batch -50 %** (meme modele, asynchrone) et
+> **`gemini-3.1-flash-image-lite` -50 %** (⚠️ 1K max + exige `responseModalities:["IMAGE"]`, sinon zero image SANS erreur).
 > Lire EN PREMIER. Pipelines spécialisés (thumbnails, carousel, portraits, Nano Banana, walk cycle) : `memory/tools/gemini-pipelines.md`.
 > Mise à jour : 2026-06-25
 
@@ -10,7 +20,7 @@
 
 | Usage | Modele EXACT |
 |-------|-------------|
-| Toute generation d'image (mockup, storyboard, character sheet, carte, asset) | `gemini-3.1-flash-image-preview` |
+| Toute generation d'image (mockup, storyboard, character sheet, carte, asset) | `gemini-3.1-flash-image` |
 | Analyse vision uniquement — breakdown JSON, diff visuel, hex codes (JAMAIS d'image en output) | `gemini-3.1-pro-preview` |
 
 **Nouveau modèle disponible (2026-05-19) :**
@@ -23,7 +33,7 @@ Toute version Gemini antérieure à 3.1 pour image/vision ; les variantes `pro-i
 
 **Cette regle a ete violee 4+ fois. Elle est definitive.**
 
-⛔ **Comfy Cloud MCP `partner_generate` NE PROPOSE PAS `gemini-3.1-flash-image-preview`** (confirme
+⛔ **Comfy Cloud MCP `partner_generate` NE PROPOSE PAS `gemini-3.1-flash-image`** (confirme
 2026-08-13) — ce serveur n'expose que des slugs `vertexai/nano-banana-2/pro/lite` (nommage produit
 different, meme famille Gemini probable mais non confirme comme identique). Pour respecter le modele
 verrouille ci-dessus, passer par l'API Gemini officielle directe (`google.genai`, voir SDK plus bas),
@@ -49,7 +59,7 @@ client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
 **Config generation d'image avec nouveau SDK :**
 ```python
 response = client.models.generate_content(
-    model="gemini-3.1-flash-image-preview",
+    model="gemini-3.1-flash-image",
     contents=parts,
     config=types.GenerateContentConfig(
         response_modalities=['IMAGE', 'TEXT']
@@ -185,7 +195,7 @@ public/assets/geoafrique/characters/[personnage]-[description]-REF.png
 
 ## Regles modele (rappel)
 
-- **Toute generation / edition d'image** : `gemini-3.1-flash-image-preview`
+- **Toute generation / edition d'image** : `gemini-3.1-flash-image`
 - **Analyse / breakdown JSON seulement** : `gemini-3.1-pro-preview` — jamais en output image
 - Config : `response_modalities: ['IMAGE', 'TEXT']` via `types.GenerateContentConfig`
 - Instruction efficace : decrire EXACTEMENT ce qu'on change + lister ce qu'il ne faut PAS toucher

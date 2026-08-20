@@ -20,6 +20,9 @@ from pathlib import Path
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from gemini_models import IMAGE_MODEL
 
 ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(ROOT / ".env")
@@ -29,7 +32,7 @@ if not API_KEY:
     print("ERROR: GEMINI_API_KEY missing")
     sys.exit(1)
 
-MODEL = "gemini-3.1-flash-image-preview"
+MODEL = IMAGE_MODEL
 
 
 BRIEFS = {

@@ -9,12 +9,16 @@ REGLE CRITIQUE (template) : ethnicité OUEST-AFRICAINE / SAHELIENNE explicite
 (peau noire, traits africains marqués) — corrige l'oubli du 1er jet.
 
 Style cohérent jetons-combattants Acte 1 : encre hachuré sepia, fond cream #d4c29d
--> removeBackground Recraft. Modèle gemini-3.1-flash-image-preview.
+-> removeBackground Recraft. Modèle gemini-3.1-flash-image.
 Sortie : public/_shared/sprites/warmap/refugie-{femme1,femme2,homme,enfant,famille}.png
 """
 import os, sys, base64, requests
 from pathlib import Path
 from dotenv import load_dotenv
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parents[1] / "tools"))
+from gemini_models import IMAGE_MODEL
 
 ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(ROOT / ".env")
@@ -91,7 +95,7 @@ ASSETS = [
 ]
 
 def gen_gemini(prompt: str) -> bytes:
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image-preview:generateContent?key={GEMINI_KEY}"
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{IMAGE_MODEL}:generateContent?key={GEMINI_KEY}"
     body = {
         "contents": [{"parts": [{"text": prompt}]}],
         "generationConfig": {"responseModalities": ["image", "text"], "temperature": 0.35},

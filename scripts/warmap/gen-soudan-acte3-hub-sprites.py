@@ -8,7 +8,7 @@ encre hachuree, palette creme/kaki/sepia/ocre, contour encre marron fonce franc,
 transparent (checker) une fois detoure. Passees en image-refs a Gemini pour ancrer la
 palette/texture exactement (regle "reference image > description texte seule").
 
-Modele : gemini-3.1-flash-image-preview (verrouille CLAUDE.md).
+Modele : gemini-3.1-flash-image (verrouille CLAUDE.md).
 Pipeline : Gemini (fond creme uniforme #d4c29d) -> Recraft removeBackground -> PNG transparent.
 Sortie : public/_shared/sprites/warmap/{dubai-hub-td,suakin-dock-td}.png
 
@@ -17,6 +17,10 @@ Prompts valides par Aziz avant lancement (session Acte 3 visual-producer).
 import os, sys, base64, requests
 from pathlib import Path
 from dotenv import load_dotenv
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parents[1] / "tools"))
+from gemini_models import IMAGE_MODEL
 
 ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(ROOT / ".env")
@@ -104,7 +108,7 @@ def load_refs():
     return parts
 
 def gen_gemini(prompt: str, ref_parts: list) -> bytes:
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image-preview:generateContent?key={GEMINI_KEY}"
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{IMAGE_MODEL}:generateContent?key={GEMINI_KEY}"
     parts = list(ref_parts) + [{"text": prompt}]
     body = {
         "contents": [{"parts": parts}],

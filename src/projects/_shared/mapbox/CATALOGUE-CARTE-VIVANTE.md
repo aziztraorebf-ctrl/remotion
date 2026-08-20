@@ -158,7 +158,7 @@ Un bon combo = une **progression narrative** (pas une superposition). Le secret 
 - **`flagCanvas.ts`** — 45 drapeaux DESSINÉS en canvas pur + `countryFilter(iso, boundaryIsos)` (filtre Mapbox par ISO, JAMAIS par `name`). ⚠️ Les drapeaux dessinés sont approximatifs → préférer `useClipFlags` (vraies images) pour tout drapeau visible. `countryFilter` reste la référence pour filtrer un fill.
 - **`resourceTextures.ts`** ⭐ — 6 textures bichromie navy/gold : `drawOilTexture`, `drawGoldTexture`, `drawPhosphateTexture`, `drawAgricultureTexture`, `drawLithiumTexture`, `drawGasTexture`. Helper `drawResourceTexture(type, size)` + `resourceImageId(type)`.
 - **Drapeaux HD locaux** : `public/_shared/flags/*.png` (ma, cn, de, es, fr...). Source : Wikimedia Commons SVG officiel → `rsvg-convert -w 1024`. AJOUTER un pays = télécharger son SVG Wikimedia, convertir, déposer ici. JAMAIS `flagcdn.com` en render (fetch externe KO headless).
-- **`scripts/tools/gemini-gen-image.py`** — génération image text-to-image (`gemini-3.1-flash-image-preview`). Pour assets créatifs (mine, usine bichromie pour ImageProjectionFill), PAS pour les drapeaux (prendre Wikimedia).
+- **`scripts/tools/gemini-gen-image.py`** — génération image text-to-image (`gemini-3.1-flash-image`). Pour assets créatifs (mine, usine bichromie pour ImageProjectionFill), PAS pour les drapeaux (prendre Wikimedia).
 
 ## 🛣️ ROUTE / FLUX SÉQUENTIEL (comble le backlog "Flux inter-pays")
 

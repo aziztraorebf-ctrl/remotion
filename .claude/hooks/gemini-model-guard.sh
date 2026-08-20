@@ -43,6 +43,12 @@ if [[ "$FILE_PATH" == *"snapshot"* ]]; then
   exit 0
 fi
 
+# Le hook contient lui-meme la liste des modeles interdits :
+# ne jamais se bloquer soi-meme (sinon toute mise a jour devient impossible).
+if [[ "$FILE_PATH" == *"gemini-model-guard.sh"* ]]; then
+  exit 0
+fi
+
 # Modeles perimes a bloquer
 PERIMES=(
   "gemini-2\.5-pro"
@@ -51,6 +57,7 @@ PERIMES=(
   "gemini-2\.0-pro"
   "gemini-1\.5"
   "gemini-3-pro-image-preview"
+  "gemini-3\\.1-flash-image-preview"
   "nano-banana-pro"
   "imagen-"
   "claude-3-5"
@@ -82,7 +89,7 @@ if [ ${#VIOLATIONS[@]} -gt 0 ]; then
   cat >&2 <<EOF
 {
   "decision": "block",
-  "reason": "MODELE GEMINI PERIME DETECTE dans $FILE_PATH : ${VIOLATIONS[*]}\n\nLire le bloc \"MODELES API VERROUILLES\" en haut de CLAUDE.md projet.\n\nBons modeles Gemini (2026-05) :\n  - Generation image : gemini-3.1-flash-image-preview\n  - Vision / breakdown JSON : gemini-3.1-pro-preview\n  - Fallback review : gemini-2.5-flash avec thinking_budget=0 UNIQUEMENT\n\nINTERDIT : gemini-2.5-pro, gemini-2.0-*, gemini-3-pro-image-preview, imagen-*, nano-banana-*\n\nSource : memory/tools/gemini.md"
+  "reason": "MODELE GEMINI PERIME DETECTE dans $FILE_PATH : ${VIOLATIONS[*]}\n\nLire le bloc \"MODELES API VERROUILLES\" en haut de CLAUDE.md projet.\n\nBons modeles Gemini (2026-08) :\n  - Generation/edition image : gemini-3.1-flash-image (GA, SANS le suffixe preview)\n  - Vision / breakdown JSON : gemini-3.1-pro-preview\n  - Fallback review : gemini-2.5-flash avec thinking_budget=0 UNIQUEMENT\n\nINTERDIT : gemini-2.5-pro, gemini-2.0-*, tout modele image en preview (shutdown depasse le 2026-06-25), imagen-*, nano-banana-*\n\nSource : memory/tools/gemini.md"
 }
 EOF
   exit 2

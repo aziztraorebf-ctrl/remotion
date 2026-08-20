@@ -1,7 +1,7 @@
 """
 Gemini 3.1 Flash Image — generation AVEC image(s) de reference jointe(s).
 Permet de passer une IMAGE-CIBLE (ex wuar68 = gravure visee) + un prompt, pour que le modele
-calibre le rendu sur la ref. Modele verrouille (CLAUDE.md) : gemini-3.1-flash-image-preview.
+calibre le rendu sur la ref. Modele verrouille (CLAUDE.md) : gemini-3.1-flash-image.
 Usage:
     python3 scripts/tools/gemini-gen-image-ref.py --prompt "..." --refs a.png,b.png --output path.png
 """
@@ -13,6 +13,10 @@ from pathlib import Path
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parent))
+from gemini_models import IMAGE_MODEL
 
 ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(ROOT / ".env")
@@ -22,7 +26,7 @@ if not API_KEY:
     print("ERROR: GEMINI_API_KEY missing")
     sys.exit(1)
 
-MODEL = "gemini-3.1-flash-image-preview"
+MODEL = IMAGE_MODEL
 
 
 def main():

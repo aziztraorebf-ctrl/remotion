@@ -15,7 +15,7 @@ from google.genai import types
 load_dotenv(Path(__file__).parent.parent / ".env")
 
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
-MODEL = "models/gemini-3.1-flash-image-preview"
+MODEL = "models/gemini-3.1-flash-image"
 
 STYLE_ANCHOR = Path(__file__).parent.parent / "public" / "assets" / "library" / "geoafrique" / "thiaroye-1944" / "frames" / "frame-03.jpg"
 

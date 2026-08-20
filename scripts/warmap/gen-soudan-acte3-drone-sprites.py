@@ -16,13 +16,17 @@ Regle "meme objet qui change de camp" : les 2 prompts sont IDENTIQUES en forme/t
 teinte d'accent change (rouge brique RSF #B14B3C vs bleu armee SAF #3E6E9E) -- coherence visuelle
 piece maitresse du registre War-Map Soudan.
 
-Modele : gemini-3.1-flash-image-preview (verrouille CLAUDE.md).
+Modele : gemini-3.1-flash-image (verrouille CLAUDE.md).
 Pipeline : Gemini (fond creme uniforme #d4c29d) -> Recraft removeBackground -> PNG transparent.
 Sortie : public/_shared/sprites/warmap/{drone-rsf-td,drone-saf-td}.png
 """
 import os, sys, base64, socket, requests
 from pathlib import Path
 from dotenv import load_dotenv
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parents[1] / "tools"))
+from gemini_models import IMAGE_MODEL
 
 # GOTCHA reseau (memory/tools/gemini.md) : la machine resout generativelanguage.googleapis.com
 # en IPv6 sans route sortante reelle -> requests/httpx hang indefiniment sans erreur (curl a un
@@ -124,7 +128,7 @@ def load_refs():
     return parts
 
 def gen_gemini(prompt: str, ref_parts: list) -> bytes:
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image-preview:generateContent?key={GEMINI_KEY}"
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{IMAGE_MODEL}:generateContent?key={GEMINI_KEY}"
     parts = list(ref_parts) + [{"text": prompt}]
     body = {
         "contents": [{"parts": parts}],

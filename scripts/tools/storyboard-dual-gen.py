@@ -1,5 +1,5 @@
 """Genere des STORYBOARDS (planches de reference visuelle) sur DEUX generateurs en parallele :
-  - Gemini 3.1 Flash Image (gemini-3.1-flash-image-preview) — RESPECTE le fond impose meme en milieu de prompt.
+  - Gemini 3.1 Flash Image (gemini-3.1-flash-image) — RESPECTE le fond impose meme en milieu de prompt.
   - GPT-image-1 via fal.ai (fal-ai/gpt-image-1) — meilleur relief, mais retombe sur son fond sombre SAUF si
     le fond est en 1ere phrase + formule negatif (« LIGHT … NOT dark/navy »). Voir _PALETTE-BACKGROUNDS.md.
 
@@ -17,6 +17,10 @@ Le bloc __main__ historique (storyboards Senegal M-Pesa) est conserve sous --dem
 import os, sys, base64, time, requests
 from pathlib import Path
 from dotenv import load_dotenv
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parent))
+from gemini_models import IMAGE_MODEL
 
 ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(ROOT / ".env")
@@ -24,7 +28,7 @@ GEMINI_KEY = os.getenv("GEMINI_API_KEY")
 FAL_KEY = os.getenv("FAL_KEY")
 OUT = Path("/tmp/storyboard-gen"); OUT.mkdir(exist_ok=True)
 
-GEMINI_MODEL = "gemini-3.1-flash-image-preview"
+GEMINI_MODEL = IMAGE_MODEL
 GEMINI_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_KEY}"
 FAL_URL = "https://fal.run/fal-ai/gpt-image-1/text-to-image"
 FAL_EDIT_URL = "https://fal.run/fal-ai/gpt-image-1/edit-image"  # accepte des refs (image_urls)

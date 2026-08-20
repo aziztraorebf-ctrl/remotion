@@ -3,12 +3,16 @@ Génère le jeton "soldats français" pour B1 V3 (War-Map Sahel Acte 2).
 Style cohérent jetons-combattants Acte 1 (fighter-jnim/eigs) : encre hachuré, fond cream → removeBg.
 Doit lire "armée française moderne" et se distinguer de JNIM (chèche clair) / EIGS (cagoule sombre).
 
-Modèle : gemini-3.1-flash-image-preview (verrouillé CLAUDE.md).
+Modèle : gemini-3.1-flash-image (verrouillé CLAUDE.md).
 Sortie : public/_shared/sprites/warmap/fighter-france.png
 """
 import os, sys, base64, requests
 from pathlib import Path
 from dotenv import load_dotenv
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parents[1] / "tools"))
+from gemini_models import IMAGE_MODEL
 
 ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(ROOT / ".env")
@@ -42,7 +46,7 @@ FRANCE_PROMPT = (
 )
 
 def gen_gemini(prompt: str) -> bytes:
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image-preview:generateContent?key={GEMINI_KEY}"
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{IMAGE_MODEL}:generateContent?key={GEMINI_KEY}"
     body = {"contents": [{"parts": [{"text": prompt}]}],
             "generationConfig": {"responseModalities": ["image", "text"], "temperature": 0.3}}
     r = requests.post(url, json=body, timeout=120)

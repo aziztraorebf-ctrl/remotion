@@ -16,6 +16,10 @@ from pathlib import Path
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parent))
+from gemini_models import IMAGE_MODEL
 
 ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(ROOT / ".env")
@@ -25,7 +29,7 @@ if not API_KEY:
     print("ERROR: GEMINI_API_KEY missing")
     sys.exit(1)
 
-MODEL = "gemini-3.1-flash-image-preview"
+MODEL = IMAGE_MODEL
 
 COMMON_RULES = """
 This source image is a landscape 16:9 YouTube thumbnail (1920x1080), already validated and published.
@@ -92,7 +96,7 @@ def recompose(input_path: Path, output_path: Path, brief_key: str) -> int:
     image_bytes = input_path.read_bytes()
     print(f"Input: {input_path.name} ({len(image_bytes) // 1024} KB)")
     print(f"Brief: {brief_key}")
-    print("[COST PREVIEW] ~$0.04 (gemini-3.1-flash-image-preview, 1 image i2i call)")
+    print("[COST PREVIEW] ~$0.04 (gemini-3.1-flash-image, 1 image i2i call)")
     print()
 
     client = genai.Client(api_key=API_KEY)

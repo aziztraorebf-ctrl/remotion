@@ -13,7 +13,7 @@ Usage :
     --prompt-file /tmp/maroc-batteries-beat3-storyboard-prompt.txt
 
 Le prompt (--prompt-file) DOIT etre redige par Claude depuis le scan (templates choisis
-+ combinaisons) et VALIDE par Aziz AVANT l'appel. Modele : gemini-3.1-flash-image-preview.
++ combinaisons) et VALIDE par Aziz AVANT l'appel. Modele : gemini-3.1-flash-image.
 Sortie : public/souverain/<episode>/beat<N>/storyboard-gemini.png (chemin attendu par preflight).
 """
 
@@ -27,11 +27,15 @@ from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 from PIL import Image
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parent))
+from gemini_models import IMAGE_MODEL
 
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 load_dotenv(PROJECT_ROOT / ".env")
 
-MODEL = "gemini-3.1-flash-image-preview"
+MODEL = IMAGE_MODEL
 
 # Ratio cible : 16:9 par defaut (Souverain mid-form / long, render HORIZONTAL).
 # ⛔ Generer au ratio du RENDER (pas vertical par defaut) : sinon panneaux portrait ->

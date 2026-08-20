@@ -1,7 +1,7 @@
 """
 Génère les sprites véhicules top-down War-Map Sahel Acte 1 (JNIM + EIGS).
 Recette validée 2026-06-05 (feedback_sprites-topdown-gemini-vs-recraft.md).
-Modèle : gemini-3.1-flash-image-preview (verrouillé CLAUDE.md).
+Modèle : gemini-3.1-flash-image (verrouillé CLAUDE.md).
 Fond cream #d4c29d imposé -> removeBackground Recraft pour PNG transparent.
 
 2 sprites (technical = pickup armé, l'arme caractéristique des groupes sahéliens) :
@@ -12,6 +12,10 @@ Sortie : public/_shared/sprites/warmap/
 import os, sys, base64, requests
 from pathlib import Path
 from dotenv import load_dotenv
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parents[1] / "tools"))
+from gemini_models import IMAGE_MODEL
 
 ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(ROOT / ".env")
@@ -74,7 +78,7 @@ SPRITES = [
 ]
 
 def gen_gemini(prompt: str) -> bytes:
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image-preview:generateContent?key={GEMINI_KEY}"
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{IMAGE_MODEL}:generateContent?key={GEMINI_KEY}"
     body = {
         "contents": [{"parts": [{"text": prompt}]}],
         "generationConfig": {"responseModalities": ["image", "text"], "temperature": 0.25},

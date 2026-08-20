@@ -13,7 +13,7 @@ payload={'contents':[{'parts':[{'text':sys.argv[1]},{'inline_data':{'mime_type':
 json.dump(payload,open(sys.argv[4],'w'))
 " "$PROMPT" "$MIME" <(echo "$B64") "$TMP/payload.json"
 curl -4 -s -X POST \
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image-preview:generateContent?key=$KEY" \
+  "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image:generateContent?key=$KEY" \
   -H "Content-Type: application/json" --data-binary "@$TMP/payload.json" 2>/dev/null > "$TMP/resp.json"
 RESP="$TMP/resp.json" python3 -c "
 import json,base64,sys,os
