@@ -263,3 +263,8 @@ Nos procédés SONT des skills exécutables. Quand un procédé démarre, **LANC
 | Avant de dire « c'est fait/terminé » | `superpowers:verification-before-completion` |
 
 **Anti-friction** : NE PAS lancer un skill pour du trivial (1 slide, fix 1 ligne, question simple). Le skill se lance quand la tâche a la FORME du procédé, pas par réflexe.
+
+## Voie B2B / freelance (distincte de la voie YouTube)
+
+- **Un client demande une video : quel pilier ?** -> `memory/doctrines/PILIERS-B2B.md` (carte d'aiguillage : carte Mapbox/D3 · scene SVG · **UI produit** · video generee).
+- **Simuler un ECRAN / dashboard / SaaS** -> `memory/fiches/FICHE-UI-PRODUIT.md` (pipeline capture Puppeteer + socle shotcraft, injecte automatiquement par hook).

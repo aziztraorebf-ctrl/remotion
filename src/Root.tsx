@@ -519,6 +519,11 @@ import { FlowdeskPersonne2B, FLOWDESK_PERSONNE_FRAMES, FLOWDESK_PERSONNE_FPS } f
 import { DashboardLowRiskStill, DashboardHighRiskStill, DashboardLowRiskLaptopStill, DashboardHighRiskLaptopStill, NS_DASHBOARD_FRAMES, NS_DASHBOARD_FPS } from "./projects/_client-sim/noteshield/ui/DashboardScreenStill";
 import { CursorTestComp, NS_CURSOR_TEST_FRAMES, NS_CURSOR_TEST_FPS } from "./projects/_client-sim/noteshield/ui/CursorTestComp";
 import { NorthShieldV3, NS_V3_FRAMES, NS_V3_FPS } from "./projects/_client-sim/noteshield/NorthShieldV3";
+import { NorthShieldRowEmbed, NS_ROWEMBED_FRAMES, NS_ROWEMBED_FPS } from "./projects/_client-sim/noteshield/live-page/NorthShieldRowEmbed";
+import { NorthShieldCursorFlyover, NS_FLYOVER_FRAMES, NS_FLYOVER_FPS } from "./projects/_client-sim/noteshield/live-page/NorthShieldCursorFlyover";
+import { NorthShieldPromo, NS_PROMO_FRAMES, NS_PROMO_FPS } from "./projects/_client-sim/noteshield/live-page/NorthShieldPromo";
+import { NorthShieldPromoV4, NS_V4_FRAMES, NS_V4_FPS } from "./projects/_client-sim/noteshield/live-page/NorthShieldPromoV4";
+import { NorthShieldPromoLight, NS_LIGHT_FRAMES, NS_LIGHT_FPS } from "./projects/_client-sim/noteshield/live-page-light/NorthShieldPromoLight";
 import { P1Pivot } from "./projects/_client-sim/mochit/P1Pivot";
 import { P2Workflow } from "./projects/_client-sim/mochit/P2Workflow";
 import { P3Cta } from "./projects/_client-sim/mochit/P3Cta";
@@ -4823,6 +4828,46 @@ export const RemotionRoot: React.FC = () => {
 
       {/* TEST R&D (2026-08-18) — scene SVG de Fable ANIMEE : le decor vit (parallaxe 3 plans),
           les 3 personnages sont rebranches sur le socle stick-figure. Test de MOTEUR. */}
+      <Composition
+        id="NorthShieldRowEmbed"
+        component={NorthShieldRowEmbed}
+        durationInFrames={NS_ROWEMBED_FRAMES}
+        fps={NS_ROWEMBED_FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="NorthShieldCursorFlyover"
+        component={NorthShieldCursorFlyover}
+        durationInFrames={NS_FLYOVER_FRAMES}
+        fps={NS_FLYOVER_FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="NorthShieldPromo"
+        component={NorthShieldPromo}
+        durationInFrames={NS_PROMO_FRAMES}
+        fps={NS_PROMO_FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="NorthShieldPromoV4"
+        component={NorthShieldPromoV4}
+        durationInFrames={NS_V4_FRAMES}
+        fps={NS_V4_FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="NorthShieldPromoLight"
+        component={NorthShieldPromoLight}
+        durationInFrames={NS_LIGHT_FRAMES}
+        fps={NS_LIGHT_FPS}
+        width={1920}
+        height={1080}
+      />
       <Composition id="RND-Fable-Plage" component={PlageFableAnimee16x9} durationInFrames={PLAGE_FABLE_FRAMES} fps={30} width={1920} height={1080} />
 
     </>

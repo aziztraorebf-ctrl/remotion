@@ -76,6 +76,11 @@ if [ -n "$BASH_CMD" ]; then
   if printf '%s' "$BASH_CMD" | grep -qE 'jury-titres|jury-thumbnail|gemini-thumbnail-(create|edit)|gemini-cover-vertical'; then
     add_fiche "FICHE-PACKAGING.md" "FICHE PACKAGING" "bash-packaging"
   fi
+  # UI PRODUIT : capture d'une page servie (pilier B2B n3). Le pipeline commence par
+  # servir la page puis la capturer -- c'est LA qu'il faut savoir que shotcraft existe.
+  if printf '%s' "$BASH_CMD" | grep -qE 'capture-northshield|capture-template|puppeteer|http\.server 88|live-layout\.json'; then
+    add_fiche "FICHE-UI-PRODUIT.md" "FICHE UI PRODUIT" "bash-ui-produit"
+  fi
   [ -z "$PARTS" ] && exit 0
   jq -n --arg ctx "$PARTS" '{hookSpecificOutput:{hookEventName:"PreToolUse",additionalContext:$ctx}}'
   exit 0
@@ -94,6 +99,13 @@ if printf '%s' "$FILE_PATH" | grep -qiE 'PROMPT-.*\.(txt|md)$|breakdown.*\.(json
 fi
 # Miniature : source composable (.svg autant que .tsx) sous thumbnails-library/.
 # ⚠️ DOIT etre AVANT le filtre .tsx : un .svg y serait rejete (bug reel, corrige 2026-08-17).
+# UI PRODUIT : page servable, socle shotcraft importe, ou composition de scene d'ecran.
+# ⚠️ AVANT le filtre .tsx : index.html d'une live-page y serait rejete.
+if printf '%s' "$FILE_PATH" | grep -qE 'live-page(-light)?/|shotcraft-lib/|_client-sim/.*(Promo|Dashboard|Screen|Mockup)'; then
+  add_fiche "FICHE-UI-PRODUIT.md" "FICHE UI PRODUIT" "$FILE_PATH"
+  [ -n "$PARTS" ] && jq -n --arg ctx "$PARTS" '{hookSpecificOutput:{hookEventName:"PreToolUse",additionalContext:$ctx}}'
+  exit 0
+fi
 if printf '%s' "$FILE_PATH" | grep -qE 'thumbnails-library/.*\.(svg|tsx)$'; then
   add_fiche "FICHE-PACKAGING.md" "FICHE PACKAGING" "$FILE_PATH"
   [ -n "$PARTS" ] && jq -n --arg ctx "$PARTS" '{hookSpecificOutput:{hookEventName:"PreToolUse",additionalContext:$ctx}}'

@@ -21,6 +21,7 @@ Cause d'échec n°1 mesurée par audit (2026-08-17) : **« brique existante non 
 | `FICHE-STORYBOARD.md` | on écrit un brief/breakdown, on lance un storyboard, **ou on reprend un STORYBOARD/PLAN hérité** | fichier `PROMPT-*`, `breakdown*` (**casse indifférente**, `-i` ajouté 2026-08-18) ou **`STORYBOARD-*`/`PLAN-*.md\|.txt`**, OU commande `storyboard-dual-gen`/`openrouter-img2img`/`openrouter-vision-breakdown`/`da-brief.py`/`da-compare.py` |
 | `FICHE-PACKAGING.md` | on prépare le **titre / la miniature / la description** | commande `jury-titres`/`jury-thumbnail`/`gemini-thumbnail-(create\|edit)`/`gemini-cover-vertical`, OU fichier `thumbnails-library/*.{svg,tsx}` |
 | `FICHE-ASSEMBLAGE.md` | on rend ou on concatène | commande `ffmpeg`/`render-mapbox.sh`/`remotion render`/`-FINAL.mp4`/`upload-to-blob`/`concat=` |
+| `FICHE-UI-PRODUIT.md` | on simule un ECRAN / dashboard / app (pilier B2B n3) | chemin `live-page(-light)/`, `shotcraft-lib/`, `_client-sim/*(Promo|Dashboard|Screen|Mockup)`, OU commande `capture-northshield`/`capture-template`/`puppeteer`/`http.server 88`/`live-layout.json` |
 | `FICHE-AUDIO.md` | on génère/aligne de l'audio, ou on cale un timing | commande `generate-narration`/`generate-sfx`/`forced-align`/`splice-segment`/`elevenlabs`/`minimax-music`, OU fichier `timing.ts`/`whisper-words*.ts`, OU contenu `<Audio`/`staticFile(*.mp3`/`sfx/`/`startFrom={` |
 
 Le hook : `.claude/hooks/fiche-inject.sh`, branché dans `settings.json` sur **DEUX matchers : `Bash` ET
