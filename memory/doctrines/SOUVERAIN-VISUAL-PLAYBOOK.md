@@ -109,6 +109,29 @@ Une fois ma scène faite et mon playbook complet, je me demande — pour chaque 
 - ⛔ **EST-CE LISIBLE ?** Si on ne comprend pas immédiatement ce que c'est (objet trop petit, sprite top-view sur carte pitchée, tracé caché par un popup), c'est du BRUIT → on retire. **TEST DE RETRAIT : si enlever l'élément ne fait PAS perdre en clarté narrative, ne pas l'ajouter.**
 - ⛔ **SÉQUENTIEL, PAS MÉTRONOME.** Plan stable + révélations cadencées sur la voix. Le mouvement sert le récit, il ne le remplace pas. Complémentarité, pas densité.
 
+### ⭐ Capacité NON UTILISÉE — la version CARTE (ajoutée 2026-07-25)
+
+Le pendant Remotion de cette règle est la **3e règle de scan** de [[SOUVERAIN-REMOTION-PLAYBOOK]] (« le scan
+dit ce qu'on A, il doit aussi dire ce qui MANQUE » — 1 capacité signalée par beat, gate outillé dans
+`beat-session.py --phase scan`). Côté CARTE, elle s'applique **sous une forme différente**, et il faut le
+dire explicitement pour ne pas rejouer le V4 A5 :
+
+| | Beat Remotion / SVG | Beat Mapbox |
+|---|---|---|
+| Ce qui manque, en général | une **finition** (matière, glow, reflet, mouvement de caméra) | un **traitement** de ce qui est déjà là (couleur, frontière, séquençage) |
+| Réflexe attendu | proposer 1 capacité en plus | proposer 1 **remplacement** ou 1 **retrait** |
+| Garde-fou | ne pas transformer en catalogue | **TEST DE RETRAIT + plafond de simultanéité d'abord** |
+
+**Formulation carte** : *« qu'est-ce qui manque à cette carte pour être meilleure — sachant qu'ajouter une
+couche est presque toujours la mauvaise réponse ? »* La réponse valable est le plus souvent : une meilleure
+COULEUR, une frontière traitée autrement, un séquençage plus tenu, un geste de caméra qui sert mieux la voix
+(cf. les 4 axes ci-dessus) — **pas un objet de plus**. Une proposition qui ferait franchir le plafond de
+simultanéité doit d'abord dire ce qui SORT.
+
+> ⚠️ Ne pas confondre les deux règles. Sur SVG/Remotion, « ajouter la finition manquante » a produit un gain
+> net (session 2026-07-25 : glow multi-couches, reflet au sol). Sur carte, le même réflexe a produit le rejet
+> V4 A5 (6 couches empilées = illisible). **Même question, réponses opposées selon le moteur.**
+
 ---
 
 ## 3. TEMPLATE STORYBOARD BEAT MAPBOX (le master)

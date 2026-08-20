@@ -115,9 +115,24 @@ CODE                → assembler les briques (combinaison, pas 1 seul template)
 SELF-REVIEW 19/23 → REVIEW GEMINI (1 appel) → CORRECTIONS → UPLOAD
 ```
 
-**Deux règles de scan (les plus oubliées) :**
+**Trois règles de scan (les plus oubliées) :**
 1. **Scan COMPLET** : lire TOUT `COMPOSANTS-INDEX.md` (toutes les sections), pas seulement HERO DATA. Aziz ne mémorise pas 71 composants — Claude le fait.
 2. **Combinaison obligatoire** : un beat premium = plusieurs templates assemblés (corps + insert + overlay + sous-titre). Jamais un seul template tout du long.
+3. ⭐ **Capacité NON UTILISÉE** (ajoutée 2026-07-25) : le scan répond à « qu'est-ce qu'on A ? ». Il doit AUSSI répondre à « qu'est-ce qui MANQUE ? ». Signaler **UNE** capacité non utilisée — celle qui aurait le plus d'effet sur CE beat — au format doctrine : *« Je remarque [X]. Reco : [Y]. On en discute avant que je code ? »*. Une seule, ciblée, **jamais un catalogue**. Si rien ne manque vraiment : l'écrire (« RAS, et pourquoi »). Section obligatoire du fichier de scan (squelette auto-généré par `beat-session.py --phase scan`).
+
+> **Pourquoi cette 3e règle.** Nos scènes sont jugées « ça marche », jamais « ça pourrait être mieux » : le
+> pipeline VALIDE (self-review ≥19/23, Gemini, œil d'Aziz) mais ne cherche pas ce qui est ABSENT. Constat
+> 2026-07-25 : nos scènes SVG étaient propres et **sèches** depuis des mois sans que personne le nomme — il
+> a fallu une vidéo YouTube externe pour révéler que 3 finitions manquaient (glow multi-couches, reflet au
+> sol, pointe de tracé), toutes codables en une session, zéro API. Deux constats « sous-exploité »
+> (Mapbox/D3, bloc SVG) dorment déjà dans [[MOTEURS-VISUELS-ET-SOCLE]] sans avoir jamais rien déclenché :
+> **un constat écrit dans un fichier ne devient pas une action — seul un gate traversé le fait.**
+> Corollaire doctrine : Aziz ne peut pas demander ce qu'il ignore. Le sous-emploi est un défaut de
+> proposition (Claude), jamais un défaut de demande (Aziz).
+>
+> Pistes documentées comme sous-exploitées, à réinterroger : Mapbox/D3 et bloc SVG ([[MOTEURS-VISUELS-ET-SOCLE]]) ·
+> finitions matière (`svg-library/techniques/neon-glow-reflet-trace.md`) · caméra SVG (`<g transform>` dans
+> un `viewBox` FIXE) · couche matière canvas (`AtmosphereCanvas`, modes dust/rain).
 
 ### ⭐ FORMAT DU BREAKDOWN REMOTION (le pont storyboard→timing — pendant du format Mapbox)
 

@@ -193,6 +193,20 @@ long du tracé, flèche, dégradé qui progresse) — c'est ce que fait `ProtoIn
 | Un basculement à un moment pivot | timeline qui se fend | `TimelineFracture`, `ParadigmShiftTimeline`, `ProtoEffect_Fracture` | COMPOSANTS § TIMELINE |
 | Hier vs aujourd'hui (comparatif daté) | fiches then/now sur carte | ⭐ `HeraFidele_V04_FlagsOnMap` (drapeaux + valeurs barrées→neuves) | _proto-16-9 |
 
+### Faire RESSENTIR la MATIÈRE / l'ATMOSPHÈRE d'une scène  ← ⭐ CATÉGORIE NOUVELLE (2026-07-25)
+> Répond au cas « ma scène SVG est propre, lisible… et SÈCHE ». Règle de tranchage :
+> **contour dessinable au trait → SVG · diffus et nombreux → canvas · j'hésite → SVG.**
+> ⛔ Ne pas cocher par réflexe : une couche matière ne se pose que si l'intention la demande.
+
+| Intention | Forme | Réponse(s) | Catalogue |
+|---|---|---|---|
+| L'air a du grain / de la profondeur (lieu ancien, étouffant) | poussière en suspension, parallaxe | `AtmosphereCanvas` `mode="dust"` (sous le `<svg>`) | svg-library/elements/effects |
+| Il pleut / la scène est humide, urbaine, nocturne | traînées inclinées + reflets au sol | `AtmosphereCanvas` `mode="rain"` + `GroundReflection` | idem + technique neon-glow |
+| Un objet/titre doit IRRADIER (néon, incandescent, sacré) | tube lumineux multi-couches | `GlowStroke` (4 passes — le cœur blanc est décisif) | ⭐ technique `neon-glow-reflet-trace.md` |
+| Quelque chose est **en train de s'écrire** (pas « apparaît ») | tracé + pointe lumineuse qui court | `DrawnPath` (`getPointAtLength`) | idem |
+| La scène doit avoir un SOL (pas un fond noir) | reflet miroir flouté masqué | `GroundReflection` (opacity ~0.58, blur ~2 — LISIBLE) | idem |
+| Un objet qui se dissout / s'évapore dramatiquement | particules radiales ("Thanos") | `ParticleDissolve` + `ParticleField` | svg-library/elements/effects |
+
 ### Faire RESSENTIR du TEXTE / mettre l'EMPHASE  ← ⭐ CATÉGORIE NOUVELLE (manquait)
 | Intention | Forme | Réponse(s) | Catalogue |
 |---|---|---|---|
@@ -224,6 +238,7 @@ long du tracé, flèche, dégradé qui progresse) — c'est ce que fait `ProtoIn
 | Un personnage qui VIT une scène SVG encre (marche, se penche, ramasse) — PAS sur carte | stick figure d'encre animé par code (frame-driven) | ⭐ `StickRig` + scène-proto `RecolteAuSol` (`_shared/personnage-vivant-svg/`) | PERSONNAGE-VIVANT-INDEX |
 | Dialoguer (2 personnages échangent) | 2 personnages face-à-face + bulle de parole | ⭐ **stick figure de profil** ×2 face-à-face + bulle courte (⛔ la bulle ne doit JAMAIS répéter la voix off — elle porte ce que la voix NE dit pas). GeminiRig écarté en prod | COMPOSANTS-INDEX § CITATION/TEXTE FORT · PERSONNAGE-VIVANT-INDEX |
 | Montrer un écran/interface (données, tableau de bord) qu'un personnage regarde | écran/tableau de données + personnage devant | `DataScreen` + ⭐ **stick figure de profil** devant (GeminiRig écarté en prod) | COMPOSANTS-INDEX § DONNÉES · PERSONNAGE-VIVANT-INDEX |
+| **Un personnage FAIT quelque chose sur une scène narrative complète** (subit, décide, attend, reçoit — pas un geste isolé) | ⭐⭐ **registre stick-figure LE PLUS RICHE** : 9 scènes narratives validées + planches gestes/interactions/identité (7 briques techniques dont l'héritage de pose) | `_shared/stick-figure-svg/StickFigure.tsx` | ⭐⭐ **STICK-FIGURE-INDEX** (distinct de PERSONNAGE-VIVANT-INDEX, plus simple — ne pas confondre les 2 registres) |
 
 ### Faire RESSENTIR du CONCEPTUEL sans quitter la carte  ← ⭐ CATÉGORIE WAR-MAP (manquait)
 > Voir **RÈGLE MAÎTRESSE 2**. Composants dans `src/projects/warmap/_shared/` — chemins exacts + props : `src/projects/warmap/WARMAP-COMPOSANTS-INDEX.md`. ⛔ `semitransp` BANNI (voile < 0.5 qui montre la carte derrière). Plein écran = masquer carte Mapbox ET contours moteur. Combiner l'ARSENAL (jetons + zones + contours + plaques), jamais 1 seul asset. CAUSE avant EFFET (jamais pop magique). Registre grave/solennel = voile plus dense + montée lente + 1 plateau tenu (halo qui respire).

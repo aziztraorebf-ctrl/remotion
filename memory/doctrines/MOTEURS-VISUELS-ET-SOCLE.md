@@ -34,6 +34,7 @@ liste de choix : lire l'intention d'abord, puis venir chercher quel registre sai
 | **QUOI / COMMENT** — objet, processus, trajet, métaphore | **SVG** | Contrôle total frame-driven, simplifie ce qui serait lourd en After Effects |
 | **⭐ QUI** — un acteur humain, un geste, un rapport de force, une charge subie | **`_shared/stick-figure-svg/` (NOS briques)** | ⛔ **Jamais un modèle, jamais Seedance** : le socle stick figure (profil) est validé en production depuis le 2026-07-28 et bat ce qu'un modèle produit. **AVANT de coder, choisir le RÉGIME** : AMBIANT (figurants qui habitent un lieu) vs **DÉMONSTRATIF** (1 perso qui EST l'argument — plus fort, moins cher, à privilégier). Recette : [[SCENE-DEMONSTRATIVE-PERSONNAGE]]. Habillage : [[brique-habillage-stick-figure]] (ne JAMAIS l'improviser). |
 | **⭐ LA MATIÈRE** — ce qu'on ne peut ni dessiner ni cartographier : une texture, un geste physique, un lieu filmé, la matière elle-même | **MiniMax H3** (matière filmée générée) | Le seul moteur qui produit du PHOTOGRAPHIQUE/FILMÉ. Sert quand le sujet doit être *vu*, pas schématisé (gaz qui circule dans une conduite, pelleteuse sur un chantier). ⚠️ Coût réel + non déterministe → jamais pour ce qu'un SVG fait aussi bien. Plafond narratif : un insert qui revient toutes les 20 s cesse de faire rupture. |
+| **LA MATIÈRE DIFFUSE** — pluie, poussière, braises, brume, grain | **Canvas 2D** (couche, pas moteur) | Beaucoup d'éléments diffus SANS contour → § ci-dessous |
 | **LE LIANT** — texte, chiffre-choc, transition, rythme | **Remotion** (socle) | Toujours |
 | **⭐ LE RACCORD** — passer d'un registre à un autre, couper, alterner, rompre l'échelle | **Remotion** (socle) — mais c'est une DÉCISION, pas un réglage | Le montage EST une capacité expressive. Une scène de 30 s n'est pas tenue d'être un seul plan continu : on peut quitter la carte pour un plein écran SVG, revenir, alterner. ⚠️ Trou n°8 du catalogue : aujourd'hui carte→scène SVG se fait au **cut sec** ; le seul vrai raccord inter-registre prouvé est `GlobeToParchemin`. |
   ⭐⭐ **2e RACCORD PROUVÉ (2026-08-18) — et le premier vers de la MATIÈRE FILMÉE** : la RUPTURE
@@ -251,6 +252,39 @@ complexe (narratif, organique, visage, parallaxe, perso riggable). Amplitude pro
 ⛔ Règle non négociable héritée : **jamais de contour de pays dessiné à main levée**, même dans une
 scène par ailleurs simple — géographie réelle = `d3-geo` + Natural Earth (échoué 2× avant pivot).
 ⛔ Et : le modèle dessine le DÉCOR/le statique, **NOUS animons**. Détail : [[SVG-SCENES-GENERATIVES]].
+
+---
+
+> ⬇️ *Section rapatriee du merge master (2026-08-20) — branche `rnd/stick-figures-gestes`.*
+
+## ⭐⭐ Le SVG porte la FORME, le canvas porte la MATIÈRE
+
+> Règle de tranchage (3 mots, au moment du code — n'ouvre aucun catalogue) :
+> **si ça a un contour qu'on pourrait dessiner au trait → SVG. Si ça n'en a pas et qu'il y en a beaucoup
+> → canvas. Si j'hésite → SVG.**
+
+Établi 2026-07-25 (session « démos Opus 5 »). Origine : une démo virale annoncée « pure HTML canvas »
+(enseigne néon animée) donnait l'impression d'un substrat qu'on n'aurait pas. Vérification frame par frame
+(Aziz) : le tracé montrait une **pointe lumineuse qui court au bout du trait** = `strokeDashoffset` = **SVG**.
+Le substrat était déjà le nôtre ; l'écart tenait à des finitions, pas à une technologie.
+
+| | SVG | Canvas 2D |
+|---|---|---|
+| Nature | formes décrites, chaque élément adressable dans le DOM | surface de pixels repeinte à chaque frame |
+| Excelle sur | contours nets, tracé progressif, objets animés individuellement, texte | grain, halo diffus, milliers de particules, mélange de lumière |
+| Échoue sur | le grain, la lumière volumétrique, 1000+ éléments (DOM saturé) | cibler/animer UNE forme précise |
+| Exemples chez nous | jeton, frontière, carte D3, tube néon, personnage | pluie, poussière, braises, brume |
+
+**Ce n'est PAS un choix exclusif** : les deux couches coexistent dans la même composition Remotion. Un
+`<canvas>` piloté par `useCurrentFrame()` reste frame-driven et déterministe — donc rendable headless, sans
+WebGL. Ordre canonique : fond → couche canvas (matière) → `<svg>` (formes) → UI/texte fixe.
+
+⛔ **Ne PAS en faire une checklist décorative.** On n'ajoute pas de la poussière « parce que la doctrine le
+suggère » — cela contredirait INTENTION→FORME→TEMPLATE et GUIDER SANS BRIDER. La couche matière se pose
+seulement quand l'intention la demande (une scène qui doit se sentir sale, humide, ancienne, étouffante).
+
+**Le vrai gain de cette session n'était pas le canvas, mais 3 finitions 100% SVG** (glow multi-couches,
+reflet au sol, pointe lumineuse de tracé) → fiche `svg-library/techniques/neon-glow-reflet-trace.md`.
 
 ## Les 3 usages du SVG (pas seulement les sprites Gemini)
 
