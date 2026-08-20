@@ -35,9 +35,11 @@ Migration image faite (preview mort → GA → **défaut LITE**, -50 %). Restes 
    GPT 20 · GLM 9), volontairement ÉTALÉE : la migration Gemini a montré qu'un remplacement de masse
    se relit fichier par fichier. Règle en vigueur : **tout NOUVEAU script importe du module** ; les
    anciens se migrent quand on les touche.
-   ⚠️ **4 variantes Kimi coexistent** dans le code (`kimi-k2.5` 43× · `kimi-k3` 34× · `kimi-k2.6` 2× ·
-   `kimi-k26` 1×, coquille probable) et 2 variantes GPT (`gpt-5.5` 15× · `gpt-5.6-sol` 10×) — à trancher
-   avec Aziz, le module fixe pour l'instant la valeur MAJORITAIRE de chaque usage.
+   ✅ **Kimi TRANCHÉ (Aziz, 2026-08-20) : `kimi-k3` UNIQUEMENT.** k2.5/k2.6/k26 périmés, à remplacer
+   quand on touche un fichier (~34 fichiers). ⚠️ `da-brief.py` est resté sur k2.5 en **contournant**
+   un bug de k3 (`reasoning_content`) — le migrer demande d'appliquer le VRAI fix, cf.
+   `memory/tools/kimi-k3-reasoning-borne.md`. ⏭️ GPT (`gpt-5.5` 15× vs `gpt-5.6-sol` 10×) : non tranché.
+
 4. **Budgets de `memory/fiches/` désynchronisés** : FICHE-CLIP-GENERE 173 lignes (plafond déclaré 132),
    FICHE-STORYBOARD 171 (114), FICHE-UI-PRODUIT 114 (55, non déclarée en exception). Re-mesurer et
    re-déclarer le tableau du README — décision de structure, à valider avec Aziz.

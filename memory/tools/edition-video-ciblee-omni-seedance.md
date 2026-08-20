@@ -55,20 +55,15 @@ réels** (dashboard fal.ai). Ne JAMAIS présenter un prix calculé par formule c
 > image ».** C'est LE chemin par défaut. Les modèles propriétaires d'édition vidéo ne sont plus requis.
 
 **Recette (reproductible)** — 3 étapes, la clé est de TOUT garder identique sauf la cible :
-1. **Éditer l'IMAGE SOURCE** avec `IMAGE_MODEL_HQ` (⛔ importer depuis `scripts/tools/gemini_models.py`,
+1. **Éditer l'IMAGE SOURCE** avec `IMAGE_MODEL` (Lite ; ⛔ importer depuis `scripts/tools/gemini_models.py`,
    jamais l'identifiant en dur), ordre **IMAGE-puis-TEXTE** (= édition ; texte-puis-image = génération).
-   Ajouter `"imageConfig":{"aspectRatio":"16:9","imageSize":"2K"}` dans `generationConfig` (sinon sortie
+   Ajouter `"imageConfig":{"aspectRatio":"16:9","imageSize":"1K"}` dans `generationConfig` (sinon sortie
    1376×768 + JPEG malgré `.png`). Température 0.2.
-   ⚠️⚠️ **CONFLIT NON TRANCHÉ — la recette d'origine (2026-08-18) demandait `"imageSize":"2K"`,
-   IMPOSSIBLE sur le Lite (1K MAX, dégradation SILENCIEUSE).**
-   ⛔ Un agent a justifié le passage en 1K par « H3 consomme en 480p de toute façon » — **c'est FAUX** :
-   `minimax-h3-styles-tests.md` documente un A/B contrôlé où le **480p a un vrai coût de fidélité**
-   (teinte délavée, traits bavés, du « morphing » qui n'était qu'un manque de résolution) et où l'on
-   rend en **720p** tout clip destiné à être montré. La résolution de la source n'est donc PAS neutre.
-   → **Par défaut : `IMAGE_MODEL_HQ` + `"imageSize":"2K"`** (recette d'origine, la seule éprouvée).
-   Le Lite en 1K est une piste d'économie **à tester en A/B** sur une édition réelle avant adoption —
-   pas à appliquer sur un raisonnement.
-   Mesuré sur notre cas : ciel **0,0 %** · nuages **0,0 %** · perso secondaire 0,4 % · **cible 3,2 %**.
+   ✅ **1K assumé (tranché par Aziz, 2026-08-20)** : notre pipeline produit les clips en **480p**,
+   on valide, PUIS on upscale via ByteDance. Produire une source en 2K pour la dégrader ensuite
+   n'a aucun sens. ⛔ Ne PAS confondre avec l'A/B `minimax-h3-styles-tests.md` : celui-ci compare
+   480p vs 720p **en SORTIE de H3** (résolution du rendu), pas la résolution de l'image SOURCE.
+
 2. **Reprendre le prompt d'origine À L'IDENTIQUE**, ne changer QUE les mentions de la cible (ici
    `indigo robe` → `emerald green robe`, 2 occurrences : SUBJECT DEFINITIONS + ATTRIBUTE TRANSFER).
    ⛔ Un prompt qui se contredit (une occurrence oubliée) rend le résultat ininterprétable.

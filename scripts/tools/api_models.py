@@ -43,10 +43,13 @@ en tete de CLAUDE.md. Ce fichier porte les CHAINES, CLAUDE.md porte la DOCTRINE.
 VOICE_SOUVERAIN = "z3gESu49naEZW8Af2Upm"
 
 # --- Moonshot / Kimi --------------------------------------------------------
-# Review technique de rendu (score consultatif — ⛔ Kimi = SIGNAL, jamais JUGE).
-KIMI_REVIEW = "kimi-k2.5"
-# Vision -> SVG one-shot, visage organique (registre complementaire a Fable 5).
-KIMI_VISION_SVG = "kimi-k3"
+# ⭐ UNE SEULE VARIANTE : k3 (tranche par Aziz le 2026-08-20 — "la plus avancee et la
+#   plus nouvelle ; toutes les autres ne devraient pas faire partie de ce qu'on utilise,
+#   pour eviter le bordel"). ⛔ k2.5 / k2.6 / k26 sont PERIMES : ne plus les ecrire.
+KIMI = "kimi-k3"
+# Alias retrocompatibles — les 2 usages pointent desormais le MEME modele.
+KIMI_REVIEW = KIMI       # review technique de rendu (⛔ SIGNAL, jamais JUGE)
+KIMI_VISION_SVG = KIMI   # vision -> SVG one-shot, visage organique
 
 # --- OpenRouter -------------------------------------------------------------
 GPT_TEXT_VISION = "openai/gpt-5.5"        # texte + vision (SVG, breakdown, ideation)
@@ -61,6 +64,7 @@ MINIMAX_MUSIC = "fal-ai/minimax-music/v2.6"
 
 __all__ = [
     "VOICE_SOUVERAIN",
+    "KIMI",
     "KIMI_REVIEW",
     "KIMI_VISION_SVG",
     "GPT_TEXT_VISION",

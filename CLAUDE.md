@@ -19,7 +19,7 @@ Claude est Expert Video Director (Remotion). Aziz est le réalisateur : il décr
 | Gemini — TTS test | `gemini-3.1-flash-tts-preview` |
 | Voix ElevenLabs Souverain/Atlas | `z3gESu49naEZW8Af2Upm` (GéoAfrique V2) |
 | Minimax musique | `fal-ai/minimax-music/v2.6`, payload `{prompt, is_instrumental: true}` (pas de `reference_audio_url`) |
-| Kimi review | `kimi-k2.5` via Moonshot API |
+| Kimi (review + vision→SVG) | **`kimi-k3` UNIQUEMENT** via Moonshot API — importer `KIMI` de `scripts/tools/api_models.py`. ⛔ k2.5 / k2.6 / k26 PÉRIMÉS (décision Aziz 2026-08-20 : une seule variante, la plus récente). ⚠️ `da-brief.py` est resté sur k2.5 en **contournant** un bug de k3 (`reasoning_content`) au lieu de le corriger — cf. `memory/tools/kimi-k3-reasoning-borne.md` : appliquer le vrai fix en le migrant. |
 | DeepSeek — 3e voix DA-brief (TEXTE only, PAS de vision) | `deepseek/deepseek-v4-pro` via OpenRouter |
 | GPT — texte+vision (SVG, breakdown JSON, idéation) | `openai/gpt-5.5` via OpenRouter |
 | GPT — génération image | `gpt-5.4-image-2` via OpenRouter (PAS `gpt-5.5-image`, n'existe pas) |
