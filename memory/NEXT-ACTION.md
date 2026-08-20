@@ -7,15 +7,6 @@
 > Toute nouvelle section de session s'insère APRÈS lui, jamais avant — sinon l'avertissement descend
 > et se fait enterrer, et un état périmé est annoncé à Aziz malgré l'avertissement présent et lu.
 
-## ⭐⭐⭐ R&D CLIPS GÉNÉRÉS (H3) — session 2026-08-18/19, CONCLUANTE
-
-**Débloqué** : mouvements de caméra (previs), mouvements d'action (previs), action+caméra dans un même
-clip 10 s, seed reproductible, raccords par changement d'échelle. Le tout sur GPU gratuit.
-→ **Prochaine action : sortir du test** — produire 8-10 s dans un ÉPISODE RÉEL, en insertion
-chirurgicale (hook / relance), là où la couche humaine manque à nos vidéos cartographiques.
-→ Détail complet, défauts restants et paliers : `memory/episodes/_rnd/scribe-tombouctou/STATUS.md`
-→ Doctrine (auto-injectée) : `memory/fiches/FICHE-CLIP-GENERE.md` · livrables : `out/_r-and-d/scribe-tombouctou/MANIFESTE.md`
-
 ## ⛔⛔ AVANT DE LIRE QUOI QUE CE SOIT — LES CHANTIERS VIVANTS SONT DANS DES WORKTREES
 
 > **Ce fichier (repo principal) est structurellement EN RETARD** sur les chantiers qui vivent ailleurs.
@@ -35,6 +26,47 @@ chirurgicale (hook / relance), là où la couche humaine manque à nos vidéos c
 > `feat/cfa-nuit1994-svg-mix`.
 
 ---
+
+## ⭐⭐⭐ CHANTIER OUVERT — RECETTE DE MONTAGE B2B (reverse engineering Aikido, 2026-08-20)
+
+> **Ce qui manque n'est PAS une capacité — c'est la RECETTE.** Vérifié plan par plan sur la vidéo
+> Aikido (142 s, 12 plans, réf. Fiverr du benchmark 08-15) : **11 plans sur 12 sont dans nos moyens
+> aujourd'hui**. Le seul trou réel = **les personnages vectoriels plats** (plan 1, réunion).
+> `PILIERS-B2B.md` dit *quel pilier pour quelle demande* ; il ne dit nulle part *comment on enchaîne
+> les 5 piliers sur 2 minutes*. C'est l'équivalent manquant de leur `promo-energy-arc`.
+
+**Ce que la vidéo Aikido enseigne (mesuré, pas supposé)** :
+- ~12 s par plan, **aucune coupe rapide** — l'inverse de shotcraft (36 s / 15 plans). En B2B on vend
+  une compréhension, pas une sensation. Chaque plan a le temps de dire UNE chose.
+- Ce qui tient les 12 plans ensemble n'est aucun pilier : c'est **la DA** (4 couleurs, 1 typo).
+  Sans elle, les mêmes briques donneraient un patchwork. → `CHARTE-DA-FREELANCE.md` est le liant.
+
+**3 temps proposés** (à valider avec Aziz avant de lancer) :
+1. **Extraire la recette** — le squelette d'un explainer B2B 2 min : quels plans, quel ordre, quel
+   pilier, quel rythme. Livrable = une doctrine de montage, pas une copie d'Aikido.
+2. **Prototyper le SEUL trou** — personnage vectoriel plat, 2 pistes : MiniMax H3 style **Vector
+   Poster** (cf. chantier H3 ci-dessus) ou SVG génératif. ⛔ Ne pas re-prouver les 11 autres plans.
+3. **Produire le CUT VENTE 60-90 s** — le même travail produit enfin l'artefact commercial manquant
+   (charte DA écrite, matière disponible, 53 renders dormants). Notre démo, pas une imitation.
+
+📁 **Vidéo rapatriée** : `public/_shared/refs/benchmark-fiverr/02-aikido/aikido-explainer-142s.mp4`
+⚠️ `public/` est **gitignoré** → ce pointeur est sa seule trace. Le dossier `02-aikido/` contenait
+déjà **47 frames** extraites au benchmark du 08-15 (voir le README du dossier) — c'est la MÊME
+référence, désormais complète avec la vidéo et son SON.
+→ Aiguillage : `memory/doctrines/PILIERS-B2B.md` · DA : `memory/doctrines/CHARTE-DA-FREELANCE.md`
+
+---
+
+
+## ⭐⭐⭐ R&D CLIPS GÉNÉRÉS (H3) — session 2026-08-18/19, CONCLUANTE
+
+**Débloqué** : mouvements de caméra (previs), mouvements d'action (previs), action+caméra dans un même
+clip 10 s, seed reproductible, raccords par changement d'échelle. Le tout sur GPU gratuit.
+→ **Prochaine action : sortir du test** — produire 8-10 s dans un ÉPISODE RÉEL, en insertion
+chirurgicale (hook / relance), là où la couche humaine manque à nos vidéos cartographiques.
+→ Détail complet, défauts restants et paliers : `memory/episodes/_rnd/scribe-tombouctou/STATUS.md`
+→ Doctrine (auto-injectée) : `memory/fiches/FICHE-CLIP-GENERE.md` · livrables : `out/_r-and-d/scribe-tombouctou/MANIFESTE.md`
+
 
 ## ✅ PACKAGING APPLIQUÉ DANS YOUTUBE STUDIO — FAIT PAR AZIZ LE 2026-08-17
 
