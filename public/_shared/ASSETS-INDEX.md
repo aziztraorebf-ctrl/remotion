@@ -18,7 +18,7 @@ utilisables telles quelles sur un mid-form. Générer sans l'avoir lu = re-payer
 **Path** : `public/_shared/previews/mockups-gemini/`
 **README** : `public/_shared/previews/mockups-gemini/README.md` — catalogue complet + workflow re-diffusion
 
-Ces images sont les **références design originales** de chaque template, générées par `gemini-3.1-flash-image-preview` avant le codage. Utiliser pour :
+Ces images sont les **références design originales** de chaque template, générées par le modele image Gemini (`IMAGE_MODEL`, defaut Lite) avant le codage. Utiliser pour :
 - Comprendre l'intent design d'un template existant
 - Re-diffuser vers `gemini-3.1-pro-preview` pour demander des améliorations
 - Faire un diff render actuel vs mockup source

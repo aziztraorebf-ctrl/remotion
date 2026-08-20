@@ -34,9 +34,9 @@ réels** (dashboard fal.ai). Ne JAMAIS présenter un prix calculé par formule c
    au temps de re-production — **c'est LÀ que ça vaut**.
 2. ⛔ **720p, jamais 1080p pour une retouche** : ×2,5 le prix (10,26 $ vs 4,17 $) sans nécessité sur un
    test ou une itération. Aziz a stoppé un lancement 1080p que j'avais proposé par réflexe.
-3. **Le chemin par défaut reste l'IMAGE SOURCE** : éditer l'image avec `gemini-3.1-flash-image-preview`
+3. **Le chemin par défaut reste l'IMAGE SOURCE** : éditer l'image avec `IMAGE_MODEL` (Lite, ~0,034 $/image)
    (chirurgical, mesuré : zones non ciblées à 0,0-0,1 % de changement) puis régénérer le clip H3.
-   ~0,07 $ contre 4,17 $ — **60× moins cher**, et on garde le contrôle du point de départ.
+   ~0,034 $ contre 4,17 $ — **~120× moins cher**, et on garde le contrôle du point de départ.
    → L'édition vidéo ne se justifie QUE si le détail est dans le MOUVEMENT ou apparaît en cours de clip.
 
 ## GOTCHAS TECHNIQUES
@@ -51,13 +51,23 @@ réels** (dashboard fal.ai). Ne JAMAIS présenter un prix calculé par formule c
 
 ## ⭐⭐⭐ LE CHEMIN GAGNANT — ÉDITER L'IMAGE SOURCE + RÉGÉNÉRER H3 (prouvé 2026-08-18)
 
-> **~0,10 $ contre 4,17 $ Seedance — et le résultat est jugé par Aziz « quasiment une copie image par
+> **~0,034 $ contre 4,17 $ Seedance — et le résultat est jugé par Aziz « quasiment une copie image par
 > image ».** C'est LE chemin par défaut. Les modèles propriétaires d'édition vidéo ne sont plus requis.
 
 **Recette (reproductible)** — 3 étapes, la clé est de TOUT garder identique sauf la cible :
-1. **Éditer l'IMAGE SOURCE** avec `gemini-3.1-flash-image-preview`, ordre **IMAGE-puis-TEXTE** (= édition ;
-   texte-puis-image = génération). Ajouter `"imageConfig":{"aspectRatio":"16:9","imageSize":"2K"}` dans
-   `generationConfig` (sinon sortie 1376×768 + JPEG malgré `.png`). Température 0.2.
+1. **Éditer l'IMAGE SOURCE** avec `IMAGE_MODEL_HQ` (⛔ importer depuis `scripts/tools/gemini_models.py`,
+   jamais l'identifiant en dur), ordre **IMAGE-puis-TEXTE** (= édition ; texte-puis-image = génération).
+   Ajouter `"imageConfig":{"aspectRatio":"16:9","imageSize":"2K"}` dans `generationConfig` (sinon sortie
+   1376×768 + JPEG malgré `.png`). Température 0.2.
+   ⚠️⚠️ **CONFLIT NON TRANCHÉ — la recette d'origine (2026-08-18) demandait `"imageSize":"2K"`,
+   IMPOSSIBLE sur le Lite (1K MAX, dégradation SILENCIEUSE).**
+   ⛔ Un agent a justifié le passage en 1K par « H3 consomme en 480p de toute façon » — **c'est FAUX** :
+   `minimax-h3-styles-tests.md` documente un A/B contrôlé où le **480p a un vrai coût de fidélité**
+   (teinte délavée, traits bavés, du « morphing » qui n'était qu'un manque de résolution) et où l'on
+   rend en **720p** tout clip destiné à être montré. La résolution de la source n'est donc PAS neutre.
+   → **Par défaut : `IMAGE_MODEL_HQ` + `"imageSize":"2K"`** (recette d'origine, la seule éprouvée).
+   Le Lite en 1K est une piste d'économie **à tester en A/B** sur une édition réelle avant adoption —
+   pas à appliquer sur un raisonnement.
    Mesuré sur notre cas : ciel **0,0 %** · nuages **0,0 %** · perso secondaire 0,4 % · **cible 3,2 %**.
 2. **Reprendre le prompt d'origine À L'IDENTIQUE**, ne changer QUE les mentions de la cible (ici
    `indigo robe` → `emerald green robe`, 2 occurrences : SUBJECT DEFINITIONS + ATTRIBUTE TRANSFER).

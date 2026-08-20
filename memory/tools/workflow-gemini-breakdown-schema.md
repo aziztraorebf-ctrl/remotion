@@ -38,7 +38,7 @@ Data-viz (NOUVEAU 2026-05-23) :
 - @remotion/paths, @remotion/shapes (SVG)
 
 Génération assets :
-- Gemini 3.1-flash-image-preview (images)
+- Gemini Flash Image via `IMAGE_MODEL` (defaut Lite) / `IMAGE_MODEL_HQ` (image publiee telle quelle) — ⛔ importer depuis `scripts/tools/gemini_models.py`, jamais en dur
 - Recraft (SVG)
 - Seedance / Kling (clips vidéo)
 - PixelLab (pixel art)
@@ -331,11 +331,11 @@ Cinematic, premium, editorial. 1080x1920 portrait. No text, no icons, pure backg
 
 | Modèle | Capacité | Rôle dans le pipeline |
 |--------|---------|----------------------|
-| `gemini-3.1-flash-image-preview` | Génère des images | Étapes 1 et 3 (storyboard + assets) |
+| `IMAGE_MODEL` (Lite) / `IMAGE_MODEL_HQ` | Génère des images | Étapes 1 et 3 (storyboard + assets) — storyboard/assets de travail = Lite ; HQ seulement si publie tel quel |
 | `gemini-3.1-pro-preview` | Analyse des images, produit du texte/JSON | Étape 2 (breakdown technique) |
 
 **3.1-pro-preview ne peut PAS générer d'images.**
-**3.1-flash-image-preview ne peut PAS produire un JSON technique précis.**
+**Le modele image (`IMAGE_MODEL`) ne peut PAS produire un JSON technique précis.**
 Ce ne sont pas deux niveaux de qualité du même modèle — ce sont deux spécialités différentes.
 
 ---

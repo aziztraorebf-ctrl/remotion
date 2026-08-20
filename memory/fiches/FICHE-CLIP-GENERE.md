@@ -122,13 +122,9 @@ sliding by itself, no teleporting pen, no duplicated pen, no disappearing pen`.
 ⛔ **Leçon de méthode** : un objet PETIT ne se juge pas sur des frames redimensionnées — le vérifier en
 lecture réelle ou sur un crop pleine résolution avant de conclure à un défaut.
 
-⚠️ **VRAI défaut restant — le MORPHING des jambes au lever** : assis en tailleur, jambes croisées, il
-passe à la position debout par un **fondu/morphing des jambes** au lieu de les décroiser puis de pousser
-sur ses appuis. Subtil mais visible, et c'est typiquement ce qui « crie l'IA ».
-→ Cause probable : mon previs ne montre QUE le changement de hauteur du bloc-corps (assis → debout), il
-ne décrit aucune étape intermédiaire de jambes.
-→ Piste : décomposer le lever dans le previs en 3 temps explicites (décroiser → un genou au sol →
-pousser/se redresser), avec des blocs de jambes distincts, comme on a décomposé la caméra.
+⚠️ **Symptôme à reconnaître — le MORPHING des jambes au lever** : assis en tailleur, le personnage
+passe à debout par un **fondu des jambes** au lieu de les décroiser. Subtil, mais c'est typiquement
+ce qui « crie l'IA ». **RÉSOLU** → le fix et sa mesure : section suivante.
 
 ## ⭐⭐⭐ LE MORPHING DES JAMBES EST RÉSOLU — et il se MESURE (validé 2026-08-19, hook Gazoduc)
 

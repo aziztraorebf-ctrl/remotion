@@ -102,7 +102,7 @@ Lire le script en se mettant dans la posture de l'adversaire le plus solide sur 
 - Vérification : lire le fichier et valider les timestamps avant de continuer
 
 ### Étape 5 — Storyboard visuel (Gemini)
-- Modèle OBLIGATOIRE : `gemini-3.1-flash-image-preview`
+- Modèle OBLIGATOIRE : `IMAGE_MODEL` (Lite, `gemini-3.1-flash-lite-image`) — ⛔ ne jamais ecrire l'identifiant en dur, importer depuis `scripts/tools/gemini_models.py`. Un storyboard n'est jamais publie tel quel : le Lite suffit (IMAGE_MODEL_HQ reserve aux images publiees telles quelles)
 - Storyboard 1 : 8 frames clés (une par moment narratif fort)
 - Storyboard 2 : beat le plus complexe séquencé en 5-6 états
 - Règle : SVG pur interdit pour textures → assets PNG Gemini

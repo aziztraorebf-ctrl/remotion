@@ -65,7 +65,7 @@ Exemple : `"NO mask. NO object covering the face. The face area is simply absent
 ## Character sheets multi-angle (VALIDE 2026-04-01)
 
 - **Workflow** : fournir 1-2 character sheets existants comme ref de style + prompt nouveau personnage
-- **Modele** : `gemini-3.1-flash-image-preview` — genere en ~30-60s
+- **Modele** : `IMAGE_MODEL` (Lite — une character sheet est une ref de travail, jamais publiee telle quelle). ⛔ importer depuis `scripts/tools/gemini_models.py`. Genere en ~30-60s
 - **Layout** : "4 head views (front, 3/4, profile, back) + 1 full body standing on the right"
 - **Resultat** : style coherent avec les refs, personnage distinct. Teste sur Colomb avec refs Abou Bakari + Moussa.
 
@@ -241,7 +241,7 @@ Register : 3 compositions A/B/C dans Root.tsx avec defaultProps
 - Input : PNG base Remotion + clé brief
 - Output : PNG édité Gemini
 - Briefs définis dans le dict `BRIEFS` (ajouter une clé par nouveau sujet)
-- Modèle : `gemini-3.1-flash-image-preview`
+- Modèle : **`IMAGE_MODEL_HQ`** (`gemini-3.1-flash-image`, ~0,067 $/image) — une miniature YouTube est PUBLIEE TELLE QUELLE, et le Lite plafonne a 1K. ⛔ importer depuis `scripts/tools/gemini_models.py`, jamais en dur
 
 ### Formule brief chirurgical thumbnails
 
@@ -346,7 +346,7 @@ ABSOLUTE RULES:
 
 **Contexte :** Générer des carousels Instagram 8 slides (1080×1920px) pour Kora & Cartes à partir des frames des vidéos publiées.
 
-**Modèle :** `gemini-3.1-flash-image-preview` — 1 appel par slide (~$0.04), ~$0.32 par carousel.
+**Modèle :** **`IMAGE_MODEL_HQ`** (`gemini-3.1-flash-image`) — un carousel Instagram est PUBLIE TEL QUEL → HQ obligatoire (le Lite plafonne a 1K, insuffisant pour du 1080x1920). ⛔ importer depuis `scripts/tools/gemini_models.py`. 1 appel par slide (~0,067 $), **~0,54 $ par carousel** (8 slides).
 
 ### Règles obligatoires (toutes les slides)
 

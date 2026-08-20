@@ -1,7 +1,7 @@
 # Mockups Gemini — Blueprints de design des templates
 
 > Source de vérité design pour chaque layout Souverain.
-> Ces images sont les **références originales** générées par `gemini-3.1-flash-image-preview` avant le codage.
+> Ces images sont les **références originales** générées par le modele image Gemini (`IMAGE_MODEL`, defaut Lite) avant le codage.
 
 ## Pourquoi ce dossier existe
 
@@ -12,7 +12,7 @@
 
 ## Workflow de génération (pour référence future)
 
-1. Générer le mockup : `gemini-3.1-flash-image-preview` + `responseModalities: ["image", "text"]`
+1. Générer le mockup : `IMAGE_MODEL` (Lite — un mockup de reference n'est jamais publie tel quel ; ⛔ importer depuis `scripts/tools/gemini_models.py`, jamais en dur) + `responseModalities: ["image", "text"]`
 2. Sauvegarder ici sous `Layout-<NomTemplate>-mockup-gemini.png`
 3. Faire le breakdown JSON : `gemini-3.1-pro-preview` (analyse vision du mockup)
 4. Coder le composant React/Remotion

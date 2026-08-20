@@ -1,5 +1,5 @@
 """Genere des STORYBOARDS (planches de reference visuelle) sur DEUX generateurs en parallele :
-  - Gemini 3.1 Flash Image (gemini-3.1-flash-image) — RESPECTE le fond impose meme en milieu de prompt.
+  - Gemini Flash Image (IMAGE_MODEL, importe depuis gemini_models.py) — RESPECTE le fond impose meme en milieu de prompt.
   - GPT-image-1 via fal.ai (fal-ai/gpt-image-1) — meilleur relief, mais retombe sur son fond sombre SAUF si
     le fond est en 1ere phrase + formule negatif (« LIGHT … NOT dark/navy »). Voir _PALETTE-BACKGROUNDS.md.
 

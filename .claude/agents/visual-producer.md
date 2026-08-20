@@ -404,7 +404,22 @@ The source demo @voxelplot uses **9 panels for 10s** (~1.1s/shot). On Soundjata 
 - Ignores "2D flat style" prompts — works best for semi-realistic/cinematic
 - See `memory/tools/kling.md`
 
-### Gemini 3.1 Flash Image (model: `models/gemini-3.1-flash-image-preview`)
+### Gemini 3.1 Flash Image — ⛔ NE JAMAIS ecrire l'identifiant en dur
+**Importer depuis `scripts/tools/gemini_models.py`** (source de verite unique) :
+```python
+from gemini_models import IMAGE_MODEL     # DEFAUT — Lite, ~0,0336 $/image, 1K MAX
+from gemini_models import IMAGE_MODEL_HQ  # ~0,067 $/image, 2K/4K
+```
+- **`IMAGE_MODEL` (defaut, Lite)** = tout ce qui n'est PAS publie tel quel : brouillons,
+  storyboards, matiere source H3, references pour un SVG, moodboards, planches de travail,
+  images destinees a etre recadrees/detourees/upscalees. C'est 95 % de nos usages.
+- **`IMAGE_MODEL_HQ` (2x le prix) UNIQUEMENT si l'image est PUBLIEE TELLE QUELLE** :
+  miniature YouTube, cover, affiche, asset final livre sans retouche — ou si le rendu
+  doit depasser 1K. ⚠️ Le Lite plafonne a 1K **sans avertissement** : un besoin 2K/4K
+  sort en 1K silencieusement. C'est a nous d'y penser AVANT de generer.
+- `response_modalities=["IMAGE"]` = config explicite recommandee (son absence n'est PAS
+  une panne : teste le 2026-08-20, les 3 variantes renvoient bien une image).
+- ⛔ La version `-preview` est MORTE (shutdown depasse le 2026-06-25) — un hook bloque son ecriture.
 - **ALWAYS** include "No text, no letters, no numerals visible anywhere" — Gemini invents text
 - For icon generation: "CRITICAL: pure white background (#FFFFFF)" for PIL transparency
 - Use REF character images for identity consistency

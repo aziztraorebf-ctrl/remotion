@@ -7,7 +7,8 @@ Style cohérent jetons Acte 1 (encre hachuré sépia) MAIS vue TOP-DOWN (objet s
 PAS un portrait. Silhouette technique "dessin d'état-major / Jane's recognition".
 Fond cream #d4c29d -> Recraft removeBackground -> PNG transparent.
 
-Modèle : gemini-3.1-flash-image (verrouillé CLAUDE.md).
+Modèle : IMAGE_MODEL (defaut Lite, importe depuis scripts/tools/gemini_models.py --
+source de verite unique ; IMAGE_MODEL_HQ uniquement si l'image est publiee telle quelle).
 Sortie : public/_shared/sprites/warmap/{avion-militaire,convoi-uranium}.png
 """
 import os, sys, base64, requests

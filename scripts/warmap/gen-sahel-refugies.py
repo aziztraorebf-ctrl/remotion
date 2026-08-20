@@ -9,7 +9,8 @@ REGLE CRITIQUE (template) : ethnicité OUEST-AFRICAINE / SAHELIENNE explicite
 (peau noire, traits africains marqués) — corrige l'oubli du 1er jet.
 
 Style cohérent jetons-combattants Acte 1 : encre hachuré sepia, fond cream #d4c29d
--> removeBackground Recraft. Modèle gemini-3.1-flash-image.
+-> removeBackground Recraft. Modele : IMAGE_MODEL (defaut Lite, importe depuis
+gemini_models.py ; le sprite est detoure ensuite, jamais publie tel quel).
 Sortie : public/_shared/sprites/warmap/refugie-{femme1,femme2,homme,enfant,famille}.png
 """
 import os, sys, base64, requests

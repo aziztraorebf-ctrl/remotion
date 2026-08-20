@@ -1,7 +1,8 @@
 """
 Gemini 3.1 Flash Image — generation AVEC image(s) de reference jointe(s).
 Permet de passer une IMAGE-CIBLE (ex wuar68 = gravure visee) + un prompt, pour que le modele
-calibre le rendu sur la ref. Modele verrouille (CLAUDE.md) : gemini-3.1-flash-image.
+calibre le rendu sur la ref. Modele : IMAGE_MODEL, importe depuis gemini_models.py
+(source de verite unique ; IMAGE_MODEL_HQ si l'image est publiee telle quelle).
 Usage:
     python3 scripts/tools/gemini-gen-image-ref.py --prompt "..." --refs a.png,b.png --output path.png
 """

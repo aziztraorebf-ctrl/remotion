@@ -1,7 +1,8 @@
 """
 Génère les sprites véhicules top-down War-Map Sahel Acte 1 (JNIM + EIGS).
 Recette validée 2026-06-05 (feedback_sprites-topdown-gemini-vs-recraft.md).
-Modèle : gemini-3.1-flash-image (verrouillé CLAUDE.md).
+Modèle : IMAGE_MODEL (defaut Lite, importe depuis scripts/tools/gemini_models.py --
+source de verite unique ; IMAGE_MODEL_HQ uniquement si l'image est publiee telle quelle).
 Fond cream #d4c29d imposé -> removeBackground Recraft pour PNG transparent.
 
 2 sprites (technical = pickup armé, l'arme caractéristique des groupes sahéliens) :

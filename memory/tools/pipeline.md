@@ -66,7 +66,8 @@ Cout evite : 30+ min debug Remotion + mini-renders rates. Cout d'appliquer : +$0
 0. CONCEPT ART — 1 image Gemini par beat majeur (NOUVEAU — 2026-05-03)
    - Avant l'audio, apres le script locked
    - 1 image 16:9 par beat : carte, ambiance, composition, cartouches vides
-   - Modele : gemini-3.1-flash-image-preview (~$0.04/image, ~5 images = $0.20)
+   - Modele : IMAGE_MODEL (Lite — un storyboard de validation n'est jamais publie ; ⛔ importer depuis `scripts/tools/gemini_models.py`, jamais en dur).
+     ~0,034 $/image, ~5 images = ~0,17 $
    - But : valider la vision visuelle avec Aziz EN 5 MINUTES avant de coder quoi que ce soit
    - Template prompt : fond + territoire + sprites + cartouches vides + style Atlas
    - Validation Aziz OBLIGATOIRE avant de passer a l'etape 1
@@ -106,7 +107,7 @@ Cout evite : 30+ min debug Remotion + mini-renders rates. Cout d'appliquer : +$0
     **SCRIPT** : `scripts/tools/generate-styleref.py [clip1 clip3]` (editer tableau CLIPS dans le script)
     Input : frame-03.jpg (style anchor) + description de la scene du clip
     Output : image 9:16 dans le style flat BD (tmp/styleref/clipN-styleref.png)
-    Modele : gemini-3.1-flash-image-preview
+    Modele : IMAGE_MODEL (Lite — styleref = matiere pour Seedance, pas un livrable ; ⛔ importer depuis `scripts/tools/gemini_models.py`, jamais en dur)
     Pourquoi : sans ref image, Seedance default vers photoralisme meme avec "2D flat" dans le texte.
 5. Generation clips Seedance (Dreamina web)
    - Uploader ref Gemini du clip comme image de reference

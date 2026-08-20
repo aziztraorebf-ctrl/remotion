@@ -65,7 +65,7 @@ editoriale Kora & Cartes (angle macro africain) rendue en mouvement.
 
 **Gemini pour le top-down precis, Recraft pour le lateral stylise.** Recraft echoue le top-down
 (corpus lateral + "map" declenche un fond decoratif). Gemini reussit du 1er coup. Recette :
-- `gemini-3.1-flash-image-preview`, decrire ce qu'on VOIT d'en haut piece par piece, marteler "STRICTLY from directly straight above, bird's eye orthographic", pointer vers le HAUT.
+- `IMAGE_MODEL` (Lite — un sprite passe ensuite par Recraft removeBackground, ce n'est pas un livrable publie ; ⛔ importer depuis `scripts/tools/gemini_models.py`, jamais en dur), decrire ce qu'on VOIT d'en haut piece par piece, marteler "STRICTLY from directly straight above, bird's eye orthographic", pointer vers le HAUT.
 - Fond cream solide `#d4c29d` impose -> verifier pixel(4,4) ~ (212,194,157) -> **Recraft removeBackground** pour le PNG transparent.
 - Detail complet : [[feedback_sprites-topdown-gemini-vs-recraft]]. Scripts reels : `scripts/warmap/gen-sahel-vehicles.py` (vehicules), `gen-sahel-fighters.py` (jetons combattants), `gen-sahel-refugies.py` (refugies). (L'ancien `gen_gemini_sprites.py` etait un script /tmp fantome.)
 

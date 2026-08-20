@@ -37,7 +37,7 @@ Références à joindre comme images :
 - [autres backgrounds validés du projet]
 - beat[X]/bg.png si déjà présent
 
-Appel 1 — gemini-3.1-flash-image-preview
+Appel 1 — IMAGE_MODEL (import depuis scripts/tools/gemini_models.py ; defaut Lite, 1K max)
 Prompt système à inclure :
   "Avant de générer les images, remplis ce tableau de validation R1.
    Règle R1 : aucun segment ne peut dépasser 8 secondes sans changement
@@ -65,7 +65,7 @@ Output JSON attendu :
     { "id": "[X].1", "start_s": 0, "end_s": 7, "duration_s": 7, "r1_ok": true, "change": "description du changement visuel" }
   ],
   "assets_to_generate": [
-    { "type": "background", "prompt": "prompt exact gemini-3.1-flash-image-preview" },
+    { "type": "background", "prompt": "prompt exact IMAGE_MODEL" },
     { "type": "icon", "prompt": "..." }
   ],
   "components_suggested": ["ComponentA", "ComponentB"],
@@ -83,7 +83,7 @@ Phase 1 autonome — à la fin :
 
 ━━━ PHASE 2 — ASSETS ━━━
 Depuis le JSON Phase 1 :
-- Générer background avec gemini-3.1-flash-image-preview + prompt exact du JSON
+- Générer background avec IMAGE_MODEL (Lite ; background = matiere de travail, jamais publiee telle quelle) + prompt exact du JSON
 - Générer autres assets si listés
 - Sauvegarder dans beat[X]/
 
@@ -136,7 +136,7 @@ Borne : max 3 iterations → score < 8.5
 - R1 : max 8s sans changement visible (validé Phase 1, vérifié Phase 3, mesuré Phase 4)
 - Palette : #0d1420 fond, #FFB800 or, #f5efe0 ivoire
 - Background : texture photographique discrète — test : "disparaît-il quand le texte arrive ?"
-- Modèles : gemini-3.1-flash-image-preview (images) / gemini-3.1-pro-preview (review)
+- Modèles : IMAGE_MODEL (images — ⛔ jamais l'identifiant en dur, importer depuis `scripts/tools/gemini_models.py` ; IMAGE_MODEL_HQ seulement si l'image est publiee telle quelle) / gemini-3.1-pro-preview (review)
 - Score cible : ≥ 8.5/10 ET r1_violations vide
 - Zéro entropie : 3 bugs bloquants = STOP + notifier Aziz
 ```

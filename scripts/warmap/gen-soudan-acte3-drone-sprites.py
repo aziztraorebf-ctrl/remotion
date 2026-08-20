@@ -16,7 +16,8 @@ Regle "meme objet qui change de camp" : les 2 prompts sont IDENTIQUES en forme/t
 teinte d'accent change (rouge brique RSF #B14B3C vs bleu armee SAF #3E6E9E) -- coherence visuelle
 piece maitresse du registre War-Map Soudan.
 
-Modele : gemini-3.1-flash-image (verrouille CLAUDE.md).
+Modele : IMAGE_MODEL (defaut Lite, importe depuis scripts/tools/gemini_models.py --
+source de verite unique ; IMAGE_MODEL_HQ uniquement si l'image est publiee telle quelle).
 Pipeline : Gemini (fond creme uniforme #d4c29d) -> Recraft removeBackground -> PNG transparent.
 Sortie : public/_shared/sprites/warmap/{drone-rsf-td,drone-saf-td}.png
 """

@@ -6,7 +6,8 @@ Génère les 5 assets War-Map Sahel Acte 2 :
 Style cohérent avec les jetons-combattants Acte 1 (gen-sahel-fighters.py) :
 encre hachuré sepia, fond cream #d4c29d -> removeBackground Recraft pour PNG transparent.
 
-Modèle : gemini-3.1-flash-image (verrouillé CLAUDE.md).
+Modèle : IMAGE_MODEL (defaut Lite, importe depuis scripts/tools/gemini_models.py --
+source de verite unique ; IMAGE_MODEL_HQ uniquement si l'image est publiee telle quelle).
 Sortie : public/_shared/sprites/warmap/{base-france,base-africacorps,jeton-fama,jeton-csp,jeton-refugie}.png
 """
 import os, sys, base64, requests

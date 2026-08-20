@@ -8,7 +8,7 @@ l'historique complet de la Session C si besoin de contexte.
 ## ✅ Thumbnail FAITE (2026-07-10) — 2 candidats A/B validés Aziz
 
 Pipeline C (voir `public/_shared/thumbnails-library/README.md`) : script complet collé sur Gemini web →
-4 concepts proposés → 2 retenus → retouche via API `gemini-3.1-flash-image-preview` (vrai sceau AES,
+4 concepts proposés → 2 retenus → retouche via API **`IMAGE_MODEL_HQ`** (`gemini-3.1-flash-image`, ~0,067 $/image — une miniature est PUBLIEE TELLE QUELLE et l'upscale 1920x1080 depasse le plafond 1K du Lite ; ⛔ importer depuis `scripts/tools/gemini_models.py`, jamais en dur) (vrai sceau AES,
 filigranes retirés, upscale 1920x1080). Fichiers :
 - `public/_shared/thumbnails-library/warmap-sahel-aes/aes-la-rupture.png` (carte fissurée + sceau doré —
   préféré Aziz)

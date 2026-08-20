@@ -131,7 +131,8 @@ Keep the single wicker basket/crate exactly as it appears in the source image --
 
 ### Modele Gemini et methode
 
-- Modele : `gemini-3.1-flash-image-preview` (le seul qui genere/edite des images, cf `memory/tools/gemini.md`)
+- Modele : `IMAGE_MODEL` (defaut Lite ; `IMAGE_MODEL_HQ` si l'image est publiee telle quelle ou exige >1K).
+  ⛔ importer depuis `scripts/tools/gemini_models.py`, jamais en dur — cf `memory/tools/gemini.md`
 - **Utiliser l'appel REST direct (`requests.post` vers `generativelanguage.googleapis.com`), PAS le SDK** — le SDK a hang plusieurs fois sur ces appels i2i (cf R8). Voir `memory/tools/gemini.md` pour le code exact.
 - Repartir de l'image source ORIGINALE (pas d'une frame de clip video deja generee, qui pourrait deja contenir un artefact — cf R5).
 

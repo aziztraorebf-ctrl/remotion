@@ -19,7 +19,7 @@ Avant de générer quoi que ce soit, se poser les questions dans l'ordre :
 | # | Question | Si OUI → Outil | Pourquoi |
 |---|----------|----------------|----------|
 | **1** | Forme simple + déformation/tracé/pulsation ? (drapeau, onde, frontière, jauge, flux, icône, cartouche) | **SVG ANIMÉ MAISON** (le réflexe par défaut) | Net full HD, nos couleurs exactes, 0 coût, 0 risque, 0 détourage |
-| **2** | Objet à TRAIT FIN / identité forte ? (jeton-portrait, sprite-lieu, véhicule détaillé, marqueur premium) | **GEMINI** (`gemini-3.1-flash-image-preview`) + détourage Recraft, animé par NOUS | Le trait net que SVG/pixel dégraderaient |
+| **2** | Objet à TRAIT FIN / identité forte ? (jeton-portrait, sprite-lieu, véhicule détaillé, marqueur premium) | **GEMINI** (`IMAGE_MODEL`, Lite) + détourage Recraft, animé par NOUS | Le trait net que SVG/pixel dégraderaient |
 | **3** | Effet organique CHAOTIQUE DENSE ? (vraie explosion, fumée volumétrique, feu) | **PixelLab** (`create_map_object` + `animate_object`), animé par PROMPT | Le pixel se fond dans le chaos ; animation organique « gratuite » |
 | — | Effet DIFFUS (poussière au sol, brume éparse top-down) | **PERSONNE** — renoncer | Ni SVG ni PixelLab ne le rendent (leçon poussière 2.1 + test ambient 2026-06-14). « Sobre = mieux ». |
 
@@ -87,7 +87,7 @@ ondulant » dans `src/projects/warmap/parties/Partie3Rupture.tsx`.
 ## 2. GEMINI — marqueurs / jetons / personnages / véhicules
 
 Objets à formes nettes, identité forte, déplacement avec intention narrative. Création **Gemini**
-(`gemini-3.1-flash-image-preview`) + détourage Recraft. Animation **NOUS-MÊMES** dans Remotion : track/path
+(`IMAGE_MODEL`, Lite — le sprite est detoure puis anime par nous, jamais publie tel quel ; ⛔ importer depuis `scripts/tools/gemini_models.py`, jamais en dur) + détourage Recraft. Animation **NOUS-MÊMES** dans Remotion : track/path
 frame-driven, walk-cycle, drift, rotation tangente, spring. On maîtrise déjà.
 
 - **On garde notre force pour ce qui a une INTENTION narrative.** Un convoi qui avance vers l'uranium, un jeton

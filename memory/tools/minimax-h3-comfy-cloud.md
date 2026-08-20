@@ -1459,7 +1459,7 @@ abstrait mou) ; en R2V la composition est VERROUILLÉE par l'image, il ne reste 
 le mouvement. Cohérent avec le Test Réel 2 déjà documenté (« la limite vient de l'image de référence,
 pas du prompt »). ⛔ **Ne plus partir en T2V pour un insert : image d'abord, animation ensuite.**
 
-**Chaîne testée** : `gemini-gen-image.py` (`gemini-3.1-flash-image-preview`, coupe de conduite Poster
+**Chaîne testée** : `gemini-gen-image.py` (`IMAGE_MODEL` — Lite ; l'image sert de SOURCE a H3, jamais publiee telle quelle, coupe de conduite Poster
 Vector, palette navy `#16213a`/or, cadrage centré sans décor) → `upload_file` Comfy Cloud →
 `submit_workflow` graphe R2V à plat (gabarit `minimax-h3-r2v-graph-template.json`, node 136
 `ref_image_size: "match"`, **un seul slot `ref_images.ref_image_0`** — `ref_image_1` OMIS pour éviter

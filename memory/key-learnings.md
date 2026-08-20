@@ -42,19 +42,28 @@ ElevenLabs, slugs Minimax/fal.ai, modeles OpenRouter/Kimi) — meme risque, chan
 
 ### 2026-08-20 — ⛔⛔ HTTP 200 n'est PAS une preuve de livrable : changer un DEFAUT exige un appel reel sur CHAQUE chemin de code
 
-**Vecu** : le modele Gemini Lite exige `response_modalities=["IMAGE"]`. Sans ce flag :
-**HTTP 200, zero image, aucune erreur, aucun warning**. 3 scripts SDK du repo ne le passaient pas —
-ils auraient casse EN SILENCE si le defaut avait bascule sans test reel.
+**⚠️ CORRECTION 2026-08-20 (meme jour)** — la version initiale de cette lecon affirmait que « le Lite
+exige `response_modalities=["IMAGE"]` ; sans ce flag : HTTP 200, zero image, aucune erreur ».
+**C'est FAUX.** Cette affirmation venait d'un rapport de recherche relaye **sans test**, puis a ete
+**INFIRMEE par appel reel** : sans flag, avec `["IMAGE"]`, avec `["image","text"]` — les 3 variantes
+renvoient bien 1 image, `finish=STOP`. Le flag reste la config explicite **recommandee**, mais son
+absence **n'est pas une panne**. Ne pas re-graver l'inverse.
 
-**Ce qui a sauve la mise** : un APPEL REEL avant de graver le defaut, au lieu de lire la doc (qui
-mentionne le flag sans dire ce qui arrive s'il manque). Idem pour le mode Batch : teste reellement
+**Vecu (ce qui reste vrai)** : en basculant le defaut sur le Lite, le vrai mode d'echec nouveau est le
+**plafond 1K silencieux** — un usage qui aurait besoin de 2K/4K sort en 1K **sans aucun avertissement**.
+C'est ca qu'il faut surveiller, pas le flag.
+
+**Ce qui a sauve la mise** : un APPEL REEL avant de graver le defaut, au lieu de faire confiance a une
+source non testee — c'est precisement ce test qui a demonte la regle du flag. Idem pour le mode Batch : teste reellement
 (job SUCCEEDED, 2 images, 304 s mesure) plutot que juge sur la doc — d'ou un motif d'ecart SOLIDE.
 
 **Checklist avant de basculer un defaut** :
 1. Appel reel → verifier que **l'ARTEFACT existe sur disque** (pas que le code HTTP soit 200).
 2. `grep` TOUS les appelants → chacun passe-t-il les parametres nouvellement requis ?
 3. Se demander : « quel mode d'echec ce modele a-t-il que l'ancien n'avait pas ? »
-   (ici : plafond 1K silencieux + flag obligatoire silencieux).
+   (ici : **plafond 1K silencieux** — le « flag obligatoire » annonce, lui, n'existait pas : teste et infirme).
+4. **Ne jamais graver une regle qu'on n'a pas testee soi-meme**, meme venue d'un rapport de recherche
+   d'apparence solide — c'est exactement l'erreur commise ici, rattrapee le jour meme.
 
 **Pendant machine de la regle projet** « un agent qui rapporte *termine* n'a pas forcement produit le
 fichier » : succes annonce (rapport texte / HTTP 200) ≠ livrable. **Seul l'artefact est une preuve.**
@@ -79,6 +88,18 @@ verifiee sur la doc officielle, et migrer vers le GA des qu'il existe.
 
 **Reflexe a ajouter** : toute session touchant un fournisseur d'API → ouvrir sa page modeles/pricing
 officielle et confronter la liste a nos identifiants en production. Coût : 2 minutes.
+
+
+⭐ **Preuve chiffree (2026-08-20)** : l'ancien modele image repond ENCORE **56 jours apres** son
+shutdown annonce. Il figure meme toujours dans la liste des modeles de notre cle API.
+→ **Ni la reponse du modele, ni sa presence dans `/v1beta/models` ne prouvent qu'il est vivant.**
+Seule la page officielle `deprecations` fait foi. Un check periodique de cette page est le vrai
+garde-fou — il n'existe pas encore chez nous.
+
+⛔ **Corollaire trouve le meme jour** : centraliser un identifiant ne sert a rien si personne
+n'importe la constante. `VISION_MODEL` existait dans le module... et n'etait importe par **aucun**
+script (42 fichiers en dur). **Verifier `grep "from <module> import <CONSTANTE>"` apres avoir
+centralise** — sinon on a l'illusion de la centralisation, pas la centralisation.
 
 ---
 

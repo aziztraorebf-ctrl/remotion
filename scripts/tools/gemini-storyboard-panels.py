@@ -13,7 +13,8 @@ Usage :
     --prompt-file /tmp/maroc-batteries-beat3-storyboard-prompt.txt
 
 Le prompt (--prompt-file) DOIT etre redige par Claude depuis le scan (templates choisis
-+ combinaisons) et VALIDE par Aziz AVANT l'appel. Modele : gemini-3.1-flash-image.
++ combinaisons) et VALIDE par Aziz AVANT l'appel. Modele : IMAGE_MODEL (defaut Lite, importe depuis
+gemini_models.py -- un storyboard n'est jamais publie tel quel).
 Sortie : public/souverain/<episode>/beat<N>/storyboard-gemini.png (chemin attendu par preflight).
 """
 

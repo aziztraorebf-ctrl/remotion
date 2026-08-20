@@ -101,13 +101,13 @@ Deux fichiers de référence permanents dans `public/_shared/refs-i2i/` :
 - Aziz valide les directions EN TEXTE avant toute génération
 
 ### Étape 2 — Flash génère les PNG (V1)
-- Modèle : `gemini-3.1-flash-image-preview`
+- Modèle : `IMAGE_MODEL` (Lite, `gemini-3.1-flash-lite-image`) — ⛔ importer depuis `scripts/tools/gemini_models.py`, jamais en dur. Storyboard = matiere de travail, jamais publiee telle quelle → le Lite suffit
 - Un PNG par beat, composition définie par Claude
 - Contraintes prompt : max 4 éléments simultanés, un élément dominant, INTERDIT effets 3D
 - Si résultat trop After Effects / infographie / 3D → Claude corrige le prompt, on regénère
 
 ### Étape 3 — Passe i2i (V2 enrichie)
-- Modèle : `gemini-3.1-flash-image-preview` en mode i2i (3 images en input)
+- Modèle : `IMAGE_MODEL` (Lite, `gemini-3.1-flash-lite-image`) en mode i2i (3 images en input)
 - Input : [ref canonique par registre] + [PNG V1] + instruction d'enrichissement
 - Ref Mapbox → public/_shared/refs-i2i/souverain-ref-mapbox.png
 - Ref Graphisme → public/_shared/refs-i2i/souverain-ref-graphisme.png

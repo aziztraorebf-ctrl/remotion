@@ -99,7 +99,7 @@ d'une frame existante").
    PAS d'appel API à ce stade. Plus rapide, gratuit, et l'interface web semble produire une meilleure
    créativité de composition que l'API pilotée par prompt seul (hypothèse non confirmée mais observée 2x).
 4. **Aziz choisit** 1-2 concepts parmi les propositions.
-5. **Itération de correction via API** (`gemini-3.1-flash-image-preview`, **REST direct** — le SDK
+5. **Itération de correction via API** (**`IMAGE_MODEL_HQ`**, `gemini-3.1-flash-image` — une miniature est PUBLIEE TELLE QUELLE et depasse 1K, donc HQ et pas le Lite ; ⛔ importer depuis `scripts/tools/gemini_models.py`, jamais en dur — **REST direct** — le SDK
    `google-genai` peut hang silencieusement sur les appels i2i, cf gotcha `memory/tools/gemini.md`) :
    fournir l'image choisie comme référence + un prompt de correction PRÉCIS et ciblé (un seul type de
    changement par itération si possible — mélanger plusieurs demandes dans un même prompt peut faire que

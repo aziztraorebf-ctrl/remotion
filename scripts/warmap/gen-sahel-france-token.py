@@ -3,7 +3,8 @@ Génère le jeton "soldats français" pour B1 V3 (War-Map Sahel Acte 2).
 Style cohérent jetons-combattants Acte 1 (fighter-jnim/eigs) : encre hachuré, fond cream → removeBg.
 Doit lire "armée française moderne" et se distinguer de JNIM (chèche clair) / EIGS (cagoule sombre).
 
-Modèle : gemini-3.1-flash-image (verrouillé CLAUDE.md).
+Modèle : IMAGE_MODEL (defaut Lite, importe depuis scripts/tools/gemini_models.py --
+source de verite unique ; IMAGE_MODEL_HQ uniquement si l'image est publiee telle quelle).
 Sortie : public/_shared/sprites/warmap/fighter-france.png
 """
 import os, sys, base64, requests

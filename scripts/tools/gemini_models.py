@@ -78,9 +78,26 @@ IMAGE_MODEL_STANDARD = IMAGE_MODEL_HQ
 IMAGE_MODEL_PRO = "gemini-3-pro-image"
 
 # --- Texte / vision (breakdown JSON, review, analyse de frames) --------------
+# ⚠️⚠️ CENTRALISATION NON FAITE POUR LA VISION (constate 2026-08-20) :
+#   VISION_MODEL n'est importe par AUCUN script — l'identifiant est en dur dans
+#   42 fichiers actifs (79 occurrences), dont certains DANS UNE URL. Changer la
+#   ligne ci-dessous ne change donc le comportement de RIEN. C'est exactement le
+#   scenario « 121 fichiers » que ce module dit vouloir eviter, encore intact ici.
+#   → Chantier : faire importer VISION_MODEL avant toute bascule. Cf. NEXT-ACTION.
+#
+# STATUT (verifie a la source le 2026-08-20) : PAS de shutdown annonce, PAS de GA
+#   `gemini-3.1-pro` (il n'existe pas). Google pousse VERS ce modele. Aucune urgence.
+# ⚠️ Mais il reste un `-preview` : re-verifier la page deprecations periodiquement.
+#
+# 💡 GISEMENT NON EXPLOITE : `gemini-3.7-flash` (STABLE, aout 2026) coute -62 % en
+#   input / -69 % en output et repond 4x plus vite sur video (1,8 s vs 7,2 s mesures).
+#   ⛔ Capacite vision verifiee, QUALITE DE JUGEMENT non testee sur nos cas exigeants
+#   (breakdown JSON, DA-brief, jury) — Flash n'est pas Pro. A tester avant bascule.
 VISION_MODEL = "gemini-3.1-pro-preview"
 
 # Fallback review si le vision timeout. A n'utiliser qu'avec thinking_budget=0.
+# ✅ PAS de shutdown annonce (verifie 2026-08-20). ⚠️ Le « 2 octobre 2026 » qui
+#   circule appartient a `gemini-2.5-flash-image` (modele IMAGE), pas a celui-ci.
 VISION_FALLBACK_MODEL = "gemini-2.5-flash"
 
 __all__ = [

@@ -79,15 +79,20 @@ parcourt le code pour remplir les catalogues de composants — un inventoriste. 
 encore** sur disque (vérifié 2026-08-17). Les fiches ne dépendent pas de lui.
 
 ## Budget par fiche
-**55 lignes par défaut.** Exceptions assumées, **chiffres re-mesurés le 2026-08-18 (fin de session)** (`wc -l`) :
-`FICHE-CAMERA` **102** · `FICHE-CLIP-GENERE` **132** · `FICHE-SVG-DESSINE` **89** · `FICHE-STORYBOARD` **114**.
-⚠️ Le budget d'exception affiché ici était de 80 et **deux fiches le dépassaient sans que ce soit
-écrit** — un README qui annonce un budget que les fiches contredisent est la même classe d'erreur
-que les fiches qui mentent. Plafond d'exception porté à **115**, à re-mesurer à chaque ajout. Raison : la caméra est le pain point n°1 mesuré du
-projet (3 des 5 boucles les plus chères) et le storyboard est le levier qui déplace le jugement avant
-le code (49 % de re-travail). Tailler la fiche la plus rentable pour respecter un budget rond serait
-retirer de la valeur là où elle sert le plus. **Ces 2 exceptions ne se généralisent pas** : toute
-autre fiche reste à 55, et une fiche qui déborde sans justification chiffrée se taille.
+**55 lignes par défaut.** Exceptions assumées, **chiffres re-mesurés le 2026-08-20 (`wc -l`)** :
+`FICHE-CLIP-GENERE` **170** · `FICHE-STORYBOARD` **168** · `FICHE-UI-PRODUIT` **117** · `FICHE-SVG-DESSINE` **108** · `FICHE-CAMERA` **102** · `FICHE-ASSEMBLAGE` **62** · `FICHE-PACKAGING` **60**.
+⚠️ **Ces chiffres se re-mesurent à CHAQUE wrap** — un README qui annonce un budget que les fiches
+contredisent est la même classe d'erreur que les fiches qui mentent. C'est arrivé 2× (2026-08-18,
+puis 2026-08-20 : 4 fiches hors de leur chiffre déclaré). Ne pas re-déclarer un plafond « rond »
+qu'on sait déjà faux.
+**Pourquoi ces exceptions** : la caméra est le pain point n°1 du projet (3 des 5 boucles les plus
+chères), le storyboard déplace le jugement avant le code (49 % de re-travail), CLIP-GENERE porte une
+R&D active dont chaque ligne est un essai payé. Tailler la fiche la plus rentable pour un chiffre
+rond serait retirer de la valeur là où elle sert le plus.
+⛔ **Ce qui SE TAILLE**, en revanche : un bloc décrivant un problème RÉSOLU plus bas dans la même
+fiche, une méthode explicitement « REMPLACÉE », une glose qui répète son propre titre. Fait le
+2026-08-20 sur STORYBOARD (-4) et CLIP-GENERE (-4).
+**Toute AUTRE fiche reste à 55** : une fiche qui déborde sans justification chiffrée se taille.
 ⚠️ Ce README n'est PAS injecté par le hook — il ne coûte aucun contexte, le budget ne s'y applique pas.
 
 ## Ajouter une fiche

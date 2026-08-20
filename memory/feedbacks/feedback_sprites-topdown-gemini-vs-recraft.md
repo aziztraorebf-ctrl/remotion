@@ -15,7 +15,7 @@ type: feedback
 - Recraft EXCELLE par contre en **vue de côté flat premium** (substyles `2d_art_poster`, `long_shadow`) = à réserver aux inserts/cartons/portraits latéraux, PAS aux tokens top-down.
 
 ## Recette Gemini qui MARCHE (recette réutilisable)
-- Modèle : `gemini-3.1-flash-image-preview` (verrouillé CLAUDE.md).
+- Modèle : `IMAGE_MODEL` (defaut Lite — le sprite est detoure via Recraft puis anime par nous, jamais publie tel quel ; ⛔ importer depuis `scripts/tools/gemini_models.py`, jamais en dur).
 - SDK : `from google import genai` ; `client.models.generate_content(model=..., config=GenerateContentConfig(response_modalities=["image","text"], temperature=0.25))`.
 - **Prompt** : décrire ce qu'on VOIT d'en haut, pièce par pièce ("you see the rectangular hull, the round central turret, the gun barrel extending toward the TOP edge, tracks on left/right"). Marteler "STRICTLY from directly straight above, bird's eye orthographic, looking straight down", "no perspective, no side view, no 3/4 view". Faire pointer le sujet vers le HAUT (-> rotation écran = cap).
 - **Fond** : Gemini ne fait pas de transparent natif. Solution A (`feedback_gemini-assets-fond-transparent`) : imposer fond cream solide `#d4c29d` ("UNIFORM solid CREAM ... edge to edge, WITHOUT transparency/checkered/gradient, WITHOUT any map/roads/grid/compass/pins"), vérifier pixel(4,4) ~ (212,194,157), puis **Recraft removeBackground** (`/v1/images/removeBackground`) pour le PNG transparent final.

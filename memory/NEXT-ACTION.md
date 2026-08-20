@@ -16,10 +16,28 @@ Migration image faite (preview mort → GA → **défaut LITE**, -50 %). Restes 
    WARMAP, `gemini-pipelines.md`, `rules-gemini.md`, ~12 docstrings) — à corriger au fil de l'eau.
    ⚠️ `.claude/agents/visual-producer.md:407` = l'agent qui **dépense de l'argent réel**, à traiter en premier.
    ⛔ NE PAS toucher aux ~120 fichiers d'archives.
-2. **`VISION_MODEL` est encore en `-preview`** — son statut de shutdown n'a PAS été vérifié. Même
-   exposition que celle découverte sur le modèle image (qui tournait 2 mois après son retrait annoncé).
-3. **La centralisation n'a été faite QUE pour Gemini.** Voix ElevenLabs, slugs Minimax/fal.ai, modèles
-   OpenRouter/Kimi portent le même risque, sans module source de vérité.
+2. ✅ **VÉRIFIÉ (2026-08-20) : PAS d'exposition.** Ni `gemini-3.1-pro-preview` ni `gemini-2.5-flash`
+   n'ont de date de shutdown annoncée, et **`gemini-3.1-pro` (GA) N'EXISTE PAS** — Google pousse VERS
+   le preview. ⚠️ Le « 2 octobre 2026 » qui circule appartient au modèle **image** 2.5-flash, pas à
+   notre fallback texte. **MAIS 2 trouvailles :**
+   ⛔ **(a) La centralisation vision N'EXISTE PAS** : `VISION_MODEL` n'est importé par **AUCUN** script,
+   l'identifiant est en dur dans **42 fichiers actifs** (79 occurrences), parfois DANS UNE URL. Changer
+   la constante ne change actuellement RIEN. C'est le scénario « 121 fichiers » encore intact.
+   → Réparer la centralisation AVANT toute bascule, sinon elle est ingérable.
+   💡 **(b) Gisement : `gemini-3.7-flash` (STABLE, août 2026)** = **−62 % input / −69 % output** et
+   **4× plus rapide en vidéo** (1,8 s vs 7,2 s, mesuré). ⛔ Capacité vision vérifiée, **qualité de
+   jugement NON testée** sur nos cas exigeants (breakdown JSON, DA-brief, jury) — Flash n'est pas Pro.
+   Protocole : même test à l'aveugle que pour l'image, sur un cas réel, avant de basculer.
+   ⭐ **Leçon** : l'ancien modèle image RÉPOND ENCORE 56 jours après son shutdown.
+   **Un modèle qui répond ne prouve pas qu'il est vivant** — seule la page deprecations fait foi.
+3. ✅ **Module `scripts/tools/api_models.py` CRÉÉ** (2026-08-20) : voix ElevenLabs, Kimi, GPT/OpenRouter,
+   GLM, DeepSeek, Minimax music. ⏭️ **Reste la migration des ~75 fichiers actifs** (voix 9 · Kimi 34 ·
+   GPT 20 · GLM 9), volontairement ÉTALÉE : la migration Gemini a montré qu'un remplacement de masse
+   se relit fichier par fichier. Règle en vigueur : **tout NOUVEAU script importe du module** ; les
+   anciens se migrent quand on les touche.
+   ⚠️ **4 variantes Kimi coexistent** dans le code (`kimi-k2.5` 43× · `kimi-k3` 34× · `kimi-k2.6` 2× ·
+   `kimi-k26` 1×, coquille probable) et 2 variantes GPT (`gpt-5.5` 15× · `gpt-5.6-sol` 10×) — à trancher
+   avec Aziz, le module fixe pour l'instant la valeur MAJORITAIRE de chaque usage.
 4. **Budgets de `memory/fiches/` désynchronisés** : FICHE-CLIP-GENERE 173 lignes (plafond déclaré 132),
    FICHE-STORYBOARD 171 (114), FICHE-UI-PRODUIT 114 (55, non déclarée en exception). Re-mesurer et
    re-déclarer le tableau du README — décision de structure, à valider avec Aziz.

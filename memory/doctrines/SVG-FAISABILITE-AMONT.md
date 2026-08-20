@@ -25,7 +25,7 @@ seule contrainte non-negociable : **decoupe en `<g id>` nommes** (sinon inanimab
    -> sortie JSON {faisable_note, approche, changements, mini_storyboard, image_cible_prompt}.
 3. **IMAGE-CIBLE = SVG NATIF du LLM** (correction 2026-06-23, prouvee par render) : generer la cible directement en
    SVG NATIF via **Gemini 3.1 Pro** (vision/SVG) ou **GPT-5.5** — PAS un raster intermediaire. Outil : `svg-scene-narrative.py`.
-   ⛔ NE PLUS utiliser `gemini-3.1-flash-image-preview` (raster) pour l'image-cible : le raster cree un ECART faisabilite
+   ⛔ NE PLUS utiliser un modele IMAGE Gemini (`IMAGE_MODEL`/`IMAGE_MODEL_HQ`, raster) pour l'image-cible : le raster cree un ECART faisabilite
    image->SVG (la cible raster est plus dense que ce que le SVG peut rendre). Le SVG natif = ecart NUL par construction
    (ce qu'on voit dans la cible = ce qu'on obtient). On VOIT la cible (convertir le SVG en PNG pour juger). Si l'element
    lit (l'arbre ressemble a un arbre) -> go. Sinon -> re-brief / change d'angle. GRATUIT vs render.

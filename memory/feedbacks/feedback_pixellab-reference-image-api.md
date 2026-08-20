@@ -19,7 +19,7 @@ Le **MCP `create_character` n'expose PAS** la creation depuis reference (texte s
 
 ## WORKFLOW BATCH valide (a coder quand on industrialise les persos)
 
-1. **Gemini** (gemini-3.1-flash-image-preview) ou Recraft → character-sheet fond blanc, perso EXACT
+1. **Gemini** (`IMAGE_MODEL`, defaut Lite — le sheet est une ref de travail pour PixelLab) ou Recraft → character-sheet fond blanc, perso EXACT
    (peau foncee, tenue mande/berbere/romaine, etc.). Controle total de l'apparence.
 2. **PixelLab REST /rotate** (`from_image` = le sheet) → 8 directions coherentes.
 3. **PixelLab REST /animate-with-text** (`reference_image`) → walk/charge/spear/death.

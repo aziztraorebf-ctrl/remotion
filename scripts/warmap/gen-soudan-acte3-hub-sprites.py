@@ -8,7 +8,8 @@ encre hachuree, palette creme/kaki/sepia/ocre, contour encre marron fonce franc,
 transparent (checker) une fois detoure. Passees en image-refs a Gemini pour ancrer la
 palette/texture exactement (regle "reference image > description texte seule").
 
-Modele : gemini-3.1-flash-image (verrouille CLAUDE.md).
+Modele : IMAGE_MODEL (defaut Lite, importe depuis scripts/tools/gemini_models.py --
+source de verite unique ; IMAGE_MODEL_HQ uniquement si l'image est publiee telle quelle).
 Pipeline : Gemini (fond creme uniforme #d4c29d) -> Recraft removeBackground -> PNG transparent.
 Sortie : public/_shared/sprites/warmap/{dubai-hub-td,suakin-dock-td}.png
 

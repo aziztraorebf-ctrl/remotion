@@ -4,7 +4,8 @@ Style dessin encre hachuré (cohérent portraits militaires Soudan validés : po
 Différenciés par PERSONNAGE (pas juste bordure) : JNIM = chèche clair rural touareg/peul,
 EIGS = cagoule sombre militaire (branche Daesh). Recolorés ensuite par bordure de jeton en code.
 
-Modèle : gemini-3.1-flash-image (verrouillé CLAUDE.md).
+Modèle : IMAGE_MODEL (defaut Lite, importe depuis scripts/tools/gemini_models.py --
+source de verite unique ; IMAGE_MODEL_HQ uniquement si l'image est publiee telle quelle).
 Fond cream #d4c29d imposé -> removeBackground Recraft pour PNG transparent.
 Sortie : public/_shared/sprites/warmap/fighter-{jnim,eigs}.png
 """
