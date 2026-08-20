@@ -13,7 +13,7 @@ Claude est Expert Video Director (Remotion). Aziz est le réalisateur : il décr
 
 | Usage | Modèle EXACT à utiliser |
 |---|---|
-| Gemini — image (génération/édition) | `gemini-3.1-flash-image` ⚠️ **SANS suffixe preview** (la variante preview est en shutdown dépassé depuis le 2026-06-25) |
+| Gemini — image (génération/édition) | **`IMAGE_MODEL` importé de `scripts/tools/gemini_models.py`** — ⛔ jamais en dur. Défaut = **`gemini-3.1-flash-lite-image`** (brouillon/storyboard/matière H3, 1K max). HQ explicite = `IMAGE_MODEL_HQ` (`gemini-3.1-flash-image`) si l'image est **publiée telle quelle** ou dépasse 1K |
 | Gemini — vision / breakdown JSON | `gemini-3.1-pro-preview` |
 | Gemini — review fallback si 3.1-pro timeout | `gemini-2.5-flash` (`thinking_budget=0`, éviter sauf urgence) |
 | Gemini — TTS test | `gemini-3.1-flash-tts-preview` |
@@ -29,7 +29,7 @@ Claude est Expert Video Director (Remotion). Aziz est le réalisateur : il décr
 
 **INTERDITS** : toute version Gemini antérieure à 3.1 pour image/vision ; les variantes `pro-image`, `imagen`, `nano-banana` ; les vieux Claude (séries 3.x). Détail exhaustif des bannis : `memory/tools/gemini.md`.
 
-**Vérif AVANT appel** : « Gemini 3.1 pro » → `gemini-3.1-pro-preview`. « Gemini Flash image » → `gemini-3.1-flash-image` (**jamais** la variante preview : shutdown dépassé). ⛔ Ne JAMAIS réécrire un identifiant en dur dans un script — importer `IMAGE_MODEL` depuis `scripts/tools/gemini_models.py` (source de vérité unique). Si je m'apprête à écrire une version Gemini périmée → STOP, relire. Un hook `gemini-model-guard.sh` bloque l'écriture de modèles périmés dans le code.
+**Vérif AVANT appel** : « Gemini 3.1 pro » → `gemini-3.1-pro-preview`. « Gemini Flash image » → importer `IMAGE_MODEL` (défaut **Lite**, 1K max) ou `IMAGE_MODEL_HQ` (2K/4K, image publiée) depuis `scripts/tools/gemini_models.py`. ⚠️ Le Lite exige `response_modalities=["IMAGE"]` — **sans ce flag il renvoie zéro image SANS erreur**. ⛔ Ne JAMAIS réécrire un identifiant en dur dans un script — importer `IMAGE_MODEL` depuis `scripts/tools/gemini_models.py` (source de vérité unique). Si je m'apprête à écrire une version Gemini périmée → STOP, relire. Un hook `gemini-model-guard.sh` bloque l'écriture de modèles périmés dans le code.
 
 ---
 

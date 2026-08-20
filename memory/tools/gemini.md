@@ -1,5 +1,26 @@
 # Gemini — Couche critique (modèles, SDK, gotchas universels)
 
+> ⭐⭐ **2026-08-20 — LE DEFAUT EST DESORMAIS LE MODELE LITE** (`gemini-3.1-flash-lite-image`, ~0,0336 $/image, **-50 %**).
+> **Pourquoi** : nos images ne sont JAMAIS le livrable. Elles servent de matiere a H3, de reference
+> SVG ou de moodboard LLM — le rendu final depend de la video upscalee ou du SVG, pas de la resolution
+> de l'image intermediaire, qu'on ne publie jamais. Payer le double pour une resolution inutilisee n'a
+> pas de sens (decision Aziz).
+> **Preuve** : comparatif a l'aveugle sur 3 editions reelles (identite avec 2 personnages similaires,
+> retrait d'objet, texte dans l'image) — **aucune difference visible** avec le Standard.
+>
+> ⚠️⚠️ **RISQUE ASSUME, sans garde-fou** (choix explicite) : le Lite **plafonne a 1K**. Un usage qui
+> aurait besoin de 2K/4K sortira en 1K **SANS AVERTISSEMENT**. → utiliser `IMAGE_MODEL_HQ` des que
+> l'image est **publiee telle quelle** (miniature YouTube, affiche) ou doit depasser 1K.
+>
+> ⛔⛔ **PIEGE** : le Lite exige `response_modalities=["IMAGE"]`. **Sans ce flag : HTTP 200, zero image,
+> aucune erreur** (panne silencieuse). Les 3 scripts SDK qui ne l'avaient pas ont ete corriges le
+> 2026-08-20 — tout NOUVEAU script doit le passer.
+>
+> 🚫 **Batch teste et ECARTE** : fonctionne pour l'edition (verifie : job SUCCEEDED, 2 images, 304 s
+> mesure) et coute -50 % entree ET sortie. Mais l'asynchrone (jusqu'a **24 h** annoncees, expiration a
+> 48 h = tout perdu) est incompatible avec nos 10-15 editions ciblees par acte, souvent relancees.
+> Economie reelle : ~0,66 $ pour 20 planches. Ne vaut le coup qu'au-dela de ~100 images figees.
+
 > ⛔⛔ **MISE A JOUR 2026-08-20 — la variante `preview` est MORTE.**
 > Google a annonce son shutdown au **2026-06-25** (date deja depassee ; elle repond encore, en sursis).
 > Le remplacant est **`gemini-3.1-flash-image`** : meme modele en GA, **meme prix** (0,067 $/image en 1K), aucune

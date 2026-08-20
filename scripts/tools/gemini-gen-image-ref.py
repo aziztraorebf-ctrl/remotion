@@ -43,7 +43,9 @@ def main():
 
     client = genai.Client(api_key=API_KEY)
     print(f"Generating with {MODEL} ({len(refs)} ref(s))...")
-    resp = client.models.generate_content(model=MODEL, contents=parts)
+    resp = client.models.generate_content(
+        model=MODEL, contents=parts, config=types.GenerateContentConfig(response_modalities=["IMAGE"])
+    )
 
     out = Path(args.output)
     out.parent.mkdir(parents=True, exist_ok=True)

@@ -3,8 +3,8 @@
 Pourquoi ce fichier existe
 --------------------------
 L'identifiant du modele image etait ecrit en dur 188 fois dans 121 fichiers.
-Quand Google a deprecie la version preview (shutdown annonce au 2026-06-25),
-il aurait fallu editer 121 fichiers. Desormais : une seule ligne ici.
+Quand Google a deprecie la version preview, il aurait fallu editer 121 fichiers.
+Desormais : une seule ligne ici.
 
 ⛔ NE JAMAIS re-ecrire un identifiant de modele en dur dans un script.
    Importer depuis ce module :
@@ -12,35 +12,71 @@ il aurait fallu editer 121 fichiers. Desormais : une seule ligne ici.
        from gemini_models import IMAGE_MODEL
 
    Les scripts de `scripts/tools/` sont lances directement (leur dossier est
-   donc dans sys.path) — l'import simple fonctionne. Depuis un autre dossier :
+   donc dans sys.path). Depuis un autre dossier (ex. scripts/warmap/) :
 
        sys.path.insert(0, str(ROOT / "scripts" / "tools"))
 
-Historique des changements
---------------------------
-- 2026-08-20 : `-preview` -> GA. La version preview etait en shutdown DEPASSE
-  depuis le 2026-06-25. Meme modele, meme prix (0,067 $/image en 1K), mais la
-  version preview pouvait cesser de repondre sans preavis.
+⭐ LE DEFAUT EST LE MODELE "LITE" — pourquoi
+-------------------------------------------
+Decision d'Aziz, 2026-08-20. Le raisonnement : **nos images ne sont jamais le
+livrable**. Elles servent de matiere a H3, de reference pour un SVG, ou de
+moodboard pour un LLM. Le rendu final depend de la video upscalee ou du SVG
+produit — pas de la resolution de l'image intermediaire, qu'on ne publie jamais.
+Payer le double pour une resolution inutilisee n'a pas de sens.
 
-Reference : https://ai.google.dev/gemini-api/docs/deprecations
+Valide par un comparatif a l'aveugle sur 3 editions reelles (identite avec
+2 personnages similaires, retrait d'objet, texte dans l'image) : aucune
+difference visible entre le Lite et le Standard. Voir memory/tools/gemini.md.
+
+⚠️⚠️ LE RISQUE ASSUME (choix explicite d'Aziz : pas de garde-fou automatique)
+-----------------------------------------------------------------------------
+**Le Lite plafonne a 1K.** Un usage qui aurait besoin de 2K/4K sortira en 1K
+**SANS AVERTISSEMENT**. Aucun mecanisme ne le detecte : c'est a nous d'y penser.
+→ Si une image doit etre publiee telle quelle, ou depasser 1K (miniature
+  YouTube haute def, affiche, asset final), utiliser explicitement IMAGE_MODEL_HQ.
+
+⛔⛔ PIEGE DU LITE — le flag est OBLIGATOIRE
+--------------------------------------------
+Le Lite exige `response_modalities=["IMAGE"]` dans la config. **Sans lui il
+renvoie ZERO image avec un HTTP 200 et aucune erreur** — panne silencieuse.
+Tous les scripts actifs ont ete corriges le 2026-08-20 ; tout NOUVEAU script
+doit le passer :
+
+    # SDK
+    client.models.generate_content(
+        model=IMAGE_MODEL, contents=parts,
+        config=types.GenerateContentConfig(response_modalities=["IMAGE"]),
+    )
+    # REST
+    {"generationConfig": {"responseModalities": ["IMAGE"]}}
+
+Historique
+----------
+- 2026-08-20 : defaut bascule sur le Lite (-50 %). Flag ajoute aux 3 scripts SDK
+  qui ne l'avaient pas (ils auraient casse en silence).
+- 2026-08-20 : `-preview` -> GA. La version preview etait en shutdown DEPASSE
+  depuis le 2026-06-25.
+
+Reference : https://ai.google.dev/gemini-api/docs/pricing
 Detail projet : memory/tools/gemini.md
 """
 
-# --- Image : generation ET edition (image en entree + instruction) ---------
-# GA depuis le 2026-05-28. Resolutions 0.5K/1K/2K/4K. ~0,067 $/image en 1K.
-IMAGE_MODEL = "gemini-3.1-flash-image"
+# --- Image : DEFAUT = Lite (brouillons, storyboards, matiere H3, refs SVG) ---
+# ~0,0336 $/image. 1K MAXIMUM. Exige response_modalities=["IMAGE"] (cf. ci-dessus).
+IMAGE_MODEL = "gemini-3.1-flash-lite-image"
 
-# Variante economique : ~0,0336 $/image (-50 %).
-# ⚠️ NON ADOPTEE — 2 contraintes verifiees, a tester avant tout usage :
-#    (1) exige generationConfig.responseModalities = ["IMAGE"], sinon elle
-#        renvoie ZERO image SANS erreur (echec silencieux) ;
-#    (2) plafonnee a 1K (pas de 2K/4K).
-IMAGE_MODEL_LITE = "gemini-3.1-flash-lite-image"
+# --- Image HAUTE QUALITE : a appeler EXPLICITEMENT ---------------------------
+# ~0,067 $/image (2x le Lite). Resolutions 0.5K/1K/2K/4K.
+# Quand l'utiliser : image publiee telle quelle, besoin de 2K/4K, asset final.
+IMAGE_MODEL_HQ = "gemini-3.1-flash-image"
+
+# Alias retrocompatible : plusieurs scripts nomment encore le standard ainsi.
+IMAGE_MODEL_STANDARD = IMAGE_MODEL_HQ
 
 # Haut de gamme image : ~0,134 $/image. Reserve aux cas ou le Flash echoue.
 IMAGE_MODEL_PRO = "gemini-3-pro-image"
 
-# --- Texte / vision (breakdown JSON, review, analyse de frames) ------------
+# --- Texte / vision (breakdown JSON, review, analyse de frames) --------------
 VISION_MODEL = "gemini-3.1-pro-preview"
 
 # Fallback review si le vision timeout. A n'utiliser qu'avec thinking_budget=0.
@@ -48,7 +84,8 @@ VISION_FALLBACK_MODEL = "gemini-2.5-flash"
 
 __all__ = [
     "IMAGE_MODEL",
-    "IMAGE_MODEL_LITE",
+    "IMAGE_MODEL_HQ",
+    "IMAGE_MODEL_STANDARD",
     "IMAGE_MODEL_PRO",
     "VISION_MODEL",
     "VISION_FALLBACK_MODEL",

@@ -45,7 +45,9 @@ def main() -> int:
         types.Part.from_text(text=args.prompt),
     ]
     print(f"i2i {MODEL} <- {ref.name}")
-    resp = client.models.generate_content(model=MODEL, contents=parts)
+    resp = client.models.generate_content(
+        model=MODEL, contents=parts, config=types.GenerateContentConfig(response_modalities=["IMAGE"])
+    )
 
     out = Path(args.output)
     out.parent.mkdir(parents=True, exist_ok=True)

@@ -19,7 +19,7 @@ from google import genai
 from google.genai import types
 import sys as _sys
 _sys.path.insert(0, str(Path(__file__).resolve().parent))
-from gemini_models import IMAGE_MODEL
+from gemini_models import IMAGE_MODEL_HQ
 
 ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(ROOT / ".env")
@@ -29,7 +29,8 @@ if not API_KEY:
     print("ERROR: GEMINI_API_KEY missing")
     sys.exit(1)
 
-MODEL = IMAGE_MODEL
+# miniature YouTube publiee -> HQ explicite (le defaut Lite plafonne a 1K)
+MODEL = IMAGE_MODEL_HQ
 
 
 BRIEFS = {

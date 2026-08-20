@@ -37,6 +37,7 @@ def main():
     resp = client.models.generate_content(
         model=MODEL,
         contents=[args.prompt],
+        config=types.GenerateContentConfig(response_modalities=["IMAGE"]),
     )
 
     out = Path(args.output)
