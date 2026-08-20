@@ -328,7 +328,7 @@ se capitalise).
 Exception, pas défaut : sujet exigeant une matière que le SVG ne rend pas (photoréalisme d'objet,
 texture, visage). Alors : script complet + brief court demandant PLUSIEURS concepts → interface web
 gratuite (Aziz colle lui-même) → 1-2 concepts retenus → correction ciblée par API
-(`gemini-3.1-flash-image-preview` REST direct).
+(`IMAGE_MODEL_HQ` de `scripts/tools/gemini_models.py`, REST direct). ⛔ **Une miniature est PUBLIEE telle quelle : toujours HQ, JAMAIS le Lite** (plafonne a 1K, sans avertissement).
 
 ⚠️ **Vérifier le CONTENU réel des fichiers téléchargés, jamais leur nom** (2 appels API perdus sur
 le Soudan : les fichiers « machine » et « serpent » étaient inversés dès le départ).

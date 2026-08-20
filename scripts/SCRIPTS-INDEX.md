@@ -75,6 +75,7 @@
 
 | Quand tu veux... | Script | Usage / note |
 |---|---|---|
+| **Choisir/importer l'identifiant du modèle Gemini (image ou vision)** | `scripts/tools/gemini_models.py` | Module, **SOURCE DE VÉRITÉ UNIQUE** — ⛔ ne JAMAIS ré-écrire un identifiant en dur. `from gemini_models import IMAGE_MODEL` (défaut **Lite**, ~0,034 $/img, **1K MAX**) ou `IMAGE_MODEL_HQ` si l'image est **publiée telle quelle** / dépasse 1K. ⚠️ Passer `response_modalities=["IMAGE"]` (recommandé ; la « panne silencieuse sans flag » a été **infirmée par test réel le 2026-08-20**). Hors `scripts/tools/` : `sys.path.insert(0, str(ROOT / "scripts" / "tools"))`. |
 | Générer une image text-to-image | `scripts/tools/gemini-gen-image.py` | `--prompt "..." --output x.png`. |
 | Éditer une image existante (i2i chirurgical, 1 ref) | `scripts/tools/gemini-i2i.py` | `--ref REF.png --prompt "CHANGE ONLY: ... PRESERVE EXACTLY: ..." --output OUT.png`. **L'image mène, le prompt modifie** (parts = image puis texte) — ⛔ ne PAS confondre avec `gemini-gen-image-ref.py`, l'ordre des parts n'est pas le même. ⛔ Jamais sur une miniature VALIDÉE (repasse toute l'image : cf `PACKAGING-YOUTUBE.md`). |
 | Générer des refs de style i2i en série (style anchor + table de clips) | `scripts/tools/generate-styleref.py` | 9:16 vertical, un par clip. |

@@ -25,7 +25,7 @@ d'un redessin diffère visiblement de celui de la plaque au sol.
    Attributs `data-capture="row|nav|thead|search"` = les sélecteurs de capture.
 2. **Servir** : `python3 -m http.server 8899 --directory <live-page>` (⛔ `--directory`, un `cd` ne
    persiste pas → 404).
-3. **Capturer** : `scratchpad/shotcraft/cap/capture-northshield.mjs` (adapté de
+3. **Capturer** : `scripts/tools/ui-capture/capture-northshield.mjs` (versionné ; adapté de
    `assets/scripts/capture-template.mjs`). Produit : plaque pleine page **2x**, découpes par élément,
    plaque VIDE (`hideForEmptyPlate`), et **`live-layout.json` = les bbox réelles**.
    Un 2e état s'obtient par `interact:` (ex. filtrer la liste) → `<name>-after.png`.

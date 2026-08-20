@@ -89,7 +89,7 @@ if [ ${#VIOLATIONS[@]} -gt 0 ]; then
   cat >&2 <<EOF
 {
   "decision": "block",
-  "reason": "MODELE GEMINI PERIME DETECTE dans $FILE_PATH : ${VIOLATIONS[*]}\n\nLire le bloc \"MODELES API VERROUILLES\" en haut de CLAUDE.md projet.\n\nBons modeles Gemini (2026-08) :\n  - Generation/edition image : gemini-3.1-flash-image (GA, SANS le suffixe preview)\n  - Vision / breakdown JSON : gemini-3.1-pro-preview\n  - Fallback review : gemini-2.5-flash avec thinking_budget=0 UNIQUEMENT\n\nINTERDIT : gemini-2.5-pro, gemini-2.0-*, tout modele image en preview (shutdown depasse le 2026-06-25), imagen-*, nano-banana-*\n\nSource : memory/tools/gemini.md"
+  "reason": "MODELE GEMINI PERIME DETECTE dans $FILE_PATH : ${VIOLATIONS[*]}\n\nLire le bloc \"MODELES API VERROUILLES\" en haut de CLAUDE.md projet.\n\nBons modeles Gemini (2026-08) :\n  - Generation/edition image : ⛔ NE PAS ecrire l'identifiant en dur.\n    Importer depuis scripts/tools/gemini_models.py :\n      from gemini_models import IMAGE_MODEL      # defaut LITE, 1K max\n      from gemini_models import IMAGE_MODEL_HQ   # image PUBLIEE telle quelle / 2K-4K\n    ⚠️ response_modalities=[\"IMAGE\"] = config recommandee (la \"panne\n        silencieuse sans flag\" a ete INFIRMEE par test reel le 2026-08-20).\n  - Vision / breakdown JSON : gemini-3.1-pro-preview\n  - Fallback review : gemini-2.5-flash avec thinking_budget=0 UNIQUEMENT\n\nINTERDIT : gemini-2.5-pro, gemini-2.0-*, tout modele image en preview (shutdown depasse le 2026-06-25), imagen-*, nano-banana-*\n\nSource : memory/tools/gemini.md"
 }
 EOF
   exit 2

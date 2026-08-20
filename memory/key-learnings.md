@@ -6,7 +6,7 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 
 ## 📑 INDEX
 
-- **🔧 MÉTHODE & PROCESS** — reorg workspace (liens en dur dans le code), grand ménage mémoire+disque (baseline), bug visuel = extraire frames + instrumenter, validation mini-renders comparatifs (pas des stills)
+- **🔧 MÉTHODE & PROCESS** — reorg workspace (liens en dur dans le code), grand ménage mémoire+disque (baseline), bug visuel = extraire frames + instrumenter, validation mini-renders comparatifs (pas des stills), ⛔ identifiant de modele/API en dur = dette (centraliser des le 2e usage), ⛔⛔ HTTP 200 ≠ livrable (changer un defaut = tester chaque chemin), modele en `-preview` = compte a rebours, repo tiers = lire ses prompts avant son code
 - **🗺️ WAR-MAP — grammaire & narration** — HOOK partir de NOS templates (pas grammaire externe), GRAMMAIRE CAUSALE + AUDIO-FIRST (standard), scanner catalogue carte-vivante avant code, structure linéaire + fact-check avant audio lock, sprite invisible = CONTRASTE, vrai coupable B1 = CODE LEGACY parallèle
 - **🎬 DA-BRIEF & review externe** — DA-brief causalité phrase-par-phrase + chaînes réf + catalogue, DeepSeek V4 3e voix conceptuelle (aveugle visuel), Gemini diff visuel obligatoire après 1er render, **DA-brief VIDÉO (analyse d'écart vers refs, scène finie)**
 - **🎨 SVG GÉNÉRATIF ANIMÉ** (2026-06-21, ⭐ NOUVELLE VOIE) — Gemini génère une SCÈNE illustrée complexe en SVG propre (50-100 paths, ~20Ko, groupes #id sémantiques) → animable PAR PARTIES dans Remotion via useCurrentFrame (pas Lottie, pas AE). Net à toute taille, couleurs modifiables à la frame. GOTCHA : ne JAMAIS sortir un élément du cadre clippé (artefact de coupe) → "repart" = avance légère + fade out · **BIBLIOTHÈQUE SVG** (2026-06-25) — capitaliser chaque projet SVG en éléments (.svg) + techniques (.md) + index R&D (RD-INDEX.md avec renders catbox + verdicts). Un agent vierge peut réutiliser sans relire les TSX source. · **TEST NAVIGABILITÉ** : lancer un agent vierge avec 5 questions concrètes → les lacunes qu'il ne trouve pas = trous à corriger immédiatement (lien mort, prompt TODO, décision non tranchée) · **PERSONNAGE VIVANT** (2026-06-30) — perso d'encre animé par CODE (frame-driven, pas sprites) ; FOOT-PLANT / compensation bassin / objet-enfant-de-la-main ; LLM=banc d'idées pas rig-en-bloc → biblio `personnage-vivant-svg/`
@@ -19,6 +19,90 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 ---
 
 ## 🔧 MÉTHODE & PROCESS
+
+### 2026-08-20 — ⛔ Un identifiant de modele/API en dur est une dette : centraliser des le 2e usage
+
+**Vecu** (migration Gemini image) : l'identifiant du modele etait ecrit en dur **188 fois dans
+121 fichiers**. Le changement lui-meme etait trivial (meme modele, meme prix, meme qualite) —
+c'est la DUPLICATION qui a transforme une ligne en chantier de session.
+
+**Le principe** : tout identifiant qui appartient a un FOURNISSEUR (modele LLM, voice_id
+ElevenLabs, slug fal.ai, endpoint) est une variable qui CHANGERA sans nous prevenir. Des qu'il
+apparait une 2e fois dans le repo, il doit vivre dans un module constant importe — jamais recopie.
+Centraliser a 2 occurrences coute 5 minutes ; a 188, une session.
+
+**Verification apres centralisation** : `grep -c` l'identifiant litteral. S'il reste des occurrences
+hors du module source (hors doc et archives), la centralisation est incomplete et le prochain
+changement re-cassera.
+
+→ Fait pour Gemini : `scripts/tools/gemini_models.py`. **PAS fait** pour les autres (voix
+ElevenLabs, slugs Minimax/fal.ai, modeles OpenRouter/Kimi) — meme risque, chantier ouvert.
+
+---
+
+### 2026-08-20 — ⛔⛔ HTTP 200 n'est PAS une preuve de livrable : changer un DEFAUT exige un appel reel sur CHAQUE chemin de code
+
+**Vecu** : le modele Gemini Lite exige `response_modalities=["IMAGE"]`. Sans ce flag :
+**HTTP 200, zero image, aucune erreur, aucun warning**. 3 scripts SDK du repo ne le passaient pas —
+ils auraient casse EN SILENCE si le defaut avait bascule sans test reel.
+
+**Ce qui a sauve la mise** : un APPEL REEL avant de graver le defaut, au lieu de lire la doc (qui
+mentionne le flag sans dire ce qui arrive s'il manque). Idem pour le mode Batch : teste reellement
+(job SUCCEEDED, 2 images, 304 s mesure) plutot que juge sur la doc — d'ou un motif d'ecart SOLIDE.
+
+**Checklist avant de basculer un defaut** :
+1. Appel reel → verifier que **l'ARTEFACT existe sur disque** (pas que le code HTTP soit 200).
+2. `grep` TOUS les appelants → chacun passe-t-il les parametres nouvellement requis ?
+3. Se demander : « quel mode d'echec ce modele a-t-il que l'ancien n'avait pas ? »
+   (ici : plafond 1K silencieux + flag obligatoire silencieux).
+
+**Pendant machine de la regle projet** « un agent qui rapporte *termine* n'a pas forcement produit le
+fichier » : succes annonce (rapport texte / HTTP 200) ≠ livrable. **Seul l'artefact est une preuve.**
+
+⚠️ **Risque ASSUME, ne pas le « corriger » spontanement** : Aziz a explicitement choisi de ne PAS
+poser de garde-fou automatique sur le plafond 1K du Lite. Un usage 2K/4K sortira en 1K sans
+avertissement — c'est a l'humain de demander `IMAGE_MODEL_HQ`. Decision consciente, pas un oubli.
+
+---
+
+### 2026-08-20 — Un modele qui REPOND n'est pas un modele SUPPORTE : auditer les dates de shutdown
+
+**Vecu** : notre modele image de production etait en **shutdown DEPASSE depuis le 2026-06-25** —
+pres de 2 mois. Il repondait encore normalement, en sursis. Rien dans notre pipeline ne l'aurait
+signale : la panne serait arrivee en pleine production, sur un 404 brutal, un jour non choisi.
+La decouverte est un **effet de bord** d'une veille faite pour une tout autre raison, pas le fruit
+d'un controle.
+
+**La regle** : le suffixe `-preview` / `-exp` / `-beta` dans un identifiant est un **compte a
+rebours, pas un nom**. Tout modele en preview utilise en PRODUCTION doit avoir sa date de shutdown
+verifiee sur la doc officielle, et migrer vers le GA des qu'il existe.
+
+**Reflexe a ajouter** : toute session touchant un fournisseur d'API → ouvrir sa page modeles/pricing
+officielle et confronter la liste a nos identifiants en production. Coût : 2 minutes.
+
+---
+
+### 2026-08-20 — Repo tiers : lire ses PROMPTS et ses CONFIGS avant son code
+
+**Vecu** : 2 videos presentaient un workflow ComfyUI Krea 2 + MiniMax H3. L'objet apparent (Krea 2
+pour l'edition) a ete **entierement ecarte** apres verification — le modele d'edition n'existe pas,
+c'est un LoRA hobbyiste ; injouable sur notre Mac ; Comfy Cloud ne peut pas l'executer.
+
+**Mais la fouille du repo (MIT) a produit la vraie valeur** : son `agent/prompts.py` contient le
+format de prompt H3 officiel « 6 sections », condense du guide MiniMax. Apport majeur : la section
+`retention_analysis` = canal EXPLICITE pour declarer ce qui doit etre preserve — exactement notre
+probleme de derive d'identite entre clips, pour lequel nous n'avions aucun canal dedie.
+
+**Le pattern** : quand une demo/repo tiers arrive, le gain n'est presque jamais l'outil vante
+(souvent inapplicable : materiel, licence, ou il n'existe pas vraiment). Le gain est le **savoir
+encode en passant** — formats de prompt, ordres d'appel, contraintes de cablage.
+
+⭐ **Signal le plus fort qui existe** : le guide officiel dit « clip < ~8 s → UNE SEULE prise », et
+nous avions mesure la meme chose INDEPENDAMMENT (« 155 frames, une seule passe », Acte 3 Gazoduc).
+Une convergence entre une source officielle et une mesure maison est bien plus forte qu'une
+convergence entre LLM : les deux chemins n'ont aucun contexte commun.
+
+---
 
 ### 2026-07-15 — Un signalement répété "trop petit" peut être un problème de CONTRASTE, pas de taille
 Short Sénégal Pétrole & Gaz D3, Beat 2 : des icônes SVG jugées "peu visibles" ont été agrandies sur 3

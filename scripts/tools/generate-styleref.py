@@ -8,6 +8,10 @@ Output: 9:16 vertical images in the same style, one per clip
 import os
 import sys
 from pathlib import Path
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parent))
+from gemini_models import IMAGE_MODEL
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
@@ -15,7 +19,7 @@ from google.genai import types
 load_dotenv(Path(__file__).parent.parent / ".env")
 
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
-MODEL = "models/gemini-3.1-flash-image"
+MODEL = f"models/{IMAGE_MODEL}"
 
 STYLE_ANCHOR = Path(__file__).parent.parent / "public" / "assets" / "library" / "geoafrique" / "thiaroye-1944" / "frames" / "frame-03.jpg"
 

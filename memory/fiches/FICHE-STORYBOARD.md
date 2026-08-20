@@ -117,8 +117,11 @@ moins chère : Gemini écrit 8 000 caractères de markdown et 0 image ; GPT dess
 - **Gemini image** — mesuré **1/6 → 3/3** en ne changeant QUE la dernière ligne. Il faut la négation
   explicite : `DELIVERABLE — GENERATE AN IMAGE (not a text description). […] Do not reply with prose.
   Output the image now.` Une formulation molle (« GENERATE THE STORYBOARD IMAGES NOW ») ne suffit pas : 1/4.
-  ⛔ `responseModalities:["image"]` SEUL n'est pas le fix — testé, ça dégrade (`finishReason=NO_IMAGE`,
-  `parts=[]`, plus aucun diagnostic possible). Garder `["image","text"]`.
+  ⚠️ Le constat « `responseModalities:["image"]` seul dégrade (`NO_IMAGE`, `parts=[]`) » datait du
+  2026-08-17 et portait sur la variante *preview*, **modèle mort depuis**. ⛔ NON REPRODUIT sur le
+  défaut actuel (Lite) : `["IMAGE"]`, `["image","text"]` et *aucun flag* renvoient tous 1 image
+  (testé 2026-08-20). Le levier reste la DERNIÈRE LIGNE du brief, pas le flag.
+  ⛔ Modèle : importer `IMAGE_MODEL` de `scripts/tools/gemini_models.py`, jamais en dur.
 - **GPT image** — la corruption du texte est **proportionnelle à la quantité de texte demandée**.
   Réduit aux SEULS timecodes → « 0,0s » « 3,5s », zéro faute. Lui demander ses notes DANS l'image →
   le pire résultat mesuré. ⛔ Ne jamais lui faire écrire d'analyse dans une planche.

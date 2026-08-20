@@ -7,6 +7,26 @@
 > Toute nouvelle section de session s'insère APRÈS lui, jamais avant — sinon l'avertissement descend
 > et se fait enterrer, et un état périmé est annoncé à Aziz malgré l'avertissement présent et lu.
 
+## 🔧 BACKLOG TECHNIQUE — dette Gemini/outillage (2026-08-20, non urgent)
+
+Migration image faite (preview mort → GA → **défaut LITE**, -50 %). Restes identifiés par l'audit de wrap :
+1. **~35 fichiers mémoire/doctrines/templates** citent encore l'ancien identifiant image. Les 7 qui
+   *agissaient* sont corrigés (hook `beat-preflight`, `PACKAGING-YOUTUBE`, `gemini.md`, `PAYSAGE`,
+   `MEMORY.md`, 2 scripts non migrés). Restent des mentions **passives** (templates de brief, doctrines
+   WARMAP, `gemini-pipelines.md`, `rules-gemini.md`, ~12 docstrings) — à corriger au fil de l'eau.
+   ⚠️ `.claude/agents/visual-producer.md:407` = l'agent qui **dépense de l'argent réel**, à traiter en premier.
+   ⛔ NE PAS toucher aux ~120 fichiers d'archives.
+2. **`VISION_MODEL` est encore en `-preview`** — son statut de shutdown n'a PAS été vérifié. Même
+   exposition que celle découverte sur le modèle image (qui tournait 2 mois après son retrait annoncé).
+3. **La centralisation n'a été faite QUE pour Gemini.** Voix ElevenLabs, slugs Minimax/fal.ai, modèles
+   OpenRouter/Kimi portent le même risque, sans module source de vérité.
+4. **Budgets de `memory/fiches/` désynchronisés** : FICHE-CLIP-GENERE 173 lignes (plafond déclaré 132),
+   FICHE-STORYBOARD 171 (114), FICHE-UI-PRODUIT 114 (55, non déclarée en exception). Re-mesurer et
+   re-déclarer le tableau du README — décision de structure, à valider avec Aziz.
+5. **`scripts/tools/mkprevis-camera-seule.py`** non commité (chantier previs H3) — à commiter ou écarter.
+
+---
+
 ## ⛔⛔ AVANT DE LIRE QUOI QUE CE SOIT — LES CHANTIERS VIVANTS SONT DANS DES WORKTREES
 
 > **Ce fichier (repo principal) est structurellement EN RETARD** sur les chantiers qui vivent ailleurs.
@@ -374,7 +394,11 @@ packaging AVANT publication) · **[DIAGNOSTIC-FLOP-VIDEO.md](memory/doctrines/DI
 sont **archivés** (consultables, pas supprimés) : ils ne sont plus la source de la showcase (« des
 templates qui défilent sans intention ne veulent rien dire »). Nouvelle source = **production vivante
 publiée** (Sénégal, Soudan, AES, CFA, Gazoduc Actes 1-2-4-5 ; ⛔ Acte 3 exclu tant que l'acte ENTIER n'est pas validé (son Segment C est FINAL depuis le 18/08, mais l'acte ne l'est pas)).
-⏭️ **PROCHAINE ACTION = écrire la CHARTE DE DA** (palette 4 couleurs + 1 typo + fond en dégradé
+✅ **CHARTE DE DA FAITE le 2026-08-15** (`memory/doctrines/CHARTE-DA-FREELANCE.md`, 166 lignes,
+palette + exceptions datées + preuve interne). ⏭️ **PROCHAINE ACTION = le DÉROULÉ** (ordre/durée/
+musique) → index interne 3-4 min → **cut vente 60-90 s**. ⛔ Ne plus annoncer la charte comme « à
+écrire » (dérive détectée au wrap du 2026-08-20). Ancien libellé conservé pour mémoire : palette
+4 couleurs + 1 typo + fond en dégradé
 vivant à halos au lieu d'aplat `#16213a`) — ~1/2 journée, ⛔ **zéro composant neuf à coder**. C'est le
 chaînon manquant du cut vente, identifié par le benchmark de 3 références Fiverr. Ensuite seulement :
 déroulé (ordre/durée/musique) → index interne 3-4 min → cut vente 60-90 s.

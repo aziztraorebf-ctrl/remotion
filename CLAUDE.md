@@ -29,7 +29,7 @@ Claude est Expert Video Director (Remotion). Aziz est le réalisateur : il décr
 
 **INTERDITS** : toute version Gemini antérieure à 3.1 pour image/vision ; les variantes `pro-image`, `imagen`, `nano-banana` ; les vieux Claude (séries 3.x). Détail exhaustif des bannis : `memory/tools/gemini.md`.
 
-**Vérif AVANT appel** : « Gemini 3.1 pro » → `gemini-3.1-pro-preview`. « Gemini Flash image » → importer `IMAGE_MODEL` (défaut **Lite**, 1K max) ou `IMAGE_MODEL_HQ` (2K/4K, image publiée) depuis `scripts/tools/gemini_models.py`. ⚠️ Le Lite exige `response_modalities=["IMAGE"]` — **sans ce flag il renvoie zéro image SANS erreur**. ⛔ Ne JAMAIS réécrire un identifiant en dur dans un script — importer `IMAGE_MODEL` depuis `scripts/tools/gemini_models.py` (source de vérité unique). Si je m'apprête à écrire une version Gemini périmée → STOP, relire. Un hook `gemini-model-guard.sh` bloque l'écriture de modèles périmés dans le code.
+**Vérif AVANT appel** : « Gemini 3.1 pro » → `gemini-3.1-pro-preview`. « Gemini Flash image » → importer `IMAGE_MODEL` (défaut **Lite**, 1K max) ou `IMAGE_MODEL_HQ` (2K/4K, image publiée) depuis `scripts/tools/gemini_models.py`. ⚠️ Passer `response_modalities=["IMAGE"]` (config recommandée ; l'affirmation « sans ce flag, zéro image sans erreur » a été **infirmée par test réel le 2026-08-20** — ne pas la propager). ⛔ Ne JAMAIS réécrire un identifiant en dur dans un script — importer `IMAGE_MODEL` depuis `scripts/tools/gemini_models.py` (source de vérité unique). Si je m'apprête à écrire une version Gemini périmée → STOP, relire. Un hook `gemini-model-guard.sh` bloque l'écriture de modèles périmés dans le code.
 
 ---
 

@@ -11,7 +11,7 @@ manquante entre les deux — elles arrivent au bon moment, sans bloquer.
 Cause d'échec n°1 mesurée par audit (2026-08-17) : **« brique existante non trouvée »**
 (6 cas documentés, ~20 itérations perdues). Les règles existaient ; elles n'étaient pas retrouvées.
 
-## Les fiches actuelles (7)
+## Les fiches actuelles (9)
 | Fiche | Se déclenche quand | Source du déclenchement |
 |---|---|---|
 | `FICHE-SVG-DESSINE.md` | on écrit du SVG dessiné dans un `.tsx` | ≥4 primitives OU un `d={`/`d="M`, avec ≥2 primitives (garde-fou anti-icône) |

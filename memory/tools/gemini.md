@@ -12,9 +12,12 @@
 > aurait besoin de 2K/4K sortira en 1K **SANS AVERTISSEMENT**. → utiliser `IMAGE_MODEL_HQ` des que
 > l'image est **publiee telle quelle** (miniature YouTube, affiche) ou doit depasser 1K.
 >
-> ⛔⛔ **PIEGE** : le Lite exige `response_modalities=["IMAGE"]`. **Sans ce flag : HTTP 200, zero image,
-> aucune erreur** (panne silencieuse). Les 3 scripts SDK qui ne l'avaient pas ont ete corriges le
-> 2026-08-20 — tout NOUVEAU script doit le passer.
+> ⚠️ **FLAG `response_modalities=["IMAGE"]` — recommande, PAS un piege.** J'avais ecrit ici que son
+> absence provoquait « HTTP 200, zero image, aucune erreur ». **C'etait FAUX** : relaye d'un rapport
+> de recherche sans test, puis **infirme par appel reel le 2026-08-20** (sans flag / `["IMAGE"]` /
+> `["image","text"]` : les 3 renvoient 1 image, finish=STOP). Garder le flag comme config explicite,
+> ne pas traiter son absence comme une panne. ⚠️ Les scripts du repo utilisent majoritairement
+> `["image","text"]` — c'est sans consequence.
 >
 > 🚫 **Batch teste et ECARTE** : fonctionne pour l'edition (verifie : job SUCCEEDED, 2 images, 304 s
 > mesure) et coute -50 % entree ET sortie. Mais l'asynchrone (jusqu'a **24 h** annoncees, expiration a
@@ -28,10 +31,12 @@
 > ⛔ **Ne plus jamais ecrire un identifiant de modele en dur** : importer depuis
 > `scripts/tools/gemini_models.py` (`IMAGE_MODEL`). L'identifiant etait duplique **188 fois dans
 > 121 fichiers** — c'est ce qui rendait cette mise a jour couteuse.
-> Pistes d'economie NON adoptees (a tester) : **mode Batch -50 %** (meme modele, asynchrone) et
-> **`gemini-3.1-flash-image-lite` -50 %** (⚠️ 1K max + exige `responseModalities:["IMAGE"]`, sinon zero image SANS erreur).
+> ✅ **Les 2 pistes d'economie sont TRANCHEES** (le 2026-08-20, ne pas les re-tester) :
+> **Lite ADOPTE** comme defaut (-50 %, `gemini-3.1-flash-lite-image` — ⚠️ noter l'ordre exact des segments)
+> · **Batch ECARTE** (fonctionne, 304 s mesure, mais l'asynchrone est incompatible avec 10-15 editions
+> ciblees par acte souvent relancees ; ~0,66 $ d'economie pour 20 planches).
 > Lire EN PREMIER. Pipelines spécialisés (thumbnails, carousel, portraits, Nano Banana, walk cycle) : `memory/tools/gemini-pipelines.md`.
-> Mise à jour : 2026-06-25
+> Mise à jour : 2026-08-20
 
 ---
 

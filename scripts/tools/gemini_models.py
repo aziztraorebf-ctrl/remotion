@@ -35,25 +35,26 @@ difference visible entre le Lite et le Standard. Voir memory/tools/gemini.md.
 → Si une image doit etre publiee telle quelle, ou depasser 1K (miniature
   YouTube haute def, affiche, asset final), utiliser explicitement IMAGE_MODEL_HQ.
 
-⛔⛔ PIEGE DU LITE — le flag est OBLIGATOIRE
---------------------------------------------
-Le Lite exige `response_modalities=["IMAGE"]` dans la config. **Sans lui il
-renvoie ZERO image avec un HTTP 200 et aucune erreur** — panne silencieuse.
-Tous les scripts actifs ont ete corriges le 2026-08-20 ; tout NOUVEAU script
-doit le passer :
+⚠️ FLAG response_modalities — RECOMMANDE, PAS un piege
+-------------------------------------------------------
+Passer `response_modalities=["IMAGE"]` reste la config explicite recommandee.
+⛔ MAIS l'affirmation « sans ce flag, le Lite renvoie ZERO image sans erreur » etait
+FAUSSE : relayee d'un rapport de recherche sans test, puis INFIRMEE par appel reel le
+2026-08-20 — sans flag, avec ["IMAGE"], avec ["image","text"] : les 3 variantes
+renvoient 1 image, finish=STOP. Ne pas traiter son absence comme une panne.
+(Lecon : une regle non testee ne se grave pas. Cf. key-learnings 2026-08-20.)
 
     # SDK
     client.models.generate_content(
         model=IMAGE_MODEL, contents=parts,
         config=types.GenerateContentConfig(response_modalities=["IMAGE"]),
     )
-    # REST
-    {"generationConfig": {"responseModalities": ["IMAGE"]}}
 
 Historique
 ----------
 - 2026-08-20 : defaut bascule sur le Lite (-50 %). Flag ajoute aux 3 scripts SDK
-  qui ne l'avaient pas (ils auraient casse en silence).
+  qui ne l'avaient pas (par coherence — la panne silencieuse annoncee n'a PAS ete
+  reproduite au test).
 - 2026-08-20 : `-preview` -> GA. La version preview etait en shutdown DEPASSE
   depuis le 2026-06-25.
 

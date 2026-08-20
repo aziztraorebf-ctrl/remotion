@@ -82,7 +82,7 @@ else
   echo "R7: Permanent motion obligatoire dans tout composant custom."
   echo ""
   echo "--- MODELES GEMINI (source de verite : tableau CLAUDE.md) ---"
-  echo "IMAGE GENERATION : gemini-3.1-flash-image-preview"
+  echo "IMAGE GENERATION : IMAGE_MODEL depuis scripts/tools/gemini_models.py (defaut LITE 1K max ; IMAGE_MODEL_HQ si image PUBLIEE telle quelle)"
   echo "VISION / REVIEW  : gemini-3.1-pro-preview  (via beat-session --phase review)"
   echo "FALLBACK REVIEW  : gemini-2.5-flash thinking_budget=0  (SEULEMENT si 3.1-pro timeout)"
   echo "INTERDIT         : gemini-2.5-pro, gemini-2.0-*, et tout modele non liste ci-dessus"

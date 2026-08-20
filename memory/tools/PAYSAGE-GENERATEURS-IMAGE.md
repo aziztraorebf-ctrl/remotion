@@ -7,8 +7,8 @@
 
 ## ⭐ VERDICT EN 3 LIGNES
 
-1. **Notre Nano Banana 2 (`gemini-3.1-flash-image-preview`) reste un bon choix** : 7e en édition (Elo 1249), 3e en text-to-image (1320), 0,067 $/image. Meilleur rapport qualité/prix du top 10.
-2. ⭐ **UN SEUL changement à gain net évident : MAI-Image-2.5 (Microsoft)** — MEILLEUR en édition (1256 > 1249) et **28 % MOINS CHER** (0,048 $). Seul modèle du marché supérieur ET moins cher. À tester (via OpenRouter / Azure AI Foundry).
+1. **La famille Gemini `flash-image` reste notre choix** : 7e en édition (Elo 1249), 3e en text-to-image (1320). ⭐ **Depuis le 2026-08-20 notre défaut est le LITE** (`IMAGE_MODEL`, ~0,0336 $/image, **1K max**) ; le HQ (`IMAGE_MODEL_HQ`, 0,067 $) est réservé aux images **publiées telles quelles**. ⛔ Identifiant jamais en dur — importer depuis `scripts/tools/gemini_models.py`.
+2. ⛔ **MAI-Image-2.5 : testé puis ÉCARTÉ** (voir DÉCISIONS ARRÊTÉES). Sur le papier meilleur en édition (1256 > 1249) et 28 % moins cher — **à l'aveugle sur notre matière, aucune différence visible**, et il est en *preview*. ⭐ La leçon : un écart de quelques points d'Elo ne se voit pas sur nos cas réels.
 3. ⛔ **AUCUN open weights ne rivalise en ÉDITION.** Le meilleur réellement utilisable par nous est à **−83 Elo** (~61 % de préférence adverse en tête-à-tête = visible à l'œil nu).
 
 ## ⛔⛔ LES 3 PIÈGES — affirmations FAUSSES très répandues dans les blogs
@@ -79,8 +79,10 @@ Critère : licence commerciale libre ET tient sur du matériel réaliste.
 
 ## DÉCISIONS ARRÊTÉES
 
-- ✅ **Garder Nano Banana 2 par défaut** (nos prompts sont calibrés dessus).
-- ⏭️ **Tester MAI-Image-2.5** sur nos éditions ciblées réelles (édition image source → régénération H3 au seed). Seul changement à gain net.
+- ✅ **Rester dans la famille Gemini `flash-image`** (nos prompts sont calibrés dessus) — défaut LITE, HQ si publié.
+- ⛔ **MAI-Image-2.5 : TESTÉ puis ÉCARTÉ (2026-08-20).** Comparatif à l'aveugle sur 3 éditions réelles : Aziz n'a vu **aucune** différence avec le nôtre. Écarté car en *preview* côté Azure et exposé en « Partner » chez fal — on ne quitte pas un preview pour un autre preview. Accès réel : `microsoft/mai-image-2.5/edit` sur **fal.ai** (⛔ **PAS** sur OpenRouter, vérifié en direct). À reconsidérer s'il passe en GA.
+- ⛔ **Mode Batch : TESTÉ puis ÉCARTÉ (2026-08-20).** Fonctionne pour l'édition (job SUCCEEDED, 2 images, **304 s mesuré**), -50 % sur l'entrée ET la sortie. Mais l'asynchrone (24 h annoncées, expiration à 48 h = tout perdu) est incompatible avec 10-15 éditions ciblées par acte, souvent relancées. ~0,66 $ d'économie pour 20 planches → ne vaut le coup qu'au-delà de ~100 images figées.
+- ✅ **Lite ADOPTÉ comme défaut (-50 %)** le 2026-08-20 — cf. `scripts/tools/gemini_models.py`.
 - ⛔ **Ne PAS migrer vers l'open weights pour l'édition** (−83 Elo mini ; les 2 modèles qui s'en approchent sont hors licence UE ou non-commerciaux).
 - ⛔ **Ne PAS passer à GPT Image 2** malgré sa 1re place T2I : 3,1× notre coût, et notre besoin est l'ÉDITION.
 
