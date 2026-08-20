@@ -1,4 +1,4 @@
-# LES 4 PILIERS B2B — quelle brique pour quelle demande client
+# LES 5 PILIERS B2B — quelle brique pour quelle demande client
 
 > Posé le 2026-08-20 (constat d'Aziz, session shotcraft). **Voie B2B / freelance**, distincte de la
 > voie YouTube. Ce fichier répond à UNE question : *« un client demande X — quel pilier ? »*
@@ -7,7 +7,7 @@
 
 ## Pourquoi ce fichier existe
 
-Quatre capacités ont été construites séparément, pour la chaîne. Mises ensemble, elles couvrent la
+Cinq capacités ont été construites séparément, pour la chaîne. Mises ensemble, elles couvrent la
 majorité de ce qu'un client B2B peut demander — mais seulement si on sait **laquelle sortir**. Sans
 aiguillage, on retombe sur le pilier qu'on a en tête (vécu : Flowdesk fait 100 % en SVG abstrait,
 rejeté « illisible sans le son », alors que la demande appelait un écran).
@@ -19,9 +19,10 @@ rejeté « illisible sans le son », alors que la demande appelait un écran).
 | montrer **où** ça se passe, un territoire, une route, un flux entre pays | **1. CARTE** | `FICHE-CAMERA.md` · doctrines Mapbox/D3 |
 | expliquer un **mécanisme**, une tension, un blocage, une idée sans forme physique | **2. SCÈNE SVG** | `FICHE-SVG-DESSINE.md` |
 | montrer **son produit**, son app, son dashboard, un écran qui existe | **3. UI PRODUIT** | `FICHE-UI-PRODUIT.md` ⭐ |
-| une **scène filmée**, un personnage, une matière organique, du photoréaliste | **4. VIDÉO GÉNÉRÉE** | `FICHE-CLIP-GENERE.md` |
+| un **graphisme** : chiffre-choc, portrait, cartouche, lockup, liens animés, badges | **4. MOTION DESIGN REACT** ⭐ | `INTENTION-FORME-INDEX.md` · `COMPOSANTS-INDEX.md` |
+| une **scène filmée**, un personnage, une matière organique | **5. VIDÉO GÉNÉRÉE** | `FICHE-CLIP-GENERE.md` |
 
-## LES 4 PILIERS EN DÉTAIL
+## LES 5 PILIERS EN DÉTAIL
 
 ### 1. CARTE — Mapbox + D3
 Territoire réel, géographie exacte. **Engage une promesse d'EXACTITUDE** (géo zéro approximation) que
@@ -42,15 +43,35 @@ Pipeline : page servie → capture Puppeteer (plaque 2x + découpes + **bbox ré
 **Prouvé agnostique du design** : même film en registre sombre ET en light mode SaaS, sans changer un
 composant. Socle importé de video-shotcraft (Apache-2.0). Détail complet : `memory/fiches/FICHE-UI-PRODUIT.md`.
 
-### 4. VIDÉO GÉNÉRÉE — MiniMax H3 (+ Comfy)
+### 4. MOTION DESIGN REACT — Remotion pur ⭐ (le socle qu'on oublie de compter)
+**Ajouté le 2026-08-20 sur constat d'Aziz** : « Remotion n'est pas juste pour coller nos vidéos
+ensemble, c'est aussi pour créer des graphismes, du motion design. »
+Le pilier le PLUS ancien, le plus utilisé, et le seul sans aucune dépendance externe — donc celui
+qu'on oublie de compter, précisément parce qu'il est partout.
+
+Briques vérifiées présentes : `PortraitDossier` · `PortraitEditorial` (imageUrl + stats + rubrique) ·
+`PortraitGeometry` · `PortraitSilhouette` · `DiscFrame` (disque paramétrable qui accueille n'importe
+quel contenu — **les « photos rondes » d'un plan carte+personnes**) · `NoeudTisserand` ·
+`MilitaryMarchLine` · compteurs, cartouches, lockups.
+Registre : chiffre-choc, portrait encadré, badges de certification, grille d'icônes, liens animés,
+carte + avatars, générique de fin. C'est le pilier qui **RELIE** les autres et porte l'habillage commun.
+
+⛔ **ERREUR À NE PAS REFAIRE (commise le 2026-08-20, dans cette même session)** : devant le plan
+« carte du UK + photos rondes de personnes » de la vidéo Aikido, j'ai répondu « pilier carte + vidéo
+générée » — en cherchant la solution dans l'outil NOUVEAU alors qu'un `PortraitEditorial`/`DiscFrame`
+posé sur une carte D3 la donne, en déterministe et révisable au paramètre.
+C'est le pattern [[feedback_registre-visuel-briques-existantes-non-consultees]].
+**Réflexe : avant de router vers un pilier externe, vérifier si c'est un graphisme composable.**
+
+### 5. VIDÉO GÉNÉRÉE — MiniMax H3 (+ Comfy)
 Matière filmée, personnages, organique — tout ce que le SVG s'interdit.
 ⚠️ **Le seul pilier non déterministe.** On ne peut pas garantir une révision au paramètre près, donc
 ⛔ **ne pas le vendre comme un service autonome** : c'est un INGRÉDIENT dans un film porté par les
 autres piliers. Un client peut obtenir de la génération ailleurs, moins cher.
 
-## ⭐ CE QUI FAIT L'OFFRE — le moat est le DÉTERMINISME (piliers 1-2-3)
+## ⭐ CE QUI FAIT L'OFFRE — le moat est le DÉTERMINISME (piliers 1-2-3-4)
 
-Trois piliers sur quatre sont du code frame-driven. En langage client :
+**Quatre piliers sur cinq** sont du code frame-driven, déterministe, révisable au paramètre. En langage client :
 - **« vous voyez le mouvement réel avant que je finisse »** — pas un storyboard statique. L'aperçu
   animé EST le livrable, à l'habillage près.
 - **« une correction est un ajustement, pas une reprise »** — je change une valeur, pas un rendu.
@@ -62,7 +83,7 @@ C'est ce que la génération d'image/vidéo ne peut pas promettre. C'est l'argum
 
 Un explainer B2B complet fait souvent **2 → 3** : le problème abstrait (pourquoi c'est cassé), puis
 l'écran qui le résout. L'échec de Flowdesk vient d'avoir tenté tout le trajet en pilier 2.
-Le pilier 1 reste **à part** (gig distinct). Le pilier 4 n'apparaît jamais seul.
+Le pilier 1 reste **à part** (gig distinct). Le pilier 5 n'apparaît jamais seul.
 
 ## ÉTAT COMMERCIAL (2026-08-20)
 

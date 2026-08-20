@@ -1,6 +1,8 @@
 # UI PRODUIT / ÉCRAN DE SAAS — fiche de déclenchement (lire AVANT de coder une scène d'interface)
 
-> Se déclenche quand on simule un écran, un dashboard, une app, un site — **pilier B2B n°3**.
+> Se déclenche quand on simule un écran, un dashboard, une app, un site — **pilier B2B n°3 sur 5**.
+> ⚠️ Un plan qui ressemble a une UI n'en est pas forcement une : cartouche, portrait, badge, lockup,
+> carte + avatars = **pilier 4 (motion design React)**, briques deja presentes. Verifier avant de capturer.
 > ⚠️ Si ce que tu lis ne correspond PAS au réel que tu as sous les yeux : **c'est la FICHE qui a tort**.
 > Corrige-la immédiatement. Chemins vérifiés sur disque le 2026-08-20.
 
@@ -102,7 +104,7 @@ client que **le pipeline s'adapte à SON design**. Compositions de référence :
 ## ⛔ CE QUE CE PILIER NE FAIT PAS
 
 Pas de personnages, pas de visages, pas d'organique. Ce n'est pas une limite à cacher : les meilleurs
-explainers SaaS n'en ont pas. Si le besoin est un personnage → pilier SVG ou pilier vidéo générée.
+explainers SaaS n'en ont pas. Si le besoin est un personnage → pilier SVG (2) ou vidéo générée (5).
 Voir `memory/doctrines/PILIERS-B2B.md`.
 
 ## Références
