@@ -31,7 +31,7 @@ d'un redessin diffère visiblement de celui de la plaque au sol.
    Un 2e état s'obtient par `interact:` (ex. filtrer la liste) → `<name>-after.png`.
 4. **Animer** — `PageCam` + les recettes (voir § socle).
 
-## ⛔⛔ LES 3 PIÈGES QUI ONT COÛTÉ UNE ITÉRATION CHACUN
+## ⛔⛔ LES 4 PIÈGES QUI ONT COÛTÉ UNE ITÉRATION CHACUN
 
 1. **`live-layout.json` de l'état APRÈS interaction est FAUX** — il est relevé AVANT l'`interact`,
    donc il liste encore les 7 lignes alors que la page filtrée n'en a qu'une.
@@ -40,7 +40,9 @@ d'un redessin diffère visiblement de celui de la plaque au sol.
 2. **Ne JAMAIS changer de plaque pendant un mouvement de caméra** (full → filtered) : la caméra
    continue de se resserrer sur une zone qui vient de se vider. Le changement se fait **sur une coupe
    couverte par `FlashCut`**.
-3. **`omitBackground: true` ne donne PAS de transparence** sur un élément qui a un fond CSS propre
+3. **Un commentaire JSX mal fermé (`*/` sans `}`) est INVISIBLE jusqu'au typecheck** — rencontré 2× dans la
+   même session, dans 2 fichiers. `npx tsc --noEmit` AVANT de considérer un `.tsx` terminé, pas au build.
+4. **`omitBackground: true` ne donne PAS de transparence** sur un élément qui a un fond CSS propre
    (vérifié : `flagged.png` sort opaque). Les découpes transparentes ne marchent que sur des éléments
    sans background.
 

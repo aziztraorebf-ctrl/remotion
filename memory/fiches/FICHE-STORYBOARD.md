@@ -128,14 +128,7 @@ moins chère : Gemini écrit 8 000 caractères de markdown et 0 image ; GPT dess
 - **Contenu coupé au bord** : ajouter `Leave a clear empty margin of at least 5% on ALL FOUR sides —
   nothing may touch or be cut off by the edge.` (sans : coupé ; avec : propre).
 
-⚠️ **Méthode en 2 temps — REMPLACÉE le 2026-08-18** (voir § LA MÉTHODE EN VIGUEUR ci-dessus ;
-conservée pour mémoire, et parce que l'étape texte reste utile si on veut un avis de Kimi) — `scripts/tools/storyboard-concepts-texte.py` :
-1. **CONCEPTION en TEXTE**, N modèles en parallèle → débloque **Kimi** (meilleure vision artistique)
-   et **Grok** (instinct accroche), jusque-là exclus parce qu'ils ne dessinent pas. Chacun rend ses
-   concepts + la **description case par case** du concept qu'il défend, prête à dessiner.
-2. **CHOIX HUMAIN** (Aziz tranche) — ⛔ pas forcément le concept que le modèle défend.
-3. **DESSIN** : 1 concept = 1 planche, 4 cases horizontales, **timecodes comme seul texte**.
-   ⛔ Ne PAS faire 1 appel par case : le problème était la charge de TEXTE, pas le nombre de cases.
+⚠️ **Méthode en 2 temps (texte→SVG) — REMPLACÉE le 2026-08-18** par la méthode en vigueur ci-dessus. Retirée du détail au wrap 2026-08-20 (la fiche s'auto-qualifiait « conservée pour mémoire ») ; récupérable via `git log -p memory/fiches/FICHE-STORYBOARD.md`. L'étape texte reste utile pour un avis de Kimi : `scripts/tools/storyboard-concepts-texte.py`.
 
 ## INTERDITS — erreurs déjà payées
 ⛔ **Coder avant validation de la direction.** Le modèle PROPOSE, Aziz valide, PUIS breakdown (prouvé 4×).
