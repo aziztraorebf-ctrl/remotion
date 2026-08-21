@@ -1,4 +1,6 @@
 import { Composition, Folder, staticFile as staticFileRoot, useCurrentFrame } from "remotion";
+import { ZambiaTraitementA, ZAMBIA_A_FRAMES } from "./projects/_client-sim/zambia-peacecorps/ZambiaTraitementA";
+import { ZambiaTraitementB, ZAMBIA_B_FRAMES } from "./projects/_client-sim/zambia-peacecorps/ZambiaTraitementB";
 import { B1Hook, B1_HOOK_FRAMES, B1_HOOK_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B1Hook";
 import { B2Source, B2_SOURCE_FRAMES, B2_SOURCE_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B2Source";
 import { VergerPreviewB3, VergerPreviewReverdit, VergerPreviewFissure } from "./projects/souverain/cacao-chocolat-short/components/VergerPreview";
@@ -4941,6 +4943,9 @@ export const RemotionRoot: React.FC = () => {
       <Composition id="Stick-Roles-Demo" component={RolesDemo16x9} durationInFrames={ROLES_DEMO_FRAMES} fps={30} width={1920} height={1080} />
       <Composition id="Stick-IdentiteEtVues-DERIVE" component={IdentiteEtVues16x9} durationInFrames={IDENTITE_ET_VUES_FRAMES} fps={30} width={1920} height={1080} />
 
+      {/* Gabarit de choix client — Zambie / Peace Corps (brief Upwork 2026-08-21) */}
+      <Composition id="Zambia-TraitementA-Souverain" component={ZambiaTraitementA} durationInFrames={ZAMBIA_A_FRAMES} fps={30} width={1920} height={1080} />
+      <Composition id="Zambia-TraitementB-DocClair" component={ZambiaTraitementB} durationInFrames={ZAMBIA_B_FRAMES} fps={30} width={1920} height={1080} />
     </>
   );
 };
