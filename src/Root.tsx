@@ -525,6 +525,7 @@ import { NorthShieldPromo, NS_PROMO_FRAMES, NS_PROMO_FPS } from "./projects/_cli
 import { NorthShieldPromoV4, NS_V4_FRAMES, NS_V4_FPS } from "./projects/_client-sim/noteshield/live-page/NorthShieldPromoV4";
 import { NorthShieldPromoLight, NS_LIGHT_FRAMES, NS_LIGHT_FPS } from "./projects/_client-sim/noteshield/live-page-light/NorthShieldPromoLight";
 import { OuvertureBureauDeterministe, VECTOR_PLAT_FRAMES, VECTOR_PLAT_FPS } from "./projects/_client-sim/vector-plat/OuvertureBureauDeterministe";
+import { OuvertureBureauMixte, MIXTE_FRAMES, MIXTE_FPS } from "./projects/_client-sim/vector-plat/OuvertureBureauMixte";
 import { P1Pivot } from "./projects/_client-sim/mochit/P1Pivot";
 import { P2Workflow } from "./projects/_client-sim/mochit/P2Workflow";
 import { P3Cta } from "./projects/_client-sim/mochit/P3Cta";
@@ -4851,6 +4852,15 @@ export const RemotionRoot: React.FC = () => {
           les 3 personnages sont rebranches sur le socle stick-figure. Test de MOTEUR. */}
       {/* TEST R&D (2026-08-20) — chemin A du test "personnage vector plat" :
           image fixe + objets animes en deterministe. Compare au clip H3 (chemin B). */}
+      {/* LE PLAN COMBINE : clip H3 (le vivant) + calendrier Remotion (le lisible) */}
+      <Composition
+        id="OuvertureBureauMixte"
+        component={OuvertureBureauMixte}
+        durationInFrames={MIXTE_FRAMES}
+        fps={MIXTE_FPS}
+        width={1920}
+        height={1080}
+      />
       <Composition
         id="OuvertureBureauDeterministe"
         component={OuvertureBureauDeterministe}

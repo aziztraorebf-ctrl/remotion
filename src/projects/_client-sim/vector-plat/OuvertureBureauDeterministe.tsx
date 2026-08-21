@@ -49,7 +49,7 @@ const SHADOW = "rgba(60, 70, 84, 0.13)";
 // Le calendrier mural : il POSE (spring), puis ses pages tournent. C'est lui qui
 // dit "le temps passe" -- le personnage, lui, ne bouge pas.
 // ---------------------------------------------------------------------------
-const CAL_X = 1508;
+const CAL_X = 1618;  // zone murale libre mesuree : ecran x 1589..1949
 const CAL_Y = 128;
 const CAL_W = 190;
 const CAL_H = 210;
@@ -174,12 +174,17 @@ const CalendrierMural: React.FC = () => {
 type Feuille = { x: number; y: number; rot: number; at: number };
 
 const FEUILLES: Feuille[] = [
-  { x: 108, y: 168, rot: -9, at: 18 },
-  { x: 246, y: 118, rot: 6, at: 30 },
-  { x: 176, y: 286, rot: -3, at: 62 },
-  { x: 322, y: 236, rot: 11, at: 88 },
-  { x: 72, y: 330, rot: 4, at: 120 },
+  { x: 96, y: 132, rot: -9, at: 18 },
+  { x: 282, y: 78, rot: 6, at: 30 },
+  { x: 178, y: 288, rot: -3, at: 62 },
+  { x: 372, y: 216, rot: 11, at: 88 },
+  { x: 52, y: 350, rot: 4, at: 120 },
 ];
+
+// Taille des feuilles : elles doivent OCCUPER le mur. En 116x148 elles se lisaient comme
+// des post-it perdus dans le vide -- le clip H3 (meme scene) les fait bien plus grandes.
+const FEUILLE_W = 168;
+const FEUILLE_H = 214;
 
 const FeuilleVolante: React.FC<{ f: Feuille }> = ({ f }) => {
   const frame = useCurrentFrame();
@@ -206,14 +211,14 @@ const FeuilleVolante: React.FC<{ f: Feuille }> = ({ f }) => {
         position: "absolute",
         left: f.x + dx,
         top: f.y + dy,
-        width: 116,
-        height: 148,
+        width: FEUILLE_W,
+        height: FEUILLE_H,
         opacity,
         transform: `rotate(${rot}deg)`,
         background: PAPER,
         borderRadius: 3,
         boxShadow: `0 5px 12px ${SHADOW}`,
-        padding: 14,
+        padding: 20,
         boxSizing: "border-box",
       }}
     >
@@ -222,23 +227,23 @@ const FeuilleVolante: React.FC<{ f: Feuille }> = ({ f }) => {
         <div
           key={i}
           style={{
-            height: 5,
-            marginBottom: 7,
+            height: 7,
+            marginBottom: 10,
             width: i === 3 ? "62%" : "100%",
-            background: "rgba(60, 70, 84, 0.22)",
+            background: "rgba(60, 70, 84, 0.24)",
             borderRadius: 2,
           }}
         />
       ))}
-      <div style={{ display: "flex", alignItems: "flex-end", gap: 4, marginTop: 10, height: 42 }}>
-        {[26, 38, 18, 32].map((h, i) => (
+      <div style={{ display: "flex", alignItems: "flex-end", gap: 6, marginTop: 16, height: 64 }}>
+        {[38, 56, 26, 47].map((h, i) => (
           <div
             key={i}
             style={{
-              width: 12,
+              width: 18,
               height: h,
               background: i % 2 === 0 ? BLUE : RED,
-              opacity: 0.75,
+              opacity: 0.78,
               borderRadius: 1,
             }}
           />
@@ -253,19 +258,46 @@ const FeuilleVolante: React.FC<{ f: Feuille }> = ({ f }) => {
 // C'est le meme fait que les feuilles en l'air, dit une 2e fois -- Aikido fait
 // pareil, et c'est ce qui rend l'accumulation credible plutot que decorative.
 // ---------------------------------------------------------------------------
-const PILE_X = 470;
-const PILE_BASE_Y = 726;
-const PILE_W = 132;
-const EPAISSEUR = 11;
+// ⛔⛔ CE QUI A REELLEMENT COUTE 3 RENDUS (diagnostic delegue, 2026-08-20) :
+// ce n'etait PAS un probleme de referentiel `objectFit: cover`, c'etait une MESURE D'ENTREE
+// FAUSSE. J'avais releve "plateau a src y=400" -- c'est le haut de l'ECRAN DU MONITEUR.
+// Le plateau du bureau est a **src y=630** (verifie par scan de colonnes x=150/250/350 :
+// une seule transition, (248,240,221) -> (211,199,175), identique sur les 3).
+// La conversion, elle, etait juste depuis le debut -- d'ou 3 corrections de dosage inutiles.
+// LECON : scanner les pixels pour trouver une coordonnee, et VERIFIER que la transition
+// trouvee est bien l'objet vise, pas un autre bord horizontal de la scene.
+//
+// Conversion cover (1408x768 -> 1920x1080) : ecran_x = src_x * 1.4062 - 30 ; ecran_y = src_y * 1.4062.
+// Note : 1080/768 = 1.40625 exactement = le scale cover, donc l'axe Y n'est PAS affecte par
+// le cover (seul le X l'est, de -30px).
+//
+// ⛔ y=630 etait ENCORE faux (2e mesure fausse) : a x=250 il n'y a pas de bureau du tout,
+// c'est la ligne mur/sol. Le plateau ne commence qu'a src x=351.
+// MESURE FINALE, par recherche de la bande BLANCHE la plus large de l'image (pas par scan
+// d'une colonne choisie a l'avance -- c'est ce choix qui a produit les 2 erreurs) :
+//   plateau = src y 552..565, s'etendant de src x=351 a x=1307
+//   => SURFACE : src y=552 -> ECRAN y=776 ; plateau ecran x 464..1808
+// ⚠️ Le bureau est ENCOMBRE : le seul espace libre au-dessus du plateau (scan des colonnes
+// sans pixel sombre entre src y 480..551) est src x 351..408 -> ECRAN x 464..544, soit
+// 80px de large seulement. La pile doit tenir dedans, sinon elle chevauche un laptop.
+const PILE_X = 468;
+const EPAISSEUR = 16;
+const PILE_BASE_Y = 776 - EPAISSEUR; // la 1re feuille POSEE sur la surface du plateau
+const PILE_W = 76;
+// 10 feuilles, pas 14 : a 14 la tour montait au-dessus de la ligne des laptops (sommet
+// ecran y~605) et se lisait comme un gag, plus comme une charge de travail.
+const PILE_NB = 10;
 
 const PileDocuments: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Une feuille toutes les ~13 frames, jusqu'a 9.
+  // Une feuille toutes les ~8 frames, jusqu'a 14 : il faut une vraie TOUR, pas un tas plat.
+  // (Sur la reference Aikido comme sur le clip H3, la pile domine le bureau -- c'est elle
+  // qui porte le "ca s'accumule", plus encore que les feuilles au mur.)
   const feuilles: number[] = [];
-  for (let i = 0; i < 9; i++) {
-    const at = 26 + i * 13;
+  for (let i = 0; i < PILE_NB; i++) {
+    const at = 22 + i * 10;
     if (frame >= at) feuilles.push(at);
   }
 
@@ -294,12 +326,15 @@ const PileDocuments: React.FC = () => {
               left: 0,
               top: y + dy,
               width: PILE_W,
-              height: EPAISSEUR + 3,
+              height: EPAISSEUR,
               background: PAPER,
               opacity,
               borderRadius: 2,
               transform: `rotate(${skew * 0.32}deg)`,
-              boxShadow: `0 2px 4px ${SHADOW}`,
+              // Liseré NET sous chaque feuille : sans lui, des ombres douces qui se recouvrent
+              // donnent un aplat blanc uni -- on perd la lecture "empilement" (vu au 1er rendu).
+              borderBottom: "2px solid rgba(60, 70, 84, 0.30)",
+              boxShadow: `0 1px 0 rgba(60, 70, 84, 0.10)`,
             }}
           />
         );
