@@ -2,7 +2,7 @@
 > Portée : produire/animer un CLIP par génération (H3 via Comfy Cloud). ⛔ Ne couvre PAS la caméra
 > **codée** (Remotion/D3/Mapbox) → `memory/fiches/FICHE-CAMERA.md`.
 > ⚠️ Si ce que tu lis ne correspond PAS au réel sous tes yeux : **c'est la fiche qui a tort**. Corrige-la.
-> Dernière vérification : 2026-08-19.
+> Dernière vérification : 2026-08-20.
 
 ## ⛔⛔ AVANT DE DÉCLARER UNE LIMITE DU MODÈLE — vérifier que ce n'est pas MON previs
 
@@ -92,8 +92,7 @@ trajectoire. ⭐ **C'est LE réglage par défaut désormais.**
 MOTION DIAGRAM ... read ONLY how the character's body moves »*, mapping explicite des blocs, +
 `THE CAMERA DOES NOT MOVE AT ALL`. Générateur : `scripts/tools/mkprevis.py --mode lever|bras`.
 
-**Prochain palier non testé** : 2 personnages en interaction (combat, échange d'objet) — cumule 2 sujets,
-contact et dynamique rapide.
+⛔ **2 personnages en interaction : TESTÉ et ÉCHOUÉ** (couloir b5) → voir § LA LIGNE DE PARTAGE.
 
 ## ⭐⭐⭐⭐⭐ TEST FINAL — ACTION + CAMÉRA dans le MÊME clip 10 s (validé 2026-08-19)
 
@@ -197,11 +196,16 @@ Il a un node 141 `CreateVideo` branché sur `ref_videos` — c'est la version qu
 ✅ **Graphe correct de référence : `out/_r-and-d/gazoduc-hook-ouvrier/graph-hook.json`** (LoadImage
 branché directement sur `ref_videos.ref_video_0`, node 141 supprimé). Validé `dry_run` + généré.
 
-## ⭐ 2e cas d'usage réel : `scripts/tools/mkprevis-chantier.py`
-Le décor de `mkprevis.py` est celui du scribe (défaut surchargeable, son en-tête le dit). Le hook
-Gazoduc est le 2e cas : **même mécanique, décor et geste différents** — extérieur nocturne, tranchée,
-geste de creuser puis se redresser. On ne généralise toujours PAS en moteur unique (règle : documenter
-la méthode avant d'abstraire ; deux cas concrets ne font pas encore une abstraction éprouvée).
+## ⭐⭐⭐ LA LIGNE DE PARTAGE — le previs porte la CAMÉRA, le prompt porte les CORPS
+**Un previs est un canal VISUEL : il transporte une APPARENCE en même temps qu'une trajectoire.**
+- La **CAMÉRA** n'a pas de forme propre — rien à recopier, le previs est GRATUIT.
+- Un **CORPS** a une forme. Dessiner un bloc pour dire « ce corps bouge ainsi » donne aussi au modèle
+  une apparence de bloc, qu'il n'a **aucune raison de refuser**.
+⛔ **Vécu (couloir b5)** : deux corps entiers dessinés au previs → H3 a sorti **deux rectangles gris à
+tête rectangulaire, plein cadre à 4 s**. Ce n'est pas une limite du modèle, c'est mon previs.
+→ Générateur **caméra pure** (aucun corps) : `scripts/tools/mkprevis-camera-seule.py --out X --gif`.
+**Les 4 cas réels** : `mkprevis.py` (scribe) · `-chantier.py` (Adrar, extérieur nocturne) ·
+`-couloir.py` (2 persos, l'échec) · `-camera-seule.py` (le fix).
 
 **⭐ 2 corrections de previs à faire d'office sur un DÉCOR EXTÉRIEUR** (chacune aurait coûté un essai) :
 1. **Un décor en bandes horizontales pures rend le push-in invisible autour du sujet** (mesuré 7,29 sur

@@ -79,6 +79,14 @@ glissante du tracé (`windowBBox`, back 45% / ahead 10%, `scaleFit` borné 1.3-2
   (2 faux positifs « 10s figées »/« 9s figées » démentis par une mesure fine). Avant d'itérer sur un verdict : re-mesurer + REGARDER un crop.
 - **Autres scripts** : `verify-trajectory.py` = élément mobile vs trajectoire (ne mesure PAS la caméra).
   `measure-insert-clip.py` = clips d'insert (ne mesure PAS la caméra).
+⛔⛔ **Une coordonnée trouvée par SCAN DE PIXELS doit être IDENTIFIÉE, pas seulement détectée.**
+  Vécu 2026-08-20 : relevé le haut du MONITEUR en croyant relever le plateau du BUREAU, puis **3 rendus**
+  corrigés à partir de cette valeur fausse — chaque correction était arithmétiquement cohérente avec une
+  origine erronée, donc chacune semblait « presque bonne ». Un scan trouve UNE transition horizontale,
+  pas forcément la bonne : **cropper la zone trouvée et la REGARDER** avant d'en dériver quoi que ce soit.
+  ⚠️ Corollaire mesuré : `objectFit:'cover'` sur 1080/768 donne exactement 1,40625 = le scale cover →
+  **l'axe Y n'est PAS affecté**, seul X l'est (-30 px). Ne jamais invoquer « cover » pour expliquer un
+  décalage VERTICAL (j'avais écrit cet avertissement faux dans le code, il a détourné le diagnostic 3 tours).
 - Juger la netteté uniquement sur `scale=1`. Frames isolées ne prouvent rien sur le mouvement.
 
 ⛔ **Un effet dont la RAISON D'ÊTRE a disparu se SUPPRIME, il ne se re-dose pas.** Vécu 2026-08-18

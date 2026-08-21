@@ -22,9 +22,9 @@
 | Vidéo | Production | Diffusion |
 |---|---|---|
 | Sénégal Pétrole & Gaz (long) | ✅ livré | ✅ **PUBLIÉ 2026-07-30** |
-| War-Map Sahel AES (long) | ⛔ REFONTE V6 en cours (non commité) | ⛔ **PUBLIÉ 2026-08-04, ÉCHEC** (5 vues/24h) |
-| Franc CFA (mid-form) | ✅ livré | 🗓️ **PROGRAMMÉ 2026-08-11** |
-| Soudan mid-form (long) | ✅ livré | 🗓️ **PROGRAMMÉ 2026-08-20** (titre/miniature/description faits 2026-07-31) |
+| War-Map Sahel AES (long) | ⛔ **ABANDONNÉ VOLONTAIREMENT** (Aziz 2026-08-17) — PAS une dette | ⛔ **PUBLIÉ 2026-08-04, ÉCHEC** (5 vues/24h) |
+| Franc CFA (mid-form) | ✅ livré | ✅ **PUBLIÉ 2026-08-11** (re-titré 08-17, cf. PACKAGING) |
+| Soudan mid-form (long) | ✅ livré | ✅ **PUBLIÉ 2026-08-20** (titre/miniature/description faits 2026-07-31) |
 | Short Sénégal D3 · Short AES 90s · Short CFA | ✅ TOUS PROGRAMMÉS via TryPost (2026-08-01/04/11) | CTA corrigé "EN BIO" — reste Short Soudan à construire |
 | Short Soudan | ⏳ timing.ts LOCKED, assets/composition à faire | à CONSTRUIRE (Stage 3+) |
 
@@ -35,7 +35,9 @@
 
 ## ÉTAT DES PROJETS VIVANTS
 
-### War-Map Sahel AES — ⛔ REFONTE V6 EN COURS (2026-08-06, non commité)
+### War-Map Sahel AES — ⛔ ABANDONNÉ VOLONTAIREMENT (Aziz, 2026-08-17)
+> ⛔ **Ne plus le compter dans le reste-à-faire** (`memory/NEXT-ACTION.md:600`). La V6 ne sera ni
+> assemblée ni republiée. Ce qui suit est conservé UNIQUEMENT pour le gotcha des 2 compositions.
 **Source de vérité** : `memory/episodes/warmap-sahel/STATUS.md` (bandeau 2026-08-06 soir).
 Vidéo longue publiée 2026-08-04, ÉCHEC (5 vues/24h, VPH 0.19). Script réécrit (V6), audio généré +
 validé Aziz, retiming complet des constantes de timing fait et vérifié (check-frame-continuity.py, 0

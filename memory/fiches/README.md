@@ -34,7 +34,7 @@ déclenche les trois premières).
 Chaque fiche n'est injectée **qu'une fois par fichier et par session** (sentinelles dans
 `$TMPDIR/fiche-inject-<session_id>/`). **Ne jamais retirer ce mécanisme.**
 
-**Coût RE-MESURÉ le 2026-08-17** (les 6 fiches pèsent 42 510 octets ≈ 10 600 tokens si toutes
+**Coût RE-MESURÉ le 2026-08-21** (les **9** fiches pèsent **85 497 octets ≈ 21 400 tokens** si toutes
 injectées ; en pratique ~2 fiches se déclenchent par fichier, ≈ 3 250 tokens) :
 - **jour typique** (7,5 fichiers touchés) : **~24 000 tokens**
 - **pire jour observé** (28 fichiers) : **~91 000 tokens**
@@ -80,7 +80,10 @@ encore** sur disque (vérifié 2026-08-17). Les fiches ne dépendent pas de lui.
 
 ## Budget par fiche
 **55 lignes par défaut.** Exceptions assumées, **chiffres re-mesurés le 2026-08-20 (`wc -l`)** :
-`FICHE-CLIP-GENERE` **212** · `FICHE-STORYBOARD` **168** · `FICHE-UI-PRODUIT` **117** · `FICHE-SVG-DESSINE` **108** · `FICHE-CAMERA` **102** · `FICHE-ASSEMBLAGE` **62** · `FICHE-PACKAGING` **60**.
+`FICHE-CLIP-GENERE` **216** · `FICHE-STORYBOARD` **167** · `FICHE-UI-PRODUIT` **116** · `FICHE-SVG-DESSINE` **107** · `FICHE-CAMERA` **109** · `FICHE-ASSEMBLAGE` **61** · `FICHE-PACKAGING` **59** — *re-mesurés le 2026-08-21*.
+⛔⛔ **MESURER AVEC `wc -l < fichier`** (redirection, PAS `wc -l fichier`). L'écart de +1 constaté
+3 wraps de suite (2026-08-18, 08-20, 08-21) vient d'un comptage à la main ou d'une déduction —
+jamais d'un artefact de `wc`. Corriger le chiffre sans graver la commande garantit une 4e fois.
 ⭐ CLIP-GENERE est passée de 170 à 212 le 2026-08-20 : +4 sections (style transposable à seed
 constant, intention vs immobilité, EMPTY WALL LOCK, nos 3 registres maison) **moins** 15 lignes
 taillées sur des problèmes déjà résolus plus bas dans la même fiche. C'est la fiche qui porte la

@@ -64,6 +64,21 @@ Migration image faite (preview mort → GA → **défaut LITE**, -50 %). Restes 
 > présents le 2026-08-13) : au moins 1 sur la branche Soudan (`wip-soudan-itineraire-avant-rnd-port`,
 > chantier « itinéraire multi-étapes » — `ItineraireMultiEtapes16x9.tsx` etc.) et 2 WIP CFA sur
 > `feat/cfa-nuit1994-svg-mix`.
+>
+> ⛔⛔ **UNE AUTRE SESSION PEUT CHANGER LA BRANCHE ET LANCER UN MERGE PENDANT QUE TU TRAVAILLES**
+> (vécu 2026-08-20). Symptôme : un `git checkout <fichier>` échoue en `path is unmerged`, ou un typecheck
+> révèle des imports dupliqués qui n'existent pas dans `HEAD`. La cause n'est PAS ton edit — c'est
+> `.git/MERGE_HEAD` laissé par l'autre session, et le repo qui a basculé de branche sous tes pieds.
+> **Vérifier AVANT de conclure quoi que ce soit sur un fichier partagé** (`src/Root.tsx` en tête) :
+> ```bash
+> git branch --show-current && ls -d .git/MERGE_HEAD 2>/dev/null && echo "MERGE EN COURS"
+> ```
+> ⛔ **Ne JAMAIS résoudre/abandonner le merge d'une autre session** (`reset`, `stash`, `merge --abort`,
+> `checkout` d'un fichier unmerged) : c'est son travail vivant. Signaler à Aziz, continuer sur les
+> fichiers non concernés, et re-vérifier la branche avant de commiter.
+> ⚠️ Corollaire : cette même session peut aussi **commiter TON travail à ta place** pour réparer la
+> cohérence du repo (vécu : `e6657203` a commité un composant que `Root.tsx` référençait). Relire
+> `git log` avant de supposer qu'un commit est de toi.
 
 ---
 
@@ -119,7 +134,8 @@ référence, désormais complète avec la vidéo et son SON.
 ---
 
 
-## ⭐⭐⭐ R&D CLIPS GÉNÉRÉS (H3) — session 2026-08-18/19, CONCLUANTE
+## ⭐ R&D CLIPS GÉNÉRÉS (H3) — CONCLUE le 2026-08-19 · reliquat : sortir du test
+> ⭐ **Prolongée le 2026-08-20** par le § RECETTE DE MONTAGE B2B ci-dessus (même moteur, acquis plus récents).
 
 **Débloqué** : mouvements de caméra (previs), mouvements d'action (previs), action+caméra dans un même
 clip 10 s, seed reproductible, raccords par changement d'échelle. Le tout sur GPU gratuit.
@@ -186,7 +202,11 @@ EXISTE (6969 o), et le hook lit bien `--prompt-file` (`.claude/hooks/moteur-visu
 ⛔ Ne PAS "corriger" en assouplissant le test : c'est le HOOK qui doit re-bloquer ce brief.
 Dernier commit touchant le hook : `658fdfcd fix(gate): moteur-visuel distingue CONCEVOIR de REDESSINER`.
 
-## ⭐⭐ CHANTIER OUVERT — MINIMAX H3 : STYLE VECTOR POSTER / SUNJATA (décidé 2026-08-18 par Aziz)
+## ⭐ RELIQUAT H3 — injecter NOTRE audio (`reference_audio_urls`, jamais testé)
+> ✅ **Le volet STYLES est FAIT le 2026-08-20** : Vector Poster ET Sunjata (+ gravure sépia) prouvés
+> transposables à seed constant, et l'argument B2B est formalisé en GABARIT DE CHOIX.
+> → § RECETTE DE MONTAGE B2B · `memory/doctrines/PILIERS-B2B.md`. **Ce qui reste ouvert ci-dessous
+> est UNIQUEMENT la limite audio.** Le prérequis seed/`.meta.json` reste valide.
 > ⚠️ **Priorité 1 reste GAZODUC Acte 3** (seul chantier avec un livrable bloquant + une action spécifiée au pixel près). Ce chantier-ci est exploratoire : le prendre quand l'Acte 3 est soldé, ou dans une session dédiée comme Aziz les mène d'habitude.
 
 **Enjeu** : on tient peut-être la voie pour produire de VRAIS inserts animés de scènes (cf. règle des
@@ -197,6 +217,8 @@ d'origine (GPU Comfy, **0 crédit**) donne un clip jugé par Aziz *« quasiment 
 **À tester la prochaine fois** : le style **Vector Poster** et le style **storyboard Sunjata** sur ce même
 chemin. Si ça tient → argument B2B/freelance direct (scène quasi-identique reproductible, coût ~0 $).
 **⛔ La seule limite connue à lever** : l'audio est RÉGÉNÉRÉ (corrélation 0,46, la voix change).
+⚠️ **Piège de grep** : `reference_audio_urls` (H3, **pluriel**, jamais testé) ≠ `reference_audio_url`
+(minimax-music, **singulier**, N'EXISTE PAS en v2.6). Un grep fait conclure à tort que le champ est mort.
 Piste ouverte : injecter NOTRE audio via `reference_audio_urls` (existe sur `minimax/h3/reference-to-video`,
 jamais testé) plutôt que de subir celui de H3.
 **⭐ Prérequis non négociable** : archiver `.prompt.txt` + `.meta.json` (avec le **SEED**) à côté de chaque

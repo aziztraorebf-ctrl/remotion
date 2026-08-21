@@ -163,4 +163,4 @@ Recette technique + prompts + livrables : [[REVERSE-STYLE-VIDEO-VERS-ASSETS]] §
 ## Liens
 `memory/fiches/FICHE-UI-PRODUIT.md` (pilier 3, détail) · `memory/doctrines/SVG-SCENES-GENERATIVES.md`
 (pilier 2) · `memory/doctrines/CHARTE-DA-FREELANCE.md` (la DA commune) ·
-`memory/projects/SHOWCASE-CAPACITES.md` (le cut vente) · `memory/tools/minimax-h3-*.md` (pilier 4).
+`memory/projects/SHOWCASE-CAPACITES.md` (le cut vente) · `memory/tools/minimax-h3-*.md` (pilier 5).

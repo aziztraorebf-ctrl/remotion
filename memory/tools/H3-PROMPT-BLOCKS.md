@@ -30,12 +30,16 @@ une phrase « No horizon line, no ground » est ignorée ; `negative_keywords: h
 
 ---
 
-## 🆕 FORMAT OFFICIEL R2V « 6 SECTIONS » — multi-références (⚠️ NON ENCORE TESTÉ CHEZ NOUS)
+## 🆕 FORMAT OFFICIEL R2V « 6 SECTIONS » — multi-références (⚠️ testé sur FLF2V, PAS sur notre node R2V)
 
 > **Découvert 2026-08-19** dans le repo MIT `github.com/benjiyaya/Calliope` (`agent/prompts.py`), qui
 > le déclare condensé du guide officiel MiniMax `VIDEO_PROMPT_WRITING_GUIDE_ref_en.md`.
-> ⛔ **STATUT : non vérifié contre le guide MiniMax original, jamais essayé sur notre pipeline Comfy
-> Cloud.** À tester sur un clip réel AVANT de le graver comme doctrine. Ne pas le présenter comme acquis.
+> ⛔ **STATUT CORRIGÉ (2026-08-21)** — la mention « jamais essayé » était à moitié fausse et faisait
+> rejeter un test DÉJÀ PAYÉ. Le vrai statut : **TESTÉ et concluant sur le node FLF2V** (Sonjata, 272
+> crédits, 11 frames + transcription Whisper — il « résout concrètement et mesurablement » le défaut de
+> convergence et permet un dialogue FR fidèle → `minimax-h3-comfy-cloud.md` § TEST RÉEL 2).
+> ⚠️ **NON testé sur `video_minimax_h3_r2v`**, notre node principal — c'est là que reste l'inconnue.
+> Toujours non vérifié contre le guide MiniMax original.
 > **Registre différent de l'ossature ci-dessus** : celle-ci anime UNE image de départ ; ce format-ci sert
 > les clips à PLUSIEURS sujets référencés (personnages + lieu).
 

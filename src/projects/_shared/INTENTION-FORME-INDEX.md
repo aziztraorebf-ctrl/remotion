@@ -187,6 +187,19 @@ tient pas une direction demandée. Porter la direction en SVG déterministe par-
 long du tracé, flèche, dégradé qui progresse) — c'est ce que fait `ProtoInsertMatiereConduite`.
 
 ### Faire RESSENTIR le TEMPS / une séquence  ← (catégorie renforcée)
+- **le temps passe alors que le sujet ne bouge pas** → `CalendrierMural` (proto) —
+  `_client-sim/vector-plat/OuvertureBureauMixte.tsx`. Il **se POSE** (spring, jamais un fade) puis ses
+  pages **TOURNENT** (flip `scaleY` 5f : 0.55 → 1.04 → 1), le quantième restant NET.
+  ⚠️ Existe en 2 variantes divergentes — **la référence est celle de `OuvertureBureauMixte`** (la plus
+  complète, celle vue à l'écran). Zéro prop aujourd'hui : à paramétrer (jours, position, mois, palette)
+  au 1er vrai réemploi.
+- **une charge qui s'accumule** (travail, dossiers, dette) → `PileDocuments` (proto) —
+  `_client-sim/vector-plat/OuvertureBureauDeterministe.tsx`. Une pile qui MONTE feuille par feuille,
+  chacune posée en spring, légèrement de travers. ⛔ 2 valeurs payées, sans elles l'entrée ne vaut rien :
+  (1) **liseré net sous chaque feuille** (`borderBottom: 2px solid rgba(60,70,84,.30)`) — sans lui les
+  ombres douces se recouvrent et donnent un aplat blanc uni, on perd la lecture « empilement » ;
+  (2) **10 feuilles, pas 14** — au-delà la tour dépasse la ligne des laptops et se lit comme un gag.
+  ⚠️ La géométrie est calée sur UNE image de fond : à re-mesurer à chaque réemploi.
 | Intention | Forme | Réponse(s) | Catalogue |
 |---|---|---|---|
 | Jalons dans le temps | frise + médaillons | ⭐ `ProtoHera_Timeline` (frise or + fiches), `Timeline`, `TimelineFracture` | _proto-16-9 / COMPOSANTS § TIMELINE |
@@ -447,6 +460,25 @@ scène vit sur une carte → **on quitte la carte**, plein écran sur la matièr
 *Preuve : Acte 3 Segment A, activité médiane 10,33 % (min 7,42 %) contre 0,57 % avant. A débloqué un
 acte gelé depuis des semaines.* ⚠️ À l'extraction : paramétrer `{countryPath, markerFrac}` (la minimap
 hardcode Adrar en fraction de bbox).
+
+### ⭐⭐⭐ CLIP GÉNÉRÉ EN FOND + OVERLAY EXACT PAR-DESSUS (prouvé, 2026-08-20)
+**Quand un plan doit à la fois faire ressentir LE VIVANT** (un corps qui s'affaisse, une matière, un
+souffle) **ET afficher une information EXACTE** (texte, chiffres, dates, logo) → le clip généré porte
+le vivant, une brique Remotion pose l'exact par-dessus.
+`OuvertureBureauMixte` — `src/projects/_client-sim/vector-plat/OuvertureBureauMixte.tsx`
+- ⭐ **critère de tri, une question** : « est-ce que ça SE LIT ? » → oui = Remotion, non = clip généré.
+  ⛔ **H3 ne sait pas écrire** (calendrier sorti en « FLANE » sur 2 générations, structurel).
+- la zone est **RÉSERVÉE dans le prompt du clip** (`EMPTY WALL LOCK`), jamais retirée après coup —
+  le versant prompt est la source de vérité et vit dans `memory/fiches/FICHE-CLIP-GENERE.md`
+  (auto-injectée sur toute commande H3/comfy). ⛔ Ne pas dupliquer le texte du prompt ici.
+- ⛔⛔ **un `<OffthreadVideo>` NU lit la frame ABSOLUE** de la composition et affiche sa dernière image
+  FIGÉE une fois le clip fini — toujours l'enfermer dans `<Sequence from durationInFrames>`.
+- durée en frames PROJET : un clip H3 de 9,417 s à 24 fps natif = **283 frames à 30 fps** (mesurer par
+  `ffprobe`, ne jamais déduire).
+*Preuve : validé à l'écran par Aziz le 2026-08-20 (« vraiment très concluant »). Le plan obtenu est
+meilleur que la référence B2B qu'on reproduisait — leur personnage est figé, le nôtre soupire.*
+⭐ Le geste vaut au-delà de nos films : poser une couche exacte (sous-titres, chiffre-clé, cartouche)
+sur un clip **fourni par un client** est un service d'édition vidéo en soi. → `memory/doctrines/PILIERS-B2B.md`.
 
 ### RÉSEAU PRÉEXISTANT QUI S'ILLUMINE (proto, 1 usage)
 **Quand une nouvelle infrastructure doit se lire comme REJOIGNANT quelque chose de déjà là** (et non
