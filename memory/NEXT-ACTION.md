@@ -118,8 +118,33 @@ question. Vaut pour 3 piliers (vidéo générée · SVG · UI produit).
 📁 **Tous les rendus validés + prompts + seeds** : `out/_r-and-d/personnage-vector-plat/MANIFESTE.md`
 
 **Reste à faire** :
-1. **Produire un VRAI gabarit de choix** sur un cas client (3 registres × 1 scène 5-10 s), avec la
-   phrase d'offre qui ferme le choix. C'est l'artefact commercial le plus court à produire.
+1. ⭐⭐⭐ **Produire le gabarit de choix sur un VRAI brief client — la ZAMBIE (Peace Corps).**
+   Offre Upwork repérée le 2026-08-21, **à traiter en priorité 1 de la prochaine session** : elle
+   transforme l'artefact de démo en livrable commercial réel, à travail identique.
+   **Le brief** : animation cinématique 15 s, évolution des volontaires Peace Corps en Zambie
+   1995→2026. **7 provinces nommées** (Luapula départ · North-Western · Eastern · Western · Northern
+   · Southern · Lusaka) avec **interdiction explicite d'en montrer d'autres** → notre « géo zéro
+   approximation » devient une exigence CLIENT. 6 jalons chiffrés (1995 ~40 · 2005 ~220 · 2015 ~350
+   · 2018 pic ~420 · **2021 évacuation COVID 0-10** · 2026 ~175). Style demandé : « documentaire
+   premium Netflix/NatGeo, épuré, mouvements de caméra fluides, **pas d'effets infographiques
+   tape-à-l'œil** » = la description de notre registre Souverain.
+   **Ce qui le rend attaquable** : 5-10 candidatures seulement · client depuis 2012, 97 recrutements,
+   29 k$ dépensés · **projet 1-3 mois « ongoing »** (porte d'entrée retainer, cf. veille marché).
+   **→ Le test à produire** : Zambie, ses 7 provinces exactes, apparition des points 1995→2005,
+   8-10 s, en **2 traitements**, envoyé AVEC la candidature. Aucun des autres candidats ne le fera,
+   et ça répond littéralement à leurs 4 questions (approche / logiciel / délai / révisions).
+   ⛔ **NE PAS y mettre « tout ce qu'on sait faire »** — une 1re commande se livre proprement, elle
+   ne valide pas 5 hypothèses à la fois.
+   ⚠️ **3 points à VÉRIFIER AVANT de promettre quoi que ce soit** :
+   (a) **ProRes 4444 avec alpha** exigé — `npx remotion render` sait-il le sortir ? Non vérifié.
+   (b) **4K 3840×2160** — nos rendus Mapbox tournent à ~5 fps en 1080p, mesurer le temps réel en 4K.
+   (c) **Ambiguïté du brief** : « points de volontaires » géolocalisés réellement, ou répartis dans
+   la province ? Ça change tout le travail — poser la question dans la candidature est un signal de
+   sérieux, pas une faiblesse.
+   ⛔ **Offre n°2 écartée** (carte monde 550 $ fixes, 20-50 candidatures) : elle exige les **fichiers
+   sources éditables Illustrator/After Effects** — rédhibitoire, notre avantage est justement de ne
+   pas travailler dans AE. Tier commodity, guerre des prix.
+2. **Puis seulement** : le gabarit de choix générique + la phrase d'offre qui ferme le choix.
 2. **Extraire la recette de MONTAGE** (l'enchaînement des 14 plans d'Aikido) — les doctrines couvrent
    la RECOMBINAISON dans un plan et le CHOIX du style, pas encore l'ENCHAÎNEMENT des plans.
 3. **Produire le CUT VENTE 60-90 s** (charte DA écrite, 53 renders dormants).
