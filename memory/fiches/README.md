@@ -80,7 +80,11 @@ encore** sur disque (vérifié 2026-08-17). Les fiches ne dépendent pas de lui.
 
 ## Budget par fiche
 **55 lignes par défaut.** Exceptions assumées, **chiffres re-mesurés le 2026-08-20 (`wc -l`)** :
-`FICHE-CLIP-GENERE` **170** · `FICHE-STORYBOARD` **168** · `FICHE-UI-PRODUIT` **117** · `FICHE-SVG-DESSINE` **108** · `FICHE-CAMERA` **102** · `FICHE-ASSEMBLAGE` **62** · `FICHE-PACKAGING` **60**.
+`FICHE-CLIP-GENERE` **212** · `FICHE-STORYBOARD` **168** · `FICHE-UI-PRODUIT` **117** · `FICHE-SVG-DESSINE` **108** · `FICHE-CAMERA` **102** · `FICHE-ASSEMBLAGE` **62** · `FICHE-PACKAGING` **60**.
+⭐ CLIP-GENERE est passée de 170 à 212 le 2026-08-20 : +4 sections (style transposable à seed
+constant, intention vs immobilité, EMPTY WALL LOCK, nos 3 registres maison) **moins** 15 lignes
+taillées sur des problèmes déjà résolus plus bas dans la même fiche. C'est la fiche qui porte la
+R&D la plus active du moment ; chacune de ses lignes est un essai payé.
 ⚠️ **Ces chiffres se re-mesurent à CHAQUE wrap** — un README qui annonce un budget que les fiches
 contredisent est la même classe d'erreur que les fiches qui mentent. C'est arrivé 2× (2026-08-18,
 puis 2026-08-20 : 4 fiches hors de leur chiffre déclaré). Ne pas re-déclarer un plafond « rond »

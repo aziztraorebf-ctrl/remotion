@@ -95,3 +95,119 @@ gardée en réserve, **pas retenue pour Gazoduc** (le globe D3 ne s'y prête pas
 **Mains articulées (TED-Ed safran, main+mortier-pilon)** : testé, PAS viable en un jet — détail
 technique complet (pourquoi, ce qui a été tenté) dans `PERSONNAGE-VIVANT-INDEX.md` § "Mains à
 doigts individuels articulés".
+
+---
+
+## ⭐⭐⭐ EXTENSION 2026-08-20 — la couche générée peut être un CLIP ANIMÉ, pas seulement une image fixe
+
+> Prouvé sur le reverse engineering de l'ouverture **Aikido** (réf. B2B, `public/_shared/refs/benchmark-fiverr/02-aikido/`).
+> Ce que la doctrine ci-dessus établissait : **image générée 1× + overlay codé**. Ce qui est ajouté ici :
+> la couche générée peut être une **VIDÉO** (MiniMax H3), et l'overlay Remotion se pose dessus.
+> Contexte : voie **B2B** (piliers 2/3/4/5 → [[PILIERS-B2B]]), pas la chaîne YouTube.
+
+### Le critère de tri, formulé par Aziz — **« est-ce que ça SE LIT ? »**
+
+Le partage image/code de la doctrine mère (`image_generee` vs `overlay_code`) se durcit en une question
+unique, qui tranche sans discussion :
+
+| Nature | Moteur | Pourquoi |
+|---|---|---|
+| **Abstrait** — feuilles qui s'empilent, papiers qui volent, une pile qui monte, un corps qui souffle | **H3** | Aucun caractère à déchiffrer. La matière suffit, et elle est plus riche que ce qu'on coderait. |
+| **Précis** — calendrier, chiffres, dates, labels, sous-titres, logo | **Remotion** | ⛔ **H3 ne sait pas écrire.** Son calendrier est sorti en charabia (« FLANE », chiffres décoratifs) sur 2 générations. Structurel, pas un défaut de prompt. |
+
+⭐ **Si le spectateur doit déchiffrer un caractère, ça vient de chez nous.** C'est le seul critère à retenir.
+
+### ⭐⭐ Le mécanisme qui rend la recombinaison possible : l'`EMPTY WALL LOCK`
+
+On ne retire pas après coup ce que H3 a dessiné — **on lui demande de laisser la place vide**, et on
+occupe cette zone en Remotion. Bloc validé (le mur est resté nu sur 9,4 s, le reste du clip inchangé) :
+
+```
+EMPTY WALL LOCK: the wall area in the upper right of the frame stays BARE and EMPTY for the entire
+clip. Nothing is ever hung, mounted, pinned or drawn there - no calendar, no poster, no picture,
+no clock, no board, no chart, no frame. It remains flat empty cream-coloured wall from the first
+frame to the last.
+```
++ dans STRICT NEGATIVE : `no calendar, no wall calendar, no poster, no picture frame, no clock, no wall chart, no notice board`
+→ Généralisable : nommer la ZONE, énumérer tout ce qui pourrait s'y loger, et le répéter en négatifs courts.
+
+### ⛔⛔ L'ERREUR À NE PAS REFAIRE — verrouiller le personnage au lieu de lui donner une intention
+
+**Commise dans cette session, corrigée par Aziz.** Devant une référence où le personnage est figé, j'ai
+écrit un `STILLNESS LOCK` pour l'immobiliser. Résultat : le clip **lâchait à 6,5 s** (bouche ouverte
+parasite), il fallait le couper pour le sauver.
+Prompt réécrit en donnant une **INTENTION** (« il est dépassé, il souffle, ses épaules retombent ») en
+gardant le décor verrouillé : le clip **tient ses 9 s**, et le soupir obtenu (sourcils en accent
+circonflexe, yeux qui se ferment, tête qui s'incline) est le meilleur moment du plan.
+
+⭐ **Autoriser le mouvement a STABILISÉ le clip** — le modèle n'avait plus à arbitrer entre l'instruction
+« ne bouge pas » et sa pente naturelle. Corollaire direct de la règle déjà écrite dans
+[[FICHE-CLIP-GENERE]] : *« l'hypothèse par défaut est que mon previs est en cause, pas que le modèle ne
+sait pas faire »* — appliquée ici au PROMPT.
+⚠️ Ce mouvement est **gratuit et non codable** : animer une épaule qui s'affaisse en flat vector est hors
+de portée du déterministe. On était en train de le jeter.
+
+**Le `MOUTH LOCK` reste obligatoire** (H3 fait parler tout visage à l'écran), mais reformulé : dire **par
+quoi** montrer le souffle plutôt qu'interdire tout mouvement —
+`The sigh is shown by his SHOULDERS and CHEST and EYEBROWS, not by his mouth opening.`
+Contrôle : `ffmpeg -af volumedetect` ; > ~-45 dB = il émet. ⚠️ Sur un clip qui SOUFFLE volontairement,
+-34 dB peut être le souffle, pas de la parole — **juger sur l'image, pas sur le seul dB**.
+
+### Ce que ça prouve pour l'offre B2B
+
+Le plan combiné est **meilleur que la référence sur ce beat** : leur homme est figé, le nôtre soupire.
+Et le geste vaut au-delà du test — poser une couche exacte (sous-titres, chiffre-clé, logo, cartouche)
+sur un clip existant est un **service d'édition vidéo** en soi, applicable à un clip client.
+
+### ⭐⭐ LES REGISTRES SONT TRANSPOSABLES À SEED CONSTANT (2026-08-20, 2e volet de la session)
+
+**Même seed + prompt IDENTIQUE + image de référence dans un autre style → la MÊME animation.**
+Corrélations du profil de mouvement : hand drawn **0,919** · storyboard **0,896** · gravure sépia
+**0,910** (réf. « même animation » = 0,823). Le décor, les vêtements et la matière s'adaptent au
+registre ; la chorégraphie ne bouge pas d'une seconde.
+⚠️ Un poster vector très contrasté mesure **0,719 alors que l'animation EST la même** — la corrélation
+pixel sur-pénalise les aplats francs. **Regarder avant de conclure sur le chiffre.**
+
+**⛔ CE QUE ÇA NE DOIT PAS DEVENIR UN ARGUMENT DE VENTE** : « on change de style en cours de projet ».
+Vrai techniquement, mais le vendre fabrique des révisions infinies. La capacité se dépense **une fois,
+en avant-vente** — 2-3 registres × 1 scène animée 5-10 s, le client choisit, le choix ferme la
+question. Doctrine complète : [[PILIERS-B2B]] § GABARIT DE CHOIX.
+
+**⛔ Partir de NOS registres, jamais d'un style inventé au prompt** (erreur commise puis corrigée par
+Aziz : mes 2 styles génériques étaient des approximations pâles à côté des vrais). Les 3 maison, leurs
+prompts et le personnage féminin déjà disponible : [[FICHE-CLIP-GENERE]] § NOS 3 REGISTRES MAISON.
+
+**⛔⛔ GOTCHA IMAGE** : nommer une zone réservée en CAPITALES dans un prompt Gemini (`BARE EMPTY WALL`)
+la fait **peindre en toutes lettres sur le mur**. Décrire l'ÉTAT, jamais nommer la zone.
+
+### Les livrables (R&D `out/_r-and-d/personnage-vector-plat/`, gitignoré — liens = seule trace)
+
+📁 **INDEX COMPLET des rendus validés, prompts et seeds** : `out/_r-and-d/personnage-vector-plat/MANIFESTE.md`
+(tous les liens Vercel Blob + ce que chaque fichier prouve + ce qu'il ne faut pas supprimer).
+
+| Clip | Ce qu'il prouve | Lien |
+|---|---|---|
+| **PLAN-COMBINE** ⭐ | la recombinaison : clip H3 + calendrier Remotion net | [lien](https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/PLAN-COMBINE-OHldLOOYSejeoczG4pixpBjGEWAZOj.mp4) |
+| **TRIPTYQUE MARIAMA** ⭐ | nos 3 registres MAISON, même animation | [lien](https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/TRIPTYQUE-MARIAMA-3-REGISTRES-MAISON-3eovRekeSoAxkabvUQx1Tw3vMLyGOv.mp4) |
+| **TRIPTYQUE 3 STYLES** ⭐ | le seed traverse le style (0,919 / 0,896) | [lien](https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/TRIPTYQUE-3-STYLES-MEME-ANIMATION-hxJalZp2tItcWUpDWzCYriddm0qlgo.mp4) |
+| planche Mariama | 2 scènes × 3 registres maison | [lien](https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/PLANCHE-MARIAMA-3-REGISTRES-MAISON-Gh4lnpnL0aKODJuQ8QQjIK9wmboibA.png) |
+| **chemin-D** (source) | H3 avec `EMPTY WALL LOCK`, mur laissé vide | garder — matière du combiné |
+| chemin-C | le soupir, mais calendrier H3 illisible | [lien](https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/chemin-C-h3-vivant-RgdSd1JsRnqPVnTUoJe5ozFSJx1r8B.mp4) |
+| chemin-B (contre-ex.) | `STILLNESS LOCK` : lâche à 6,5 s | [comparatif B vs C](https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/COMPARATIF-B-fige-vs-C-vivant-SsKgI9RQhn5o18QjYzbQoFN5wdotya.mp4) |
+| chemin-A (contre-ex.) | tout en Remotion : texte net, mais matière sèche + 4 rendus de placement | [comparatif A vs B](https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/COMPARATIF-A-vs-B-3s6Orhn5ziNF96xKMOMJWQdvurd48I.mp4) |
+
+**Code** : `src/projects/_client-sim/vector-plat/OuvertureBureauMixte.tsx` (le combiné, compo
+`OuvertureBureauMixte`) · `OuvertureBureauDeterministe.tsx` (le tout-Remotion, contre-exemple).
+**Prompts + seeds archivés** à côté des clips (`clipB/C/D.prompt.txt`, `.meta.json`) — sans le seed,
+aucune correction post-montage n'est possible.
+Coût total du test : **0,034 $** (1 image Gemini Lite) + GPU Comfy gratuit.
+
+### ⚠️ Tension à surveiller avec [[MOTEURS-VISUELS-ET-SOCLE]] (signalée, PAS tranchée)
+
+Cette doctrine-là pose pour le registre **QUI** : « ⛔ Jamais un modèle, jamais Seedance », et qualifie
+H3 de « coût réel + non déterministe ». Notre clip est un acteur humain produit par H3, **gratuit**
+(Comfy Cloud), et il bat ce qu'on coderait.
+**Pourquoi il n'y a pas contradiction** : l'interdit vise un acteur qui **JOUE** (son geste porte
+l'argument — scribe, vendeuse) dans les vidéos **Souverain/YouTube**, où le socle stick-figure est
+validé en production depuis le 2026-07-28. Notre homme **SUBIT** : il est le décor humain d'un problème,
+dans un livrable **B2B**. ⛔ Ne PAS étendre ce résultat au registre QUI de la chaîne sans un test dédié.

@@ -85,6 +85,66 @@ Un explainer B2B complet fait souvent **2 → 3** : le problème abstrait (pourq
 l'écran qui le résout. L'échec de Flowdesk vient d'avoir tenté tout le trajet en pilier 2.
 Le pilier 1 reste **à part** (gig distinct). Le pilier 5 n'apparaît jamais seul.
 
+### ⭐⭐⭐ Combiner 5 + 4 DANS UN MÊME PLAN — « est-ce que ça se lit ? » (prouvé 2026-08-20)
+
+Les piliers ne s'enchaînent pas seulement plan par plan : **ils se superposent dans un plan**. Le
+pilier 5 (clip H3) porte la couche du fond, le pilier 4 (Remotion) pose par-dessus tout ce qui doit
+être EXACT. Critère de tri unique :
+- **abstrait** (matière, corps qui souffle, objets qui s'empilent) → **5. H3**
+- **précis** (texte, chiffres, dates, sous-titres, logo) → **4. Remotion** — ⛔ H3 ne sait pas écrire.
+
+Mécanisme : demander à H3 de **laisser la zone vide** (`EMPTY WALL LOCK`), pas retirer après coup.
+⛔ Et donner au personnage une **INTENTION**, jamais un ordre d'immobilité (un `STILLNESS LOCK` a fait
+lâcher le clip à 6,5 s ; l'intention « il souffle » l'a stabilisé sur 9 s).
+Recette complète, prompts et livrables : [[REVERSE-STYLE-VIDEO-VERS-ASSETS]] § EXTENSION 2026-08-20.
+⭐ Ce geste est aussi **un service vendable en soi** : poser une couche exacte sur une vidéo existante
+(sous-titres, chiffre-clé, cartouche) — y compris sur un clip fourni par le client.
+
+## ⭐⭐⭐ LE GABARIT DE CHOIX — ce qu'on vend AVANT le projet (posé 2026-08-20)
+
+> **L'acquis commercial le plus important de la session** (formulé par Aziz). Vaut pour 3 piliers.
+
+**⛔ LA PROMESSE À NE PAS FAIRE** : « on peut changer de style en cours de projet ». C'est vrai
+techniquement (seed constant → même animation réhabillée, corrélation 0,90+), et c'est précisément
+pour ça qu'il ne faut PAS le vendre : annoncer qu'un changement de style est facile **fabrique** les
+demandes de changement de style, en cours de production, plusieurs fois. On transforme une capacité
+en promesse de révisions illimitées.
+
+**✅ CE QU'ON VEND À LA PLACE** : la capacité se dépense **UNE fois, en AVANT-VENTE**.
+On montre au client **2-3 registres × UNE scène de son projet, animée 5-10 s**. Il choisit.
+Le choix ferme la question du style pour toute la production.
+
+| Ce que ça produit | Pourquoi ça vaut plus qu'un portfolio |
+|---|---|
+| le client choisit sur **SA** scène | un portfolio le fait choisir le travail d'un AUTRE |
+| il l'a vu **BOUGER** avant de payer | il ne peut plus dire « ce n'est pas ce que j'imaginais » |
+| le désaccord de goût arrive **avant le code** | aujourd'hui il arrive après le rendu, quand il coûte cher |
+| le style est **arrêté** à cette étape | protège la production au lieu de l'exposer |
+
+C'est la logique de notre storyboard interne (« le modèle propose, on valide, PUIS on code »),
+portée côté client — [[CONTINUITE-SCENE-INTENTION-DABORD]].
+
+**Décliné par pilier** (chacun a SA variable, ne pas les confondre) :
+
+| Pilier | Ce qu'on montre | La variable |
+|---|---|---|
+| **5. vidéo générée** | 1 scène animée × 3 registres (Sunjata · gravure sépia · poster vector) | le REGISTRE graphique |
+| **2. scène SVG** | 1 scène × 2-3 traitements, animée | le registre de DESSIN. ⚠️ La signature du SVG reste le **mix and match** (composer des éléments hétérogènes) — argument distinct, ne pas mélanger |
+| **3. UI produit** | le même film d'écran en plusieurs teintes | la PALETTE, pas le montage (agnosticité déjà prouvée : `NorthShieldPromoV4` sombre / `NorthShieldPromoLight` clair) |
+
+**⛔ 3 GARDE-FOUS (chacun payé dans le test du 2026-08-20)** :
+1. **Relire chaque planche à l'œil.** Sur 5 styles générés, 1 avait dérivé (fenêtre devenue tableau)
+   et 1 prompt a fait PEINDRE le texte sur le mur. Générer coûte ~0 ; relire, non. Une planche fautive
+   fait juger notre rigueur, pas notre style.
+2. **3 registres, pas 5.** Deux des cinq se disputaient le même terrain (ligne claire vs flat vector).
+   Trop de choix affaiblit chaque option et rend la décision plus difficile.
+3. **Fermer le choix par écrit.** Une phrase dans l'offre : « le style est arrêté à cette étape ; la
+   production s'y tient ». Sans elle, on a offert le choix ET gardé le risque.
+
+⭐ **Bonus** : le triptyque est aussi la **démo d'entrée** qui manquait — un prospect comprend la
+méthode en 10 s, sans explication. Plus court à produire que le cut vente 60-90 s en attente.
+Recette technique + prompts + livrables : [[REVERSE-STYLE-VIDEO-VERS-ASSETS]] § EXTENSION 2026-08-20.
+
 ## ÉTAT COMMERCIAL (2026-08-20)
 
 - Page de gig généraliste rédigée et validée : `memory/freelance-linkedin/GIG-PAGE-VALIDEE.md`

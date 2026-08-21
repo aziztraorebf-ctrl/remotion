@@ -81,13 +81,34 @@ Migration image faite (preview mort → GA → **défaut LITE**, -50 %). Restes 
 - Ce qui tient les 12 plans ensemble n'est aucun pilier : c'est **la DA** (4 couleurs, 1 typo).
   Sans elle, les mêmes briques donneraient un patchwork. → `CHARTE-DA-FREELANCE.md` est le liant.
 
-**3 temps proposés** (à valider avec Aziz avant de lancer) :
-1. **Extraire la recette** — le squelette d'un explainer B2B 2 min : quels plans, quel ordre, quel
-   pilier, quel rythme. Livrable = une doctrine de montage, pas une copie d'Aikido.
-2. **Prototyper le SEUL trou** — personnage vectoriel plat, 2 pistes : MiniMax H3 style **Vector
-   Poster** (cf. chantier H3 ci-dessus) ou SVG génératif. ⛔ Ne pas re-prouver les 11 autres plans.
-3. **Produire le CUT VENTE 60-90 s** — le même travail produit enfin l'artefact commercial manquant
-   (charte DA écrite, matière disponible, 53 renders dormants). Notre démo, pas une imitation.
+**✅ TEMPS 2 FAIT (2026-08-20) — le « trou » n'en était pas un, et la recette de recombinaison est écrite.**
+Le personnage vectoriel plat est produit par H3 **et** par Remotion. Mais le vrai acquis est ailleurs :
+**H3 et Remotion se superposent DANS un plan** — abstrait → H3, ce qui SE LIT → Remotion (H3 ne sait
+pas écrire). Mécanisme `EMPTY WALL LOCK` + intention (⛔ jamais un ordre d'immobilité).
+→ Recette + prompts + livrables : `memory/doctrines/REVERSE-STYLE-VIDEO-VERS-ASSETS.md` § EXTENSION 2026-08-20
+→ Aiguillage mis à jour : `memory/doctrines/PILIERS-B2B.md` § Combiner 5 + 4
+→ Code : `src/projects/_client-sim/vector-plat/OuvertureBureauMixte.tsx` (compo `OuvertureBureauMixte`)
+⚠️ Mesures revues au passage : le film fait **14 plans** (pas 12), dont 2 BLOCS à états successifs
+(43 s de carte, 19 s de démo produit) — la leçon de rythme n'est pas « 12 s/plan » mais « un bloc long
+tenu par un enchaînement d'états, pas par une coupe ». Le pilier 4 porte **la moitié du film**.
+
+**✅ 2e VOLET (même jour) — LE STYLE EST TRANSPOSABLE À SEED CONSTANT.** Même seed + prompt identique
++ image dans un AUTRE style → **même animation** (0,919 / 0,896 / 0,910 ; réf. 0,823). Prouvé sur nos
+**3 registres MAISON** (Sunjata · gravure sépia · poster vector) avec Mariama Bâ.
+⭐⭐⭐ **L'acquis n'est PAS technique, il est COMMERCIAL** (formulation d'Aziz) : ⛔ ne jamais vendre
+« on change de style en cours de projet » (= révisions infinies). C'est un **GABARIT DE CHOIX** —
+2-3 registres × 1 scène animée 5-10 s, montrés en AVANT-VENTE, le client tranche, le choix ferme la
+question. Vaut pour 3 piliers (vidéo générée · SVG · UI produit).
+→ `memory/doctrines/PILIERS-B2B.md` § GABARIT DE CHOIX · technique : `memory/fiches/FICHE-CLIP-GENERE.md`
+📁 **Tous les rendus validés + prompts + seeds** : `out/_r-and-d/personnage-vector-plat/MANIFESTE.md`
+
+**Reste à faire** :
+1. **Produire un VRAI gabarit de choix** sur un cas client (3 registres × 1 scène 5-10 s), avec la
+   phrase d'offre qui ferme le choix. C'est l'artefact commercial le plus court à produire.
+2. **Extraire la recette de MONTAGE** (l'enchaînement des 14 plans d'Aikido) — les doctrines couvrent
+   la RECOMBINAISON dans un plan et le CHOIX du style, pas encore l'ENCHAÎNEMENT des plans.
+3. **Produire le CUT VENTE 60-90 s** (charte DA écrite, 53 renders dormants).
+⛔ Ne PAS re-prouver le personnage plat, la transposition de style, ni les 11 autres plans.
 
 📁 **Vidéo rapatriée** : `public/_shared/refs/benchmark-fiverr/02-aikido/aikido-explainer-142s.mp4`
 ⚠️ `public/` est **gitignoré** → ce pointeur est sa seule trace. Le dossier `02-aikido/` contenait

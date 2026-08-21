@@ -100,31 +100,16 @@ contact et dynamique rapide.
 **Le previs peut porter les DEUX à la fois.** Chorégraphie demandée : 0-3 s écrit (caméra fixe) ·
 3-5 s pose la plume · 5-10 s se lève PENDANT un push-in.
 
-**Mesure — la caméra a respecté le découpage temporel** :
-| | valeur | attendu |
-|---|---|---|
-| bords 0-4,5 s | **2,79** | caméra fixe ✅ |
-| bords 5-10 s | **43,48** | push-in franc ✅ |
-| gradient (style) | 11,8 / 11,8 / 13,0 / 13,1 | sain sur 10 s ✅ |
-
-⭐ **C'est le bloc complet** : geste + caméra + prompt, sur 10 s, sans coupe, style tenu. Le montage
-redevient un choix narratif au lieu d'une contrainte technique.
+**Mesuré** : bords 2,79 sur la phase fixe → 43,48 sur le push-in, gradient sain (11,8-13,1) sur 10 s.
+⭐ Le bloc complet : geste + caméra + prompt, 10 s sans coupe, style tenu.
 
 ⚠️ **Nuance vs le duo 10 s précédent** : ici les 2 phases sont bien distinctes parce qu'elles sont de
 NATURES différentes (caméra fixe → caméra mobile). Deux mouvements de caméra CONSÉCUTIFS (push puis
 latéral) restent non acquis — H3 précipite tout dans le premier tiers.
 
-✅ **L'OBJET EST RÉGLÉ** (vérifié par Aziz au visionnage — ma lecture sur frames était FAUSSE, je
-l'avais crue disparue) : la plume est posée sur la table, **elle y reste** pendant qu'il se lève et
-jusqu'à la fin. Le combo qui marche : previs qui dessine l'objet à CHAQUE frame (dans la main puis sur
-la table) + prompt qui déclare son état seconde par seconde + négatif `no floating objects, no object
-sliding by itself, no teleporting pen, no duplicated pen, no disappearing pen`.
-⛔ **Leçon de méthode** : un objet PETIT ne se juge pas sur des frames redimensionnées — le vérifier en
-lecture réelle ou sur un crop pleine résolution avant de conclure à un défaut.
-
-⚠️ **Symptôme à reconnaître — le MORPHING des jambes au lever** : assis en tailleur, le personnage
-passe à debout par un **fondu des jambes** au lieu de les décroiser. Subtil, mais c'est typiquement
-ce qui « crie l'IA ». **RÉSOLU** → le fix et sa mesure : section suivante.
+✅ **Objet tenu en main puis posé** : previs qui le dessine à CHAQUE frame + état déclaré seconde par
+seconde + négatif `no floating objects, no object sliding by itself, no teleporting pen`.
+⛔ Un objet PETIT ne se juge pas sur frames redimensionnées → crop pleine résolution.
 
 ## ⭐⭐⭐ LE MORPHING DES JAMBES EST RÉSOLU — et il se MESURE (validé 2026-08-19, hook Gazoduc)
 
@@ -140,6 +125,64 @@ par frame pendant le geste :
 | montée progressive → **PIC net** (la poussée sur les appuis) → décrue | ✅ vrai lever |
 | courbe **LISSE et continue**, sans pic | ⛔ morphing/fondu |
 Mesuré sur le hook Gazoduc : montée 5,5→6,5 s, **pic à 6,7-6,9 s**, décrue jusqu'à 8,5 s. ✅
+
+## ⭐⭐⭐⭐⭐ LE STYLE EST TRANSPOSABLE À SEED CONSTANT (validé 2026-08-20) — l'acquis n°1
+
+**Même seed + prompt IDENTIQUE au caractère près + image de référence dans un AUTRE style
+→ la MÊME animation, réhabillée.** Corrélations mesurées (profil de mouvement frame-à-frame) :
+hand drawn **0,919** · storyboard crayon **0,896** · gravure sépia **0,910** (réf. fiche : 0,823).
+⛔ Ne toucher QUE l'image. Une seule phrase de prompt changée et la garantie tombe.
+⭐ Écrire le prompt SANS nommer le style (« Preserve this exact art style ») — un prompt qui dit
+« flat vector » appliqué à une image au crayon se contredit lui-même.
+⚠️ **Un poster vector à aplats très contrastés mesure 0,719 alors que l'animation EST la même** :
+la corrélation pixel sur-pénalise les forts contrastes. **Toujours REGARDER avant de conclure sur le
+chiffre** — ici la mesure seule aurait fait rejeter un clip bon.
+
+**Ce que ça sert (doctrine commerciale, décision Aziz)** : ⛔ PAS « on peut changer de style en cours
+de projet » — cette promesse fabrique des révisions infinies. La capacité se dépense **UNE fois, en
+AVANT-VENTE** : 3 registres × une scène de 5-10 s → le client choisit, et le choix ferme la question.
+Détail : [[PILIERS-B2B]] § GABARIT DE CHOIX.
+
+## ⭐⭐⭐ DONNER UNE INTENTION, JAMAIS UN ORDRE D'IMMOBILITÉ (validé 2026-08-20)
+
+`STILLNESS LOCK` (« il ne bouge pas ») → le clip **lâche à 6,5 s** sur 9 (bouche parasite), à couper.
+Même seed, prompt réécrit en INTENTION (« il est dépassé, il souffle, ses épaules retombent »)
++ décor toujours verrouillé → **tient 9 s**, et le soupir obtenu (sourcils accent circonflexe, yeux
+qui se ferment) est le meilleur moment du plan. **Autoriser le mouvement STABILISE le clip.**
+⭐ Ce mouvement est gratuit et **non codable** (une épaule qui s'affaisse en flat vector est hors de
+portée du déterministe) — le verrouiller, c'est jeter la valeur ajoutée du moteur.
+Reformuler le MOUTH LOCK en disant PAR QUOI montrer le souffle :
+`The sigh is shown by his SHOULDERS and CHEST and EYEBROWS, not by his mouth opening.`
+
+## ⭐⭐⭐ RÉSERVER UNE ZONE POUR REMOTION — `EMPTY WALL LOCK` (validé 2026-08-20)
+
+⛔ **H3 ne sait pas écrire** (calendrier sorti en « FLANE », chiffres décoratifs, 2 générations).
+Règle de tri : **« est-ce que ça SE LIT ? »** → abstrait (matière, corps, objets qui s'empilent) = H3 ·
+précis (texte, chiffres, dates, sous-titres, logo) = **Remotion par-dessus**.
+On ne retire pas après coup — on demande à H3 de laisser la place :
+```
+EMPTY WALL LOCK: the wall area in the upper right stays BARE and EMPTY for the entire clip.
+Nothing is ever hung, mounted, pinned or drawn there - no calendar, no poster, no picture,
+no clock, no board, no chart, no frame.
+```
++ négatifs courts : `no calendar, no poster, no picture frame, no clock, no wall chart`
+⛔⛔ **GOTCHA IMAGE (Gemini)** : nommer la zone en CAPITALES (`BARE EMPTY WALL`) la fait **PEINDRE EN
+TOUTES LETTRES sur le mur**. Décrire l'ÉTAT (« the upper right portion of the wall is smooth
+undecorated earth ») + `no text of any kind anywhere` en négatif.
+
+## 🎨 NOS 3 REGISTRES MAISON — prompts archivés, ⛔ ne pas réinventer un style générique
+
+| Registre | Signature | Prompt source |
+|---|---|---|
+| **Sunjata** | contour brun épais (jamais noir), aplats mats, grain papier, palette ocre/sienne/terre | `out/_r-and-d/scribe-tombouctou/prompts/prompt-sonjata-plan1.txt` |
+| **Gravure sépia** | encre + hachures croisées denses, lavis, papier vieilli | `memory/episodes/_rnd/canada-red-bay/tests-visuels/scene5-narrative-test/prompt-plan1.txt` |
+| **Poster vector** | aplats francs, teal + orange brûlé + ocre, silhouettes graphiques, éditorial adulte | `out/_r-and-d/scribe-tombouctou/prompts/prompt-B-postervector.txt` |
+
+Personnage féminin prêt (planche 6 vues, registre Sunjata) :
+`memory/episodes/_rnd/canada-red-bay/tests-visuels/mariama-ba-charsheet-6vues-v1.png`
+⭐ Les 3 tiennent l'animation ET supportent un décor moderne (Sunjata testé en open-space B2B).
+⛔ Un style inventé au prompt est une approximation pâle : partir de ces fichiers.
+Livrables + liens : [[REVERSE-STYLE-VIDEO-VERS-ASSETS]] § EXTENSION 2026-08-20.
 
 ## ⚠️ `AUDIO: no speech` + `MOUTH LOCK` n'empêchent PAS la génération audio (2026-08-19)
 Mesuré -31,0 dB malgré les deux blocs (seuil de la fiche : -45 dB). **MAIS la bouche ne s'animait pas**
