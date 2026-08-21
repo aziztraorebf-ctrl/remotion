@@ -74,6 +74,31 @@ echo "=== G. Autres tools — jamais bloquer ==="
 run "Read" PASS '{"tool_name":"Read","tool_input":{"file_path":"x.tsx"}}'
 run "Edit" PASS '{"tool_name":"Edit","tool_input":{"file_path":"src/projects/souverain/x.tsx","new_string":"rien"}}'
 
+# ─────────────────────────────────────────────────────────────────────────────
+# H. CREATION DE SCENE PAR BASH — le trou paye le 2026-08-21 (gabarit Zambie).
+# Le gate ne surveillait que l'outil Write. Une scene creee via `cat > Scene.tsx <<EOF`
+# passait sous le radar, moteur jamais declare. La consigne de session poussant a
+# travailler en Bash, cette porte laterale etait le chemin PAR DEFAUT, pas un cas rare.
+# ─────────────────────────────────────────────────────────────────────────────
+echo "=== H. Bash cree une scene .tsx — DOIT BLOQUER sans moteur ==="
+run "cat > scene neuve sans moteur" BLOCK '{"tool_name":"Bash","tool_input":{"command":"cat > src/projects/souverain/demo/Neuve.tsx <<EOF\nimport React from \"react\";\nEOF"}}'
+run "cp vers scene neuve" BLOCK '{"tool_name":"Bash","tool_input":{"command":"cp /tmp/S.tsx src/projects/souverain/demo/Copie.tsx"}}'
+run "tee vers scene neuve" BLOCK '{"tool_name":"Bash","tool_input":{"command":"tee src/projects/souverain/demo/Beat9.tsx < /tmp/x"}}'
+
+echo "=== I. Bash cree une scene .tsx — NE DOIT PAS BLOQUER ==="
+run "cat > scene AVEC moteur declare" PASS '{"tool_name":"Bash","tool_input":{"command":"cat > src/projects/souverain/demo/Neuve.tsx <<EOF\n// MOTEUR: D3 — geometrie calculee\nEOF"}}'
+run "cat > brique _shared" PASS '{"tool_name":"Bash","tool_input":{"command":"cat > src/projects/_shared/mapbox/Truc.tsx <<EOF\nrien\nEOF"}}'
+run "cat > fichier EXISTANT" PASS '{"tool_name":"Bash","tool_input":{"command":"cat > src/projects/_client-sim/zambia-peacecorps/ZambiaTraitementA.tsx <<EOF\nrien\nEOF"}}'
+# Faux positif reel, rencontre en ecrivant ce gate : un script python contenant l'exemple
+# "cp x Scene.tsx" etait bloque alors qu'il ne cree aucune scene.
+run "python3 qui PARLE de .tsx" PASS '{"tool_name":"Bash","tool_input":{"command":"python3 -c \"s = 42\""}}'
+run "sed qui PARLE de .tsx" PASS '{"tool_name":"Bash","tool_input":{"command":"sed -i s/x/y/ note.txt"}}'
+# Faux positif reel n2 : le message de commit DECRIVANT le fix contenait "cat > Scene.tsx",
+# et la commande commencait par `cd ... && git add` — le motif ancre en tete ne matchait pas.
+# Un message de commit qui decrit une commande n'est pas une commande.
+run "git commit decrivant cat > Scene.tsx" PASS '{"tool_name":"Bash","tool_input":{"command":"cd /Users/x/repo && git add -A && git commit -m \"fix: cat > Scene.tsx contournait le gate\""}}'
+run "echo decrivant un .tsx" PASS '{"tool_name":"Bash","tool_input":{"command":"echo \"cp a.tsx b.tsx\" >> notes.md"}}'
+
 echo
 echo "RESULTAT : $PASS ok / $FAIL echec(s)"
 [ $FAIL -eq 0 ] || exit 1

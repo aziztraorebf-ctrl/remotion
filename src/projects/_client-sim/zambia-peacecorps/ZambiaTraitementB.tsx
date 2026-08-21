@@ -7,6 +7,8 @@
  *
  * Registre B = fond ivoire/papier, provinces gris-chaud, points terre de sienne, traits fins.
  */
+// MOTEUR: D3 — geometrie calculee sur projection reelle (le beat montre une REPARTITION
+//         dans des frontieres exactes, pas un lieu a survoler). Registre alternatif = Mapbox.
 import React, { useEffect, useState } from "react";
 import {
   AbsoluteFill,

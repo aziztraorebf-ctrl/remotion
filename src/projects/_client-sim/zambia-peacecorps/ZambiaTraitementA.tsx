@@ -7,6 +7,8 @@
  *
  * Registre A = notre fond #16213a, provinces sombres, points ambre qui s'allument.
  */
+// MOTEUR: D3 — geometrie calculee sur projection reelle (le beat montre une REPARTITION
+//         dans des frontieres exactes, pas un lieu a survoler). Registre alternatif = Mapbox.
 import React, { useEffect, useState } from "react";
 import {
   AbsoluteFill,

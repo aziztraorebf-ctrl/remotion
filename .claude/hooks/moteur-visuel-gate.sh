@@ -61,6 +61,57 @@ EOF
   Bash)
     CMD=$(echo "$INPUT" | jq -r '.tool_input.command // empty')
 
+    # ─────────────────────────────────────────────────────────────────────────
+    # A. CREATION D'UNE SCENE .tsx PAR BASH (heredoc, cp, mv, tee...)
+    # ⛔ FIX 2026-08-21 — TROU REEL, paye le jour meme (gabarit Zambie) : le gate ne
+    # surveillait que l'outil Write. Une scene creee via `cat > Scene.tsx <<EOF` passait
+    # sous le radar, moteur jamais declare. La consigne de session pousse a travailler en
+    # Bash : la porte laterale n'etait pas theorique, elle etait le chemin par defaut.
+    # On applique ici EXACTEMENT les memes regles que la branche Write.
+    # ─────────────────────────────────────────────────────────────────────────
+    # Fichiers .tsx cibles d'une REDIRECTION (> ou >>) ou d'un cp/mv/tee.
+    # ⚠️ Ne PAS analyser une commande qui MANIPULE du texte contenant ".tsx" sans creer de
+    # scene (patch python/sed d'un hook, grep, heredoc de doc). Faux positif reel, mesure a
+    # l'ecriture meme de ce gate : un script python contenant l'exemple "cp x Scene.tsx" a
+    # ete bloque. On ignore donc les interpreteurs et les commandes de lecture.
+    # ⚠️ L'exclusion doit rester LOCALE a la detection .tsx : un `exit 0` global tuerait aussi
+    # la surveillance des briefs storyboard, qui se lancent justement via `python3 ...py`
+    # (3 tests casses en le faisant — corrige avant commit).
+    # ⚠️ Le motif doit matcher l'outil OU QU'IL SOIT DANS LA CHAINE, pas seulement en tete :
+    # `cd /x && git commit -m "...cat > Scene.tsx..."` a ete bloque a tort (faux positif reel,
+    # rencontre en commitant ce meme fix). Un message de commit qui DECRIT une commande n'est
+    # pas une commande. Idem `echo`/`printf` d'une doc.
+    case "$CMD" in
+      *git\ commit*|*git\ add*|*git\ -*|git\ *|*"git "*) BASH_TSX="" ;;
+      python3\ *|python\ *|node\ *|perl\ *|ruby\ *|sed\ *|awk\ *|grep\ *|rg\ *|echo\ *|printf\ *) BASH_TSX="" ;;
+      *) BASH_TSX=$(echo "$CMD" | grep -oE '(>>?|cp|mv|tee)[[:space:]]+[^ |;&]*\.tsx' \
+           | grep -oE '[^ |;&>]*\.tsx' | sort -u) ;;
+    esac
+
+    for f in $BASH_TSX; do
+      # Chemin absolu si relatif
+      case "$f" in /*) FP="$f" ;; *) FP="$PWD/$f" ;; esac
+
+      # Fichier deja existant : editer ne redecide pas le moteur (parite avec Write).
+      [ -f "$FP" ] && continue
+
+      # Zones hors-scope, identiques a la branche Write.
+      case "$FP" in
+        *_shared/*|*/tests/*|*_archive*|*/archive/*|*.test.tsx|*.spec.tsx) continue ;;
+      esac
+
+      # Le moteur est-il declare dans la commande elle-meme (le heredoc en fait partie) ?
+      echo "$CMD" | grep -qiE "$MARQUEUR" && continue
+
+      cat >&2 <<EOF
+{
+  "decision": "block",
+  "reason": "MOTEUR VISUEL NON DECLARE — nouvelle scene creee par Bash : $FP\n\nCe gate surveillait seulement l'outil Write. Creer la scene via 'cat > fichier.tsx' contournait\nla verification sans intention de le faire (trou paye le 2026-08-21, gabarit Zambie).\n\nAvant de coder une scene, l'etape MOTEUR ne se saute pas :\n  INTENTION (1 verbe) -> FORME (le geste) -> MOTEUR (le registre) -> TEMPLATE\n\nAjouter en en-tete du fichier un commentaire declarant le registre ET pourquoi, ex :\n  // MOTEUR: D3 — geometrie calculee (le beat montre une PROPORTION, pas un lieu)\n\nLes registres disponibles :\n  Mapbox        OU        — lieu reel, territoire, frontieres\n  D3            COMBIEN   — flux, reseaux, arcs, projection, choropleth, globe\n  SVG           QUOI/COMMENT — objet, processus, trajet, metaphore\n  stick-figure  QUI       — un acteur, un geste, un rapport de force\n  MiniMax H3    LA MATIERE — texture, geste physique, lieu filme\n  RACCORD       LE MONTAGE — quitter la carte, couper, alterner, rompre l'echelle\n\nDoctrine : $DOCTRINE"
+}
+EOF
+      exit 2
+    done
+
     # Cible : les scripts qui envoient un brief de storyboard a un modele externe.
     if ! echo "$CMD" | grep -qE "(storyboard.*\.py|gemini-storyboard|openrouter-img2img|openrouter-gen-image|storyboard-dual-gen)"; then
       exit 0
@@ -95,7 +146,15 @@ EOF
     # de fichier hors surveillance — un contournement n'est pas un fix.
     # ⚠️ Cette porte NE dispense PAS de l'audit du brief par un modele tiers (FICHE-STORYBOARD.md) :
     # elle dit seulement "ce brief n'est pas une conception", pas "ce brief est bon".
-    if grep -qiE "REDRAW|RE-?DESSIN|ALREADY (SELECTED|CHOSEN|ARBITRATED)|concepts? (are|is) already (chosen|selected)|MISTAKES? FROM THE PREVIOUS ATTEMPT" "$PROMPT_FILE"; then
+    # ⛔ FIX 2026-08-21 — le motif nu "REDRAW|RE-?DESSIN" produisait un FAUX POSITIF sur la NEGATION.
+    # Vecu : le VRAI brief 4B fautif contient "these geometries [...] must not be redrawn" (une
+    # INTERDICTION de redessiner la geo), et le gate y lisait "brief de re-dessin" -> exit 0.
+    # Resultat : le garde-fou etait inoperant sur l'incident meme qui l'a fait naitre.
+    # On exige desormais une formulation qui DEMANDE un re-dessin, et on rejette les negations.
+    REDRAW_HIT=$(grep -inE "(REDRAW|RE-?DESSIN(E|ER)?|ALREADY (SELECTED|CHOSEN|ARBITRATED)|concepts? (are|is) already (chosen|selected)|MISTAKES? FROM THE PREVIOUS ATTEMPT)" "$PROMPT_FILE" \
+      | grep -ivE "(not|never|jamais|pas|sans|without|no)[^.]{0,30}(redraw|re-?dessin)" \
+      | head -1)
+    if [ -n "$REDRAW_HIT" ]; then
       exit 0
     fi
 

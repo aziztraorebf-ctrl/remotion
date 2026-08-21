@@ -53,9 +53,26 @@ if [ -n "$BASH_CMD" ]; then
   # ⛔ Exclure git/echo/cat : un `git commit -m "...narration..."` matchait le TEXTE du
   # message et injectait la fiche audio pour rien (faux positif reel, 2026-08-17).
   # On ne veut matcher que de VRAIES actions de production.
+  #
+  # ⛔⛔ FIX 2026-08-21 — MAIS l'exclusion `cat *` coupait le canal pour les scenes CREEES
+  # en Bash (`cat > Scene.tsx <<EOF`). Mesure sur le cas reel (gabarit Zambie) : le fichier
+  # scorait CAM=6 et HAS_D=2 — FICHE-CAMERA et FICHE-SVG-DESSINE se seraient donc declenchees
+  # via Write, et n'ont RIEN injecte via Bash. Consequence concrete : `camAtContinu()` et les
+  # patterns camera existaient dans la fiche, personne ne me les a mis sous les yeux, et j'ai
+  # code des cercles a la main en ignorant tout l'arsenal.
+  # => si la commande ECRIT un .tsx, on ne sort pas : on laisse la branche fichier analyser.
+  BASH_TSX_TARGET=$(printf '%s' "$BASH_CMD" | grep -oE '(>>?|cp|mv|tee)[[:space:]]+[^ |;&]*\.tsx' \
+    | grep -oE '[^ |;&>]*\.tsx' | head -1)
+  # Un interpreteur qui PARLE de .tsx n'en cree pas (patch de hook, script d'analyse).
   case "$BASH_CMD" in
-    git\ *|*"git commit"*|echo\ *|cat\ *|grep\ *|ls\ *) exit 0 ;;
+    python3\ *|python\ *|node\ *|perl\ *|sed\ *|awk\ *) BASH_TSX_TARGET="" ;;
   esac
+
+  if [ -z "$BASH_TSX_TARGET" ]; then
+    case "$BASH_CMD" in
+      git\ *|*"git commit"*|echo\ *|cat\ *|grep\ *|ls\ *) exit 0 ;;
+    esac
+  fi
   if printf '%s' "$BASH_CMD" | grep -qE 'storyboard-dual-gen|openrouter-img2img|openrouter-vision-breakdown|da-brief\.py|da-compare\.py'; then
     add_fiche "FICHE-STORYBOARD.md" "FICHE STORYBOARD" "bash-storyboard"
   fi
@@ -81,9 +98,16 @@ if [ -n "$BASH_CMD" ]; then
   if printf '%s' "$BASH_CMD" | grep -qE 'capture-northshield|capture-template|puppeteer|http\.server 88|live-layout\.json'; then
     add_fiche "FICHE-UI-PRODUIT.md" "FICHE UI PRODUIT" "bash-ui-produit"
   fi
-  [ -z "$PARTS" ] && exit 0
-  jq -n --arg ctx "$PARTS" '{hookSpecificOutput:{hookEventName:"PreToolUse",additionalContext:$ctx}}'
-  exit 0
+  # SCENE CREEE EN BASH : on rebascule sur la branche fichier avec le corps de la commande
+  # (le heredoc) comme CONTENT. Sans ca, une scene ecrite en Bash n'a jamais ses fiches.
+  if [ -n "$BASH_TSX_TARGET" ]; then
+    FILE_PATH="$BASH_TSX_TARGET"
+    CONTENT="$BASH_CMD"
+  else
+    [ -z "$PARTS" ] && exit 0
+    jq -n --arg ctx "$PARTS" '{hookSpecificOutput:{hookEventName:"PreToolUse",additionalContext:$ctx}}'
+    exit 0
+  fi
 fi
 
 # ---------------------------------------------------------------- BRANCHE FICHIER
@@ -152,6 +176,16 @@ fi
 # Camera : transversal (D3, Mapbox, SVG) — declencheur = motifs de code camera.
 if [ "${CAM:-0}" -ge 2 ]; then
   add_fiche "FICHE-CAMERA.md" "FICHE CAMERA" "$FILE_PATH"
+fi
+
+# ARSENAL DE SCENE (ajoute 2026-08-21) : les autres fiches enseignent la METHODE, aucune ne
+# disait ce qu'on POSSEDE. Coût mesuré le jour meme (gabarit Zambie) : des <circle> dessines a
+# la main alors que GisementMarker existait et etait utilisable tel quel — livrable juge
+# "prototype", a refaire. Declencheur = la scene DESSINE (primitives/paths) ou pose des
+# MARQUEURS geo, c'est-a-dire exactement les 2 moments ou on reinvente une brique existante.
+GEO=$(printf '%s' "$SCOPE" | grep -oE 'project\(|projection\(|geoPath|geoMercator|map\.project|cx=\{|cy=\{' | wc -l | tr -d ' ')
+if { [ "${PRIMS:-0}" -ge 2 ] || [ "${HAS_D:-0}" -ge 1 ]; } || [ "${GEO:-0}" -ge 2 ]; then
+  add_fiche "FICHE-ARSENAL-SCENE.md" "FICHE ARSENAL DE SCENE" "$FILE_PATH"
 fi
 
 # Format vertical : chemin de Short OU dimensions 1080x1920 dans le contenu.
