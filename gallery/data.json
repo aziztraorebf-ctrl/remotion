@@ -1,0 +1,110 @@
+[
+ {
+  "slug": "drift-continu",
+  "titre": "Drift continu",
+  "cat": "reperage",
+  "desc": "Dérive lente + bearing 0 à 12°, pitch 25. Le plan qui respire sans intention forte.",
+  "lieu": "Dakar",
+  "energie": "basse",
+  "poids": 157
+ },
+ {
+  "slug": "orbit-dolly-in",
+  "titre": "Orbit + Dolly In",
+  "cat": "approche",
+  "desc": "Bearing 0 à -180° pendant que le zoom passe 4.5 à 6.2 et le pitch 0 à 50. On tourne autour en se rapprochant.",
+  "lieu": "Marrakech",
+  "energie": "haute",
+  "poids": 320
+ },
+ {
+  "slug": "whip-pan-multistop",
+  "titre": "Multi-stop A → B + Whip Pan",
+  "cat": "transition",
+  "desc": "Déplacement Lagos vers Nairobi avec flou de filé au milieu. Le raccord qui avale la distance.",
+  "lieu": "Lagos → Nairobi",
+  "energie": "haute",
+  "poids": 363
+ },
+ {
+  "slug": "zoom-freeze",
+  "titre": "Zoom rapide + Freeze",
+  "cat": "accent",
+  "desc": "Zoom 3.2 à 5.8 puis arrêt net. Sert à plaquer un chiffre ou un nom sur l'arrêt.",
+  "lieu": "Agadez",
+  "energie": "moyenne",
+  "poids": 157
+ },
+ {
+  "slug": "tilt-pull-back",
+  "titre": "Tilt + Pull Back",
+  "cat": "revelation",
+  "desc": "Le pitch bascule 0 à 60 puis le zoom recule 5.5 à 3.0. On se redresse et on découvre le contexte.",
+  "lieu": "Kinshasa",
+  "energie": "moyenne",
+  "poids": 334
+ },
+ {
+  "slug": "counter-rotation",
+  "titre": "Counter-rotation + Orbit",
+  "cat": "approche",
+  "desc": "Bearing -45 à +35 : la carte tourne dans un sens, la caméra dans l'autre.",
+  "lieu": "Johannesburg",
+  "energie": "moyenne",
+  "poids": 271
+ },
+ {
+  "slug": "drift-blur",
+  "titre": "Drift lent + blur atmosphère",
+  "cat": "reperage",
+  "desc": "Dérive avec flou atmosphérique constant. Fond de plan pour poser une voix off.",
+  "lieu": "Alger",
+  "energie": "basse",
+  "poids": 148
+ },
+ {
+  "slug": "pull-back-reveal",
+  "titre": "Pull Back Reveal planétaire",
+  "cat": "revelation",
+  "desc": "Zoom 5.5 à 2.8 en 60 frames : le pays s'éloigne jusqu'à la vue planétaire. Le geste canonique de la doctrine.",
+  "lieu": "Afrique",
+  "energie": "haute",
+  "poids": 343
+ },
+ {
+  "slug": "zoom-sol-3d",
+  "titre": "Zoom sol 3D",
+  "cat": "approche",
+  "desc": "Descente depuis l'orbite jusqu'au niveau du sol, pitch 70°, zoom 14, satellite-streets. Le plan le plus spectaculaire du lot.",
+  "lieu": "Nairobi",
+  "energie": "haute",
+  "poids": 1577
+ },
+ {
+  "slug": "fade-style-switch",
+  "titre": "Fade style switch",
+  "cat": "transition",
+  "desc": "Bascule dark vers satellite en fondu, caméra fixe. Changer de registre sans bouger.",
+  "lieu": "Lagos",
+  "energie": "basse",
+  "poids": 281
+ },
+ {
+  "slug": "whip-pan-style-switch",
+  "titre": "Whip Pan + style switch",
+  "cat": "transition",
+  "desc": "Déplacement Casablanca vers Accra avec changement de style au pic du flou. Le switch est invisible.",
+  "lieu": "Casablanca → Accra",
+  "energie": "haute",
+  "poids": 329
+ },
+ {
+  "slug": "zoom-out-in",
+  "titre": "Zoom out → style → Zoom in",
+  "cat": "transition",
+  "desc": "On recule, on change de style, on revient. Traverser une ellipse temporelle.",
+  "lieu": "Dakar",
+  "energie": "moyenne",
+  "poids": 523
+ }
+]

@@ -1,0 +1,3 @@
+# Les clips vivent sur la release `gallery-media`, jamais dans git.
+# Recuperation locale : ./fetch-media.sh
+clips/

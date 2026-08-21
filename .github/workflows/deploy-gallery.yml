@@ -1,0 +1,72 @@
+name: Deploy gallery to GitHub Pages
+
+# Publie gallery/ quand il change sur la branche par defaut.
+# Les clips .mp4 ne sont PAS dans git : ils vivent sur la release `gallery-media`
+# et sont telecharges ici avant l'assemblage, pour que les URLs relatives
+# ./clips/*.mp4 de data.json continuent de fonctionner.
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'gallery/**'
+      - '.github/workflows/deploy-gallery.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: deploy-gallery
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Assemble site
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p site
+          rsync -a \
+            --exclude 'build-gallery.py' \
+            --exclude 'fetch-media.sh' \
+            --exclude '__pycache__' \
+            gallery/ site/
+          mkdir -p site/clips
+          if gh release view gallery-media --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release download gallery-media --repo "$GITHUB_REPOSITORY" \
+              --dir site/clips --pattern '*.mp4' --clobber
+          else
+            echo "::warning::release gallery-media absente - site publie sans les clips"
+          fi
+
+      - name: Verify manifest matches files
+        run: |
+          python3 - <<'PY'
+          import json, os, sys
+          cards = json.load(open('site/data.json'))
+          missing = [c['slug'] for c in cards
+                     if not os.path.exists(f"site/posters/{c['slug']}.jpg")]
+          if missing:
+              sys.exit(f"poster manquant pour: {missing}")
+          noclip = [c['slug'] for c in cards
+                    if not os.path.exists(f"site/clips/{c['slug']}.mp4")]
+          print(f"{len(cards)} cartes | posters OK"
+                + (f" | clips absents: {noclip}" if noclip else " | clips OK"))
+          PY
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v4

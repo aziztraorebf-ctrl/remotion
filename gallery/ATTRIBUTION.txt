@@ -1,0 +1,4 @@
+Structure de page, systeme de tokens CSS et mecanique de lecture video (IntersectionObserver
++ preload="none" + data-src) adaptes de video-shotcraft :
+https://github.com/Vincentwei1021/video-shotcraft — Apache License 2.0.
+Code reecrit, non copie verbatim. Palette et contenus propres a Kora et Cartes.
