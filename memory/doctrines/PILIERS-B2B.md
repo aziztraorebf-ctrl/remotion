@@ -141,6 +141,13 @@ portée côté client — [[CONTINUITE-SCENE-INTENTION-DABORD]].
 3. **Fermer le choix par écrit.** Une phrase dans l'offre : « le style est arrêté à cette étape ; la
    production s'y tient ». Sans elle, on a offert le choix ET gardé le risque.
 
+📊 **Ce que le marché confirme (veille 2026-08-20)** : les démos personnalisées closent **2,8×** mieux
+que les présentations génériques, et une candidature avec échantillon ciblé fait **+35 %** de réponses.
+⛔ Mais un simple **lien de portfolio** dans une candidature FAIT BAISSER la réponse (8,22 % sans lien
+vs 5,90 % avec) — un lien demande un effort, un aperçu n'en demande aucun. C'est toute la différence.
+Chiffres, sources et le positionnement qui en découle (« vidéo DÉTERMINISTE avec de l'IA dedans », pas
+« vidéo IA » qui est commoditisée à −13 %/contrat) : [[freelance-dataviz-fiverr-pro]] § VEILLE MARCHÉ.
+
 ⭐ **Bonus** : le triptyque est aussi la **démo d'entrée** qui manquait — un prospect comprend la
 méthode en 10 s, sans explication. Plus court à produire que le cut vente 60-90 s en attente.
 Recette technique + prompts + livrables : [[REVERSE-STYLE-VIDEO-VERS-ASSETS]] § EXTENSION 2026-08-20.
