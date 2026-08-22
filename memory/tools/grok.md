@@ -4,6 +4,29 @@
 > `scripts/tools/jury-script-saas-llm.py`, `jury-script-creatif-llm.py` : `grok-4.20-reasoning`
 > via `https://api.x.ai/v1/chat/completions`).
 
+## ⛔ SLUG VISION/TEXTE via OpenRouter — ne pas le deviner (payé 2026-08-22)
+
+J'ai écrit `x-ai/grok-4.1` pour un breakdown vision : **ce modèle n'existe pas**, l'appel a échoué
+en HTTP 400 (`is not a valid model ID`). Un appel perdu, uniquement parce que j'ai supposé un
+numéro de version au lieu de lire la liste.
+
+**Les slugs réellement disponibles** (`GET https://openrouter.ai/api/v1/models`, vérifié 2026-08-22) :
+`x-ai/grok-4.20` · `x-ai/grok-4.20-multi-agent` · `x-ai/grok-4.3` · `x-ai/grok-4.5` ·
+**`x-ai/grok-4.6`** (le plus récent, celui qu'on utilise) · `x-ai/grok-build-0.1` · `~x-ai/grok-latest`.
+⚠️ Deux familles distinctes à ne pas confondre : **génération d'image** = API xAI directe
+(`grok-imagine-image-2.0`, ci-dessous) · **texte+vision** = OpenRouter (`x-ai/grok-4.6`) ·
+**jurys existants** = API xAI directe (`grok-4.20-reasoning`).
+
+**Réflexe** : avant tout appel à un modèle dont on n'a pas le slug sous les yeux, lister l'API
+(1 `curl`, gratuit) plutôt que de déduire une version. Vaut pour tous les fournisseurs.
+
+### Capacités d'entrée mesurées (OpenRouter, 2026-08-22)
+| Modèle | `input_modalities` | Conséquence |
+|---|---|---|
+| `x-ai/grok-4.6` | text, image, file | breakdown de frames OK, **pas de vidéo** |
+| `openai/gpt-5.5` | text, image, file | idem — **meilleur relecteur de frame** testé, même sans avoir dessiné la planche |
+| `google/gemini-3.1-pro-preview` | text, image, file, audio, **video** | le SEUL à juger du MOUVEMENT |
+
 ## ⭐⭐ Grok GÉNÈRE DES IMAGES — capacité qu'on ignorait, découverte 2026-08-17
 
 > **On croyait que Grok ne dessinait pas** et il était donc exclu de tous nos storyboards. Faux :

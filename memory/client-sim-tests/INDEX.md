@@ -12,6 +12,22 @@
 
 ## Tests réalisés
 
+- ⭐⭐⭐ **Zambie / Peace Corps (CARTOGRAPHIQUE — 1er brief CLIENT RÉEL, pas un SaaS fictif) — 2026-08-21/22.**
+  ⚠️ Genre différent des 3 tests ci-dessous : ce n'est pas un produit inventé mais une **vraie offre
+  Upwork** (animation cartographique, volontaires en Zambie 1995→2026), et le livrable est une **démo
+  d'avant-vente de 8 s en 2 traitements** (gabarit de choix), pas un film complet.
+  **Objectif réel du test : éprouver le WORKFLOW**, pas produire la vidéo.
+  Parcours : 1er rendu codé SANS storyboard → **rejeté « prototype » par Aziz** (conservé dans
+  `v1-rejete/` comme mesure du progrès) → reprise par le storyboard (brief audité, 3 dessinateurs,
+  arbitrage, breakdown par le modèle qui a dessiné) → code → self-review mécanique → comparatif →
+  correction **par la mesure** → 2 concepts validés.
+  ⭐ Acquis transférable : *ce qui se mesure ne se demande jamais à un modèle*. Sur 7 points remontés
+  par 3 modèles : 3 justes, 2 neutres, **2 nuisibles**.
+  Livrables + écarts mesurés + pièges : [MANIFESTE](zambia-peacecorps/MANIFESTE.md).
+  Code : `src/projects/_client-sim/zambia-peacecorps/`. Outils nés ici :
+  `scripts/tools/carto-selfreview.py` · `scripts/tools/make-comparatif-panel.py`.
+  ▶️ **2e test prévu** (starter prêt dans `memory/NEXT-ACTION.md`) avant de graver le workflow.
+
 - ⭐⭐⭐ **Flowdesk (SaaS fictif, centralisation de demandes internes) — CLOS 2026-08-06.**
   Conclusions stratégiques (pipeline SaaS V1 formalisé, Direction A/B, règle
   draw-on/mouvement/vie, structure CONCRET→ABSTRAIT→CONCRET) :

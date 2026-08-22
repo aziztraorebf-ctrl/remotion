@@ -7,7 +7,9 @@
 #   - --public-dir slim via symlinks — evite la copie des 2.5 GB de public/
 #   - src/index.ts en argument explicite
 #
-# Speed: ~180 frames/35s (~5fps render rate).
+# Speed: MESURE 2026-08-22 sur Senegal-Acte2-Continu (20 frames) : ~1,5 fps en 1080p.
+# ⚠️ L'ancien commentaire annoncait "~5fps" — optimiste x3. Un commentaire ne bat pas une mesure.
+# 4K (--scale=2) : 13s vs 12s pour 20 frames, soit +8 % seulement. Le 4K est quasi gratuit ici.
 
 set -e
 

@@ -144,6 +144,12 @@ export const ZambiaConceptA: React.FC = () => {
   });
 
   const globeR = R0 * scaleMul;
+  // ⚠️ DETTE DE REUTILISATION (relevee au wrap 2026-08-22) : cette projection re-declare a la main
+  // ce que fait deja `orthoAt()` de `_rnd/d3-16x9/globeGeo.ts`. C'est le pattern decrit par
+  // feedback_globe-d3-reutiliser-briques-exactes-pas-variante-maison. Le rendu est VALIDE, donc
+  // rien d'urgent — mais importer orthoAt() AVANT tout reemploi de ce fichier.
+  // ⭐ Apport reellement neuf de cette scene : l'amplitude. scaleMul va jusqu'a 10.8, la ou tout
+  // l'existant plafonne entre 1.2 et 4.8 (globe -> pays plein cadre sans raccord).
   const proj = geoOrthographic()
     .scale(globeR)
     .translate([W / 2, H / 2])
@@ -473,7 +479,11 @@ function ringsToPath(
   return parts.join(" ");
 }
 
-/** Interpole 2 couleurs hex : sert a passer de la palette GLOBE a la palette TERRITOIRE. */
+/**
+ * Interpole 2 couleurs hex : sert a passer de la palette GLOBE a la palette TERRITOIRE.
+ * ⚠️ DOUBLON connu de `lerpHex()` (`warmap/parties/warmapPremiumKit.ts:195`), meme contrat.
+ * Releve au wrap 2026-08-22 : au prochain besoin, importer lerpHex plutot que re-declarer.
+ */
 function melange(a: string, b: string, t: number): string {
   const k = Math.max(0, Math.min(1, t));
   const hex = (c: string) => [1, 3, 5].map((i) => parseInt(c.slice(i, i + 2), 16));

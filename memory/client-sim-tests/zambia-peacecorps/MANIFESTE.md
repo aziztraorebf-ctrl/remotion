@@ -24,8 +24,9 @@
 | Self-review | 4/4 | 4/4 |
 
 **Socle partagé** : `zambiaGeo.ts` (7 provinces du brief + 3 hors-brief en fond neutre, semis
-déterministe lon/lat, interpolation des totaux) · GeoJSON régénérable par
-`scripts/warmap/generate-zambia-admin1.py` (⚠️ `public/` est gitignoré).
+déterministe lon/lat, interpolation des totaux) · GeoJSON **versionné** (`public/_shared/geo-data/zambia/`), régénérable par
+`scripts/warmap/generate-zambia-admin1.py`. ⚠️ Contrairement à `out/`, `public/` n'est PAS gitignoré —
+j'ai affirmé l'inverse en séance, à tort : les 14 autres fichiers geo-data y sont suivis.
 
 ## 📉 LE 1er RENDU, REJETÉ (`v1-rejete/`)
 

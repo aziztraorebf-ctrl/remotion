@@ -125,3 +125,35 @@ structure, ratio de boucle, ecran noir en fin, derive de luminosite.
 l'inspection visuelle (gaz qui se vide, navire qui derive de 15 px, raccord de boucle franc).
 Gabarits de prompt pour corriger ce qu'il revele : `memory/tools/H3-PROMPT-BLOCKS.md`.
 
+
+## carto-selfreview.py — gate MÉCANIQUE d'une frame cartographique (2026-08-22) ⛔ BLOQUANT
+
+`python3 scripts/tools/carto-selfreview.py --frame f.png [--globe-interdit|--globe-attendu] [--attendu-fond RRGGBB] [--sujet-min N --sujet-max N]`
+
+O/X sur 4 critères, **exit 1** si un critère dur échoue : C1 projection (globe non voulu) · C2 fond vs
+palette maison · C3 % du cadre occupé par le sujet · C4 part de cadre vide.
+À lancer **AVANT tout appel de modèle et AVANT toute présentation** — comme `mapbox-selfreview.py`.
+
+Né de 3 défauts qui ont traversé plusieurs rendus sans être vus : globe silencieux de Mapbox (bascule
+auto sous zoom ~5), fond `dark-v11` brut RGB(9,9,9) au lieu de la charte, cadrage jugé à l'œil.
+⚠️ `--attendu-fond` ne vaut QUE si le fond est visible aux bords (globe, carte large) : sur une vue
+pleine il mesure les terres, pas le ciel.
+
+## make-comparatif-panel.py — planche A/B storyboard ↔ rendu (2026-08-22)
+
+`python3 scripts/tools/make-comparatif-panel.py --storyboard SB.jpg --row 0|1 --panel 1-4 --render frame.png --out cmp.png`
+
+UNE case de storyboard ↔ UNE frame **pleine taille**, même hauteur.
+⛔ **Ne JAMAIS empiler des vignettes** : Gemini ET Grok ont halluciné « le pays occupe 15-20 % du
+cadre » alors que la mesure donnait 61 %. Sur planche propre, le même modèle diagnostique juste.
+
+## ⛔ QUEL MODÈLE POUR QUELLE ENTRÉE (vérifié sur l'API OpenRouter, 2026-08-22)
+
+| Modèle | Entrées | Usage |
+|---|---|---|
+| `openai/gpt-5.5` | file, image, text | ⭐ **meilleur relecteur de FRAME**, même sans avoir dessiné la planche (seul à repérer un manque narratif, seul à donner des px). Pas de vidéo. |
+| `x-ai/grok-4.6` | file, image, text | bon sur sa propre planche. ⛔ `x-ai/grok-4.1` N'EXISTE PAS (HTTP 400 — 1 appel perdu). |
+| `google/gemini-3.1-pro-preview` | + **video**, audio | le SEUL à juger du MOUVEMENT. |
+
+⛔ **Un point de modèle ne s'applique jamais sans vérification** : sur 7 points reçus au comparatif
+final, 2 étaient NUISIBLES (violer un interdit client, supprimer une décision d'Aziz).

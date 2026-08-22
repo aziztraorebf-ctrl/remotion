@@ -23,6 +23,7 @@ Cause d'échec n°1 mesurée par audit (2026-08-17) : **« brique existante non 
 | `FICHE-ASSEMBLAGE.md` | on rend ou on concatène | commande `ffmpeg`/`render-mapbox.sh`/`remotion render`/`-FINAL.mp4`/`upload-to-blob`/`concat=` |
 | `FICHE-UI-PRODUIT.md` | on simule un ECRAN / dashboard / app (pilier B2B n3) | chemin `live-page(-light)/`, `shotcraft-lib/`, `_client-sim/*(Promo|Dashboard|Screen|Mockup)`, OU commande `capture-northshield`/`capture-template`/`puppeteer`/`http.server 88`/`live-layout.json` |
 | `FICHE-AUDIO.md` | on génère/aligne de l'audio, ou on cale un timing | commande `generate-narration`/`generate-sfx`/`forced-align`/`splice-segment`/`elevenlabs`/`minimax-music`, OU fichier `timing.ts`/`whisper-words*.ts`, OU contenu `<Audio`/`staticFile(*.mp3`/`sfx/`/`startFrom={` |
+| `FICHE-ARSENAL-SCENE.md` | On s'apprête à dessiner une primitive SVG sur une carte ou à poser un marqueur (`fiche-inject.sh:188`) | Dit ce qu'on POSSÈDE (jetons, cartouches, effets vivants, pièges d'import) — les autres fiches disent la méthode |
 
 Le hook : `.claude/hooks/fiche-inject.sh`, branché dans `settings.json` sur **DEUX matchers : `Bash` ET
 `Edit|Write`**. La branche Bash est indispensable — le storyboard et l'assemblage ne sont pas des éditions

@@ -277,19 +277,12 @@ les 2 arborescences, écarte les collisions résolues (stub/identiques) et les f
 
 ---
 
-## 🐛 BUG OUVERT — le gate `moteur-visuel` ne rattrape plus son cas de référence (2026-08-18)
+## ✅ RÉSOLU 2026-08-22 — gate `moteur-visuel` réparé (était : « ne rattrape plus son cas de référence »)
 
-`bash tests/hooks/test-moteur-visuel-gate.sh` → **18 ok / 1 échec**, et l'échec est le test de
-NON-RÉGRESSION : « LE VRAI brief 4B fautif » (attendu BLOCK, obtenu PASS).
-⚠️ **Vérifié indépendamment que l'échec est PRÉEXISTANT** (la version commitée du test échoue aussi) —
-ce n'est pas une régression de la session du 18/08.
-**Ce qui est écarté** : la fixture `memory/episodes/souverain/gazoduc-aagp-tsgp/breakdown-acte4/4B/PROMPT-storyboard-4B.txt`
-EXISTE (6969 o), et le hook lit bien `--prompt-file` (`.claude/hooks/moteur-visuel-gate.sh:69-72`).
-→ C'est donc la **logique de détection** du gate qui ne matche plus ce brief.
-**Enjeu** : le garde-fou anti-brief-bridé est inopérant sur l'incident même qui l'a fait naître
-(storyboard Gazoduc 4B, 2026-08-15, tout en flèches/tracés parce que le brief n'ouvrait aucune porte).
-⛔ Ne PAS "corriger" en assouplissant le test : c'est le HOOK qui doit re-bloquer ce brief.
-Dernier commit touchant le hook : `658fdfcd fix(gate): moteur-visuel distingue CONCEVOIR de REDESSINER`.
+`tests/hooks/test-moteur-visuel-gate.sh` → **29 ok / 0 échec**. La cause n'était pas la logique de
+détection mais la porte de sortie « brief de re-dessin » : elle matchait `REDRAW` **sans gérer la
+négation**, et le vrai brief 4B fautif dit « must not be redrawn » (une INTERDICTION). Le gate y lisait
+un feu vert. → [gate-contourne-par-outil-alternatif](../../.claude/projects/-Users-clawdbot-Workspace-remotion/memory/feedback_gate-contourne-par-outil-alternatif.md)
 
 ## ⭐ RELIQUAT H3 — injecter NOTRE audio (`reference_audio_urls`, jamais testé)
 > ✅ **Le volet STYLES est FAIT le 2026-08-20** : Vector Poster ET Sunjata (+ gravure sépia) prouvés

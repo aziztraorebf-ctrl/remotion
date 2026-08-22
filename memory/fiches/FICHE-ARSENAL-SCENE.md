@@ -1,11 +1,16 @@
 # ARSENAL DE SCÈNE — fiche de déclenchement (lire AVANT de dessiner quoi que ce soit à la main)
 
 > **Pourquoi cette fiche existe** : les autres fiches enseignent la MÉTHODE (caméra, SVG, storyboard).
-> Aucune ne disait ce qu'on POSSÈDE. Coût mesuré le 2026-08-21 (gabarit client Zambie) : scène codée
-> avec des `<circle>` dessinés à la main alors que `GisementMarker` (5 variantes, halo, anti-collision,
-> taille pilotée par le zoom) existait et était **utilisable tel quel**. Livrable jugé « prototype »
-> par Aziz, à refaire. La règle « ne jamais re-coder un effet qui existe » était écrite dans CLAUDE.md
-> depuis des mois — écrite ne suffit pas, il faut la poser sous les yeux au moment où on code.
+> Aucune ne disait ce qu'on POSSÈDE. Coût mesuré le 2026-08-21 (démo client Zambie) : v1 codée **sans
+> storyboard**, avec des `<circle>` improvisés — jugée « prototype » par Aziz, à refaire.
+>
+> ⛔⛔ **MAIS LA CORRECTION N'A PAS ÉTÉ DE BRANCHER UNE BRIQUE.** Le rendu FINAL validé garde des
+> `<circle>` à la main (`ZambiaConceptB.tsx`, billes lumineuses) — parce que **le storyboard demandait
+> cette forme-là**. `GisementMarker` avait été branché par réflexe, puis retiré (commit `7c33d2de`
+> « billes lumineuses conformes au storyboard »).
+> **La question n'est PAS « existe-t-il une brique ? » mais « le storyboard demande-t-il CETTE forme ? ».**
+> Réutiliser par réflexe une brique dont la forme contredit le storyboard est la MÊME erreur que
+> redessiner à la main ce qui existe. Le storyboard arbitre la forme ; l'arsenal ne propose que des moyens.
 > ⚠️ Si ce que tu lis ici ne correspond PAS au code sous tes yeux : **c'est la fiche qui a tort**. Corrige-la.
 > Chemins vérifiés sur disque (`ls` + compilation) : 2026-08-21.
 
@@ -50,6 +55,14 @@ Autres briques : `ui/` (`Badge`, `CountUp`, `GoldLine`, `SVGGrain`), `inserts/` 
 ⚠️ `PortraitEditorial.tsx` compile mais est **hardcodé 1920×1080** (constantes de position) et quasi-dormant.
 
 ## 3. EFFET VIVANT SUR CARTE (Mapbox uniquement)
+
+⛔⛔ **Mapbox v3 bascule SEUL en projection GLOBE sous zoom ~5**, silencieusement — rien ne plante,
+l'image est juste fausse (mesuré : 4/4 coins hors-disque vs 0/4 sur la case storyboard). Forcer
+`projection: { name: "mercator" }` **à la construction de la Map**.
+⛔ **`dark-v11` BRUT n'est pas notre charte** : fond RGB(9,9,9) quasi noir. Appeler `applyGeoAfriqueV5(map)`
+→ water `#1a3a5c`. Écart au storyboard passé de ~60 points RGB à 4,7.
+⭐ **Avant de présenter une frame carto** : `python3 scripts/tools/carto-selfreview.py --frame f.png`
+(O/X mécanique, exit 1 — projection, fond, cadrage, vide).
 
 Catalogue complet **avec preview vidéo par template** : `src/projects/_shared/mapbox/CATALOGUE-CARTE-VIVANTE.md`.
 
@@ -96,11 +109,3 @@ Zoom monotone + centre interpolé en continu. Globe D3 : **`camAtContinu()`**, j
   Il n'existe **aucun** système de sprite raster géo-ancré vivant → passer par `GisementMarker` mode `fill`.
 - **`src/projects/_demos/` = ZONE GELÉE** : ne pas s'en inspirer comme source de vérité.
 - `public/_shared/ASSETS-INDEX.md` a **3 mois de retard** — ne connaît ni jetons, ni decal, ni globe D3.
-
-## VÉRIFIER AVANT DE PARTIR SUR UNE BRIQUE
-```bash
-ls <chemin> && git ls-files <chemin>          # existe ET versionné ?
-find src -name "<Nom>*" | grep -v _archive     # 2 résultats = piège d'import
-```
-Un catalogue qui affirme une ABSENCE est faillible : un registre « canonique » peut vivre sur une branche
-R&D jamais mergée (4 occurrences constatées).
