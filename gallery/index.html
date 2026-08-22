@@ -9,7 +9,7 @@
 </head><body>
 <header class="topbar">
   <div class="brand">Mouvements de caméra
-    <small>Mapbox — 12 gestes disponibles</small></div>
+    <small id="sub">Mapbox &amp; SVG</small></div>
   <div class="theme-switch" role="group" aria-label="Theme">
     <button id="tLight" aria-pressed="false" title="Clair">&#9788;</button>
     <button id="tDark" aria-pressed="false" title="Sombre">&#9789;</button>
@@ -19,9 +19,16 @@
   <section class="intro">
     <h1>Ce qu'on sait déjà faire</h1>
     <p>Touche <strong>&#9654;</strong> pour voir un mouvement. Touche <strong>le nom en bas d'une carte</strong>
-       pour le copier, puis colle-le dans le chat : je saurai exactement de quel geste tu parles.</p>
+       pour le copier, puis colle-le dans le chat : je saurai exactement de quel geste tu parles.
+       La recherche accepte le langage courant — « reculer », « suivre une route », « interface ».</p>
   </section>
+  <div class="searchbar">
+    <input id="q" type="search" placeholder="Chercher : reculer, tourner, globe, interface…"
+           aria-label="Chercher un mouvement" autocomplete="off" spellcheck="false">
+    <button id="qClear" type="button" aria-label="Effacer" hidden>&times;</button>
+  </div>
   <nav class="filters" id="filters" aria-label="Filtrer"></nav>
+  <div class="count" id="count"></div>
   <div class="grid" id="grid"></div>
 </main>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>

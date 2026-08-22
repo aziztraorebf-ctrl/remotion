@@ -4,6 +4,9 @@
   "titre": "Drift continu",
   "cat": "reperage",
   "desc": "Dérive lente + bearing 0 à 12°, pitch 25. Le plan qui respire sans intention forte.",
+  "usage": "Poser un lieu sans le commenter, laisser respirer sous une voix off.",
+  "kw": "reperage calme lent respirer voix off fond installer poser contexte introduction ambiance",
+  "fav": false,
   "lieu": "Dakar",
   "energie": "basse",
   "poids": 157
@@ -13,6 +16,9 @@
   "titre": "Orbit + Dolly In",
   "cat": "approche",
   "desc": "Bearing 0 à -180° pendant que le zoom passe 4.5 à 6.2 et le pitch 0 à 50. On tourne autour en se rapprochant.",
+  "usage": "Faire le tour d'un lieu pour l'installer, en se rapprochant.",
+  "kw": "tourner autour orbite rotation approcher zoom avant presenter installer lieu ville decouvrir",
+  "fav": false,
   "lieu": "Marrakech",
   "energie": "haute",
   "poids": 320
@@ -22,6 +28,9 @@
   "titre": "Multi-stop A → B + Whip Pan",
   "cat": "transition",
   "desc": "Déplacement Lagos vers Nairobi avec flou de filé au milieu. Le raccord qui avale la distance.",
+  "usage": "Passer d'un pays a un autre sans montrer le trajet.",
+  "kw": "aller de a vers b saut deplacement rapide flou file transition pays distance relier deux lieux ville",
+  "fav": false,
   "lieu": "Lagos → Nairobi",
   "energie": "haute",
   "poids": 363
@@ -31,6 +40,9 @@
   "titre": "Zoom rapide + Freeze",
   "cat": "accent",
   "desc": "Zoom 3.2 à 5.8 puis arrêt net. Sert à plaquer un chiffre ou un nom sur l'arrêt.",
+  "usage": "Arriver sur un point et s'arreter net pour plaquer un chiffre.",
+  "kw": "zoom rapide arret stop fige chiffre donnee statistique frapper accent ponctuer nom",
+  "fav": false,
   "lieu": "Agadez",
   "energie": "moyenne",
   "poids": 157
@@ -40,6 +52,9 @@
   "titre": "Tilt + Pull Back",
   "cat": "revelation",
   "desc": "Le pitch bascule 0 à 60 puis le zoom recule 5.5 à 3.0. On se redresse et on découvre le contexte.",
+  "usage": "Se redresser puis reculer pour decouvrir le contexte autour.",
+  "kw": "basculer redresser incliner reculer decouvrir contexte revelation elargir voir autour",
+  "fav": false,
   "lieu": "Kinshasa",
   "energie": "moyenne",
   "poids": 334
@@ -49,6 +64,9 @@
   "titre": "Counter-rotation + Orbit",
   "cat": "approche",
   "desc": "Bearing -45 à +35 : la carte tourne dans un sens, la caméra dans l'autre.",
+  "usage": "Creer du mouvement en faisant tourner carte et camera en sens inverse.",
+  "kw": "rotation inverse contraire tourner dynamique mouvement complexe energie tension",
+  "fav": false,
   "lieu": "Johannesburg",
   "energie": "moyenne",
   "poids": 271
@@ -58,6 +76,9 @@
   "titre": "Drift lent + blur atmosphère",
   "cat": "reperage",
   "desc": "Dérive avec flou atmosphérique constant. Fond de plan pour poser une voix off.",
+  "usage": "Un fond de plan doux pour poser du texte ou une narration.",
+  "kw": "flou fond arriere plan texte narration doux calme atmosphere support lisible",
+  "fav": false,
   "lieu": "Alger",
   "energie": "basse",
   "poids": 148
@@ -67,6 +88,9 @@
   "titre": "Pull Back Reveal planétaire",
   "cat": "revelation",
   "desc": "Zoom 5.5 à 2.8 en 60 frames : le pays s'éloigne jusqu'à la vue planétaire. Le geste canonique de la doctrine.",
+  "usage": "Montrer qu'un pays est petit face au monde.",
+  "kw": "reculer zoom arriere echelle petit grand monde planete comparaison ecraser situer perspective globe",
+  "fav": false,
   "lieu": "Afrique",
   "energie": "haute",
   "poids": 343
@@ -76,6 +100,9 @@
   "titre": "Zoom sol 3D",
   "cat": "approche",
   "desc": "Descente depuis l'orbite jusqu'au niveau du sol, pitch 70°, zoom 14, satellite-streets. Le plan le plus spectaculaire du lot.",
+  "usage": "Descendre du ciel jusqu'a la rue, en relief.",
+  "kw": "descendre plonger 3d relief satellite ville rue sol immersion spectaculaire impressionnant terrain",
+  "fav": false,
   "lieu": "Nairobi",
   "energie": "haute",
   "poids": 1577
@@ -85,6 +112,9 @@
   "titre": "Fade style switch",
   "cat": "transition",
   "desc": "Bascule dark vers satellite en fondu, caméra fixe. Changer de registre sans bouger.",
+  "usage": "Changer d'ambiance sans bouger la camera.",
+  "kw": "fondu changement style ambiance basculer satellite sombre registre transition douce immobile",
+  "fav": false,
   "lieu": "Lagos",
   "energie": "basse",
   "poids": 281
@@ -94,6 +124,9 @@
   "titre": "Whip Pan + style switch",
   "cat": "transition",
   "desc": "Déplacement Casablanca vers Accra avec changement de style au pic du flou. Le switch est invisible.",
+  "usage": "Changer de lieu et d'ambiance d'un coup, sans qu'on voie la couture.",
+  "kw": "flou file transition invisible changement style lieu ambiance masquer coupe raccord ville",
+  "fav": false,
   "lieu": "Casablanca → Accra",
   "energie": "haute",
   "poids": 329
@@ -103,6 +136,9 @@
   "titre": "Zoom out → style → Zoom in",
   "cat": "transition",
   "desc": "On recule, on change de style, on revient. Traverser une ellipse temporelle.",
+  "usage": "Traverser une ellipse : on recule, ca change, on revient.",
+  "kw": "ellipse temps saut temporel avant apres reculer revenir changement epoque evolution",
+  "fav": false,
   "lieu": "Dakar",
   "energie": "moyenne",
   "poids": 523
@@ -112,6 +148,9 @@
   "titre": "Suivi de trace",
   "cat": "approche",
   "desc": "La camera avance avec le trace qui se dessine, en gardant l'amont visible derriere. Le geste canonique du gazoduc.",
+  "usage": "Suivre un trace qui se construit, en gardant l'amont visible.",
+  "kw": "suivre trace route trajet pipeline gazoduc chemin progression construire avancer parcours ligne",
+  "fav": false,
   "lieu": "Nigeria vers Portugal",
   "energie": "moyenne",
   "poids": 307
@@ -121,8 +160,23 @@
   "titre": "Pull Back globe D3",
   "cat": "revelation",
   "desc": "Le pays plein cadre recule jusqu'a devenir un globe avec sa courbure. Version D3 du Pull Back Reveal.",
+  "usage": "Passer d'un pays au globe entier, en D3.",
+  "kw": "globe planete terre courbure reculer echelle monde d3 pays petit spatial vue satellite",
+  "fav": false,
   "lieu": "Soudan",
   "energie": "haute",
   "poids": 315
+ },
+ {
+  "slug": "pagecam-flyover",
+  "titre": "PageCam — survol d'interface",
+  "cat": "approche",
+  "desc": "Camera 2.5D par keyframes sur une page capturee : elle se rapproche pendant que le curseur descend. Le seul systeme de camera generique et parametrable du repo.",
+  "usage": "Parcourir une interface produit comme si on la montrait a quelqu'un.",
+  "kw": "interface ui produit saas ecran dashboard curseur souris demo logiciel application survol montrer",
+  "fav": false,
+  "lieu": "Interface produit",
+  "energie": "moyenne",
+  "poids": 99
  }
 ]
