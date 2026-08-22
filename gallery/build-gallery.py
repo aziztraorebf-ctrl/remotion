@@ -22,6 +22,7 @@ CAMERA_LAB = os.path.join(REPO, "out/episodes/_shared/mapbox-camera-lab-v2.mp4")
 GAZODUC_A2 = os.path.join(REPO, "out/episodes/gazoduc-aagp-tsgp/acte2-FINAL.mp4")
 SOUDAN_A3  = os.path.join(REPO, "out/PRET-PUBLICATION/soudan-midform/soudan-acte3-suivre-lor-globe-FINAL.mp4")
 PAGECAM    = os.path.join(REPO, "out/templates-souverain/_camera/pagecam-flyover.mp4")
+BP = lambda n: os.path.join(REPO, f"out/templates-souverain/_camera/{n}.mp4")
 
 # slug, titre, categorie, description, lieu, energie, (fichier source, debut s, duree s), crf
 MOVES = [
@@ -76,6 +77,27 @@ MOVES = [
  ("pagecam-flyover","PageCam — survol d'interface","approche",
   "Camera 2.5D par keyframes sur une page capturee : elle se rapproche pendant que le curseur descend. Le seul systeme de camera generique et parametrable du repo.",
   "Interface produit","moyenne",(PAGECAM,0.8,6),28),
+ # --- Blueprints Atlas rendus le 2026-08-21 (n'avaient aucune image) ---
+ # Ces compositions durent 10-23 s : le geste ne se joue PAS au debut. Timecodes
+ # trouves par sonde image par image, jamais estimes (1re passe a 1.0 s = 4 clips vides).
+ ("camera-track-entity","Caméra qui suit un personnage","approche",
+  "Un personnage marche d'un point a un autre et la camera reste sur lui. Blueprint Atlas n°9.",
+  "Trajet A vers B","moyenne",(BP("Atlas-BP-CameraTrackEntity"),1.0,5),28),
+ ("dual-entity-sequential","Passage d'un personnage a l'autre","transition",
+  "Deux personnages se succedent, la camera change de sujet actif puis recule. Blueprint Atlas n°10.",
+  "Echange entre deux","moyenne",(BP("Atlas-BP-DualEntitySequential"),9.0,5),28),
+ ("formation-march","Marche en formation","approche",
+  "Plusieurs personnages avancent ensemble avec des retards individuels. Blueprint Atlas n°11.",
+  "Groupe en mouvement","haute",(BP("Atlas-BP-FormationMarch"),12.0,5),28),
+ ("waypoint-march","Voyage par etapes","approche",
+  "Un personnage traverse plusieurs villes avant d'arriver. Blueprint Atlas n°12.",
+  "Multi-villes","moyenne",(BP("Atlas-BP-WaypointMarch"),2.6,5),28),
+ ("dutch-tilt-collapse","Bascule d'effondrement","accent",
+  "La carte s'incline, la couleur se desature, la camera tremble a l'impact. Blueprint Atlas n°13.",
+  "Chute d'empire","haute",(BP("Atlas-BP-DutchTiltCollapse"),6.6,5),28),
+ ("gold-route-atlas-zoom","Zoom sur une route","approche",
+  "La camera se resserre progressivement sur un trajet qui se dessine.",
+  "Route commerciale","moyenne",(BP("Template-GoldRouteAtlasZoom"),1.0,5),28),
 ]
 
 # Pour chaque geste : (a quoi ca sert -- affiche, mots que tu taperais -- recherche seule).
@@ -111,6 +133,18 @@ INTENTIONS = {
    "globe planete terre courbure reculer echelle monde d3 pays petit spatial vue satellite"),
  "pagecam-flyover": ("Parcourir une interface produit comme si on la montrait a quelqu'un.",
    "interface ui produit saas ecran dashboard curseur souris demo logiciel application survol montrer"),
+ "camera-track-entity": ("Accompagner quelqu'un dans son deplacement, sans le perdre de vue.",
+   "suivre personnage marcher accompagner voyage deplacement acteur figurant caravane pieton trajet"),
+ "dual-entity-sequential": ("Montrer un echange : la camera lache le premier pour prendre le second.",
+   "deux personnages echange rencontre commerce troc passer relais changer sujet dialogue dolly recul"),
+ "formation-march": ("Faire avancer un groupe : armee, cortege, caravane.",
+   "armee groupe cortege caravane troupe soldats ensemble marche formation avancer masse collectif"),
+ "waypoint-march": ("Raconter un long voyage en marquant chaque etape.",
+   "voyage etapes villes escales route longue conquete progression traverser parcours itineraire"),
+ "dutch-tilt-collapse": ("Faire sentir qu'un monde s'ecroule.",
+   "effondrement chute defaite catastrophe crise drame basculer incliner trembler desaturer tension empire"),
+ "gold-route-atlas-zoom": ("Resserrer sur une route pendant qu'elle se trace.",
+   "route commerce or trajet zoom resserrer suivre chemin caravane atlas parcours ligne"),
 }
 
 # Favoris partages (versionnes, donc lisibles par Claude) : ce qu'Aziz privilegie.
