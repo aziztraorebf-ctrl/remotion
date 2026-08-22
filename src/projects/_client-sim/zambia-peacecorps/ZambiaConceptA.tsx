@@ -49,6 +49,17 @@ const TERRE = "#c2cbd1"; // mesure storyboard RGB(194,203,209)
 const TERRE_LIGNE = "#8fa3b5";
 const OR = "#e2b33c";
 const OR_CLAIR = "#f5d98a";
+
+// --- Palette de la VUE TERRITOIRE (mesuree sur les cases 3-4 du storyboard Gemini) ---
+// ⚠️ Distincte de celle du globe : le storyboard CHANGE de registre a l'arrivee. Mesures :
+//   fond gris clair RGB(142,143,145) · provinces actives tan RGB(232,190,132)
+//   provinces inactives gris moyen RGB(90,90,90)
+// Mon 1er rendu gardait le bleu marine du globe partout — c'est ce qu'Aziz a signale par
+// "les territoires sont beaucoup differents, le background semble different".
+const TERR_FOND = "#8e8f91";
+const TERR_ACTIVE = "#e8be84";
+const TERR_INACTIVE = "#5a5a5a";
+const TERR_TRAIT = "#f2f2f2";
 const CYAN = "#5fe0e8"; // balise de destination pendant la descente (storyboard panneaux 1-2)
 const TEXTE = "#f2ede3";
 
@@ -177,7 +188,7 @@ export const ZambiaConceptA: React.FC = () => {
   }));
 
   return (
-    <AbsoluteFill style={{ backgroundColor: FOND }}>
+    <AbsoluteFill style={{ backgroundColor: melange(FOND, TERR_FOND, opaProvinces) }}>
       <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`}>
         <defs>
           <radialGradient id="hazeA" cx="50%" cy="50%" r="50%">
@@ -194,11 +205,11 @@ export const ZambiaConceptA: React.FC = () => {
         </defs>
 
         {/* L'ocean = le disque du globe. Son rayon SUIT globeR (piege n2). */}
-        <circle cx={W / 2} cy={H / 2} r={globeR} fill={OCEAN} />
+        <circle cx={W / 2} cy={H / 2} r={globeR} fill={melange(OCEAN, TERR_FOND, opaProvinces)} />
 
         <g opacity={opaMonde}>
           <path d={path(grat as never) || ""} fill="none" stroke={TERRE_LIGNE} strokeWidth={0.5} opacity={0.28} />
-          <path d={path(world.land as never) || ""} fill={TERRE} stroke="none" />
+          <path d={path(world.land as never) || ""} fill={melange(TERRE, TERR_INACTIVE, opaProvinces)} stroke="none" />
           <path d={path(world.countries as never) || ""} fill="none" stroke={TERRE_LIGNE} strokeWidth={0.7} opacity={0.55} />
         </g>
 
@@ -231,11 +242,11 @@ export const ZambiaConceptA: React.FC = () => {
             <path
               key={`hb-${i}`}
               d={ringsToPath(rings, proj)}
-              fill={TERRE}
-              fillOpacity={0.55}
-              stroke={TERRE_LIGNE}
-              strokeWidth={0.7}
-              strokeOpacity={0.4}
+              fill={TERR_INACTIVE}
+              fillOpacity={0.92}
+              stroke={TERR_TRAIT}
+              strokeWidth={1.1}
+              strokeOpacity={0.5}
             />
           ))}
         </g>
@@ -261,11 +272,11 @@ export const ZambiaConceptA: React.FC = () => {
               <path
                 key={prov.name}
                 d={reprojectProvince(prov, proj)}
-                fill={OR}
-                fillOpacity={0.10 + intensite * 0.34}
-                stroke={intensite > 0 ? OR_CLAIR : TERRE_LIGNE}
-                strokeWidth={intensite > 0 ? 1.6 : 0.8}
-                strokeOpacity={0.35 + intensite * 0.6}
+                fill={intensite > 0 ? TERR_ACTIVE : TERR_INACTIVE}
+                fillOpacity={0.55 + intensite * 0.42}
+                stroke={TERR_TRAIT}
+                strokeWidth={intensite > 0 ? 1.8 : 1.0}
+                strokeOpacity={0.45 + intensite * 0.45}
               />
             );
           })}
@@ -448,4 +459,14 @@ function ringsToPath(
     if (pts.length > 2) parts.push(`M ${pts.join(" L ")} Z`);
   }
   return parts.join(" ");
+}
+
+/** Interpole 2 couleurs hex : sert a passer de la palette GLOBE a la palette TERRITOIRE. */
+function melange(a: string, b: string, t: number): string {
+  const k = Math.max(0, Math.min(1, t));
+  const hex = (c: string) => [1, 3, 5].map((i) => parseInt(c.slice(i, i + 2), 16));
+  const [r1, g1, b1] = hex(a);
+  const [r2, g2, b2] = hex(b);
+  const m = (x: number, y: number) => Math.round(x + (y - x) * k);
+  return `rgb(${m(r1, r2)}, ${m(g1, g2)}, ${m(b1, b2)})`;
 }

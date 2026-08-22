@@ -52,7 +52,16 @@ def coins_hors_disque(im: Image.Image) -> int:
 
 
 def couleur_fond(im: Image.Image) -> tuple:
-    """Couleur dominante des bords : c'est le fond, pas le sujet (centre)."""
+    """
+    Couleur dominante des bords.
+
+    ⚠️ LIMITE CONNUE : cela suppose que les bords montrent le FOND. Quand la carte remplit
+    tout le cadre (vue serree sur un pays), les bords touchent le continent, pas le ciel —
+    le critere mesure alors la couleur des TERRES et bloque a tort (faux positif reel sur le
+    concept A : ecart 39,3 alors que le rendu etait conforme).
+    => n'utiliser --attendu-fond que sur une vue ou le fond est REELLEMENT visible aux bords
+    (globe, carte large avec ocean). Pour une vue pleine, s'appuyer sur C3/C4.
+    """
     w, h = im.size
     px = im.load()
     ech = []
