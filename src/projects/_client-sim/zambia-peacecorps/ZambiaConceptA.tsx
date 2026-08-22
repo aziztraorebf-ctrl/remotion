@@ -210,7 +210,19 @@ export const ZambiaConceptA: React.FC = () => {
         <g opacity={opaMonde}>
           <path d={path(grat as never) || ""} fill="none" stroke={TERRE_LIGNE} strokeWidth={0.5} opacity={0.28} />
           <path d={path(world.land as never) || ""} fill={melange(TERRE, TERR_INACTIVE, opaProvinces)} stroke="none" />
-          <path d={path(world.countries as never) || ""} fill="none" stroke={TERRE_LIGNE} strokeWidth={0.7} opacity={0.55} />
+          {/* FRONTIERES DES PAYS — signalees par Aziz : "le gris est tellement profond qu'on
+              ne voit meme pas le contour des territoires, juste un grand continent gris".
+              Cause : trait 0.7px a 0.55 d'opacite, sur un calque qui s'efface encore pendant
+              la descente -> les frontieres disparaissaient au moment ou elles servent le plus.
+              Le trait s'EPAISSIT avec le zoom (contre-echelle) et son opacite MONTE a l'arrivee,
+              au lieu de suivre l'effacement du calque monde. */}
+          <path
+            d={path(world.countries as never) || ""}
+            fill="none"
+            stroke={melange(TERRE_LIGNE, "#e8e8e8", opaProvinces)}
+            strokeWidth={1.1 + 0.9 * Math.min(1, scaleMul / 6)}
+            opacity={0.62 + 0.33 * opaProvinces}
+          />
         </g>
 
         {/* BALISE CYAN — dit OU on va pendant la descente (storyboard panneaux 1-2).
