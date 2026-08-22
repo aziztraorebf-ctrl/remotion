@@ -197,6 +197,65 @@ def cmd_scale(args):
 
 
 # ---------------------------------------------------------------- motion
+
+def cmd_sheet(args):
+    """Planche-contact horodatee : ou se joue REELLEMENT le geste dans un rendu long.
+
+    ⛔ Ecrit en script jetable le 2026-08-21 puis versionne ici — c'est exactement le
+    motif que la docstring de ce fichier decrit ("mesure ecrite en script jetable puis
+    PERDUE, donc reecrite a zero la fois suivante").
+
+    Pourquoi : un rendu de 10-23 s NE COMMENCE PAS par son geste. Decouper "au jugement"
+    a produit 3 clips faux le meme jour (galerie de mouvements de camera) :
+      - pull-back-reveal a 72,5 s montrait la camera qui SE RESSERRE (vrai geste : 69,5 s)
+      - zoom-sol-3d a 82,5 s contenait DEUX gestes distincts (vrai : 81,5 s)
+      - 6 blueprints Atlas decoupes a 1,0 s : 4 vignettes sur 6 ne montraient RIEN
+        (vrais timecodes 6,6 / 12,0 / 9,0 s sur des rendus de 10,0 / 21,2 / 23,1 s)
+    """
+    import subprocess, tempfile
+    try:
+        from PIL import Image, ImageDraw
+    except ImportError:
+        sys.exit("Pillow requis : pip install Pillow")
+
+    dur = float(subprocess.run(
+        ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", args.video],
+        capture_output=True, text=True).stdout.strip())
+    start = args.start if args.start is not None else 0.0
+    # -0.15 s : une extraction pile a la duree totale echoue (frame inexistante)
+    end = args.end if args.end is not None else max(start, dur - 0.15)
+    step = args.step if args.step else max(0.5, (end - start) / 12)
+
+    tmp = tempfile.mkdtemp(prefix="camsheet_")
+    ims, t = [], start
+    while t <= end + 1e-6:
+        f = os.path.join(tmp, f"f{t:.2f}.png")
+        subprocess.run(["ffmpeg", "-v", "error", "-ss", f"{t:.2f}", "-i", args.video,
+                        "-vf", f"scale={args.width}:-1", "-frames:v", "1", "-y", f],
+                       capture_output=True)
+        if not os.path.exists(f):
+            t += step
+            continue
+        im = Image.open(f).convert("RGB")
+        d = ImageDraw.Draw(im)
+        d.rectangle([0, 0, 62, 20], fill=(0, 0, 0))
+        d.text((5, 5), f"{t:.1f}s", fill=(255, 220, 0))
+        ims.append(im)
+        t += step
+
+    if not ims:
+        sys.exit("aucune frame extraite")
+    w, h = ims[0].size
+    cols = args.cols
+    rows = (len(ims) + cols - 1) // cols
+    sheet = Image.new("RGB", (w * cols, h * rows), (0, 0, 0))
+    for i, im in enumerate(ims):
+        sheet.paste(im, ((i % cols) * w, (i // cols) * h))
+    sheet.save(args.out)
+    print(f"duree source : {dur:.2f}s")
+    print(f"{len(ims)} frames de {start:.1f}s a {end:.1f}s (pas {step:.2f}s) -> {args.out}")
+    print("REGARDE la planche : le geste occupe une fenetre etroite, elle est rarement au debut.")
+
 def cmd_motion(args):
     np = need("numpy")
     Image = need("PIL").Image
@@ -265,6 +324,16 @@ def main():
     c.add_argument("--width", type=int, default=960)
     c.add_argument("--threshold", type=int, default=18)
     c.set_defaults(func=cmd_scale)
+
+    sh = sub.add_parser("sheet", help="planche-contact horodatee — OU se joue le geste (avant toute decoupe)")
+    sh.add_argument("video")
+    sh.add_argument("--out", default="/tmp/camera-sheet.png")
+    sh.add_argument("--start", type=float, default=None)
+    sh.add_argument("--end", type=float, default=None)
+    sh.add_argument("--step", type=float, default=None, help="defaut : ~12 frames sur la plage")
+    sh.add_argument("--cols", type=int, default=4)
+    sh.add_argument("--width", type=int, default=300)
+    sh.set_defaults(func=cmd_sheet)
 
     m = sub.add_parser("motion", help="immobilite reelle (!= gel)")
     m.add_argument("video")

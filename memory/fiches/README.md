@@ -11,7 +11,7 @@ manquante entre les deux — elles arrivent au bon moment, sans bloquer.
 Cause d'échec n°1 mesurée par audit (2026-08-17) : **« brique existante non trouvée »**
 (6 cas documentés, ~20 itérations perdues). Les règles existaient ; elles n'étaient pas retrouvées.
 
-## Les fiches actuelles (9)
+## Les fiches actuelles (10)
 | Fiche | Se déclenche quand | Source du déclenchement |
 |---|---|---|
 | `FICHE-SVG-DESSINE.md` | on écrit du SVG dessiné dans un `.tsx` | ≥4 primitives OU un `d={`/`d="M`, avec ≥2 primitives (garde-fou anti-icône) |
@@ -34,7 +34,7 @@ déclenche les trois premières).
 Chaque fiche n'est injectée **qu'une fois par fichier et par session** (sentinelles dans
 `$TMPDIR/fiche-inject-<session_id>/`). **Ne jamais retirer ce mécanisme.**
 
-**Coût RE-MESURÉ le 2026-08-21** (les **9** fiches pèsent **85 497 octets ≈ 21 400 tokens** si toutes
+**Coût RE-MESURÉ le 2026-08-21** (les **10** fiches pèsent **93314 octets ≈ 23328 tokens** (re-mesuré 2026-08-21) si toutes
 injectées ; en pratique ~2 fiches se déclenchent par fichier, ≈ 3 250 tokens) :
 - **jour typique** (7,5 fichiers touchés) : **~24 000 tokens**
 - **pire jour observé** (28 fichiers) : **~91 000 tokens**

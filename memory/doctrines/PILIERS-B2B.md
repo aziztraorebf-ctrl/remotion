@@ -157,8 +157,18 @@ Recette technique + prompts + livrables : [[REVERSE-STYLE-VIDEO-VERS-ASSETS]] §
 - Page de gig généraliste rédigée et validée : `memory/freelance-linkedin/GIG-PAGE-VALIDEE.md`
   ⚠️ **prix et délais non mesurés** sur une vraie commande de bout en bout.
 - Décidé : **un seul gig d'abord** (piliers 2+3), la carto en second, jamais les deux mélangés.
-- ⏭️ Manque : le **cut vente 60-90 s** (charte DA écrite le 2026-08-15, matière disponible) et une
-  démo par geste. Sans artefact partageable, le studio est vendable en capacité mais pas en pratique.
+- ⏭️ Manque : le **cut vente 60-90 s** (charte DA écrite le 2026-08-15, matière disponible).
+- ✅ **La démo par geste EXISTE depuis le 2026-08-21** — galerie de 21 mouvements de caméra,
+  consultable sur mobile : https://aziztraorebf-ctrl.github.io/remotion/ (source : `gallery/`,
+  build = `gallery/build-gallery.py`, médias hors git sur la release `gallery-media`).
+  ⭐ **Lecture des 7 favoris d'Aziz** (drift-blur, drift-continu, pull-back-globe-d3, pull-back-reveal,
+  suivi-de-trace, tilt-pull-back, whip-pan-multistop) : 4 sur 7 sont des gestes de **recul ou de suivi**,
+  2 des fonds calmes, 1 seul geste rapide. Préférence nette pour **le mouvement lent qui installe**,
+  pas pour l'effet — à traiter comme une orientation de DA, pas comme une liste de composants.
+- ⛔ **Le gabarit de choix se dépense sur un prospect QUALIFIÉ, jamais en tête de tunnel** (recherche
+  démarchage 2026-08-21) : à ~10 réponses/100 messages, personnaliser en amont = ~100 clips sur mesure
+  pour ~2 clients, ce qui détruit justement l'avantage du registre réutilisable à coût marginal nul.
+  Détail : `memory/projects/freelance-dataviz-fiverr-pro.md`.
 
 ## Liens
 `memory/fiches/FICHE-UI-PRODUIT.md` (pilier 3, détail) · `memory/doctrines/SVG-SCENES-GENERATIVES.md`

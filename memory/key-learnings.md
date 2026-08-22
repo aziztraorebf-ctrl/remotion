@@ -1511,3 +1511,28 @@ analogie avec le 1er bug. **Regle** : face a 2 bugs visuellement similaires, ne 
 racine — un indicateur visuel temporaire dans le rendu lui-meme est plus rapide qu'inspecter le code seul
 pour un defaut qui ne crash pas (proche de `systematic-debugging`/`root-cause-tracing`, cas d'application
 concret pour du rendu Remotion/Mapbox).
+
+## 2026-08-21 — Le champ « recettes de caméra » est VIDE sur GitHub (prospection exhaustive)
+
+**Constat fort, qui évite de relancer cette prospection dans 3 mois** : il n'existe **aucune bibliothèque
+de recettes de caméra cinématographique réutilisable en JS/TS**. Ce qui existe est soit du contrôleur
+interactif 3D (orbit/damping pour un utilisateur, pas pour une timeline), soit des portfolios. Notre
+difficulté récurrente sur les mouvements de caméra n'était **pas une lacune de notre part**.
+Le volet **analytique** est vide aussi : rien de public ne mesure un rendu de motion design —
+`scripts/tools/measure-camera.py` et notre usage de `mpdecimate` sont en avance sur le public.
+
+**Seule trouvaille : `Remocn/remocn`** (1277 ★, MIT) — registry copy-paste façon shadcn pour Remotion.
+Composant `Stage` : caméra 2D par keyframes `{at, x, y, zoom, rotate, easing}`, **x/y normalisés 0..1**
+(la mesure d'entrée disparaît du problème), easing par clé d'arrivée, holds natifs, `random()` seedé.
+⚠️ Mergé le jour même, zéro recul, et **ne pilote PAS Mapbox** (caméra sur plan 2D). À regarder, pas à adopter.
+
+**⛔ GOTCHA API GitHub search** : le qualificatif `stars:>N` combiné à une requête MULTI-MOTS renvoie
+**0 item sans aucune erreur**. Environ la moitié des « rien trouvé » de la session étaient des faux
+négatifs. → chercher SANS `stars:` d'abord, filtrer côté client.
+
+**⛔ Les stars peuvent être sur l'INDEX, pas sur la matière** : `iart-ai/motion-skills` (377 ★) ne contient
+qu'un README + 3 scripts shell ; le contenu vit dans 15 sous-repos de 1-16 ★. Regarder l'ARBRE du repo
+avant de lire sa popularité comme un signal de qualité.
+
+**Écartés** : `OpenMontage` (49221 ★ mais **AGPL**) · `heygen/hyperframes` (41933 ★ mais framework de
+rendu **concurrent** — il ship un `/remotion-to-hyperframes`, c'est une migration hors de notre stack).

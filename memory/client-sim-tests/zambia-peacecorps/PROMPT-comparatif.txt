@@ -1,0 +1,39 @@
+You are looking at a single vertical A/B image.
+
+TOP HALF — "CIBLE (storyboard)": the storyboard row YOU drew. This is the TARGET.
+BOTTOM HALF — "RENDU ACTUEL (code)": four frames extracted from the animation we actually
+coded from that storyboard, in time order.
+
+Your job: state precisely HOW THE RENDER DIFFERS FROM YOUR STORYBOARD, and give the concrete
+values needed to close each gap.
+
+## HOW TO ANSWER
+
+Rank the differences by how much they hurt, most damaging first. For EACH difference:
+
+1. WHAT DIFFERS — one sentence. Name the element.
+2. TARGET VALUE — the value the storyboard implies. Be numeric wherever a number is possible:
+   hex colours, opacity 0-1, relative sizes as a percentage of frame width or height,
+   timings in seconds. If the storyboard implies a colour, give the HEX.
+3. CURRENT VALUE — what the render appears to use. Estimate it from the image; say "approx".
+4. THE FIX — the change to type. Not "make it more vivid" but the actual value to set.
+
+## WHAT NOT TO DO
+
+- Do NOT comment on the base map style, terrain source, or label set: those are locked by our
+  production stack and are not adjustable for this shot.
+- Do NOT propose new creative ideas, new panels, or a different concept. The concept is
+  arbitrated and frozen. You are closing the gap to YOUR OWN board, nothing else.
+- Do NOT invent statistics. Numbers shown on screen come from the client's data.
+- If a difference is a deliberate improvement rather than a defect, say so and move on.
+
+## SCORE
+
+End your answer with a single line:
+
+SCORE: n/10
+
+where n is how closely the current render matches your storyboard today. Then state, in one
+sentence, WHICH SINGLE FIX would move that score up the most.
+
+We are aiming for 9/10. Be blunt about what is missing — a generous score helps nobody.

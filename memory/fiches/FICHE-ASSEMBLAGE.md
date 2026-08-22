@@ -54,6 +54,13 @@ Coût documenté : Soudan mid-form v4 (2026-07-22), **image figée ~4 minutes** 
   - **PNG / image / autre → catbox → Imgur → uguu → Litterbox** (ordre CLAUDE.md § Communication mobile, TOUJOURS valide). catbox est instable (HTTP 200 + `content-length: 0` silencieux) → **vérifier `curl -sI <url> | grep content-length` avant de donner le lien**. uguu ~3 h de rétention, Litterbox 72 h.
   - **Page HTML → ni Blob ni catbox** (voir ligne suivante).
 - **Page HTML → ⛔ JAMAIS Vercel Blob ni catbox** (confirmé 2×) → `~/.claude/skills/atlas-video-preproduction/scripts/publish-here-now.sh`. Page autonome (CSS/JS inline, images `data:`).
+**Page HTML avec des VIDÉOS → GitHub Pages** (here.now sert aussi les `.mp4` : `video/mp4` +
+`accept-ranges` + HTTP 206 vérifiés le 2026-08-21, son API accepte un TABLEAU de fichiers). 3 gotchas
+payés : (1) **`workflow_dispatch` n'est déclenchable que si le workflow est sur la branche par défaut** —
+sur une branche de feature `gh workflow run` renvoie 404, le 1er déploiement EXIGE le merge ;
+(2) **médias lourds hors git, sur une release GitHub**, téléchargés au déploiement (`gallery/fetch-media.sh`),
+sinon l'historique gonfle à chaque re-découpage ; (3) **transcodage obligatoire** :
+`scale=1280:-2 -crf 28 -preset slow -an -movflags +faststart` = ~320 Ko/5 s au lieu de 80 Mo (facteur 14).
 - **Plein format seul d'abord**, jamais une vignette côte-à-côte rapetissée : un render jugé à 540 px a fait « corriger » un problème inexistant en plein écran. Le côte-à-côte sert à MESURER, le plein format à JUGER.
 - **Un agent qui rapporte « terminé » n'a pas forcément produit le fichier** : `ls -la` sur le chemin annoncé avant d'accepter le succès. Un agent peut aussi s'arrêter juste AVANT `git commit`.
 

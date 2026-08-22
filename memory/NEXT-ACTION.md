@@ -47,6 +47,22 @@ Migration image faite (preview mort → GA → **défaut LITE**, -50 %). Restes 
 
 ---
 
+## ✅ GALERIE DES MOUVEMENTS DE CAMÉRA — LIVRÉE 2026-08-21
+
+**https://aziztraorebf-ctrl.github.io/remotion/** — 21 mouvements, consultable sur mobile, recherche en
+langage courant, 7 favoris d'Aziz. Comble le trou « démo par geste » de `PILIERS-B2B`.
+
+⛔ **4 faits non dérivables du code** : (1) `gallery/data.json` est **GÉNÉRÉ** par
+`gallery/build-gallery.py` — ne jamais l'éditer à la main ; (2) les `.mp4` vivent sur la **release GitHub
+`gallery-media`**, PAS dans git ; (3) le build **échoue** si un geste n'a pas d'`INTENTION` ;
+(4) déploiement auto par `.github/workflows/deploy-gallery.yml` à chaque push sur `master`.
+
+**Ajouter un geste** = une ligne dans `MOVES` + `python3 gallery/build-gallery.py` + `gh release upload
+gallery-media <clip>` + commit. ⛔ Sonder le timecode (`measure-camera.py sheet`), jamais l'estimer.
+
+**Écartés volontairement** : 5 clips verticaux Atlas au registre daté (orange/bleu) — ils donneraient une
+fausse image du niveau actuel. **Prochaine catégorie possible** : scènes SVG ou cartes vivantes.
+
 ## ⛔⛔ AVANT DE LIRE QUOI QUE CE SOIT — LES CHANTIERS VIVANTS SONT DANS DES WORKTREES
 
 > **Ce fichier (repo principal) est structurellement EN RETARD** sur les chantiers qui vivent ailleurs.
@@ -118,9 +134,15 @@ question. Vaut pour 3 piliers (vidéo générée · SVG · UI produit).
 📁 **Tous les rendus validés + prompts + seeds** : `out/_r-and-d/personnage-vector-plat/MANIFESTE.md`
 
 **Reste à faire** :
-1. ⭐⭐⭐ **Produire le gabarit de choix sur un VRAI brief client — la ZAMBIE (Peace Corps).**
-   Offre Upwork repérée le 2026-08-21, **à traiter en priorité 1 de la prochaine session** : elle
-   transforme l'artefact de démo en livrable commercial réel, à travail identique.
+1. ✅ **FAIT le 2026-08-21 (commit `babc82d7`)** — gabarit de choix Zambie : les **2 concepts sont CODÉS**
+   (`src/projects/_client-sim/zambia-peacecorps/ZambiaConceptA.tsx` D3/globe · `ZambiaConceptB.tsx`
+   Mapbox/jetons · socle `zambiaGeo.ts`), typecheck 0 erreur, 240 frames chacun, 0 province hors-brief.
+   Storyboards + arbitrage + breakdowns : `memory/client-sim-tests/zambia-peacecorps/`.
+   ⏭️ **RESTE À ENVOYER** — et les 3 vérifications ci-dessous ne sont PAS faites :
+   ProRes 4444 alpha · 4K Mapbox (~5 fps) · ambiguïté de géolocalisation des points.
+   ⛔ Le livrable existe, **la candidature non** — c'est une action commerciale, pas un chantier de
+   production. **Priorité 1 de production = GAZODUC Acte 3** (seul chantier avec un livrable bloquant).
+   ⚠️ Arbitrage « avancer le Gazoduc vs répondre à une offre client datée » = décision d'Aziz.
    **Le brief** : animation cinématique 15 s, évolution des volontaires Peace Corps en Zambie
    1995→2026. **7 provinces nommées** (Luapula départ · North-Western · Eastern · Western · Northern
    · Southern · Lusaka) avec **interdiction explicite d'en montrer d'autres** → notre « géo zéro

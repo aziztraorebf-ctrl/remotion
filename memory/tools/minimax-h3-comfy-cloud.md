@@ -29,7 +29,7 @@
 > ⭐ **Suivi de coût — préférence Aziz (2026-08-08)** : rapporter en priorité la **consommation GPU
 > réelle** (minutes/heures, via le mécanisme 0.39 crédit/seconde documenté ci-dessus) plutôt que
 > marteler un montant en dollars à chaque test. Le dollar reste la métrique de secours fiable tant
-> qu'aucun endpoint `get_usage_report` ne renvoie directement une durée GPU exploitable (vérifié
+> qu'~~aucun endpoint ne renvoie directement une durée GPU~~ ⛔ **FAUX, corrigé 2026-08-21** : `get_billing_activity` renvoie `gpu_seconds` + `gpu_type` PAR JOB (mais aucun dollar). `get_usage_report` donne les dollars par produit, jamais les heures. Croiser les deux pour un coût par job. Tarif dérivé constant vérifié : **4,66 $/h sur `rtx_pro_6000`** (5,00 h = 23,30 $ sur 116 jobs, coût moyen 0,20 $/job). `get_job_status` donne succeeded/job_failed (vérifié
 > 2026-08-08 : l'outil ne renvoie que des dollars, pas de minutes — ne PAS halluciner de taux de
 > conversion crédit→GPU pour combler ce manque, le signaler explicitement à la place). Objectif :
 > savoir combien de temps GPU réel a été utilisé sur Comfy Cloud, pas juste le prix payé.

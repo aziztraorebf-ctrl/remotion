@@ -68,7 +68,13 @@ glissante du tracé (`windowBBox`, back 45% / ahead 10%, `scaleFit` borné 1.3-2
    Un `interpolate` qui sature (`Math.min(1,p)` convergé en 2-3s sur un beat de 15s) laisse la caméra strictement immobile.
 
 ## MESURER AVANT DE RETOUCHER
-⭐ **Outil dédié : `python3 scripts/tools/measure-camera.py --help`** (créé 2026-08-17, couvre les 3 mesures).
+⭐ **Outil dédié : `python3 scripts/tools/measure-camera.py --help`** (créé 2026-08-17, 4 sous-commandes : `speed` · `scale` · `motion` · `sheet`).
+- ⛔⛔ **UN TIMECODE DE DÉCOUPE NE S'ESTIME JAMAIS — il se SONDE** (`measure-camera.py sheet <video>`).
+  **Un rendu long NE COMMENCE PAS par son geste.** 3 erreurs le 2026-08-21 : 72,5 s montrait la caméra
+  qui SE RESSERRE (vrai 69,5) · 82,5 s contenait DEUX gestes (vrai 81,5) · 6 blueprints découpés à 1,0 s
+  alors qu'ils durent 10-23 s → **4 vignettes sur 6 vides** (vrais : 6,6 / 12,0 / 9,0 s).
+  ⛔ Corollaire : « un mouvement de caméra » dans un rapport d'agent est un SIGNAL — 2 des 4 extractions
+  annoncées ce jour-là n'en étaient pas (tracé qui se dessine, transition en flou). Sonder puis REGARDER.
 - **Vitesse frame-à-frame, HORS render** (le moins cher, à faire en premier) — `measure-camera.py speed` :
   rejoue la fonction caméra sur toutes les frames, imprime Δposition/Δscale. v=0.000 quelque part → piège 1. Pic énorme → index arrondi.
 - **Diamètre/échelle réels sur N frames** — `measure-camera.py scale` : détecte les pixels non-fond sur la ligne médiane.
@@ -84,9 +90,6 @@ glissante du tracé (`windowBBox`, back 45% / ahead 10%, `scaleFit` borné 1.3-2
   corrigés à partir de cette valeur fausse — chaque correction était arithmétiquement cohérente avec une
   origine erronée, donc chacune semblait « presque bonne ». Un scan trouve UNE transition horizontale,
   pas forcément la bonne : **cropper la zone trouvée et la REGARDER** avant d'en dériver quoi que ce soit.
-  ⚠️ Corollaire mesuré : `objectFit:'cover'` sur 1080/768 donne exactement 1,40625 = le scale cover →
-  **l'axe Y n'est PAS affecté**, seul X l'est (-30 px). Ne jamais invoquer « cover » pour expliquer un
-  décalage VERTICAL (j'avais écrit cet avertissement faux dans le code, il a détourné le diagnostic 3 tours).
 - Juger la netteté uniquement sur `scale=1`. Frames isolées ne prouvent rien sur le mouvement.
 
 ⛔ **Un effet dont la RAISON D'ÊTRE a disparu se SUPPRIME, il ne se re-dose pas.** Vécu 2026-08-18

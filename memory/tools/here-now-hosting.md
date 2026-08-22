@@ -98,6 +98,7 @@ Le `claimToken` est retourné UNE SEULE FOIS à la création. Sauvegarder imméd
 | Vidéos MP4 | catbox.moe | Marche bien, lien permanent |
 | Audio MP3 | catbox.moe | Marche bien, lien permanent |
 | Fichiers >200 MB | catbox.moe ne marche pas | Vercel ou GitHub LFS |
+| **Page HTML + PLUSIEURS vidéos** | **GitHub Pages + release GitHub** | Voir § dédié en bas. here.now marche aussi (mp4 servis en HTTP 206) |
 
 ### Banc d'ecoute musique CFA 2026-07-30
 - Slug : `earthy-parcel-d3gg`
@@ -109,3 +110,26 @@ Le `claimToken` est retourné UNE SEULE FOIS à la création. Sauvegarder imméd
 
 ⚠️ **Claude Code MOBILE ne peut pas ouvrir les Artifacts claude.ai** (constate par Aziz
 2026-07-30). Pour toute page HTML destinee au mobile : here.now directement, pas Artifact.
+
+## ⭐ Galerie/dashboard avec PLUSIEURS médias lourds → GitHub Pages + Release (2026-08-21)
+
+Cas différent d'un upload d'un seul fichier. Site statique versionné dans le repo (`gallery/`), déployé
+par un workflow sur **GitHub Pages** au push. Les `.mp4` ne sont **PAS dans git** (`.gitignore`) : ils
+vivent sur une **release GitHub dédiée** (`gallery-media`), et le workflow les télécharge
+(`gh release download <tag> --pattern '*.mp4'`) avant de publier, pour que les URLs relatives
+`./clips/*.mp4` du manifest fonctionnent. Un step « Verify manifest » vérifie posters + clips avant publish.
+
+**Pourquoi** : l'historique git ne gonfle pas à chaque re-découpage. Méthode reprise de video-shotcraft
+(209 previews hors git) — cf. `memory/tools/video-shotcraft-architecture.md`.
+
+⛔ **3 gotchas payés** :
+1. **`workflow_dispatch` n'est déclenchable QUE si le workflow existe sur la branche par défaut.**
+   Sur une branche de feature, `gh workflow run` renvoie **HTTP 404** → le 1er déploiement EXIGE le merge.
+2. **Transcodage obligatoire** : `scale=1280:-2 -crf 28 -preset slow -an -movflags +faststart` =
+   **~320 Ko / 5 s** au lieu de 80 Mo (facteur ~14), qualité et texte HUD intacts.
+3. **here.now sert AUSSI les `.mp4`** (vérifié : `content-type: video/mp4` + `accept-ranges: bytes` +
+   HTTP **206** sur requête partielle = seek possible ; son API accepte un **tableau** de fichiers, pas
+   seulement un HTML seul). Les deux marchent — GitHub Pages a été **préféré** pour la permanence de
+   l'URL et le versionnement, pas imposé par une limite de here.now.
+
+Exemple vivant : `gallery/` + `.github/workflows/deploy-gallery.yml` + `gallery/fetch-media.sh`.

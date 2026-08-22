@@ -171,3 +171,18 @@ CAM_PULLBACK  (frame_pullback → fin)
 Style custom via Mapbox Studio — texture parchemin/papyrus, typo cartographique africaine.
 Une fois créé : URL `mapbox://styles/azizbf12/<style-id>` à ajouter dans `MAPBOX_STYLES`.
 Idéal pour épisodes Atlas (Mansa Moussa, Empire Ghana, Tombouctou).
+
+## ⭐⭐ `MapboxCameraLab` — les 12 mouvements de caméra catalogués (indexé le 2026-08-21)
+
+`src/projects/_shared/mapbox/MapboxCameraLab.tsx` · composition Root.tsx **`Mapbox-Camera-Lab`**.
+
+**Laboratoire de référence** : 12 mouvements de caméra Mapbox, 10 s chacun, **avec le nom du mouvement
+affiché en HUD dans l'image** — drift continu · orbit + dolly in · whip pan multi-stop · zoom + freeze ·
+tilt + pull back · counter-rotation · drift + blur atmosphérique · pull back planétaire · zoom sol 3D ·
+fade style switch · whip pan + style switch · zoom out → style → in.
+
+⛔ **Il existait AVANT le 2026-08-21 et n'était indexé NULLE PART** — découvert seulement parce que la
+galerie l'a rendu visible. Cas d'école de « chercher l'existant avant de produire ».
+
+**Le voir** : https://aziztraorebf-ctrl.github.io/remotion/ (posters + clips de chaque geste, recherche
+en langage courant). Rendu source : `out/episodes/_shared/mapbox-camera-lab-v2.mp4` (120 s).

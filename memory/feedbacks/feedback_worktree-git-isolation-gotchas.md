@@ -186,3 +186,24 @@ et `git ls-files` liste les 2 fichiers sur HEAD. C'était une branche de travail
 pattern récurrent avec un cas qui n'en est pas un rend le feedback moins fiable — l'EFFET se ressemblait
 (fichier absent de ma branche), la CONDITION (jamais mergé) n'était pas remplie.
 Cf. [[feedback_generaliser-un-seul-cas-isoler-la-condition-pas-juste-l-effet]].
+
+## ⛔⛔ CHAÎNE `commit && checkout` NON VÉRIFIÉE = TRAVAIL PERDU (2026-08-21)
+
+**Vécu** : `git add gallery/ && git commit -m "..." && git checkout master && git merge && git push`
+en UNE commande. J'étais **déjà sur master** (un merge précédent m'y avait laissé, je ne l'avais pas
+vérifié) → `git add` a staged sur master, le commit a échoué (hook), et le `git checkout` suivant a
+**écrasé les fichiers modifiés non commités**. Une heure de travail (recherche + intentions + favoris de
+la galerie) intégralement à refaire. Seul le rendu vidéo a survécu, parce qu'il vivait dans `out/`.
+
+**Cause racine** : `&&` ne protège que du code de sortie non nul. Un commit bloqué par un hook, ou un
+`git add` qui ne stage rien parce qu'on n'est pas sur la branche attendue, n'arrête pas forcément la
+chaîne — et `checkout` détruit alors ce qui n'a pas été commité.
+
+**Règle** :
+1. `git branch --show-current` AVANT tout `git add` — ne jamais supposer la branche depuis le contexte.
+2. **Commiter, puis VÉRIFIER** (`git log --oneline -1`), PUIS seulement enchaîner.
+3. ⛔ Jamais `commit` et `checkout` dans la même chaîne `&&`. Deux appels séparés, minimum.
+
+**Corollaire** : ce qui n'est pas commité n'existe pas. Un fichier de travail long (page web, script,
+doctrine) se commit dès qu'il compile, pas quand il est « fini » — le commit est la sauvegarde, pas la
+publication (on peut toujours amender ensuite).
