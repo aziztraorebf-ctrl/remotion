@@ -6,7 +6,7 @@
   "desc": "Dérive lente + bearing 0 à 12°, pitch 25. Le plan qui respire sans intention forte.",
   "usage": "Poser un lieu sans le commenter, laisser respirer sous une voix off.",
   "kw": "reperage calme lent respirer voix off fond installer poser contexte introduction ambiance",
-  "fav": false,
+  "fav": true,
   "lieu": "Dakar",
   "energie": "basse",
   "poids": 157
@@ -30,7 +30,7 @@
   "desc": "Déplacement Lagos vers Nairobi avec flou de filé au milieu. Le raccord qui avale la distance.",
   "usage": "Passer d'un pays a un autre sans montrer le trajet.",
   "kw": "aller de a vers b saut deplacement rapide flou file transition pays distance relier deux lieux ville",
-  "fav": false,
+  "fav": true,
   "lieu": "Lagos → Nairobi",
   "energie": "haute",
   "poids": 363
@@ -54,7 +54,7 @@
   "desc": "Le pitch bascule 0 à 60 puis le zoom recule 5.5 à 3.0. On se redresse et on découvre le contexte.",
   "usage": "Se redresser puis reculer pour decouvrir le contexte autour.",
   "kw": "basculer redresser incliner reculer decouvrir contexte revelation elargir voir autour",
-  "fav": false,
+  "fav": true,
   "lieu": "Kinshasa",
   "energie": "moyenne",
   "poids": 334
@@ -78,7 +78,7 @@
   "desc": "Dérive avec flou atmosphérique constant. Fond de plan pour poser une voix off.",
   "usage": "Un fond de plan doux pour poser du texte ou une narration.",
   "kw": "flou fond arriere plan texte narration doux calme atmosphere support lisible",
-  "fav": false,
+  "fav": true,
   "lieu": "Alger",
   "energie": "basse",
   "poids": 148
@@ -90,7 +90,7 @@
   "desc": "Zoom 5.5 à 2.8 en 60 frames : le pays s'éloigne jusqu'à la vue planétaire. Le geste canonique de la doctrine.",
   "usage": "Montrer qu'un pays est petit face au monde.",
   "kw": "reculer zoom arriere echelle petit grand monde planete comparaison ecraser situer perspective globe",
-  "fav": false,
+  "fav": true,
   "lieu": "Afrique",
   "energie": "haute",
   "poids": 343
@@ -150,7 +150,7 @@
   "desc": "La camera avance avec le trace qui se dessine, en gardant l'amont visible derriere. Le geste canonique du gazoduc.",
   "usage": "Suivre un trace qui se construit, en gardant l'amont visible.",
   "kw": "suivre trace route trajet pipeline gazoduc chemin progression construire avancer parcours ligne",
-  "fav": false,
+  "fav": true,
   "lieu": "Nigeria vers Portugal",
   "energie": "moyenne",
   "poids": 307
@@ -162,7 +162,7 @@
   "desc": "Le pays plein cadre recule jusqu'a devenir un globe avec sa courbure. Version D3 du Pull Back Reveal.",
   "usage": "Passer d'un pays au globe entier, en D3.",
   "kw": "globe planete terre courbure reculer echelle monde d3 pays petit spatial vue satellite",
-  "fav": false,
+  "fav": true,
   "lieu": "Soudan",
   "energie": "haute",
   "poids": 315
