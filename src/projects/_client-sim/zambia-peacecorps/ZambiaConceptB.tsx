@@ -51,8 +51,8 @@ const TEXTE = "#f2ede3";
 
 // Cadrages, tires du breakdown : continent large -> medium LARGE sur la Zambie.
 // ⭐ zoom d'arrivee volontairement BAS (4.35) : c'est lui qui garde le collier de contexte.
-const CAM_DEBUT = { lon: 19.5, lat: -3.0, zoom: 2.35 };
-const CAM_FIN = { lon: 27.6, lat: -13.4, zoom: 4.35 };
+const CAM_DEBUT = { lon: 21.0, lat: -6.0, zoom: 3.5, pitch: 16 };
+const CAM_FIN = { lon: 27.6, lat: -13.9, zoom: 5.15, pitch: 42 };
 
 // Chronologie (30 fps), calee sur le breakdown Grok.
 const F_DESCENTE = 12;
@@ -94,6 +94,8 @@ export const ZambiaConceptB: React.FC = () => {
   const zoom = CAM_DEBUT.zoom + (CAM_FIN.zoom - CAM_DEBUT.zoom) * tDesc + creep;
   const lon = CAM_DEBUT.lon + (CAM_FIN.lon - CAM_DEBUT.lon) * tDesc;
   const lat = CAM_DEBUT.lat + (CAM_FIN.lat - CAM_DEBUT.lat) * tDesc;
+  // Le pitch monte avec la descente : c'est lui qui donne le relief "presque 3D" du storyboard.
+  const pitch = CAM_DEBUT.pitch + (CAM_FIN.pitch - CAM_DEBUT.pitch) * tDesc;
 
   useEffect(() => {
     if (!ref.current) return;
@@ -103,9 +105,15 @@ export const ZambiaConceptB: React.FC = () => {
       style: "mapbox://styles/mapbox/dark-v11",
       center: [CAM_DEBUT.lon, CAM_DEBUT.lat],
       zoom: CAM_DEBUT.zoom,
+      pitch: CAM_DEBUT.pitch,
       interactive: false,
       preserveDrawingBuffer: true,
       attributionControl: false,
+      // ⛔⛔ MERCATOR FORCE. Mapbox v3 bascule TOUT SEUL en projection globe sous zoom ~5 :
+      // a zoom 2.35 on obtenait un disque sur fond noir (mesure : 4/4 coins noirs) alors que
+      // la case storyboard de Grok est une CARTE PLATE plein cadre (0/4 coins noirs).
+      // Le globe appartient au concept A (Gemini) ; il n'a jamais rien eu a faire ici.
+      projection: { name: "mercator" },
     });
     mapRef.current = map;
 
@@ -169,6 +177,20 @@ export const ZambiaConceptB: React.FC = () => {
       // Grok avait dessine NOTRE propre palette maison, il fallait juste l'appliquer.
       applyGeoAfriqueV5(map);
 
+      // RELIEF — l'effet "presque 3D" du storyboard vient du terrain ombre, pas du seul tilt.
+      // Exaggeration MODEREE (1.4) : la Zambie est un plateau, pas une chaine de montagnes.
+      // Un client "NatGeo" verrait le mensonge d'un relief pousse (teste a 8.0 : spectaculaire
+      // mais faux).
+      if (!map.getSource("dem")) {
+        map.addSource("dem", {
+          type: "raster-dem",
+          url: "mapbox://mapbox.mapbox-terrain-dem-v1",
+          tileSize: 512,
+          maxzoom: 14,
+        });
+      }
+      map.setTerrain({ source: "dem", exaggeration: 1.4 });
+
       map.once("idle", () => {
         setReady(true);
         continueRender(handle);
@@ -181,8 +203,8 @@ export const ZambiaConceptB: React.FC = () => {
   // Mapbox frame-driven : jumpTo uniquement (flyTo/easeTo sont incompatibles headless).
   useEffect(() => {
     const m = mapRef.current;
-    if (m) m.jumpTo({ center: [lon, lat], zoom });
-  }, [lon, lat, zoom]);
+    if (m) m.jumpTo({ center: [lon, lat], zoom, pitch });
+  }, [lon, lat, zoom, pitch]);
 
   const progression = interpolate(frame, [T_MARQUEURS.Luapula, F_FIN - 25], [0, 1], {
     extrapolateLeft: "clamp",
