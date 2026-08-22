@@ -1,3 +1,4 @@
+import { ChillMeterOverlay } from "./projects/_rnd/chill-meter/ChillMeterOverlay";
 import { Composition, Folder, staticFile as staticFileRoot, useCurrentFrame } from "remotion";
 import { ZambiaConceptB, ZAMBIA_CONCEPT_B_FRAMES } from "./projects/_client-sim/zambia-peacecorps/ZambiaConceptB";
 import { ZambiaConceptA, ZAMBIA_CONCEPT_A_FRAMES } from "./projects/_client-sim/zambia-peacecorps/ZambiaConceptA";
@@ -4950,6 +4951,64 @@ export const RemotionRoot: React.FC = () => {
       <Composition id="Zambia-TraitementB-DocClair" component={ZambiaTraitementB} durationInFrames={ZAMBIA_B_FRAMES} fps={30} width={1920} height={1080} />
       <Composition id="Zambia-ConceptA-Globe" component={ZambiaConceptA} durationInFrames={ZAMBIA_CONCEPT_A_FRAMES} fps={30} width={1920} height={1080} />
       <Composition id="Zambia-ConceptB-Continent" component={ZambiaConceptB} durationInFrames={ZAMBIA_CONCEPT_B_FRAMES} fps={30} width={1920} height={1080} />
+
+      <Folder name="RND-ChillMeter">
+        <Composition
+          id="ChillMeter-Entrance"
+          component={ChillMeterOverlay}
+          durationInFrames={60}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "entrance" as const }}
+        />
+        <Composition
+          id="ChillMeter-Idle"
+          component={ChillMeterOverlay}
+          durationInFrames={90}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "idle" as const }}
+        />
+        <Composition
+          id="ChillMeter-Fill25"
+          component={ChillMeterOverlay}
+          durationInFrames={75}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill25" as const }}
+        />
+        <Composition
+          id="ChillMeter-Fill50"
+          component={ChillMeterOverlay}
+          durationInFrames={105}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill50" as const }}
+        />
+        <Composition
+          id="ChillMeter-Fill75"
+          component={ChillMeterOverlay}
+          durationInFrames={105}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill75" as const }}
+        />
+        <Composition
+          id="ChillMeter-Fill100"
+          component={ChillMeterOverlay}
+          durationInFrames={135}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill100" as const }}
+        />
+      </Folder>
+
     </>
   );
 };

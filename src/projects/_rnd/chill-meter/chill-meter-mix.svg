@@ -1,0 +1,779 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1448 1086" width="1448" height="1086">
+<!--
+  Max Chill Factor Meter — MIX assemble depuis 3 planches.
+    chassis        <- gpt
+    ecran          <- gpt
+    graduation     <- kimi
+    gauge_track    <- kimi
+    seg_00..seg_25 <- kimi
+    legende        <- kimi
+    sous_titre     <- fable
+    panneau_power  <- gpt
+    bouton_power   <- kimi
+    boutons_bas    <- kimi
+    plaque_titre   <- gpt
+    titre_texte    <- fable
+    frost_layer    <- fable
+    icicles        <- gpt
+
+  Anime depuis React (aucune animation embarquee ici) :
+    seg_00..seg_25 : opacite, allumes 1 par 1 selon le niveau 0-100
+    frost_layer    : opacity 0 -> 1 quand le givre pousse
+    icicles        : chaque icicle_NN a son origine a son point d'attache -> scale(1,k)
+    bouton_power   : opacite pulsee
+-->
+<defs>
+<!-- defs issus de kimi -->
+
+    <linearGradient id="kimi_metalMain" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4a5560"/>
+      <stop offset="0.15" stop-color="#3a434c"/>
+      <stop offset="0.5" stop-color="#242b33"/>
+      <stop offset="0.85" stop-color="#161b21"/>
+      <stop offset="1" stop-color="#101419"/>
+    </linearGradient>
+    <linearGradient id="kimi_metalBevel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6a7681"/>
+      <stop offset="0.4" stop-color="#39424b"/>
+      <stop offset="1" stop-color="#141920"/>
+    </linearGradient>
+    <linearGradient id="kimi_metalPipe" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#12161b"/>
+      <stop offset="0.35" stop-color="#55606a"/>
+      <stop offset="0.55" stop-color="#7c8894"/>
+      <stop offset="0.7" stop-color="#3a434c"/>
+      <stop offset="1" stop-color="#0e1216"/>
+    </linearGradient>
+    <linearGradient id="kimi_screenGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#051423"/>
+      <stop offset="0.5" stop-color="#071c30"/>
+      <stop offset="1" stop-color="#040f1a"/>
+    </linearGradient>
+    <radialGradient id="kimi_screenGlow" cx="0.5" cy="0.5" r="0.75">
+      <stop offset="0" stop-color="#0d3a5e" stop-opacity="0.9"/>
+      <stop offset="0.6" stop-color="#082640" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#03101c" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="kimi_segGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8fe3ff"/>
+      <stop offset="0.3" stop-color="#3fc4ff"/>
+      <stop offset="0.7" stop-color="#1498e8"/>
+      <stop offset="1" stop-color="#0a6ec0"/>
+    </linearGradient>
+    <radialGradient id="kimi_greenBtn" cx="0.4" cy="0.35" r="0.8">
+      <stop offset="0" stop-color="#d8ffd8"/>
+      <stop offset="0.3" stop-color="#6fff6f"/>
+      <stop offset="0.7" stop-color="#1ccc1c"/>
+      <stop offset="1" stop-color="#0a7a0a"/>
+    </radialGradient>
+    <radialGradient id="kimi_greenHalo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#4cff4c" stop-opacity="0.7"/>
+      <stop offset="0.5" stop-color="#2be82b" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#1aff1a" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="kimi_rivetGrad" cx="0.35" cy="0.3" r="0.9">
+      <stop offset="0" stop-color="#a8b6c2"/>
+      <stop offset="0.45" stop-color="#4a545e"/>
+      <stop offset="1" stop-color="#0d1115"/>
+    </radialGradient>
+    <linearGradient id="kimi_plaqueGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2a343e"/>
+      <stop offset="0.5" stop-color="#131a21"/>
+      <stop offset="1" stop-color="#0a0e13"/>
+    </linearGradient>
+    <linearGradient id="kimi_frostGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="0.5" stop-color="#cfeaff" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#9fd0ff" stop-opacity="0.55"/>
+    </linearGradient>
+    <linearGradient id="kimi_icicleGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#eaf7ff" stop-opacity="0.95"/>
+      <stop offset="0.5" stop-color="#a8d8ff" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#7cc0ff" stop-opacity="0.35"/>
+    </linearGradient>
+    <linearGradient id="kimi_btnGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2c3641"/>
+      <stop offset="0.5" stop-color="#171e26"/>
+      <stop offset="1" stop-color="#0d1218"/>
+    </linearGradient>
+  
+<!-- defs issus de gpt -->
+
+    <linearGradient id="gpt_metalOuter" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#71859a"/>
+      <stop offset="0.08" stop-color="#26394b"/>
+      <stop offset="0.26" stop-color="#0b1722"/>
+      <stop offset="0.55" stop-color="#172a3b"/>
+      <stop offset="0.78" stop-color="#07111b"/>
+      <stop offset="0.94" stop-color="#3e566b"/>
+      <stop offset="1" stop-color="#101c27"/>
+    </linearGradient>
+    <linearGradient id="gpt_metalInset" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#566d82"/>
+      <stop offset="0.14" stop-color="#101d29"/>
+      <stop offset="0.48" stop-color="#25384a"/>
+      <stop offset="0.72" stop-color="#07121c"/>
+      <stop offset="1" stop-color="#40566a"/>
+    </linearGradient>
+    <linearGradient id="gpt_bevelBlue" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b7dcff"/>
+      <stop offset="0.1" stop-color="#2c78bc"/>
+      <stop offset="0.48" stop-color="#071929"/>
+      <stop offset="0.88" stop-color="#183d5f"/>
+      <stop offset="1" stop-color="#8fcaff"/>
+    </linearGradient>
+    <linearGradient id="gpt_screenFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#03111f"/>
+      <stop offset="0.45" stop-color="#061b31"/>
+      <stop offset="1" stop-color="#020b14"/>
+    </linearGradient>
+    <radialGradient id="gpt_screenBloom" cx="50%" cy="48%" r="70%">
+      <stop offset="0" stop-color="#0b5592" stop-opacity="0.34"/>
+      <stop offset="0.58" stop-color="#063359" stop-opacity="0.17"/>
+      <stop offset="1" stop-color="#00101f" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gpt_titlePlate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#263e54"/>
+      <stop offset="0.14" stop-color="#071522"/>
+      <stop offset="0.55" stop-color="#10283c"/>
+      <stop offset="0.88" stop-color="#06101a"/>
+      <stop offset="1" stop-color="#526b80"/>
+    </linearGradient>
+    <linearGradient id="gpt_buttonFace" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#344b60"/>
+      <stop offset="0.18" stop-color="#102131"/>
+      <stop offset="0.72" stop-color="#07131f"/>
+      <stop offset="1" stop-color="#253d52"/>
+    </linearGradient>
+    <linearGradient id="gpt_iceSegment" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#dff8ff"/>
+      <stop offset="0.18" stop-color="#68d8ff"/>
+      <stop offset="0.55" stop-color="#20a9f3"/>
+      <stop offset="0.86" stop-color="#0878d5"/>
+      <stop offset="1" stop-color="#8be8ff"/>
+    </linearGradient>
+    <linearGradient id="gpt_frost" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.25" stop-color="#d9f3ff"/>
+      <stop offset="0.66" stop-color="#76beff"/>
+      <stop offset="1" stop-color="#2778c4"/>
+    </linearGradient>
+    <linearGradient id="gpt_icicleFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7fdff" stop-opacity="0.95"/>
+      <stop offset="0.32" stop-color="#a8dcff" stop-opacity="0.9"/>
+      <stop offset="0.78" stop-color="#3d9ee9" stop-opacity="0.78"/>
+      <stop offset="1" stop-color="#dff7ff" stop-opacity="0.92"/>
+    </linearGradient>
+    <radialGradient id="gpt_screwFace" cx="38%" cy="30%" r="72%">
+      <stop offset="0" stop-color="#93abc0"/>
+      <stop offset="0.18" stop-color="#3e5568"/>
+      <stop offset="0.58" stop-color="#101d28"/>
+      <stop offset="1" stop-color="#030910"/>
+    </radialGradient>
+    <radialGradient id="gpt_greenLamp" cx="38%" cy="30%" r="65%">
+      <stop offset="0" stop-color="#edffd8"/>
+      <stop offset="0.2" stop-color="#9dff67"/>
+      <stop offset="0.58" stop-color="#39c52f"/>
+      <stop offset="1" stop-color="#0b5d1e"/>
+    </radialGradient>
+    <pattern id="gpt_screenGrid" width="42" height="34" patternUnits="userSpaceOnUse">
+      <path d="M42 0H0V34" stroke="#2496e0" stroke-width="1" stroke-opacity="0.11"/>
+      <path d="M0 17H42M21 0V34" stroke="#2496e0" stroke-width="0.7" stroke-opacity="0.045"/>
+    </pattern>
+    <pattern id="gpt_scratches" width="83" height="49" patternUnits="userSpaceOnUse">
+      <path d="M7 14h22M41 8h31M17 37h46M3 44h12" stroke="#aac4d8" stroke-width="1" stroke-opacity="0.12"/>
+      <path d="M32 23h45M4 29h18" stroke="#02080d" stroke-width="2" stroke-opacity="0.38"/>
+    </pattern>
+    <filter id="gpt_shadow" x="-20%" y="-25%" width="140%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="16"/>
+      <feOffset dy="14"/>
+      <feColorMatrix values="0 0 0 0 0 0 0 0 0 0.025 0 0 0 0 0.06 0 0 0 .8 0"/>
+      <feBlend in="SourceGraphic"/>
+    </filter>
+    <filter id="gpt_blueGlow" x="-80%" y="-100%" width="260%" height="300%">
+      <feGaussianBlur stdDeviation="9" result="b"/>
+      <feFlood flood-color="#168dff" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="gpt_softBlueGlow" x="-50%" y="-70%" width="200%" height="240%">
+      <feGaussianBlur stdDeviation="4.5" result="b"/>
+      <feFlood flood-color="#39baff" flood-opacity="0.72"/>
+      <feComposite in2="b" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="gpt_greenGlow" x="-150%" y="-150%" width="400%" height="400%">
+      <feGaussianBlur stdDeviation="11" result="b"/>
+      <feFlood flood-color="#65ff4d" flood-opacity="0.9"/>
+      <feComposite in2="b" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="gpt_frostGlow" x="-30%" y="-50%" width="160%" height="220%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feFlood flood-color="#75c8ff" flood-opacity="0.65"/>
+      <feComposite in2="b" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  
+<!-- defs issus de fable -->
+
+    <linearGradient id="fable_g_metal_body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4a5468"/>
+      <stop offset="0.12" stop-color="#333c4c"/>
+      <stop offset="0.5" stop-color="#1b212c"/>
+      <stop offset="0.82" stop-color="#12161e"/>
+      <stop offset="1" stop-color="#2a3242"/>
+    </linearGradient>
+    <linearGradient id="fable_g_metal_plaque" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#465067"/>
+      <stop offset="0.45" stop-color="#171c26"/>
+      <stop offset="1" stop-color="#242c3c"/>
+    </linearGradient>
+    <linearGradient id="fable_g_plaque_inner" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0e1a2c"/>
+      <stop offset="1" stop-color="#050a12"/>
+    </linearGradient>
+    <linearGradient id="fable_g_screen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d2038"/>
+      <stop offset="0.45" stop-color="#081426"/>
+      <stop offset="1" stop-color="#04080f"/>
+    </linearGradient>
+    <linearGradient id="fable_g_seg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#eaf8ff"/>
+      <stop offset="0.25" stop-color="#a4dbff"/>
+      <stop offset="0.6" stop-color="#4aa4f4"/>
+      <stop offset="1" stop-color="#1f78dd"/>
+    </linearGradient>
+    <linearGradient id="fable_g_ice" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="0.45" stop-color="#cfeaff" stop-opacity="0.8"/>
+      <stop offset="1" stop-color="#8ec8f8" stop-opacity="0.55"/>
+    </linearGradient>
+    <linearGradient id="fable_g_frost" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="0.5" stop-color="#ddf1ff" stop-opacity="0.8"/>
+      <stop offset="1" stop-color="#9fd0ff" stop-opacity="0.3"/>
+    </linearGradient>
+    <linearGradient id="fable_g_pipe" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#10141c"/>
+      <stop offset="0.3" stop-color="#4c5666"/>
+      <stop offset="0.5" stop-color="#78849a"/>
+      <stop offset="0.72" stop-color="#3a4352"/>
+      <stop offset="1" stop-color="#0d1119"/>
+    </linearGradient>
+    <linearGradient id="fable_g_pipe_h" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#10141c"/>
+      <stop offset="0.3" stop-color="#4c5666"/>
+      <stop offset="0.5" stop-color="#78849a"/>
+      <stop offset="0.72" stop-color="#3a4352"/>
+      <stop offset="1" stop-color="#0d1119"/>
+    </linearGradient>
+    <linearGradient id="fable_g_btnface" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a4453"/>
+      <stop offset="0.5" stop-color="#1a202a"/>
+      <stop offset="1" stop-color="#28303e"/>
+    </linearGradient>
+    <radialGradient id="fable_r_screw" cx="0.38" cy="0.35" r="0.75">
+      <stop offset="0" stop-color="#9aa5b7"/>
+      <stop offset="0.55" stop-color="#4a5364"/>
+      <stop offset="1" stop-color="#181d27"/>
+    </radialGradient>
+    <radialGradient id="fable_r_rivet" cx="0.38" cy="0.35" r="0.75">
+      <stop offset="0" stop-color="#aab4c4"/>
+      <stop offset="0.6" stop-color="#566274"/>
+      <stop offset="1" stop-color="#20262f"/>
+    </radialGradient>
+    <radialGradient id="fable_r_green" cx="0.4" cy="0.35" r="0.8">
+      <stop offset="0" stop-color="#f2ffdd"/>
+      <stop offset="0.35" stop-color="#8df05a"/>
+      <stop offset="0.7" stop-color="#3fca25"/>
+      <stop offset="1" stop-color="#157a10"/>
+    </radialGradient>
+    <radialGradient id="fable_r_green_halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#7dff4a" stop-opacity="0.85"/>
+      <stop offset="0.6" stop-color="#46d92a" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#2ab818" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="fable_f_blur2" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="2"/>
+    </filter>
+    <filter id="fable_f_blur4" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+    <filter id="fable_f_blur6" x="-70%" y="-70%" width="240%" height="240%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+    <filter id="fable_f_blur10" x="-90%" y="-90%" width="280%" height="280%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+    <filter id="fable_f_blur18" x="-120%" y="-120%" width="340%" height="340%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+    <filter id="fable_f_frost" x="-15%" y="-15%" width="130%" height="130%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="3" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="14"/>
+    </filter>
+    <g id="fable_sym_flocon" fill="none" stroke-linecap="round">
+      <g>
+        <line x1="0" y1="0" x2="0" y2="-26"/>
+        <line x1="0" y1="-16" x2="-7" y2="-22"/>
+        <line x1="0" y1="-16" x2="7" y2="-22"/>
+        <line x1="0" y1="-8" x2="-5" y2="-13"/>
+        <line x1="0" y1="-8" x2="5" y2="-13"/>
+      </g>
+      <g transform="rotate(60)">
+        <line x1="0" y1="0" x2="0" y2="-26"/>
+        <line x1="0" y1="-16" x2="-7" y2="-22"/>
+        <line x1="0" y1="-16" x2="7" y2="-22"/>
+        <line x1="0" y1="-8" x2="-5" y2="-13"/>
+        <line x1="0" y1="-8" x2="5" y2="-13"/>
+      </g>
+      <g transform="rotate(120)">
+        <line x1="0" y1="0" x2="0" y2="-26"/>
+        <line x1="0" y1="-16" x2="-7" y2="-22"/>
+        <line x1="0" y1="-16" x2="7" y2="-22"/>
+        <line x1="0" y1="-8" x2="-5" y2="-13"/>
+        <line x1="0" y1="-8" x2="5" y2="-13"/>
+      </g>
+      <g transform="rotate(180)">
+        <line x1="0" y1="0" x2="0" y2="-26"/>
+        <line x1="0" y1="-16" x2="-7" y2="-22"/>
+        <line x1="0" y1="-16" x2="7" y2="-22"/>
+        <line x1="0" y1="-8" x2="-5" y2="-13"/>
+        <line x1="0" y1="-8" x2="5" y2="-13"/>
+      </g>
+      <g transform="rotate(240)">
+        <line x1="0" y1="0" x2="0" y2="-26"/>
+        <line x1="0" y1="-16" x2="-7" y2="-22"/>
+        <line x1="0" y1="-16" x2="7" y2="-22"/>
+        <line x1="0" y1="-8" x2="-5" y2="-13"/>
+        <line x1="0" y1="-8" x2="5" y2="-13"/>
+      </g>
+      <g transform="rotate(300)">
+        <line x1="0" y1="0" x2="0" y2="-26"/>
+        <line x1="0" y1="-16" x2="-7" y2="-22"/>
+        <line x1="0" y1="-16" x2="7" y2="-22"/>
+        <line x1="0" y1="-8" x2="-5" y2="-13"/>
+        <line x1="0" y1="-8" x2="5" y2="-13"/>
+      </g>
+    </g>
+    <text id="fable_t_titre" x="730" y="266" font-family="Impact, 'Arial Black', sans-serif" font-size="96" text-anchor="middle" letter-spacing="2">AbiGirl Reacts</text>
+    <text id="fable_t_sous" x="718" y="420" font-family="Impact, 'Arial Black', sans-serif" font-size="56" text-anchor="middle" letter-spacing="4">MAX CHILL DETECTION</text>
+    <text id="fable_t_leg" x="724" y="700" font-family="Impact, 'Arial Black', sans-serif" font-size="29" text-anchor="middle" letter-spacing="3">0 = NO CHILL | 100 = MAX CHILL</text>
+    <text id="fable_t_power" x="1347" y="480" font-family="Impact, 'Arial Black', sans-serif" font-size="21" text-anchor="middle" letter-spacing="1">POWER</text>
+  
+</defs>
+  <!-- chassis <- gpt -->
+  <g id="chassis">
+    <path d="M137 247H289V205Q289 168 328 158H1112Q1146 161 1162 193L1179 244H1322Q1398 244 1405 320V758Q1400 843 1316 854H1282V876Q1282 905 1250 908H185Q151 904 151 873V852H118Q42 842 37 762V340Q42 260 137 247Z" fill="#000814" opacity="0.8" filter="url(#gpt_shadow)"/>
+    <path d="M126 244H288V204Q288 167 329 157H1110Q1147 158 1163 197L1178 243H1323Q1394 245 1400 318V763Q1394 835 1323 846H1285V876Q1284 900 1252 902H184Q154 900 153 874V848H123Q50 842 45 764V329Q52 252 126 244Z" fill="url(#gpt_metalOuter)" stroke="#738da5" stroke-width="3"/>
+    <path d="M137 266H300L315 223H1138L1158 267H1315Q1366 270 1374 326V750Q1368 810 1312 821H1257V858H177V822H126Q71 812 68 753V337Q72 277 137 266Z" fill="#07121d" stroke="#263f55" stroke-width="6"/>
+    <path d="M145 289H1293Q1341 289 1345 340V735Q1340 786 1292 792H145Q96 788 93 735V345Q96 295 145 289Z" fill="url(#gpt_metalInset)" stroke="#7790a5" stroke-width="3"/>
+    <path d="M150 308H1287Q1320 309 1325 346V729Q1321 766 1284 772H151Q113 768 111 728V352Q114 315 150 308Z" fill="#07131e" stroke="#0b0f14" stroke-width="12"/>
+    <path d="M151 308H1287Q1320 309 1325 346V729Q1321 766 1284 772H151Q113 768 111 728V352Q114 315 150 308Z" fill="none" stroke="url(#gpt_bevelBlue)" stroke-width="5"/>
+    <path d="M71 327H45V401H68M69 419H38V520H68M68 540H43V643H69M69 661H43V735H71" stroke="#58758b" stroke-width="11"/>
+    <path d="M47 331H24V400H44M42 421H25V518H42M43 542H25V642H43" stroke="#162a3a" stroke-width="7"/>
+    <path d="M1395 354H1423V423H1398M1397 444H1424V546H1398M1398 566H1422V667H1398" stroke="#60798d" stroke-width="10"/>
+    <path d="M1398 356H1430M1398 421H1429M1398 445H1431M1398 545H1431M1398 568H1430M1398 666H1430" stroke="#101d28" stroke-width="5"/>
+    <path d="M1170 247V221H1354Q1379 221 1382 248V274" stroke="#334b5e" stroke-width="13"/>
+    <path d="M1182 248V232H1347Q1364 233 1367 251V274" stroke="#7f95a7" stroke-width="3"/>
+    <path d="M98 270L80 252L110 236L286 236" stroke="#31495c" stroke-width="15"/>
+    <path d="M91 266L112 248H285" stroke="#859caf" stroke-width="3"/>
+    <rect x="163" y="796" width="1091" height="72" rx="15" fill="#0a1621" stroke="#597187" stroke-width="4"/>
+    <rect x="174" y="806" width="1068" height="50" rx="11" fill="url(#gpt_scratches)" stroke="#172b3b" stroke-width="3" opacity="0.18"/>
+    <path d="M86 299L102 284M71 389L92 389M75 707H98M1354 304L1370 320M1356 729L1374 746" stroke="#b5c8d8" stroke-width="3" opacity="0.5"/>
+    <path d="M85 281H279M1190 280H1352M84 782H1363" stroke="#c6d6e2" stroke-width="2" opacity="0.22"/>
+    <path d="M61 507V366M58 721V580M1388 694V494" stroke="#9cb4c7" stroke-width="2" opacity="0.33"/>
+
+    <g transform="translate(99 327)">
+      <circle r="23" fill="#050b11" stroke="#425b70" stroke-width="5"/>
+      <circle r="14" fill="url(#gpt_screwFace)" stroke="#8ba0b1" stroke-width="2"/>
+      <path d="M-7-7L7 7M7-7L-7 7" stroke="#020609" stroke-width="4"/>
+      <path d="M-6-8L7 5" stroke="#c3d2dd" stroke-width="1.2"/>
+    </g>
+    <g transform="translate(98 725)">
+      <circle r="23" fill="#050b11" stroke="#425b70" stroke-width="5"/>
+      <circle r="14" fill="url(#gpt_screwFace)" stroke="#8ba0b1" stroke-width="2"/>
+      <path d="M-8 0H8M0-8V8" stroke="#020609" stroke-width="4"/>
+      <path d="M-7-1H7" stroke="#c3d2dd" stroke-width="1.2"/>
+    </g>
+    <g transform="translate(1311 330)">
+      <circle r="23" fill="#050b11" stroke="#425b70" stroke-width="5"/>
+      <circle r="14" fill="url(#gpt_screwFace)" stroke="#8ba0b1" stroke-width="2"/>
+      <path d="M-7-7L7 7M7-7L-7 7" stroke="#020609" stroke-width="4"/>
+      <path d="M-6-8L7 5" stroke="#c3d2dd" stroke-width="1.2"/>
+    </g>
+    <g transform="translate(1308 738)">
+      <circle r="23" fill="#050b11" stroke="#425b70" stroke-width="5"/>
+      <circle r="14" fill="url(#gpt_screwFace)" stroke="#8ba0b1" stroke-width="2"/>
+      <path d="M-8 0H8M0-8V8" stroke="#020609" stroke-width="4"/>
+      <path d="M-7-1H7" stroke="#c3d2dd" stroke-width="1.2"/>
+    </g>
+    <g transform="translate(208 271)">
+      <circle r="17" fill="#050b11" stroke="#425b70" stroke-width="4"/>
+      <circle r="10" fill="url(#gpt_screwFace)"/>
+      <path d="M-5-5L5 5M5-5L-5 5" stroke="#020609" stroke-width="3"/>
+    </g>
+    <g transform="translate(1202 271)">
+      <circle r="17" fill="#050b11" stroke="#425b70" stroke-width="4"/>
+      <circle r="10" fill="url(#gpt_screwFace)"/>
+      <path d="M-5-5L5 5M5-5L-5 5" stroke="#020609" stroke-width="3"/>
+    </g>
+    <g transform="translate(231 873)">
+      <circle r="13" fill="#050b11" stroke="#425b70" stroke-width="3"/>
+      <circle r="7" fill="url(#gpt_screwFace)"/>
+      <path d="M-4 0H4" stroke="#020609" stroke-width="2"/>
+    </g>
+    <g transform="translate(1198 873)">
+      <circle r="13" fill="#050b11" stroke="#425b70" stroke-width="3"/>
+      <circle r="7" fill="url(#gpt_screwFace)"/>
+      <path d="M-4 0H4" stroke="#020609" stroke-width="2"/>
+    </g>
+  </g>
+  <!-- ecran <- gpt -->
+  <g id="ecran">
+    <path d="M164 342H1222Q1251 342 1264 367L1277 405V684Q1271 711 1240 719H167Q135 714 127 683V402L141 365Q147 347 164 342Z" fill="url(#gpt_screenFill)" stroke="#2f739f" stroke-width="5"/>
+    <path d="M174 354H1214Q1238 354 1248 376L1258 407V675Q1254 696 1231 702H175Q151 698 145 676V409L155 378Q160 359 174 354Z" fill="url(#gpt_screenBloom)"/>
+    <path d="M174 354H1214Q1238 354 1248 376L1258 407V675Q1254 696 1231 702H175Q151 698 145 676V409L155 378Q160 359 174 354Z" fill="url(#gpt_screenGrid)"/>
+    <path d="M177 382H1221M173 442H1230M173 500H1230M173 559H1230M173 620H1230M173 675H1224" stroke="#2d9ce1" stroke-width="1" opacity="0.18"/>
+    <path d="M187 359H1210M151 403V672M1252 405V674" stroke="#91d8ff" stroke-width="2" opacity="0.3"/>
+    <path d="M179 453H1241M180 656H1239" stroke="#02070d" stroke-width="3" opacity="0.7"/>
+  </g>
+  <!-- graduation <- kimi -->
+  <g id="graduation">
+    <g font-family="Impact, 'Arial Black', sans-serif" font-size="42" fill="#eaf7ff" text-anchor="middle">
+      <text x="225" y="492">0</text>
+      <text x="474" y="492">25</text>
+      <text x="723" y="492">50</text>
+      <text x="972" y="492">75</text>
+      <text x="1184" y="492">100</text>
+    </g>
+    <path d="M225 505 H1185" stroke="#bfe8ff" stroke-width="2.5" opacity="0.9"/>
+    <g stroke="#bfe8ff" stroke-width="2.5" opacity="0.9">
+      <path d="M225 505 V522 M474 505 V522 M723 505 V522 M972 505 V522 M1185 505 V522"/>
+    </g>
+    <g stroke="#7fb8d8" stroke-width="1.5" opacity="0.7">
+      <path d="M275 505 V515 M325 505 V515 M375 505 V515 M425 505 V515"/>
+      <path d="M524 505 V515 M574 505 V515 M624 505 V515 M673 505 V515"/>
+      <path d="M773 505 V515 M823 505 V515 M873 505 V515 M922 505 V515"/>
+      <path d="M1022 505 V515 M1072 505 V515 M1122 505 V515 M1160 505 V515"/>
+    </g>
+  </g>
+  <!-- gauge_track <- kimi -->
+  <g id="gauge_track">
+    <rect x="212" y="538" width="986" height="112" rx="20" fill="#04101c" stroke="#0a2438" stroke-width="3"/>
+    <rect x="212" y="538" width="986" height="112" rx="20" fill="none" stroke="#2fa8e8" stroke-width="3" opacity="0.8"/>
+    <rect x="218" y="544" width="974" height="100" rx="16" fill="none" stroke="#8fe0ff" stroke-width="1.5" opacity="0.5"/>
+  </g>
+  <!-- seg_00..seg_25 <- kimi -->
+  <g id="seg_00"><rect x="232" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35"/><rect x="232" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5"/><rect x="236" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <g id="seg_01"><rect x="270" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35"/><rect x="270" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5"/><rect x="274" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <g id="seg_02"><rect x="308" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35"/><rect x="308" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5"/><rect x="312" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <g id="seg_03"><rect x="346" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35"/><rect x="346" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5"/><rect x="350" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <g id="seg_04"><rect x="384" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35"/><rect x="384" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5"/><rect x="388" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <g id="seg_05"><rect x="422" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35"/><rect x="422" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5"/><rect x="426" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <g id="seg_06"><rect x="460" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35"/><rect x="460" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5"/><rect x="464" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <g id="seg_07"><rect x="498" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35"/><rect x="498" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5"/><rect x="502" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <g id="seg_08"><rect x="536" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35"/><rect x="536" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5"/><rect x="540" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <g id="seg_09"><rect x="574" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35"/><rect x="574" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5"/><rect x="578" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <g id="seg_10"><rect x="612" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35"/><rect x="612" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5"/><rect x="616" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <g id="seg_11"><rect x="650" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35"/><rect x="650" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5"/><rect x="654" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <g id="seg_12"><rect x="688" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35"/><rect x="688" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5"/><rect x="692" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <g id="seg_13"><rect x="726" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35"/><rect x="726" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5"/><rect x="730" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <g id="seg_14"><rect x="764" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35"/><rect x="764" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5"/><rect x="768" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <g id="seg_15"><rect x="802" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35"/><rect x="802" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5"/><rect x="806" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <g id="seg_16"><rect x="840" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35"/><rect x="840" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5"/><rect x="844" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <g id="seg_17"><rect x="878" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35"/><rect x="878" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5"/><rect x="882" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <g id="seg_18"><rect x="916" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35"/><rect x="916" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5"/><rect x="920" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <g id="seg_19"><rect x="954" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35"/><rect x="954" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5"/><rect x="958" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <g id="seg_20"><rect x="992" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35"/><rect x="992" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5"/><rect x="996" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <g id="seg_21"><rect x="1030" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35"/><rect x="1030" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5"/><rect x="1034" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <g id="seg_22"><rect x="1068" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35"/><rect x="1068" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5"/><rect x="1072" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <g id="seg_23"><rect x="1106" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35"/><rect x="1106" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5"/><rect x="1110" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <g id="seg_24"><rect x="1144" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35"/><rect x="1144" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5"/><rect x="1148" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <g id="seg_25"><rect x="1144" y="556" width="26" height="76" rx="4" fill="#2fb8ff" opacity="0.35" transform="translate(38 0)"/><rect x="1182" y="556" width="0" height="76" rx="4" fill="none"/><rect x="1144" y="556" width="26" height="76" rx="4" fill="url(#kimi_segGrad)" stroke="#bfeaff" stroke-width="1.5" transform="translate(38 0)"/><rect x="1186" y="562" width="8" height="64" rx="3" fill="#ffffff" opacity="0.55"/></g>
+  <!-- legende <- kimi -->
+  <g id="legende">
+    <text x="723" y="690" text-anchor="middle" font-family="'Arial Black', Arial, sans-serif" font-size="26" letter-spacing="3" fill="#2fb8ff" opacity="0.4" stroke="#2fb8ff" stroke-width="3">0 = NO CHILL  |  100 = MAX CHILL</text>
+    <text x="723" y="690" text-anchor="middle" font-family="'Arial Black', Arial, sans-serif" font-size="26" letter-spacing="3" fill="#cfeaff">0 = NO CHILL  |  100 = MAX CHILL</text>
+    <g stroke="#2fb8ff" stroke-width="2" opacity="0.5">
+      <path d="M415 683 h55 M430 678 h40"/>
+      <path d="M978 683 h55 M993 678 h40"/>
+    </g>
+  </g>
+  <!-- sous_titre <- fable -->
+  <g id="sous_titre">
+    <use href="#fable_t_sous" fill="#2f8fff" stroke="#2f8fff" stroke-width="8" opacity="0.55" filter="url(#fable_f_blur10)"/>
+    <use href="#fable_t_sous" fill="#4aa0ff" stroke="#4aa0ff" stroke-width="3" opacity="0.85" filter="url(#fable_f_blur4)"/>
+    <use href="#fable_t_sous" fill="#aed6ff" stroke="#5aa8ff" stroke-width="1.4"/>
+    <use href="#fable_t_sous" fill="#ffffff" opacity="0.85"/>
+    <use href="#fable_sym_flocon" transform="translate(250 402)" stroke="#2f8fff" stroke-width="4.5" opacity="0.7" filter="url(#fable_f_blur4)"/>
+    <use href="#fable_sym_flocon" transform="translate(250 402)" stroke="#dceeff" stroke-width="2.2"/>
+    <use href="#fable_sym_flocon" transform="translate(1210 402)" stroke="#2f8fff" stroke-width="4.5" opacity="0.7" filter="url(#fable_f_blur4)"/>
+    <use href="#fable_sym_flocon" transform="translate(1210 402)" stroke="#dceeff" stroke-width="2.2"/>
+  </g>
+  <!-- panneau_power <- gpt -->
+  <g id="panneau_power">
+    <path d="M1281 434H1394V704Q1392 725 1372 733H1301Q1283 727 1281 706Z" fill="#050d15" stroke="#101923" stroke-width="10"/>
+    <path d="M1289 438H1385V699Q1383 714 1368 719H1306Q1292 714 1289 699Z" fill="url(#gpt_metalInset)" stroke="#667d91" stroke-width="3"/>
+    <rect x="1305" y="459" width="66" height="39" rx="5" fill="#06121e" stroke="#405c72" stroke-width="3"/>
+    <text x="1338" y="487" text-anchor="middle" font-family="Impact, Arial Black, sans-serif" font-size="19" letter-spacing="1.5" fill="#8dccff">POWER</text>
+    <path d="M1311 614H1367M1311 626H1367M1311 638H1367M1311 650H1367M1311 662H1367M1311 674H1367" stroke="#02070c" stroke-width="8" stroke-linecap="round"/>
+    <path d="M1311 611H1367M1311 623H1367M1311 635H1367M1311 647H1367M1311 659H1367M1311 671H1367" stroke="#52687a" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="1338" cy="544" r="31" fill="#07100d" stroke="#1c2f29" stroke-width="5"/>
+    <circle cx="1338" cy="544" r="24" fill="#081b10" stroke="#668a72" stroke-width="3"/>
+    <path d="M1297 443V707M1378 443V706" stroke="#a3b5c2" stroke-width="1.5" opacity="0.25"/>
+  </g>
+  <!-- bouton_power <- kimi -->
+  <g id="bouton_power">
+    <circle cx="1337" cy="555" r="52" fill="url(#kimi_greenHalo)"/>
+    <circle cx="1337" cy="555" r="26" fill="url(#kimi_greenBtn)" stroke="#0a4a0a" stroke-width="3"/>
+    <ellipse cx="1329" cy="546" rx="9" ry="6" fill="#ffffff" opacity="0.8"/>
+  </g>
+  <!-- boutons_bas <- kimi -->
+  <g id="boutons_bas">
+    <g font-family="'Arial Black', Arial, sans-serif" font-size="25" letter-spacing="1" text-anchor="middle">
+      <!-- STATUS -->
+      <rect x="172" y="752" width="182" height="82" rx="12" fill="url(#kimi_btnGrad)" stroke="#06090c" stroke-width="3"/>
+      <rect x="178" y="758" width="170" height="70" rx="9" fill="none" stroke="#4a5560" stroke-width="1.5" opacity="0.6"/>
+      <g stroke="#6fd4ff" stroke-width="2.5" stroke-linecap="round" fill="none" transform="translate(210 793)">
+        <path d="M0 -12 V12 M-10 -6 L10 6 M-10 6 L10 -6"/>
+      </g>
+      <text x="272" y="803" fill="#6fd4ff">STATUS</text>
+      <!-- DATA -->
+      <rect x="374" y="752" width="182" height="82" rx="12" fill="url(#kimi_btnGrad)" stroke="#06090c" stroke-width="3"/>
+      <rect x="380" y="758" width="170" height="70" rx="9" fill="none" stroke="#4a5560" stroke-width="1.5" opacity="0.6"/>
+      <g fill="#6fd4ff" transform="translate(412 793)">
+        <rect x="-12" y="-2" width="6" height="14"/>
+        <rect x="-3" y="-10" width="6" height="22"/>
+        <rect x="6" y="-16" width="6" height="28"/>
+      </g>
+      <text x="480" y="803" fill="#6fd4ff">DATA</text>
+      <!-- HUD -->
+      <rect x="576" y="752" width="182" height="82" rx="12" fill="url(#kimi_btnGrad)" stroke="#06090c" stroke-width="3"/>
+      <rect x="582" y="758" width="170" height="70" rx="9" fill="none" stroke="#4a5560" stroke-width="1.5" opacity="0.6"/>
+      <g stroke="#6fd4ff" stroke-width="2.5" fill="none" transform="translate(614 793)">
+        <circle cx="0" cy="0" r="10"/>
+        <path d="M0 -15 V-6 M0 6 V15 M-15 0 H-6 M6 0 H15"/>
+      </g>
+      <text x="680" y="803" fill="#6fd4ff">HUD</text>
+      <!-- CALIBRATE -->
+      <rect x="778" y="752" width="230" height="82" rx="12" fill="url(#kimi_btnGrad)" stroke="#06090c" stroke-width="3"/>
+      <rect x="784" y="758" width="218" height="70" rx="9" fill="none" stroke="#4a5560" stroke-width="1.5" opacity="0.6"/>
+      <g stroke="#6fd4ff" stroke-width="2.5" stroke-linecap="round" fill="none" transform="translate(816 793)">
+        <path d="M0 -12 V12 M-10 -6 L10 6 M-10 6 L10 -6"/>
+      </g>
+      <text x="900" y="803" fill="#6fd4ff">CALIBRATE</text>
+      <!-- ABOUT -->
+      <rect x="1028" y="752" width="190" height="82" rx="12" fill="url(#kimi_btnGrad)" stroke="#06090c" stroke-width="3"/>
+      <rect x="1034" y="758" width="178" height="70" rx="9" fill="none" stroke="#4a5560" stroke-width="1.5" opacity="0.6"/>
+      <g stroke="#6fd4ff" stroke-width="2.5" fill="none" transform="translate(1066 793)">
+        <circle cx="0" cy="0" r="11"/>
+        <path d="M0 -4 V5 M0 -8 V-7" stroke-linecap="round"/>
+      </g>
+      <text x="1150" y="803" fill="#6fd4ff">ABOUT</text>
+    </g>
+  </g>
+  <!-- plaque_titre <- gpt -->
+  <g id="plaque_titre">
+    <path d="M338 153H1107Q1134 153 1149 178L1165 221Q1174 249 1151 278L1125 297H324L294 276Q280 264 287 230L296 190Q303 161 338 153Z" fill="#020912" opacity="0.7" filter="url(#gpt_shadow)"/>
+    <path d="M337 157H1108Q1134 157 1146 182L1160 224Q1167 249 1149 270L1124 289H325L300 271Q287 256 294 228L302 191Q309 165 337 157Z" fill="url(#gpt_titlePlate)" stroke="#718da5" stroke-width="5"/>
+    <path d="M347 172H1096Q1117 172 1127 192L1138 227Q1143 244 1130 258L1114 271H336L318 257Q309 246 314 227L321 195Q325 176 347 172Z" fill="#061523" stroke="#194972" stroke-width="5"/>
+    <path d="M347 177H1094Q1110 177 1118 193L1128 226Q1132 239 1122 249L1108 260H342L329 249Q322 239 326 225L333 197Q336 181 347 177Z" fill="url(#gpt_screenBloom)"/>
+    <path d="M325 198H1129M335 267H1117" stroke="#9dc6e6" stroke-width="2" opacity="0.35"/>
+    <path d="M344.0 218V158.0M344.0 218L318.0 203M344.0 218L370.0 203M344.0 218V218.0M344.0 218L318.0 233M344.0 218L370.0 233M332.0 194L344.0 202L356.0 194M332.0 242L344.0 234L356.0 242M318.0 215L330.0 218L324.0 228M370.0 215L358.0 218L364.0 228M318.0 221L330.0 218L324.0 208M370.0 221L358.0 218L364.0 208" stroke="#c9efff" stroke-width="3" stroke-linecap="round" filter="url(#gpt_softBlueGlow)"/>
+    <path d="M1119.0 218V224.0M1119.0 218L1093.0 203M1119.0 218L1145.0 203M1119.0 218V284.0M1119.0 218L1093.0 233M1119.0 218L1145.0 233M1107.0 194L1119.0 202L1131.0 194M1107.0 242L1119.0 234L1131.0 242M1093.0 215L1105.0 218L1099.0 228M1145.0 215L1133.0 218L1139.0 228M1093.0 221L1105.0 218L1099.0 208M1145.0 221L1133.0 218L1139.0 208" stroke="#c9efff" stroke-width="3" stroke-linecap="round" filter="url(#gpt_softBlueGlow)"/>
+  </g>
+  <!-- titre_texte <- fable -->
+  <g id="titre_texte">
+    <use href="#fable_t_titre" fill="#2277ff" stroke="#2277ff" stroke-width="14" opacity="0.5" filter="url(#fable_f_blur18)"/>
+    <use href="#fable_t_titre" fill="#3f97ff" stroke="#3f97ff" stroke-width="6" opacity="0.85" filter="url(#fable_f_blur6)"/>
+    <use href="#fable_t_titre" fill="#9ccdff" stroke="#5aa8ff" stroke-width="2"/>
+    <use href="#fable_t_titre" fill="#ffffff" opacity="0.92"/>
+  </g>
+  <!-- frost_layer <- fable -->
+  <g id="frost_layer" opacity="0">
+    <g filter="url(#fable_f_frost)">
+      <path d="M 302 178 Q 316 150 334 164 Q 350 142 372 158 Q 392 138 414 156 Q 440 144 462 160 Q 492 146 520 162 Q 556 148 590 164 Q 630 150 668 166 Q 710 152 748 166 Q 792 150 830 164 Q 872 148 908 162 Q 946 146 982 160 Q 1016 144 1048 158 Q 1080 140 1108 156 Q 1132 144 1156 166 L 1158 192 L 302 192 Z" fill="url(#fable_g_frost)"/>
+      <path d="M 60 310 Q 84 288 112 300 Q 140 282 172 296 Q 204 280 238 294 Q 268 282 296 296 L 298 318 L 60 330 Z" fill="url(#fable_g_frost)"/>
+      <path d="M 1160 296 Q 1192 280 1224 292 Q 1256 278 1288 292 Q 1322 280 1352 296 Q 1378 286 1396 306 L 1396 330 L 1160 318 Z" fill="url(#fable_g_frost)"/>
+      <path d="M 58 330 Q 76 356 64 386 Q 82 414 66 444 Q 84 470 68 500 Q 86 528 70 558 Q 88 586 72 616 Q 90 644 74 674 Q 90 700 76 726 L 58 728 Z" fill="url(#fable_g_frost)"/>
+      <path d="M 1396 340 Q 1380 368 1392 398 Q 1376 426 1390 456 Q 1374 484 1388 514 Q 1372 542 1388 572 Q 1374 600 1390 630 Q 1376 658 1392 688 L 1398 690 L 1398 340 Z" fill="url(#fable_g_frost)"/>
+      <path d="M 70 820 Q 100 846 136 834 Q 172 856 212 842 Q 256 862 300 848 Q 348 866 396 852 Q 448 868 500 854 Q 556 870 612 856 Q 668 872 724 858 Q 780 872 836 858 Q 892 872 948 858 Q 1004 870 1060 856 Q 1116 868 1172 854 Q 1228 866 1284 850 Q 1336 862 1386 838 L 1392 812 L 70 800 Z" fill="url(#fable_g_frost)"/>
+      <path d="M 88 312 Q 108 300 126 314 Q 138 330 124 344 Q 106 354 92 342 Q 80 326 88 312 Z" fill="#eef8ff" opacity="0.85"/>
+      <path d="M 88 722 Q 108 710 126 724 Q 138 740 124 754 Q 106 764 92 752 Q 80 736 88 722 Z" fill="#eef8ff" opacity="0.8"/>
+      <path d="M 1328 314 Q 1348 302 1366 316 Q 1378 332 1364 346 Q 1346 356 1332 344 Q 1320 328 1328 314 Z" fill="#eef8ff" opacity="0.8"/>
+      <path d="M 1328 724 Q 1348 712 1366 726 Q 1378 742 1364 756 Q 1346 766 1332 754 Q 1320 738 1328 724 Z" fill="#eef8ff" opacity="0.8"/>
+      <path d="M 44 428 Q 66 414 92 426 Q 100 448 88 462 Q 66 472 48 460 Q 38 444 44 428 Z" fill="url(#fable_g_frost)"/>
+      <path d="M 42 540 Q 64 528 92 538 Q 102 558 90 572 Q 66 582 48 570 Q 36 554 42 540 Z" fill="url(#fable_g_frost)"/>
+      <path d="M 1160 232 Q 1190 222 1220 232 Q 1252 224 1280 234 Q 1310 226 1340 236 Q 1360 230 1372 244 L 1370 258 L 1160 250 Z" fill="url(#fable_g_frost)"/>
+      <path d="M 300 168 Q 310 186 300 204 Q 312 224 302 244 Q 314 262 304 282 L 298 284 L 298 168 Z" fill="url(#fable_g_frost)"/>
+      <path d="M 1160 168 Q 1150 186 1160 204 Q 1148 224 1158 244 Q 1146 262 1158 282 L 1162 284 L 1162 168 Z" fill="url(#fable_g_frost)"/>
+    </g>
+    <g fill="#ffffff">
+      <circle cx="180" cy="296" r="2.2" opacity="0.9"/>
+      <circle cx="340" cy="160" r="1.8" opacity="0.85"/>
+      <circle cx="520" cy="156" r="2.4" opacity="0.9"/>
+      <circle cx="870" cy="154" r="1.7" opacity="0.8"/>
+      <circle cx="1100" cy="152" r="2.2" opacity="0.9"/>
+      <circle cx="1300" cy="290" r="1.8" opacity="0.85"/>
+      <circle cx="66" cy="470" r="2" opacity="0.85"/>
+      <circle cx="1392" cy="520" r="2" opacity="0.8"/>
+      <circle cx="250" cy="850" r="2.4" opacity="0.9"/>
+      <circle cx="640" cy="860" r="1.8" opacity="0.85"/>
+      <circle cx="980" cy="858" r="2.2" opacity="0.9"/>
+      <circle cx="1240" cy="852" r="1.8" opacity="0.8"/>
+    </g>
+  </g>
+  <!-- icicles <- gpt -->
+  <g id="icicles" opacity="0">
+    <g id="icicle_00" transform="translate(121 254)">
+      <path d="M-7 0Q0 5 7 0L3 35L0 50L-3 35Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+      <path d="M0 5V39" stroke="#fff" stroke-width="1.5" opacity="0.7"/>
+    </g>
+    <g id="icicle_01" transform="translate(164 254)">
+      <path d="M-8 0Q0 6 8 0L4 54L0 75L-4 54Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+      <path d="M0 6V60" stroke="#fff" stroke-width="1.5" opacity="0.7"/>
+    </g>
+    <g id="icicle_02" transform="translate(204 254)">
+      <path d="M-6 0Q0 5 6 0L3 27L0 39L-3 27Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_03" transform="translate(331 178)">
+      <path d="M-6 0Q0 5 6 0L3 32L0 47L-3 32Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_04" transform="translate(371 177)">
+      <path d="M-7 0Q0 5 7 0L3 43L0 63L-3 43Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+      <path d="M0 5V50" stroke="#fff" stroke-width="1.3" opacity="0.7"/>
+    </g>
+    <g id="icicle_05" transform="translate(420 177)">
+      <path d="M-5 0Q0 4 5 0L2 23L0 35L-2 23Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_06" transform="translate(487 177)">
+      <path d="M-6 0Q0 5 6 0L3 34L0 50L-3 34Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_07" transform="translate(569 177)">
+      <path d="M-5 0Q0 4 5 0L2 25L0 39L-2 25Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_08" transform="translate(675 177)">
+      <path d="M-7 0Q0 5 7 0L3 47L0 70L-3 47Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+      <path d="M0 5V56" stroke="#fff" stroke-width="1.3" opacity="0.7"/>
+    </g>
+    <g id="icicle_09" transform="translate(784 177)">
+      <path d="M-5 0Q0 4 5 0L2 29L0 43L-2 29Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_10" transform="translate(902 177)">
+      <path d="M-6 0Q0 5 6 0L3 38L0 57L-3 38Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_11" transform="translate(1004 177)">
+      <path d="M-5 0Q0 4 5 0L2 27L0 41L-2 27Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_12" transform="translate(1083 177)">
+      <path d="M-7 0Q0 5 7 0L3 44L0 66L-3 44Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_13" transform="translate(337 282)">
+      <path d="M-6 0Q0 5 6 0L3 37L0 57L-3 37Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_14" transform="translate(386 282)">
+      <path d="M-5 0Q0 4 5 0L2 57L0 84L-2 57Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+      <path d="M0 5V66" stroke="#fff" stroke-width="1.3" opacity="0.7"/>
+    </g>
+    <g id="icicle_15" transform="translate(516 282)">
+      <path d="M-5 0Q0 4 5 0L2 28L0 42L-2 28Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_16" transform="translate(676 282)">
+      <path d="M-6 0Q0 5 6 0L3 39L0 59L-3 39Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_17" transform="translate(775 282)">
+      <path d="M-7 0Q0 5 7 0L3 47L0 71L-3 47Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+      <path d="M0 5V57" stroke="#fff" stroke-width="1.3" opacity="0.7"/>
+    </g>
+    <g id="icicle_18" transform="translate(986 282)">
+      <path d="M-5 0Q0 4 5 0L2 30L0 45L-2 30Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_19" transform="translate(1156 313)">
+      <path d="M-6 0Q0 5 6 0L3 47L0 69L-3 47Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_20" transform="translate(1214 316)">
+      <path d="M-7 0Q0 5 7 0L3 68L0 100L-3 68Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+      <path d="M0 5V80" stroke="#fff" stroke-width="1.3" opacity="0.7"/>
+    </g>
+    <g id="icicle_21" transform="translate(1361 314)">
+      <path d="M-6 0Q0 5 6 0L3 40L0 61L-3 40Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_22" transform="translate(116 703)">
+      <path d="M-7 0Q0 5 7 0L3 48L0 73L-3 48Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_23" transform="translate(181 703)">
+      <path d="M-6 0Q0 5 6 0L3 31L0 47L-3 31Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_24" transform="translate(318 703)">
+      <path d="M-5 0Q0 4 5 0L2 55L0 82L-2 55Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+      <path d="M0 5V65" stroke="#fff" stroke-width="1.3" opacity="0.7"/>
+    </g>
+    <g id="icicle_25" transform="translate(561 703)">
+      <path d="M-6 0Q0 5 6 0L3 37L0 55L-3 37Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_26" transform="translate(807 703)">
+      <path d="M-6 0Q0 5 6 0L3 53L0 80L-3 53Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_27" transform="translate(1009 703)">
+      <path d="M-5 0Q0 4 5 0L2 36L0 54L-2 36Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_28" transform="translate(1246 703)">
+      <path d="M-7 0Q0 5 7 0L3 66L0 99L-3 66Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+      <path d="M0 5V79" stroke="#fff" stroke-width="1.3" opacity="0.7"/>
+    </g>
+    <g id="icicle_29" transform="translate(143 832)">
+      <path d="M-7 0Q0 5 7 0L3 50L0 75L-3 50Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_30" transform="translate(205 834)">
+      <path d="M-6 0Q0 5 6 0L3 73L0 109L-3 73Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+      <path d="M0 5V87" stroke="#fff" stroke-width="1.3" opacity="0.7"/>
+    </g>
+    <g id="icicle_31" transform="translate(277 834)">
+      <path d="M-5 0Q0 4 5 0L2 35L0 53L-2 35Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_32" transform="translate(391 835)">
+      <path d="M-7 0Q0 5 7 0L3 58L0 87L-3 58Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_33" transform="translate(545 835)">
+      <path d="M-6 0Q0 5 6 0L3 76L0 114L-3 76Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+      <path d="M0 5V91" stroke="#fff" stroke-width="1.3" opacity="0.7"/>
+    </g>
+    <g id="icicle_34" transform="translate(683 835)">
+      <path d="M-5 0Q0 4 5 0L2 42L0 63L-2 42Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_35" transform="translate(824 835)">
+      <path d="M-6 0Q0 5 6 0L3 58L0 87L-3 58Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_36" transform="translate(971 835)">
+      <path d="M-6 0Q0 5 6 0L3 38L0 57L-3 38Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_37" transform="translate(1102 835)">
+      <path d="M-7 0Q0 5 7 0L3 69L0 104L-3 69Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+      <path d="M0 5V83" stroke="#fff" stroke-width="1.3" opacity="0.7"/>
+    </g>
+    <g id="icicle_38" transform="translate(1182 835)">
+      <path d="M-5 0Q0 4 5 0L2 49L0 74L-2 49Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+    <g id="icicle_39" transform="translate(1272 829)">
+      <path d="M-7 0Q0 5 7 0L3 82L0 123L-3 82Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+      <path d="M0 5V98" stroke="#fff" stroke-width="1.3" opacity="0.7"/>
+    </g>
+    <g id="icicle_40" transform="translate(1342 792)">
+      <path d="M-6 0Q0 5 6 0L3 52L0 78L-3 52Z" fill="url(#gpt_icicleFill)" stroke="#bdeaff" stroke-width="1.5"/>
+    </g>
+  </g>
+</svg>
