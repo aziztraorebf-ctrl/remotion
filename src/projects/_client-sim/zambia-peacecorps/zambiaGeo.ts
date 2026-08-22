@@ -37,6 +37,16 @@ export type ProvincePath = {
   rings: [number, number][][];
   /** boite englobante projetee [minX, minY, maxX, maxY] */
   bbox: [number, number, number, number];
+  /**
+   * Anneaux en coordonnees GEOGRAPHIQUES (lon/lat), non projetes.
+   * ⚠️ `rings` ci-dessus est deja projete par le fitExtent de ce module, donc valable
+   * UNIQUEMENT pour une vue fixe. Une scene dont la camera bouge (globe qui descend) doit
+   * reprojeter chaque frame : c'est ce champ-la qu'elle consomme, jamais `rings`.
+   */
+  ringsLonLat: [number, number][][];
+  /** centroide en lon/lat, pour ancrer un marqueur sous une projection quelconque */
+  centroidLon: number;
+  centroidLat: number;
 };
 
 export type ZambiaGeo = {
@@ -44,6 +54,16 @@ export type ZambiaGeo = {
   outlineD: string;
   /** UNIQUEMENT les 7 provinces du brief, dans l'ordre narratif (Luapula en premier) */
   briefProvinces: ProvincePath[];
+  /**
+   * Les 3 provinces HORS brief (Central, Copperbelt, Muchinga), en lon/lat uniquement.
+   *
+   * ⛔ Elles ne doivent JAMAIS etre mises en avant (allumees, etiquetees, remplies d'accent).
+   * Mais les omettre completement laisse un TROU au milieu du pays sous une camera mobile —
+   * defaut constate au 1er rendu du concept A, ou la Zambie apparaissait trouee en son centre.
+   * On les dessine donc en fond neutre, au meme niveau que les pays voisins : presentes comme
+   * territoire, absentes comme sujet. C'est ce que demande le brief client, lu correctement.
+   */
+  horsBriefRings: [number, number][][][];
   project: (c: [number, number]) => [number, number];
 };
 
@@ -105,11 +125,26 @@ export function getZambiaGeo(FC: ZambiaFeatureCollection): ZambiaGeo {
         briefOrder: f.properties.briefOrder ?? 0,
         rings,
         bbox: [minX, minY, maxX, maxY] as [number, number, number, number],
+        ringsLonLat: raw.map((ring) => ring.map((c) => [c[0], c[1]] as [number, number])),
+        centroidLon: f.properties.centroidLon,
+        centroidLat: f.properties.centroidLat,
       };
+    });
+
+  // Anneaux lon/lat des 3 provinces hors brief : dessinees en fond neutre uniquement.
+  const horsBriefRings: [number, number][][][] = FC.features
+    .filter((f) => !f.properties.inBrief)
+    .map((f) => {
+      const raw =
+        f.geometry.type === "Polygon"
+          ? [(f.geometry.coordinates as number[][][])[0]]
+          : (f.geometry.coordinates as number[][][][]).map((poly) => poly[0]);
+      return raw.map((ring) => ring.map((c) => [c[0], c[1]] as [number, number]));
     });
 
   return {
     outlineD,
+    horsBriefRings,
     briefProvinces,
     project: (c) => {
       const p = projection(c);
@@ -144,6 +179,44 @@ export const REPARTITION: Record<number, Record<string, number>> = {
     Lusaka: 20,
   },
 };
+
+/**
+ * Province d'origine : le brief client la designe comme le point de depart de 1995.
+ * Les deux traitements en dependent (arcs du concept A, 1er marqueur du concept B).
+ */
+export const ORIGINE = "Luapula";
+
+/**
+ * Ordre d'allumage des 6 provinces de destination.
+ *
+ * Les deux breakdowns (Gemini et Grok, independamment) demandent un stagger plutot qu'une
+ * apparition simultanee — l'oeil doit lire chaque arrivee. Gemini le veut ordonne par
+ * DISTANCE a l'origine ; c'est calcule ici, pas devine, pour que l'ordre reste juste si
+ * la projection ou le cadrage change.
+ */
+export function ordreDepuisOrigine(geo: ZambiaGeo): ProvincePath[] {
+  const origine = geo.briefProvinces.find((p) => p.name === ORIGINE);
+  const cibles = geo.briefProvinces.filter((p) => p.name !== ORIGINE);
+  if (!origine) return cibles;
+  return [...cibles].sort((a, b) => {
+    const da = Math.hypot(a.cx - origine.cx, a.cy - origine.cy);
+    const db = Math.hypot(b.cx - origine.cx, b.cy - origine.cy);
+    return da - db;
+  });
+}
+
+/**
+ * Total de volontaires a un instant donne de la sequence.
+ *
+ * ⛔ Toute valeur intermediaire est une INTERPOLATION, jamais une donnee client. Grok l'a
+ * explicitement releve dans son breakdown en interdisant le "150" qu'il avait lui-meme
+ * dessine sur sa planche. On n'affiche donc que le resultat d'une interpolation continue
+ * entre les deux seuls jalons reels (40 en 1995, ~220 en 2005).
+ */
+export function volontairesA(t: number): number {
+  const clamped = Math.max(0, Math.min(1, t));
+  return Math.round(JALONS[0].volontaires + (JALONS[1].volontaires - JALONS[0].volontaires) * clamped);
+}
 
 /** Test point-dans-polygone (ray casting) sur les anneaux projetes. */
 function dansProvince(x: number, y: number, rings: [number, number][][]): boolean {

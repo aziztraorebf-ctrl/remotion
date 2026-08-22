@@ -5,6 +5,17 @@ const CATS = {tous:'Tous', reperage:'Repérage', approche:'Approche',
               revelation:'Révélation', transition:'Transition', accent:'Accent'};
 let cards = [], filtre = 'tous', q = '', favOnly = false;
 
+// Favoris : marques d'un doigt et memorises dans CE navigateur (instantane),
+// puis exportables pour etre graves dans le depot via FAVORIS (partages, donc
+// lisibles par Claude). Un favori partage reste marque meme sur un autre appareil.
+const FKEY = 'galerie-camera-favoris';
+let favLocaux = new Set(JSON.parse(localStorage.getItem(FKEY) || '[]'));
+const estFav = c => favLocaux.has(c.slug) || c.fav;
+function basculerFav(slug){
+  favLocaux.has(slug) ? favLocaux.delete(slug) : favLocaux.add(slug);
+  localStorage.setItem(FKEY, JSON.stringify([...favLocaux]));
+}
+
 fetch('data.json').then(r => r.json()).then(d => {
   cards = d; initUI(); rendre();
   document.getElementById('sub').textContent = `${d.length} gestes disponibles`;
@@ -37,8 +48,7 @@ function initUI(){
   const nav = document.getElementById('filters');
   nav.innerHTML = dispo.map(c =>
     `<button data-c="${c}" aria-pressed="${c === filtre}">${CATS[c]}</button>`).join('')
-    + (cards.some(c => c.fav)
-        ? `<button data-fav="1" aria-pressed="false" class="fav-filter">&#9733; Favoris</button>` : '');
+    + `<button data-fav="1" aria-pressed="false" class="fav-filter">&#9733; Favoris</button>`;
   nav.onclick = e => {
     const b = e.target.closest('button'); if (!b) return;
     if (b.dataset.fav){ favOnly = !favOnly; b.setAttribute('aria-pressed', favOnly); }
@@ -58,11 +68,15 @@ function rendre(){
   const brut = norm(q).split(/\s+/).filter(Boolean);
   const terms = brut.filter(t => !STOP.has(t) && t.length > 1);
 
-  let list = cards.filter(c => (filtre === 'tous' || c.cat === filtre) && (!favOnly || c.fav));
+  let list = cards.filter(c => (filtre === 'tous' || c.cat === filtre) && (!favOnly || estFav(c)));
   if (terms.length){
     list = list.map(c => ({c, n: score(c, terms)})).filter(x => x.n > 0)
                .sort((a, b) => b.n - a.n).map(x => x.c);
   }
+
+  const bar = document.getElementById('favBar');
+  bar.hidden = favLocaux.size === 0;
+  if (favLocaux.size) document.getElementById('favN').textContent = favLocaux.size;
 
   document.getElementById('qClear').hidden = !q;
   document.getElementById('count').textContent =
@@ -77,7 +91,9 @@ function rendre(){
             <path d="M8 5v14l11-7z" fill="currentColor"/></svg>
         </button>
         <span class="badge">${CATS[c.cat]}</span>
-        ${c.fav ? '<span class="star" title="Favori">&#9733;</span>' : ''}
+        <button class="star" data-fav-toggle="${c.slug}" aria-pressed="${estFav(c)}"
+                title="${c.fav ? 'Favori partage' : 'Marquer comme favori'}"
+                aria-label="Favori : ${esc(c.titre)}">${estFav(c) ? '&#9733;' : '&#9734;'}</button>
       </div>
       <div class="body">
         <div class="titre">${esc(c.titre)}</div>
@@ -114,6 +130,21 @@ document.addEventListener('click', e => {
     navigator.clipboard.writeText(t).then(() => toast(`Copié : ${t}`)).catch(() => toast('Copie impossible'));
     return;
   }
+  const st = e.target.closest('[data-fav-toggle]');
+  if (st){ basculerFav(st.dataset.favToggle); rendre(); return; }
+
+  const ex = e.target.closest('#favExport');
+  if (ex){
+    const liste = [...favLocaux].sort();
+    const txt = liste.length
+      ? `FAVORIS = {${liste.map(s2 => `"${s2}"`).join(', ')}}`
+      : 'FAVORIS = set()';
+    navigator.clipboard.writeText(txt)
+      .then(() => toast(`${liste.length} favori(s) copie(s) — colle-les dans le chat`))
+      .catch(() => toast('Copie impossible'));
+    return;
+  }
+
   const pl = e.target.closest('.play');
   if (pl) lire(pl.closest('.preview'));
 });

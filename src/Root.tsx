@@ -1,4 +1,6 @@
 import { Composition, Folder, staticFile as staticFileRoot, useCurrentFrame } from "remotion";
+import { ZambiaConceptB, ZAMBIA_CONCEPT_B_FRAMES } from "./projects/_client-sim/zambia-peacecorps/ZambiaConceptB";
+import { ZambiaConceptA, ZAMBIA_CONCEPT_A_FRAMES } from "./projects/_client-sim/zambia-peacecorps/ZambiaConceptA";
 import { ZambiaTraitementA, ZAMBIA_A_FRAMES } from "./projects/_client-sim/zambia-peacecorps/ZambiaTraitementA";
 import { ZambiaTraitementB, ZAMBIA_B_FRAMES } from "./projects/_client-sim/zambia-peacecorps/ZambiaTraitementB";
 import { B1Hook, B1_HOOK_FRAMES, B1_HOOK_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B1Hook";
@@ -4946,6 +4948,8 @@ export const RemotionRoot: React.FC = () => {
       {/* Gabarit de choix client — Zambie / Peace Corps (brief Upwork 2026-08-21) */}
       <Composition id="Zambia-TraitementA-Souverain" component={ZambiaTraitementA} durationInFrames={ZAMBIA_A_FRAMES} fps={30} width={1920} height={1080} />
       <Composition id="Zambia-TraitementB-DocClair" component={ZambiaTraitementB} durationInFrames={ZAMBIA_B_FRAMES} fps={30} width={1920} height={1080} />
+      <Composition id="Zambia-ConceptA-Globe" component={ZambiaConceptA} durationInFrames={ZAMBIA_CONCEPT_A_FRAMES} fps={30} width={1920} height={1080} />
+      <Composition id="Zambia-ConceptB-Continent" component={ZambiaConceptB} durationInFrames={ZAMBIA_CONCEPT_B_FRAMES} fps={30} width={1920} height={1080} />
     </>
   );
 };

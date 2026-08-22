@@ -1,0 +1,96 @@
+STORYBOARD REQUEST — 2 concepts on one board.
+
+## THE FILM (real client brief, paid work)
+
+A cinematic map animation about the Peace Corps volunteer presence in Zambia.
+We are producing a 5 to 10 second excerpt of it as a sample.
+
+What the excerpt must cover: the state of the volunteer presence in Zambia changes from
+its 1995 state to its 2005 state. In 1995 it exists in one province only (Luapula, in the
+north), about 40 volunteers. By 2005 it exists in seven provinces, about 220 volunteers.
+
+The client's own words for the style they want: "premium documentary, Netflix / National
+Geographic, clean and uncluttered, smooth camera moves, no flashy infographic effects."
+
+## HARD FACTS — not negotiable, not stylistic choices
+
+- Zambia has 10 provinces. The client names seven and explicitly forbids showing any other
+  as active: Luapula, North-Western, Eastern, Western, Northern, Southern, Lusaka.
+  The other three (Central, Copperbelt, Muchinga) may exist as part of the national outline
+  but must never be highlighted, labelled, or filled.
+- Real geography only. Real province borders, real positions. No approximation.
+- The excerpt covers 1995 -> 2005 only. Not the full timeline.
+- Everything is rendered as deterministic code. Nothing is filmed, nothing is AI-generated
+  footage. Numbers shown must be the real ones above.
+
+## THE OPEN QUESTION WE WANT YOUR ANSWER ON
+
+How much of the world should the viewer see?
+
+Zambia can be shown alone, filling the frame. It can also be shown as part of the African
+continent, with the whole landmass visible and the action happening on it. It can start at
+one scale and end at another. Nothing forces the frame to stay where it starts, and nothing
+forces it to move either.
+
+Your two concepts must answer this question DIFFERENTLY. One should commit to a scale of
+view, the other should commit to a different one. We want to see the trade-off, not a
+compromise between the two.
+
+## YOUR TASK
+
+Propose TWO DISTINCT concepts for this excerpt. Beyond the scale question above, they must
+also differ in HOW they communicate the change in volunteer presence — not merely in color
+or framing of the same idea.
+
+For each concept:
+- Draw it as a row of 4 panels, left to right, in time order.
+- Name the single gesture of each panel in a few words. If a panel needs three gestures to
+  work, it is too expensive — simplify it.
+- Put only a timecode on each panel (e.g. "0.0s", "3.5s"). No paragraphs inside the image.
+- Draw a colored border around the row of the concept you defend, and no border on the
+  other. Do not write out your reasoning — the border is your answer.
+
+Two rows total, one concept per row, 4 panels each.
+
+## WHAT WE CAN ACTUALLY BUILD
+
+This is an inventory of proven capability, so that you do not limit yourself to what you
+assume a map animation can do. It is NOT a checklist and NOT a menu to pick from. If the
+strongest idea uses none of it, or combines it in a way we have not tried, propose that —
+we would rather be surprised than served our own catalogue back.
+
+Two rendering treatments are both fully available, and which one fits this film is for you
+to judge:
+- a geographically accurate 3D map treatment (terrain, relief, hydrography, camera altitude
+  and pitch, continuous camera movement between scales, including from a whole-continent
+  view down to a single province) — see reference image A, a real frame from one of our films;
+- a precise calculated-geometry treatment (exact projections, globe, data-driven shapes,
+  charts, networks) — cleaner and more editorial, less photographic.
+
+On-map and on-screen devices we have already built and shipped: geo-anchored markers that
+scale with camera altitude (reference image B shows one of ours in place); annotations
+connected to a map point; surface treatments filling a region; province states that change
+over time; framing devices that isolate an insert; non-map sequences; animated counters and
+editorial text.
+
+Non-map moments are allowed. Changing scale, cutting away from the map and returning to it
+are legitimate tools here, not failures of the map.
+
+## MATERIAL LIMITS — what would make a concept unbuildable
+
+- No photorealistic humans, no live-action footage of people, no faces.
+- No hand-drawn, watercolor, or painterly rendering.
+- Terrain relief is real elevation data. It can be emphasised, but a flat plateau cannot be
+  turned into a mountain range — the client would see the lie.
+- Every element must sit at a real geographic coordinate, or be a deliberate full-screen
+  departure. Nothing floats at an arbitrary screen position over a map.
+- Text must be minimal. This is 5 to 10 seconds.
+
+## LAYOUT
+
+Exactly 4 panels per row, 2 rows. Leave a clear empty margin of at least 5% on ALL FOUR
+sides — nothing may touch or be cut off by the edge. Panels must be large enough that the
+gesture in each is readable at a glance.
+
+DELIVERABLE — GENERATE AN IMAGE (not a text description). Do not reply with prose.
+Output the image now.

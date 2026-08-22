@@ -1,0 +1,44 @@
+You drew this storyboard board. It has two concepts, one per row, four panels each.
+
+The director has now ARBITRATED. He is not asking for a new concept — the concept is
+chosen. He wants to build ONE sequence by combining parts of your own two rows:
+
+- The OPENING comes from your CONCEPT 1, panels 1 and 2 (the globe with Africa visible,
+  the camera beginning its descent toward southern Africa).
+- The BODY comes from your CONCEPT 1, panels 3 and 4 (the Zambia view with the provinces).
+- Into that body, bring the DIRECTIONAL ARCS you drew in your CONCEPT 2, panels 3 and 4.
+  Their meaning is fixed: they show the presence SPREADING OUT FROM Luapula, the single
+  1995 province, toward the six other provinces. One origin, several destinations.
+  They are not a mesh between all provinces.
+
+Describe this combined sequence panel by panel, as a build specification for the engineer
+who will code it. Total duration 5 to 10 seconds.
+
+For EACH panel, state:
+1. TIMECODE — start and end, in seconds.
+2. CAMERA — where it is and what it does. Be specific about scale: what fraction of the
+   frame does Africa occupy? does the camera move during the panel, or hold? If it moves,
+   from what to what. Note: the camera must never come to a full stop between panels — it
+   is one continuous move, not a series of positions.
+3. WHAT IS ON SCREEN — every element, and where it sits geographically.
+4. THE SINGLE GESTURE — what changes during this panel, in one sentence.
+5. WHAT MUST NOT APPEAR — anything that would break the shot.
+
+Then, separately:
+- THE TRANSITION between the globe and the Zambia view: what exactly happens? Is it a
+  continuous camera descent, a cut, a dissolve? You drew it — say which, and say how long
+  it takes.
+- THE ARCS: how many, drawn in what order, over how long, and what they look like when
+  they finish. Do they stay on screen or fade?
+
+Hard constraints you must respect:
+- Only these seven provinces may ever be shown as active: Luapula, North-Western, Eastern,
+  Western, Northern, Southern, Lusaka. Central, Copperbelt and Muchinga must never be
+  highlighted or labelled.
+- 1995 = 40 volunteers in Luapula only. 2005 = about 220 across the seven. Do not invent
+  intermediate figures — if you want a count shown mid-sequence, say it must be interpolated.
+- Real geography. The engineer uses real province polygons.
+- Everything is deterministic code, rendered frame by frame. No filmed footage.
+
+Answer in plain structured text. Be concrete and quantitative — the engineer will type
+what you write. Where you are unsure, say so rather than inventing a precise value.
