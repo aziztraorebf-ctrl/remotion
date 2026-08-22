@@ -285,3 +285,63 @@ export function semisDansProvince(
   }
   return points;
 }
+
+/**
+ * Semis DETERMINISTE en coordonnees GEOGRAPHIQUES (lon/lat).
+ *
+ * ⚠️ `semisDansProvince` ci-dessus tire dans la bbox ECRAN, donc valable pour une vue FIXE
+ * seulement : sous une camera mobile les points glisseraient sur le territoire. Ici on tire
+ * en lon/lat une fois pour toutes, et la scene reprojette chaque frame — les points restent
+ * cloues au sol. Meme generateur congruentiel : meme entree, meme sortie a chaque render.
+ */
+export function semisGeo(
+  prov: ProvincePath,
+  n: number
+): [number, number][] {
+  let seed = 0;
+  for (let i = 0; i < prov.name.length; i++) {
+    seed = (seed * 31 + prov.name.charCodeAt(i)) % 2147483647;
+  }
+  const rand = () => {
+    seed = (seed * 1103515245 + 12345) % 2147483648;
+    return seed / 2147483648;
+  };
+
+  let minLon = Infinity, minLat = Infinity, maxLon = -Infinity, maxLat = -Infinity;
+  for (const ring of prov.ringsLonLat) {
+    for (const [lo, la] of ring) {
+      if (lo < minLon) minLon = lo;
+      if (la < minLat) minLat = la;
+      if (lo > maxLon) maxLon = lo;
+      if (la > maxLat) maxLat = la;
+    }
+  }
+
+  const dedans = (lo: number, la: number): boolean => {
+    let inside = false;
+    for (const ring of prov.ringsLonLat) {
+      for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+        const [xi, yi] = ring[i];
+        const [xj, yj] = ring[j];
+        if (yi > la !== yj > la && lo < ((xj - xi) * (la - yi)) / (yj - yi) + xi) inside = !inside;
+      }
+    }
+    return inside;
+  };
+
+  const out: [number, number][] = [];
+  let essais = 0;
+  const MAX = n * 400;
+  // marge en degres : le point ne colle pas la frontiere, l'oeil le lit comme "dedans"
+  const marge = 0.12;
+  while (out.length < n && essais < MAX) {
+    essais++;
+    const lo = minLon + rand() * (maxLon - minLon);
+    const la = minLat + rand() * (maxLat - minLat);
+    if (!dedans(lo, la)) continue;
+    if (!dedans(lo - marge, la) || !dedans(lo + marge, la)) continue;
+    if (!dedans(lo, la - marge) || !dedans(lo, la + marge)) continue;
+    out.push([lo, la]);
+  }
+  return out;
+}

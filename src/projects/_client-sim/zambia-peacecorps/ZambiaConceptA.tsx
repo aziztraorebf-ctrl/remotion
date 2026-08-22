@@ -29,6 +29,8 @@ import { feature } from "topojson-client";
 import {
   getZambiaGeo,
   ordreDepuisOrigine,
+  REPARTITION,
+  semisGeo,
   volontairesA,
   ORIGINE,
   W,
@@ -42,11 +44,12 @@ import {
 export const ZAMBIA_CONCEPT_A_FRAMES = 240; // 8 s a 30 fps (duree du breakdown)
 
 const FOND = "#0a1020";
-const OCEAN = "#0e1b30";
-const TERRE = "#3d5273";
-const TERRE_LIGNE = "#5b7aa6";
+const OCEAN = "#132741";
+const TERRE = "#c2cbd1"; // mesure storyboard RGB(194,203,209)
+const TERRE_LIGNE = "#8fa3b5";
 const OR = "#e2b33c";
 const OR_CLAIR = "#f5d98a";
+const CYAN = "#5fe0e8"; // balise de destination pendant la descente (storyboard panneaux 1-2)
 const TEXTE = "#f2ede3";
 
 // Centre geographique de la Zambie (moyenne des centroides du brief).
@@ -104,13 +107,13 @@ export const ZambiaConceptA: React.FC = () => {
   // easeInOut PAR SEGMENT ont une derivee nulle a chaque extremite -> la camera s'ARRETE a
   // chaque point de passage. Ici : UNE seule interpolation monotone sur toute la duree, plus
   // un creep residuel qui ne retombe jamais a zero avant la derniere frame.
-  const zoomBrut = interpolate(frame, [F_GLOBE, F_ARRIVEE], [1, 7.4], {
+  const zoomBrut = interpolate(frame, [F_GLOBE, F_ARRIVEE], [1, 10.8], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: (t) => t * t * (3 - 2 * t), // smoothstep unique, pas par segment
   });
   // creep : la camera continue d'avancer tres lentement apres l'arrivee (jamais figee)
-  const creep = interpolate(frame, [F_ARRIVEE, F_FIN], [0, 0.55], {
+  const creep = interpolate(frame, [F_ARRIVEE, F_FIN], [0, 0.7], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
@@ -199,6 +202,28 @@ export const ZambiaConceptA: React.FC = () => {
           <path d={path(world.countries as never) || ""} fill="none" stroke={TERRE_LIGNE} strokeWidth={0.7} opacity={0.55} />
         </g>
 
+        {/* BALISE CYAN — dit OU on va pendant la descente (storyboard panneaux 1-2).
+            Absente du 1er rendu : le comparatif l'a relevee, et sans elle la descente
+            n'a pas de cible lisible. S'eteint a l'arrivee, quand les provinces prennent le relais. */}
+        {(() => {
+          const q = proj([ZM_LON, ZM_LAT] as [number, number]);
+          if (!q) return null;
+          const opa = interpolate(frame, [F_GLOBE, 20, F_ARRIVEE - 25, F_ARRIVEE], [0, 1, 1, 0], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+          });
+          if (opa <= 0) return null;
+          const pulse = 1 + 0.16 * Math.sin(frame / 8);
+          const rBase = Math.max(14, globeR * 0.055);
+          return (
+            <g opacity={opa}>
+              <circle cx={q[0]} cy={q[1]} r={rBase * 2.1 * pulse} fill={CYAN} opacity={0.16} filter="url(#glowA)" />
+              <circle cx={q[0]} cy={q[1]} r={rBase * pulse} fill={CYAN} opacity={0.55} filter="url(#glowA)" />
+              <circle cx={q[0]} cy={q[1]} r={rBase * 0.35} fill="#ffffff" opacity={0.9} />
+            </g>
+          );
+        })()}
+
         {/* Les 3 provinces HORS brief : fond neutre, jamais un accent. Sans elles, le pays
             apparait TROUE en son centre sous une camera mobile (defaut du 1er rendu). */}
         <g opacity={opaProvinces}>
@@ -242,6 +267,51 @@ export const ZambiaConceptA: React.FC = () => {
                 strokeWidth={intensite > 0 ? 1.6 : 0.8}
                 strokeOpacity={0.35 + intensite * 0.6}
               />
+            );
+          })}
+        </g>
+
+        {/* GRAPPES DE VOLONTAIRES — le storyboard en montre dans chaque province active.
+            Totalement absentes du 1er rendu (releve par le comparatif). Semees en lon/lat
+            puis reprojetees chaque frame : elles restent clouees au sol quand la camera bouge. */}
+        <g opacity={opaProvinces}>
+          {geo.briefProvinces.map((prov) => {
+            const estOrigine = prov.name === ORIGINE;
+            const rang = cibles.findIndex((c) => c.name === prov.name);
+            const seuil = estOrigine ? 0 : rang / cibles.length;
+            const t = estOrigine
+              ? interpolate(frame, [F_ARCS - 20, F_ARCS + 10], [0, 1], {
+                  extrapolateLeft: "clamp",
+                  extrapolateRight: "clamp",
+                })
+              : interpolate(propagation, [seuil, Math.min(1, seuil + 0.24)], [0, 1], {
+                  extrapolateLeft: "clamp",
+                  extrapolateRight: "clamp",
+                });
+            if (t <= 0) return null;
+            const cible = REPARTITION[2005][prov.name] ?? 0;
+            const nb = Math.max(1, Math.round(cible * 0.42));
+            const pts = semisGeo(prov, nb);
+            return (
+              <g key={`dots-${prov.name}`}>
+                {pts.map(([lo, la], k) => {
+                  const q = proj([lo, la] as [number, number]);
+                  if (!q) return null;
+                  const retard = (k / Math.max(1, nb)) * 0.35;
+                  const a = Math.max(0, Math.min(1, (t - retard) / 0.35));
+                  if (a <= 0) return null;
+                  return (
+                    <circle
+                      key={k}
+                      cx={q[0]}
+                      cy={q[1]}
+                      r={2.6}
+                      fill="#ffffff"
+                      opacity={a * 0.82}
+                    />
+                  );
+                })}
+              </g>
             );
           })}
         </g>

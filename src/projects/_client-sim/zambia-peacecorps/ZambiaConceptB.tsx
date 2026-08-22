@@ -45,6 +45,8 @@ export const ZAMBIA_CONCEPT_B_FRAMES = 240; // 8 s a 30 fps
 const TOKEN = process.env.REMOTION_MAPBOX_TOKEN || process.env.MAPBOX_TOKEN || "";
 
 const OR = "#e2b33c";
+const VERT = "#2f8a38";      // remplissage attendu par le storyboard (mesure Grok)
+const OR_BORD = "#f0c014";   // liseré or lumineux du storyboard
 const TEXTE = "#f2ede3";
 
 // Cadrages, tires du breakdown : continent large -> medium LARGE sur la Zambie.
@@ -130,14 +132,32 @@ export const ZambiaConceptB: React.FC = () => {
         type: "fill",
         source: "zm",
         filter: ["get", "inBrief"],
-        paint: { "fill-color": OR, "fill-opacity": 0.16 },
+        paint: { "fill-color": VERT, "fill-opacity": 0.46 },
+      });
+      map.addLayer({
+        id: "zm-halo",
+        type: "line",
+        source: "zm",
+        filter: ["get", "inBrief"],
+        paint: {
+          "line-color": "#ffd000",
+          "line-width": 9,
+          "line-opacity": 0.34,
+          "line-blur": 7,
+        },
       });
       map.addLayer({
         id: "zm-ligne",
         type: "line",
         source: "zm",
         filter: ["get", "inBrief"],
-        paint: { "line-color": OR, "line-width": 1.1, "line-opacity": 0.5 },
+        // liseré or epais + halo : c'est lui qui detache la Zambie du fond (absent du 1er rendu)
+        paint: {
+          "line-color": OR_BORD,
+          "line-width": 2.6,
+          "line-opacity": 0.92,
+          "line-blur": 0.6,
+        },
       });
 
       // ⛔ Doctrine : zero label Mapbox sur nos cartes. Helper maison, pas une reimplementation.
