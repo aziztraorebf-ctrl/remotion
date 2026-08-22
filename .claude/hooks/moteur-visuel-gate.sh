@@ -164,7 +164,10 @@ EOF
     fi
 
     # (3) Aucune vraie question ouverte adressee au modele
-    if ! grep -qiE "propose (your|3|three|ton|votre)|your own concept|invent|imagine|what would you|conceive" "$PROMPT_FILE"; then
+    # ⚠️ 2026-08-21 : "2|two|deux" ajoutes. Un brief legitime demandant DEUX concepts
+    # ("Propose TWO DISTINCT concepts") etait compte comme n'ayant aucune question ouverte.
+    # Le nombre de concepts n'est pas le critere — la demande de CONCEVOIR l'est.
+    if ! grep -qiE "propose (your|[0-9]+|two|three|ton|votre|deux|trois)|your own concept|invent|imagine|what would you|conceive|concept YOU defend" "$PROMPT_FILE"; then
       PROBLEMES="$PROBLEMES\n  - AUCUNE QUESTION OUVERTE : rien ne demande au modele de CONCEVOIR (\"propose TON concept\")."
     fi
 
