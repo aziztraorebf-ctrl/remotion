@@ -114,7 +114,8 @@ INTENTIONS = {
 }
 
 # Favoris partages (versionnes, donc lisibles par Claude) : ce qu'Aziz privilegie.
-FAVORIS = set()
+FAVORIS = {"drift-blur", "drift-continu", "pull-back-globe-d3", "pull-back-reveal",
+           "suivi-de-trace", "tilt-pull-back", "whip-pan-multistop"}
 
 def run(cmd):
     r = subprocess.run(cmd, capture_output=True, text=True)
