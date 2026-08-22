@@ -50,7 +50,7 @@ const TEXTE = "#f2ede3";
 // Cadrages, tires du breakdown : continent large -> medium LARGE sur la Zambie.
 // ⭐ zoom d'arrivee volontairement BAS (4.35) : c'est lui qui garde le collier de contexte.
 const CAM_DEBUT = { lon: 21.0, lat: -6.0, zoom: 3.5, pitch: 16 };
-const CAM_FIN = { lon: 27.6, lat: -13.9, zoom: 5.15, pitch: 42 };
+const CAM_FIN = { lon: 27.6, lat: -13.1, zoom: 5.9, pitch: 38 };
 
 // Chronologie (30 fps), calee sur le breakdown Grok.
 const F_DESCENTE = 12;
@@ -270,11 +270,34 @@ export const ZambiaConceptB: React.FC = () => {
             })}
           </svg>
 
-          <div style={{ position: "absolute", left: 96, bottom: 96 }}>
+          {/* Cartouche VOLONTAIRES — reduit apres mesure : il pesait 3,8x l'ensemble des
+              7 billes et volait le regard. Le sujet du plan, ce sont les foyers qui
+              s'allument, pas le chiffre. Contraste baisse pour la meme raison. */}
+          {/* ANNEE — releve par GPT-5.5 : sans elle, le plan dit "220 volontaires quelque part"
+              sans jamais dire QUAND. Vrai manque narratif.
+              ⚠️ GPT l'attribue au storyboard, a tort : la case de Grok ne porte qu'un timecode.
+              Point applique parce qu'il est JUSTE, pas parce qu'un modele l'a dit. */}
+          <div
+            style={{
+              position: "absolute",
+              left: 96,
+              top: 92,
+              color: TEXTE,
+              fontSize: 46,
+              fontFamily: "Source Sans 3, sans-serif",
+              fontWeight: 700,
+              letterSpacing: 3,
+              opacity: 0.9,
+            }}
+          >
+            {frame < T_MARQUEURS.Northern ? 1995 : Math.round(1995 + 10 * progression)}
+          </div>
+
+          <div style={{ position: "absolute", left: 96, bottom: 84, opacity: 0.78 }}>
             <div
               style={{
                 color: OR,
-                fontSize: 96,
+                fontSize: 58,
                 fontFamily: "Source Sans 3, sans-serif",
                 fontWeight: 700,
                 lineHeight: 1,
@@ -286,11 +309,11 @@ export const ZambiaConceptB: React.FC = () => {
             <div
               style={{
                 color: TEXTE,
-                fontSize: 27,
+                fontSize: 18,
                 fontFamily: "Source Sans 3, sans-serif",
                 letterSpacing: 3,
-                marginTop: 12,
-                opacity: 0.85,
+                marginTop: 8,
+                opacity: 0.62,
               }}
             >
               VOLONTAIRES

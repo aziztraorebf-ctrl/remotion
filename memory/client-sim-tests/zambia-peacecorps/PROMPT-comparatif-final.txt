@@ -1,0 +1,46 @@
+You are looking at a single A/B image.
+
+LEFT — one panel from the storyboard YOU drew. This is the TARGET.
+RIGHT — the corresponding frame from the animation we coded from it, at full resolution.
+
+Both halves are shown at the same height so that proportions are directly comparable.
+
+## WHAT HAS ALREADY BEEN MEASURED — do not re-estimate these by eye
+
+We measured these pixel values directly. They are settled. Do not comment on them, do not
+propose different values for them, and do not include them in your list of gaps:
+
+- Background / base colours: sampled and matched to within a few RGB points of your panel.
+- Subject occupancy: the country's height in frame was measured against your panel and
+  matched.
+- Projection: verified (flat map vs globe) by corner analysis.
+- Country border strokes: thickened and brightened; neighbouring countries are legible.
+
+If you believe one of the above is still wrong, say so in ONE line at the very end under
+"CONTESTED:" with what you see — but assume the measurement is right and you are looking
+at a compression artifact.
+
+## WHAT WE ACTUALLY WANT FROM YOU
+
+The things a measurement cannot catch. Look at your panel, then at ours, and answer:
+
+1. Does our frame TELL THE SAME THING as your panel? If a viewer saw only ours, what would
+   they misunderstand or miss entirely?
+2. What is PRESENT in your panel and ABSENT in ours — as an element, not as a colour value?
+3. What is present in ours that you did NOT intend, and that weakens the shot?
+4. Is there anything in your panel that you now think was a mistake, and that we were right
+   not to reproduce?
+
+For each point, give the concrete change to make, with a value where a value applies.
+
+## RULES
+
+- Do NOT give a score out of 10. We are not looking for a grade.
+- Do NOT invent data. The on-screen numbers come from the client's dataset: 40 volunteers in
+  1995 (Luapula only), about 220 by 2005 across seven provinces. Any intermediate figure is
+  an interpolation, never a data point.
+- Do NOT propose a new concept or new panels. The concept is arbitrated and frozen.
+- The base map style, terrain source and label set are locked by our stack. Out of scope.
+- If our frame is faithful on a point, say nothing about that point. Silence is useful.
+
+Be blunt and specific. If nothing meaningful is left to fix, say exactly that in one line.
