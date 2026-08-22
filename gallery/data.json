@@ -106,5 +106,23 @@
   "lieu": "Dakar",
   "energie": "moyenne",
   "poids": 523
+ },
+ {
+  "slug": "suivi-de-trace",
+  "titre": "Suivi de trace",
+  "cat": "approche",
+  "desc": "La camera avance avec le trace qui se dessine, en gardant l'amont visible derriere. Le geste canonique du gazoduc.",
+  "lieu": "Nigeria vers Portugal",
+  "energie": "moyenne",
+  "poids": 307
+ },
+ {
+  "slug": "pull-back-globe-d3",
+  "titre": "Pull Back globe D3",
+  "cat": "revelation",
+  "desc": "Le pays plein cadre recule jusqu'a devenir un globe avec sa courbure. Version D3 du Pull Back Reveal.",
+  "lieu": "Soudan",
+  "energie": "haute",
+  "poids": 315
  }
 ]

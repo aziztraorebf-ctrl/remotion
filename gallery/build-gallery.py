@@ -19,6 +19,8 @@ CLIPS = os.path.join(ROOT, "clips")
 POSTERS = os.path.join(ROOT, "posters")
 
 CAMERA_LAB = os.path.join(REPO, "out/episodes/_shared/mapbox-camera-lab-v2.mp4")
+GAZODUC_A2 = os.path.join(REPO, "out/episodes/gazoduc-aagp-tsgp/acte2-FINAL.mp4")
+SOUDAN_A3  = os.path.join(REPO, "out/PRET-PUBLICATION/soudan-midform/soudan-acte3-suivre-lor-globe-FINAL.mp4")
 
 # slug, titre, categorie, description, lieu, energie, (fichier source, debut s, duree s), crf
 MOVES = [
@@ -60,6 +62,15 @@ MOVES = [
  ("zoom-out-in","Zoom out → style → Zoom in","transition",
   "On recule, on change de style, on revient. Traverser une ellipse temporelle.",
   "Dakar","moyenne",(CAMERA_LAB,112.5,5),28),
+ # --- Gestes extraits d'episodes publies (verifies image par image) ---
+ # 30.5s : la camera suit le trace Nigeria -> cote (fenetre glissante back 45% / ahead 10%)
+ ("suivi-de-trace","Suivi de trace","approche",
+  "La camera avance avec le trace qui se dessine, en gardant l'amont visible derriere. Le geste canonique du gazoduc.",
+  "Nigeria vers Portugal","moyenne",(GAZODUC_A2,30.5,6),28),
+ # 40.0s : le Soudan plein cadre recule jusqu'a la courbure planetaire
+ ("pull-back-globe-d3","Pull Back globe D3","revelation",
+  "Le pays plein cadre recule jusqu'a devenir un globe avec sa courbure. Version D3 du Pull Back Reveal.",
+  "Soudan","haute",(SOUDAN_A3,40.0,6),28),
 ]
 
 def run(cmd):
