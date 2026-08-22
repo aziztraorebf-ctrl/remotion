@@ -28,7 +28,7 @@ import {
 } from "remotion";
 
 import { GisementMarker } from "../../_shared/mapbox/GisementTokens";
-import { MapboxBrandingHide, removeLabels } from "../../_shared/mapbox/MapboxBase";
+import { applyGeoAfriqueV5, MapboxBrandingHide, removeLabels } from "../../_shared/mapbox/MapboxBase";
 import {
   getZambiaGeo,
   volontairesA,
@@ -45,7 +45,7 @@ export const ZAMBIA_CONCEPT_B_FRAMES = 240; // 8 s a 30 fps
 const TOKEN = process.env.REMOTION_MAPBOX_TOKEN || process.env.MAPBOX_TOKEN || "";
 
 const OR = "#e2b33c";
-const VERT = "#2f8a38";      // remplissage attendu par le storyboard (mesure Grok)
+const VERT = "#4e7e45";      // MESURE sur la case storyboard : RGB(78,126,69)
 const OR_BORD = "#f0c014";   // liseré or lumineux du storyboard
 const TEXTE = "#f2ede3";
 
@@ -132,7 +132,7 @@ export const ZambiaConceptB: React.FC = () => {
         type: "fill",
         source: "zm",
         filter: ["get", "inBrief"],
-        paint: { "fill-color": VERT, "fill-opacity": 0.46 },
+        paint: { "fill-color": VERT, "fill-opacity": 0.82 },
       });
       map.addLayer({
         id: "zm-halo",
@@ -162,6 +162,12 @@ export const ZambiaConceptB: React.FC = () => {
 
       // ⛔ Doctrine : zero label Mapbox sur nos cartes. Helper maison, pas une reimplementation.
       removeLabels(map);
+
+      // ⭐ Palette GeoAfrique V5 (water #1a3a5c). MESURE : le fond du storyboard Grok est
+      // RGB(21,53,82) — soit EXACTEMENT cette couleur. Le dark-v11 nu donnait RGB(9,9,9),
+      // un noir qui ecrasait tout : c'est la cause du "trop sombre, pas la meme couleur".
+      // Grok avait dessine NOTRE propre palette maison, il fallait juste l'appliquer.
+      applyGeoAfriqueV5(map);
 
       map.once("idle", () => {
         setReady(true);
