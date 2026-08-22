@@ -10,6 +10,7 @@
 import React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, interpolate, spring, Easing } from "remotion";
 import { ChillMeterDevice, DEVICE_W, DEVICE_H } from "./ChillMeterDevice";
+import { GivreDefs, CRISTAUX, ECLATS, FLEURS } from "./GivrePlanche";
 
 export type MeterState =
   | "entrance"
@@ -125,37 +126,67 @@ const FullChillEffect: React.FC<{ progress: number; frame: number; fps: number }
       ))}
 
       <svg width="100%" height="100%" style={{ position: "absolute", inset: 0 }}>
-        {/* cristaux de givre accroches aux bords */}
-        {Array.from({ length: 70 }).map((_, i) => {
+        <GivreDefs />
+        {/* GIVRE ACCROCHE AUX BORDS — vraies pieces dessinees (planche Fable+GPT).
+            Remplace les heptagones generes par boucle : ils se lisaient comme
+            "des petits carres blancs qui arrivent de nulle part". */}
+        {Array.from({ length: 54 }).map((_, i) => {
           const seed = i + 1;
           const th = Math.abs(Math.sin(seed * 2.9)) * 0.5;
           const local = Math.max(0, Math.min(1, (progress - th) / 0.4));
           if (local <= 0) return null;
+
           const side = i % 4;
-          let cx = 0;
-          let cy = 0;
           const p = Math.abs(Math.sin(seed * 4.7));
-          if (side === 0) {
-            cx = p * 1920;
-            cy = 1080 - Math.abs(Math.sin(seed * 3.3)) * 60;
-          } else if (side === 1) {
-            cx = p * 1920;
-            cy = Math.abs(Math.sin(seed * 3.3)) * 50;
-          } else if (side === 2) {
-            cx = Math.abs(Math.sin(seed * 3.3)) * 60;
-            cy = p * 1080;
-          } else {
-            cx = 1920 - Math.abs(Math.sin(seed * 3.3)) * 60;
-            cy = p * 1080;
+          const inset = Math.abs(Math.sin(seed * 3.3));
+
+          // Fleurs de givre : ancrees au bord, elles POUSSENT vers l'interieur.
+          // Cristaux/eclats : en derive, plus petits, plus nombreux.
+          const isFleur = i % 7 === 0;
+          const piece = isFleur
+            ? FLEURS[i % FLEURS.length]
+            : i % 5 === 0
+            ? ECLATS[i % ECLATS.length]
+            : CRISTAUX[i % CRISTAUX.length];
+
+          // grandes pieces sur les bords, plus petites vers le centre
+          const size = isFleur
+            ? 150 + inset * 110
+            : (i % 3 === 0 ? 46 + inset * 40 : 20 + inset * 22);
+
+          let x = 0;
+          let y = 0;
+          let rot = 0;
+          if (side === 0) {        // bas
+            x = p * 1920 - size / 2;
+            y = 1080 - size * (isFleur ? 1 : 0.55) - inset * 26;
+            rot = isFleur ? 0 : seed * 37;
+          } else if (side === 1) { // haut
+            x = p * 1920 - size / 2;
+            y = -size * 0.35 + inset * 30;
+            rot = isFleur ? 180 : seed * 53;
+          } else if (side === 2) { // gauche
+            x = -size * 0.3 + inset * 26;
+            y = p * 1080 - size / 2;
+            rot = isFleur ? 90 : seed * 71;
+          } else {                 // droite
+            x = 1920 - size * 0.7 - inset * 26;
+            y = p * 1080 - size / 2;
+            rot = isFleur ? 270 : seed * 29;
           }
-          const r = (7 + Math.abs(Math.sin(seed * 6.2)) * 22) * local;
-          const pts: string[] = [];
-          for (let k = 0; k < 7; k++) {
-            const a = (k / 7) * Math.PI * 2;
-            const wob = 0.5 + 0.5 * Math.abs(Math.sin(seed * 11.3 + k * 3.7));
-            pts.push(`${cx + Math.cos(a) * r * wob},${cy + Math.sin(a) * r * wob}`);
-          }
-          return <polygon key={i} points={pts.join(" ")} fill="#eaf7ff" opacity={0.5 * local} />;
+
+          // le brief : ne jamais masquer lourdement son visage (zone droite-haute)
+          const faceGuard = x > 1150 && y < 640 ? 0.3 : 1;
+
+          return (
+            <g
+              key={i}
+              transform={`rotate(${rot} ${x + size / 2} ${y + size / 2})`}
+              opacity={local * (isFleur ? 0.72 : 0.85) * faceGuard}
+            >
+              <use href={`#${piece}`} x={x} y={y} width={size} height={size} />
+            </g>
+          );
         })}
 
         {/* Onde de choc gelee — anneaux nets, SANS blur.
@@ -203,6 +234,8 @@ const FullChillEffect: React.FC<{ progress: number; frame: number; fps: number }
           const baseY = Math.abs(Math.sin(seed * 78.233)) * 1080;
           const y = (baseY - t * (16 + Math.abs(Math.sin(seed * 4.1)) * 40) + 1080) % 1080;
           // le brief : le visage (droite/haut) ne doit jamais etre lourdement masque
+          // Ne pas noyer la fenetre du clip musical (haut-gauche) ni son visage (droite).
+          const clipGuard = x < 880 && y > 230 && y < 730 ? 0.22 : 1;
           const faceGuard = x > 1180 && y < 620 ? 0.28 : 1;
           const r = 1.4 + Math.abs(Math.sin(seed * 5.9)) * 3.4;
           return (
@@ -212,7 +245,7 @@ const FullChillEffect: React.FC<{ progress: number; frame: number; fps: number }
               cy={y}
               r={r}
               fill="#e9f8ff"
-              opacity={local * (0.3 + Math.abs(Math.sin(seed * 3.6)) * 0.5) * faceGuard}
+              opacity={local * (0.3 + Math.abs(Math.sin(seed * 3.6)) * 0.5) * faceGuard * clipGuard}
             />
           );
         })}
