@@ -27,12 +27,10 @@ import {
   useCurrentFrame,
 } from "remotion";
 
-import { GisementMarker } from "../../_shared/mapbox/GisementTokens";
 import { applyGeoAfriqueV5, MapboxBrandingHide, removeLabels } from "../../_shared/mapbox/MapboxBase";
 import {
   getZambiaGeo,
   volontairesA,
-  ORIGINE,
   W,
   H,
   ZAMBIA_GEOJSON,
@@ -219,6 +217,21 @@ export const ZambiaConceptB: React.FC = () => {
       {ready && geo && (
         <AbsoluteFill style={{ pointerEvents: "none" }}>
           <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`}>
+            <defs>
+              <radialGradient id="billeCoeur" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="#fffdf0" stopOpacity="1" />
+                <stop offset="45%" stopColor="#f6e16a" stopOpacity="1" />
+                <stop offset="100%" stopColor="#f6e16a" stopOpacity="0" />
+              </radialGradient>
+              <linearGradient id="billeTrainee" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#f6e16a" stopOpacity="0.85" />
+                <stop offset="100%" stopColor="#f6e16a" stopOpacity="0" />
+              </linearGradient>
+              <filter id="billeGlow" x="-160%" y="-160%" width="420%" height="420%">
+                <feGaussianBlur stdDeviation="7" />
+              </filter>
+            </defs>
+
             {geo.briefProvinces.map((prov) => {
               const t0 = T_MARQUEURS[prov.name];
               if (t0 == null || frame < t0) return null;
@@ -227,19 +240,31 @@ export const ZambiaConceptB: React.FC = () => {
               // Reprojection CHAQUE frame : sans ca, le marqueur derive de la carte.
               const p = m.project([prov.centroidLon, prov.centroidLat]);
               const localF = frame - t0;
+
+              // MESURE sur la case storyboard : coeur RGB(246,225,106), halo RGB(198,179,68),
+              // rayon ~1,1 % de la largeur du cadre. Ce ne sont PAS des jetons hexagonaux
+              // (ceux-la sont notre registre Souverain) ni des points noirs : ce sont des
+              // BILLES LUMINEUSES avec une trainee verticale, comme une epingle de lumiere
+              // plantee dans le sol. Entierement faisable en SVG — aucun After Effects.
+              const R = W * 0.0072; // halo reduit : a 0.011 il mangeait le vert des provinces
+              const naissance = Math.max(0, Math.min(1, localF / 14));
+              const pop = 1 + 0.55 * Math.max(0, 1 - localF / 10); // petit sursaut a l'allumage
+              const respire = 1 + 0.07 * Math.sin((frame - t0) / 9);
+              const r = R * naissance * pop * respire;
+              if (r <= 0.2) return null;
+
               return (
-                <g key={prov.name}>
-                  <GisementMarker
-                    kind={prov.name === ORIGINE ? "seal" : "sonar"}
-                    x={p.x}
-                    y={p.y}
-                    scale={1.15}
-                    frame={frame}
-                    localF={localF}
-                    appeared={localF > 12}
-                    uid={`zm-${prov.name}`}
-                    zoom={zoom}
+                <g key={prov.name} opacity={naissance}>
+                  {/* trainee : le cone qui descend vers le sol */}
+                  <path
+                    d={`M ${p.x - r * 0.42} ${p.y} L ${p.x + r * 0.42} ${p.y} L ${p.x} ${p.y + r * 4.2} Z`}
+                    fill="url(#billeTrainee)"
                   />
+                  {/* halo large et flou, deborde sur le territoire */}
+                  <circle cx={p.x} cy={p.y} r={r * 2.2} fill="#c6b344" opacity={0.26} filter="url(#billeGlow)" />
+                  {/* coeur */}
+                  <circle cx={p.x} cy={p.y} r={r * 1.5} fill="url(#billeCoeur)" />
+                  <circle cx={p.x} cy={p.y} r={r * 0.52} fill="#fffdf0" />
                 </g>
               );
             })}
