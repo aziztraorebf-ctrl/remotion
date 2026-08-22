@@ -178,5 +178,77 @@
   "lieu": "Interface produit",
   "energie": "moyenne",
   "poids": 99
+ },
+ {
+  "slug": "camera-track-entity",
+  "titre": "Caméra qui suit un personnage",
+  "cat": "approche",
+  "desc": "Un personnage marche d'un point a un autre et la camera reste sur lui. Blueprint Atlas n°9.",
+  "usage": "Accompagner quelqu'un dans son deplacement, sans le perdre de vue.",
+  "kw": "suivre personnage marcher accompagner voyage deplacement acteur figurant caravane pieton trajet",
+  "fav": false,
+  "lieu": "Trajet A vers B",
+  "energie": "moyenne",
+  "poids": 472
+ },
+ {
+  "slug": "dual-entity-sequential",
+  "titre": "Passage d'un personnage a l'autre",
+  "cat": "transition",
+  "desc": "Deux personnages se succedent, la camera change de sujet actif puis recule. Blueprint Atlas n°10.",
+  "usage": "Montrer un echange : la camera lache le premier pour prendre le second.",
+  "kw": "deux personnages echange rencontre commerce troc passer relais changer sujet dialogue dolly recul",
+  "fav": false,
+  "lieu": "Echange entre deux",
+  "energie": "moyenne",
+  "poids": 634
+ },
+ {
+  "slug": "formation-march",
+  "titre": "Marche en formation",
+  "cat": "approche",
+  "desc": "Plusieurs personnages avancent ensemble avec des retards individuels. Blueprint Atlas n°11.",
+  "usage": "Faire avancer un groupe : armee, cortege, caravane.",
+  "kw": "armee groupe cortege caravane troupe soldats ensemble marche formation avancer masse collectif",
+  "fav": false,
+  "lieu": "Groupe en mouvement",
+  "energie": "haute",
+  "poids": 649
+ },
+ {
+  "slug": "waypoint-march",
+  "titre": "Voyage par etapes",
+  "cat": "approche",
+  "desc": "Un personnage traverse plusieurs villes avant d'arriver. Blueprint Atlas n°12.",
+  "usage": "Raconter un long voyage en marquant chaque etape.",
+  "kw": "voyage etapes villes escales route longue conquete progression traverser parcours itineraire",
+  "fav": false,
+  "lieu": "Multi-villes",
+  "energie": "moyenne",
+  "poids": 715
+ },
+ {
+  "slug": "dutch-tilt-collapse",
+  "titre": "Bascule d'effondrement",
+  "cat": "accent",
+  "desc": "La carte s'incline, la couleur se desature, la camera tremble a l'impact. Blueprint Atlas n°13.",
+  "usage": "Faire sentir qu'un monde s'ecroule.",
+  "kw": "effondrement chute defaite catastrophe crise drame basculer incliner trembler desaturer tension empire",
+  "fav": false,
+  "lieu": "Chute d'empire",
+  "energie": "haute",
+  "poids": 409
+ },
+ {
+  "slug": "gold-route-atlas-zoom",
+  "titre": "Zoom sur une route",
+  "cat": "approche",
+  "desc": "La camera se resserre progressivement sur un trajet qui se dessine.",
+  "usage": "Resserrer sur une route pendant qu'elle se trace.",
+  "kw": "route commerce or trajet zoom resserrer suivre chemin caravane atlas parcours ligne",
+  "fav": false,
+  "lieu": "Route commerciale",
+  "energie": "moyenne",
+  "poids": 288
  }
 ]
