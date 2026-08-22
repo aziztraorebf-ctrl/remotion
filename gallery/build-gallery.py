@@ -21,6 +21,7 @@ POSTERS = os.path.join(ROOT, "posters")
 CAMERA_LAB = os.path.join(REPO, "out/episodes/_shared/mapbox-camera-lab-v2.mp4")
 GAZODUC_A2 = os.path.join(REPO, "out/episodes/gazoduc-aagp-tsgp/acte2-FINAL.mp4")
 SOUDAN_A3  = os.path.join(REPO, "out/PRET-PUBLICATION/soudan-midform/soudan-acte3-suivre-lor-globe-FINAL.mp4")
+PAGECAM    = os.path.join(REPO, "out/templates-souverain/_camera/pagecam-flyover.mp4")
 
 # slug, titre, categorie, description, lieu, energie, (fichier source, debut s, duree s), crf
 MOVES = [
@@ -71,7 +72,49 @@ MOVES = [
  ("pull-back-globe-d3","Pull Back globe D3","revelation",
   "Le pays plein cadre recule jusqu'a devenir un globe avec sa courbure. Version D3 du Pull Back Reveal.",
   "Soudan","haute",(SOUDAN_A3,40.0,6),28),
+ # Rendu depuis la composition NorthShieldCursorFlyover (PageCam + curseur solidaires)
+ ("pagecam-flyover","PageCam — survol d'interface","approche",
+  "Camera 2.5D par keyframes sur une page capturee : elle se rapproche pendant que le curseur descend. Le seul systeme de camera generique et parametrable du repo.",
+  "Interface produit","moyenne",(PAGECAM,0.8,6),28),
 ]
+
+# Pour chaque geste : (a quoi ca sert -- affiche, mots que tu taperais -- recherche seule).
+# C'est le champ le plus consulte : il dit QUAND utiliser le geste, pas comment il marche.
+INTENTIONS = {
+ "drift-continu": ("Poser un lieu sans le commenter, laisser respirer sous une voix off.",
+   "reperage calme lent respirer voix off fond installer poser contexte introduction ambiance"),
+ "orbit-dolly-in": ("Faire le tour d'un lieu pour l'installer, en se rapprochant.",
+   "tourner autour orbite rotation approcher zoom avant presenter installer lieu ville decouvrir"),
+ "whip-pan-multistop": ("Passer d'un pays a un autre sans montrer le trajet.",
+   "aller de a vers b saut deplacement rapide flou file transition pays distance relier deux lieux ville"),
+ "zoom-freeze": ("Arriver sur un point et s'arreter net pour plaquer un chiffre.",
+   "zoom rapide arret stop fige chiffre donnee statistique frapper accent ponctuer nom"),
+ "tilt-pull-back": ("Se redresser puis reculer pour decouvrir le contexte autour.",
+   "basculer redresser incliner reculer decouvrir contexte revelation elargir voir autour"),
+ "counter-rotation": ("Creer du mouvement en faisant tourner carte et camera en sens inverse.",
+   "rotation inverse contraire tourner dynamique mouvement complexe energie tension"),
+ "drift-blur": ("Un fond de plan doux pour poser du texte ou une narration.",
+   "flou fond arriere plan texte narration doux calme atmosphere support lisible"),
+ "pull-back-reveal": ("Montrer qu'un pays est petit face au monde.",
+   "reculer zoom arriere echelle petit grand monde planete comparaison ecraser situer perspective globe"),
+ "zoom-sol-3d": ("Descendre du ciel jusqu'a la rue, en relief.",
+   "descendre plonger 3d relief satellite ville rue sol immersion spectaculaire impressionnant terrain"),
+ "fade-style-switch": ("Changer d'ambiance sans bouger la camera.",
+   "fondu changement style ambiance basculer satellite sombre registre transition douce immobile"),
+ "whip-pan-style-switch": ("Changer de lieu et d'ambiance d'un coup, sans qu'on voie la couture.",
+   "flou file transition invisible changement style lieu ambiance masquer coupe raccord ville"),
+ "zoom-out-in": ("Traverser une ellipse : on recule, ca change, on revient.",
+   "ellipse temps saut temporel avant apres reculer revenir changement epoque evolution"),
+ "suivi-de-trace": ("Suivre un trace qui se construit, en gardant l'amont visible.",
+   "suivre trace route trajet pipeline gazoduc chemin progression construire avancer parcours ligne"),
+ "pull-back-globe-d3": ("Passer d'un pays au globe entier, en D3.",
+   "globe planete terre courbure reculer echelle monde d3 pays petit spatial vue satellite"),
+ "pagecam-flyover": ("Parcourir une interface produit comme si on la montrait a quelqu'un.",
+   "interface ui produit saas ecran dashboard curseur souris demo logiciel application survol montrer"),
+}
+
+# Favoris partages (versionnes, donc lisibles par Claude) : ce qu'Aziz privilegie.
+FAVORIS = set()
 
 def run(cmd):
     r = subprocess.run(cmd, capture_output=True, text=True)
@@ -90,6 +133,10 @@ def main():
     slugs = [m[0] for m in MOVES]
     if len(slugs) != len(set(slugs)):
         sys.exit("slugs en double")
+    sans = [x for x in slugs if x not in INTENTIONS]
+    if sans:
+        sys.exit(f"INTENTION manquante pour: {sans}\n"
+                 "Chaque geste doit dire a quoi il sert, sinon il est introuvable.")
 
     if check:
         absents = [s for s in slugs if not os.path.exists(f"{CLIPS}/{s}.mp4")]
@@ -107,7 +154,9 @@ def main():
         run(["ffmpeg","-v","error","-ss","2","-i",out,"-vf","scale=640:-2",
              "-frames:v","1","-q:v","6","-y",f"{POSTERS}/{slug}.jpg"])
         ko = round(os.path.getsize(out)/1024); total += ko
-        cards.append(dict(slug=slug,titre=titre,cat=cat,desc=desc,
+        usage, kw = INTENTIONS.get(slug, ("", ""))
+        cards.append(dict(slug=slug,titre=titre,cat=cat,desc=desc,usage=usage,
+                          kw=kw, fav=slug in FAVORIS,
                           lieu=lieu,energie=energie,poids=ko))
         print(f"  {slug:24s} {ko:5d} Ko")
 
