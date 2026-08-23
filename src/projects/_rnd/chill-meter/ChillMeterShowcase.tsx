@@ -12,12 +12,12 @@ const FPS = 30;
 
 // Duree de chaque etat, dans l'ordre de la progression du brief.
 const STATES: { state: MeterState; dur: number; label: string }[] = [
-  { state: "entrance", dur: 60, label: "1 — Entree + power-on" },
-  { state: "idle", dur: 75, label: "2 — Idle (boucle)" },
-  { state: "fill25", dur: 75, label: "3 — 0 a 25 %" },
-  { state: "fill50", dur: 105, label: "4 — 50 % : le givre pousse" },
-  { state: "fill75", dur: 105, label: "5 — 75 % : bord bas" },
-  { state: "fill100", dur: 135, label: "6 — 100 % : MAX CHILL" },
+  { state: "entrance", dur: 60, label: "1 - Entrance + power-on" },
+  { state: "idle", dur: 75, label: "2 - Idle (loop)" },
+  { state: "fill25", dur: 75, label: "3 - 0 to 25%" },
+  { state: "fill50", dur: 105, label: "4 - 50%: frost builds" },
+  { state: "fill75", dur: 105, label: "5 - 75%: bottom edge" },
+  { state: "fill100", dur: 135, label: "6 - 100%: MAX CHILL" },
 ];
 
 export const SHOWCASE_FRAMES = STATES.reduce((a, s) => a + s.dur, 0);
