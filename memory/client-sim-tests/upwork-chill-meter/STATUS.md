@@ -42,6 +42,14 @@ Alpha verifie deux fois — cf. § PROCHAINE SESSION point 2 pour la commande et
    (`public/_shared/rnd/abigirl-decor.png`). Une mire animee est meilleure pour ce test : le
    mouvement rend un fond opaque immediatement visible.
    ⚠️ Ce test validait SON outil a elle, pas notre rendu (l'alpha etait deja prouve cote ffmpeg).
+   ⭐ **A DIRE DANS LA LIVRAISON** (constate 17h09 : le clip Idle avait disparu de l'apercu —
+   cause = `Position Y = -1909` dans Transform, un glissement accidentel dans la fenetre
+   d'apercu l'avait pousse hors cadre ; Fill100 etait reste a X=0/Y=0 et s'affichait bien).
+   Un overlay plein cadre 1920x1080 se deplace d'un simple glissement, et l'editeur ne voit
+   alors plus rien sans comprendre pourquoi — il peut conclure que le fichier est casse.
+   Donc preciser 2 lignes a la cliente : (1) les MOV sont **en plein cadre 1920x1080, deja
+   positionnes** -> deposer tels quels, ne pas les deplacer ; (2) si le compteur disparait,
+   c'est **Transform -> reset** (ou X=0 / Y=0), pas le fichier.
 
 2. ~~**REGENERER les 6 MOV**~~ ✅ **FAIT le 2026-08-23 16h20.** Les 6 sont sur disque, alpha
    verifie 2 fois : `pix_fmt = yuva444p12le` sur les 6, ET mesure pixel reelle sur la frame 100
