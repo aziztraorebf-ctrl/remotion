@@ -143,6 +143,29 @@ if printf '%s' "$FILE_PATH" | grep -qE 'timing\.ts$|whisper-words.*\.ts$'; then
   exit 0
 fi
 
+# BRIEF CLIENT / candidature freelance (ajoute 2026-08-23). Volontairement NARROW : ne se
+# declenche QUE sur le travail client-sim/Upwork, jamais sur la production video quotidienne
+# (l'essentiel des sessions) — le cout des fiches se CUMULE.
+# Cout paye qui la justifie : candidature entiere redigee sur un RESUME du brief alors que le
+# PDF etait disponible -> 2 erreurs d'un coup (un titre redige pour un champ inexistant ; le
+# son demande dans CHAQUE section, ignore en silence par une demo muette).
+# ⚠️⚠️ DOIT etre AVANT le filtre .tsx ci-dessous — ces cibles sont des .md et des .tsx.
+# C'est le MEME piege que .svg (2026-08-17), index.html et timing.ts : 4e occurrence.
+# 1re tentative posee dans la branche BASH (FILE_PATH vide) -> ne declenchait jamais ;
+# 2e posee APRES le filtre .tsx -> les .md rejetes. Detecte par le TEST, pas la relecture.
+if printf '%s' "$FILE_PATH" | grep -qiE 'client-sim|upwork|freelance-linkedin|BRIEF-CLIENT'; then
+  add_fiche "FICHE-BRIEF-CLIENT.md" "FICHE BRIEF CLIENT" "$FILE_PATH"
+  # ⛔ Sortie anticipee UNIQUEMENT pour les .md (un brief/STATUS ne declenche aucune autre
+  # fiche). Un .tsx de _client-sim/ DOIT continuer vers les tests suivants : sinon
+  # FICHE-SVG-DESSINE et FICHE-ARSENAL-SCENE seraient court-circuitees exactement la ou
+  # leur absence a deja coute — livrable Zambie juge "prototype" parce que GisementMarker
+  # existait et n'avait pas ete trouve. Detecte en testant le CUMUL, pas a la relecture.
+  if ! printf '%s' "$FILE_PATH" | grep -qE '\.tsx$'; then
+    [ -n "$PARTS" ] && jq -n --arg ctx "$PARTS" '{hookSpecificOutput:{hookEventName:"PreToolUse",additionalContext:$ctx}}'
+    exit 0
+  fi
+fi
+
 [[ "$FILE_PATH" =~ \.tsx$ ]] || exit 0
 case "$FILE_PATH" in
   *_archive*|*/archive/*|*.test.tsx|*.spec.tsx|*/Root.tsx) exit 0 ;;

@@ -11,7 +11,7 @@ manquante entre les deux — elles arrivent au bon moment, sans bloquer.
 Cause d'échec n°1 mesurée par audit (2026-08-17) : **« brique existante non trouvée »**
 (6 cas documentés, ~20 itérations perdues). Les règles existaient ; elles n'étaient pas retrouvées.
 
-## Les fiches actuelles (10)
+## Les fiches actuelles (11)
 | Fiche | Se déclenche quand | Source du déclenchement |
 |---|---|---|
 | `FICHE-SVG-DESSINE.md` | on écrit du SVG dessiné dans un `.tsx` | ≥4 primitives OU un `d={`/`d="M`, avec ≥2 primitives (garde-fou anti-icône) |
@@ -23,6 +23,7 @@ Cause d'échec n°1 mesurée par audit (2026-08-17) : **« brique existante non 
 | `FICHE-ASSEMBLAGE.md` | on rend ou on concatène | commande `ffmpeg`/`render-mapbox.sh`/`remotion render`/`-FINAL.mp4`/`upload-to-blob`/`concat=` |
 | `FICHE-UI-PRODUIT.md` | on simule un ECRAN / dashboard / app (pilier B2B n3) | chemin `live-page(-light)/`, `shotcraft-lib/`, `_client-sim/*(Promo|Dashboard|Screen|Mockup)`, OU commande `capture-northshield`/`capture-template`/`puppeteer`/`http.server 88`/`live-layout.json` |
 | `FICHE-AUDIO.md` | on génère/aligne de l'audio, ou on cale un timing | commande `generate-narration`/`generate-sfx`/`forced-align`/`splice-segment`/`elevenlabs`/`minimax-music`, OU fichier `timing.ts`/`whisper-words*.ts`, OU contenu `<Audio`/`staticFile(*.mp3`/`sfx/`/`startFrom={` |
+| `FICHE-BRIEF-CLIENT.md` | on trie/lit/répond à un **brief client freelance** (Upwork & co) | chemin contenant `client-sim`/`upwork`/`freelance-linkedin`/`BRIEF-CLIENT` — volontairement NARROW, zéro coût sur la production vidéo. ⚠️ Placée AVANT le filtre `.tsx` (cibles = `.md` ET `.tsx`) : 4e occurrence du même piège après `.svg`, `index.html`, `timing.ts` |
 | `FICHE-ARSENAL-SCENE.md` | On s'apprête à dessiner une primitive SVG sur une carte ou à poser un marqueur (`fiche-inject.sh:188`) | Dit ce qu'on POSSÈDE (jetons, cartouches, effets vivants, pièges d'import) — les autres fiches disent la méthode |
 
 Le hook : `.claude/hooks/fiche-inject.sh`, branché dans `settings.json` sur **DEUX matchers : `Bash` ET
@@ -35,8 +36,13 @@ déclenche les trois premières).
 Chaque fiche n'est injectée **qu'une fois par fichier et par session** (sentinelles dans
 `$TMPDIR/fiche-inject-<session_id>/`). **Ne jamais retirer ce mécanisme.**
 
-**Coût RE-MESURÉ le 2026-08-21** (les **10** fiches pèsent **93314 octets ≈ 23328 tokens** (re-mesuré 2026-08-21) si toutes
+**Coût RE-MESURÉ le 2026-08-23** (les **11** fiches pèsent **105554 octets ≈ 26388 tokens** si toutes
 injectées ; en pratique ~2 fiches se déclenchent par fichier, ≈ 3 250 tokens) :
+⭐ `FICHE-BRIEF-CLIENT` (1361 tokens) n'aggrave PAS le jour typique : son déclencheur est NARROW
+(chemins client-sim/upwork uniquement) et elle sort en anticipé sur les `.md`. Sur un `.tsx` de
+`_client-sim/` elle se cumule normalement — **vérifié par test**, c'était un bug : une sortie
+anticipée inconditionnelle court-circuitait SVG-DESSINE et ARSENAL-SCENE précisément là où leur
+absence avait déjà coûté un livrable (Zambie, `GisementMarker` non trouvé).
 - **jour typique** (7,5 fichiers touchés) : **~24 000 tokens**
 - **pire jour observé** (28 fichiers) : **~91 000 tokens**
 
