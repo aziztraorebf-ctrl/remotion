@@ -7,16 +7,17 @@
 > Toute nouvelle section de session s'insère APRÈS lui, jamais avant — sinon l'avertissement descend
 > et se fait enterrer, et un état périmé est annoncé à Aziz malgré l'avertissement présent et lu.
 
-## ⭐⭐ CANDIDATURE UPWORK — prête, non envoyée (2026-08-23)
+## ⭐⭐ CANDIDATURE UPWORK — ENVOYÉE le 2026-08-23, en attente de réponse
 
 **Profil et portfolio FAITS** : titre, résumé, 20 compétences, photo, Working style, 4 showcases +
 11 pièces EN (`out/_r-and-d/portfolio-en/UPWORK/`, manifeste versionné dans
 `memory/client-sim-tests/upwork-chill-meter/PORTFOLIO-MANIFESTE.md`).
 
-**① et ② FAITES le 2026-08-23** : test CapCut validé sur l'outil de la cliente (CapCut desktop
-importe le ProRes 4444, alpha correctement composité) · 6 MOV régénérés, alpha vérifié 2×.
-**③ = envoyer. Tout est rédigé et prêt à coller** ; Aziz a acheté des connects (≈143), le blocage
-du 1<sup>er</sup> du mois est LEVÉ. Employment history rempli.
+**Les 3 étapes sont FAITES.** Test CapCut validé sur l'outil de la cliente · 6 MOV régénérés,
+alpha vérifié 2× · **proposition envoyée** (7 connects, pas de boost, solde ≈143).
+⛔ **Décision d'Aziz : ne RIEN produire de plus avant d'avoir le contrat.** Cette ligne ne rouvre
+que si **elle répond** — alors : arbitrer une éventuelle négociation (350 $ = le prix DU BRIEF,
+pas une enchère), puis prototyper le SON en premier (seul point promis non démontré).
 ⭐ Le **brief client PDF est sur disque** (`BRIEF-CLIENT-ORIGINAL.pdf`, gitignoré) : le RELIRE avant
 toute action sur cette annonce — un résumé ne le remplace pas (2 erreurs payées le 23/08).
 → Candidature complète (lettre + 5 réponses + jalons + « pas de boost ») :
