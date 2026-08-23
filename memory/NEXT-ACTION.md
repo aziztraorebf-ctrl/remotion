@@ -13,10 +13,14 @@
 11 pièces EN (`out/_r-and-d/portfolio-en/UPWORK/`, manifeste versionné dans
 `memory/client-sim-tests/upwork-chill-meter/PORTFOLIO-MANIFESTE.md`).
 
-**Les 3 étapes, dans l'ordre** : ① test CapCut desktop des MOV alpha (Aziz seul peut le faire) ·
-② **régénérer les 6 MOV** (antérieurs au fix des flocons, commit `d9737af7`) · ③ envoyer.
-⛔ **Blocage réel = connects à 0** (10 gratuits le 1<sup>er</sup> du mois). Employment history vide.
-→ Détail + pièges du questionnaire : `memory/client-sim-tests/upwork-chill-meter/STATUS.md`.
+**① et ② FAITES le 2026-08-23** : test CapCut validé sur l'outil de la cliente (CapCut desktop
+importe le ProRes 4444, alpha correctement composité) · 6 MOV régénérés, alpha vérifié 2×.
+**③ = envoyer. Tout est rédigé et prêt à coller** ; Aziz a acheté des connects (≈143), le blocage
+du 1<sup>er</sup> du mois est LEVÉ. Employment history rempli.
+⭐ Le **brief client PDF est sur disque** (`BRIEF-CLIENT-ORIGINAL.pdf`, gitignoré) : le RELIRE avant
+toute action sur cette annonce — un résumé ne le remplace pas (2 erreurs payées le 23/08).
+→ Candidature complète (lettre + 5 réponses + jalons + « pas de boost ») :
+`memory/client-sim-tests/upwork-chill-meter/STATUS.md` § CANDIDATURE.
 
 ---
 
