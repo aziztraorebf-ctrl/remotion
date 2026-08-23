@@ -69,7 +69,58 @@ Alpha verifie deux fois — cf. § PROCHAINE SESSION point 2 pour la commande et
    `yuv422p12le` SANS alpha, sans erreur. Sans `--image-format=png`, TypeError.
    Verifier apres coup : `ffprobe ... stream=pix_fmt` doit rendre `yuva444p12le` (le `a` = alpha).
 
-3. **ENVOYER LA CANDIDATURE.** Le profil Upwork est desormais PRET (voir § ci-dessous).
+3. **ENVOYER LA CANDIDATURE** — tout est redige et en place au 2026-08-23 (voir § CANDIDATURE).
+
+## CANDIDATURE — prete a envoyer (2026-08-23, brief PDF enfin lu)
+
+⭐ **Le PDF de l'annonce a ete fourni par Aziz cette session** — il corrige 2 erreurs que j'avais
+faites en travaillant de memoire :
+- ⛔ **Il n'y a PAS de champ TITRE** dans le formulaire de proposition Upwork. J'avais redige un
+  titre pour rien. Le brief dit « subject line OR title » -> **FROSTY en 1re ligne de la lettre**
+  remplit la condition (et c'est mieux : premiere chose lue).
+- ⛔ **Le SON est demande partout** (chaque section du brief liste ses SFX : thud, click, crackle,
+  chime, whoosh, boom). Notre demo est MUETTE. Traite en promettant des **stems audio separes par
+  etat** — defendable et meilleur pour elle (elle mixe contre sa musique), mais c'est une PROMESSE,
+  pas une demonstration. Attendre une question la-dessus en entretien.
+- ⛔ La reference visuelle est **SON image fournie** (p.5-6), pas un dessin libre. Dire « I built
+  the meter » etait trop large -> reformule en « I animated a working version from your reference ».
+
+**2e test d'attention, distinct du mot-code** : la derniere question (« the one small instruction
+outside of the design requirements ») attend l'instruction FROSTY elle-meme (p.9, « Attention to
+Detail Check »). Y repondre EXPLICITEMENT, ne pas compter sur le mot-code pour le prouver.
+
+**Structure du formulaire** : 1 lettre + **5 questions dans des cases SEPAREES** + pieces jointes.
+⛔ Ne pas tout mettre dans la lettre : une case vide se lit comme un trou. La repetition
+lettre/cases est normale et attendue.
+
+**Cadrage retenu (correction d'Aziz, juste)** : la lettre laissait croire que TOUT etait deja
+construit, alors que le brief demande 8 livrables et qu'on n'a qu'un prototype visuel muet.
+Risque double : elle se demande pourquoi elle paie 350 $, OU elle decouvre apres coup que le son
+manque. Phrase-cle ajoutee : **« It's a proof of concept, not the finished piece »** — les 3 jalons
+redeviennent logiques et l'absence de son est annoncee par nous, pas decouverte par elle.
+
+**Jalons proposes** (dates volontairement avec marge — le jalon 1 depend de SON approbation) :
+1 Meter design approved — 28 aout — 105 $ · 2 Entrance/idle/0-25%/50% — 4 sept — 140 $ ·
+3 75% + 100% + fichiers finaux — 11 sept — 105 $. Total 350 $. Duree : « Less than 1 month ».
+
+**Piece jointe** : `progressive meter.mp4` (3,2 Mo — la variante avec l'accroche MAX CHILL en tete).
+⛔ Limite Upwork = **10 fichiers, 25 Mo chacun**. Joindre le fichier, ne PAS coller de lien.
+
+**Boost : NON.** La proposition coute 7 connects, le bid de boost est a 0 — on peut envoyer sans.
+Le boost ne change PAS la visibilite (toutes les propositions restent visibles), seulement l'ORDRE
+d'affichage. Preuve terrain : un candidat a mis 15 connects la veille, la cliente s'est connectee
+3 h avant et n'avait toujours pas decide. Garder les connects pour le VOLUME de candidatures.
+
+⭐ **Connects : 0,15 $/unite (verifie page officielle), mais un job coute 4 a 16 connects**, pas 1.
+100 connects ≈ 10-25 candidatures. Bonus de **50 connects offerts apres le 1er achat** (nouveau
+freelance). Recredites souvent si un client interviewe ; jamais rembourses si elle choisit
+quelqu'un d'autre ou si l'annonce expire.
+
+ℹ️ **« Interview » a ce niveau de prix = echange ECRIT** dans le fil Upwork, pas une visio. Le mot
+est un terme de plateforme designant le moment ou le client engage la conversation.
+
+## ANCIEN BLOC (conserve pour reference)
+3. ~~ENVOYER~~ Le profil Upwork est desormais PRET (voir § ci-dessous).
    Le questionnaire a 2 pieges : mot-code **"FROSTY"** dans le titre (PDF p.9) + question sur le
    format transparent (reponse : MOV ProRes 4444).
    ⛔ Connects a 0 au 2026-08-23 : 10 gratuits le 1er du mois, ou en acheter. Sans connects,
