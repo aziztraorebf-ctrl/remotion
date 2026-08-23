@@ -420,6 +420,7 @@ import { KineticMaskSlamFX } from "./projects/_shared/_demos/KineticMaskSlamFX";
 import { KineticSlam3D } from "./projects/_shared/_demos/KineticSlam3D";
 import { Country3DRise } from "./projects/_shared/_demos/Country3DRise";
 import { Asset3DShowcase } from "./projects/_shared/_demos/Asset3DShowcase";
+import { PremiumCard3D, PREMIUM_CARD_3D_FRAMES } from "./projects/_shared/_demos/PremiumCard3D";
 import { JetonWarMap3DCompare } from "./projects/_shared/_demos/JetonWarMap3DCompare";
 import { RapidFireCountries } from "./projects/_shared/mapbox/RapidFireCountries";
 import { ClassifiedRedactReveal } from "./projects/_shared/mapbox/ClassifiedRedactReveal";
@@ -2726,6 +2727,51 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="KineticSlam3D-Maroc-V" component={() => <KineticSlam3D bigText="70%" subText="DU PHOSPHATE MONDIAL" />} durationInFrames={120} fps={30} width={1080} height={1920} />
         <Composition id="Country3DRise-Maroc-V" component={() => <Country3DRise geoName="Morocco" bigText="70%" subText="DU PHOSPHATE MONDIAL" />} durationInFrames={120} fps={30} width={1080} height={1920} />
         <Composition id="Asset3DShowcase" component={Asset3DShowcase} durationInFrames={120} fps={30} width={1080} height={1080} />
+        {/* PremiumCard3D — reverse engineering du workflow CapCut de Danny Why (2026-08-23) */}
+        <Composition
+          id="PremiumCard3D"
+          component={PremiumCard3D}
+          durationInFrames={PREMIUM_CARD_3D_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ background: "gradient" as const }}
+        />
+        <Composition
+          id="PremiumCard3D-Alpha"
+          component={PremiumCard3D}
+          durationInFrames={PREMIUM_CARD_3D_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ background: "alpha" as const }}
+        />
+        <Composition
+          id="PremiumCard3D-Green"
+          component={PremiumCard3D}
+          durationInFrames={PREMIUM_CARD_3D_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ background: "green" as const }}
+        />
+        <Composition
+          id="PremiumCard3D-Bleu"
+          component={PremiumCard3D}
+          durationInFrames={PREMIUM_CARD_3D_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            background: "gradient" as const,
+            titleBefore: "L'",
+            titleAccent: "Energie",
+            titleAfter: " du Sahel",
+            bgStops: ["#06121f", "#0d2136", "#14344f"] as [string, string, string],
+            cardStops: ["#123049", "#071523"] as [string, string],
+            accentColor: "#4fc3f7",
+          }}
+        />
         <Composition id="JetonWarMap3DCompare" component={JetonWarMap3DCompare} durationInFrames={120} fps={30} width={1920} height={1080} />
         {/* ── hooks-lib — bibliotheque de hooks agnostiques au fond (2026-06-15) ── */}
         <Composition id="ArteryDrain-Niger-V" component={() => <ArteryDrain center={[8.08, 17.6]} baseZoom={4.8} focusIso="NER" bigText="68t" subText="D'URANIUM PAR AN" rays={8} />} durationInFrames={110} fps={30} width={1080} height={1920} />
