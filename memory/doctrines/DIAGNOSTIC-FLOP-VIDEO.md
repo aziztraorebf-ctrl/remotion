@@ -42,6 +42,69 @@ n'était PAS le hook** (suspect réflexe n°1) **mais le corps du script entre 3
 vidéo qui a mieux marché. Si le décrochage précoce (0-30s) est comparable entre les deux, chercher la
 cause plus loin dans le script — retravailler un hook déjà correct est du temps perdu.
 
+## ⭐ LES 5 FORMES DE COURBE — nommer le défaut d'écriture (mesuré 2026-08-23, 4 vidéos)
+
+> Le § précédent dit **où** ça décroche. Celui-ci dit **quel défaut d'écriture** produit cette forme.
+> Grille adaptée de FacelessOS Core v3 (`retention-coaching-skill.md`, Haris Mazhar) — le seul apport
+> de ce corpus qui n'existait pas chez nous. ⚠️ Ses **benchmarks chiffrés** (23,7 % moyen, « 70 % à
+> 30 s ») viennent de blogs d'outils SEO, PAS de sources primaires YouTube : ordres de grandeur, jamais
+> des seuils de décision. **Les 5 formes, elles, sont utilisables — c'est de la lecture de courbe.**
+
+| Forme | Signature | Défaut d'écriture correspondant |
+|---|---|---|
+| 1. **Falaise** | chute massive 0-30 s, puis plat | le hook a promis autre chose que la suite |
+| 2. **Saignement lent** | déclin régulier, sans palier | aucune mécanique de relance : pas de re-hooks, structure « et ensuite » |
+| 3. **Falaise en milieu** | chute nette à un instant précis | UNE section tue l'intérêt (ennui, confusion, promesse non tenue) |
+| 4. **Pic de ré-engagement** | creux puis remontée | les gens scrubbent : ce qui précède le pic est du remplissage |
+| 5. **Plateau** | chute initiale puis ligne stable | rien à corriger — c'est la forme cible |
+
+**⭐ La règle méta (la vraie valeur) :** si **3 vidéos ou plus** ont la MÊME forme, ce n'est pas un
+problème de vidéo — c'est un **défaut systématique du gabarit d'écriture**. On corrige le gabarit, pas
+la vidéo.
+
+### MESURE RÉELLE — Kora & Cartes, 4 vidéos longues (2026-08-23)
+
+`audienceWatchRatio` aux ratios clés. ⚠️ Échantillons **très faibles** (35 à 97 vues) : la FORME est
+lisible, les valeurs précises non.
+
+| Vidéo | Vues | 1 % | 5 % | 10 % | 25 % | 50 % | fin | Forme |
+|---|---|---|---|---|---|---|---|---|
+| Sénégal Pétrole (8:17) | 97 | 99 % | 68 % | 56 % | 39 % | 27 % | 14 % | **saignement lent** |
+| AES Sahel (7:31) | 48 | 100 % | 76 % | 52 % | 24 % | 19 % | 10 % | **saignement lent** |
+| Franc CFA (4:29) | 54 | 100 % | 71 % | 51 % | 43 % | 39 % | 20 % | **plateau** (le meilleur) |
+| Soudan (10:36) | 35 | 97 % | 42 % | 33 % | 30 % | 15 % | 9 % | **falaise** puis plateau |
+
+⛔ **Ce que la mesure INFIRME.** L'hypothèse de départ (« nos 4 longues ont toutes la Falaise, donc
+notre gabarit d'ouverture est cassé ») est **FAUSSE**. Les formes divergent. Il n'y a **pas** de défaut
+systématique unique — la règle des 3+ ne se déclenche pas. Ne pas refondre le gabarit d'ouverture.
+
+**Ce qu'elle établit, vidéo par vidéo :**
+- **Soudan = le seul cas de Falaise.** 97 % → 51 % à 3 % du film (≈ 19 s) : la moitié part avant
+  20 secondes. MAIS ensuite **plateau stable à 30 % jusqu'à 3 min 35**, et son
+  `relativeRetentionPerformance` culmine à **0,42 vers 22 %** — sur ce segment il fait mieux que des
+  vidéos comparables. Le corps tient ; c'est l'entrée qui saigne. Correction chirurgicale (20 s), pas
+  une refonte.
+- **Sénégal + AES = saignement lent**, pas falaise. Leur entrée est BONNE (68 % et 76 % à 5 %).
+  Ils perdent en continu faute de relances. ✅ Cohérent avec le § précédent (mesure du 08-12) :
+  « le problème n'était PAS le hook mais le corps entre 30 s et 2-3 min ».
+- **CFA = notre meilleure courbe** (39 % à mi-film, ~2× les autres) et **la plus courte (4:29)**.
+  Signal à vérifier, pas conclusion : la durée courte pourrait être ce qui protège la rétention.
+
+### ⛔ LE CONSTAT QUI PRIME SUR TOUT LE RESTE — format, pas qualité
+
+Même période (2026-07-01 → 08-23), même chaîne :
+
+| | Vues | Source |
+|---|---|---|
+| **Shorts** (3 vidéos) | **3 015** | 2 781 via le flux `SHORTS` |
+| **Longues** (toutes) | **231** | — |
+
+**Facteur 13.** YouTube distribue les Shorts et ne distribue pas les longues (Soudan : 35 vues en 3 j).
+⛔ **Ne pas lire un flop de vidéo longue comme un verdict sur sa qualité tant que ce déséquilibre de
+distribution tient** — sur 35 vues, le contenu n'a pas été jugé, il n'a pas été vu. Les deux verrous
+(conversion §DISTRIBUTION, entrée §ci-dessus) restent vrais et ne se contredisent pas ; celui-ci est
+en amont des deux.
+
 ## PROFIL DÉMOGRAPHIQUE — donnée disponible, pas encore un signal d'action ferme
 
 `vidiq_channel_analytics` (report `demographics`, `geography`) donne l'audience réelle sans export CSV
