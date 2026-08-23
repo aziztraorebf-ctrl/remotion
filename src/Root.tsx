@@ -1,3 +1,4 @@
+import { ChillMeterShowcase, SHOWCASE_FRAMES } from "./projects/_rnd/chill-meter/ChillMeterShowcase";
 import { ChillMeterOverlay } from "./projects/_rnd/chill-meter/ChillMeterOverlay";
 import { Composition, Folder, staticFile as staticFileRoot, useCurrentFrame } from "remotion";
 import { ZambiaConceptB, ZAMBIA_CONCEPT_B_FRAMES } from "./projects/_client-sim/zambia-peacecorps/ZambiaConceptB";
@@ -5006,6 +5007,14 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
           defaultProps={{ state: "fill100" as const }}
+        />
+        <Composition
+          id="ChillMeter-Showcase"
+          component={ChillMeterShowcase}
+          durationInFrames={SHOWCASE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
         />
       </Folder>
 

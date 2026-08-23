@@ -31,6 +31,8 @@ load_dotenv(ROOT / ".env")
 GEMINI_MODEL = "gemini-3.1-pro-preview"
 GPT_MODEL = "openai/gpt-5.6-sol"
 KIMI_K3_MODEL = "moonshotai/kimi-k3"
+# Grok texte+vision : slug verifie via GET /models (memory/tools/grok.md : ne JAMAIS deviner une version)
+GROK_MODEL = "x-ai/grok-4.6"
 
 TAIL = """
 
@@ -110,7 +112,7 @@ def _openrouter_vision(model: str, brief: str, ref: Path, out: Path, extra: dict
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--provider", required=True, choices=["gemini", "gpt", "kimi"])
+    ap.add_argument("--provider", required=True, choices=["gemini", "gpt", "kimi", "grok"])
     ap.add_argument("--brief", required=True, help="fichier .md du brief")
     ap.add_argument("--ref", required=True, help="image de reference (png)")
     ap.add_argument("--out", required=True, help="fichier .svg de sortie")
@@ -127,6 +129,8 @@ def main():
         gen_gemini(brief, ref, out)
     elif args.provider == "gpt":
         _openrouter_vision(GPT_MODEL, brief, ref, out)
+    elif args.provider == "grok":
+        _openrouter_vision(GROK_MODEL, brief, ref, out)
     else:
         # K3 : borner le raisonnement, sinon content=null (memory/tools/kimi-k3-reasoning-borne.md)
         _openrouter_vision(
