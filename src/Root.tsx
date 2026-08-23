@@ -85,6 +85,7 @@ import { GazoducActe4RessourceUnique } from "./projects/souverain/gazoduc-aagp-t
 import { ProtoCartePaletteGPT, ProtoCartePaletteNous, ProtoCartePaletteGPTSeule, PROTO_CARTE_PALETTE_GPT_FRAMES } from "./projects/_rnd/d3-16x9/ProtoCartePaletteGPT";
 import { GazoducActe4Objectifs } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe4Objectifs";
 import { GazoducActe4Calendrier } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe4Calendrier";
+import { GazoducDemandCurveEN, GazoducBlueprintHD, DEMAND_CURVE_EN_FRAMES, BLUEPRINT_HD_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducPortfolioEN";
 import { GazoducActe5Faille } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe5Faille";
 import { GazoducActe5Negocier } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe5Negocier";
 import { GazoducActe5Vannes2 } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe5Vannes2";
@@ -1307,6 +1308,26 @@ export const RemotionRoot: React.FC = () => {
           id="D3-Gazoduc-Acte4-Calendrier"
           component={GazoducActe4Calendrier}
           durationInFrames={GAZODUC_A4_SEGC_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* PORTFOLIO EN — extraits courts, muets, anglophones (aucune scène FR de production n'est
+            modifiée : ce sont des fenêtres de montage sur les mêmes composants). Le 4C reçoit la
+            variante de labels EN ; le blueprint de l'Acte 2 n'a aucun texte à traduire et n'existait
+            qu'en 960x540 sur disque, d'où ce re-render 1920x1080. */}
+        <Composition
+          id="Portfolio-EN-Gazoduc-DemandCurve"
+          component={GazoducDemandCurveEN}
+          durationInFrames={DEMAND_CURVE_EN_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Portfolio-EN-Gazoduc-Blueprint"
+          component={GazoducBlueprintHD}
+          durationInFrames={BLUEPRINT_HD_FRAMES}
           fps={30}
           width={1920}
           height={1080}

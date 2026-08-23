@@ -146,7 +146,31 @@ const Plate: React.FC<{
   );
 };
 
-export const GazoducActe4Calendrier: React.FC = () => {
+// ===== LOCALISATION DES 3 PLAQUES =====
+// Seuls textes visibles de la scene (les 3 "indeductibles de l'image", cf bloc REGLE DE TEXTE plus
+// bas). Le defaut reste le FRANCAIS : la composition de production existante ne change pas d'un
+// pixel. Une variante anglaise est fournie pour le portfolio freelance anglophone.
+export type CalendrierLabels = {
+  today: string;
+  horizon: string;
+  demand: string;
+};
+
+export const CALENDRIER_LABELS_FR: CalendrierLabels = {
+  today: "AUJOURD'HUI",
+  horizon: "2030",
+  demand: "DEMANDE EUROPÉENNE",
+};
+
+export const CALENDRIER_LABELS_EN: CalendrierLabels = {
+  today: "TODAY",
+  horizon: "2030",
+  demand: "EUROPEAN DEMAND",
+};
+
+export const GazoducActe4Calendrier: React.FC<{ labels?: CalendrierLabels }> = ({
+  labels = CALENDRIER_LABELS_FR,
+}) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -696,9 +720,9 @@ export const GazoducActe4Calendrier: React.FC = () => {
               instant ("DES DIZAINES DE MILLIARDS", "UN MARCHÉ QUI RÉTRÉCIT", "UN SEUL SUFFIRAIT") :
               c'etait du sous-titrage deguise. Leur fonction est reprise par le GRAPHISME (masse de
               la barre, contraction de la bande, comparaison des deux volumes ambre). */}
-          <Plate x={PLOT_X0} y={AXIS_Y + 62} label="AUJOURD'HUI" appear={anchorsIn} />
-          <Plate x={PLOT_X1} y={AXIS_Y + 62} label="2030" appear={anchorsIn} />
-          <Plate x={xAt(0.60)} y={CURVE_Y_HIGH - 58} label="DEMANDE EUROPÉENNE" color={CYAN_EDGE} appear={areaIn} anchor="start" />
+          <Plate x={PLOT_X0} y={AXIS_Y + 62} label={labels.today} appear={anchorsIn} />
+          <Plate x={PLOT_X1} y={AXIS_Y + 62} label={labels.horizon} appear={anchorsIn} />
+          <Plate x={xAt(0.60)} y={CURVE_Y_HIGH - 58} label={labels.demand} color={CYAN_EDGE} appear={areaIn} anchor="start" />
           {/* ⛔ Badge "AIE" RETIRE (decision Aziz 2026-08-16) : la voix cite deja l'Agence
               internationale de l'energie, l'ecrire n'apportait rien. Il ne reste que les textes
               indeductibles de l'image : AUJOURD'HUI, 2030, DEMANDE EUROPÉENNE. */}
