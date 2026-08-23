@@ -20,6 +20,8 @@ export interface NoeudTisserandProps {
   bottleneckLabel?: string;
   bottleneckEntity?: string;
   blocked?: boolean;
+  /** Libelle affiche au-dessus du noeud quand blocked=true. Defaut FR "BLOQUÉ". */
+  blockedLabel?: string;
   bgColor?: string;
 }
 
@@ -65,6 +67,7 @@ export const NoeudTisserand: React.FC<NoeudTisserandProps> = ({
   bottleneckLabel = "GOULOT",
   bottleneckEntity = "PORT DE DAKAR",
   blocked = true,
+  blockedLabel = "BLOQUÉ",
   bgColor = "transparent",
 }) => {
   const frame = useCurrentFrame();
@@ -270,7 +273,7 @@ export const NoeudTisserand: React.FC<NoeudTisserandProps> = ({
             opacity: Math.min(nodeScale, labelsOpacity),
           }}
         >
-          BLOQUÉ
+          {blockedLabel}
         </div>
       )}
     </AbsoluteFill>

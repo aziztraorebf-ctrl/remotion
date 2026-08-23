@@ -11,6 +11,8 @@ export interface MosaiqueActor {
   name: string;
   role: string;
   status: "ALLIE" | "NEUTRE" | "ANTAGONISTE" | "CIBLE";
+  /** Texte affiche dans le bandeau. Defaut = la cle `status` (FR). Permet une variante EN. */
+  statusLabel?: string;
   statusColor?: string;
 }
 
@@ -169,7 +171,7 @@ export const MosaiqueActeurs: React.FC<MosaiqueActeursProps> = ({
                 textAnchor="middle"
                 style={{ fontFamily: FONT_MONO, fontSize: 14, fontWeight: "bold", fill: "#f2ebd9", letterSpacing: 3 }}
               >
-                {actor.status}
+                {actor.statusLabel ?? actor.status}
               </text>
             </g>
           );

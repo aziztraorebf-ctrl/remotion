@@ -29,6 +29,8 @@ export interface ArbreAPalabresProps {
   centralLabel?: string;
   actors?: PalabresActor[];
   connections?: PalabresConnection[];
+  /** Legende [allie, neutre, adversaire]. Defaut FR. Permet une variante EN. */
+  legendLabels?: [string, string, string];
   bgColor?: string;
 }
 
@@ -75,6 +77,7 @@ export const ArbreAPalabres: React.FC<ArbreAPalabresProps> = ({
   centralLabel = "PÉTROLE\nSANGOMAR",
   actors = DEFAULT_ACTORS,
   connections = DEFAULT_CONNECTIONS,
+  legendLabels = ["ALLIÉ", "NEUTRE", "ADVERSAIRE"],
   bgColor = "transparent",
 }) => {
   const frame = useCurrentFrame();
@@ -206,7 +209,7 @@ export const ArbreAPalabres: React.FC<ArbreAPalabresProps> = ({
         </g>
 
         {/* Legend */}
-        {[["ally", "#c8a951", "ALLIÉ"], ["neutral", "#4a9eff", "NEUTRE"], ["adversary", "#e55353", "ADVERSAIRE"]].map(([key, color, lbl], i) => (
+        {([["ally", "#c8a951", legendLabels[0]], ["neutral", "#4a9eff", legendLabels[1]], ["adversary", "#e55353", legendLabels[2]]] as const).map(([key, color, lbl], i) => (
           <g key={key} opacity={labelsOpacity}>
             <circle cx={80} cy={920 + i * 32} r={8} fill={color} />
             <text x={100} y={920 + i * 32} dominantBaseline="middle"

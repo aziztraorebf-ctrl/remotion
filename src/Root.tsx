@@ -608,6 +608,17 @@ const OdometerFlipDemo: React.FC = () => (
   />
 );
 
+// Variante EN pour le portfolio freelance (la version FR ci-dessus reste intacte).
+const OdometerFlipDemoEN: React.FC = () => (
+  <OdometerFlip
+    toValue="184620"
+    label="UNITS SHIPPED"
+    subtitle="fiscal year 2024"
+    spinStartFrame={20}
+    bgColor="#1a2535"
+  />
+);
+
 const BarRaceDemo: React.FC = () => <BarRace />;
 const StackedBarsDemo: React.FC = () => <StackedBars />;
 const ScaleShockDemo: React.FC = () => <ScaleShock />;
@@ -3072,6 +3083,251 @@ export const RemotionRoot: React.FC = () => {
           fps={30}
           width={1920}
           height={1080}
+        />
+
+        {/* ===================================================================
+            PORTFOLIO EN — MOTION DESIGN & GRAPHICS (showcase freelance)
+            Memes composants que les Template-* FR ci-dessus : AUCUNE modification
+            de leur code, on ne fait que passer des defaultProps anglais. Les
+            compositions FR de production rendent donc a l'identique.
+            Format : 1920x1080 (16:9) pour toutes.
+            =================================================================== */}
+
+        {/* 1. LOWER THIRD / grille de fiches nom+fonction — noms fictifs neutres */}
+        <Composition
+          id="Portfolio-EN-Motion-LowerThirdGrid"
+          component={TrombinoscapeStrategique}
+          durationInFrames={210}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            titre: "KEY STAKEHOLDERS",
+            bgColor: "#252d3a",
+            portraits: [
+              { name: "SARAH OKONJO", role: "HEAD OF OPERATIONS", pouvoir: 85, statutColor: "#e63946" },
+              { name: "DANIEL MERCER", role: "CHIEF FINANCIAL OFFICER", pouvoir: 92, statutColor: "#4a9eff" },
+              { name: "PRIYA RAGHAVAN", role: "DIRECTOR OF STRATEGY", pouvoir: 78, statutColor: "#c8a951" },
+              { name: "TOMAS LINDQVIST", role: "SENIOR ADVISOR", pouvoir: 65, statutColor: "#4a9eff" },
+              { name: "MAYA CHEN", role: "HEAD OF COMPLIANCE", pouvoir: 88, statutColor: "#e63946" },
+            ],
+          }}
+        />
+
+        {/* 2. LOWER THIRD / cartes acteurs nom+role+statut — entites fictives */}
+        <Composition
+          id="Portfolio-EN-Motion-ActorCards"
+          component={MosaiqueActeurs}
+          durationInFrames={240}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            title: "STAKEHOLDER MAP — OFFSHORE PROGRAM",
+            bgColor: "#252d3a",
+            actors: [
+              { name: "MERIDIAN HOLDINGS", role: "Lead operator", status: "ALLIE" as const, statusLabel: "PARTNER" },
+              { name: "NORTHWIND ENERGY", role: "Technical contractor", status: "NEUTRE" as const, statusLabel: "NEUTRAL" },
+              { name: "STATE ENERGY CO.", role: "National company", status: "ALLIE" as const, statusLabel: "PARTNER" },
+              { name: "HARBOUR CAPITAL", role: "Former shareholder", status: "ANTAGONISTE" as const, statusLabel: "OPPOSED" },
+              { name: "DELTA BROKERS LTD", role: "Alleged intermediary", status: "CIBLE" as const, statusLabel: "UNDER REVIEW" },
+              { name: "IMF", role: "International creditor", status: "NEUTRE" as const, statusLabel: "NEUTRAL" },
+            ],
+          }}
+        />
+
+        {/* 3. CHIFFRE-CHOC pulse — compteur central + anneaux */}
+        <Composition
+          id="Portfolio-EN-Motion-PulseNumber"
+          component={PulseNumber}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            topLabel: "BILLIONS EXTRACTED",
+            value: "$2.3T",
+            subtitle: "since 1960",
+            bgColor: "#1a2535",
+          }}
+        />
+
+        {/* 4. COMPTEUR mecanique a rouleaux */}
+        <Composition
+          id="Portfolio-EN-Motion-Odometer"
+          component={OdometerFlipDemoEN}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+
+        {/* 5. BARRES DE DONNEES rythmees + seuil */}
+        <Composition
+          id="Portfolio-EN-Motion-BarChart"
+          component={PolyrythmieData}
+          durationInFrames={210}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            title: "GDP COMPARED · WEST AFRICA",
+            unit: "bn$",
+            maxValue: 80,
+            thresholdValue: 26.9,
+            thresholdLabel: "REGIONAL AVERAGE",
+            bgColor: "#202632",
+            bars: [
+              { label: "MALI", value: 15.3, displayValue: "15.3 bn$" },
+              { label: "SENEGAL", value: 27.6, displayValue: "27.6 bn$" },
+              { label: "BURKINA", value: 19.1, displayValue: "19.1 bn$" },
+              { label: "IVORY COAST", value: 70.0, displayValue: "70.0 bn$" },
+              { label: "NIGER", value: 13.6, displayValue: "13.6 bn$" },
+              { label: "GUINEA", value: 16.0, displayValue: "16.0 bn$" },
+            ],
+          }}
+        />
+
+        {/* 6. COMPARAISON D'ECHELLE — deux cercles */}
+        <Composition
+          id="Portfolio-EN-Motion-ScaleShock"
+          component={ScaleShock}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            topLabel: "AREA COMPARED",
+            labelLeft: "Belgium",
+            labelLeftSub: "30,528 km2",
+            labelRight: "Africa",
+            labelRightSub: "30,370,000 km2",
+            subtitle: "area compared",
+            bgColor: "#1a2535",
+          }}
+        />
+
+        {/* 7. RADAR — balayage + cibles qui apparaissent */}
+        <Composition
+          id="Portfolio-EN-Motion-RadarScan"
+          component={RadarScan}
+          durationInFrames={210}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            title: "DETECTION",
+            subtitle: "SYSTEM · ACTIVE",
+            bgColor: "#0d1520",
+            targets: [
+              { dx: 120, dy: -200, icon: "diamond" as const, label: "GOLD", revealFrame: 30 },
+              { dx: -250, dy: -80, icon: "pickaxe" as const, label: "MINES", revealFrame: 55 },
+              { dx: 300, dy: 150, icon: "ship" as const, label: "EXPORT", revealFrame: 80 },
+              { dx: -150, dy: 250, icon: "factory" as const, label: "PLANTS", revealFrame: 105 },
+              { dx: 50, dy: 320, icon: "dollar" as const, label: "FLOWS", revealFrame: 130 },
+            ],
+          }}
+        />
+
+        {/* 8. BALANCE — desequilibre entre deux grandeurs.
+            ⚠️ VERTICAL : ScaleTilt est cable en dur sur 1080x1920 (cf. son SVG).
+            Le rendre en 16:9 laisse la moitie droite noire — on le rend donc a son
+            format natif, le cadrage 16:9 se fera au montage. */}
+        <Composition
+          id="Portfolio-EN-Motion-ScaleTilt"
+          component={ScaleTilt}
+          durationInFrames={210}
+          fps={30}
+          width={1080}
+          height={1920}
+          defaultProps={{
+            title: "IMBALANCE",
+            leftSide: { icon: "building" as const, label: "DEBT", stat: "$400B" },
+            rightSide: { icon: "trending" as const, label: "GDP", stat: "$180B" },
+            heavySide: "left" as const,
+            subtitle: "SOVEREIGN DEBT",
+          }}
+        />
+
+        {/* 9. GOULOT D'ETRANGLEMENT — flux qui convergent et se bloquent */}
+        <Composition
+          id="Portfolio-EN-Motion-Bottleneck"
+          component={NoeudTisserand}
+          durationInFrames={210}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            outputLabel: "INTERNATIONAL TRANSIT",
+            bottleneckLabel: "CHOKE",
+            bottleneckEntity: "PORT OF DAKAR",
+            blockedLabel: "BLOCKED",
+            blocked: true,
+            bgColor: "#161a23",
+            inputFlows: [
+              { label: "MALI", percentage: 34, color: "#c8a951", side: "left" as const },
+              { label: "BURKINA FASO", percentage: 28, color: "#4a9eff", side: "left" as const },
+              { label: "NIGER", percentage: 38, color: "#f2ebd9", side: "left" as const },
+            ],
+          }}
+        />
+
+        {/* 10. DOCUMENT CAVIARDE — caviardage + tampon */}
+        <Composition
+          id="Portfolio-EN-Motion-Redaction"
+          component={Caviardage}
+          durationInFrames={210}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            stampText: "DECLASSIFIED",
+            bgColor: "#1f1b12",
+            lines: [
+              { official: "STRATEGIC PARTNERSHIP", real: "SOVEREIGN DEBT" },
+              { official: "SUSTAINABLE DEVELOPMENT", real: "TOTAL EXTRACTION" },
+              { official: "INCLUSIVE GROWTH", real: "EXPORTED PROFITS" },
+              { official: "SKILLS TRANSFER", real: "TECHNICAL DEPENDENCE" },
+            ],
+          }}
+        />
+
+        {/* 11. RESEAU ORGANIQUE — noeud central + satellites */}
+        <Composition
+          id="Portfolio-EN-Motion-NetworkTree"
+          component={ArbreAPalabres}
+          durationInFrames={240}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            centralLabel: "OFFSHORE\nPROGRAM",
+            legendLabels: ["ALLY", "NEUTRAL", "OPPOSED"] as [string, string, string],
+            bgColor: "#202632",
+            actors: [
+              { id: 0, label: "STATE ENERGY", role: "REGULATOR", angle: 0, x: 1310, y: 540, weight: 3 as const, alignment: "ally" as const, branchPath: "M 960 540 C 1135 450, 1135 630, 1310 540" },
+              { id: 1, label: "NORTHWIND", role: "OPERATOR", angle: 60, x: 1135, y: 843, weight: 3 as const, alignment: "neutral" as const, branchPath: "M 960 540 C 960 690, 1135 690, 1135 843" },
+              { id: 2, label: "CONTRACTORS", role: "SERVICES", angle: 120, x: 785, y: 843, weight: 2 as const, alignment: "neutral" as const, branchPath: "M 960 540 C 960 690, 785 690, 785 843" },
+              { id: 3, label: "COMMUNITIES", role: "IMPACTED", angle: 180, x: 610, y: 540, weight: 1 as const, alignment: "adversary" as const, branchPath: "M 960 540 C 785 450, 785 630, 610 540" },
+              { id: 4, label: "NGO WATCHDOG", role: "OBSERVER", angle: 240, x: 785, y: 237, weight: 1 as const, alignment: "adversary" as const, branchPath: "M 960 540 C 960 390, 785 390, 785 237" },
+              { id: 5, label: "MERIDIAN", role: "PARTNER", angle: 300, x: 1135, y: 237, weight: 2 as const, alignment: "ally" as const, branchPath: "M 960 540 C 960 390, 1135 390, 1135 237" },
+            ],
+          }}
+        />
+
+        {/* 12. TRANSFORMATION DE SYMBOLE — morphing typographique */}
+        <Composition
+          id="Portfolio-EN-Motion-SymbolMorph"
+          component={MetamorphoseFiduciaire}
+          durationInFrames={180}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            symbolA: "$",
+            symbolB: "¥",
+            bgColor: "#ece5d3",
+          }}
         />
 
         {/* Vague 4 manquants */}
