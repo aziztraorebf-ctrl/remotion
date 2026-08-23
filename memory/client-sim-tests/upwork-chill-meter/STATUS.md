@@ -16,19 +16,13 @@ Branche : `feat/proto-chill-meter-upwork` (3 commits, mergeable ou à garder en 
 | Code : device + overlay + showcase + planche givre | `src/projects/_rnd/chill-meter/` |
 | Briefs réutilisables + script de mix | ce dossier |
 
-⚠️ **Les 6 MOV datent d'AVANT la correction des flocons** — à régénérer si on postule :
-```
-npx remotion render ChillMeter-<Etat> out.mov \
-  --codec=prores --prores-profile=4444 --pixel-format=yuva444p10le --image-format=png
-```
-Les 3 flags sont obligatoires : sans `--pixel-format`, ProRes retombe silencieusement
-en `yuv422p12le` SANS alpha, sans erreur. Sans `--image-format=png`, TypeError.
+✅ **Les 6 MOV sont A JOUR (regeneres le 2026-08-23 16h20, posterieurs au fix `d9737af7`).**
+Alpha verifie deux fois — cf. § PROCHAINE SESSION point 2 pour la commande et les mesures.
 
 ## PROCHAINE SESSION — 2026-08-23, dans cet ordre
 
-> Statut verifie le 2026-08-23 : les 6 MOV sont TOUJOURS sur disque, alpha confirme
-> (`yuva444p12le` sur les 6, mesure a ffprobe). Mais ils datent du 22 aout 19h15,
-> soit **AVANT le commit d9737af7 (fix des flocons)** — a REGENERER avant tout envoi.
+> Statut au 2026-08-23 16h20 : les 6 MOV sont **regeneres et a jour** (posterieurs a `d9737af7`).
+> Reste : ① le test CapCut (Aziz seul) et ③ l'envoi — bloque par les connects a 0.
 
 1. ⭐ **TEST CAPCUT — CapCut est maintenant installe (Aziz, 2026-08-23).**
    Demander a Claude d'ouvrir le dossier : `open out/_r-and-d/chill-meter-upwork/`
@@ -37,7 +31,16 @@ en `yuv422p12le` SANS alpha, sans erreur. Sans `--image-format=png`, TypeError.
    ℹ️ L'alpha est deja prouve par ffmpeg (57,2 % de pixels transparents) et par la composition sur
    sa vraie video. Ce test valide SON outil a elle, pas notre rendu.
 
-2. **REGENERER les 6 MOV** (ils sont anterieurs au fix des flocons) :
+2. ~~**REGENERER les 6 MOV**~~ ✅ **FAIT le 2026-08-23 16h20.** Les 6 sont sur disque, alpha
+   verifie 2 fois : `pix_fmt = yuva444p12le` sur les 6, ET mesure pixel reelle sur la frame 100
+   de Fill100 (**56,1 % de pixels totalement transparents**, coin haut-gauche a alpha 191 = le
+   voile de givre, conforme au brief). Frames : Entrance 60 · Idle 90 · Fill25 75 · Fill50 105 ·
+   Fill75 105 · Fill100 135.
+   ⭐ **Constat au passage** : Entrance/Idle/Fill25/Fill50 sont sortis **octet pour octet identiques**
+   aux anciens — normal, `d9737af7` ne touchait qu'aux paliers 75/100 (cristaux + `meterGuard`).
+   Le rendu est donc bien deterministe, et seuls 2 fichiers avaient reellement change.
+
+   Commande de reference (les 3 flags restent obligatoires) :
    ```
    npx remotion render ChillMeter-<Etat> out.mov \
      --codec=prores --prores-profile=4444 --pixel-format=yuva444p10le --image-format=png
@@ -58,8 +61,10 @@ Le profil est rempli et le portfolio est publie : titre, resume, 20 competences,
 Working style (« Clear Communicator »), 4 showcases + 11 pieces isolees, toutes en anglais.
 Livrables : `out/_r-and-d/portfolio-en/UPWORK/` (+ `showcases/`, `thumbnails/`).
 
-**Ce qui reste ouvert cote profil** : Employment history VIDE (texte redige, a coller),
-badge d'identite (35 connects), aucun temoignage (viendra avec le temps).
+**Ce qui reste ouvert cote profil** : badge d'identite (35 connects — arbitrage d'Aziz :
+les candidatures d'abord), aucun temoignage (viendra avec le temps).
+✅ **Employment history REMPLI** par Aziz (session du 2026-08-23) — entree « Kora & Cartes /
+Founder & Video Director ».
 
 ## CE QU'ON A APPRIS (transposable, indépendant de cette annonce)
 
@@ -89,9 +94,39 @@ badge d'identite (35 connects), aucun temoignage (viendra avec le temps).
 - ⛔ `yt-dlp` : 3 installations concurrentes sur cette machine. La seule à jour est
   `/opt/homebrew/Caskroom/miniforge/base/bin/yt-dlp`. Les versions >90 j échouent en 403 sur YouTube.
 
-## RÈGLES PLATEFORME — vérifié 2026-08-22, À CONFIRMER avant d'envoyer
+## RÈGLES PLATEFORME
 
-Sources : recherche web du 2026-08-22, **non vérifié contre les pages officielles Upwork**.
+### ⭐⭐ Lien externe vs piece jointe — TRANCHE le 2026-08-23 (pages officielles Upwork lues)
+
+**Conclusion : joindre le fichier, ne pas coller de lien.** Non pas parce que le lien serait
+interdit, mais parce que la piece jointe supprime la question entierement.
+
+Ce que disent les pages officielles (scrapees, pas des forums) :
+- La **circonvention** vise les **coordonnees et moyens de contact/paiement hors plateforme** :
+  email, telephone, WhatsApp, Telegram, liens de reunion. « Sharing forms of outside communication
+  (or any other form of contact outside Upwork) before a contract starts is circumvention. »
+  ⛔ Un lien de PORTFOLIO n'y figure pas — c'est ce qu'Aziz avait vu masque en « information
+  removed », et ca ne visait pas les liens de travaux.
+- **Les propositions acceptent les pieces jointes**, memes types de fichiers que partout ailleurs :
+  « The supported file types are the same everywhere attachments are available (proposals, job
+  posts, projects, messages, etc.) », **1 Go max par fichier**.
+- ⚠️ Le seul risque reel sur un lien (source secondaire, forum) : il devient suspect s'il mene vers
+  une page contenant **des coordonnees ou un formulaire de contact**. Un blob nu n'en a pas — mais
+  la piece jointe rend le point sans objet.
+
+Sources : `support.upwork.com/hc/en-us/articles/360052511133` (circonvention) ·
+`.../360049608113` (partage de fichiers).
+
+### ⭐ Positionnement — ne pas avoir l'air de faire du travail gratuit (Aziz, 2026-08-23)
+
+Le risque n'est PAS qu'elle prenne le travail et parte (un MP4 de demo ne lui sert a rien sans le
+projet source ni les 6 MOV). Le risque est de **positionnement** : livrer avant d'avoir parle prix
+se lit comme « j'ai besoin du contrat », et devient un argument contre nous a la negociation.
+→ Joindre un **extrait court presente comme un test de faisabilite technique**, pas le livrable
+presente comme un cadeau. Et **ne pas annoncer qu'on a deja construit les 6 etats** — le garder
+pour l'entretien, ou c'est un atout de negociation.
+
+### Divulgation IA — verifie 2026-08-22, sources secondaires
 - Upwork n'a **pas** de page de politique dédiée à la divulgation d'IA ; l'obligation générale
   est de « personnellement relire et personnaliser » ce qu'on envoie.
 - Upwork **ne scanne pas** les livrables à la recherche d'IA au niveau plateforme. Ce qui compte
