@@ -44,6 +44,64 @@ const GREEN = "#3a8a70";  // Botswana
 const clamp = { extrapolateLeft: "clamp" as const, extrapolateRight: "clamp" as const };
 const W = 1920, H = 1080;
 
+// ── i18n : libelles affiches a l'ecran. Defaut = FR (la video publiee ne change PAS).
+// Une variante EN passe simplement labels={SCENE_COMPARAISON_LABELS_EN}.
+export type SceneComparaisonLabels = {
+  /** Plaques verdict deportees (nom + chiffre + source). */
+  norvegeName: string;
+  norvegeStat: string;
+  norvegeSource: string;
+  congoName: string;
+  congoStat: string;
+  congoSource: string;
+  botswanaName: string;
+  botswanaStat: string;
+  botswanaSource: string;
+  /** Triple screen final (nom court + chiffre). */
+  panelNorvegeName: string;
+  panelNorvegeStat: string;
+  panelCongoName: string;
+  panelCongoStat: string;
+  panelBotswanaName: string;
+  panelBotswanaStat: string;
+};
+
+export const SCENE_COMPARAISON_LABELS_FR: SceneComparaisonLabels = {
+  norvegeName: "NORVEGE",
+  norvegeStat: "1 500 Mds$",
+  norvegeSource: "fonds souverain — NBIM 2025",
+  congoName: "CONGO-BRAZZAVILLE",
+  congoStat: "dette : 92% du PIB",
+  congoSource: "2024 — Banque mondiale",
+  botswanaName: "BOTSWANA",
+  botswanaStat: "fonds souverain — Pula Fund",
+  botswanaSource: "diamants, dès 1966",
+  panelNorvegeName: "NORVÈGE",
+  panelNorvegeStat: "1 500 Mds$",
+  panelCongoName: "CONGO",
+  panelCongoStat: "dette : 92% du PIB",
+  panelBotswanaName: "BOTSWANA",
+  panelBotswanaStat: "fonds souverain",
+};
+
+export const SCENE_COMPARAISON_LABELS_EN: SceneComparaisonLabels = {
+  norvegeName: "NORWAY",
+  norvegeStat: "$1,500 bn",
+  norvegeSource: "sovereign fund — NBIM 2025",
+  congoName: "CONGO-BRAZZAVILLE",
+  congoStat: "debt: 92% of GDP",
+  congoSource: "2024 — World Bank",
+  botswanaName: "BOTSWANA",
+  botswanaStat: "sovereign fund — Pula Fund",
+  botswanaSource: "diamonds, since 1966",
+  panelNorvegeName: "NORWAY",
+  panelNorvegeStat: "$1,500 bn",
+  panelCongoName: "CONGO",
+  panelCongoStat: "debt: 92% of GDP",
+  panelBotswanaName: "BOTSWANA",
+  panelBotswanaStat: "sovereign fund",
+};
+
 // ── coords reelles (point cle par pays) ───────────────────────────────────────
 const NORVEGE: [number, number] = [4.50, 61.20];   // territoire (ancre la plaque verdict)
 const NORVEGE_OIL: [number, number] = [2.80, 60.30]; // gisement OFFSHORE mer du Nord (le jeton petrole, dans l'eau)
@@ -91,7 +149,9 @@ const brightenMap = (map: mapboxgl.Map) => {
   safe("admin-1-boundary", "line-color", "rgba(210,210,210,0.18)");
 };
 
-export const SceneComparaisonV3: React.FC = () => {
+export const SceneComparaisonV3: React.FC<{ labels?: SceneComparaisonLabels }> = ({
+  labels = SCENE_COMPARAISON_LABELS_FR,
+}) => {
   const { fps } = useVideoConfig();
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const [, force] = useState(0);
@@ -149,10 +209,10 @@ export const SceneComparaisonV3: React.FC = () => {
         <AnimatedFlagDecal mapRef={mapRef} iso="COG" geoNames={["Congo"]} appearAt={F_COG + 30} maxOpacity={0.72} />
         <AnimatedFlagDecal mapRef={mapRef} iso="BWA" geoNames={["Botswana"]} appearAt={F_BWA + 30} maxOpacity={0.72} />
         {/* Overlays geo-ancres : dots sonar + leaders + plaques verdict */}
-        <Overlays mapRef={mapRef} />
+        <Overlays mapRef={mapRef} labels={labels} />
       </CartoSouverainV5>
       {/* Fin = triple screen NU (3 pays cote a cote, zero phrase, la voix porte le recit) */}
-      <TripleScreen />
+      <TripleScreen labels={labels} />
       {/* Vignette tres douce (allegee : ne pas reassombrir les bords — carte lisible en plein jour) */}
       <AbsoluteFill style={{
         pointerEvents: "none",
@@ -259,7 +319,7 @@ const Leader: React.FC<{ x1: number; y1: number; x2: number; y2: number; op: num
 //  OVERLAYS — 1 seul SVG plein ecran, positions recalculees chaque frame (anti-derive)
 //  + plaques verdict deportees (GeoCountryPlaque mode pos), reliees par leader.
 // ════════════════════════════════════════════════════════════════════════════
-const Overlays: React.FC<{ mapRef: React.MutableRefObject<mapboxgl.Map | null> }> = ({ mapRef }) => {
+const Overlays: React.FC<{ mapRef: React.MutableRefObject<mapboxgl.Map | null>; labels: SceneComparaisonLabels }> = ({ mapRef, labels }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const map = mapRef.current;
@@ -314,21 +374,21 @@ const Overlays: React.FC<{ mapRef: React.MutableRefObject<mapboxgl.Map | null> }
       {/* plaques verdict deportees — UN SEUL CHIFFRE FACTUEL par pays (pas de jugement de valeur, decision Aziz).
           Norvege = ce qu'ils ont accumule · Congo = leur dette · Botswana = leur fonds (comme la Norvege). */}
       <GeoCountryPlaque
-        frame={frame} name="NORVEGE" color={GOLD}
-        stat="1 500 Mds$"
-        source="fonds souverain — NBIM 2025"
+        frame={frame} name={labels.norvegeName} color={GOLD}
+        stat={labels.norvegeStat}
+        source={labels.norvegeSource}
         appearAt={F_NOR + 55} hideAt={F_TRANS_AB} pos={norP} fadeFrames={14}
       />
       <GeoCountryPlaque
-        frame={frame} name="CONGO-BRAZZAVILLE" color={ORANGE}
-        stat="dette : 92% du PIB"
-        source="2024 — Banque mondiale"
+        frame={frame} name={labels.congoName} color={ORANGE}
+        stat={labels.congoStat}
+        source={labels.congoSource}
         appearAt={F_COG + 55} hideAt={F_TRANS_BC} pos={cogP} fadeFrames={14}
       />
       <GeoCountryPlaque
-        frame={frame} name="BOTSWANA" color={GREEN}
-        stat="fonds souverain — Pula Fund"
-        source="diamants, dès 1966"
+        frame={frame} name={labels.botswanaName} color={GREEN}
+        stat={labels.botswanaStat}
+        source={labels.botswanaSource}
         appearAt={F_BWA + 55} hideAt={F_CRANE} pos={bwaP} fadeFrames={14}
       />
     </>
@@ -342,11 +402,11 @@ const Overlays: React.FC<{ mapRef: React.MutableRefObject<mapboxgl.Map | null> }
 //  L'opposition se LIT dans le triptyque (3 destins juxtaposes), pas dans du texte.
 // ════════════════════════════════════════════════════════════════════════════
 type Panel = { iso: string; geoName: string; name: string; stat: string; color: string; clipBbox?: [number, number, number, number] };
-const PANELS: Panel[] = [
+const buildPanels = (labels: SceneComparaisonLabels): Panel[] => [
   // Norvege : clip continental (enleve Svalbard + iles eparses du Grand Nord -> silhouette compacte, taille comparable aux autres)
-  { iso: "NOR", geoName: "Norway",   name: "NORVÈGE", stat: "1 500 Mds$",        color: GOLD,   clipBbox: [4.0, 57.8, 31.5, 71.3] },
-  { iso: "COG", geoName: "Congo",    name: "CONGO",   stat: "dette : 92% du PIB", color: ORANGE },
-  { iso: "BWA", geoName: "Botswana", name: "BOTSWANA",stat: "fonds souverain",   color: GREEN },
+  { iso: "NOR", geoName: "Norway",   name: labels.panelNorvegeName,  stat: labels.panelNorvegeStat,  color: GOLD,   clipBbox: [4.0, 57.8, 31.5, 71.3] },
+  { iso: "COG", geoName: "Congo",    name: labels.panelCongoName,    stat: labels.panelCongoStat,    color: ORANGE },
+  { iso: "BWA", geoName: "Botswana", name: labels.panelBotswanaName, stat: labels.panelBotswanaStat, color: GREEN },
 ];
 
 // filtre les anneaux d'un feature pour ne garder que ceux dont le centre tombe dans une bbox (pays a iles eparses)
@@ -445,7 +505,7 @@ const TerritoryFlagPanel: React.FC<{ panel: Panel; index: number; topology: any;
   );
 };
 
-const TripleScreen: React.FC = () => {
+const TripleScreen: React.FC<{ labels: SceneComparaisonLabels }> = ({ labels }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const [topo, setTopo] = useState<any>(null);
@@ -457,13 +517,14 @@ const TripleScreen: React.FC = () => {
       .catch(() => continueRender(handle));
   }, [handle]);
 
+  const panels = buildPanels(labels);
   if (frame < F_CRANE - 10) return null;
   const veil = interpolate(frame, [F_CRANE - 10, F_CRANE + 30], [0, 1], clamp);
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
       <AbsoluteFill style={{ backgroundColor: NAVY, opacity: veil }} />
       <div style={{ position: "absolute", inset: 0, display: "flex", opacity: veil }}>
-        {topo && PANELS.map((panel, i) => (
+        {topo && panels.map((panel, i) => (
           <TerritoryFlagPanel key={panel.iso} panel={panel} index={i} topology={topo} frame={frame} fps={fps} />
         ))}
       </div>

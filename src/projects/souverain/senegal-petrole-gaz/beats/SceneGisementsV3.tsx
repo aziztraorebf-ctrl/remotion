@@ -50,6 +50,58 @@ const NAVY = "#16213a", GOLD = "#c8a951", GREY = "#5a5a5a", IVORY = "#f2efe6";
 const clamp = { extrapolateLeft: "clamp" as const, extrapolateRight: "clamp" as const };
 const W = 1920, H = 1080;
 
+// ── i18n : libelles affiches a l'ecran. Defaut = FR (la video publiee ne change PAS).
+// Une variante EN passe simplement labels={SCENE_GISEMENTS_LABELS_EN}.
+export type SceneGisementsLabels = {
+  /** PIVOT 60% — la seule ecriture du pivot. */
+  pivotQuestion: string;
+  /** Plaque SANGOMAR (acte 1). */
+  sangomarStat: string;
+  sangomarSource: string;
+  /** Plaque GTA (acte 2). */
+  gtaStat: string;
+  gtaSource: string;
+  /** Plaques destination (acte 2, dezoom monde). */
+  franceName: string;
+  franceStat: string;
+  indeName: string;
+  indeStat: string;
+  /** Plaque YAKAAR-TERANGA (acte 3). */
+  yakaarName: string;
+  yakaarStat: string;
+  yakaarSource: string;
+};
+
+export const SCENE_GISEMENTS_LABELS_FR: SceneGisementsLabels = {
+  pivotQuestion: "Combien reste au Sénégal\u00a0?",
+  sangomarStat: "Pétrole brut",
+  sangomarSource: "Opérateur : Woodside (Australie)",
+  gtaStat: "Gaz, depuis 2025",
+  gtaSource: "Opérateur : BP (Royaume-Uni)",
+  franceName: "FRANCE",
+  franceStat: "Client gaz",
+  indeName: "INDE",
+  indeStat: "Client gaz",
+  yakaarName: "YAKAAR-TERANGA",
+  yakaarStat: "Gaz, non attribué",
+  yakaarSource: "Opérateur : à décider",
+};
+
+export const SCENE_GISEMENTS_LABELS_EN: SceneGisementsLabels = {
+  pivotQuestion: "How much stays in Senegal\u00a0?",
+  sangomarStat: "Crude oil",
+  sangomarSource: "Operator: Woodside (Australia)",
+  gtaStat: "Gas, since 2025",
+  gtaSource: "Operator: BP (United Kingdom)",
+  franceName: "FRANCE",
+  franceStat: "Gas customer",
+  indeName: "INDIA",
+  indeStat: "Gas customer",
+  yakaarName: "YAKAAR-TERANGA",
+  yakaarStat: "Gas, unallocated",
+  yakaarSource: "Operator: to be decided",
+};
+
 // ── coords reelles (offshore Senegal + destinations export) ──────────────────
 const SANGOMAR: [number, number] = [-16.95, 14.0];   // petrole, au large de Dakar/Sine-Saloum
 const GTA: [number, number] = [-17.05, 15.9];        // gaz, frontiere SN/MR
@@ -120,7 +172,9 @@ const brightenMap = (map: mapboxgl.Map) => {
   safe("admin-1-boundary", "line-color", "rgba(210,210,210,0.18)");
 };
 
-export const SceneGisementsV3: React.FC = () => {
+export const SceneGisementsV3: React.FC<{ labels?: SceneGisementsLabels }> = ({
+  labels = SCENE_GISEMENTS_LABELS_FR,
+}) => {
   const { fps } = useVideoConfig();
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const [, force] = useState(0);
@@ -201,10 +255,10 @@ export const SceneGisementsV3: React.FC = () => {
           <AnimatedFlagDecal mapRef={mapRef} iso="FRA" geoNames={["France"]} appearAt={905} maxOpacity={1} clipBbox={[-5.5, 41.0, 9.8, 51.5]} />
           <AnimatedFlagDecal mapRef={mapRef} iso="IND" geoNames={["India"]} appearAt={950} maxOpacity={0.9} />
           <AnimatedFlagDecal mapRef={mapRef} iso="RUS" geoNames={["Russia"]} appearAt={905} maxOpacity={0.5} fadeOutAt={1000} />
-          <Effets mapRef={mapRef} />
+          <Effets mapRef={mapRef} labels={labels} />
         </CartoSouverainV5>
         {/* ── PIVOT 60% : voile navy + chiffre hero + jauge + nuance (premier plan, par-dessus la carte) ── */}
-        <PivotRevenu />
+        <PivotRevenu labels={labels} />
       </Sequence>
     </AbsoluteFill>
   );
@@ -224,7 +278,7 @@ export const SceneGisementsV3: React.FC = () => {
 //   P3 f1740-1980 : tenue stable, halo respire ("60% la moyenne" f1911).
 //   P4 f1980-2120 : halo se calme, fade doux -> navy pur ("ni scandale... du resultat" f2010-2134).
 // ════════════════════════════════════════════════════════════════════════════
-const PivotRevenu: React.FC = () => {
+const PivotRevenu: React.FC<{ labels: SceneGisementsLabels }> = ({ labels }) => {
   const frame = useCurrentFrame();
   if (frame < PIV) return null;
 
@@ -295,7 +349,7 @@ const PivotRevenu: React.FC = () => {
             opacity: qOp, color: IVORY, fontFamily: BEBAS, fontSize: 52, letterSpacing: "0.05em",
           }}
         >
-          Combien reste au Sénégal&nbsp;?
+          {labels.pivotQuestion}
         </div>
 
         {/* BARIL HERO a GAUCHE du centre (immuable, gros), se remplit du drapeau SEN */}
@@ -482,7 +536,7 @@ const Leader: React.FC<{ x1: number; y1: number; x2: number; y2: number; op: num
 // ════════════════════════════════════════════════════════════════════════════
 //  EFFETS — overlays SVG geo-ancres (1 seul SVG plein ecran, positions recalculees chaque frame)
 // ════════════════════════════════════════════════════════════════════════════
-const Effets: React.FC<{ mapRef: React.MutableRefObject<mapboxgl.Map | null> }> = ({ mapRef }) => {
+const Effets: React.FC<{ mapRef: React.MutableRefObject<mapboxgl.Map | null>; labels: SceneGisementsLabels }> = ({ mapRef, labels }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const map = mapRef.current;
@@ -620,29 +674,29 @@ const Effets: React.FC<{ mapRef: React.MutableRefObject<mapboxgl.Map | null> }> 
 
       {/* ── ACTE 1 — plaque SANGOMAR deportee (ocean gauche) ──────────────────── */}
       {frame < A2 && a1PlaqueOp > 0.01 && (
-        <GeoCountryPlaque frame={frame} name="SANGOMAR" color={GOLD} stat="Pétrole brut" source="Opérateur : Woodside (Australie)" appearAt={230} hideAt={A2} pos={{ x: PLAQUE_X, y: 560 }} />
+        <GeoCountryPlaque frame={frame} name="SANGOMAR" color={GOLD} stat={labels.sangomarStat} source={labels.sangomarSource} appearAt={230} hideAt={A2} pos={{ x: PLAQUE_X, y: 560 }} />
       )}
 
       {/* ── ACTE 2 — plaque GTA deportee (ocean gauche) ──────────────────────── */}
       {frame >= A2 - 10 && frame < 730 && a2PlaqueOp > 0.01 && (
-        <GeoCountryPlaque frame={frame} name="GTA" color={GOLD} stat="Gaz, depuis 2025" source="Opérateur : BP (Royaume-Uni)" appearAt={600} hideAt={724} pos={{ x: PLAQUE_X, y: 380 }} />
+        <GeoCountryPlaque frame={frame} name="GTA" color={GOLD} stat={labels.gtaStat} source={labels.gtaSource} appearAt={600} hideAt={724} pos={{ x: PLAQUE_X, y: 380 }} />
       )}
 
       {/* ── ACTE 2 — plaques DESTINATION qui apparaissent quand la fleche TOUCHE le pays ──
           France (fleche Europe arrive ~f1010) · Inde (fleche Asie arrive ~f1060). Posees AU POINT
           d'atterrissage (geo-ancrees), petites (juste le nom + role) = vie sur les pays partenaires. */}
       {frame >= 1000 && frame < A3 && (
-        <GeoCountryPlaque frame={frame} name="FRANCE" color={IVORY} stat="Client gaz" appearAt={1008} hideAt={A3} pos={{ x: ex, y: ey - 30 }} />
+        <GeoCountryPlaque frame={frame} name={labels.franceName} color={IVORY} stat={labels.franceStat} appearAt={1008} hideAt={A3} pos={{ x: ex, y: ey - 30 }} />
       )}
       {frame >= 1050 && frame < A3 && (
-        <GeoCountryPlaque frame={frame} name="INDE" color={GOLD} stat="Client gaz" appearAt={1058} hideAt={A3} pos={{ x: asx, y: asy - 30 }} />
+        <GeoCountryPlaque frame={frame} name={labels.indeName} color={GOLD} stat={labels.indeStat} appearAt={1058} hideAt={A3} pos={{ x: asx, y: asy - 30 }} />
       )}
 
       {/* ── ACTE 3 — plaque YAKAAR deportee (ocean gauche) ───────────────────── */}
       {/* La plaque Yakaar disparait AVANT le pivot 60% (sinon elle chevauche l'amorce "sur tout cet argent").
           hideAt=PIV-10 -> elle s'efface pendant que la voix finit "...la plus grosse surprise". */}
       {frame >= A3 + 60 && frame < PIV && (
-        <GeoCountryPlaque frame={frame} name="YAKAAR-TERANGA" color={GOLD} stat="Gaz, non attribué" source="Opérateur : à décider" appearAt={1180} hideAt={PIV - 10} pos={{ x: PLAQUE_X, y: 470 }} />
+        <GeoCountryPlaque frame={frame} name={labels.yakaarName} color={GOLD} stat={labels.yakaarStat} source={labels.yakaarSource} appearAt={1180} hideAt={PIV - 10} pos={{ x: PLAQUE_X, y: 470 }} />
       )}
     </>
   );

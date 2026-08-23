@@ -389,8 +389,8 @@ import { PrototypeD3StackedBars } from "./projects/souverain/senegal-petrole-gaz
 import { MapboxCameraLab, MAPBOX_CAMERA_LAB_FRAMES } from "./projects/_shared/mapbox/MapboxCameraLab";
 import { CartoSouverainV5Demo } from "./projects/_shared/mapbox/CartoSouverainV5Demo";
 import { CartoSouverainV5RegionalDemo } from "./projects/_shared/mapbox/CartoSouverainV5RegionalDemo";
-import { SceneGisementsV3 } from "./projects/souverain/senegal-petrole-gaz/beats/SceneGisementsV3";
-import { SceneComparaisonV3, SCENE_COMPARAISON_V3_FRAMES } from "./projects/souverain/senegal-petrole-gaz/beats/SceneComparaisonV3";
+import { SceneGisementsV3, SCENE_GISEMENTS_LABELS_EN } from "./projects/souverain/senegal-petrole-gaz/beats/SceneGisementsV3";
+import { SceneComparaisonV3, SCENE_COMPARAISON_V3_FRAMES, SCENE_COMPARAISON_LABELS_EN } from "./projects/souverain/senegal-petrole-gaz/beats/SceneComparaisonV3";
 import { SceneContratV3, SCENE_CONTRAT_V3_FRAMES } from "./projects/souverain/senegal-petrole-gaz/beats/SceneContratV3";
 import { SceneDetteV3, SCENE_DETTE_V3_FRAMES } from "./projects/souverain/senegal-petrole-gaz/beats/SceneDetteV3";
 import { SceneCoulissesV3, SCENE_COULISSES_V3_FRAMES } from "./projects/souverain/senegal-petrole-gaz/beats/SceneCoulissesV3";
@@ -2301,6 +2301,25 @@ export const RemotionRoot: React.FC = () => {
             fps={30}
             width={1920}
             height={1080}
+          />
+          {/* PORTFOLIO EN — memes scenes, libelles anglais (les FR ci-dessus restent intactes) */}
+          <Composition
+            id="Portfolio-EN-Senegal-Gisements"
+            component={SceneGisementsV3}
+            durationInFrames={2151}
+            fps={30}
+            width={1920}
+            height={1080}
+            defaultProps={{ labels: SCENE_GISEMENTS_LABELS_EN }}
+          />
+          <Composition
+            id="Portfolio-EN-Senegal-Comparaison"
+            component={SceneComparaisonV3}
+            durationInFrames={SCENE_COMPARAISON_V3_FRAMES}
+            fps={30}
+            width={1920}
+            height={1080}
+            defaultProps={{ labels: SCENE_COMPARAISON_LABELS_EN }}
           />
           <Composition
             id="SceneContratV3"
