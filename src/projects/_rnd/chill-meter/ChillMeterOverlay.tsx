@@ -62,18 +62,28 @@ const BottomEdgeEffect: React.FC<{ intensity: number; frame: number; fps: number
           filter: "blur(3px)",
         }}
       />
-      {/* particules qui derivent vers le haut (deterministe) */}
+      {/* Particules qui montent du bas — de vrais flocons, jamais des points ronds.
+          Brief p.8 : a 75 %, l'effet est sur le BORD BAS uniquement, le reste du cadre
+          doit rester clair. On borne donc leur remontee au tiers inferieur. */}
       <svg width="100%" height="100%" style={{ position: "absolute", inset: 0 }}>
-        {Array.from({ length: 46 }).map((_, i) => {
+        <GivreDefs />
+        {Array.from({ length: 26 }).map((_, i) => {
           const seed = i + 1;
-          const speed = 26 + Math.abs(Math.sin(seed * 3.1)) * 44;
-          const life = 4.4;
-          const phase = (t * speed / 100 + Math.abs(Math.sin(seed * 7.7))) % 1;
-          const x = ((Math.abs(Math.sin(seed * 12.9898)) * 1920) + Math.sin(t * 0.7 + seed) * 22) % 1920;
-          const y = 1080 - phase * 420;
-          const op = intensity * (1 - phase) * (0.35 + Math.abs(Math.sin(seed * 2.2)) * 0.5);
-          const r = 1.6 + Math.abs(Math.sin(seed * 5.4)) * 3.1;
-          return <circle key={i} cx={x} cy={y} r={r} fill="#cfefff" opacity={op} />;
+          const speed = 20 + Math.abs(Math.sin(seed * 3.1)) * 30;
+          const phase = ((t * speed) / 100 + Math.abs(Math.sin(seed * 7.7))) % 1;
+          const x = (Math.abs(Math.sin(seed * 12.9898)) * 1920 + Math.sin(t * 0.7 + seed) * 18) % 1920;
+          // remontee bornee : 320 px max au-dessus du bord bas
+          const y = 1080 - phase * 320;
+          const size = 13 + Math.abs(Math.sin(seed * 5.4)) * 17;
+          const op = intensity * (1 - phase) * (0.3 + Math.abs(Math.sin(seed * 2.2)) * 0.45);
+          if (op < 0.02) return null;
+          const piece = CRISTAUX[i % CRISTAUX.length];
+          const rot = (t * (6 + (seed % 4) * 5) + seed * 31) % 360;
+          return (
+            <g key={i} transform={`rotate(${rot} ${x + size / 2} ${y + size / 2})`} opacity={op}>
+              <use href={`#${piece}`} x={x} y={y} width={size} height={size} />
+            </g>
+          );
         })}
       </svg>
     </AbsoluteFill>
@@ -223,32 +233,51 @@ const FullChillEffect: React.FC<{ progress: number; frame: number; fps: number }
           </>
         )}
 
-        {/* neige / particules portees par la rafale */}
-        {Array.from({ length: 120 }).map((_, i) => {
+        {/* NEIGE — de VRAIS flocons dessines, plus de points ronds.
+            Regle du brief p.9 : "The strongest animation should stay concentrated along the
+            bottom half, the outer edges, and the left/center portions of the frame."
+            -> densite et taille decroissent avec la hauteur ; le haut-droite (son visage)
+            ne recoit que quelques flocons tres discrets ("a small amount CAN pass over my face"). */}
+        {Array.from({ length: 64 }).map((_, i) => {
           const seed = i + 1;
           const th = Math.abs(Math.sin(seed * 1.7)) * 0.3;
           const local = Math.max(0, Math.min(1, (progress - th) / 0.5));
           if (local <= 0) return null;
-          const drift = t * (38 + Math.abs(Math.sin(seed * 2.4)) * 88);
-          const x = (Math.abs(Math.sin(seed * 12.9898)) * 1920 + drift) % 1920;
+
+          // derive : lente, portee par la rafale vers la droite, chute douce
+          const drift = t * (30 + Math.abs(Math.sin(seed * 2.4)) * 70);
+          const x = (Math.abs(Math.sin(seed * 12.9898)) * 2040 + drift) % 2040 - 60;
+          const fall = t * (14 + Math.abs(Math.sin(seed * 4.1)) * 34);
           const baseY = Math.abs(Math.sin(seed * 78.233)) * 1080;
-          const y = (baseY - t * (16 + Math.abs(Math.sin(seed * 4.1)) * 40) + 1080) % 1080;
-          // le brief : le visage (droite/haut) ne doit jamais etre lourdement masque
-          // Ne pas noyer la fenetre du clip musical (haut-gauche) ni son visage (droite).
-          const clipGuard = x < 880 && y > 230 && y < 730 ? 0.22 : 1;
-          const faceGuard = x > 1180 && y < 620 ? 0.28 : 1;
-          const r = 1.4 + Math.abs(Math.sin(seed * 5.9)) * 3.4;
+          const y = (baseY + fall) % 1140 - 60;
+
+          // hauteur relative : 0 en haut, 1 en bas -> pilote densite ET taille
+          const depth = Math.min(1, Math.max(0, y / 1080));
+
+          // le tiers superieur ne garde qu'un flocon sur trois, et minuscule
+          if (depth < 0.34 && i % 3 !== 0) return null;
+
+          const size = (depth < 0.34 ? 9 : 15 + depth * 34) + Math.abs(Math.sin(seed * 5.9)) * 12 * depth;
+          const piece = CRISTAUX[i % CRISTAUX.length];
+          const rot = (t * (7 + (seed % 5) * 4) + seed * 47) % 360;
+
+          // zones protegees : son visage (droite-haut), la fenetre du clip (gauche)
+          // et LE COMPTEUR lui-meme — c'est l'instrument qu'on doit pouvoir lire.
+          const faceGuard = x > 1150 && y < 640 ? 0.22 : 1;
+          const clipGuard = x < 880 && y > 230 && y < 730 ? 0.3 : 1;
+          const meterGuard =
+            x > POS_X - 30 && x < POS_X + DEVICE_W * SCALE + 30 && y > POS_Y - 30 ? 0 : 1;
+
+          const op = local * (0.2 + depth * 0.55) * faceGuard * clipGuard * meterGuard;
+          if (op < 0.02) return null;
+
           return (
-            <circle
-              key={i}
-              cx={x}
-              cy={y}
-              r={r}
-              fill="#e9f8ff"
-              opacity={local * (0.3 + Math.abs(Math.sin(seed * 3.6)) * 0.5) * faceGuard * clipGuard}
-            />
+            <g key={i} transform={`rotate(${rot} ${x + size / 2} ${y + size / 2})`} opacity={op}>
+              <use href={`#${piece}`} x={x} y={y} width={size} height={size} />
+            </g>
           );
         })}
+
       </svg>
     </AbsoluteFill>
   );
