@@ -7,6 +7,19 @@
 > Toute nouvelle section de session s'insère APRÈS lui, jamais avant — sinon l'avertissement descend
 > et se fait enterrer, et un état périmé est annoncé à Aziz malgré l'avertissement présent et lu.
 
+## ⭐⭐ CANDIDATURE UPWORK — prête, non envoyée (2026-08-23)
+
+**Profil et portfolio FAITS** : titre, résumé, 20 compétences, photo, Working style, 4 showcases +
+11 pièces EN (`out/_r-and-d/portfolio-en/UPWORK/`, manifeste versionné dans
+`memory/client-sim-tests/upwork-chill-meter/PORTFOLIO-MANIFESTE.md`).
+
+**Les 3 étapes, dans l'ordre** : ① test CapCut desktop des MOV alpha (Aziz seul peut le faire) ·
+② **régénérer les 6 MOV** (antérieurs au fix des flocons, commit `d9737af7`) · ③ envoyer.
+⛔ **Blocage réel = connects à 0** (10 gratuits le 1<sup>er</sup> du mois). Employment history vide.
+→ Détail + pièges du questionnaire : `memory/client-sim-tests/upwork-chill-meter/STATUS.md`.
+
+---
+
 ## 🔧 BACKLOG TECHNIQUE — dette Gemini/outillage (2026-08-20, non urgent)
 
 Migration image faite (preview mort → GA → **défaut LITE**, -50 %). Restes identifiés par l'audit de wrap :

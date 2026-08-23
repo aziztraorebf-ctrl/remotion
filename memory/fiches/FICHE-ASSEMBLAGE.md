@@ -78,3 +78,25 @@ sinon l'historique gonfle à chaque re-découpage ; (3) **transcodage obligatoir
 
 ## SI ÇA RATE 2×
 Au **2e échec du même symptôme** (render qui plante, concat qui casse, gel qui revient) : STOP, pas de 3e variante. Déléguer à un agent frais (Opus, `run_in_background`) — **reverse-engineering du repo D'ABORD** (git log/blame, `memory/`, doctrines : le fix existe souvent déjà), `systematic-debugging` ensuite. L'agent RAPPORTE, n'applique pas. Coût documenté : ~40 min perdues sur un blocage API dont le fix était déjà dans le repo.
+
+## MONTER UN EXTRAIT PAR FONDUS (`xfade`) — paye le 2026-08-23
+
+⛔ **L'offset est CUMULATIF** : `xfade=transition=fade:duration=D:offset=O` ou `O` = duree cumulee
+des clips precedents **moins** la somme des fondus deja consommes. Un offset naif = fondu au mauvais
+endroit, ou filtre qui refuse.
+⛔ **Chaque entree passe par `scale=1920:1080,setsar=1,fps=30`** avant le filtre. Sur des sources
+heterogenes (notre cas : extraits Mapbox + D3 + motion melanges), `xfade` echoue sinon.
+ℹ️ La fiche couvrait le `concat` (raccord franc), pas le fondu. Zero occurrence de `xfade` dans
+`scripts/` et `memory/` avant ce jour.
+
+## ARTIFACT CLAUDE = APERCU, JAMAIS HEBERGEUR (mesure 2026-08-23)
+
+L'artifact **affiche bien** la video (`data:video/mp4;base64`, lecture confirmee) — ce n'est pas la
+lecture qui bloque, c'est le POIDS. **Plafond 16 Mo/page, et le base64 coute x1,34.**
+Mesure : 4 showcases = **41,6 Mo bruts -> 55,4 Mo encodes** = impossible.
+La version qui passe : `-crf 30 -vf scale=620:-2` -> **0,27-0,56 Mo par video, 2,18 Mo la page**.
+-> Calcul avant d'essayer : **~12 Mo de video brute maximum** par page, tout compris.
+-> Le lien de livraison d'un MP4 reste Vercel Blob. Pour les **IMAGES**, l'artifact reste le 1er choix.
+
+⚠️ **Une vignette extraite d'une video recadree DEPUIS est perimee** — elle montre l'ancien
+decoupage, sans erreur. Test : `[ vignette -nt video ] || echo PERIME`.

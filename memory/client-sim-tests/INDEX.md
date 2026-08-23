@@ -29,7 +29,8 @@
   Coûts mesurés : 4 planches d'un objet texturé = **0,79 $** · rendu ProRes alpha 135 frames = **53 s**.
   Détail, gotchas et suites : [STATUS](upwork-chill-meter/STATUS.md).
   Code : `src/projects/_rnd/chill-meter/`. Outil né ici : `scripts/tools/svg-from-ref-image.py`.
-  ▶️ **Prochaine session** : test CapCut (Aziz), puis remplir le profil Upwork (vide) avant toute candidature.
+  ▶️ **Prochaine session** : test CapCut (desktop, installé le 23/08) · **RÉGÉNÉRER les 6 MOV** (antérieurs au fix des flocons, commit d9737af7) · envoyer la candidature.
+  ⛔ Profil et portfolio **FAITS le 2026-08-23** (4 showcases + 11 pièces EN, `out/_r-and-d/portfolio-en/UPWORK/`). Blocage réel = **connects à 0** + Employment history vide.
 
 - ⭐⭐⭐ **Zambie / Peace Corps (CARTOGRAPHIQUE — 1er brief CLIENT RÉEL, pas un SaaS fictif) — 2026-08-21/22.**
   ⚠️ Genre différent des 3 tests ci-dessous : ce n'est pas un produit inventé mais une **vraie offre

@@ -25,6 +25,14 @@ d'un redessin diffère visiblement de celui de la plaque au sol.
    Attributs `data-capture="row|nav|thead|search"` = les sélecteurs de capture.
 2. **Servir** : `python3 -m http.server 8899 --directory <live-page>` (⛔ `--directory`, un `cd` ne
    persiste pas → 404).
+⛔ **`waitUntil:'networkidle'` TIMEOUT sur une page a videos en boucle** (le reseau n'est jamais au
+   repos) -> `waitUntil:'load'` + `waitForTimeout(1500)`. ⚠️ `capture-northshield.mjs:78` utilise
+   `networkidle0` : correct pour une page statique, il se BLOQUERA sur une page a medias.
+⛔ **Playwright sans navigateur** : reutiliser le Chrome de Puppeteer deja present plutot que
+   `playwright install` — `chromium.launch({executablePath: process.env.CHROME_BIN})` avec
+   `~/.cache/puppeteer/chrome/*/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/...`
+   (⚠️ 2 versions coexistent : globber, ne pas coder en dur). Paye le 2026-08-23.
+
 3. **Capturer** : `scripts/tools/ui-capture/capture-northshield.mjs` (versionné ; adapté de
    `assets/scripts/capture-template.mjs`). Produit : plaque pleine page **2x**, découpes par élément,
    plaque VIDE (`hideForEmptyPlate`), et **`live-layout.json` = les bbox réelles**.
@@ -65,12 +73,9 @@ leurs plans serrés sont nets et pas une réimplémentation maison.
 
 ## LE MONTAGE — leur `promo-energy-arc` (= leur mix-and-match)
 
-| Segment | Part | Énergie | Cartes |
-|---|---|---|---|
-| ① Ouverture marque | 8-12 % | basse | `brand-ink-open` |
-| ② Le héros | 12-15 % | moyenne | la page se pose |
-| ③ Montée | **55-65 %** | moyenne⇄basse | `row-embed` · `type-and-filter` · `list-stack-press` |
-| ④ Final | 13-16 % | **pic** | `outro-group-photo-launch` |
+*(tableau des proportions retire le 2026-08-23 : doctrine importee, consultable dans
+`Vincentwei1021/video-shotcraft` > `sequences/promo-energy-arc`. Les regles dures ci-dessous, elles,
+portent chacune leur cout paye.)*
 
 Règles dures de leurs fiches : **hold ≥ 1 s** après la pose d'un lockup (« sous 1 s = à refaire ») ·
 frappe **3f/caractère** (valeur figée après un retour « trop rapide ») · **respiration de ~11f** entre

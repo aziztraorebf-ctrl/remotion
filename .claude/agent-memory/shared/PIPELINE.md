@@ -315,3 +315,23 @@ ci-dessus. Détail technique complet conservé dans `memory/episodes/_client-sim
   "je n'ai même pas vu le pic".
 - Statut : READY FOR STAGE 6 (quality-reviewer). Dev server non lancé (validation stills ciblés
   jugée suffisante, cf justification Option A dans RULES-ACTIVE.md pour ce projet mixte complexe).
+
+---
+
+## 2026-08-23 — PORTFOLIO UPWORK FREELANCE (hors pipeline video classique)
+
+- **Etat** : LIVRE. Profil Upwork rempli + portfolio publie.
+- **Produit** : 4 showcases montes (43-57 s, sous la limite plateforme de 60 s) + 11 pieces isolees,
+  toutes 1920x1080 muettes ANGLAISES, + 15 vignettes choisies a la main (Upwork prend sinon une
+  frame au hasard — vecu : cartouche coupe au bord).
+  Livrables : `out/_r-and-d/portfolio-en/UPWORK/` · manifeste versionne :
+  `memory/client-sim-tests/upwork-chill-meter/PORTFOLIO-MANIFESTE.md` (⚠️ `out/` est gitignore).
+- **Code** : variantes EN par prop `labels` a defaut FR (commits c2f51e6b, 3c7120cf, 847668dc).
+  Les compositions de production rendent a l'identique — non-regression garantie par construction.
+- **Incident** : 2 agents paralleles en `isolation:worktree` se sont ecrases (`src/` est partage).
+  Code de traduction Soudan perdu (MP4 sauves). Le commit gazoduc est reste sur la branche du
+  worktree — recupere par cherry-pick a la cloture. Cf. `feedback_agents-paralleles-ecrasement-src-partage`.
+- **Prochaine etape** : test CapCut · regenerer les 6 MOV chill-meter · envoyer la candidature.
+  ⛔ Blocage reel = connects a 0, pas le portfolio.
+- **En pause** : site web portfolio externe (`out/_r-and-d/portfolio-site/`, README + 2 directions
+  de design proposees par Gemini et GPT). Un site Netlify VIDE existe deja — ne pas en recreer un.

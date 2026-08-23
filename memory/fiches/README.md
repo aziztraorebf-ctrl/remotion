@@ -81,7 +81,17 @@ encore** sur disque (vérifié 2026-08-17). Les fiches ne dépendent pas de lui.
 
 ## Budget par fiche
 **55 lignes par défaut.** Exceptions assumées, **chiffres re-mesurés le 2026-08-20 (`wc -l`)** :
-`FICHE-CLIP-GENERE` **216** · `FICHE-STORYBOARD` **167** · `FICHE-UI-PRODUIT` **116** · `FICHE-SVG-DESSINE` **107** · `FICHE-CAMERA` **109** · `FICHE-ASSEMBLAGE` **61** · `FICHE-PACKAGING` **59** — *re-mesurés le 2026-08-21*.
+⛔⛔ **LA LISTE CHIFFREE A ETE SUPPRIMEE LE 2026-08-23 — elle a menti 4 wraps de suite.**
+Un chiffre grave dans un fichier NON injecte redevient faux des que la fiche grossit. Le README
+annoncait lui-meme « corriger le chiffre sans graver la commande garantit une 4e fois » : c'est
+arrive. On ne corrige donc plus le chiffre, on MESURE :
+```
+for f in memory/fiches/FICHE-*.md; do printf "%-28s %s\n" "$(basename $f)" "$(wc -l < $f)"; done
+```
+Fiches **hors budget assumees** (le depassement est arbitre, pas subi) : `FICHE-CLIP-GENERE`
+(R&D la plus active) · `FICHE-STORYBOARD` · `FICHE-UI-PRODUIT` · `FICHE-SVG-DESSINE` ·
+`FICHE-CAMERA` · `FICHE-ARSENAL-SCENE` (⚠️ ajoutee le 2026-08-23 : elle depassait depuis
+longtemps sans jamais avoir ete arbitree) · `FICHE-ASSEMBLAGE`.
 ⛔⛔ **MESURER AVEC `wc -l < fichier`** (redirection, PAS `wc -l fichier`). L'écart de +1 constaté
 3 wraps de suite (2026-08-18, 08-20, 08-21) vient d'un comptage à la main ou d'une déduction —
 jamais d'un artefact de `wc`. Corriger le chiffre sans graver la commande garantit une 4e fois.
