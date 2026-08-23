@@ -421,7 +421,7 @@ import { KineticSlam3D } from "./projects/_shared/_demos/KineticSlam3D";
 import { Country3DRise } from "./projects/_shared/_demos/Country3DRise";
 import { Asset3DShowcase } from "./projects/_shared/_demos/Asset3DShowcase";
 import { PremiumCard3D, PREMIUM_CARD_3D_FRAMES } from "./projects/_shared/_demos/PremiumCard3D";
-import { KeyBenchA, KeyBenchB } from "./projects/_shared/_demos/keys/KeyBench";
+import { KeyBenchA, KeyBenchB, KeyBenchGemini, KeyBenchGlm, KeyBenchKimi, KeyBenchGrok } from "./projects/_shared/_demos/keys/KeyBench";
 import { JetonWarMap3DCompare } from "./projects/_shared/_demos/JetonWarMap3DCompare";
 import { RapidFireCountries } from "./projects/_shared/mapbox/RapidFireCountries";
 import { ClassifiedRedactReveal } from "./projects/_shared/mapbox/ClassifiedRedactReveal";
@@ -2741,6 +2741,38 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="KeyBench-B"
           component={KeyBenchB}
+          durationInFrames={1}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="KeyBench-Gemini"
+          component={KeyBenchGemini}
+          durationInFrames={1}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="KeyBench-Glm"
+          component={KeyBenchGlm}
+          durationInFrames={1}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="KeyBench-Kimi"
+          component={KeyBenchKimi}
+          durationInFrames={1}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="KeyBench-Grok"
+          component={KeyBenchGrok}
           durationInFrames={1}
           fps={30}
           width={1920}

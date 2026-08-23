@@ -18,6 +18,10 @@ import React from "react";
 import { AbsoluteFill, useVideoConfig } from "remotion";
 import { KeyModel as KeyModelA } from "./KeyModelA";
 import { KeyModel as KeyModelB } from "./KeyModelB";
+import { KeyModel as KeyModelGemini } from "./KeyModelGemini";
+import { KeyModel as KeyModelGlm } from "./KeyModelGlm";
+import { KeyModel as KeyModelKimi } from "./KeyModelKimi";
+import { KeyModel as KeyModelGrok } from "./KeyModelGrok";
 
 /** Les 4 angles ou l'objet sera reellement vu, en radians. */
 export const BENCH_ANGLES = [-0.2, 0.35, 0.85, 1.4] as const;
@@ -81,3 +85,7 @@ export const KeyBench: React.FC<{ model: KeyComponent }> = ({ model: Key }) => {
  */
 export const KeyBenchA: React.FC = () => <KeyBench model={KeyModelA} />;
 export const KeyBenchB: React.FC = () => <KeyBench model={KeyModelB} />;
+export const KeyBenchGemini: React.FC = () => <KeyBench model={KeyModelGemini} />;
+export const KeyBenchGlm: React.FC = () => <KeyBench model={KeyModelGlm} />;
+export const KeyBenchKimi: React.FC = () => <KeyBench model={KeyModelKimi} />;
+export const KeyBenchGrok: React.FC = () => <KeyBench model={KeyModelGrok} />;

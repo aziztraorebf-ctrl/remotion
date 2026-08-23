@@ -1,0 +1,36 @@
+[
+  {
+    "provider": "gemini",
+    "ok": true,
+    "fichier": "src/projects/_shared/_demos/keys/KeyModelGemini.tsx",
+    "lignes": 219,
+    "secondes": 139.6
+  },
+  {
+    "provider": "gpt",
+    "ok": false,
+    "erreur": "HTTPError: 402 Client Error: Payment Required for url: https://openrouter.ai/api/v1/chat/completions",
+    "secondes": 0.4
+  },
+  {
+    "provider": "glm",
+    "ok": true,
+    "fichier": "src/projects/_shared/_demos/keys/KeyModelGlm.tsx",
+    "lignes": 93,
+    "secondes": 70.6
+  },
+  {
+    "provider": "kimi",
+    "ok": true,
+    "fichier": "src/projects/_shared/_demos/keys/KeyModelKimi.tsx",
+    "lignes": 154,
+    "secondes": 178.7
+  },
+  {
+    "provider": "grok",
+    "ok": true,
+    "fichier": "src/projects/_shared/_demos/keys/KeyModelGrok.tsx",
+    "lignes": 384,
+    "secondes": 242.9
+  }
+]
