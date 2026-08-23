@@ -810,3 +810,31 @@ python3 scripts/tools/svg-concours-vision.py --image cible.png --brief-file brie
 
 ⚠️ Corollaire : ne jamais choisir un modele "par reputation" sur ce type de tache — lancer le concours,
 comparer les rendus rasterises, greffer element par element.
+
+---
+
+## ⭐⭐ 2026-08-22 — LE MIX-AND-MATCH EST UNE PROPRIÉTÉ DU BRIEF, PAS DES MODÈLES
+
+Le § CONCOURS VISION disait déjà « le mix-and-match par élément est LA méthode ». Ce qui manquait :
+**comment le rendre mécanique**. Réponse : **imposer dans le brief la liste EXACTE des `<g id>` attendus**
+(noms + rôle de chacun). Les 4 planches du test chill-meter partageaient alors la même arborescence, donc
+un script a pu assembler le meilleur groupe de chaque modèle sans une retouche manuelle
+(`memory/client-sim-tests/upwork-chill-meter/assemble_mix.py`).
+⛔ Sans cette clause : choisir UNE planche et vivre avec ses défauts.
+
+⭐ Corollaire payé : **exiger l'ÉTAT NEUTRE quand la référence client montre l'état FINAL.** La référence
+fournie était givrée à 100 % (son état final) ; le brief a exigé un châssis PROPRE + le givre en couche
+séparée. Sans ça, les paliers 0/25/50 % étaient impossibles → toute la planche à refaire.
+
+### Profils mesurés sur UN MÊME objet texturé (même brief, même image de référence)
+
+| Modèle | Force | Faiblesse | Coût |
+|---|---|---|---|
+| **Kimi K3** | le plus propre, aucun défaut de composition | métal un peu lisse | 0,21 $ |
+| **GPT-5.6 Sol** | la matière la plus riche (cadres, grille, 41 glaçons) | ⛔ **textes chevauchés** (bloquant) | 0,19 $ |
+| **Fable 5** | le meilleur néon (cœur blanc incandescent) | gauge plat, même défaut de flocon | **0 $** |
+| **Grok 4.6** (`x-ai/grok-4.6`) | ⭐ **la meilleure typographie — seul sans chevauchement** | matière plate | 0,25 $ |
+
+→ **Grok entre dans la rotation** quand la lisibilité prime (HUD, habillage de marque).
+Lanceur : `scripts/tools/svg-from-ref-image.py --provider {gemini|gpt|kimi|grok} --brief X.md --ref Y.png --out Z.svg`
+(⚠️ à ne pas confondre avec `svg-from-image-target.py`, dont le brief est verrouillé sur le registre gravure 9:16).

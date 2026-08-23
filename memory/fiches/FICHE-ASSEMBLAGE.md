@@ -3,6 +3,18 @@
 > Chemins vérifiés sur disque le 2026-08-17.
 
 ## AVANT DE RENDRE
+- ⭐⭐ **Export ALPHA (overlay livré à un client, incrustation CapCut/Premiere) — les 4 flags sont TOUS obligatoires** :
+  `npx remotion render <Comp> out.mov --codec=prores --prores-profile=4444 --pixel-format=yuva444p10le --image-format=png`
+  ⛔ Sans `--pixel-format`, ProRes retombe **silencieusement** en `yuv422p12le` SANS alpha, sans erreur.
+  Sans `--image-format=png`, TypeError. **Vérifier après coup, jamais sur parole** :
+  `ffprobe -v error -select_streams v:0 -show_entries stream=pix_fmt` doit rendre `yuva444p12le`
+  (le `10le` demandé sort en `12le`, c'est normal — ce qui compte est le **`a`**). Mesuré : 135 frames 1080p = 53 s.
+  (chill-meter Upwork, 2026-08-22 · détail : `memory/key-learnings.md` porte déjà le piège depuis 2026-06-08)
+- ⛔⛔ **UN RENDU ALPHA S'AFFICHE COMME UN RECTANGLE NOIR** dans les visualiseurs d'images — c'est NORMAL,
+  pas un bug. Vécu 2026-08-22 : défaut inexistant signalé à Aziz, code modifié pour rien, agent de diagnostic
+  mobilisé. **Avant de conclure à un défaut sur une frame transparente : MESURER**
+  (`Image.open(f).convert("RGBA").getpixel((x,y))` → `(0,0,0,0)` = tout va bien).
+  Cf. `feedback_transparence-lue-comme-bug.md`.
 - **Mapbox / WebGL → `./scripts/render-mapbox.sh <CompositionId> <out.mp4> [args]` OBLIGATOIRE.** `npx remotion render` nu échoue en « Failed to initialize WebGL ». Le script fixe ce qui a été payé : `chrome-headless-shell`, `--gl=angle`, `--concurrency=1`, public-dir slim par symlinks (évite de copier 2,4 Go). ~5 fps.
 - **D3 / SVG pur → `npx remotion render` local classique.** ⛔ `scripts/tools/render-on-vercel.py` = POC ABANDONNÉ, ne JAMAIS l'utiliser (repo Vercel figé au 2026-03-27, 3 compos de démo, ne verra jamais nos compositions).
 - **Netteté = `scale=1` uniquement.** Un render 0.4–0.5 est flou par construction et fait douter à tort. Avant de conclure « flou/moche » → 1 frame full HD.

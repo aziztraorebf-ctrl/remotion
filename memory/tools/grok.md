@@ -27,6 +27,20 @@ numéro de version au lieu de lire la liste.
 | `openai/gpt-5.5` | text, image, file | idem — **meilleur relecteur de frame** testé, même sans avoir dessiné la planche |
 | `google/gemini-3.1-pro-preview` | text, image, file, audio, **video** | le SEUL à juger du MOUVEMENT |
 
+### ⭐ VISION→SVG — 1re fois testé, MEILLEURE TYPOGRAPHIE des 4 modèles (2026-08-22)
+
+`x-ai/grok-4.6` via OpenRouter, comparatif à brief ET image identiques sur un objet texturé
+(compteur néon givré, test Upwork chill-meter) : **seul des 4 à ne produire AUCUN chevauchement de
+texte** — GPT-5.6 Sol et Fable 5 ont tous deux fait manger une lettre du titre par un flocon.
+Matière plate en revanche (Kimi plus propre en géométrie, GPT plus riche en matière, Fable meilleur
+néon et gratuit). → **À privilégier dès que la LISIBILITÉ TYPOGRAPHIQUE prime** : HUD, jauge,
+habillage de marque, cartouche, légende chiffrée. ⛔ Jamais seul sur un objet très texturé.
+
+Coût mesuré : **0,25 $/planche** (vs Kimi 0,21 · GPT 0,19 · Fable 0). Le plus cher des 4, à cause de
+~15 000 tokens de raisonnement.
+
+✅ **BRANCHÉ le jour même** dans `scripts/tools/svg-from-ref-image.py` (`--provider grok`).
+
 ## ⭐⭐ Grok GÉNÈRE DES IMAGES — capacité qu'on ignorait, découverte 2026-08-17
 
 > **On croyait que Grok ne dessinait pas** et il était donc exclu de tous nos storyboards. Faux :

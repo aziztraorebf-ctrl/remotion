@@ -1,5 +1,5 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-08-13 (purge : 26,5 Ko → ce fichier. Sections closes/mergées/dupliquées supprimées, git garde tout)
+> Mis a jour : 2026-08-22 (purge : 26,5 Ko → ce fichier. Sections closes/mergées/dupliquées supprimées, git garde tout)
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 > ⛔ **Format : 3 lignes max par projet.** Un projet TERMINÉ se SUPPRIME de ce fichier, il ne
 > s'accumule pas — c'est faute d'appliquer cette règle qu'il a atteint 116 Ko en juillet, puis 26,5 Ko en août.

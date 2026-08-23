@@ -57,6 +57,16 @@ Ouvrir dans cet ordre, **lire chaque liste jusqu'au bout** (une brique en fin de
 ⚠️ Un catalogue qui affirme une ABSENCE est faillible : vérifier par `ls` + `git ls-files` + `git log --all -- <nom>` (un registre « canonique » peut vivre sur une branche R&D jamais mergée — 4 occurrences). Un nom trouvé 2× (`find src -name '<Nom>*'`) = piège d'import.
 
 ## INTERDITS — erreurs déjà payées
+- ⛔⛔ Convertir en camelCase un SVG injecté par `dangerouslySetInnerHTML` (réflexe JSX) → **garder le
+  kebab-case** : React parse ce fragment en **HTML**, donc `strokeWidth`/`stopColor` sont ignorés
+  **silencieusement** — les 26 segments d'un gauge sont restés noirs, sans erreur. Le camelCase ne vaut
+  que pour du JSX écrit à la main. (chill-meter, 2026-08-22 : 1 rendu + 1 diagnostic)
+- ⛔⛔ **Corollaire payé de la règle 4 du contrat** (« les éléments à révéler sont livrés `opacity="0"` ») :
+  retirer cet attribut figé À L'INJECTION si l'enveloppe React pilote aussi l'opacité — sinon
+  `0 × frost = 0` et l'élément n'apparaît **jamais**, sans erreur. La règle qui rend le SVG animable est
+  exactement celle qui l'éteint si on l'oublie au branchement. (chill-meter, 2026-08-22)
+- ⛔ Un gros cercle avec `filter: blur` **CSS** → rastérisé en **rectangle opaque** en headless. Faire les
+  halos/ondes en **anneaux nets superposés** (le `feGaussianBlur` SVG, lui, passe). (chill-meter, 2026-08-22)
 - ⛔ Dessiner un contour de pays/région à main levée ou depuis un `svg_path` de LLM → **utiliser d3-geo + Natural Earth** — Zimbabwe méconnaissable, 2 cas.
 - ⛔ Relier deux points géo en ligne droite (tracé, pipeline, flux) → grep le tracé dans `src/projects/` — TSGP raccourci, sautait le Niger.
 - ⛔ Animer `viewBox` pour une caméra → `<g transform="translate(cx,cy) scale(k) translate(-cx,-cy)">`, viewBox FIXE — croyance « pas de caméra en SVG ».
@@ -73,6 +83,15 @@ Ouvrir dans cet ordre, **lire chaque liste jusqu'au bout** (une brique en fin de
 ## RÉFLEXES
 - **INTENTION (1 verbe : ce qu'on veut faire RESSENTIR) → FORME → MOTEUR → TEMPLATE.** Jamais partir du catalogue : c'est le piège des 10 essais.
 - **Le modèle dessine le DÉCOR (SVG statique en `<g id>` nommés) · nous animons l'AMBIANCE · nos briques prennent les PERSONNAGES.** Fable 5 = générateur SVG par défaut (agent Claude Code, zéro API) ; mode MAX pour narratif/organique/visage.
+  ⛔⛔ **LE PIÈGE : dessiner ne se présente pas comme dessiner, mais comme de la MÉCANIQUE.**
+  Enfreint **3× dans la même session** (2026-08-22, prototype chill-meter) alors que cette fiche
+  était injectée : (1) l'objet entier codé à la main → châssis plat, sans relief, à refaire ;
+  (2) « juste quelques polygones pour figurer du givre » → Aziz : *« on dirait des petits carrés
+  qui arrivent de nulle part »* ; (3) des cercles pour des particules de neige → *« trop cheap »*.
+  Les 3 fois, c'est Aziz qui l'a vu AU RENDU, jamais moi en écrivant. **Test avant d'écrire une
+  boucle qui produit des `<polygon>`/`<circle>`/`<path>` décoratifs : est-ce que ça FIGURE quelque
+  chose du monde réel (flocon, éclat, feuille, étincelle) ? Si oui → c'est du dessin, ça se
+  délègue.** Une planche de N pièces réutilisables coûte ~0,15 $ et 3 min.
 - **Scène à personnage : choisir le RÉGIME d'abord** — DÉMONSTRATIF (1 corps qui EST l'argument) > AMBIANT (décor coûteux).
 - **Mécanisme : modéliser par calcul AVANT le JSX.** Poser le pivot, calculer la position à 0/50/100 %, vérifier que l'ancrage ne bouge pas. Préférer `scale(sx,1)` autour d'un bord fixe à `rotate()` (zéro débordement par construction). Le render CONFIRME, il ne DÉCOUVRE pas.
 - **Calcul et rendu prouvent des choses différentes** : le calcul prouve les INVARIANTS (bornes, fenêtres de temps, conservation, non-collision), le rendu prouve la CRÉDIBILITÉ (ancrage, occlusion, profondeur, lecture). Faire les deux.

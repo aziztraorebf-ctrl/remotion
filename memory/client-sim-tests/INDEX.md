@@ -12,6 +12,25 @@
 
 ## Tests réalisés
 
+- ⭐⭐⭐ **Upwork « Max Chill Factor Meter » / AbiGirl Reacts (OVERLAY ANIMÉ — 2e brief CLIENT RÉEL) — 2026-08-22.**
+  Genre encore différent : ni carte ni SaaS, un **habillage de marque à fond transparent** livré pour
+  le montage de la cliente (compteur rétro-futuriste givré, 0→100, 6 états, 350 $).
+  **Prototype COMPLET de bout en bout. RIEN ENVOYÉ, aucun engagement pris.**
+  Parcours : 3 annonces triées → 4 modèles au MÊME brief SVG (Kimi/GPT/Fable/**Grok**) → mix
+  assemblé par script → animation Remotion → **export ProRes 4444 alpha vérifié** → démo montée
+  sur le plateau réel de la cliente.
+  ⭐ Acquis transférables : (1) **le ratio « total dépensé ÷ embauches » du client** trie une annonce
+  en 30 s — les 2 annonces écartées étaient à 135 $ et 39 $/embauche ; (2) **le marché ne demande
+  jamais « du SVG »** — aucun des 3 briefs ne nomme une technique, ils demandent un livrable et un
+  format ; (3) **un brief qui DICTE les noms de `<g id>`** rend les planches de N modèles
+  interchangeables pièce par pièce ; (4) **exiger l'ÉTAT NEUTRE** quand la référence client montre
+  l'état FINAL (sa référence était givrée à 100 % = son état final ; sans châssis propre livré à
+  part, les paliers 0/25/50 % étaient impossibles) — c'est le SYMÉTRIQUE du point 3 ci-dessous.
+  Coûts mesurés : 4 planches d'un objet texturé = **0,79 $** · rendu ProRes alpha 135 frames = **53 s**.
+  Détail, gotchas et suites : [STATUS](upwork-chill-meter/STATUS.md).
+  Code : `src/projects/_rnd/chill-meter/`. Outil né ici : `scripts/tools/svg-from-ref-image.py`.
+  ▶️ **Prochaine session** : test CapCut (Aziz), puis remplir le profil Upwork (vide) avant toute candidature.
+
 - ⭐⭐⭐ **Zambie / Peace Corps (CARTOGRAPHIQUE — 1er brief CLIENT RÉEL, pas un SaaS fictif) — 2026-08-21/22.**
   ⚠️ Genre différent des 3 tests ci-dessous : ce n'est pas un produit inventé mais une **vraie offre
   Upwork** (animation cartographique, volontaires en Zambie 1995→2026), et le livrable est une **démo

@@ -8,6 +8,26 @@
 > le fix EN DUR (import `force_ipv4` natif, plus besoin d'y penser) — mais TOUT NOUVEAU script réseau
 > doit importer `scripts/tools/force_ipv4.py` en première ligne dès sa création, pas après coup.
 
+## ⛔ 3 INSTALLATIONS CONCURRENTES SUR CETTE MACHINE — utiliser la bonne (2026-08-22)
+
+`which -a yt-dlp` renvoie **3 binaires**. Un seul est à jour :
+
+| Chemin | Version au 2026-08-22 | Verdict |
+|---|---|---|
+| `/opt/homebrew/Caskroom/miniforge/base/bin/yt-dlp` | **2026.08.19** | ✅ **le seul à utiliser** |
+| `/opt/homebrew/bin/yt-dlp` | 2026.03.17 | ⛔ >90 j → **HTTP 403** sur YouTube |
+| `/Library/Frameworks/Python.framework/Versions/3.14/bin/yt-dlp` | 2026.03.17 | ⛔ idem |
+
+⚠️ `pip install --upgrade yt-dlp` met à jour **miniforge**, PAS le binaire de `/opt/homebrew/bin/`
+que le PATH résout en premier — donc `yt-dlp --version` continue d'afficher l'ancienne après upgrade.
+
+**Symptômes d'une version périmée** (vécu 2026-08-22, 2 tentatives perdues) : `--download-sections`
+échoue en `403 Forbidden` puis, en changeant de client, `Only images are available for download`.
+Ce n'est PAS le gotcha IPv6 ci-dessous — la requête aboutit, c'est YouTube qui refuse.
+
+**Réflexe** : utiliser le chemin absolu miniforge, ou vérifier `yt-dlp --version` **avant** de
+diagnostiquer un échec YouTube. Une version de plus de 90 jours affiche elle-même un avertissement.
+
 ## IPv6 mort dans le sandbox -> yt-dlp/Gemini/OpenRouter/tout script Python semble "bloqué" indéfiniment
 
 **Symptôme** : toute requête HTTPS faite par un client Python (`yt-dlp`, `google-genai`, `requests` vers OpenRouter, urllib, http.client) reste bloquée sans erreur ni timeout respecté, alors que `curl` répond en <2s sur la même URL. **Pas spécifique à YouTube** — confirmé aussi sur `generativelanguage.googleapis.com` (Gemini) et `openrouter.ai` (GPT via OpenRouter).
