@@ -142,3 +142,6 @@ scratchpad-yt/
 
 # Zooms/crops derives des storyboards (reproductibles avec PIL, ne pas versionner)
 memory/episodes/**/breakdown-acte*/**/zoom-*.png
+
+# Brief client PDF (7,4 Mo) - garde sur disque, hors git (binaire non-diffable)
+memory/client-sim-tests/upwork-chill-meter/BRIEF-CLIENT-ORIGINAL.pdf

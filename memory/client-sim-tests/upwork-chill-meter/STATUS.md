@@ -71,6 +71,13 @@ Alpha verifie deux fois — cf. § PROCHAINE SESSION point 2 pour la commande et
 
 3. **ENVOYER LA CANDIDATURE** — tout est redige et en place au 2026-08-23 (voir § CANDIDATURE).
 
+## ⭐ LE BRIEF CLIENT EST MAINTENANT SUR DISQUE
+
+`BRIEF-CLIENT-ORIGINAL.pdf` (10 pages) dans CE dossier. ⛔ **Gitignore** (7,4 Mo binaire, le repo
+fait deja 1,1 Go) — il vit sur disque, pas dans l'historique. Le RELIRE avant toute action sur
+cette annonce : cette session a montre qu'un resume ne remplace pas la source (2 erreurs, cf.
+[[feedback_reconfronter-brief-original-pas-diff-relatif]] § extension 2026-08-23).
+
 ## CANDIDATURE — prete a envoyer (2026-08-23, brief PDF enfin lu)
 
 ⭐ **Le PDF de l'annonce a ete fourni par Aziz cette session** — il corrige 2 erreurs que j'avais
