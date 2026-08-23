@@ -3,7 +3,7 @@
 > Prototype de bout en bout sur un VRAI brief client Upwork (350 $, overlay YouTube animé).
 > Session du 2026-08-22. Rien n'a été envoyé à la cliente, aucun engagement pris.
 
-## ETAT : prototype COMPLET, livrables prêts, non envoyé
+## ETAT : proposition ENVOYÉE le 2026-08-23, en attente de réponse
 
 Branche : `feat/proto-chill-meter-upwork` (3 commits, mergeable ou à garder en R&D).
 
@@ -70,6 +70,41 @@ Alpha verifie deux fois — cf. § PROCHAINE SESSION point 2 pour la commande et
    Verifier apres coup : `ffprobe ... stream=pix_fmt` doit rendre `yuva444p12le` (le `a` = alpha).
 
 3. **ENVOYER LA CANDIDATURE** — tout est redige et en place au 2026-08-23 (voir § CANDIDATURE).
+
+## 📤 PROPOSITION ENVOYÉE — 2026-08-23 (en attente de réponse)
+
+**Envoyée.** Première candidature d'Aziz sur Upwork, moins de 2 jours après la création du profil.
+Coût : 7 connects, **pas de boost** (solde ≈143). Pièce jointe : `progressive meter.mp4` (3,2 Mo).
+
+**⛔ DÉCISION (Aziz) : ne RIEN produire de plus avant d'avoir le contrat.** Pas de prototype son,
+pas de livrable anticipé. Les 6 états et les animations existent déjà — si le contrat est gagné,
+l'essentiel du visuel est fait ; restent le son et des ajustements de dosage (plus/moins de neige,
+timing d'une animation).
+
+**PROCHAINE SESSION = seulement si elle répond.** Alors :
+1. Lire sa réponse ; si elle négocie ou demande des modifs, arbitrer avec Aziz (le prix de 350 $
+   est CELUI DU BRIEF, pas une enchère — ne pas descendre sans contrepartie de périmètre).
+2. Si contrat gagné : **prototyper le SON en premier**, c'est le seul point promis non démontré.
+   Nos moyens : `scripts/generate-sfx-elevenlabs.py` + 160 SFX déjà produits dans `public/`.
+   ⚠️ 2 différences avec nos SFX habituels : (a) matière (craquement de gel, condensation, métal
+   qui givre) plutôt que ticks/whooshes d'interface — prévoir ~5 essais par son ; (b) calage sur
+   des ÉVÉNEMENTS MÉCANIQUES (impact au sol, clic d'activation, départ de l'onde) et non sur des
+   beats narratifs — l'animation étant en code, la frame exacte de chaque événement est connue,
+   donc le calage est déterministe. C'est un argument de vente, pas une difficulté.
+   Ce que le brief demande par état : entrée = thud + click + power-on · idle = RIEN · 25 % =
+   montée légère · 50 % = crackle + pulse + chime + ice-building · 75 % = chime + crackle + vent ·
+   100 % = whoosh + boom + chime + crackle + rafale + shimmer.
+   ⚠️ Le brief ne précise PAS le format de livraison audio (la section « Final File Exports » ne
+   parle que de vidéo). On a proposé des **stems séparés par état** — ça lui laisse le choix de
+   mixer contre sa musique. Si elle préfère l'intégré au MOV, faire les deux.
+3. Le jalon 1 dépend de SON approbation du design → la relancer plutôt qu'attendre, sinon la date
+   du 28 août glisse sans que ce soit notre faute.
+
+⭐ **Leçon confirmée sur un cas réel (Aziz)** : « plus de neige », « animation plus lente » sont des
+CHANGEMENTS DE PARAMÈTRE en code. En vidéo générée (MiniMax H3 & co), la même demande impose de
+relancer une génération dont le RESTE bougera aussi. Si la cliente avait exigé un livrable vidéo
+généré, ces ajustements auraient été bien plus coûteux. C'est le moat « déterminisme » de
+`memory/doctrines/PILIERS-B2B.md`, vérifié en conditions réelles.
 
 ## ⭐ LE BRIEF CLIENT EST MAINTENANT SUR DISQUE
 
