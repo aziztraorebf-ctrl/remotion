@@ -320,3 +320,37 @@ avec l'IA/le spam, mais la mécanique frappe exactement ce profil.
 
 ⚠️ Source : recherche web du 2026-08-14 (ma knowledge cutoff est en retard sur les annonces YouTube
 2026). Re-vérifier si une décision à fort enjeu en dépend.
+
+---
+
+## ⭐ PISTE OUVERTE 2026-08-23 — LE REGISTRE CHALEUREUX (explainer type TED-Ed / Vox)
+
+> Née du constat fait en montant le portfolio Upwork (4 showcases). **À traiter en session dédiée**,
+> avec des vidéos de référence qu'Aziz fournira à analyser. Sujet candidat identifié : **le FMI**.
+
+**Le diagnostic qui déclenche la piste** — ce n'est PAS un problème de sujet ni de géographie :
+tout notre corpus est **grave**. Guerre, dette, pétrole, souveraineté. Palette bleu nuit + or,
+ton documentaire, rythme lent. Un client B2B (SaaS, e-commerce, santé) ne se projette pas — non
+parce qu'on parle d'Afrique, mais parce que **rien ne prouve qu'on sait faire léger, clair,
+chaleureux**. C'est le REGISTRE qu'il faut casser, pas la niche.
+
+**Ce que le virage apporterait aux deux voies simultanément** :
+- *YouTube* : format qui voyage (pas de barrière culturelle), indexation internationale, durée de vie longue.
+- *Portfolio B2B* : la pièce que tout client comprend immédiatement, et surtout **une 2e charte
+  graphique** — le vrai gain. Aujourd'hui le showcase 4 prouve la cohérence d'une charte, PAS
+  la capacité à s'adapter à celle d'un client.
+
+**Sujet candidat retenu par Aziz : le FMI** — se prête à un ton chaleureux, un script narratif,
+un rythme presque TikTok. À creuser en session dédiée.
+
+**Autres angles notés** (non validés) : l'histoire d'un objet (chaise, jean, carte SIM — d'où
+viennent les composants, qui gagne quoi, où il finit) ; le « comment on a construit ça » (barrage,
+tunnel, réseau — exploite le registre blueprint technique-élégant déjà produit et sous-utilisé).
+
+⛔ **Réserve de méthode** : ne pas produire une vidéo POUR cocher une case de portfolio — ça se voit.
+Et ne pas ouvrir ce chantier tant qu'Upwork n'est pas lancé : mieux vaut combler les trous que le
+MARCHÉ révèle (après quelques semaines de candidatures) que ceux qu'on imagine.
+
+**Les 3 trous mesurés du portfolio actuel** (utiles pour cadrer la future session) : pas d'UI produit
+exposable (la seule pièce porte une marque tierce) · pas de typographie animée plein cadre · pas de
+lockup/logo animé de marque.

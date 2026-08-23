@@ -24,18 +24,42 @@ npx remotion render ChillMeter-<Etat> out.mov \
 Les 3 flags sont obligatoires : sans `--pixel-format`, ProRes retombe silencieusement
 en `yuv422p12le` SANS alpha, sans erreur. Sans `--image-format=png`, TypeError.
 
-## PROCHAINE SESSION — dans cet ordre
+## PROCHAINE SESSION — 2026-08-23, dans cet ordre
 
-1. **Test CapCut** (Aziz, sur ordinateur — personne d'autre ne peut le faire).
-   Importer un MOV sur une piste au-dessus d'une vidéo : fond transparent = OK.
-   ⚠️ La version WEB de CapCut a échoué à l'import (testé 2026-08-22) → appli de bureau.
-   ℹ️ L'alpha est déjà prouvé par ffmpeg (57,2 % de pixels transparents après re-décodage)
-   et par la composition sur sa vraie vidéo. Le test CapCut confirme SON outil à elle.
-2. **Remplir le profil Upwork** — actuellement vide. Prérequis à toute candidature.
-3. **Décider ce qu'on envoie** : filigrane, quel extrait, quel texte de candidature.
-   Le questionnaire a 2 pièges : mot-code **"FROSTY"** dans le titre (PDF p.9) + question
-   sur le format transparent (réponse : MOV ProRes 4444).
-4. **Vérifier les règles plateforme** (voir § ci-dessous, à compléter).
+> Statut verifie le 2026-08-23 : les 6 MOV sont TOUJOURS sur disque, alpha confirme
+> (`yuva444p12le` sur les 6, mesure a ffprobe). Mais ils datent du 22 aout 19h15,
+> soit **AVANT le commit d9737af7 (fix des flocons)** — a REGENERER avant tout envoi.
+
+1. ⭐ **TEST CAPCUT — CapCut est maintenant installe (Aziz, 2026-08-23).**
+   Demander a Claude d'ouvrir le dossier : `open out/_r-and-d/chill-meter-upwork/`
+   Importer un `.mov` sur une piste AU-DESSUS d'une video : le fond doit etre transparent.
+   ⚠️ La version WEB de CapCut a echoue a l'import (teste 2026-08-22) -> utiliser l'appli de BUREAU.
+   ℹ️ L'alpha est deja prouve par ffmpeg (57,2 % de pixels transparents) et par la composition sur
+   sa vraie video. Ce test valide SON outil a elle, pas notre rendu.
+
+2. **REGENERER les 6 MOV** (ils sont anterieurs au fix des flocons) :
+   ```
+   npx remotion render ChillMeter-<Etat> out.mov \
+     --codec=prores --prores-profile=4444 --pixel-format=yuva444p10le --image-format=png
+   ```
+   Les 3 flags sont obligatoires : sans `--pixel-format`, ProRes retombe SILENCIEUSEMENT en
+   `yuv422p12le` SANS alpha, sans erreur. Sans `--image-format=png`, TypeError.
+   Verifier apres coup : `ffprobe ... stream=pix_fmt` doit rendre `yuva444p12le` (le `a` = alpha).
+
+3. **ENVOYER LA CANDIDATURE.** Le profil Upwork est desormais PRET (voir § ci-dessous).
+   Le questionnaire a 2 pieges : mot-code **"FROSTY"** dans le titre (PDF p.9) + question sur le
+   format transparent (reponse : MOV ProRes 4444).
+   ⛔ Connects a 0 au 2026-08-23 : 10 gratuits le 1er du mois, ou en acheter. Sans connects,
+   aucune candidature possible.
+
+## ETAT DU PROFIL UPWORK (2026-08-23) — le blocage n'est plus le portfolio
+
+Le profil est rempli et le portfolio est publie : titre, resume, 20 competences, photo,
+Working style (« Clear Communicator »), 4 showcases + 11 pieces isolees, toutes en anglais.
+Livrables : `out/_r-and-d/portfolio-en/UPWORK/` (+ `showcases/`, `thumbnails/`).
+
+**Ce qui reste ouvert cote profil** : Employment history VIDE (texte redige, a coller),
+badge d'identite (35 connects), aucun temoignage (viendra avec le temps).
 
 ## CE QU'ON A APPRIS (transposable, indépendant de cette annonce)
 
