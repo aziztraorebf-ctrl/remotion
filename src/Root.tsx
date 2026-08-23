@@ -421,6 +421,7 @@ import { KineticSlam3D } from "./projects/_shared/_demos/KineticSlam3D";
 import { Country3DRise } from "./projects/_shared/_demos/Country3DRise";
 import { Asset3DShowcase } from "./projects/_shared/_demos/Asset3DShowcase";
 import { PremiumCard3D, PREMIUM_CARD_3D_FRAMES } from "./projects/_shared/_demos/PremiumCard3D";
+import { KeyBenchA, KeyBenchB } from "./projects/_shared/_demos/keys/KeyBench";
 import { JetonWarMap3DCompare } from "./projects/_shared/_demos/JetonWarMap3DCompare";
 import { RapidFireCountries } from "./projects/_shared/mapbox/RapidFireCountries";
 import { ClassifiedRedactReveal } from "./projects/_shared/mapbox/ClassifiedRedactReveal";
@@ -2728,6 +2729,23 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="Country3DRise-Maroc-V" component={() => <Country3DRise geoName="Morocco" bigText="70%" subText="DU PHOSPHATE MONDIAL" />} durationInFrames={120} fps={30} width={1080} height={1920} />
         <Composition id="Asset3DShowcase" component={Asset3DShowcase} durationInFrames={120} fps={30} width={1080} height={1080} />
         {/* PremiumCard3D — reverse engineering du workflow CapCut de Danny Why (2026-08-23) */}
+        {/* Banc comparatif cle 3D — test aveugle Fable (2026-08-23) */}
+        <Composition
+          id="KeyBench-A"
+          component={KeyBenchA}
+          durationInFrames={1}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="KeyBench-B"
+          component={KeyBenchB}
+          durationInFrames={1}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
         <Composition
           id="PremiumCard3D"
           component={PremiumCard3D}
