@@ -21,15 +21,27 @@ Alpha verifie deux fois — cf. § PROCHAINE SESSION point 2 pour la commande et
 
 ## PROCHAINE SESSION — 2026-08-23, dans cet ordre
 
-> Statut au 2026-08-23 16h20 : les 6 MOV sont **regeneres et a jour** (posterieurs a `d9737af7`).
-> Reste : ① le test CapCut (Aziz seul) et ③ l'envoi — bloque par les connects a 0.
+> Statut au 2026-08-23 17h03 : ① test CapCut **VALIDE** · ② 6 MOV **regeneres et a jour**.
+> **Seul reste ③ l'envoi — bloque par les connects a 0** (10 gratuits le 1er du mois).
 
-1. ⭐ **TEST CAPCUT — CapCut est maintenant installe (Aziz, 2026-08-23).**
-   Demander a Claude d'ouvrir le dossier : `open out/_r-and-d/chill-meter-upwork/`
-   Importer un `.mov` sur une piste AU-DESSUS d'une video : le fond doit etre transparent.
-   ⚠️ La version WEB de CapCut a echoue a l'import (teste 2026-08-22) -> utiliser l'appli de BUREAU.
-   ℹ️ L'alpha est deja prouve par ffmpeg (57,2 % de pixels transparents) et par la composition sur
-   sa vraie video. Ce test valide SON outil a elle, pas notre rendu.
+1. ~~**TEST CAPCUT**~~ ✅ **VALIDE le 2026-08-23 17h03** (Aziz sur CapCut desktop, enregistrement
+   d'ecran verifie par Claude : 24 frames couvrant toute la duree + mesure pixel).
+   **Ce qui est prouve** : CapCut desktop importe le ProRes 4444 sans broncher (c'etait le point
+   d'echec de la version WEB) · l'alpha est correctement interprete a la composition · le cas
+   **Fill100** passe (givre + flocons en semi-transparence par-dessus le fond, le cas le plus
+   delicat) · 3 clips sur 3 pistes cohabitent.
+   Mesure objective : bande horizontale a hauteur du compteur sur le composite Fill100 =
+   **7 couleurs distinctes** (les barres de mire traversent le cadre). Un fond opaque aurait
+   donne une bande unie.
+   ⛔ **Piege a connaitre** : la ou aucun clip ne joue EN DESSOUS, l'overlay s'affiche sur le noir
+   du projet. Ce noir est le vide de la timeline, PAS un fond du fichier — le chassis reste
+   visible au travers. Ne pas le lire comme un defaut. Cf. [[feedback_transparence-lue-comme-bug]].
+   ℹ️ **Materiel de test reutilisable** : `TEST-fond-mouvant.mp4` (mire animee 1920x1080, 15 s,
+   generee par `ffmpeg -f lavfi -i testsrc2`) dans le meme dossier. Sa vraie video N'EST PAS sur
+   disque et n'est PAS necessaire — on n'avait qu'une image fixe de son plateau
+   (`public/_shared/rnd/abigirl-decor.png`). Une mire animee est meilleure pour ce test : le
+   mouvement rend un fond opaque immediatement visible.
+   ⚠️ Ce test validait SON outil a elle, pas notre rendu (l'alpha etait deja prouve cote ffmpeg).
 
 2. ~~**REGENERER les 6 MOV**~~ ✅ **FAIT le 2026-08-23 16h20.** Les 6 sont sur disque, alpha
    verifie 2 fois : `pix_fmt = yuva444p12le` sur les 6, ET mesure pixel reelle sur la frame 100
