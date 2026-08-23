@@ -46,6 +46,55 @@ const TARGETS: Record<TargetKey, { x: number; y: number; label: string }> = {
 // point de depart des colonnes RSF (staging-rsf du fond recompose, sud-est, hors des 3 cibles)
 const RSF_ORIGIN = { x: 1750, y: 940 };
 
+// ── i18n : libelles affiches a l'ecran. Defaut = FR (la video publiee ne change PAS).
+// Une variante EN passe simplement labels={KHARTOUM_EM_LABELS_EN}.
+export type KhartoumEmLabels = {
+  bannerTitle: string;
+  bannerDate: string;
+  targets: Record<TargetKey, string>;
+  subtitles: {
+    establish: string;
+    aeroport: string;
+    palais: string;
+    tourtv: string;
+    resolution: string;
+  };
+};
+
+export const KHARTOUM_EM_LABELS_FR: KhartoumEmLabels = {
+  bannerTitle: "KHARTOUM — ATTAQUE COORDONNEE DE LA RSF",
+  bannerDate: "15 AVRIL 2023",
+  targets: {
+    tourtv: "TOUR TV — OMDURMAN",
+    palais: "PALAIS PRESIDENTIEL",
+    aeroport: "AEROPORT INTERNATIONAL",
+  },
+  subtitles: {
+    establish: "Khartoum, 15 avril 2023, au matin.",
+    aeroport: "La RSF frappe l'aeroport international en premier.",
+    palais: "Puis la colonne converge vers le palais presidentiel.",
+    tourtv: "La tour TV d'Omdurman tombe a son tour.",
+    resolution: "Trois cibles, une seule matinee. Khartoum bascule dans la guerre.",
+  },
+};
+
+export const KHARTOUM_EM_LABELS_EN: KhartoumEmLabels = {
+  bannerTitle: "KHARTOUM — COORDINATED RSF ASSAULT",
+  bannerDate: "APRIL 15, 2023",
+  targets: {
+    tourtv: "TV TOWER — OMDURMAN",
+    palais: "PRESIDENTIAL PALACE",
+    aeroport: "INTERNATIONAL AIRPORT",
+  },
+  subtitles: {
+    establish: "Khartoum, morning of April 15, 2023.",
+    aeroport: "The RSF strikes the international airport first.",
+    palais: "The column then converges on the presidential palace.",
+    tourtv: "The Omdurman TV tower falls in turn.",
+    resolution: "Three targets, a single morning. Khartoum falls into war.",
+  },
+};
+
 // (Les ponts sur le Nil ont ete testes puis RETIRES — retour Aziz : complexite geometrique
 // disproportionnee pour le gain. La colonne suit son trajet direct sans structure de pont.)
 
@@ -485,7 +534,10 @@ const TargetReveal: React.FC<{ x: number; y: number; frame: number; appearAt: nu
 
 // hideSubtitle : masque le bandeau sous-titre interne (à utiliser quand une narration off dit déjà
 // la même chose — évite le doublon voix/texte banni par la doctrine WARMAP). Défaut false = autonome.
-export const KhartoumEtatMajorSVG: React.FC<{ hideSubtitle?: boolean }> = ({ hideSubtitle = false }) => {
+export const KhartoumEtatMajorSVG: React.FC<{ hideSubtitle?: boolean; labels?: KhartoumEmLabels }> = ({
+  hideSubtitle = false,
+  labels = KHARTOUM_EM_LABELS_FR,
+}) => {
   const frame = useCurrentFrame();
 
   const pFond = clampI(frame, 0, 25);
@@ -522,11 +574,11 @@ export const KhartoumEtatMajorSVG: React.FC<{ hideSubtitle?: boolean }> = ({ hid
   }
 
   const subtitleFor = (): string => {
-    if (frame < ESTABLISH_END) return "Khartoum, 15 avril 2023, au matin.";
-    if (frame < PHASE_STARTS.palais) return "La RSF frappe l'aeroport international en premier.";
-    if (frame < PHASE_STARTS.tourtv) return "Puis la colonne converge vers le palais presidentiel.";
-    if (frame < RESOLUTION_START) return "La tour TV d'Omdurman tombe a son tour.";
-    return "Trois cibles, une seule matinee. Khartoum bascule dans la guerre.";
+    if (frame < ESTABLISH_END) return labels.subtitles.establish;
+    if (frame < PHASE_STARTS.palais) return labels.subtitles.aeroport;
+    if (frame < PHASE_STARTS.tourtv) return labels.subtitles.palais;
+    if (frame < RESOLUTION_START) return labels.subtitles.tourtv;
+    return labels.subtitles.resolution;
   };
 
   return (
@@ -624,7 +676,7 @@ export const KhartoumEtatMajorSVG: React.FC<{ hideSubtitle?: boolean }> = ({ hid
               </g>
             </g>
             <rect x={450} y={440} width={260} height={38} fill="#4a1f18" stroke="#c7a977" strokeWidth={1} filter="url(#emShadow)" />
-            <text x={580} y={465} textAnchor="middle" fill="#f5e6ce" fontFamily="system-ui, -apple-system, sans-serif" fontSize={15} fontWeight={700} letterSpacing={2.5}>TOUR TV — OMDURMAN</text>
+            <text x={580} y={465} textAnchor="middle" fill="#f5e6ce" fontFamily="system-ui, -apple-system, sans-serif" fontSize={15} fontWeight={700} letterSpacing={2.5}>{labels.targets.tourtv}</text>
           </g>
 
           {/* ── Cible 2 : Palais Presidentiel (1020,560) ── */}
@@ -704,7 +756,7 @@ export const KhartoumEtatMajorSVG: React.FC<{ hideSubtitle?: boolean }> = ({ hid
               </g>
             </g>
             <rect x={890} y={650} width={260} height={38} fill="#4a1f18" stroke="#c7a977" strokeWidth={1} filter="url(#emShadow)" />
-            <text x={1020} y={675} textAnchor="middle" fill="#f5e6ce" fontFamily="system-ui, -apple-system, sans-serif" fontSize={15} fontWeight={700} letterSpacing={2.5}>PALAIS PRESIDENTIEL</text>
+            <text x={1020} y={675} textAnchor="middle" fill="#f5e6ce" fontFamily="system-ui, -apple-system, sans-serif" fontSize={15} fontWeight={700} letterSpacing={2.5}>{labels.targets.palais}</text>
           </g>
 
           {/* ── Cible 3 : Aeroport International (1280,820) rotate(-32) ── */}
@@ -757,7 +809,7 @@ export const KhartoumEtatMajorSVG: React.FC<{ hideSubtitle?: boolean }> = ({ hid
               </g>
             </g>
             <rect x={1130} y={920} width={300} height={38} fill="#4a1f18" stroke="#c7a977" strokeWidth={1} filter="url(#emShadow)" />
-            <text x={1280} y={945} textAnchor="middle" fill="#f5e6ce" fontFamily="system-ui, -apple-system, sans-serif" fontSize={15} fontWeight={700} letterSpacing={2.5}>AEROPORT INTERNATIONAL</text>
+            <text x={1280} y={945} textAnchor="middle" fill="#f5e6ce" fontFamily="system-ui, -apple-system, sans-serif" fontSize={15} fontWeight={700} letterSpacing={2.5}>{labels.targets.aeroport}</text>
           </g>
 
           {/* point de depart RSF */}
@@ -834,8 +886,8 @@ export const KhartoumEtatMajorSVG: React.FC<{ hideSubtitle?: boolean }> = ({ hid
         <g opacity={cartouche}>
           <rect x={42} y={42} width={1836} height={56} fill="#4a1f18" opacity={0.08} />
           <line x1={42} y1={98} x2={1878} y2={98} stroke="#4a1f18" strokeWidth={1.5} opacity={0.5} />
-          <text x={70} y={78} fill="#4a1f18" fontFamily="system-ui, -apple-system, sans-serif" fontSize={22} fontWeight={800} letterSpacing={4}>KHARTOUM — ATTAQUE COORDONNEE DE LA RSF</text>
-          <text x={1850} y={78} textAnchor="end" fill="#4a1f18" fontFamily="Georgia, 'Times New Roman', serif" fontSize={20} fontStyle="italic" letterSpacing={1.5}>15 AVRIL 2023</text>
+          <text x={70} y={78} fill="#4a1f18" fontFamily="system-ui, -apple-system, sans-serif" fontSize={22} fontWeight={800} letterSpacing={4}>{labels.bannerTitle}</text>
+          <text x={1850} y={78} textAnchor="end" fill="#4a1f18" fontFamily="Georgia, 'Times New Roman', serif" fontSize={20} fontStyle="italic" letterSpacing={1.5}>{labels.bannerDate}</text>
         </g>
 
         {/* ============ BANDEAU BAS (sous-titre dynamique par phase) — masqué si narration off ============ */}

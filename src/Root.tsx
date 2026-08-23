@@ -430,7 +430,7 @@ import { RedlineContagion } from "./projects/_shared/hooks-lib/RedlineContagion"
 import { MaskReveal } from "./projects/_shared/hooks-lib/MaskReveal";
 import { HookAESActe1Proto } from "./projects/warmap/HookAESActe1Proto";
 import { SoudanActe1Ouverture, SOUDAN_A1_DURATION, SOUDAN_A1_FPS } from "./projects/warmap/SoudanActe1Ouverture";
-import { KhartoumEtatMajorSVG, KHARTOUM_EM_FRAMES, KHARTOUM_EM_FPS } from "./projects/warmap/KhartoumEtatMajorSVG";
+import { KhartoumEtatMajorSVG, KHARTOUM_EM_FRAMES, KHARTOUM_EM_FPS, KHARTOUM_EM_LABELS_EN } from "./projects/warmap/KhartoumEtatMajorSVG";
 import { KhartoumFxDemo, KHARTOUM_FX_FRAMES, KHARTOUM_FX_FPS } from "./projects/warmap/_rnd/KhartoumFxDemo";
 import { ProtoSilhouetteRiseFx, PROTO_SILHOUETTE_FRAMES, PROTO_SILHOUETTE_FPS } from "./projects/warmap/_rnd/ProtoSilhouetteRiseFx";
 import { VoxReproMaster, VOX_REPRO_FRAMES, VOX_REPRO_FPS } from "./projects/_rnd/vox-repro/VoxReproMaster";
@@ -461,7 +461,7 @@ import { GlobeSoudanDubaiTest, GLOBE_SOUDAN_DUBAI_TEST_FRAMES } from "./projects
 import { BlocRapportForceTest } from "./projects/warmap/soudan-acte2/BlocRapportForceTest";
 import { GeoFlowConnectionTest, GFC_TEST_FRAMES, GFC_TEST_FPS } from "./projects/warmap/GeoFlowConnectionTest";
 import { BlocImpasseB6Test } from "./projects/warmap/soudan-acte2/BlocImpasseB6Test";
-import { BLOC_B6_FRAMES, BLOC_B6_FPS } from "./projects/warmap/soudan-acte2/BlocImpasseB6";
+import { BlocImpasseB6, BLOC_B6_FRAMES, BLOC_B6_FPS, BLOC_B6_LABELS_EN } from "./projects/warmap/soudan-acte2/BlocImpasseB6";
 import { ComboSweepDominoFlag } from "./projects/_shared/mapbox/ComboSweepDominoFlag";
 import { ComboFiberAuraPopup } from "./projects/_shared/mapbox/ComboFiberAuraPopup";
 // ── N1-N4 Fill-Pattern templates (session 2026-06-03)
@@ -2684,6 +2684,8 @@ export const RemotionRoot: React.FC = () => {
         {/* MINI-RENDER VALIDATION — Soudan Acte 1 ouverture (carte + jeton Hemeti + forces RSF + contour, audio fact-check) */}
         <Composition id="SoudanActe1Ouverture" component={SoudanActe1Ouverture} durationInFrames={SOUDAN_A1_DURATION} fps={SOUDAN_A1_FPS} width={1920} height={1080} />
         <Composition id="KhartoumEtatMajorSVG" component={KhartoumEtatMajorSVG} durationInFrames={KHARTOUM_EM_FRAMES} fps={KHARTOUM_EM_FPS} width={1920} height={1080} />
+        {/* PORTFOLIO EN — meme scene, libelles anglais (la FR ci-dessus reste intacte) */}
+        <Composition id="KhartoumEtatMajorSVG-EN" component={KhartoumEtatMajorSVG} durationInFrames={KHARTOUM_EM_FRAMES} fps={KHARTOUM_EM_FPS} width={1920} height={1080} defaultProps={{ labels: KHARTOUM_EM_LABELS_EN }} />
         <Composition id="KhartoumFxDemo" component={KhartoumFxDemo} durationInFrames={KHARTOUM_FX_FRAMES} fps={KHARTOUM_FX_FPS} width={1920} height={1080} />
         <Composition id="ProtoSilhouetteRiseFx-A-Parchemin" component={ProtoSilhouetteRiseFx} durationInFrames={PROTO_SILHOUETTE_FRAMES} fps={PROTO_SILHOUETTE_FPS} width={1920} height={1080} defaultProps={{ epure: false }} />
         <Composition id="ProtoSilhouetteRiseFx-B-Epure" component={ProtoSilhouetteRiseFx} durationInFrames={PROTO_SILHOUETTE_FRAMES} fps={PROTO_SILHOUETTE_FPS} width={1920} height={1080} defaultProps={{ epure: true }} />
@@ -2697,6 +2699,8 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="FrontOuvertSVG" component={FrontOuvertSVG} durationInFrames={FRONT_OUVERT_FRAMES} fps={FRONT_OUVERT_FPS} width={1920} height={1080} />
         {/* Beat 6 Acte 2 Soudan — impasse militaire (SAF pousse et echoue), registre etat-major */}
         <Composition id="BlocImpasseB6Test" component={BlocImpasseB6Test} durationInFrames={BLOC_B6_FRAMES} fps={BLOC_B6_FPS} width={1920} height={1080} />
+        {/* PORTFOLIO EN — meme scene, libelles anglais (la FR ci-dessus reste intacte) */}
+        <Composition id="BlocImpasseB6-EN" component={BlocImpasseB6} durationInFrames={BLOC_B6_FRAMES} fps={BLOC_B6_FPS} width={1920} height={1080} defaultProps={{ labels: BLOC_B6_LABELS_EN }} />
         {/* HOOK d'ouverture Soudan — "l'or du Darfour" reskin parchemin/encre + continuation */}
         <Composition id="OrDarfourHook" component={OrDarfourHook} durationInFrames={OR_DARFOUR_HOOK_FRAMES} fps={OR_DARFOUR_HOOK_FPS} width={1920} height={1080} />
         {/* SOCLE carte Soudan (grammaire AES : Soudan crème + voisins kaki + contour permanent + halos locaux) */}

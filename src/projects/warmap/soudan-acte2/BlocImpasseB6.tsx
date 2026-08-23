@@ -209,7 +209,33 @@ const TANK_COL: { restX: number; y: number }[] = [
 ];
 const TANK_COL_ADVANCE = 300; // px parcourus vers l'ouest au pic (le char de tete atteint ~ le front)
 
-export const BlocImpasseB6: React.FC<{ localFrame?: number }> = ({ localFrame }) => {
+// ── i18n : libelles affiches a l'ecran. Defaut = FR (la video publiee ne change PAS).
+// Une variante EN passe simplement labels={BLOC_B6_LABELS_EN}.
+export type BlocImpasseLabels = {
+  title: string;
+  date: string;
+  legendSaf: string;
+  legendRsf: string;
+};
+
+export const BLOC_B6_LABELS_FR: BlocImpasseLabels = {
+  title: "SOUDAN — RAPPORT DE FORCE",
+  date: "IMPASSE MILITAIRE",
+  legendSaf: "SAF — chars et aviation",
+  legendRsf: "RSF — colonnes mobiles",
+};
+
+export const BLOC_B6_LABELS_EN: BlocImpasseLabels = {
+  title: "SUDAN — BALANCE OF FORCES",
+  date: "MILITARY STALEMATE",
+  legendSaf: "SAF — armor and air power",
+  legendRsf: "RSF — mobile columns",
+};
+
+export const BlocImpasseB6: React.FC<{ localFrame?: number; labels?: BlocImpasseLabels }> = ({
+  localFrame,
+  labels = BLOC_B6_LABELS_FR,
+}) => {
   const cf = useCurrentFrame();
   const frame = localFrame ?? cf;
 
@@ -357,18 +383,18 @@ export const BlocImpasseB6: React.FC<{ localFrame?: number }> = ({ localFrame })
         <Impact x={frontXat(BREACH_Y, frame)} y={BREACH_Y} frame={frame} startFrame={contactFrame} />
 
         {/* ============ CADRE / CARTOUCHE ============ */}
-        <EmFrame title="SOUDAN — RAPPORT DE FORCE" date="IMPASSE MILITAIRE" opacity={pFond} cartoucheOp={cartouche} />
+        <EmFrame title={labels.title} date={labels.date} opacity={pFond} cartoucheOp={cartouche} />
 
         {/* Legende illustrative (materiel, pas losanges) : pastilles couleur faction + libelle */}
         <g opacity={legendOp} transform="translate(90 150)">
           <rect x={-14} y={-26} width={340} height={94} fill="#2a120e" opacity={0.82} rx={4} />
           <g transform="translate(16 6)">
             <rect x={-8} y={-11} width={22} height={22} rx={3} fill={SAF.body} stroke={SAF.bezel} strokeWidth={1.4} />
-            <text x={30} y={5} fill="#f5e6ce" fontFamily="system-ui, sans-serif" fontSize={17} fontWeight={700} letterSpacing={1}>SAF — chars et aviation</text>
+            <text x={30} y={5} fill="#f5e6ce" fontFamily="system-ui, sans-serif" fontSize={17} fontWeight={700} letterSpacing={1}>{labels.legendSaf}</text>
           </g>
           <g transform="translate(16 40)">
             <rect x={-8} y={-11} width={22} height={22} rx={3} fill={RSF.body} stroke={RSF.bezel} strokeWidth={1.4} />
-            <text x={30} y={5} fill="#f5e6ce" fontFamily="system-ui, sans-serif" fontSize={17} fontWeight={700} letterSpacing={1}>RSF — colonnes mobiles</text>
+            <text x={30} y={5} fill="#f5e6ce" fontFamily="system-ui, sans-serif" fontSize={17} fontWeight={700} letterSpacing={1}>{labels.legendRsf}</text>
           </g>
         </g>
       </svg>
