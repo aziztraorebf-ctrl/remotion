@@ -10,6 +10,18 @@
 > Décision Aziz (2026-08-06) : garder cette distinction stricte pour ne pas diluer la mémoire
 > principale avec des sujets secondaires, même bien référencés.
 
+## ⭐⭐⭐ LA MÉTHODE — `memory/fiches/FICHE-BRIEF-CLIENT.md`
+
+**Avant de trier, lire ou répondre à un brief client : c'est là que sont les règles.** Ce fichier-ci
+raconte les tests (des RÉCITS, chronologiques) ; la fiche donne la MÉTHODE extraite de ces récits —
+trier l'annonce · lire le brief · répondre · envoyer. Auto-injectée par `fiche-inject.sh` dès qu'on
+touche un chemin `client-sim`/`upwork`/`freelance-linkedin`.
+
+⭐ Elle existe parce que le savoir était éparpillé : le ratio dépensé/embauches ici, la règle
+lien-vs-pièce-jointe dans un STATUS, « résumé ≠ source » dans un feedback, le prix des connects
+ailleurs. Trois endroits pour une seule tâche. **Tout nouvel acquis d'un test client va dans la
+fiche**, pas seulement dans le récit du test.
+
 ## Tests réalisés
 
 - ⭐⭐⭐ **Upwork « Max Chill Factor Meter » / AbiGirl Reacts (OVERLAY ANIMÉ — 2e brief CLIENT RÉEL) — 2026-08-22.**
@@ -29,8 +41,14 @@
   Coûts mesurés : 4 planches d'un objet texturé = **0,79 $** · rendu ProRes alpha 135 frames = **53 s**.
   Détail, gotchas et suites : [STATUS](upwork-chill-meter/STATUS.md).
   Code : `src/projects/_rnd/chill-meter/`. Outil né ici : `scripts/tools/svg-from-ref-image.py`.
-  ▶️ **Prochaine session** : test CapCut (desktop, installé le 23/08) · **RÉGÉNÉRER les 6 MOV** (antérieurs au fix des flocons, commit d9737af7) · envoyer la candidature.
-  ⛔ Profil et portfolio **FAITS le 2026-08-23** (4 showcases + 11 pièces EN, `out/_r-and-d/portfolio-en/UPWORK/`). Blocage réel = **connects à 0** + Employment history vide.
+  ✅ **PROPOSITION ENVOYÉE le 2026-08-23** (première candidature d'Aziz, <2 j après création du profil ;
+  7 connects, pas de boost). Test CapCut **validé** sur l'outil de la cliente · 6 MOV régénérés, alpha
+  vérifié 2× · profil et portfolio faits (4 showcases + 11 pièces EN).
+  ⛔ **Décision : ne rien produire de plus avant d'avoir le contrat.** Si elle répond → prototyper le
+  SON en premier (seul point promis non démontré). Détail : [STATUS](upwork-chill-meter/STATUS.md).
+  ⭐ Acquis n°5 de ce test : **la source primaire, jamais un résumé** — candidature entière rédigée
+  sur le STATUS alors que le PDF existait → 2 erreurs (titre pour un champ inexistant, son demandé
+  dans chaque section). C'est ce test qui a fait naître `FICHE-BRIEF-CLIENT.md`.
 
 - ⭐⭐⭐ **Zambie / Peace Corps (CARTOGRAPHIQUE — 1er brief CLIENT RÉEL, pas un SaaS fictif) — 2026-08-21/22.**
   ⚠️ Genre différent des 3 tests ci-dessous : ce n'est pas un produit inventé mais une **vraie offre
