@@ -134,3 +134,14 @@ cause est ÉDITORIALE.
 Au **2e échec sur le même défaut** (y compris un rendu rejeté 2× sur le même symptôme décrit) : ⛔ STOP, ne pas re-doser une 3e valeur (amplitude, timing, pivot).
 1. **Mesurer objectivement** plutôt que juger à l'œil : script qui chiffre le symptôme (bbox projetée, diamètre sur N frames, écart d'ancrage par cycle). Vécu : 4 itérations de dosage caméra alors qu'un câblage figé se mesurait en une passe.
 2. Puis le protocole agent-dédié du CLAUDE.md global (reverse engineering → agent frais qui RAPPORTE) — déjà en contexte à chaque session, pas repris ici.
+
+
+## ↔ OBJET 3D GÉNÉRÉ (React Three Fiber) — le registre voisin
+
+⛔⛔ **UN CLASSEMENT DE MODÈLES NE SE TRANSPOSE PAS D'UN REGISTRE À L'AUTRE.** Mesure 2026-08-25, même brief aux 5 modèles sur un objet **3D** : **Grok 4.6** (384 l / 243 s) > **Gemini 3.1 Pro** (219 l / 140 s) > **Kimi K3** (154 l / 179 s) > **GLM 5.2** (93 l / 71 s, « raquette percée », brief non suivi). Or GLM-5.2 est notre meilleur rapport qualité/prix en **SVG** — il finit **DERNIER** en 3D. Re-tester par registre, jamais présupposer. (GPT-5.5 non testé : 402 crédit OpenRouter épuisé — échec de paiement, pas un refus.) Script : `scripts/tools/llm-gen-3d.py --provider all`.
+
+⭐ **Le mode ÉLEVÉ suffit pour un objet GÉOMÉTRIQUE ornemental.** Test aveugle 2026-08-25 (2 agents, brief identique, Aziz juge sans connaître le mode) : max et élevé jugés **À ÉGALITÉ**. Mesures : max = 299 l / 16 meshes / 21 s ; élevé = 190 l / 12 meshes / 18 s. Garder le MAX pour l'organique/complexe — la doctrine ne change pas, elle se **précise** : le critère n'est pas « c'est important », c'est « est-ce organique ? ».
+
+⚠️ **Éclairage d'un objet AJOURÉ** : un éclairage **frontal seul** ne peut pas éclairer les parois intérieures d'un perçage — la tête noircit de face. 3 modèles sur 4 jugés à tort sur leur géométrie avant d'identifier que la cause était le **banc**. Ajouter un **contre-jour** avant de juger.
+
+⛔ **Cadre d'usage** : outil d'**APPOINT** (objet-emblème, pivot qui révèle, reflet métallique), **PAS** un registre de production vidéo. L'organique (visage/personnage/décor) n'est pas faisable par code — limite structurelle. Règle : « si tu peux décrire l'objet à un menuisier au téléphone, ça passe ; si tu dois lui montrer une photo, non. » Détail : `memory/doctrines/SVG-SCENES-GENERATIVES.md` § extension 3D.

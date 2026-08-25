@@ -3,6 +3,7 @@
 > Chemins vérifiés sur disque le 2026-08-17.
 
 ## AVANT DE RENDRE
+- ⛔ **REMOTION `defaultProps` EST SÉRIALISÉ EN JSON.** Y passer une **référence de composant** la fait arriver `undefined` côté navigateur → **« Minified React error #130 »**, message qui ne nomme ni la prop ni le composant. FIX : wrappers concrets câblés en dur, un par variante (`export const KeyBenchA = () => <KeyBench model={KeyModelA} />`). Vaut pour toute prop non-JSON : fonction, classe, Map, Date. (session 3D, 2026-08-25)
 - ⭐⭐ **Export ALPHA (overlay livré à un client, incrustation CapCut/Premiere) — les 4 flags sont TOUS obligatoires** :
   `npx remotion render <Comp> out.mov --codec=prores --prores-profile=4444 --pixel-format=yuva444p10le --image-format=png`
   ⛔ Sans `--pixel-format`, ProRes retombe **silencieusement** en `yuv422p12le` SANS alpha, sans erreur.
@@ -15,7 +16,7 @@
   mobilisé. **Avant de conclure à un défaut sur une frame transparente : MESURER**
   (`Image.open(f).convert("RGBA").getpixel((x,y))` → `(0,0,0,0)` = tout va bien).
   Cf. `feedback_transparence-lue-comme-bug.md`.
-- **Mapbox / WebGL → `./scripts/render-mapbox.sh <CompositionId> <out.mp4> [args]` OBLIGATOIRE.** `npx remotion render` nu échoue en « Failed to initialize WebGL ». Le script fixe ce qui a été payé : `chrome-headless-shell`, `--gl=angle`, `--concurrency=1`, public-dir slim par symlinks (évite de copier 2,4 Go). ~5 fps.
+- **Mapbox / WebGL → `./scripts/render-mapbox.sh <CompositionId> <out.mp4> [args]` OBLIGATOIRE.** `npx remotion render` nu échoue en « Failed to initialize WebGL ». Le script fixe ce qui a été payé : `chrome-headless-shell`, `--gl=angle`, `--concurrency=1`, public-dir slim par symlinks (évite de copier 2,4 Go). **~1,5 fps en 1080p** (mesure 2026-08-22 ; le « ~5 fps » historique était optimiste x3). ⛔ **VIDÉO SEULEMENT** — le script est câblé en dur sur `remotion render` (L41) : pour une **IMAGE FIXE** WebGL/Three.js il ne sert à rien (`--frames=0` échoue en « output directory of the image sequence cannot have an extension »). Utiliser `still` à la main : `npx remotion still src/index.ts <Comp> <out.png> --browser-executable=node_modules/.remotion/chrome-headless-shell/mac-arm64/chrome-headless-shell-mac-arm64/chrome-headless-shell --gl=angle --image-format=png` (2026-08-25).
 - **D3 / SVG pur → `npx remotion render` local classique.** ⛔ `scripts/tools/render-on-vercel.py` = POC ABANDONNÉ, ne JAMAIS l'utiliser (repo Vercel figé au 2026-03-27, 3 compos de démo, ne verra jamais nos compositions).
 - **Netteté = `scale=1` uniquement.** Un render 0.4–0.5 est flou par construction et fait douter à tort. Avant de conclure « flou/moche » → 1 frame full HD.
 - **Render multi-segments** (`--frames=X-Y`) : `python3 scripts/tools/check-frame-continuity.py 2055-2939 3196-5699 …` AVANT (bornes prévues) ET APRÈS (bornes réelles). Coût de ne pas l'avoir fait : War-Map Sahel 2026-07-01, trous entre segments, narration sautée, détecté après livraison.

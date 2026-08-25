@@ -189,7 +189,11 @@ PRIMS=$(printf '%s' "$SCOPE" | grep -oE '<(path|circle|ellipse|polygon|polyline|
 # d={...} (path calcule) est MAJORITAIRE ici : 488 fichiers vs 227 en d="M".
 # Chercher seulement d="M ratait la majorite des scenes (verifie sur Acte5NegocierCreuserFable).
 HAS_D=$(printf '%s' "$SCOPE" | grep -oE 'd=\{|d="[Mm]' | wc -l | tr -d ' ')
-CAM=$(printf '%s' "$SCOPE" | grep -oE 'camAt|scaleMul|getCam|lerpCam|camFor|jumpTo|bearing|pitch:|interpolate\(' | wc -l | tr -d ' ')
+# 2026-08-25 : ajout des motifs 3D/R3F. Un objet Three.js pilote par rotationY ne matchait
+# QUE `interpolate(` (score 1, sous le seuil 2) — FICHE-CAMERA ne s'est donc PAS declenchee
+# sur PremiumCard3D.tsx alors que la session y a paye 3 rendus sur un piege de CAMERA
+# (angle mort d'un objet en rotation). Regle ecrite sans gate outille = regle qui ne se declenche pas.
+CAM=$(printf '%s' "$SCOPE" | grep -oE 'camAt|scaleMul|getCam|lerpCam|camFor|jumpTo|bearing|pitch:|interpolate\(|rotationY|ThreeCanvas|useFrame|rotation=\{\[' | wc -l | tr -d ' ')
 
 # SVG dessine : double critere + garde-fou anti-icone (PRIMS>=2).
 if { [ "${PRIMS:-0}" -ge 4 ] || [ "${HAS_D:-0}" -ge 1 ]; } && [ "${PRIMS:-0}" -ge 2 ]; then

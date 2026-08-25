@@ -14,7 +14,7 @@ Rack d'effets natifs Remotion = matiere premium sous-utilisee (decouvert 2026-06
 - `@remotion/effects@4.0.456` : SEULEMENT `blur` / `blurHorizontal` / `blurVertical`, `halftone`, `tint`, `wave`. (4 familles, pas 40.)
 - `@remotion/motion-blur@4.0.456` : `CameraMotionBlur` (flou mouvement cinema) + `Trail` (trainee/echo fantome).
 - `@remotion/light-leaks@4.0.456` : deja installe depuis le debut.
-- `@remotion/three@4.0.456` : vraie 3D (Three.js + R3F headless), `@react-three/drei` 10.7.7 dispo. JAMAIS utilise dans le projet — territoire vierge.
+- `@remotion/three@4.0.456` : vraie 3D (Three.js + R3F headless), `@react-three/drei` 10.7.7 dispo. ⭐ **MAJ 2026-08-25 : PLUS un territoire vierge** — **10 fichiers** l'utilisent deja (mesure `grep -rl`) : `_demos/` Country3DRise, KineticSlam3D, Asset3DShowcase, JetonWarMap3DCompare, PremiumCard3D, keys/KeyBench + 2 protos 16:9 + 2 archives. **Lire ces demos AVANT d'ecrire un nouveau socle 3D.**
 
 ## ⚠️ PIEGE Context7 (cause d'une sur-promesse en session)
 La doc Context7 de `/remotion-dev/remotion` decrit une version PLUS RECENTE que 4.0.456 : elle liste glow, chromaticAberration, noiseDisplacement, lightLeak(), pixelDissolve, scanlines, starburst, shine... CES EFFETS N'EXISTENT PAS EN 4.0.456. Ils sont arrives apres (derniere version au 2026-06-17 = 4.0.479).

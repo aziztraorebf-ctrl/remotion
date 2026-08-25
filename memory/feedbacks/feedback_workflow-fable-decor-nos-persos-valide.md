@@ -48,3 +48,18 @@ donc riggable, donc animable — c'est toute la différence avec un personnage d
   (https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/test-registres/plage-v6-fWjc6j81M6Y50FVNYVmJgKQ404r3d7.mp4)
 - SVG source (modifiable) : `public/_rnd/fable-svg/plage-peche-crepuscule.svg`
 - Code d'animation : `src/projects/_rnd/fable-scene-animee/PlageFableAnimee16x9.tsx` (compo `RND-Fable-Plage`)
+
+
+---
+
+## ⭐ 2026-08-25 — LE PARTAGE VAUT AUSSI POUR LA 3D (et je ne l'ai pas transposé seul)
+
+Le même partage « le modèle fabrique la matière statique, NOUS animons » s'applique au **3D généré**
+(React Three Fiber, `scripts/tools/llm-gen-3d.py`) : Fable/Grok produisent la **géométrie** de l'objet,
+nous pilotons la rotation, le timing et la lumière en frame-driven.
+
+⛔ **Friction réelle de la session** : face à un objet 3D, je n'ai PAS transposé cette méthode — j'ai codé la
+clé moi-même, à la main, avec 9 primitives assemblées. C'est **Aziz** qui a dû suggérer de faire appel à Fable.
+Le résultat généré était **nettement supérieur** à ma géométrie manuelle.
+**Règle** : dès qu'il s'agit de produire une MATIÈRE (dessin plat, objet en volume, décor), le réflexe est de
+faire produire par un modèle et d'animer nous-mêmes — **le registre n'a pas d'importance, le partage si**.

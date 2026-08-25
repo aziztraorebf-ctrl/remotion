@@ -1,4 +1,9 @@
-# OpenRouter pour la generation SVG — GLM-5.2 (3e modele low-cost)
+# OpenRouter — generation SVG ET 3D (paysage des modeles)
+
+> ⛔⛔ **BORNE DE REGISTRE (2026-08-25)** : tous les classements de ce fichier valent pour le **SVG UNIQUEMENT**.
+> Ils **NE se transposent PAS** a la 3D generee (React Three Fiber) — mesure sur brief identique le 2026-08-25 :
+> **Grok 4.6 > Gemini 3.1 Pro > Kimi K3 > GLM 5.2**, soit **GLM DERNIER en 3D alors qu'il est excellent en SVG**.
+> Chaque registre a son propre paysage : **comparer, ne jamais extrapoler**. Section 3D en bas de ce fichier.
 
 > ⭐⭐ **MISE A JOUR 2026-07-20 — FABLE 5 teste en SVG (via AGENT workspace, PAS OpenRouter) + comparatif
 > 4 modeles sur meme brief (insert "table de negociation" + "hemicycle vote"). Verdict :**
@@ -838,3 +843,42 @@ séparée. Sans ça, les paliers 0/25/50 % étaient impossibles → toute la pla
 → **Grok entre dans la rotation** quand la lisibilité prime (HUD, habillage de marque).
 Lanceur : `scripts/tools/svg-from-ref-image.py --provider {gemini|gpt|kimi|grok} --brief X.md --ref Y.png --out Z.svg`
 (⚠️ à ne pas confondre avec `svg-from-image-target.py`, dont le brief est verrouillé sur le registre gravure 9:16).
+
+
+---
+
+## ⭐⭐⭐ 2026-08-25 — LE PENDANT 3D : `llm-gen-3d.py` (React Three Fiber)
+
+Meme plomberie que `llm-gen-svg.py`, **meme doctrine** : le modele produit la **GEOMETRIE STATIQUE**, NOUS animons
+en frame-driven. Contrat impose identique aux 5 modeles (test equitable) : un seul composant `KeyModel`, props
+`{rotationY, scale}`, ZERO animation interne, ZERO `<Canvas>`, ZERO lumiere, ZERO fichier externe, geometrie
+100 % procedurale et deterministe (pas de `Math.random`/`Date.now`).
+
+Lanceur : `python3 scripts/tools/llm-gen-3d.py --provider {gemini|gpt|glm|kimi|grok|all} --outdir <dir>`
+
+### Resultats sur brief IDENTIQUE (objet ornemental : une cle), mesures
+
+| Modele | Lignes | Duree | Verdict |
+|---|---|---|---|
+| **Grok 4.6** (`x-ai/grok-4.6`) | 384 | 243 s | ⭐ **LE MEILLEUR** — quadrilobe ajoure + volutes + torsade |
+| Gemini 3.1 Pro | 219 | 140 s | Bon, mais tete sombre de face |
+| Kimi K3 (`moonshotai/kimi-k3`) | 154 | 179 s | Tete PLEINE non percee, vire au noir de face |
+| GLM 5.2 (`z-ai/glm-5.2`) | 93 | 71 s | ⛔ « raquette percee » — brief ornemental non suivi |
+| GPT 5.5 | — | — | ECHEC `402 Payment Required` (credit OpenRouter epuise, **PAS un refus modele** — a re-tester) |
+
+**4/5 compilent DU PREMIER COUP** et respectent le contrat. Le 3D par code est un registre viable.
+
+⭐ **Fable 5 mode ELEVE reste le defaut** (agent, 0 API, inclus dans l'abonnement) : test aveugle MAX vs ELEVE
+sur le meme objet — **Aziz juge A EGALITE**. MAX = 299 l / 16 meshes / 21 s ; ELEVE = 190 l / 12 meshes / 18 s.
+Plus de matiere != meilleur resultat : le surplus part en detail invisible aux angles d'usage.
+
+### ⚠️ Le defaut partage par 3 modeles sur 4 etait un defaut DU BANC
+La tete percee noircissait de face chez Gemini, Kimi et GLM. Cause reelle : `KeyBench.tsx` n'avait que des
+lumieres **FRONTALES** — les parois interieures du percage ne recevaient rien. **Avant d'accuser les modeles sur
+un test 3D, auditer l'eclairage du banc** (ajouter un contre-jour). Meme famille que « juger un asset sur un
+render scale=0.4 ».
+
+### ⛔ Cadre d'usage — outil d'APPOINT, pas un registre de production
+Objet-embleme de carte de titre, pivot qui revele, reflet metallique impossible a plat. **L'organique
+(visage/personnage/decor) n'est PAS faisable par code** — limite structurelle, aucun test a faire.
+Detail : `memory/doctrines/SVG-SCENES-GENERATIVES.md` § extension 3D.

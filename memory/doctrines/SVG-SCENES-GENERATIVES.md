@@ -916,3 +916,45 @@ signature en pointillé se dessine vers un stylo posé, mais s'arrête juste ava
 stylo n'écrit jamais). Citation Aziz (validation forte) : « j'adore la métaphore du trait qui s'arrête
 juste au stylo, la signature qui empêche le tracé de continuer ». À retenir pour toute scène narrative
 où un accord/une décision reste en suspens.
+
+
+---
+
+## ⭐⭐⭐ 2026-08-25 — EXTENSION 3D : la frontiere OBJET/ORGANIQUE vaut AUSSI pour le 3D genere
+
+Le registre « 3D genere par LLM » (React Three Fiber, `scripts/tools/llm-gen-3d.py`, paysage des modeles dans
+`memory/tools/openrouter-svg.md` § 2026-08-25) herite **exactement** de la doctrine d'orientation ci-dessus —
+mais la limite y est plus dure, et il faut savoir POURQUOI.
+
+### ⛔ La regle du menuisier au telephone (formulation retenue, tranchee par Aziz)
+> **« Si tu peux decrire l'objet a un menuisier au telephone, ca passe. Si tu dois lui montrer une photo, non. »**
+
+Ce n'est pas une question de qualite de modele, c'est **STRUCTUREL** : un objet geometrique se decrit par des
+REGLES (un cylindre de rayon r, quatre volutes a 90 deg, un anneau ajoure) — une suite d'instructions, donc du
+code. Un visage, un corps, un decor complet **ne se decrivent pas par des regles**, ils se decrivent par une
+image. ⛔ **Aucun test « organique en 3D par code » n'est a faire** : ce n'est pas un mur qu'un meilleur modele
+franchira.
+
+| Faisable par code | Pas faisable |
+|---|---|
+| Cle, lingot, cadenas, piece, sceau | Visage, personnage |
+| Baril, coffre, engrenage, bouclier | Corps en mouvement |
+| Batiment simple, monument stylise | Decor complet, paysage, tissu, fumee |
+
+### ⛔ CADRAGE — outil d'APPOINT, pas une nouvelle facon de faire des videos
+Correction explicite d'Aziz apres que j'aie **survendu** le registre. Le 3D genere sert des cas ponctuels :
+**objet-embleme** de carte de titre · **pivot qui revele** (le geste que le plat ne sait pas faire) · **reflet
+metallique** impossible a rendre a plat. Hors de ces cas, **notre SVG plat reste meilleur** (plus controlable,
+plus rapide, plus lisible). A ranger comme sous-registre du **pilier 4**, pas comme un 6e pilier.
+⭐ Converge avec le verdict deja tranche le 2026-06-17 (`memory/feedbacks/remotion-effects-rack-natif.md`
+§ CADRE D'USAGE 3D : « rehausseur de niche », test A/B jetons « le plat gagne ») — **re-confirme 2 mois plus
+tard par une mesure independante**.
+
+### ⭐ Le protocole de test aveugle qui a tranche (reutilisable pour tout arbitrage mode/modele)
+1. **2 agents en parallele sur un brief STRICTEMENT identique**, chacun ignorant l'existence de l'autre.
+2. **Un banc affichant les ANGLES REELS D'USAGE** (`keys/KeyBench.tsx` : 4 angles que le geste traverse
+   vraiment), pas un rendu de vitrine — un angle flatteur choisi apres coup fausse tout arbitrage.
+3. **Aziz juge sans savoir qui a produit quoi**, les metriques ne sont revelees qu'ensuite.
+⛔ Les metriques **ne decident pas** : MAX produisait +57 % de lignes, verdict « a egalite » quand meme.
+⚠️ Gotcha du banc : un composant passe en `defaultProps` arrive `undefined` (Remotion serialise en JSON)
+→ wrappers cables en dur. Detail : `memory/tools/remotion.md` § defaultProps serialise.

@@ -367,3 +367,7 @@ import { CountUp } from '../../_shared/components/ui/CountUp'
 // overlays
 import { SourceTag } from '../../_shared/components/overlays/SourceTag'
 ```
+
+| `ConicHaloBorder` (proto, in-situ 2026-08-25) | `_shared/_demos/PremiumCard3D.tsx` (inline, ~25 l — à extraire avant réutilisation) | "faire ressentir qu'un objet/une carte est PRÉCIEUX, sous projecteur, vivant sans bouger" — une lumière qui **court réellement** le long du contour : double `conic-gradient` animé (couche floutée + couche nette) piloté par `useCurrentFrame()`. ⭐ Supérieur au masque tournant sur duplicata (technique CapCut) : ici la lumière parcourt vraiment le bord, pas une illusion. Seul `conic-gradient` du repo. |
+| `KeyBench` (proto, 2026-08-25) | `_shared/_demos/keys/KeyBench.tsx` | "TRANCHER entre plusieurs variantes d'un même objet 3D sans se faire piéger par un angle flatteur isolé" — grille de N angles fixes côte à côte (`BENCH_ANGLES`), éclairage et échelle identiques, nom du modèle masqué (test aveugle). ⚠️ Son `BenchLights` est 100 % frontal : ajouter un contre-jour avant de juger un objet AJOURÉ. |
+| `KeyModelGrok` (proto, 2026-08-25) | `_shared/_demos/keys/KeyModelGrok.tsx` | "une scène a besoin d'un OBJET-MÉTAPHORE en volume (la clé, l'accès, le secret) plutôt qu'un pictogramme plat" — clé ornementale 3D procédurale (quadrilobe ajouré + volutes + torsade), géométrie pure, ZÉRO animation interne, props `{rotationY, scale}` pilotées par la scène. Gagnant du comparatif 5 modèles (`llm-gen-3d.py`). ⛔ Plage lisible -0.2 à ~1.1 rad — au-delà l'objet passe par la tranche. |

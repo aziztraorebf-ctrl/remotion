@@ -743,6 +743,10 @@ Starter (à revérifier) : `archive/starters-perimes-2026-06-15/STARTER-PROMPT-m
 ## ⏳ ACTIONS OUVERTES
 
 ### Recharger le crédit OpenAI
+
+> ⚠️ **MAJ 2026-08-25 — l'impact dépasse Whisper** : OpenRouter renvoie aussi `402 Payment Required`, ce qui a
+> **empêché de tester GPT-5.5** dans le comparatif 3D du 25/08 (`llm-gen-3d.py`). Trou de mesure à combler
+> après recharge — c'est le seul modèle absent du classement 3D.
 Quota épuisé le 2026-07-25 (`429 insufficient_quota`). Bloque `whisper-align.py`/`transcribe-openai.py`.
 Contournement en place : `scripts/tools/forced-align.py` (ElevenLabs).
 

@@ -110,3 +110,8 @@ Au **2e rejet du même symptôme de mouvement** : STOP. Ne pas retoucher une 3e 
 du projet n'était un problème de dosage. Mesurer (ci-dessus), puis déléguer à un agent dédié frais
 (Opus, `run_in_background`, reverse-engineering du repo D'ABORD puis `systematic-debugging`). L'agent RAPPORTE, n'applique pas.
 Coût documenté de ne pas l'avoir fait : 4 + 3 + 3 itérations complètes (code + render + review).
+
+## MÉCANISMES — piège 3D
+
+
+5. ⛔⛔ **UN OBJET 3D N'EST PAS LISIBLE SOUS TOUS LES ANGLES — un tour complet traverse des ANGLES MORTS.** Une CLÉ vue exactement de face confond son anneau avec sa tige et se lit comme un TOURNEVIS. Le fix n'est PAS de re-doser lumière/épaisseur (**3 rendus perdus** à le faire) : c'est de changer le **GESTE** — osciller autour de l'angle 3/4 lisible au lieu de tourner à 360°. Valeurs retenues (`PremiumCard3D.tsx` : `READABLE = 0.85` rad, amplitude décroissante 0.7→0.55→0.30) : plage lisible **-0.2 à ~1.1 rad**, au-delà de 1.2 rad l'objet passe par la tranche. Banc de vérification : `keys/KeyBench.tsx` affiche les 4 angles côte à côte — **un objet beau à un seul angle est disqualifié**. Même famille que les pièges 1-3 : la cause est STRUCTURELLE (le geste), jamais le dosage. (2026-08-25)
