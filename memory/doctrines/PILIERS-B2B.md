@@ -2,6 +2,19 @@
 
 > Posé le 2026-08-20 (constat d'Aziz, session shotcraft). **Voie B2B / freelance**, distincte de la
 > voie YouTube. Ce fichier répond à UNE question : *« un client demande X — quel pilier ? »*
+>
+> ⭐⭐⭐ **DÉCISION D'AZIZ, 2026-08-24 — LA CHAÎNE EST UNE VITRINE, PAS UNE SOURCE DE REVENU.**
+> Elle continue (Gazoduc), mais **la priorité d'EFFORT est le freelance**. Ce n'est pas un abandon :
+> c'est un changement de ce qu'on demande à la chaîne — elle prouve les capacités, elle ne les
+> monétise pas. Les trois mesures qui ont amené là : production ≠ rémunération sur YouTube
+> (des chaînes à caméra fixe font 190 k vues sur nos sujets), Shorts 3015 vues vs longues 231 sur
+> la même période, et le même actif payé 2 ordres de grandeur plus cher en direct qu'en plateforme.
+> ⚠️ **Le freelance n'est pas prouvé non plus** (1 candidature, 0 revenu) — ce qui est décidé, c'est
+> où va l'effort marginal, pas ce qui marchera.
+>
+> ⭐⭐ **FER DE LANCE retenu le 2026-08-24 : le pilier 2 (objets/scènes graphiques animés par code).**
+> Les 4 autres restent servis, mais c'est celui qu'on met en avant — le plus mature, le plus
+> transversal, et le seul testé en conditions client (chill-meter, Lottie LCD).
 > ⛔ Ce n'est PAS un catalogue de composants (ça c'est `INTENTION-FORME-INDEX.md`), ni une doctrine
 > de production. C'est un **aiguillage**.
 
@@ -21,6 +34,29 @@ rejeté « illisible sans le son », alors que la demande appelait un écran).
 | montrer **son produit**, son app, son dashboard, un écran qui existe | **3. UI PRODUIT** | `FICHE-UI-PRODUIT.md` ⭐ |
 | un **graphisme** : chiffre-choc, portrait, cartouche, lockup, liens animés, badges | **4. MOTION DESIGN REACT** ⭐ | `INTENTION-FORME-INDEX.md` · `COMPOSANTS-INDEX.md` |
 | une **scène filmée**, un personnage, une matière organique | **5. VIDÉO GÉNÉRÉE** | `FICHE-CLIP-GENERE.md` |
+
+### ⭐⭐ LE 2e AXE, AJOUTÉ LE 2026-08-24 — SOUS QUEL FORMAT IL REÇOIT
+
+⛔ Ce tableau répondait à « que veut-il MONTRER ? » et jamais à « **comment veut-il le RECEVOIR ?** ».
+Trou révélé par le test Lottie : un brief entièrement dans nos cordes (composant d'interface,
+géométrie simple = pilier 2) restait illisible tant qu'on lisait « animation » comme « MP4 ».
+
+| Il veut… | Format | Prouvé |
+|---|---|---|
+| une vidéo à publier / intégrer telle quelle | **MP4 / MOV** | partout |
+| un habillage à poser sur SON montage | **MOV ProRes 4444 alpha** | chill-meter 2026-08-22 |
+| un composant que SES développeurs intègrent et **contrôlent élément par élément** (app, site, firmware) | **`.json` / `.lottie`** | LCD 2026-08-24 |
+
+**La chaîne Lottie** : image → **Fable mode MAX** (SVG structuré, ids imposés, zéro animation dedans)
+→ script → `.json`. C'est « le modèle dessine le STATIQUE, nous animons » appliqué à une autre sortie.
+Ce n'est **pas un 6e pilier** : la matière reste le pilier 2, c'est un **canal de livraison** de plus.
+⭐ Il renforce le moat déterminisme : un `.json` Lottie est éditable au paramètre **par le client
+lui-même**. Limites et gotchas : `memory/client-sim-tests/lottie-ui-lcd/STATUS.md`.
+
+⭐ **Règle de tri devant un brief** : poser les 2 questions SÉPARÉMENT — « sait-on PRODUIRE ça ? »
+et « sait-on le LIVRER dans SON format ? ». Un NON à la seconde n'est pas un NON au brief, c'est
+un chantier de tuyauterie souvent court. ⛔ Le pire cas est un OUI à la production avec un NON
+non identifié sur le format : on produit, puis on découvre qu'on ne peut pas livrer.
 
 ## LES 5 PILIERS EN DÉTAIL
 

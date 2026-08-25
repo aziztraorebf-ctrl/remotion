@@ -191,3 +191,10 @@ Registre = formes abstraites/UI (spinners, progress bars, icônes), pas personna
 **Conclusion** : pas nécessaire pour le pipeline Remotion actuel — le socle spring/interpolate fait
 déjà ce rôle, un import Lottie ajouterait une couche de conversion sans gain net. Aucune mention de
 limite gratuit/payant dans la doc consultée — à revérifier si le sujet revient concrètement.
+
+⭐⭐ **QUALIFIÉ le 2026-08-24 — le verdict ci-dessus vaut pour Lottie EN ENTRÉE (outil d'édition de
+NOS vidéos). Il ne vaut PAS pour Lottie EN SORTIE (livrable client).** Depuis le brief LCD, on
+produit du `.json` Lottie standard par notre propre chaîne (image → Fable SVG structuré → script),
+**validé dans LottieFiles Preview ET Creator**, les 2 outils officiels du client.
+⛔ Lu seul, « ÉCARTÉ » ferait refuser par réflexe un brief Lottie — c'est un marché réel.
+→ `memory/client-sim-tests/lottie-ui-lcd/STATUS.md` · `memory/doctrines/PILIERS-B2B.md` § LE 2e AXE.

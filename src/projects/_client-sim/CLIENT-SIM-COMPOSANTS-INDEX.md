@@ -37,3 +37,35 @@ Doctrine du pilier : `memory/fiches/FICHE-UI-PRODUIT.md` (auto-injectée par hoo
 `LoopedVideo`/`LoopedImageSequence` (`_client-sim/flowdesk/videoLoop.tsx`) — résout un problème Remotion
 générique (boucler un clip, `OffthreadVideo` n'a pas de prop `loop`) sans rien de spécifique SaaS. À
 indexer plutôt dans un futur `utils/` partagé studio entier si le besoin se répète ailleurs.
+
+---
+
+## OUTILS (pas des composants visuels)
+
+| Outil | Chemin | Quand tu veux… | Statut |
+|---|---|---|---|
+| **Convertisseur SVG→Lottie** | `lottie-ui/tools/animate_start.py` | livrer un **composant animé au format du client** (`.json`/`.lottie`) plutôt qu'une vidéo — app, site, écran embarqué, contrôle par élément | **proto** (1 usage) |
+
+⭐ **Ce qu'il fait** : lit un SVG **structuré à ids imposés** (produit par Fable, zéro animation dedans)
+et écrit le Lottie JSON directement — pas de conversion approximative, pas d'After Effects. Applique le
+réflexe maison « le modèle dessine le STATIQUE, NOUS animons » à un nouveau format de sortie. Le SVG source
+n'est jamais modifié : **si le client envoie son Figma, on remplace le fichier et on relance**.
+
+**Validé** dans les 2 outils officiels de LottieFiles (Preview + Creator) + 2 moteurs (`rlottie`,
+`lottie-web`) : calques nommés, dépliables, **éléments déplaçables un par un**. 1 382 octets compressé.
+
+⚠️ **Statut `proto` et non `prouvé`** malgré la validation d'Aziz : c'est le **PIPELINE** qui est prouvé,
+sur **un seul artefact**. Le STATUS exige lui-même « 2 scènes de registres différents minimum » avant de
+conclure. `build()` est encore câblé en dur sur cet objet (ids, palette, constantes) — la généralisation
+est le travail du 2e usage, pas maintenant.
+
+⛔ **4 limites** : segments **droits uniquement** (`M/L/H/V/Z` — toute courbe lève une `ValueError`, échec
+bruyant par choix) · aplatit `transform="translate()"` dans les points · **pas de source `.aep`** ·
+**parse en regex, sans parseur XML** — ne PAS l'exposer à un SVG client non fiable sans reprendre le
+durcissement XXE de `svg2lottie.py` (le prototype).
+
+**Rejeté (remplacé dans la même session)** : `lottie-ui/tools/svg2lottie.py` — 1re version, ne lit que
+`<circle>`/`<line>`. Gardé pour l'historique **et** parce qu'il porte le bloc `defusedxml` à reprendre le
+jour où on parsera un SVG fourni par un client.
+
+Récit complet, gotchas et suites : `memory/client-sim-tests/lottie-ui-lcd/STATUS.md`.

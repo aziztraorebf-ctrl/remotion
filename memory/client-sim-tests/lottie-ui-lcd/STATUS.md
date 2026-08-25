@@ -120,6 +120,11 @@ renvoyer ne prouve rien. **Animer SON élément à lui** prouve qu'on a lu son �
 **1 faille de sécurité signalée par le hook** : parseur XML stdlib vulnérable (XXE / billion
 laughs) sur des SVG qui viendront de clients. Corrigé : `defusedxml` si présent, sinon parseur
 qui refuse toute déclaration d'entité.
+⛔ **PRÉCISION (corrigée au wrap)** : ce durcissement vit dans `svg2lottie.py`, **le prototype
+abandonné**. Le convertisseur RETENU, `animate_start.py`, ne parse pas de XML du tout — il lit
+les `<path>` par regex (`re.finditer`). Donc **aucune surface XXE, mais aucune validation d'entrée
+non plus**. Si on passe un jour à un vrai parseur (nécessaire pour les courbes et les masques),
+**reporter le bloc `defusedxml`** — ne pas repartir de zéro.
 
 **Ce que le workflow maison a apporté** : la 1re version (bricolée sans Fable) avait des
 rectangles à la place des lettres. La 2e (Fable → SVG structuré → animation) a les vrais

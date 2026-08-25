@@ -335,3 +335,35 @@ ci-dessus. Détail technique complet conservé dans `memory/episodes/_client-sim
   ⛔ Blocage reel = connects a 0, pas le portfolio.
 - **En pause** : site web portfolio externe (`out/_r-and-d/portfolio-site/`, README + 2 directions
   de design proposees par Gemini et GPT). Un site Netlify VIDE existe deja — ne pas en recreer un.
+
+---
+
+## 2026-08-24 — DIAGNOSTIC RETENTION + PIPELINE LOTTIE (hors pipeline video classique)
+
+### Volet A — diagnostic retention YouTube (MESURE, pas production)
+- **Etat** : MESURE FAITE. Rien a produire, la chaine devient une VITRINE (decision Aziz).
+- **Outil** : `vidiq_channel_analytics` report `audience_retention` + `filters: video==ID`
+  donne la courbe seconde-par-seconde. 4 videos longues mesurees.
+- ⛔ **Hypothese INFIRMEE** : les 4 courbes ont des formes DIVERGENTES (Soudan = falaise puis
+  plateau · Senegal + AES = saignement lent · CFA = plateau). Il n'y a PAS de defaut systematique
+  du gabarit d'ouverture — **ne pas le refondre**.
+- ⛔⛔ **Shorts 3015 vues vs longues 231** sur la meme periode (x13). Sur 35 vues, le contenu
+  n'a pas ete juge — il n'a pas ete vu. Un flop de longue n'est pas un verdict de qualite
+  tant que ce desequilibre tient.
+- **Grave** : `memory/doctrines/DIAGNOSTIC-FLOP-VIDEO.md` § LES 5 FORMES DE COURBE (commit e489d6eb).
+
+### Volet B — pipeline SVG→Lottie (3e test client-sim, NON candidate)
+- **Etat** : PIPELINE PROUVE. Valide dans les 2 outils OFFICIELS du client (LottieFiles
+  Preview + Creator) : calques nommes, depliables, elements deplacables un par un.
+- **La chaine** : image → **Fable mode MAX** (SVG structure, ids imposes, ZERO animation dedans)
+  → script Python → `.json` Lottie. C'est « le modele dessine le STATIQUE, NOUS animons »
+  applique a un nouveau format de sortie.
+- **Poids** : 1382 octets compresse — SOUS la reference que le client cite lui-meme (1,4 Ko).
+- **Code** : `src/projects/_client-sim/lottie-ui/` · recit + 3 limites + suites :
+  `memory/client-sim-tests/lottie-ui-lcd/STATUS.md` (commit 4039e8b9).
+- ⛔ **3 limites a annoncer, jamais a cacher** : courbes non gerees (echec bruyant par choix) ·
+  pas de source `.aep` (AE exporte vers Lottie, ne l'importe PAS) · pas de personnages articules.
+- **Tri client applique** : 100 $/embauche sur 19 embauches, budget affiche 100 $ → aucune
+  negociation possible, pas de candidature. Piece gardee au portfolio (UI generique).
+- **Prochaine etape** : etendre le convertisseur aux COURBES de Bezier (bloquant), puis
+  convertir une SCENE NARRATIVE complete et mesurer ce qui passe / ce qui ne passe pas.

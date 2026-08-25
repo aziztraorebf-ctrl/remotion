@@ -7,7 +7,27 @@
 > Toute nouvelle section de session s'insère APRÈS lui, jamais avant — sinon l'avertissement descend
 > et se fait enterrer, et un état périmé est annoncé à Aziz malgré l'avertissement présent et lu.
 
-## ⭐⭐ CANDIDATURE UPWORK — ENVOYÉE le 2026-08-23, en attente de réponse
+## ⭐⭐⭐ DÉCISION DU 2026-08-24 — LA CHAÎNE EST UNE VITRINE, LE FREELANCE PORTE L'EFFORT
+
+Décision d'Aziz. La chaîne continue (Gazoduc), mais elle **prouve les capacités, elle ne les monétise
+pas**. ⚠️ Le freelance n'est pas prouvé non plus (1 candidature, 0 revenu) — ce qui est décidé, c'est
+**où va l'effort marginal**. Doctrine + fer de lance retenu (pilier 2, objets animés par code) :
+`memory/doctrines/PILIERS-B2B.md` (en tête).
+
+**Acquis technique de la session** : pipeline **SVG → Lottie** prouvé, validé dans les 2 outils
+officiels de LottieFiles. On sait livrer un composant au format du client, pas seulement une vidéo.
+→ `memory/client-sim-tests/lottie-ui-lcd/STATUS.md`
+
+**Prochaine étape (bloquante)** : étendre le convertisseur aux **courbes de Bézier**, puis convertir
+une **scène narrative** complète et mesurer ce qui passe / ce qui ne passe pas.
+
+⛔ **Ne PAS refondre le gabarit d'ouverture des vidéos** : la mesure des 4 courbes de rétention
+INFIRME l'hypothèse d'un défaut systématique (les formes divergent).
+→ `memory/doctrines/DIAGNOSTIC-FLOP-VIDEO.md` § LES 5 FORMES DE COURBE
+
+---
+
+## ⏸️ CANDIDATURE UPWORK chill-meter — ENVOYÉE 2026-08-23, EN ATTENTE (rien à faire de notre côté)
 
 **Profil et portfolio FAITS** : titre, résumé, 20 compétences, photo, Working style, 4 showcases +
 11 pièces EN (`out/_r-and-d/portfolio-en/UPWORK/`, manifeste versionné dans
@@ -241,7 +261,7 @@ référence, désormais complète avec la vidéo et son SON.
 ---
 
 
-## ⭐ R&D CLIPS GÉNÉRÉS (H3) — CONCLUE le 2026-08-19 · reliquat : sortir du test
+## ⏸️ R&D CLIPS GÉNÉRÉS (H3) — CONCLUE 2026-08-19, reliquat non urgent : insérer 8-10 s dans un épisode réel
 > ⭐ **Prolongée le 2026-08-20** par le § RECETTE DE MONTAGE B2B ci-dessus (même moteur, acquis plus récents).
 
 **Débloqué** : mouvements de caméra (previs), mouvements d'action (previs), action+caméra dans un même
@@ -302,7 +322,7 @@ détection mais la porte de sortie « brief de re-dessin » : elle matchait `RED
 négation**, et le vrai brief 4B fautif dit « must not be redrawn » (une INTERDICTION). Le gate y lisait
 un feu vert. → [gate-contourne-par-outil-alternatif](../../.claude/projects/-Users-clawdbot-Workspace-remotion/memory/feedback_gate-contourne-par-outil-alternatif.md)
 
-## ⭐ RELIQUAT H3 — injecter NOTRE audio (`reference_audio_urls`, jamais testé)
+## 🔬 PISTE OUVERTE (non urgente) — H3 : injecter NOTRE audio via `reference_audio_urls` (jamais testé)
 > ✅ **Le volet STYLES est FAIT le 2026-08-20** : Vector Poster ET Sunjata (+ gravure sépia) prouvés
 > transposables à seed constant, et l'argument B2B est formalisé en GABARIT DE CHOIX.
 > → § RECETTE DE MONTAGE B2B · `memory/doctrines/PILIERS-B2B.md`. **Ce qui reste ouvert ci-dessous

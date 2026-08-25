@@ -207,3 +207,24 @@ chaîne — et `checkout` détruit alors ce qui n'a pas été commité.
 **Corollaire** : ce qui n'est pas commité n'existe pas. Un fichier de travail long (page web, script,
 doctrine) se commit dès qu'il compile, pas quand il est « fini » — le commit est la sauvegarde, pas la
 publication (on peut toujours amender ensuite).
+
+
+---
+
+## ⛔⛔ LE SCRIPT D'UNE VIDÉO PUBLIÉE EST UN LIVRABLE — jamais dans un worktree (2026-08-24)
+
+Vécu : les scripts du **CFA mid-form** et de l'**AES** — deux vidéos PUBLIÉES — étaient introuvables.
+Ils vivaient dans un worktree supprimé. Un agent a dû **transcrire les MP4** pour travailler sur le
+texte réel.
+
+**Règle** : le script d'une vidéo publiée est un artefact permanent au même titre que le MP4 final.
+Il appartient à `memory/projects/<ep>-SCRIPT*.md` ou `memory/episodes/<ep>/` **sur master** — jamais
+à une branche de production, jamais à un worktree. (Le pattern des scripts Soudan est le bon.)
+
+**Vérification à faire au moment de promouvoir vers `out/PRET-PUBLICATION/`** : le script
+correspondant existe-t-il sur master ?
+
+⭐ **Corollaire** : quand une source primaire textuelle a disparu, la **transcription du MP4** est le
+recours — coûteuse mais fiable, et toujours préférable à travailler sur un résumé. C'est
+« la source primaire, jamais un résumé » (`FICHE-BRIEF-CLIENT.md` § 2) appliqué à nos propres livrables.
+Même famille que `feedback_upload-nest-pas-une-archive-garder-le-render-local` — ici c'est le pendant TEXTE.

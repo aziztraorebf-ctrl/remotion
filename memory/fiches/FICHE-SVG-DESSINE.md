@@ -46,6 +46,12 @@ lire les occurrences avant de conclure à une violation (faux positif vécu le j
 Gabarits de briefs qui ont marché : `/tmp/BRIEF-SVG-VERROU.md`, `/tmp/BRIEF-SVG-PONTS.md`
 (recopiés dans `memory/episodes/souverain/gazoduc-aagp-tsgp/`).
 
+⭐ **Le contrat sert AUSSI à SORTIR du repo** (2026-08-24, brief Lottie LCD) : ces mêmes règles
+(un `<g id>` par pièce, ids imposés, zéro `<animate>`, tout en attributs) sont exactement ce qui rend
+un SVG convertible en **Lottie standard** — calques nommés, dépliables et **déplaçables un par un**
+dans LottieFiles Creator. Le contrat n'est pas une commodité interne : c'est ce qui ouvre les briefs
+qui exigent un format tiers. Preuve + 3 limites : `memory/client-sim-tests/lottie-ui-lcd/STATUS.md`.
+
 ## BRIQUES EXISTANTES — vérifier AVANT de coder
 Ouvrir dans cet ordre, **lire chaque liste jusqu'au bout** (une brique en fin de liste a été ratée par 3 agents sur 3) :
 1. `src/projects/_shared/INTENTION-FORME-INDEX.md` — porte d'entrée, APRÈS avoir déduit l'intention (1 verbe).
@@ -57,6 +63,12 @@ Ouvrir dans cet ordre, **lire chaque liste jusqu'au bout** (une brique en fin de
 ⚠️ Un catalogue qui affirme une ABSENCE est faillible : vérifier par `ls` + `git ls-files` + `git log --all -- <nom>` (un registre « canonique » peut vivre sur une branche R&D jamais mergée — 4 occurrences). Un nom trouvé 2× (`find src -name '<Nom>*'`) = piège d'import.
 
 ## INTERDITS — erreurs déjà payées
+- ⛔⛔ **Un `tr` Lottie posé À CÔTÉ des formes au lieu de les ENVELOPPER** : il n'agit que sur les
+  formes de son PROPRE `it`. Le JSON reste **valide et se charge sans erreur sur 4 moteurs** — le
+  groupe ne bouge simplement pas. Seul le RENDU l'a dit. ⭐ Corollaire dur, valable pour tout format
+  déclaratif à hiérarchie (Lottie, SVG imbriqué, scene graph) : **la validité syntaxique ne prouve
+  rien sur la PORTÉE**. Un attribut correct au mauvais niveau d'arbre produit un fichier parfait qui
+  ne fait rien. (2026-08-24)
 - ⛔⛔ Convertir en camelCase un SVG injecté par `dangerouslySetInnerHTML` (réflexe JSX) → **garder le
   kebab-case** : React parse ce fragment en **HTML**, donc `strokeWidth`/`stopColor` sont ignorés
   **silencieusement** — les 26 segments d'un gauge sont restés noirs, sans erreur. Le camelCase ne vaut
@@ -121,6 +133,4 @@ cause est ÉDITORIALE.
 
 Au **2e échec sur le même défaut** (y compris un rendu rejeté 2× sur le même symptôme décrit) : ⛔ STOP, ne pas re-doser une 3e valeur (amplitude, timing, pivot).
 1. **Mesurer objectivement** plutôt que juger à l'œil : script qui chiffre le symptôme (bbox projetée, diamètre sur N frames, écart d'ancrage par cycle). Vécu : 4 itérations de dosage caméra alors qu'un câblage figé se mesurait en une passe.
-2. **Reverse engineering d'abord** : `git log --all`, grep du registre/doctrine — le problème a souvent déjà été résolu ici.
-3. **Déléguer à un agent dédié frais** (Opus, `run_in_background: true`) qui RAPPORTE la cause racine sans appliquer le fix.
-4. Un rapport d'agent n'est pas une preuve : vérifier `git diff` et le fichier sur disque avant d'accepter un « terminé ».
+2. Puis le protocole agent-dédié du CLAUDE.md global (reverse engineering → agent frais qui RAPPORTE) — déjà en contexte à chaque session, pas repris ici.

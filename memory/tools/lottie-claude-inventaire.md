@@ -8,7 +8,10 @@ type: reference
 
 Validé après exploration Shaka Zulu (2026-05-03). Le format JSON canonique étant maîtrisé via skill Wiggle, Claude peut maintenant générer des animations Lottie autonomes pour les vidéos Atlas et autres projets.
 
-**Référence format** : voir memory/feedback_remotion-lottie-headless-broken.md pour les 4 règles critiques + pattern require().
+⛔ **LIEN MORT corrigé au wrap 2026-08-24** : `feedback_remotion-lottie-headless-broken.md` n'existe
+**dans aucune des 2 arborescences** — les « 4 règles critiques + pattern require() » qu'il portait sont
+perdues. Ne pas partir à sa recherche. La référence de format vivante est ce fichier + le pipeline
+maison (§ ci-dessous).
 
 ---
 
@@ -88,6 +91,45 @@ Validé après exploration Shaka Zulu (2026-05-03). Le format JSON canonique ét
 
 ---
 
+## ⭐⭐ 2026-08-24 — LE PIPELINE SVG→LOTTIE EXISTE MAINTENANT (dette de juin refermée)
+
+> ⛔ **Ce fichier disait depuis juin « Reproduction d'un dessin/photo → Outil SVG→Lottie »
+> sans que cet outil existe.** Il existe. Le tableau « NE PEUT PAS » ci-dessous reste vrai
+> pour la génération À LA MAIN par Claude, mais la ligne « reproduction d'un dessin » a
+> désormais une réponse maison.
+
+**La chaîne** : image → **Fable mode MAX** (SVG structuré, ids imposés, ZÉRO animation dedans)
+→ script Python → `.json` Lottie. C'est le réflexe maison « le modèle dessine le STATIQUE,
+NOUS animons », appliqué à un nouveau format de sortie.
+
+**Outil** : `src/projects/_client-sim/lottie-ui/tools/animate_start.py` (statut **proto**, 1 usage).
+Récit complet, gotchas et suites : `memory/client-sim-tests/lottie-ui-lcd/STATUS.md`.
+
+**Validé sur 4 moteurs**, dont les 2 officiels de LottieFiles (Preview + Creator) : calques nommés,
+dépliables, **éléments déplaçables un par un**. 1382 octets compressé.
+
+⛔ **Les 4 limites de l'outil** (à annoncer à un client, jamais à cacher) :
+1. **Segments DROITS uniquement** (`M/L/H/V/Z`) — toute courbe lève une `ValueError`. Échec
+   BRUYANT par choix, jamais silencieux. C'est le chantier n°1 pour aller plus loin.
+2. **Pas de source `.aep`** — After Effects *exporte* vers Lottie mais ne l'*importe* pas.
+   Nos sources = le SVG + le code.
+3. **Aplatit `transform="translate(x,y)"`** dans les points (Lottie n'a pas d'équivalent de
+   transform sur une forme).
+4. ⛔ **Parse le SVG en regex, sans parseur XML** : ne PAS l'exposer à un SVG client non fiable
+   sans reprendre le durcissement XXE de `svg2lottie.py` (parseur qui refuse toute déclaration
+   d'entité — faille signalée par le hook sécurité le 2026-08-24).
+
+⛔ **Piège d'affichage LottieFiles Creator** : à l'import, il enveloppe l'animation dans un
+`[Precomp Layer ...]` et le panneau ne montre QU'UNE ligne. **Les calques sont derrière l'onglet
+du même nom, en bas à côté de « Main Scene »** — cliquer dessus. Rien n'est aplati. (A failli
+être diagnostiqué comme un défaut du fichier.)
+
+⛔ **Un `tr` Lottie n'agit QUE sur les formes de son PROPRE groupe `it`.** Posé à côté des formes
+au lieu de les envelopper → le groupe ne tourne pas, alors que le JSON est **valide et se charge
+sans erreur**. Seul le rendu visuel le dit. (Bug payé 2 fois cette session.)
+
+---
+
 ## Ce que Claude NE PEUT PAS faire (utiliser un autre outil)
 
 ### Trop complexe pour génération manuelle
@@ -146,7 +188,9 @@ Validé après exploration Shaka Zulu (2026-05-03). Le format JSON canonique ét
 ## Réutilisabilité
 
 Les JSON Lottie générés sont **portables** : peuvent servir dans plusieurs vidéos Atlas. Les fichiers validés vivent dans :
-- `src/projects/atlas/_shared/lottie-icons/` (à créer quand on aura accumulé 5+ icônes réutilisables)
+- ⛔ **`src/projects/atlas/_shared/lottie-icons/` N'A JAMAIS ÉTÉ CRÉÉ** (annoncé le 2026-06-15, vérifié
+  absent le 2026-08-24). Les 3 `.json` ci-dessous vivent en réalité dans
+  `src/_archive/episodes-livres/atlas/shaka-zulu/tests/`. Une promesse de dossier n'est pas un dossier.
 - En attendant : dans le dossier `tests/` du projet en cours
 
 Bibliothèque actuelle (Shaka Zulu) :
