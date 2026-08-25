@@ -24,6 +24,27 @@ fiche**, pas seulement dans le récit du test.
 
 ## Tests réalisés
 
+- ⭐⭐⭐ **LOTTIE UI / menu LCD embarqué (3e brief CLIENT RÉEL — NON candidaté) — 2026-08-24.**
+  Genre encore différent : ni carte, ni SaaS, ni overlay — un **composant d'interface** livré en
+  `.json` Lottie pour un appareil photo embarqué (4 écrans, budget 100 $, Turquie).
+  ⭐⭐⭐ **L'ACQUIS N'EST PAS LE TEST, C'EST LE PIPELINE** : on sait produire du **Lottie standard
+  depuis notre workflow SVG habituel, sans After Effects** — chaîne `image → Fable (SVG structuré)
+  → script → .json`. **Validé dans l'outil OFFICIEL du client** (LottieFiles Creator) : calques
+  nommés, dépliables, et **éléments déplaçables un par un** — l'exigence même du brief. Poids
+  compressé **1 382 octets**, sous la référence que le client cite lui-même (1,4 Ko).
+  Croisé sur 4 moteurs : `rlottie`, `lottie-web`, Preview et Creator.
+  ⛔ 3 limites à annoncer, jamais à cacher : **courbes non gérées** (segments droits seulement,
+  échec bruyant par choix) · **pas de source `.aep`** (AE exporte vers Lottie, ne l'importe pas) ·
+  pas de personnages articulés (métier différent, pas une limite de format).
+  **Décision : pas de candidature** — client à **100 $/embauche** sur 19 embauches, budget affiché
+  100 $, donc aucune négociation possible. La pièce reste au portfolio (UI générique, ne périme pas).
+  ⭐ Acquis de méthode : **ne jamais renvoyer au client sa propre référence comme preuve**
+  (correction d'Aziz) — animer SON élément prouve qu'on a lu son écran, renvoyer son exemple ne
+  prouve rien. Et **la 1re version bricolée sans Fable était moins bonne** que celle passée par le
+  workflow (rectangles au lieu des vraies lettres) : la discipline paie, mesurable.
+  Détail, prochaine session et limites : [STATUS](lottie-ui-lcd/STATUS.md).
+  Code : `src/projects/_client-sim/lottie-ui/`.
+
 - ⭐⭐⭐ **Upwork « Max Chill Factor Meter » / AbiGirl Reacts (OVERLAY ANIMÉ — 2e brief CLIENT RÉEL) — 2026-08-22.**
   Genre encore différent : ni carte ni SaaS, un **habillage de marque à fond transparent** livré pour
   le montage de la cliente (compteur rétro-futuriste givré, 0→100, 6 états, 350 $).

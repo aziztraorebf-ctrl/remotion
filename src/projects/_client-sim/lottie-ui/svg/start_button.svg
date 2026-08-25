@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 72">
+  <defs>
+    <linearGradient id="grad_sweep" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#000000"/>
+      <stop offset="0.12" stop-color="#000000"/>
+      <stop offset="0.70" stop-color="#F06254"/>
+      <stop offset="1" stop-color="#F06254"/>
+    </linearGradient>
+  </defs>
+
+  <g id="bg-sweep">
+    <rect x="0" y="4" width="360" height="64" rx="8" fill="url(#grad_sweep)"/>
+  </g>
+
+  <!-- Lettres vectorisees, capitales grasses condensees (cap height 30, chasse 20, fut 8) -->
+  <g id="label-start" fill="#FFFFFF">
+    <path id="letter_s_1" transform="translate(108,21)" d="M0,0 H20 V8 H8 V11 H20 V30 H0 V22 H12 V19 H0 Z"/>
+    <path id="letter_t_1" transform="translate(135,21)" d="M0,0 H20 V8 H14 V30 H6 V8 H0 Z"/>
+    <path id="letter_a" transform="translate(162,21)" fill-rule="evenodd" d="M0,30 V0 H20 V30 H13 V22 H7 V30 Z M7,8 H13 V15 H7 Z"/>
+    <path id="letter_r" transform="translate(189,21)" fill-rule="evenodd" d="M0,0 H20 V19 H7 V30 H0 Z M7,8 H13 V13 H7 Z M11,19 L20,30 H12 L7,19 Z"/>
+    <path id="letter_t_2" transform="translate(216,21)" d="M0,0 H20 V8 H14 V30 H6 V8 H0 Z"/>
+  </g>
+
+  <!-- centre icone : (315, 36) -->
+  <!-- Interpretation : sur la reference les deux contours semblent de la meme teinte ;
+       palette imposee -> #FF9E94 applique au contour hexagonal ET au triangle. -->
+  <!-- Proportions mesurees sur la maquette : l'icone occupe ~70% de la hauteur
+       du bandeau et DEBORDE legerement a droite. Centre icone : (318, 36). -->
+  <g id="play-chevron" fill="none" stroke="#FFB3A8" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+    <path id="hex_outline" d="M292,36 L302,11 H336 L352,36 L336,61 H302 Z"/>
+    <path id="triangle" d="M312,20 L340,36 L312,52 Z"/>
+  </g>
+</svg>
