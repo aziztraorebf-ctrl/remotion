@@ -107,6 +107,50 @@ elle s'annule par construction). Les pièges sont documentés en tête de `test_
 
 ---
 
+## ⭐⭐ NOS PROPRES SCÈNES (Gazoduc, Soudan) — testé le 2026-08-25
+
+**Oui, elles sont convertibles** — mais elles ne sont pas des fichiers `.svg` : ce sont des
+composants React qui CALCULENT leur SVG à chaque frame (`interpolate`, `spring`).
+Outil : **`tools/extract-remotion-svg.mjs`** — extrait le SVG réel et RÉSOLU d'une composition
+Remotion à une frame donnée (prouvé : un rect passe de `width=40` à `width=133.6` selon la frame).
+
+```bash
+node src/projects/_client-sim/lottie-ui/tools/extract-remotion-svg.mjs \
+     D3-Gazoduc-Acte5-Maison --frame 200 -o maison.svg
+```
+⚠️ Les IDs de composition ne sont PAS les noms de fichiers (`D3-Gazoduc-Acte5-Maison`, pas
+`GazoducActe5Maison`) — les lire dans `src/Root.tsx`.
+⛔ Le Studio Remotion ne sert à rien ici : le chemin d'URL y est **décoratif** (état client, pas
+une route), et en navigateur headless il ne rend rien du tout. L'outil passe par `renderStill()`
+avec sa propre instance Puppeteer — c'est Remotion qui monte la scène, on lit son DOM.
+
+| Scène | Formes | SVG extrait vs render Remotion | Lottie vs SVG | Verdict |
+|---|---|---|---|---|
+| **Hook Or du Darfour** (Soudan) | 72 | 0,05 % | **0,01 %** | ✅ **livrable tel quel** |
+| **Maison + courbe** (Gazoduc A5) | 25 | 0,12 % | **1,44 %** | ✅ bon — l'aire sous la courbe perd son fondu (aplat), le fond son halo (masque refusé) |
+| **Aéroport nuit** (Gazoduc A3) | 498 | 6,89 % | **57,74 %** | ⛔ **change d'ambiance** |
+
+⛔⛔ **L'AÉROPORT EST LE CAS QUI TRANCHE — et la cause n'est PAS l'extraction** (fidèle à 6,89 %).
+Sur ses 17 dégradés, **11 sont RADIAUX** : le halo du projecteur, la lueur de la lune, les
+auréoles des lampes. Rabattus en couleur unie, le cône de lumière devient un **aplat beige
+opaque**, la lune un **disque plat**, le ciel des **bandes franches**. Géométrie intacte,
+**atmosphère détruite** — un client refuserait.
+⚠️ Un rapport d'agent qualifiait cet écart de « structurellement mineur » : **c'est faux**, et
+seule la planche de comparaison le montre. Encore la règle CODE + VISUEL.
+
+⭐ **CE QUE ÇA DIT DU CHANTIER SUIVANT** : le vrai frein pour NOS scènes n'est ni l'extraction ni
+les courbes — ce sont **les dégradés, radiaux en premier**. C'est ce qui sépare « un client
+refuserait » de « livrable tel quel ». Lottie SAIT les faire (`gf`, type 2 pour radial) : c'est
+notre convertisseur qui ne les porte pas.
+
+⛔ **L'ANIMATION N'EST PAS PORTÉE.** Chaque extraction est une frame FIGÉE — les `interpolate`
+sont cuits dans les coordonnées. Extraire 2-3 frames clés (début/milieu/fin) documente le
+mouvement voulu ; **l'animation Lottie reste à écrire par nous**. Ce qui est cohérent avec notre
+méthode habituelle (le statique d'abord, nous animons), mais ce n'est PAS un bouton
+« Acte 5 → Lottie animé ».
+
+---
+
 ## Ce qui reste ouvert
 
 - **Dégradés** — le format les gère (`gf`), notre convertisseur non. Demande de porter aussi
