@@ -84,6 +84,16 @@ def lisser(k, seuil_sommets=8, angle_min=120.0, tension=1.0/6.0):
 
 
 def parcourir(doc, **kw):
+    """
+    Lisse tous les chemins du document.
+
+    ⚠️ Un chemin peut etre STATIQUE ("ks": {"a": 0, "k": {v,i,o,c}}) ou ANIME
+    ("ks": {"a": 1, "k": [ {t, s: [{v,i,o,c}]}, ... ]}) quand il a ete produit
+    par transcribe_animation.py. Le 1er jet supposait le cas statique et
+    plantait des qu'on enchainait les deux outils. On lisse donc CHAQUE
+    keyframe d'un chemin anime -- sinon la forme sauterait entre une version
+    lissee et une version a facettes.
+    """
     n_lisses, n_vus = 0, 0
     for couche in doc.get("layers", []):
         for groupe in couche.get("shapes", []):
@@ -91,8 +101,18 @@ def parcourir(doc, **kw):
                 if it.get("ty") != "sh":
                     continue
                 n_vus += 1
-                if lisser(it["ks"]["k"], **kw):
-                    n_lisses += 1
+                ks = it.get("ks", {})
+                if ks.get("a") == 1:
+                    touche = False
+                    for kf in ks.get("k", []):
+                        for forme in kf.get("s", []):
+                            if isinstance(forme, dict) and lisser(forme, **kw):
+                                touche = True
+                    if touche:
+                        n_lisses += 1
+                elif isinstance(ks.get("k"), dict):
+                    if lisser(ks["k"], **kw):
+                        n_lisses += 1
     return n_lisses, n_vus
 
 
