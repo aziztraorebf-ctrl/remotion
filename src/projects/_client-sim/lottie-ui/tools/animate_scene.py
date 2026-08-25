@@ -50,6 +50,21 @@ PARTITIONS = {
         "link": ("trace", 88, 118),
         "chart": ("trace", 118, 280),
     },
+    # Hook "Or du Darfour", sur les groupes NOMMES (cf. group_layers.py).
+    # ⭐ Le vignettage est pose des la 1re frame et JAMAIS anime : c'est un
+    # cadre, pas un element narratif. Le reveler en cascade produisait les
+    # "bandes verticales sombres" signalees par Aziz.
+    "soudan": {
+        "_duree": 150,
+        "ciel": ("aucun", 0, 0),          # le decor est la des le debut
+        "vignettage": ("aucun", 0, 0),    # cadre : jamais anime
+        "ambiance": ("aucun", 0, 0),
+        "soleil": ("pop", 8, 40),
+        "nuages": ("fondu", 20, 55),
+        "sol": ("fondu", 30, 62),
+        "ombre": ("fondu", 62, 84),
+        "lingot": ("pop", 66, 96),
+    },
     # Revelation generique : tout apparait EN MEME TEMPS. Utile pour un test
     # de tuyauterie, pauvre comme demonstration.
     "cascade": {"_duree": 120, "*": ("fondu", 0, 24)},
