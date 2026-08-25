@@ -298,8 +298,10 @@ def shapes_de_style(st, rapport, nom):
     fo = float(st.get("fill-opacity", 1)) * float(st.get("opacity", 1))
     if str(fill).startswith("url("):
         rapport.approxime(f"{nom}: fill=gradient",
-                          "degrade converti en couleur pleine (moyenne des arrets)")
+                          "degrade converti en couleur pleine (moyenne des arrets, "
+                          "opacite moyenne comprise)")
         fill = st.get("_gradient_moyen", "#808080")
+        fo *= float(st.get("_gradient_opacite", 1.0))
     c = couleur(fill)
     if c is not None:
         out.append({"ty": "fl", "nm": "fill", "r": 1,
@@ -337,17 +339,32 @@ def gradients_moyens(root):
             gid = g.attrib.get("id")
             if not gid:
                 continue
-            cols = []
+            cols, opacites = [], []
             for stop in g.iter(NS + "stop"):
                 st = stop.attrib.get("stop-color") or ""
-                if not st and "style" in stop.attrib:
+                op = stop.attrib.get("stop-opacity")
+                if "style" in stop.attrib:
                     m = re.search(r"stop-color\s*:\s*([^;]+)", stop.attrib["style"])
-                    st = m.group(1) if m else ""
+                    st = st or (m.group(1) if m else "")
+                    m = re.search(r"stop-opacity\s*:\s*([\d.]+)", stop.attrib["style"])
+                    op = op or (m.group(1) if m else None)
                 c = couleur(st, None)
                 if c:
                     cols.append(c)
+                    try:
+                        opacites.append(float(op) if op is not None else 1.0)
+                    except ValueError:
+                        opacites.append(1.0)
             if cols:
-                out[gid] = [round(sum(c[i] for c in cols) / len(cols), 4) for i in range(3)]
+                out[gid] = {
+                    "couleur": [round(sum(c[i] for c in cols) / len(cols), 4) for i in range(3)],
+                    # ⛔ TROUVE PAR AZIZ (courbe "moins belle que l'original") : on
+                    # moyennait la COULEUR mais on ignorait l'OPACITE des arrets.
+                    # L'aire sous la courbe du Gazoduc va de 0,30 a 0,02 ; on la
+                    # rendait a 1,00 — soit 3 a 50x trop opaque. La forme etait
+                    # juste, la matiere completement fausse.
+                    "opacite": round(sum(opacites) / len(opacites), 4),
+                }
     return out
 
 
@@ -426,8 +443,10 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=()):
         if v.startswith("url("):
             gid = v[v.find("#") + 1:].rstrip(")").strip('"\'')
             if gid in grads:
+                g = grads[gid]
                 st["_gradient_moyen"] = "#%02x%02x%02x" % tuple(
-                    int(round(x * 255)) for x in grads[gid])
+                    int(round(x * 255)) for x in g["couleur"])
+                st["_gradient_opacite"] = g["opacite"]
 
     try:
         formes = parse_path(d)
