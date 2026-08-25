@@ -49,9 +49,14 @@ Matière client : `memory/client-sim-tests/lottie-ui-lcd/lcd.jpg` + `start_ref.p
 1. **Le convertisseur ne gère que les segments DROITS** (`M/L/H/V/Z`).
    Une courbe (cadran rond, jauge circulaire, forme organique) le fait échouer —
    **bruyamment, par choix**, jamais en silence. C'est LE chantier n°1.
-2. **Pas de fichier source After Effects.** AE *exporte* vers Lottie, il ne l'*importe* pas.
-   Nos sources = le SVG + le code. Défendable (« changer une couleur est un paramètre »),
-   mais c'est un vrai motif de rejet si le client exige un `.aep`.
+2. **Pas de fichier source After Effects — ⚠️ À RE-TESTER, l'affirmation était FAUSSE.**
+   J'ai affirmé qu'AE n'importait pas le Lottie : **c'est faux** (correction d'Aziz, 08-24).
+   **Bodymovin** (écrit par le créateur du format) et **LottieFiles for AE** font l'import —
+   *« import your Lottie animations into your After Effects project for further editing »*.
+   ⚠️ Réserve de praticiens : l'import peut produire des calques encombrés de groupes/merge-paths
+   parasites, et *« in some cases you have to rebuild it differently »*. Le texte n'est éditable
+   qu'en polices standard. **Nos JSON sont plus simples que ceux générés par AE — favorable,
+   mais non vérifié.** → test prioritaire, § 4 bis.
 3. **Pas de personnages articulés.** Ce n'est pas une limite de format (Lottie sait faire
    des courbes) — c'est un métier différent (rigging, pivots, dessins par angle).
 
@@ -71,17 +76,53 @@ dans `i`/`o` de chaque point : la conversion Bézier existe, elle est mécanique
 mais prendre un asset à vraies courbes de `svg-library/elements/` (ex. `cabosse-ouverte`,
 `poisson-encre`) et vérifier le rendu contre le SVG d'origine.
 
-**Étape 2 — Une scène réelle, mesurée.**
-Prendre UNE scène narrative existante et la convertir. Questions à trancher **par la mesure**,
-pas par l'intuition :
-- Combien pèse le `.lottie` ? (au-delà de ~100 Ko, l'argument « léger » tombe)
-- Les calques restent-ils nommés et dépliables dans Creator ?
-- Qu'est-ce qui NE passe PAS ? (filtres, masques, images raster, dégradés radiaux)
-⛔ **Ne pas conclure sur un seul cas** — 2 scènes de registres différents minimum.
+**Étape 2 — Une scène réelle : chercher LE POINT DE RUPTURE, pas la faisabilité.**
+⭐ On ne teste pas « est-ce que ça marche » — on cherche **où ça casse**. 4 murs possibles :
+
+| Mur | Question | Enjeu si on le heurte |
+|---|---|---|
+| **Courbes** | franchi à l'étape 1 ? | le seul qu'on sait franchir (Bézier = mécanique) |
+| **Poids** | une scène pèse combien ? | au-delà de ~100 Ko l'argument « léger » s'effondre |
+| **Structure** | 60 calques restent-ils nommés/dépliables dans Creator ? | c'est ce qui sépare un livrable pro d'un fichier illisible |
+| **Non-transportable** | filtres, masques, dégradés radiaux, raster ? | ⭐ **la liste de ce qui NE passe pas EST le livrable de la session** |
+
+Le 4e mur est le plus précieux : c'est lui qui permettra de dire **oui ou non à un brief en 30 s**.
+⛔ **2 scènes de registres DIFFÉRENTS minimum** (une abstraite/data-viz, une narrative) — une seule
+réussite ne prouve rien, deux font une méthode.
+⭐ Le registre visé par Aziz : **animation vectorielle abstraite/éditoriale** — des scènes belles
+sans personnages articulés. C'est un créneau réel et moins encombré que l'explainer à personnages.
 
 **Étape 3 — Ce qu'on ne peut PAS transporter (livrable de la session).**
 Écrire la liste ferme : ce que Lottie accepte de notre stack, ce qu'il refuse.
 C'est ce qui permet de dire OUI ou NON à un brief en 30 secondes.
+
+### ⭐ Étape 4 bis (INDÉPENDANTE) — le test After Effects, 7 jours gratuits
+
+**Pourquoi** : si l'import fonctionne, l'objection « pas de source `.aep` » **tombe**, et on parle le
+vocabulaire du marché au lieu de se battre contre lui (raisonnement d'Aziz, 08-24). C'est le même
+principe que toute la session : **tester le maillon inconnu, pas construire autour d'une hypothèse.**
+
+⚠️ **Essai = 7 jours, carte bancaire OBLIGATOIRE, compte à rebours dès l'installation.**
+⛔ **Ne PAS installer avant d'avoir 2 h devant soi** — sinon on brûle des jours pour rien.
+⛔ Annuler **avant** la fin (Compte Adobe → Gérer la formule → Annuler), **jamais le dernier jour**
+(témoignages de facturation). Filet : remboursement intégral sous 14 jours.
+
+**Le test, ~1-2 h** :
+1. Installer AE + le plugin **Bodymovin** ou **LottieFiles for AE** (gratuits).
+2. Importer `out/start_button_v2.json`. Vérifier : les 3 calques sont-ils **nommés** ? Les 5 lettres
+   sont-elles séparées dedans ? Les keyframes sont-ils **éditables** ou est-ce un bloc figé ?
+3. ⭐ **Le test qui décide** : enregistrer un `.aep`, le refermer, le rouvrir. Si ça tient →
+   **on peut livrer un fichier source**, l'objection est levée.
+4. Bonus si le temps le permet : aller-retour complet (JSON → AE → ré-export Lottie) et vérifier que
+   le fichier ressortant joue toujours. Prouverait que le pont tient **dans les deux sens**.
+
+**Décision qui en découle** : ça marche → l'abonnement mensuel (34,49 $/mois, sans engagement) devient
+justifiable **quand un brief l'exige**, pas avant. Ça ne marche pas → on annule et on sait où est la
+vraie limite, pour 0 $.
+
+⛔ **Le glissement à surveiller** : utiliser AE comme **convertisseur de sortie** (importer, exporter,
+fermer) est cohérent. En faire un outil de PRODUCTION ne l'est pas — ce serait entrer en concurrence
+frontale avec des gens qui y ont dix ans d'avance, en abandonnant l'avantage du code.
 
 ### ⛔ Ce qu'il ne faut PAS faire la prochaine session
 - Bâtir un convertisseur générique « pour tous les cas » sans client en face.

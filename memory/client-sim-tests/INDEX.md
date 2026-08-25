@@ -34,7 +34,8 @@ fiche**, pas seulement dans le récit du test.
   compressé **1 382 octets**, sous la référence que le client cite lui-même (1,4 Ko).
   Croisé sur 4 moteurs : `rlottie`, `lottie-web`, Preview et Creator.
   ⛔ 3 limites à annoncer, jamais à cacher : **courbes non gérées** (segments droits seulement,
-  échec bruyant par choix) · **pas de source `.aep`** (AE exporte vers Lottie, ne l'importe pas) ·
+  échec bruyant par choix) · **source `.aep` ⚠️ à TESTER** (l'affirmation « AE n'importe pas » était
+  FAUSSE — Bodymovin fait l'import ; test prioritaire prochaine session) ·
   pas de personnages articulés (métier différent, pas une limite de format).
   **Décision : pas de candidature** — client à **100 $/embauche** sur 19 embauches, budget affiché
   100 $, donc aucune négociation possible. La pièce reste au portfolio (UI générique, ne périme pas).

@@ -111,7 +111,9 @@ dépliables, **éléments déplaçables un par un**. 1382 octets compressé.
 ⛔ **Les 4 limites de l'outil** (à annoncer à un client, jamais à cacher) :
 1. **Segments DROITS uniquement** (`M/L/H/V/Z`) — toute courbe lève une `ValueError`. Échec
    BRUYANT par choix, jamais silencieux. C'est le chantier n°1 pour aller plus loin.
-2. **Pas de source `.aep`** — After Effects *exporte* vers Lottie mais ne l'*importe* pas.
+2. **Source `.aep` : ⚠️ À TESTER** — j'avais affirmé qu'AE n'importait pas le Lottie, **c'est FAUX**
+   (corrigé 08-24). Bodymovin et LottieFiles-for-AE font l'import ; reste à vérifier si NOS fichiers
+   passent proprement. → `memory/client-sim-tests/lottie-ui-lcd/STATUS.md` § 4 bis.
    Nos sources = le SVG + le code.
 3. **Aplatit `transform="translate(x,y)"`** dans les points (Lottie n'a pas d'équivalent de
    transform sur une forme).
