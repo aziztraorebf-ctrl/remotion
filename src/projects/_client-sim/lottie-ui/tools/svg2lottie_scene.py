@@ -85,19 +85,60 @@ class Rapport:
         self.refus.append((quoi, pourquoi))
 
     def afficher(self, titre=""):
+        """
+        ⛔ ORDRE ET REGROUPEMENT (corrige sur une vraie scene) : le 1er jet
+        listait les approximations AVANT les refus, une ligne par element.
+        Sur chill-meter-mix, 102 lignes de degrades identiques enterraient
+        les 30 refus (13 textes, 12 <use>, 5 filtres) 100 lignes plus bas --
+        un rapport cense trancher en 30 secondes.
+        Desormais : LES REFUS D'ABORD, et on groupe par CAUSE, pas par
+        element. Le detail element par element reste accessible via --detail.
+        """
         if titre:
             print(f"\n{titre}")
-        print(f"  porte     : {len(self.porte)} element(s)")
-        if self.approx:
-            print(f"  APPROXIME : {len(self.approx)}")
-            for quoi, pourquoi in _uniq(self.approx):
-                print(f"      - {quoi} : {pourquoi}")
         if self.refus:
-            print(f"  REFUSE    : {len(self.refus)}")
-            for quoi, pourquoi in _uniq(self.refus):
+            print(f"  ⛔ REFUSE    : {len(self.refus)} element(s) — le rendu CHANGE")
+            for quoi, pourquoi in _par_cause(self.refus):
                 print(f"      - {quoi} : {pourquoi}")
+        if self.approx:
+            print(f"  ⚠️  APPROXIME : {len(self.approx)} element(s)")
+            for quoi, pourquoi in _par_cause(self.approx):
+                print(f"      - {quoi} : {pourquoi}")
+        print(f"  ✓  porte     : {len(self.porte)} element(s)")
         if not self.approx and not self.refus:
             print("  -> transportable a l'identique")
+
+    def detail(self):
+        """Liste element par element (option --detail)."""
+        for etiquette, items in (("REFUSE", self.refus), ("APPROXIME", self.approx)):
+            for quoi, pourquoi in items:
+                print(f"  {etiquette:9} {quoi} : {pourquoi}")
+
+
+def _par_cause(pairs):
+    """
+    Groupe par RAISON et non par element : "12 <use>" est actionnable,
+    douze lignes "<use>" identiques ne le sont pas. Les noms d'elements
+    sont resumes (3 max) pour garder la trace de OU regarder.
+    """
+    par_raison = {}
+    for quoi, pourquoi in pairs:
+        # "path-248: fill=gradient" -> famille "fill=gradient"
+        famille = quoi.split(": ", 1)[1] if ": " in quoi else quoi.split(" (x")[0]
+        cible = quoi.split(": ", 1)[0] if ": " in quoi else None
+        e = par_raison.setdefault((famille, pourquoi), [])
+        if cible:
+            e.append(cible)
+    out = []
+    for (famille, pourquoi), cibles in par_raison.items():
+        n = len(cibles) if cibles else sum(
+            1 for q, p in pairs if p == pourquoi and famille in q)
+        etiquette = f"{famille} (x{n})" if n > 1 else famille
+        if cibles:
+            apercu = ", ".join(cibles[:3]) + ("…" if len(cibles) > 3 else "")
+            etiquette += f"  [{apercu}]"
+        out.append((etiquette, pourquoi))
+    return out
 
 
 def _uniq(pairs):
@@ -310,8 +351,16 @@ def gradients_moyens(root):
     return out
 
 
-def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0):
-    """Parcourt l'arbre SVG et produit une liste de (nom, shapes Lottie)."""
+def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=()):
+    """
+    Parcourt l'arbre SVG et produit une liste de (nom, formes, styles).
+
+    `chemin` = les id des <g> traverses. ⭐ MESURE (2 scenes reelles) : les
+    formes n'ont presque jamais d'id, mais les GROUPES en ont souvent
+    (moitie-gauche, feves...). Aplatir sans les reprendre donnait 100 % de
+    calques nommes "path-248" -- illisible dans Creator, et c'est justement
+    ce qui separe un livrable pro d'un fichier brut.
+    """
     tag = el.tag.replace(NS, "")
 
     if tag in NON_PORTES:
@@ -339,8 +388,10 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0):
     m = _mul(mat, parse_transform(el.attrib.get("transform", "")))
 
     if tag in ("svg", "g", "a"):
+        gid = el.attrib.get("id")
+        suite = chemin + (gid,) if gid else chemin
         for enfant in el:
-            collecter(enfant, m, st, rapport, grads, sortie, profondeur + 1)
+            collecter(enfant, m, st, rapport, grads, sortie, profondeur + 1, suite)
         return
 
     if tag not in GEOM:
@@ -357,7 +408,17 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0):
             return                      # forme degeneree : rien a tracer
         rapport.ok(f"<{tag}>")
 
-    nom = el.attrib.get("id") or f"{tag}-{len(sortie) + 1}"
+    # Nom du calque : l'id de la forme si elle en a un, sinon celui du groupe
+    # qui la contient (suffixe pour rester unique), sinon un auto-numero.
+    propre = el.attrib.get("id")
+    if propre:
+        nom = propre
+    elif chemin:
+        base = chemin[-1]
+        rang = sum(1 for n, _, _ in sortie if n == base or n.startswith(base + "-")) + 1
+        nom = f"{base}-{rang}"
+    else:
+        nom = f"{tag}-{len(sortie) + 1}"
 
     # Gradient : on note la moyenne pour shapes_de_style
     for cle in ("fill", "stroke"):
@@ -476,6 +537,8 @@ def main():
     ap.add_argument("--frames", type=int, default=60)
     ap.add_argument("--rapport", action="store_true",
                     help="analyse seule, n'ecrit pas de fichier")
+    ap.add_argument("--detail", action="store_true",
+                    help="liste element par element au lieu du groupement par cause")
     a = ap.parse_args()
 
     try:
@@ -492,6 +555,8 @@ def main():
     print(f"{os.path.basename(a.svg)} -> {len(doc['layers'])} calques, "
           f"{nb_pts} sommets, {doc['w']}x{doc['h']}")
     rapport.afficher()
+    if a.detail:
+        rapport.detail()
 
     if not a.rapport:
         out = a.out or os.path.splitext(a.svg)[0] + ".json"

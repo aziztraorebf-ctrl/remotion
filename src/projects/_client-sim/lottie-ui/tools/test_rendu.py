@@ -27,6 +27,15 @@ CAS = [
     ("agriculture/cacaoyer/cacaoyer-cacao-chocolat.svg", 0.5),
 ]
 
+# Scenes completes (hors svg-library) : chemin absolu depuis la racine du repo.
+# ⭐ Le 2e cas est VOLONTAIREMENT un echec attendu -- voir plus bas.
+SCENES = [
+    ("public/assets/geoafrique/recraft-v4/beat01-free-A2.svg", 0.5, None),
+    ("src/projects/_rnd/chill-meter/chill-meter-mix.svg", 100.0,
+     "30 refus annonces (13 text, 12 use, 5 filtres) + 102 degrades approximes : "
+     "l'ecart mesure ~33 % CONFIRME le rapport, il ne le contredit pas"),
+]
+
 fails = []
 with tempfile.TemporaryDirectory() as tmp:
     for rel, tol in CAS:
@@ -59,6 +68,44 @@ with tempfile.TemporaryDirectory() as tmp:
             fails.append(nom)
         else:
             print(f"  ok    {nom} : {pct:.2f} % divergents")
+
+# --- Scenes completes ---------------------------------------------------------
+# ⭐ POURQUOI un cas a 33 % d'ecart est un SUCCES : le convertisseur avait
+# annonce 30 refus AVANT tout rendu. Le rendu montre exactement ce qui manque
+# (tout le texte, les icones, les degrades d'ecran). Ce test verifie donc la
+# COHERENCE rapport <-> rendu : si l'ecart devenait faible sans que les refus
+# disparaissent, c'est le RAPPORT qui mentirait.
+print()
+with tempfile.TemporaryDirectory() as tmp:
+    for rel, tol, note in SCENES:
+        svg = os.path.join(RACINE, rel)
+        if not os.path.exists(svg):
+            print(f"  SKIP  {os.path.basename(rel)} (absent)")
+            continue
+        nom = os.path.splitext(os.path.basename(rel))[0]
+        js = os.path.join(tmp, nom + ".json")
+        subprocess.run([sys.executable, os.path.join(ICI, "svg2lottie_scene.py"),
+                        svg, "-o", js], capture_output=True, text=True)
+        if not os.path.exists(js):
+            print(f"  FAIL  {nom} : conversion echouee")
+            fails.append(nom)
+            continue
+        r = subprocess.run([sys.executable, os.path.join(ICI, "compare_render.py"),
+                            svg, js, "-o", os.path.join(tmp, nom + ".png")],
+                           capture_output=True, text=True)
+        pct = None
+        for ligne in r.stdout.splitlines():
+            if "divergents" in ligne:
+                pct = float(ligne.split(":")[1].split("%")[0])
+        if pct is None:
+            print(f"  FAIL  {nom} : pas de mesure")
+            fails.append(nom)
+        elif pct > tol:
+            print(f"  FAIL  {nom} : {pct:.2f} % divergents (max {tol} %)")
+            fails.append(nom)
+        else:
+            print(f"  ok    {nom} : {pct:.2f} % divergents"
+                  + (f"\n          ({note})" if note else ""))
 
 print()
 if fails:
