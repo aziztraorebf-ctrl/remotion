@@ -1,7 +1,8 @@
 # TEST CLIENT-SIM — LOTTIE UI (menu LCD embarqué)
 
-> Session du 2026-08-24. **Statut : pipeline PROUVÉ, validé dans l'outil officiel du client.**
-> Prochaine étape identifiée : passer des composants simples aux SCÈNES COMPLEXES.
+> Sessions des 2026-08-24 et **2026-08-25**. **Statut : pipeline PROUVÉ (outil officiel du client)
+> + COURBES ET PRIMITIVES FRANCHIES**, rendu vérifié pixel par pixel contre le SVG d'origine.
+> ⏭️ Prochaine étape : la **SCÈNE** (poids, structure à ~60 calques, liste ferme des refus).
 > Méthode de candidature : `memory/fiches/FICHE-BRIEF-CLIENT.md` (auto-injectée).
 
 ---
@@ -35,8 +36,12 @@ l'onglet du même nom, en bas à côté de « Main Scene »** — cliquer dessus
 Code et sorties : `src/projects/_client-sim/lottie-ui/`
 - `svg/start_button.svg` — le dessin produit par Fable (statique, ids imposés)
 - `out/start_button_v2.json` · `out/start_button.lottie` — l'animation
-- `tools/animate_start.py` — SVG structuré → Lottie (le convertisseur retenu)
+- `tools/animate_start.py` — SVG structuré → Lottie (convertisseur de LA PIÈCE LCD)
 - `tools/svg2lottie.py` — 1re version, prototype de tuyauterie (garde l'historique)
+- ⭐ **`tools/svgpath.py`** — chemins SVG → polybézier Lottie (grammaire complète + primitives)
+- ⭐ **`tools/svg2lottie_scene.py`** — SVG entier → Lottie, PORTÉ/APPROXIMÉ/REFUSÉ
+- ⭐ **`tools/compare_render.py`** — rend les deux dans Chromium et **mesure** l'écart pixel
+- `tools/test_svgpath.py` (36 tests) · `tools/test_rendu.py` (non-régression visuelle)
 
 Matière client : `memory/client-sim-tests/lottie-ui-lcd/lcd.jpg` + `start_ref.png`
 
@@ -46,9 +51,13 @@ Matière client : `memory/client-sim-tests/lottie-ui-lcd/lcd.jpg` + `start_ref.p
 
 ## 3. ⛔ LES 3 LIMITES CONNUES — à dire au client, jamais à cacher
 
-1. **Le convertisseur ne gère que les segments DROITS** (`M/L/H/V/Z`).
-   Une courbe (cadran rond, jauge circulaire, forme organique) le fait échouer —
-   **bruyamment, par choix**, jamais en silence. C'est LE chantier n°1.
+1. ~~**Le convertisseur ne gère que les segments DROITS**~~ — ✅ **LEVÉE le 2026-08-25**
+   (commit `4ce4b9ee`). Grammaire SVG complète `M/L/H/V/C/S/Q/T/A/Z` + relatives, plus les
+   primitives `circle/ellipse/rect/line/polygon/polyline`. Cubiques et quadratiques **exactes**
+   (1e-14) ; arcs sous **5e-04 px** de R=5 à R=2000. Module : `tools/svgpath.py`.
+   ⭐ Ce que la mesure a appris et que le plan ne prévoyait pas : **nos assets ne sont pas faits
+   que de `<path>`** — `soleil-radiant-ggw.svg` contient ZÉRO path (4 `circle` + 12 `line`), et
+   l'ancien convertisseur en sortait un fichier **vide sans erreur**.
 2. **Pas de fichier source After Effects — ⚠️ À RE-TESTER, l'affirmation était FAUSSE.**
    J'ai affirmé qu'AE n'importait pas le Lottie : **c'est faux** (correction d'Aziz, 08-24).
    **Bodymovin** (écrit par le créateur du format) et **LottieFiles for AE** font l'import —
@@ -69,32 +78,54 @@ Cible nommée : nos **scènes narratives** SVG, découpées en calques.
 
 ### Ordre proposé (du moins cher au plus cher)
 
-**Étape 1 — Les courbes (bloquant, ~2-4 h).**
-Étendre `animate_start.py` aux commandes `C`/`S`/`Q`/`T`/`A`. Lottie stocke les tangentes
-dans `i`/`o` de chaque point : la conversion Bézier existe, elle est mécanique.
-⭐ **Test de sortie** : reprendre `soleil-radiant-ggw.svg` — ses cercles passent déjà,
-mais prendre un asset à vraies courbes de `svg-library/elements/` (ex. `cabosse-ouverte`,
-`poisson-encre`) et vérifier le rendu contre le SVG d'origine.
+**Étape 1 — Les courbes.** ✅ **FAITE le 2026-08-25** (commit `4ce4b9ee`).
+Grammaire SVG complète + primitives. Outils : `tools/svgpath.py` (conversion),
+`tools/svg2lottie_scene.py` (SVG entier → Lottie, un calque nommé par forme, transforms aplatis),
+`tools/compare_render.py` (rendu lottie-web vs SVG dans Chromium, **mesure** l'écart pixel),
+`tools/test_svgpath.py` (36 tests) et `tools/test_rendu.py` (non-régression visuelle).
+Mesuré sur 4 assets réels : **0,00 % / 0,39 % / 0,00 % / 0,00 %** de pixels divergents.
+⚠️ `animate_start.py` (pièce LCD) n'a **pas** été migré sur le nouveau module — il produit un JSON
+bit-à-bit identique à hier. À migrer quand on y retouchera, pas avant.
 
-**Étape 2 — Une scène réelle : chercher LE POINT DE RUPTURE, pas la faisabilité.**
-⭐ On ne teste pas « est-ce que ça marche » — on cherche **où ça casse**. 4 murs possibles :
+⛔⛔ **2 BUGS QUE SEUL LE RENDU A MONTRÉS** — le rapport du convertisseur annonçait
+« transportable à l'identique » dans les deux cas, et les tests de géométrie passaient :
+1. **Contours réduits de moitié.** Dans un calque Lottie, le **PREMIER groupe est peint EN
+   DERNIER** : le remplissage recouvrait la moitié intérieure du trait (5 px → 2 px ; 7030 → 3475
+   pixels sombres). Corrigé en `[stroke, fill]`.
+2. **`filter` / `clip-path` / `mask` sont surtout des ATTRIBUTS, pas des balises.** Ne détecter
+   que les balises laissait un flou disparaître **en silence**.
+→ Confirme la règle CODE + VISUEL : un `.json` valide, aux chemins exacts et aux bonnes couleurs,
+peut rendre faux. **Ne jamais conclure sur le rapport seul.**
 
-| Mur | Question | Enjeu si on le heurte |
+**Étape 2 — Une scène réelle : chercher LE POINT DE RUPTURE.** ⏭️ **RESTE À FAIRE.**
+Les 4 assets convertis sont des OBJETS isolés (3,5 à 18 Ko), pas des scènes. Les 3 murs non
+encore éprouvés :
+| Mur | État |
+|---|---|
+| **Courbes** | ✅ franchi |
+| **Poids** | ⏭️ non mesuré sur une vraie scène (objets seuls : 3,5-18 Ko, très loin des 100 Ko) |
+| **Structure** | ⏭️ **non vérifié dans Creator** — 9 à 16 calques testés, jamais 60 |
+| **Non-transportable** | 🟡 liste partielle ci-dessous, établie sur un SVG-piège fabriqué |
+
+⛔ Toujours valable : **2 scènes de registres DIFFÉRENTS** (une abstraite/data-viz, une narrative).
+⭐ Registre visé par Aziz : **animation vectorielle abstraite/éditoriale**, sans personnages articulés.
+
+**Étape 3 — Ce qui NE passe PAS (le livrable).** 🟡 **PREMIÈRE VERSION, à compléter sur une vraie scène.**
+
+| Élément SVG | Verdict | Détail |
 |---|---|---|
-| **Courbes** | franchi à l'étape 1 ? | le seul qu'on sait franchir (Bézier = mécanique) |
-| **Poids** | une scène pèse combien ? | au-delà de ~100 Ko l'argument « léger » s'effondre |
-| **Structure** | 60 calques restent-ils nommés/dépliables dans Creator ? | c'est ce qui sépare un livrable pro d'un fichier illisible |
-| **Non-transportable** | filtres, masques, dégradés radiaux, raster ? | ⭐ **la liste de ce qui NE passe pas EST le livrable de la session** |
+| `path` toutes commandes, `circle`, `ellipse`, `rect` (même `rx`/`ry`), `line`, `polygon`, `polyline` | ✅ **porté** | exact |
+| `transform` (translate/scale/rotate/skew/matrix) | ✅ **porté** | aplati dans les points |
+| `fill`, `stroke`, largeurs, `linecap`/`linejoin`, opacités | ✅ **porté** | — |
+| **Dégradés** (`linearGradient`, `radialGradient`) | 🟡 **approximé** | rabattu sur la couleur moyenne. ⚠️ Lottie **sait** faire les dégradés (`gf`) : le porter demande aussi son système de coordonnées et ses transforms — chantier à part, **pas une impossibilité** |
+| `filter` (flou, ombre portée) | ⛔ **refusé** | aucun équivalent générique |
+| `mask`, `clipPath` | ⛔ **refusé** | Lottie a des masques, d'un autre modèle ; le détourage doit être pré-appliqué |
+| `text` | ⛔ **refusé** | exige une police déclarée |
+| `image` (raster) | ⛔ **refusé** | embarquable en base64, mais alourdit beaucoup |
+| `use`, `symbol`, `pattern`, `marker` | ⛔ **refusé** | à aplatir avant conversion |
+| `animate*` (SMIL) | ⛔ **refusé** | l'animation vient de NOTRE code |
 
-Le 4e mur est le plus précieux : c'est lui qui permettra de dire **oui ou non à un brief en 30 s**.
-⛔ **2 scènes de registres DIFFÉRENTS minimum** (une abstraite/data-viz, une narrative) — une seule
-réussite ne prouve rien, deux font une méthode.
-⭐ Le registre visé par Aziz : **animation vectorielle abstraite/éditoriale** — des scènes belles
-sans personnages articulés. C'est un créneau réel et moins encombré que l'explainer à personnages.
-
-**Étape 3 — Ce qu'on ne peut PAS transporter (livrable de la session).**
-Écrire la liste ferme : ce que Lottie accepte de notre stack, ce qu'il refuse.
-C'est ce qui permet de dire OUI ou NON à un brief en 30 secondes.
+⚠️ **Cette liste vient d'un SVG-piège fabriqué, pas d'une scène réelle** — la compléter à l'étape 2.
 
 ### ⭐ Étape 4 bis (INDÉPENDANTE) — le test After Effects, 7 jours gratuits
 
