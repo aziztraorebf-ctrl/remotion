@@ -2,7 +2,10 @@
 
 > Sessions des 2026-08-24 et **2026-08-25**. **Statut : pipeline PROUVÉ (outil officiel du client)
 > + COURBES ET PRIMITIVES FRANCHIES**, rendu vérifié pixel par pixel contre le SVG d'origine.
-> ⏭️ Prochaine étape : la **SCÈNE** (poids, structure à ~60 calques, liste ferme des refus).
+> ✅ **ÉTAPES 1, 2 ET 3 FAITES** (courbes · 2 scènes réelles · liste ferme).
+> ⭐⭐ **LIVRABLE = `CE-QUI-PASSE-EN-LOTTIE.md`** (répondre à un brief en 30 s) — le lire AVANT
+> tout brief Lottie, et passer le SVG du client à `svg2lottie_scene.py --rapport`.
+> ⏭️ Reste : validation Creator sur une scène · animer une scène · test After Effects (§ 4 bis).
 > Méthode de candidature : `memory/fiches/FICHE-BRIEF-CLIENT.md` (auto-injectée).
 
 ---

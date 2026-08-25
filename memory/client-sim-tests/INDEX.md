@@ -33,8 +33,14 @@ fiche**, pas seulement dans le récit du test.
   nommés, dépliables, et **éléments déplaçables un par un** — l'exigence même du brief. Poids
   compressé **1 382 octets**, sous la référence que le client cite lui-même (1,4 Ko).
   Croisé sur 4 moteurs : `rlottie`, `lottie-web`, Preview et Creator.
-  ⛔ 3 limites à annoncer, jamais à cacher : **courbes non gérées** (segments droits seulement,
-  échec bruyant par choix) · **source `.aep` ⚠️ à TESTER** (l'affirmation « AE n'importe pas » était
+  ⭐⭐ **2026-08-25 — COURBES FRANCHIES + LISTE FERME** : `CE-QUI-PASSE-EN-LOTTIE.md` répond à un
+  brief Lottie en 30 s (mesuré sur 6 fichiers, rendu comparé pixel à pixel). ⭐ Le vrai mur n'est
+  ni les courbes ni le poids (`.lottie` compressé = 17-166 Ko) : c'est le **NOMMAGE des calques**,
+  et il dépend de **l'outil source** — un export Recraft brut n'a aucun `id`, donc 509 calques
+  `path-248` illisibles ; notre chaîne Fable/svg-library en a.
+  ⛔ Limites restantes : **texte, filtres, masques, images, `use`** ne passent pas · **dégradés**
+  rabattus sur une couleur moyenne (le format sait les faire, notre convertisseur non) ·
+  **source `.aep` ⚠️ à TESTER** (l'affirmation « AE n'importe pas » était
   FAUSSE — Bodymovin fait l'import ; test prioritaire prochaine session) ·
   pas de personnages articulés (métier différent, pas une limite de format).
   **Décision : pas de candidature** — client à **100 $/embauche** sur 19 embauches, budget affiché
