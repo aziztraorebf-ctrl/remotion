@@ -1,4 +1,17 @@
 # NEXT-ACTION — Recommandations actives
+
+## ⭐⭐⭐ PROCHAINE SESSION — REPRODUIRE « Foster With Confidence » de A à Z
+
+**Décision d'Aziz 2026-08-26** : arrêter d'inventer des clients fictifs, **reproduire une
+vidéo réellement vendue sur Fiverr**. Si on reproduit plusieurs vidéos dans des registres
+différents, on sait qu'on est outillé pour la plupart des scénarios.
+
+→ **Plan complet, découpage plan par plan mesuré : `memory/projects/REPRO-FOSTER.md`**
+→ Source sécurisée : `public/_client-sim/_references/foster/foster-with-confidence.mp4`
+→ 11 plans, 13 transitions mesurées. **9 plans sur 11 sont déjà couverts** par notre stack.
+→ 2 trous, décision prise : maison filmée → **Minimax H3** · portraits d'enfants → **images Gemini**.
+→ 1re action : trancher le niveau visé (structure+gestes recommandé, pixel = bonus).
+
 > Mis a jour : 2026-08-22 (purge : 26,5 Ko → ce fichier. Sections closes/mergées/dupliquées supprimées, git garde tout)
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 > ⛔ **Format : 3 lignes max par projet.** Un projet TERMINÉ se SUPPRIME de ce fichier, il ne
