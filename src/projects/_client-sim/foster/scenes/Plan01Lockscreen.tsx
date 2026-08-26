@@ -36,6 +36,7 @@ import {
   continueRender,
   delayRender,
   interpolate,
+  spring,
   staticFile,
   useCurrentFrame,
   useVideoConfig,
@@ -50,8 +51,18 @@ const DECOR = "_shared/refs/decors-mockup/desk-designer-top.png";
 const DECOR_PX_PER_CM = 24.6;
 const PHONE_H_CM = 14.7; // iPhone 15 Pro : 146,6 mm
 
-/** Plaque d'ecran verrouille, capturee par ui-capture (1179x2556 natif). */
-const PLATE = "_client-sim/foster/screens/lockscreen.png";
+/**
+ * L'ECRAN EST VIVANT : la notification s'ECRIT en 3 temps dans la reference
+ * (mesure sur zoom serre) — bulle vide a 0,05 s, « Ofsted » a 0,30 s, phrase
+ * complete a 0,60 s. Trois plaques capturees, pas une image fixe.
+ */
+const PLATES = [
+  "_client-sim/foster/screens/lockscreen-s0.png",
+  "_client-sim/foster/screens/lockscreen-s1.png",
+  "_client-sim/foster/screens/lockscreen-s2.png",
+] as const;
+/** Bascule d'etat, en secondes (mesure sur la reference). */
+const PLATE_AT = [0, 0.27, 0.55] as const;
 
 /** SFX — banque Shotcraft. ⛔ PAS de whoosh sur une UI. */
 const SFX = {
@@ -149,7 +160,9 @@ export const Plan01Lockscreen: React.FC = () => {
   const { width, height, fps } = useVideoConfig();
 
   // Plaque 1179x2556 ; ecran du modele 1.39 x 3.012 unites.
-  const tex = useTex(PLATE, 1179 / 2556, 1.39 / 3.012);
+  const t0 = useTex(PLATES[0], 1179 / 2556, 1.39 / 3.012);
+  const t1 = useTex(PLATES[1], 1179 / 2556, 1.39 / 3.012);
+  const t2 = useTex(PLATES[2], 1179 / 2556, 1.39 / 3.012);
 
   /**
    * ALLUMAGE DU DECOR — courbe MESUREE sur la reference, pas choisie :
@@ -157,26 +170,58 @@ export const Plan01Lockscreen: React.FC = () => {
    * On la reproduit en deux temps plutot qu'avec un seul ease.
    */
   const tSec = frame / fps;
-  const litSlow = interpolate(tSec, [0.53, 1.03], [0, 0.33], {
+
+  /**
+   * LE « SPLASH » — ce n'est PAS un fondu lineaire.
+   * Luminance globale mesuree frame par frame sur la reference : la montee
+   * ACCELERE continument (+0,4/frame a 0,1 s, +3 a 0,9 s, PIC A +10,8 a 1,10 s)
+   * puis s'ARRETE NET a 1,20 s (delta < 0,1 ensuite : plateau parfait).
+   * Une courbe cubique-in reproduit cette acceleration ; le clamp donne l'arret sec.
+   */
+  const lit = interpolate(tSec, [0.0, 1.2], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
-    easing: Easing.linear,
+    easing: Easing.in(Easing.cubic),
   });
-  const litFast = interpolate(tSec, [1.03, 1.2], [0, 0.67], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: Easing.out(Easing.quad),
-  });
-  const lit = litSlow + litFast;
+
+  /** Plaque courante : l'ecran vit pendant que le decor s'allume. */
+  const plateIdx = tSec >= PLATE_AT[2] ? 2 : tSec >= PLATE_AT[1] ? 1 : 0;
+  const tex = plateIdx === 2 ? t2 : plateIdx === 1 ? t1 : t0;
 
   /**
    * Le plan large est quasi FIXE : la reference ne bouge pas avant la coupe.
    * Une derive tres lente (1 -> 1.02) evite l'image morte sans inventer un
    * mouvement que la reference n'a pas.
    */
-  const drift = interpolate(tSec, [0, 1.6], [1, 1.02], {
+  /**
+   * PULL BACK REVEAL — le geste principal du plan, absent de la v1.
+   * MESURE a la regle sur la reference (largeur du chassis, plein cadre) :
+   *   t=0,05 s -> 342 px  |  t=0,60 s -> 322 px  |  t=1,45 s -> 155 px
+   * Soit un recul de x2,2, concentre entre 0,9 et 1,3 s — avant ca le cadrage
+   * ne bouge quasiment pas. On reproduit ce profil : plateau, puis recul.
+   */
+  const pull = interpolate(tSec, [0, 0.6, 0.9, 1.3], [2.2, 2.07, 1.9, 1.0], {
+    extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
+    easing: Easing.inOut(Easing.cubic),
   });
+
+  /**
+   * LA POSE — arret amorti avec un LEGER depassement.
+   * ⚠️ Mesure honnete : je n'ai PAS pu prouver un overshoot franc sur la
+   * reference (sa 1re seconde est recouverte par l'interface Fiverr, et tout
+   * detecteur global derape quand le decor s'allume). Ce que je mesure est une
+   * forte deceleration qui se cale a 1,30 s. On code donc un spring a
+   * depassement leger — a ajuster au rendu si c'est trop marque.
+   */
+  const settle = spring({
+    frame: frame - Math.round(1.05 * fps),
+    fps,
+    config: { damping: 11, mass: 0.5, stiffness: 120 },
+    durationInFrames: Math.round(0.55 * fps),
+  });
+  /** 1 -> leger depassement -> 1. Amplitude volontairement faible (1,8 %). */
+  const bounce = 1 + 0.018 * Math.sin(settle * Math.PI) * (1 - settle * 0.35);
   /**
    * CADRAGE — facteur MESURE, pas dose : la periode des carreaux du tapis vaut
    * 214 px dans la reference contre 188 px chez nous (FFT sur une ligne du
@@ -186,8 +231,22 @@ export const Plan01Lockscreen: React.FC = () => {
    */
   const DECOR_ZOOM = 1.138;
 
-  const camZ = 8.4;
-  const phoneScale = scaleForRealSize(3.2, PHONE_H_CM, DECOR_PX_PER_CM, camZ, height);
+  /**
+   * ⛔⛔ CAUSE RACINE D'UN BUG QUI A COUTE 2 RENDUS (v3, v4) :
+   * la prop `camera={{ position: [0, 0, camZ] }}` de <ThreeCanvas> n'est lue
+   * QU'A L'INITIALISATION — c'est une valeur par DEFAUT de react-three-fiber,
+   * pas une liaison reactive. Animer `camZ` ne bouge donc RIEN a l'ecran.
+   * (`PhoneOnDesk` semble animer sa camera, mais son zoom vient en realite du
+   * `scale` qu'il recalcule sur camZ — la camera, elle, ne bouge jamais.)
+   * -> LE PULL BACK PASSE PAR LE SCALE. La camera reste a distance fixe.
+   */
+  const CAM_Z = 8.4;
+  /**
+   * Echelle de REFERENCE : le telephone fait ses 14,7 cm reels a l'echelle du
+   * decor une fois le plan large atteint. `pull` la multiplie pendant le recul.
+   */
+  const phoneScaleBase = scaleForRealSize(3.2, PHONE_H_CM, DECOR_PX_PER_CM, CAM_Z, height);
+  const phoneScale = phoneScaleBase * pull * bounce;
   const phonePx = PHONE_H_CM * DECOR_PX_PER_CM;
 
   return (
@@ -203,7 +262,7 @@ export const Plan01Lockscreen: React.FC = () => {
 
       {/* DECOR — il s'allume, il ne se devoile pas par un fondu plat :
           l'opacite monte sur une courbe mesuree. */}
-      <AbsoluteFill style={{ opacity: lit, transform: `scale(${drift * DECOR_ZOOM})` }}>
+      <AbsoluteFill style={{ opacity: lit, transform: `scale(${pull * DECOR_ZOOM * bounce})` }}>
         <Img src={staticFile(DECOR)} style={{ width, height, objectFit: "cover" }} />
       </AbsoluteFill>
 
@@ -212,7 +271,8 @@ export const Plan01Lockscreen: React.FC = () => {
       <AbsoluteFill
         style={{
           background:
-            "radial-gradient(30% 24% at 50% 50%, rgba(120,195,255,0.55), rgba(60,140,230,0.20) 45%, transparent 72%)",
+            "radial-gradient(26% 21% at 50% 50%, rgba(120,195,255,0.50), rgba(60,140,230,0.18) 48%, transparent 70%)",
+          transform: `scale(${pull})`,
           mixBlendMode: "screen",
           opacity: interpolate(tSec, [0.10, 0.55, 1.3], [0, 1, 0.35], {
             extrapolateLeft: "clamp",
@@ -221,19 +281,27 @@ export const Plan01Lockscreen: React.FC = () => {
         }}
       />
 
-      <GroundShadow cx="50%" cy="51%" w={phonePx * 0.5} h={phonePx * 1.02} opacity={0.62 * lit} />
+      {/* L'ombre suit le pull back : large quand on est serre, resserree a la pose.
+          Elle porte aussi le rebond — une ombre qui ne bouge pas trahit l'objet colle. */}
+      <GroundShadow
+        cx="50%"
+        cy="51%"
+        w={phonePx * 0.5 * pull * bounce}
+        h={phonePx * 1.02 * pull * bounce}
+        opacity={0.62 * lit}
+      />
 
       <ThreeCanvas
         width={width}
         height={height}
-        camera={{ fov: 40, position: [0, 0, camZ] }}
+        camera={{ fov: 40, position: [0, 0, CAM_Z] }}
         style={{ background: "transparent" }}
         gl={{ alpha: true, antialias: true }}
       >
         <SceneLights />
         {/* 2,5 deg de desalignement : un objet vraiment pose n'est jamais
             parfaitement aligne sur le bord de la table. */}
-        <group rotation={[0, 0, -0.044]} scale={drift}>
+        <group rotation={[0, 0, -0.044]}>
           <PhoneModel
             rotationY={0}
             scale={phoneScale}

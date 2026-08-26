@@ -99,6 +99,53 @@ mesure des plans.
   l'argument commercial « voici la vidéo vendue, voici la nôtre » exige la comparaison directe.
 - **Branche : `feat/repro-foster`.**
 
+
+## ⭐⭐ LE PLAN 1 EST UN PULL BACK REVEAL — 4 corrections apportees par Aziz (2026-08-26)
+
+> ⛔ **La v1 etait FAUSSE sur le geste principal, pas juste imparfaite.** J'ai lu
+> « le decor s'allume » dans le tableau de decoupage et reproduit un allumage SANS
+> mouvement de camera. Le tableau decrivait ce qui CHANGE A L'ECRAN, pas le GESTE.
+> **Lecon transposable aux 10 plans suivants : mesurer le geste avant de coder,
+> le decoupage ne le donne pas.**
+
+Les 4 points, tous **mesures** sur la reference :
+
+1. **PULL BACK REVEAL x2,2** (mesure a la regle, plein cadre) :
+   largeur du chassis 342 px a t=0,05 s -> 322 px a 0,60 s -> **155 px a 1,45 s**.
+   Le recul est concentre **entre 0,9 et 1,3 s** ; avant, le cadrage bouge a peine.
+   ⛔ **Se code par la DISTANCE CAMERA** (camZ 3.5 -> 8.4), jamais par le scale du
+   groupe 3D : scale-er le groupe fausse l'echelle reelle calculee et l'effet est
+   bien trop faible (constate au rendu v3).
+   ⛔⛔ **Et l'echelle se calcule a la distance FINALE**, pas a `camZ` courant —
+   sinon le telephone garde la meme taille a l'ecran et le pull back s'annule.
+
+2. **L'ECRAN EST VIVANT** — la notification s'ECRIT en 3 temps :
+   bulle vide (0,05 s) -> « Head Of Service / Ofsted » (0,30 s) -> phrase complete
+   (0,60 s). 3 plaques capturees via `?state=0|1|2`, pas une image fixe.
+   (Pattern `row-embed` du socle shotcraft : decoupage de plaque, jamais redessin.)
+
+3. **LE « SPLASH » = une rampe qui ACCELERE puis s'ARRETE NET.** Luminance globale
+   mesuree frame par frame : +0,4/frame a 0,1 s, +3 a 0,9 s, **pic a +10,8 a 1,10 s**,
+   puis **plateau parfait** des 1,20 s (delta < 0,1). Ce n'est PAS un fondu lineaire.
+   -> `Easing.in(Easing.cubic)` + clamp.
+
+4. **LA POSE / LE REBOND** — ⚠️ **honnetete de mesure** : je n'ai PAS pu prouver un
+   overshoot franc. Ce qui est mesurable est une forte deceleration qui se cale a
+   1,30 s. La 1re seconde etant recouverte par l'interface Fiverr, et tout detecteur
+   global derapant quand le decor s'allume, la question reste ouverte.
+   Decision d'Aziz : **`spring()` a depassement leger, on juge au rendu.**
+
+### ⛔ Les mesures automatiques qui ONT ECHOUE sur cette matiere (ne pas refaire)
+Detection de bords par gradient, seuillage du blanc, FFT sur la periode des carreaux :
+**toutes derapent des que le decor s'allume** (elles attrapent le tapis au lieu du
+telephone ; une a donne « x2,55 » et une autre « 79 px » au lieu de 214).
+✅ **Ce qui marche : tracer une grille de reperes sur la frame et mesurer a l'oeil.**
+(`grid_cmp.png` — regle rouge tous les 192 px sur un cadre 1920.)
+
+### Detail visuel note au passage
+Les « eclats bleus » derriere le telephone sont des **fragments geometriques nets
+disposes en anneau** (visibles a 0,60 s), pas un halo diffus.
+
 ## CE QUI EST DÉJÀ PRÊT (acquis de la session 2026-08-25/26)
 - `devices/PhoneModel` · `LaptopModel` — mockups procéduraux, écran = zone d'accueil
 - `devices/DeviceInScene` — objet posé dans un décor, ombre 3 couches, allumage 0,30 s

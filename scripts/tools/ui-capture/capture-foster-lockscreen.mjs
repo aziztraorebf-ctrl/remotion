@@ -9,9 +9,15 @@ const page = await browser.newPage();
 // La page est authored a la resolution native iPhone 15 Pro (1179x2556).
 // deviceScaleFactor 1 : le HTML porte deja les pixels reels.
 await page.setViewport({ width: 1179, height: 2556, deviceScaleFactor: 1 });
-await page.goto('http://localhost:8899/lockscreen.html', { waitUntil: 'networkidle0' });
-await new Promise((r) => setTimeout(r, 500));
-
+// 3 etats de la notification : elle s'ECRIT progressivement dans la reference
+// (bulle vide 0,05 s -> expediteur 0,30 s -> phrase complete 0,60 s).
+for (const st of ['0', '1', '2']) {
+  await page.goto(`http://localhost:8899/lockscreen.html?state=${st}`, { waitUntil: 'networkidle0' });
+  await new Promise((r) => setTimeout(r, 300));
+  await page.screenshot({ path: `${OUT}/lockscreen-s${st}.png` });
+}
+await page.goto('http://localhost:8899/lockscreen.html?state=2', { waitUntil: 'networkidle0' });
+await new Promise((r) => setTimeout(r, 300));
 await page.screenshot({ path: `${OUT}/lockscreen.png` });
 
 const info = await page.evaluate(() => {
