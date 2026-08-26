@@ -65,6 +65,29 @@ PARTITIONS = {
         "ombre": ("fondu", 62, 84),
         "lingot": ("pop", 66, 96),
     },
+    # ⭐⭐ Gazoduc Acte 4 "Objectifs" — LA SCENE DENSE (108 elements -> 5 groupes
+    # par group_layers.py --carte gazoduc-a4). C'est le pas qui manquait :
+    # l'animation n'avait ete prouvee que sur 24 calques (maison) et 8 groupes
+    # (Soudan), jamais sur une scene de cette densite.
+    #
+    # ⛔ LES BORNES NE SONT PAS INVENTEES : elles sont RECOPIEES du composant
+    # Remotion d'origine (GazoducActe4Objectifs.tsx), ou chaque repere porte le
+    # mot de la voix off qui le declenche -- trMaroc S(0.3)->S(1.5), trNigeria
+    # S(0.9)->S(2.1), trAlgerie S(1.5)->S(2.7), puis les remplissages decales
+    # (flMaroc S(1.1)->S(2.3)...). A 30 fps, S(x) = 30x. On garde la CASCADE
+    # pays par pays : c'est elle qui raconte "le projet traverse trois pays",
+    # et non trois pays qui s'allument ensemble.
+    #
+    # Le fond de carte ne s'anime PAS : c'est le decor, pas le recit (meme
+    # raison que le vignettage du Soudan -- l'animer produit du bruit).
+    "gazoduc-a4": {
+        "_duree": 150,
+        "carte-fond": ("aucun", 0, 0),        # decor : pose des la 1re frame
+        "pays-concernes": ("fondu", 9, 81),   # S(0.3) -> S(2.7), la cascade
+        "gazoduc-trace": ("trace", 45, 135),  # le tuyau SE DESSINE, il n'apparait pas
+        "jalons": ("pop", 100, 140),          # les etapes s'allument apres le trace
+        "cartouches": ("fondu", 110, 145),    # les noms nomment ce qu'on voit deja
+    },
     # Revelation generique : tout apparait EN MEME TEMPS. Utile pour un test
     # de tuyauterie, pauvre comme demonstration.
     "cascade": {"_duree": 120, "*": ("fondu", 0, 24)},
