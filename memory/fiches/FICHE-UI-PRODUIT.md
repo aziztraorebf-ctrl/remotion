@@ -114,6 +114,65 @@ Pas de personnages, pas de visages, pas d'organique. Ce n'est pas une limite à 
 explainers SaaS n'en ont pas. Si le besoin est un personnage → pilier SVG (2) ou vidéo générée (5).
 Voir `memory/doctrines/PILIERS-B2B.md`.
 
+## ⭐⭐ L'UI DANS UN MOCKUP D'APPAREIL 3D (prouvé 2026-08-25, registre SaaS explainer)
+
+Le pilier 3 (UI capturée) se marie au **pilier 4** via un mockup 3D procédural : la capture devient la
+texture de l'écran. Elle s'incline, reçoit la lumière et est occultée par le châssis — ce n'est PAS une
+image posée par-dessus. Registre observé sur la référence Comma (portfolio Fiverr SaaS explainer).
+
+**Le socle** — `src/projects/_shared/_demos/devices/` :
+| Fichier | Rôle |
+|---|---|
+| `PhoneModel.tsx` · `LaptopModel.tsx` | Mockups procéduraux (Fable 5, ~9 min les 2 en parallèle, 0 crédit API) |
+| `PhoneModelVision.tsx` | Variante déduite d'une frame de référence — géométrie MEILLEURE (Dynamic Island, rails plats) |
+| `VisionLights.tsx` | Rig d'éclairage mesuré au pixel sur la référence (`VISION_BG = "#101010"`) |
+| `DeviceBench.tsx` | Banc 4 angles paramétrable (modèle × éclairage) — clone de `keys/KeyBench.tsx` |
+| `DeviceScreenDemo.tsx` | Le mariage : capture Shotcraft plaquée dans l'écran |
+
+**Contrat des modèles** : géométrie procédurale pure, `rotationY`/`scale` en props, ZÉRO lumière/caméra/
+animation dedans (le banc les fournit), déterministe. Donc animables tels quels dans n'importe quelle scène.
+
+### ⛔⛔ LES 4 PIÈGES PAYÉS (chacun a coûté au moins un rendu)
+
+1. **⛔⛔ `useLayoutEffect`/`useEffect` NE S'EXÉCUTENT JAMAIS dans un composant enfant de `<ThreeCanvas>`**
+   avant la capture d'un render `still` — react-three-fiber a son propre reconciler, non flushé.
+   Symptôme : **écran NOIR**, mesuré à (1,1,1). ⛔ Le piège du piège : on croit à une course de chargement
+   et on ajoute `delayRender` — inutile, le chargement n'a **jamais commencé**. 2 tentatives perdues là-dessus.
+   → **FIX : charger la texture dans un composant DOM, HORS du canvas, et la passer en prop.**
+   Preuve : témoins colorés dans le canvas, zone écran 0.00 → 27.15 une fois le hook hissé.
+2. **`--gl=angle` est OBLIGATOIRE pour TOUT render 3D headless**, pas seulement Mapbox
+   (`Error creating WebGL context` sinon). `render-mapbox.sh` le porte déjà depuis longtemps.
+3. **Une UI desktop recadrée dans un écran de téléphone ne garde qu'une colonne.** Ne PAS redimensionner :
+   **écrire une variante responsive** de la page (tableau 6 colonnes → cartes empilées) et la capturer à
+   390×844 en ×3. Cause vérifiée sur la page NorthShield : **0 media query + `width:1920px` en dur**.
+   Variante : `src/projects/_client-sim/noteshield/live-page-mobile/` · capture : `scripts/tools/ui-capture/capture-mobile.mjs`.
+4. **`puppeteer` n'est PAS dans les dépendances du projet** (seul son Chrome est en cache). Capturer avec le
+   binaire `chrome-headless-shell` de Playwright en CLI (`--screenshot`, `--window-size`,
+   `--force-device-scale-factor=3`) plutôt que d'installer une dépendance.
+   ⚠️ Vérifier qu'aucun serveur ne squatte déjà le port : une capture a attrapé une AUTRE page (vécu).
+
+### Convention `screen` (les 2 modèles la partagent)
+La prop `screen` reçoit un **élément material r3f** rendu en enfant du mesh d'écran :
+`screen={<meshBasicMaterial map={tex} toneMapped={false} />}`.
+⛔ PAS `<Html>` de drei : couche DOM hors canvas, donc ni occlusion ni éclairage — l'UI flotterait
+au-dessus du châssis aux angles rasants. `meshBasicMaterial` + `toneMapped={false}` car un écran ÉMET
+sa lumière (un material standard l'assombrirait sous un rig sombre).
+Cadrage plaque : `repeat`/`offset` en "cover" — on rogne, on n'étire jamais.
+
+### Vision → 3D : ce qui marche et ce qui ne marche pas
+Donner une frame de référence à Fable produit une **géométrie nettement meilleure** (proportions mesurées
+au pixel sur l'image). Mais son **rig d'éclairage déduit est trop sombre** : l'analyse est exacte
+(vérifiée indépendamment : fond (16,16,16), rampe de chanfrein 39→67, RGB neutres, rails 3-32) et
+pourtant les intensités Three.js sont fausses. ⭐ **Identifier une lumière ≠ produire les bons gains.**
+→ Garder les DIRECTIONS et COULEURS du rig vision, remonter les intensités.
+⛔ Ne pas généraliser depuis le SVG : `memory/tools/openrouter-svg.md` porte déjà « classements SVG ≠ 3D ».
+
+### Limite connue (non levée)
+Dans un mockup, l'écran est une **texture plate** : `PageCam` ne peut pas y opérer sa caméra 2.5D.
+Pour une UI qui s'anime dans l'appareil → rendre la séquence Shotcraft en vidéo puis `VideoTexture`
+(pas encore testé). D'où l'articulation de montage : **UI plein cadre** quand on montre COMMENT ça marche
+(la caméra plonge dans la page) · **mockup 3D** quand on montre CE QUE C'EST (ouverture, CTA).
+
 ## Références
 Repo source : https://github.com/Vincentwei1021/video-shotcraft (152 fiches, 209 previews, Apache-2.0).
 Fiches lues et appliquées : `opening/brand-ink-open` · `ui-entrance/row-embed` · `ui-entrance/list-reveal` ·
