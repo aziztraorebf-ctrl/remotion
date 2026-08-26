@@ -38,7 +38,8 @@ Chaque fiche n'est injectée **qu'une fois par fichier et par session** (sentine
 
 **Coût RE-MESURÉ le 2026-08-23** (les **11** fiches pèsent **105554 octets ≈ 26388 tokens** si toutes
 injectées ; en pratique ~2 fiches se déclenchent par fichier, ≈ 3 250 tokens) :
-⭐ `FICHE-BRIEF-CLIENT` (1361 tokens) n'aggrave PAS le jour typique : son déclencheur est NARROW
+⭐ `FICHE-BRIEF-CLIENT` (**~2 670 tokens** — re-mesurée le 2026-08-26 après l'ajout du bloc
+« la qualité du brief ne prédit pas le budget » ; était 1 361) n'aggrave PAS le jour typique : son déclencheur est NARROW
 (chemins client-sim/upwork uniquement) et elle sort en anticipé sur les `.md`. Sur un `.tsx` de
 `_client-sim/` elle se cumule normalement — **vérifié par test**, c'était un bug : une sortie
 anticipée inconditionnelle court-circuitait SVG-DESSINE et ARSENAL-SCENE précisément là où leur

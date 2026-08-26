@@ -1,10 +1,39 @@
 # BRIEF CLIENT / CANDIDATURE FREELANCE — fiche de déclenchement
 > ⚠️ Si ce que tu lis ne correspond PAS au réel sous tes yeux : **c'est la FICHE qui a tort**. Corrige-la immédiatement.
-> Règles issues de 3 briefs CLIENTS RÉELS (Zambie/Peace Corps · chill-meter/AbiGirl · NoteShield). Aucune règle théorique.
+> Règles issues de 5 briefs CLIENTS RÉELS (Zambie/Peace Corps · chill-meter/AbiGirl · NoteShield ·
+> Lottie LCD · EdTech GCC · YouTube explainer). Aucune règle théorique.
 
 ## 1. TRIER l'annonce (avant de dépenser 1 connect)
 - ⭐⭐ **Ratio « total dépensé ÷ nb d'embauches » du client** — tri en 30 s. Les 2 annonces écartées le 2026-08-22 étaient à **135 $ et 39 $ par embauche** : un client qui paie 39 $ par contrat ne paiera pas 350 $.
 - ⭐ **Le lire AVEC le budget affiché.** Lottie LCD (08-24) : 1900 $ / 19 embauches = **100 $/embauche, et budget affiché 100 $**. Quand les deux coïncident, le prix est **verrouillé**, même si le client est excellent par ailleurs (4,9/5, 100 % d'embauche, société 10-99). Le ratio ne dit pas « mauvais client », il dit **« pas de négociation »**.
+- ⛔⛔⭐⭐⭐ **LA QUALITÉ DU BRIEF NE PRÉDIT PAS LE BUDGET — c'est le piège le plus coûteux.**
+  Un brief médiocre à bas prix s'écarte en 10 s. Un brief **excellent** à bas prix fait hésiter :
+  on lit du soin, on en déduit du sérieux, on projette un budget qui n'existe pas.
+  **3 cas en 3 jours, tous très bien rédigés, tous verrouillés :**
+  | Annonce | Ce qu'elle demandait | Prix réel |
+  |---|---|---|
+  | Lottie LCD (08-24) | 4 écrans, composants séparés, sources | 100 $/embauche = budget affiché |
+  | EdTech GCC (08-25) | AE + Illustrator + Photoshop + 2D/3D + storyboards + **Loom 3-5 min** | 8,4 k$ / 42 = **200 $**, et **7,85 $/h** payés |
+  | YouTube explainer (08-25) | **8-12 min** façon Infographics Show, en **5 jours** | **160 $** fixe ≈ **4 $/h** à 40 h |
+  ⭐ **Le test qui tranche en 30 s** : diviser le prix par les heures RÉELLES du livrable, pas par
+  l'envie qu'on en a. 160 $ pour 10 min d'animation de personnages = le tarif d'un stagiaire.
+- ⚠️ **PEU DE PROPOSITIONS ≠ BONNE AFFAIRE.** Réflexe naturel (Aziz, 08-25 : « je suis surpris de
+  voir juste 5 propositions pour une telle offre »). Mais sur une annonce MONDIALE visible depuis
+  plusieurs heures, **le vide EST le verdict du marché** : les gens qui savent faire ont lu les
+  chiffres du client et sont passés. Chercher pourquoi, pas se réjouir.
+- ⛔ **3 formulations qui signalent un budget verrouillé** (relevées sur les 2 annonces du 08-25) :
+  · **« speed is a hiring factor » sur un prix FIXE** → même somme, plus vite : le seul levier
+    restant est ton taux horaire, qui baisse.
+  · **bonus « une fois qu'assez de données existeront »** → conditionnés à une chaîne qui n'existe
+    pas, sur des seuils non définis. Une intention, pas une rémunération.
+  · **« tous les assets réutilisables sont transférés au projet »** → rigs, templates,
+    environnements : tout ce qui te ferait gagner du temps aux épisodes suivants devient SA
+    propriété. Tu construis son studio, il le garde.
+- ⚠️ **Un client peut être excellent ET mal payer** — ce n'est pas contradictoire. EdTech GCC :
+  **5,0/30 avis**, paiement vérifié, et 7,85 $/h. Les avis mesurent l'agrément, pas le budget.
+- ⭐ **Un brief écarté garde une valeur : le CRÉNEAU.** EdTech (« animer graphes, formules,
+  processus », « animations d'UI produit », pas-à-pas) décrit exactement nos piliers déterministes.
+  Noter le vocabulaire pour le rechercher chez des clients à **800 $+ par embauche**.
 - Vérifier aussi : le client a-t-il DÉJÀ embauché (sinon les connects sont un pari) · combien de propositions déjà reçues.
 - ⛔ **Un job coûte 4 à 16 connects, pas 1** (0,15 $/connect, vérifié page officielle). 100 connects ≈ **10-25 candidatures**. Bonus de **50 connects après le 1er achat** (nouveau freelance). Recrédités souvent si le client interviewe ; **jamais** s'il choisit un autre ou si l'annonce expire.
 
