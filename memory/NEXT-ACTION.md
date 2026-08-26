@@ -58,30 +58,35 @@ toute action sur cette annonce — un résumé ne le remplace pas (2 erreurs pay
 
 ---
 
-## ⭐⭐⭐ LOTTIE — chaîne PROUVÉE de bout en bout (25-26 août) · suite : TEXTE puis ANIMER
+## ⭐⭐⭐ LOTTIE — une PIÈCE LIVRABLE existe (26 août) · suite : CONTRÔLE QUALITÉ puis Khartoum
 
-**Nos scènes React passent en Lottie standard**, dessin ET animation. Mesuré, vu, validé par
-Aziz dans LottieFiles Creator.
+**La maison-gaz est un livrable, pas une démo** : 1346×805, 9,6 s, 6 blocs nommés, **16 Ko**
+en `.lottie`, validée par Aziz dans Creator (blocs dépliables, animation qui joue).
+⭐ Le `.json` SEUL suffit au client — site web, Creator, After Effects. Le `.lottie` n'est qu'un zip.
 
-| Acquis | Preuve |
+| Acquis du 26/08 | Preuve |
 |---|---|
-| Dégradés (linéaires + radiaux) | aéroport **57,74 % → 11,58 %** d'écart |
-| Animation par recalcul de forme | flamme du Gazoduc : **78 px/frame** vs 98 à l'original |
-| Calques nommés et manipulables | Soudan **71 → 8 groupes**, validé dans Creator |
-| Poids | 10 s d'animation = **2,3 Ko** compressés |
-| MCP Creator | installé, 110 outils, lecture/écriture en direct |
+| **TEXTE — 2 voies** | vectorisé **1,95 %** partout · natif 0,05 % **mais 5,74 % sans la police** (pire que rien) |
+| **POINTILLÉS** | 0,07 % — `nm` doit être unique, sinon le player **fige en silence** |
+| **Scène dense animée** | Gazoduc A4 : 108 éléments → 5 groupes |
+| **Courbe vivante + flux + fondu** | recalcul de forme porté · gaz qui coule · marche 27 → **4** |
 
 ▶️ **Prochaine session — starter prêt** : `memory/starters/STARTER-PROMPT-lottie-texte-et-animation.md`
-1. **Le TEXTE** (83 scènes sur 172 — le bloqueur le plus fréquent), même méthode que les dégradés.
-2. **Animer une scène DENSE** — prouvé sur 24 calques, jamais sur 498. « Sans animation qui joue,
-   cela ne sert à rien » (Aziz). Candidat : une scène de rue/port.
-3. **Rétrospective** de tout ce qui a été prouvé.
+1. ⭐ **CONTRÔLE QUALITÉ AUTOMATIQUE** — comparer la **VIDÉO** d'origine au Lottie, image par
+   image. ⛔ 3 fois le 26/08 un fichier valide a rendu FAUX en disant « ça bouge » : on compare
+   une image FIXE à une image FIXE. C'est ce qui a laissé passer une courbe figée 2 jours.
+2. **KHARTOUM au banc d'essai** (`KhartoumEtatMajorSVG`, dans `warmap/`) — jetons + 9 textes
+   + 10 filtres + 18 anims. Elle cumule tous nos points durs. ⛔ **UNE seule scène** : « si
+   j'ouvre quatre chantiers, j'en finis zéro ».
 
-⛔ **Le piège récurrent, 4 fois en 2 jours** : fichier valide + rapport « porté » + rien à
-l'écran. L'élément était correct à chaque fois, c'est son AIGUILLAGE qui l'annulait.
-→ Ne jamais conclure sur le rapport : rendre et REGARDER.
-⚠️ **Le MCP exige UNE SEULE session Claude Code** (port 3847 unique) et une URL **HTTPS avec
-CORS** pour importer (Vercel Blob OK, uguu non). → `memory/tools/lottie-creator-mcp.md`
+⛔⛔ **RECADRAGE D'AZIZ (26/08)** : une carte géographique complète n'est **PAS** un livrable
+Lottie — j'ai fini la carte du Gazoduc A4 en croyant produire une pièce vendable. **Prouver une
+capacité ≠ produire un livrable.** Ce qui vaut le test : des scènes qui **racontent avec des
+objets qui bougent** (jetons, chars, bannières), pas de la géographie.
+⚠️ **La réserve à reposer** : on outille beaucoup, **rien n'a encore été montré à un client**.
+⛔ Le piège récurrent (7 cas listés dans le starter) : fichier valide + rapport content + rendu
+faux. **Aucun trouvé par un rapport — tous à l'OEIL.**
+✅ **AUCUN script ne dépend de Creator** → tout l'outillage tourne sans Aziz.
 📄 Table de décision client : `memory/client-sim-tests/lottie-ui-lcd/CE-QUI-PASSE-EN-LOTTIE.md`
 
 ---

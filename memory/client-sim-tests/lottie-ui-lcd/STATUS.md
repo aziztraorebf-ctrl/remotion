@@ -4,7 +4,14 @@
 > animation, validée par Aziz dans LottieFiles Creator.
 > ⭐⭐⭐ **CE FICHIER EST LE RÉCIT. Les VERDICTS à jour sont dans `CE-QUI-PASSE-EN-LOTTIE.md`**
 > (table de décision client) — ne pas trancher un brief depuis ce STATUS.
-> ⏭️ Reste : le TEXTE (83 scènes/172) · animer une scène dense · le test After Effects (§ 4 bis).
+> ⏭️ **Reste au 2026-08-26 soir** : le **contrôle qualité automatique** (comparer la VIDÉO
+> d'origine au Lottie, image par image — 3 fois ce jour-là un fichier valide a rendu FAUX sans
+> qu'aucune mesure le voie) · **Khartoum au banc d'essai** · masques · aéroport à regrouper ·
+> le test After Effects (§ 4 bis).
+> ✅ **FAITS le 26/08** : le TEXTE (2 voies mesurées) · les POINTILLÉS · animer une scène dense ·
+> et la **maison-gaz devenue PIÈCE LIVRABLE**, validée par Aziz dans Creator.
+> ⛔⛔ **Recadrage d'Aziz** : une carte géographique complète n'est **PAS** un livrable Lottie.
+> Prouver une capacité ≠ produire un livrable. Starter : `memory/starters/STARTER-PROMPT-lottie-texte-et-animation.md`
 
 ---
 
