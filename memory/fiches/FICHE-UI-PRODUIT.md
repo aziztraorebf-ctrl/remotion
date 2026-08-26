@@ -187,6 +187,42 @@ Decors generes (Gemini HQ, centre volontairement VIDE) : `public/_shared/refs/de
 reference : luma 5 -> 96 entre 0,90 s et 1,20 s, cale sur un pic sonore). Pas un fondu lent.
 ⭐ **`lidAngle`** du laptop est un parametre : le capot s'OUVRE pendant que la camera approche.
 
+### ⛔⛔ L'ECHELLE SE CALCULE, ELLE NE SE DOSE PAS (paye 3 fois le 2026-08-26)
+Un mockup pose dans un decor photo doit occuper sa TAILLE REELLE. Choisir `scale` au
+juge donne des absurdites immediatement visibles : telephone 2,1x trop grand, tasse du
+decor paraissant 2,2x plus grosse que le laptop entier.
+**METHODE** : reperer dans la photo un objet de taille connue (regle 30 cm, tasse ~9,5 cm,
+carnet A5 21 cm) -> mesurer sa taille en px -> echelle du decor en px/cm. Puis :
+`scale = (taille_cm_reelle * px_par_cm) / unitsToPx(unites_modele, camZ, hauteur_rendu)`
+avec `unitsToPx = (u / (2*z*tan(fov/2))) * H`. Code : `devices/DeviceInScene.tsx`.
+⚠️ **Le decor est affiche en `cover`** : l'echelle mesuree DANS LE FICHIER doit etre
+multipliee par `max(1920/W, 1080/H)`. Oubli = facteur 1,4 d'erreur.
+
+### ⛔ UNE PHOTO DE DECOR PORTE UN CADRAGE IMPLICITE
+Generer « un bureau » ne suffit pas. Un decor shoote en GROS PLAN (la tasse occupe la
+moitie du cadre => ~40 px/cm) ne peut pas recevoir un laptop de 31 cm : a la bonne
+echelle il masquerait tout le decor. **Preciser la distance de prise de vue dans le
+prompt** : « wide establishing shot, camera pulled BACK, objects only at the FAR edges,
+vast empty space in the middle ». Un decor par ordre de grandeur d'objet.
+
+### ⭐ L'OMBRE A TROIS COUCHES (une ellipse floue ne suffit pas)
+Mesure comparative : la reference a un creux de luminosite PROGRESSIF (122 niveaux) la
+ou une ombre a une seule couche saute brutalement (7 -> 203 -> 50 en quelques px).
+1. **Occlusion ambiante** — large, tres pale, tout autour de la base. C'est CE detail
+   qui fait lire « pose » plutot que « superpose ».
+2. **Ombre projetee** — decalee du cote oppose a la lumiere (key haut-droite => bas-gauche).
+3. **Contact** — serree, sombre, a peine floutee, juste sous l'objet.
+⭐ Ajouter un **desalignement de ~2,5 deg** : un objet vraiment pose n'est jamais parfaitement
+aligne sur le bord de la table.
+
+### ⭐ SFX : UN SON PAR EVENEMENT, PAS UN TEMPO
+La reference porte **12 transitoires en 8 s** — chaque apparition a son son, c'est ce qui
+rend la scene « vraie ». Banque deja sur disque : `public/_client-sim/noteshield/sfx/`
+(19 fichiers). Choix valides : `hit-weak` (0,59 s) sur l'allumage de scene · `click`
+(1,10 s) sur la pose / l'ouverture du capot · `tone` (0,20 s) sur un micro-etat.
+Volume SFX **0,50**. ⛔ **JAMAIS de whoosh sur une UI** (vocabulaire d'AIR, sans rapport
+avec un logiciel — retire le 2026-08-20 apres retour d'Aziz).
+
 ### ⛔ CE QUI FAIT LE PREMIUM N'EST PAS LA BRIQUE (lecon de la 4e video, 2026-08-26)
 Analyse initiale faussee par un echantillonnage a **16 frames sur 1273** — juger un MONTAGE sur
 des photos espacees. Ce que la densite a revele :

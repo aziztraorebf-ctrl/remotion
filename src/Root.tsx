@@ -425,7 +425,7 @@ import { KeyBenchA, KeyBenchB, KeyBenchGemini, KeyBenchGlm, KeyBenchKimi, KeyBen
 import { LaptopScreenDemo, PhoneScreenDemo } from "./projects/_shared/_demos/devices/DeviceScreenDemo";
 import { PhoneHeroShot, LaptopHeroShot, PhoneHeroClip } from "./projects/_shared/_demos/devices/DeviceHeroShot";
 import { DeviceShowreel } from "./projects/_shared/_demos/devices/DeviceShowreel";
-import { PhoneOnDesk, PhoneOnDeskExec, LaptopOnDesk, LaptopOnDeskLight } from "./projects/_shared/_demos/devices/DeviceInScene";
+import { PhoneOnDesk, PhoneOnDeskExec, LaptopOnDesk, LaptopOnDeskLight, LaptopOnDeskDark } from "./projects/_shared/_demos/devices/DeviceInScene";
 import { DeviceBenchPhone, DeviceBenchLaptop, DeviceBenchPhoneVision, DeviceBenchPhoneVisionBlindLights, DeviceBenchPhoneOrigVisionLights } from "./projects/_shared/_demos/devices/DeviceBench";
 import { JetonWarMap3DCompare } from "./projects/_shared/_demos/JetonWarMap3DCompare";
 import { RapidFireCountries } from "./projects/_shared/mapbox/RapidFireCountries";
@@ -2739,6 +2739,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="PhoneOnDesk" component={PhoneOnDesk} durationInFrames={110} fps={30} width={1920} height={1080} />
         <Composition id="PhoneOnDeskExec" component={PhoneOnDeskExec} durationInFrames={110} fps={30} width={1920} height={1080} />
         <Composition id="LaptopOnDesk" component={LaptopOnDesk} durationInFrames={110} fps={30} width={1920} height={1080} />
+        <Composition id="LaptopOnDeskDark" component={LaptopOnDeskDark} durationInFrames={110} fps={30} width={1920} height={1080} />
         <Composition id="LaptopOnDeskLight" component={LaptopOnDeskLight} durationInFrames={110} fps={30} width={1920} height={1080} />
         {/* Showreel : rotations, texte derriere/a cote, assemblage */}
         <Composition id="DeviceShowreel" component={DeviceShowreel} durationInFrames={508} fps={30} width={1920} height={1080} />
