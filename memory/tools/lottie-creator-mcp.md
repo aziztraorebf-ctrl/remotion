@@ -51,8 +51,13 @@ demander l'accord d'Aziz d'abord (fait le 08-26).
   · `GRADIENT_RADIAL` accepte en plus `highlightAngle` et `highlightLength`.
   ✅ **Testé en direct** : radial 3 arrêts (opacité 1 → 0,45 → 0) et linéaire reproduisant
   l'aire du Gazoduc (0,30 → 0,02) acceptés sans erreur.
-- **Texte** : `create_text`, `set_text_style`, `split_text`, `measure_text_units`, `list_fonts`
-  — notre bloqueur le plus fréquent (83 scènes sur 172).
+- **Texte** : `create_text`, `set_text_style`, `split_text`, `measure_text_units`, `list_fonts`.
+  ✅ **Bloqueur LEVÉ le 26/08** par cette voie : poser dans Creator → lire la structure → porter.
+  Ce que `measure_text_units` a donné et que la spec ne disait pas : `line_height` = la taille de
+  police par défaut, `tracking` est un nombre simple (4 = léger), justification **2 = centre**,
+  et l'origine est la **LIGNE DE BASE**. ⛔ `list_fonts` : **17 familles, toutes PRESET** — ni
+  Georgia (412 usages chez nous) ni Arial ni Cinzel. C'est ce relevé qui a tranché « vectoriser
+  par défaut ».
 - **Effets qu'on ne savait pas faire** : `apply_bounce` (physique), `apply_squash`,
   `add_drop_shadow`, `add_blur`, `create_mask`, `set_matte`, `vectorize_image`.
 - **Organisation** : `group_layers`, `reorder_layer`, `align_layers`, `stagger_layers`.
@@ -67,6 +72,12 @@ demander l'accord d'Aziz d'abord (fait le 08-26).
   d'importer des SVG existants — exactement notre position.
 
 ## Prochain usage prévu
-Poser un dégradé radial dans Creator, **lire la structure produite**, et la porter dans
-`svg2lottie_scene.py` — pour que l'aéroport (57,74 % d'écart, 11 dégradés radiaux) devienne
-livrable **sans que Creator soit ouvert**.
+✅ **La cible précédente est ATTEINTE** (porter les dégradés radiaux : `svg2lottie_scene.py` émet
+un vrai `gf`, l'aéroport est passé de 57,74 % à 11,58 %). Même méthode appliquée au **texte** le
+26/08, également fermé.
+
+⏭️ **Prochaine cible : les MASQUES** — le dernier gros refus, et le mur de la scène « Front Ouvert »
+(6 masques) retenue au banc d'essai. Lire dans Creator la structure produite par `create_mask` /
+`set_matte`, puis la porter. ⭐ Un contournement existe déjà pour un cas : un masque à dégradé
+horizontal se reproduit par **empilement de copies** (`vivifier.py::fondu_de_bord`) — vérifier
+si le principe se généralise avant de porter le masque natif.

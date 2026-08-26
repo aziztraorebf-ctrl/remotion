@@ -255,6 +255,47 @@ scène par ailleurs simple — géographie réelle = `d3-geo` + Natural Earth (�
 
 ---
 
+## ⭐⭐⭐ OBJET 3D APLATI (R3F) — l'objet qui a un DOS (ajouté 2026-08-26)
+
+⛔ **Ce moteur MANQUAIT à cette page** alors que le gate `moteur-visuel-gate.sh` force à l'ouvrir avant
+tout choix de registre (vérifié : zéro occurrence de « R3F » / « 3D » dans le fichier avant ce jour).
+**Conséquence mesurée** : la règle de partage SVG/3D ne vivait que dans `memory/fiches/FICHE-UI-PRODUIT.md`
+— une fiche d'ÉCRAN DE SAAS — donc invisible depuis une scène d'objet. J'ai affirmé à Aziz qu'un SVG ne
+pouvait pas s'animer ; c'était faux, et la règle qui le disait était rangée au mauvais endroit.
+
+**Amplitude prouvée (2026-08-25/26)** : mockups d'appareils procéduraux (`src/projects/_shared/_demos/devices/`
+— `PhoneModel`, `LaptopModel`), objets-emblèmes (`_demos/keys/`), pivot qui révèle, capot qui s'ouvre
+(`lidAngle`), rotation 360°, **matériau APLATI** (`FlatDeviceMotion.tsx` : `metalness=0`, `roughness=1`,
+`envMapIntensity=0`, ambiante 2.5 + directionnelle 1.2) qui garde le volume sans lire « photo »
+(écart-type des luminances 7,7-19,7 pendant une rotation complète — le volume ne s'effondre pas).
+
+**⛔ UN SVG S'ANIME TRÈS BIEN.** Le mockup SVG de Fable (`public/_client-sim/noteshield/laptop-mockup.svg`)
+porte **21 groupes nommés** dont `lid`/`hinge`/`base` séparés, charnière mesurable (axe y=760, centre x=956)
+— il ouvre son capot, zoome, glisse. La ligne de partage n'est PAS « animable ou pas ».
+
+**LA VRAIE LIGNE : le point de vue change-t-il, et y a-t-il quelque chose à RÉVÉLER ?**
+
+| Le geste | Qui gagne | Pourquoi |
+|---|---|---|
+| Point de vue fixe, objet déjà ouvert (zoom, glissement, apparition) | **SVG** | plus léger, mieux intégré à un fond dessiné |
+| Un état qui en **RÉVÈLE** un autre (capot qui se ferme, objet qui se retourne) | **3D** | il a un DOS ; le SVG s'écrase, il ne se retourne pas |
+| Rotation dans l'espace, orbite, 360° | **3D seul** | les faces cachées n'existent pas dans un dessin |
+| Besoin de paramétrer (finesse, angle, teinte, taille) | **3D** | variables vs dessin fini |
+
+⭐ **DÉFAUT POUR UN MOCKUP D'APPAREIL = 3D aplati** : il couvre les deux cas. Un modèle 3D **contient plus
+d'information que ce qu'il montre** — c'est ce qui le rend réutilisable dans des plans non prévus. Le SVG
+reste supérieur pour un registre franchement ILLUSTRÉ sur plan fixe.
+
+⚠️ **Ne contredit PAS le cadrage « outil d'APPOINT »** de `SVG-SCENES-GENERATIVES.md` § EXTENSION 3D
+(2026-08-25) — il le BORNE : l'appoint vaut pour l'objet-emblème isolé ; le mockup d'appareil qui accueille
+une UI capturée est un registre entier (pilier 3 × pilier 4), pas un appoint. La règle du menuisier au
+téléphone (objet descriptible par règles = OK, organique = non) reste entièrement valable.
+
+Détail technique (contrat des modèles, convention `screen`, 4 pièges payés) :
+`memory/fiches/FICHE-UI-PRODUIT.md` § L'UI DANS UN MOCKUP D'APPAREIL 3D.
+
+---
+
 > ⬇️ *Section rapatriee du merge master (2026-08-20) — branche `rnd/stick-figures-gestes`.*
 
 ## ⭐⭐ Le SVG porte la FORME, le canvas porte la MATIÈRE

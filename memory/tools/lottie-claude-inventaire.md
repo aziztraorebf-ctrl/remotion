@@ -109,8 +109,10 @@ Récit complet, gotchas et suites : `memory/client-sim-tests/lottie-ui-lcd/STATU
 dépliables, **éléments déplaçables un par un**. 1382 octets compressé.
 
 ⛔ **Les 4 limites de l'outil** (à annoncer à un client, jamais à cacher) :
-1. **Segments DROITS uniquement** (`M/L/H/V/Z`) — toute courbe lève une `ValueError`. Échec
-   BRUYANT par choix, jamais silencieux. C'est le chantier n°1 pour aller plus loin.
+1. ✅ **LEVÉE le 2026-08-25** (commit `4ce4b9ee`) — disait « segments DROITS uniquement, toute
+   courbe lève une `ValueError` ». **FAUX** : grammaire SVG complète (cubiques exactes à 1e-14,
+   arcs sous 5e-04 px) + primitives. ⛔ Ce fichier ne porte plus aucun verdict propre — la table
+   de décision est `memory/client-sim-tests/lottie-ui-lcd/CE-QUI-PASSE-EN-LOTTIE.md`.
 2. **Source `.aep` : ⚠️ À TESTER** — j'avais affirmé qu'AE n'importait pas le Lottie, **c'est FAUX**
    (corrigé 08-24). Bodymovin et LottieFiles-for-AE font l'import ; reste à vérifier si NOS fichiers
    passent proprement. → `memory/client-sim-tests/lottie-ui-lcd/STATUS.md` § 4 bis.

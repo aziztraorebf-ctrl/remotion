@@ -168,10 +168,10 @@ un appel minimal texte-only sans image. `curl` sur le même endpoint fonctionne 
       return _orig(host, port, socket.AF_INET, type, proto, flags)
   socket.getaddrinfo = _ipv4_only
   ```
-- **État de propagation** : fix appliqué UNIQUEMENT dans `scripts/tools/svg-scene-narrative.py` (2026-07-03).
-  PAS ENCORE propagé à `svg-faisabilite-brief.py`, `gemini-gen-image.py`, `gemini-i2i.py` et autres scripts
-  Gemini. Si un de ces scripts hang un jour sans raison apparente, appliquer ce même monkeypatch en premier
-  réflexe avant de chercher ailleurs (clé API, quota, brief trop long — tous écartés lors du diagnostic 2026-07-03).
+- **État de propagation** : ✅ **DETTE PAYÉE le 2026-08-26** — le fix vit désormais dans `scripts/tools/gemini_models.py`, que TOUS les scripts image importent déjà pour `IMAGE_MODEL` : il s'applique par simple import, plus aucune propagation manuelle à suivre. *(Historique : appliqué d'abord dans `svg-scene-narrative.py` le 2026-07-03, dette restée ouverte 7 semaines — c'est ce délai qui a coûté les ~40 min citées en preuve de valeur dans le CLAUDE.md global.)*
+  *(Ancienne note, désormais caduque : « pas encore propagé à `svg-faisabilite-brief.py`, `gemini-gen-image.py`, `gemini-i2i.py` » — le patch dans `gemini_models.py` les couvre tous par import.)*
+  ⭐ **Réflexe conservé** : si un script hang un jour sans raison apparente, vérifier ce monkeypatch en premier
+  avant de chercher ailleurs (clé API, quota, brief trop long — tous écartés lors du diagnostic 2026-07-03).
 
 ---
 

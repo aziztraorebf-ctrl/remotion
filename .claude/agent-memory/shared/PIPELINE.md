@@ -383,3 +383,25 @@ ci-dessus. Détail technique complet conservé dans `memory/episodes/_client-sim
 - **Prochaine etape** : le **TEXTE** (meme methode que les degrades : poser dans Creator via le
   MCP, lire la structure, la porter), puis **animer une scene DENSE** (prouve sur 24 calques et
   8 groupes, jamais sur 498). Starter : `memory/starters/STARTER-PROMPT-lottie-texte-et-animation.md`
+
+---
+
+## 2026-08-26 — SOCLE MOCKUPS 3D + UI CAPTUREE (pilier 3 x pilier 4)
+
+**Etat** : socle POSE et commite (6 commits, branche `feat/mockups-3d-saas-explainer`, alignee sur
+`feat/lottie-texte` — les 2 branches portent le meme travail).
+
+**Ce qui existe maintenant** — `src/projects/_shared/_demos/devices/` (13 fichiers, tous cables dans Root) :
+- `PhoneModel` / `LaptopModel` : mockups 3D proceduraux (Fable 5 comme agent, 0 credit API).
+  Ecran = zone d'accueil ; `lidAngle` ouvre le capot ; materiau `Flatten` pour un fond dessine.
+- `GridBackdrop` : fond SVG parametrable (5 couleurs + cell), anime.
+- Capture Shotcraft plaquee dans l'ecran, desktop ET mobile · VIDEO qui joue dans l'ecran (VideoTexture,
+  frame-driven donc deterministe) · objet pose dans un decor photo (ombre 3 couches, echelle calculee).
+
+**Arbitrage tranche au banc** : SVG dessine vs 3D aplati -> le 3D par defaut pour un mockup d'appareil
+(il a un DOS ; le SVG s'ecrase). Regle complete dans `memory/doctrines/MOTEURS-VISUELS-ET-SOCLE.md`
+§ OBJET 3D APLATI (le moteur 3D y MANQUAIT — c'est la cause racine d'une affirmation fausse faite a Aziz).
+
+**HANDOFF -> prochaine session** : `memory/projects/REPRO-FOSTER.md`. Reproduire de A a Z une vidéo
+Fiverr reellement vendue (« Foster With Confidence », source sur disque). 11 plans mesures, 9 couverts
+par la stack. 2 trous tranches : maison filmee -> Minimax H3 · portraits -> images Gemini.

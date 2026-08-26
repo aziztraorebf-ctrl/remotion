@@ -15,8 +15,38 @@
 ## La réponse en une ligne
 
 **On sait livrer du Lottie standard depuis notre chaîne SVG, sans After Effects — à condition
-que la scène soit faite de FORMES et de COULEURS PLEINES.** Dès qu'elle repose sur du texte,
-des dégradés, des filtres ou des images, une partie ne traverse pas.
+que la scène soit faite de FORMES et de COULEURS PLEINES.** Le texte, les dégradés et les
+pointillés passent désormais ; les filtres, masques et images ne traversent toujours pas.
+
+---
+
+## ⛔⛔ LE TROU DE VÉRIFICATION — à savoir avant de citer un chiffre de cette page
+
+Toutes nos mesures comparent **une image FIXE à une image FIXE**. Le **2026-08-26, TROIS fois**, un
+fichier était valide, l'outillage disait OK, et le rendu était **FAUX** : pointillés ignorés en
+silence · animations perdues au regroupement (`check_animation.py` disait « ça bouge ») · fondu en
+marches d'escalier. **À chaque fois, seul l'OEIL l'a vu** — c'est la même cause qui a laissé passer
+une courbe **FIGÉE pendant deux jours**.
+→ Manque outillé : comparer la **VIDÉO** d'origine au Lottie **image par image**. Chantier n°1.
+⚠️ En attendant : **`compare_render.py` est la seule preuve** ; `check_animation.py` dit « ça
+bouge » même quand l'histoire est détruite.
+
+---
+
+## ⛔⛔ CE QUI PASSE TECHNIQUEMENT ≠ CE QUI SE VEND (Aziz, 2026-08-26)
+
+**Une carte géographique complète n'est PAS un livrable Lottie.** Personne ne commande ça — et le
+format le dit lui-même : **Creator ouvre en 512×512**, une scène 1920×1080 déborde de partout.
+Coût de la leçon : **une journée** passée à finir la carte du Gazoduc Acte 4 en la croyant vendable.
+
+⭐ **Le registre qui vaut** : dashboards et UI, logos, icônes, schémas, objets isolés, et les scènes
+qui **racontent avec des objets qui bougent** (jetons, chars, bannières, une ligne qui se déforme,
+du texte en situation — pas 100 % du texte).
+
+⛔ **Prouver une capacité ≠ produire un livrable.** Avant de finir une pièce, deux questions
+SÉPARÉES : « qu'est-ce que ça prouve ? » (→ s'arrêter dès que c'est mesuré, ne pas polir) et
+« est-ce que quelqu'un commanderait ça ? » (→ alors polir vaut le coup).
+Détail : [[feedback_prouver-une-capacite-nest-pas-produire-un-livrable]]
 
 ---
 
@@ -270,7 +300,7 @@ méthode habituelle (le statique d'abord, nous animons), mais ce n'est PAS un bo
 - **Il PEUT modifier l'animation** : ouvrir le fichier dans Creator ou After Effects, déplacer
   les keyframes, changer les couleurs. C'est l'intérêt du format, et c'est vérifié.
 - **Il ne la contrôle PAS à la lecture** : un Lottie standard joue comme il a été fabriqué.
-  (Sauf peut-être avec les state machines — cf. point 4, non testé.)
+  (Sauf peut-être avec les state machines — cf. point 5, non testé.)
 
 ### ⚠️ Combien de calques peut-on livrer ?
 Pas de norme universelle — ça dépend de la cible :

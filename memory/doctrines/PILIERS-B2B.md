@@ -51,7 +51,9 @@ géométrie simple = pilier 2) restait illisible tant qu'on lisait « animation 
 → script → `.json`. C'est « le modèle dessine le STATIQUE, nous animons » appliqué à une autre sortie.
 Ce n'est **pas un 6e pilier** : la matière reste le pilier 2, c'est un **canal de livraison** de plus.
 ⭐ Il renforce le moat déterminisme : un `.json` Lottie est éditable au paramètre **par le client
-lui-même**. Limites et gotchas : `memory/client-sim-tests/lottie-ui-lcd/STATUS.md`.
+lui-même**. ⭐ Verdicts (répondre à un brief) : `memory/client-sim-tests/lottie-ui-lcd/CE-QUI-PASSE-EN-LOTTIE.md`
+· le récit : `.../STATUS.md`. MAJ 26/08 : chaîne prouvée en **ANIMATION**, et une **PIÈCE
+LIVRABLE** existe (maison-gaz, 16 Ko `.lottie`, validée par Aziz dans Creator).
 
 ⭐ **Règle de tri devant un brief** : poser les 2 questions SÉPARÉMENT — « sait-on PRODUIRE ça ? »
 et « sait-on le LIVRER dans SON format ? ». Un NON à la seconde n'est pas un NON au brief, c'est
@@ -210,3 +212,6 @@ Recette technique + prompts + livrables : [[REVERSE-STYLE-VIDEO-VERS-ASSETS]] §
 `memory/fiches/FICHE-UI-PRODUIT.md` (pilier 3, détail) · `memory/doctrines/SVG-SCENES-GENERATIVES.md`
 (pilier 2) · `memory/doctrines/CHARTE-DA-FREELANCE.md` (la DA commune) ·
 `memory/projects/SHOWCASE-CAPACITES.md` (le cut vente) · `memory/tools/minimax-h3-*.md` (pilier 5).
+
+⭐⭐ **Le segment est MESURÉ (2026-08-26)** : sur les 4 vidéos du portfolio d'une vendeuse Fiverr Level 2 du registre SaaS explainer, **3 n'ont aucun personnage** et **3 n'ont pas de voix off** (musique seule, le récit porté par la TYPO). Le « ce pilier ne fait pas de personnages » n'est donc pas une faiblesse à assumer : c'est **la norme du segment**. Prix observés : **~10 $ CA la seconde livrée**. Détail et réserves : `memory/projects/freelance-dataviz-fiverr-pro.md` § BENCHMARK 4 VIDÉOS.
+⭐ Le pilier 3 se marie au pilier 4 via un **mockup d'appareil 3D** (la capture devient la texture de l'écran). Ce n'est pas un 6e pilier. Socle + 4 pièges payés : `memory/fiches/FICHE-MOCKUP-3D.md`.

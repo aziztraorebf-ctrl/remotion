@@ -18,9 +18,20 @@ supporte nativement l'animation de path ("ks": {"a": 1, ...} sur un 'sh').
 ⛔ CONTRAINTE DU FORMAT, incontournable : toutes les keyframes d'un meme
 chemin doivent avoir LE MEME NOMBRE DE SOMMETS (la spec Lottie l'exige pour
 pouvoir interpoler). Un chemin dont le nombre de points varie dans le temps
-(une courbe qui se construit point par point, comme buildCurve) n'est donc
-PAS transcriptible tel quel -- le script le signale au lieu de produire un
-fichier faux.
+n'est donc PAS transcriptible PAR EXTRACTION -- le script le signale au lieu
+de produire un fichier faux.
+
+⭐ MAIS LE MUR SE CONTOURNE (prouve le 2026-08-26, ne pas relire l'alinea
+ci-dessus comme un refus definitif) : une courbe qui se construit point par
+point (comme `buildCurve` du Gazoduc A5) echantillonne en general sur une
+grille FIXE (i/steps) ; seul le NOMBRE de points TRACES varie. En REGENERANT
+la forme depuis les constantes du composant -- toujours N+1 points, la queue
+ecrasee sur la pointe -- le compte devient constant et Lottie interpole.
+    -> `vivifier.py` : `courbe_recalculee()` / `echantillonner()`.
+Mesure : pointe finale reconstruite identique a l'attendu (x1273,0 y477,1).
+⚠️ Ce n'est pas de la transcription mais de la RECONSTRUCTION : il faut les
+constantes du CODE SOURCE (jamais d'un fichier converti, qui porte des valeurs
+deja transformees -- vecu : X1=984 lu au lieu de 1560, courbe a mi-parcours).
 
 Usage :
     python3 transcribe_animation.py <CompositionId> --frames 70-160 --pas 2 \\

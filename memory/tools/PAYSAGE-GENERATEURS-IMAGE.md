@@ -8,6 +8,7 @@
 ## ⭐ VERDICT EN 3 LIGNES
 
 1. **La famille Gemini `flash-image` reste notre choix** : 7e en édition (Elo 1249), 3e en text-to-image (1320). ⭐ **Depuis le 2026-08-20 notre défaut est le LITE** (`IMAGE_MODEL`, ~0,0336 $/image, **1K max**) ; le HQ (`IMAGE_MODEL_HQ`, 0,067 $) est réservé aux images **publiées telles quelles**. ⛔ Identifiant jamais en dur — importer depuis `scripts/tools/gemini_models.py`.
+> **Levier concret** : `python3 scripts/tools/gemini-gen-image.py --prompt "..." --output x.png [--hq]` — sans `--hq` = LITE (defaut, 1K max) ; avec = `IMAGE_MODEL_HQ` (2K/4K, image PUBLIEE telle quelle). Flag ajoute le 2026-08-26.
 2. ⛔ **MAI-Image-2.5 : testé puis ÉCARTÉ** (voir DÉCISIONS ARRÊTÉES). Sur le papier meilleur en édition (1256 > 1249) et 28 % moins cher — **à l'aveugle sur notre matière, aucune différence visible**, et il est en *preview*. ⭐ La leçon : un écart de quelques points d'Elo ne se voit pas sur nos cas réels.
 3. ⛔ **AUCUN open weights ne rivalise en ÉDITION.** Le meilleur réellement utilisable par nous est à **−83 Elo** (~61 % de préférence adverse en tête-à-tête = visible à l'œil nu).
 

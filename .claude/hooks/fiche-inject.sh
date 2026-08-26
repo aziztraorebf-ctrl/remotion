@@ -123,6 +123,12 @@ if printf '%s' "$FILE_PATH" | grep -qiE 'PROMPT-.*\.(txt|md)$|breakdown.*\.(json
 fi
 # Miniature : source composable (.svg autant que .tsx) sous thumbnails-library/.
 # ⚠️ DOIT etre AVANT le filtre .tsx : un .svg y serait rejete (bug reel, corrige 2026-08-17).
+# MOCKUP 3D : modeles d'appareils R3F. ⚠️ Ne PAS exit ici — FICHE-CAMERA reste
+# pertinente sur ces fichiers (score CAM eleve), les deux se cumulent.
+if printf '%s' "$FILE_PATH" | grep -qE '_demos/devices/|PhoneModel|LaptopModel|GridBackdrop|FlatDevice|DeviceInScene|DeviceHeroShot|DeviceShowreel|DeviceBench|LidOpenBench|SvgVs3dBench'; then
+  add_fiche "FICHE-MOCKUP-3D.md" "FICHE MOCKUP 3D" "$FILE_PATH"
+fi
+
 # UI PRODUIT : page servable, socle shotcraft importe, ou composition de scene d'ecran.
 # ⚠️ AVANT le filtre .tsx : index.html d'une live-page y serait rejete.
 if printf '%s' "$FILE_PATH" | grep -qE 'live-page(-light)?/|shotcraft-lib/|_client-sim/.*(Promo|Dashboard|Screen|Mockup)'; then

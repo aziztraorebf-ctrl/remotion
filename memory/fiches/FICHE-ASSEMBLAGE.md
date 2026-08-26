@@ -101,3 +101,7 @@ La version qui passe : `-crf 30 -vf scale=620:-2` -> **0,27-0,56 Mo par video, 2
 
 ⚠️ **Une vignette extraite d'une video recadree DEPUIS est perimee** — elle montre l'ancien
 decoupage, sans erreur. Test : `[ vignette -nt video ] || echo PERIME`.
+
+⛔ **`--gl=angle` vaut pour TOUT render 3D headless, pas seulement Mapbox** — un `<ThreeCanvas>` sans lui
+echoue en `Error creating WebGL context`. Pour un **still** 3D, `render-mapbox.sh` ne sert a rien (cable sur
+`remotion render`) : passer `--gl=angle` a la main sur `npx remotion still`. Paye le 2026-08-26.

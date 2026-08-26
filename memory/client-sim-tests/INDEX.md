@@ -38,8 +38,11 @@ fiche**, pas seulement dans le récit du test.
   ni les courbes ni le poids (`.lottie` compressé = 17-166 Ko) : c'est le **NOMMAGE des calques**,
   et il dépend de **l'outil source** — un export Recraft brut n'a aucun `id`, donc 509 calques
   `path-248` illisibles ; notre chaîne Fable/svg-library en a.
-  ⛔ Limites restantes : **texte, filtres, masques, images, `use`** ne passent pas · **dégradés**
-  rabattus sur une couleur moyenne (le format sait les faire, notre convertisseur non) ·
+  ⛔ **Ne pas trancher un brief depuis cet INDEX** — verdicts à jour :
+  `lottie-ui-lcd/CE-QUI-PASSE-EN-LOTTIE.md`. MAJ 26/08 : texte, dégradés et pointillés PORTÉS ;
+  une **PIÈCE LIVRABLE** existe (maison-gaz, 16 Ko, validée par Aziz dans Creator). Restent
+  refusés : filtres, masques, images, `use`. ⛔⛔ Une carte géographique n'est PAS un livrable
+  Lottie (recadrage Aziz). ·
   **source `.aep` ⚠️ à TESTER** (l'affirmation « AE n'importe pas » était
   FAUSSE — Bodymovin fait l'import ; test prioritaire prochaine session) ·
   pas de personnages articulés (métier différent, pas une limite de format).

@@ -1,6 +1,9 @@
 # NEXT-ACTION — Recommandations actives
 
-## ⭐⭐⭐ PROCHAINE SESSION — REPRODUIRE « Foster With Confidence » de A à Z
+## ⭐⭐⭐ CHANTIER ARMÉ — REPRODUIRE « Foster With Confidence » de A à Z
+> ⚠️ **Ordre à trancher par Aziz** : décidé le 2026-08-26 *avant* le recadrage Lottie de fin de
+> session, qui a verrouillé « contrôle qualité automatique PUIS Khartoum, et rien d'autre ».
+> Les deux viennent d'Aziz — je ne réordonne pas seul. À enchaîner, ou à faire d'abord ?
 
 **Décision d'Aziz 2026-08-26** : arrêter d'inventer des clients fictifs, **reproduire une
 vidéo réellement vendue sur Fiverr**. Si on reproduit plusieurs vidéos dans des registres
@@ -182,7 +185,7 @@ fausse image du niveau actuel. **Prochaine catégorie possible** : scènes SVG o
 
 ---
 
-## ⭐⭐⭐ PRIORITÉ 1 — 2e TEST DU WORKFLOW DÉMO CLIENT (carto) — starter prêt (2026-08-22)
+## 🔧 BACKLOG — 2e test du workflow démo client (carto), starter prêt (2026-08-22, en attente)
 
 > **Pourquoi une 2e fois avant de graver** : le workflow a été validé sur UN seul brief (Zambie).
 > Doctrine maison : *une abstraction écrite sur un seul cas est un pari, pas une brique*.
@@ -224,7 +227,7 @@ si le workflow tient sans explication. Si oui → on le grave. Sinon → on note
 
 ---
 
-## ⭐⭐⭐ CHANTIER OUVERT — RECETTE DE MONTAGE B2B (reverse engineering Aikido, 2026-08-20)
+## 🔧 BACKLOG — RECETTE DE MONTAGE B2B : reste l'ENCHAÎNEMENT des plans + le cut vente 60-90 s (le reste ✅ fait les 20-21/08)
 
 > **Ce qui manque n'est PAS une capacité — c'est la RECETTE.** Vérifié plan par plan sur la vidéo
 > Aikido (142 s, 12 plans, réf. Fiverr du benchmark 08-15) : **11 plans sur 12 sont dans nos moyens

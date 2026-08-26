@@ -115,3 +115,7 @@ Coût documenté de ne pas l'avoir fait : 4 + 3 + 3 itérations complètes (code
 
 
 5. ⛔⛔ **UN OBJET 3D N'EST PAS LISIBLE SOUS TOUS LES ANGLES — un tour complet traverse des ANGLES MORTS.** Une CLÉ vue exactement de face confond son anneau avec sa tige et se lit comme un TOURNEVIS. Le fix n'est PAS de re-doser lumière/épaisseur (**3 rendus perdus** à le faire) : c'est de changer le **GESTE** — osciller autour de l'angle 3/4 lisible au lieu de tourner à 360°. Valeurs retenues (`PremiumCard3D.tsx` : `READABLE = 0.85` rad, amplitude décroissante 0.7→0.55→0.30) : plage lisible **-0.2 à ~1.1 rad**, au-delà de 1.2 rad l'objet passe par la tranche. Banc de vérification : `keys/KeyBench.tsx` affiche les 4 angles côte à côte — **un objet beau à un seul angle est disqualifié**. Même famille que les pièges 1-3 : la cause est STRUCTURELLE (le geste), jamais le dosage. (2026-08-25)
+
+## 3D — cadrage et matiere
+→ Cette fiche couvre le GESTE de camera. Le CADRAGE 3D (`z = (largeur_unites * H) / (2*tan(fov/2) * largeur_px)`),
+le materiau aplati et les mockups d'appareil : **`memory/fiches/FICHE-MOCKUP-3D.md`**.

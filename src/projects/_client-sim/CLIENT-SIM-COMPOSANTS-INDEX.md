@@ -44,7 +44,10 @@ indexer plutôt dans un futur `utils/` partagé studio entier si le besoin se r�
 
 | Outil | Chemin | Quand tu veux… | Statut |
 |---|---|---|---|
-| **Chaîne SVG→Lottie** | `lottie-ui/tools/` (9 outils) | livrer un composant **animé au format du client** (`.json`/`.lottie`) plutôt qu'une vidéo | **prouvé** (25-26/08) |
+| **Chaîne SVG→Lottie** | `lottie-ui/tools/` (16 outils) | livrer un composant **animé au format du client** (`.json` seul suffit) plutôt qu'une vidéo | **prouvé** (25-26/08, enrichi le 26/08) |
+| ⭐ `svgtext.py` | `lottie-ui/tools/` | porter le **TEXTE** — 2 voies : `vectoriser()` (courbes, fidèle partout, non éditable) ou `calque_natif()` (`ty:5`, éditable par le client, dépend de sa police) | **prouvé** (importé par `svg2lottie_scene.py` et `test_texte.py`) |
+| ⭐ `finir_piece.py` | `lottie-ui/tools/` | transformer une scène animée en **PIÈCE LIVRABLE** : recadrage sur l'emprise du dessin, amorce du tracé (1re frame jamais vide), tenue de fin | **prouvé** (maison-gaz validée par Aziz dans Creator, 26/08) |
+| ⭐ `vivifier.py` | `lottie-ui/tools/` | rendre **VIVANT** ce qu'une extraction fige : une forme qui GRANDIT (contourne la limite « nombre de sommets variable »), un FLUX qui défile dans un trait, un FONDU de bord là où Lottie refuse les masques | **prouvé** (reproduit le livrable maison-gaz à l'identique) |
 
 ⛔⛔ **CETTE ENTRÉE MENTAIT jusqu'au 2026-08-26** : elle désignait `animate_start.py` comme LE
 convertisseur et annonçait « segments **droits uniquement**, toute courbe lève une `ValueError` ».
@@ -67,7 +70,12 @@ convertisseur et annonçait « segments **droits uniquement**, toute courbe lèv
 aéroport **57,74 % → 11,58 %**) · animation dans les 2 registres · calques nommés et manipulables,
 **validés par Aziz dans LottieFiles Creator**. Poids : 10 s d'animation = **2,3 Ko** compressés.
 
-⛔ **Limites réelles** : le **TEXTE** ne passe pas (bloqueur n°1 : 83 scènes sur 172) · filtres,
+✅ **Levé le 2026-08-26** : le **TEXTE passe** (`svgtext.py`, 2 voies) et les **POINTILLÉS** aussi.
+⚠️ Le natif `ty:5` est éditable mais **5,74 % d'écart si le lecteur n'a pas la police** — pire que
+ne rien porter. Nos scènes écrivent en Georgia (412×), absente des 17 familles de Creator :
+**vectoriser par défaut**. Table de décision : `memory/client-sim-tests/lottie-ui-lcd/CE-QUI-PASSE-EN-LOTTIE.md`
+
+⛔ **Limites réelles restantes** : filtres,
 masques, images, `use` refusés · un SVG **sans ids** (export Recraft brut) donne des calques
 `path-248` illisibles → devant un brief « calques manipulables », la question n'est pas « sait-on
 convertir ? » mais **« d'où vient le SVG ? »**.

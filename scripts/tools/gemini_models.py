@@ -62,6 +62,31 @@ Reference : https://ai.google.dev/gemini-api/docs/pricing
 Detail projet : memory/tools/gemini.md
 """
 
+# ---------------------------------------------------------------------------
+# ⛔ FIX IPv4 — APPLIQUE ICI POUR TOUS LES SCRIPTS IMAGE (2026-08-26)
+# ---------------------------------------------------------------------------
+# En sandbox, IPv6 est mort : un appel Gemini/OpenRouter HANG INDEFINIMENT, sans
+# erreur ni timeout. Cout deja paye : ~40 min perdues a re-essayer manuellement
+# avant de deleguer (cite comme preuve de valeur dans le CLAUDE.md global).
+#
+# Le fix vivait dans un seul script (svg-scene-narrative.py) depuis le 2026-07-03,
+# avec une note de dette « pas encore propage a gemini-gen-image.py, gemini-i2i.py,
+# svg-faisabilite-brief.py ». Une propagation manuelle par script est une dette qui
+# se re-oublie : on le met donc DANS CE MODULE, que tous les scripts image importent
+# deja pour IMAGE_MODEL. Un seul endroit, plus rien a suivre.
+import socket as _socket
+
+_orig_getaddrinfo = _socket.getaddrinfo
+
+
+def _ipv4_only_getaddrinfo(host, port, family=0, type=0, proto=0, flags=0):
+    return _orig_getaddrinfo(host, port, _socket.AF_INET, type, proto, flags)
+
+
+_socket.getaddrinfo = _ipv4_only_getaddrinfo
+
+
+
 # --- Image : DEFAUT = Lite (brouillons, storyboards, matiere H3, refs SVG) ---
 # ~0,0336 $/image. 1K MAXIMUM. Exige response_modalities=["IMAGE"] (cf. ci-dessus).
 IMAGE_MODEL = "gemini-3.1-flash-lite-image"

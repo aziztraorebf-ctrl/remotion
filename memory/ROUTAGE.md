@@ -133,10 +133,13 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | regrouper des calques illisibles par intention | `…/group_layers.py` (Soudan 71 → 8) |
 | **vérifier qu'un Lottie BOUGE vraiment** / mesurer l'écart au SVG | `…/check_animation.py` · `…/compare_render.py` |
 | piloter LottieFiles Creator en direct (110 outils) | `memory/tools/lottie-creator-mcp.md` ⚠️ port 3847 unique |
-| l'inventaire complet des 9 outils | `src/projects/_client-sim/CLIENT-SIM-COMPOSANTS-INDEX.md` § OUTILS |
+| l'inventaire complet des 16 outils | `src/projects/_client-sim/CLIENT-SIM-COMPOSANTS-INDEX.md` § OUTILS |
 
-⛔ **Le TEXTE ne passe pas** (83 scènes sur 172 en contiennent) — c'est le bloqueur n°1. Filtres,
-masques, images et `use` sont refusés aussi. Prochaine session : `memory/starters/STARTER-PROMPT-lottie-texte-et-animation.md`
+✅ **Le TEXTE passe depuis le 2026-08-26** (`svgtext.py`, 2 voies : vectorisé 1,95 % partout ·
+natif `ty:5` éditable **mais 5,74 % si le lecteur n'a pas la police** → vectoriser par défaut).
+Les **POINTILLÉS** aussi. ⛔ Restent refusés : filtres, masques, images, `use`.
+⛔⛔ **Une carte géographique complète n'est PAS un livrable Lottie** (Aziz, 26/08) : le registre
+qui vaut = dashboards/UI, logos, icônes, schémas, objets qui racontent. Prochaine session : `memory/starters/STARTER-PROMPT-lottie-texte-et-animation.md`
 
 ### War-Map
 
