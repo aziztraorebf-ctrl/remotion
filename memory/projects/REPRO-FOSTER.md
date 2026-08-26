@@ -170,6 +170,53 @@ plan 2 etant un TRES GROS PLAN sur la notification, verifier a ce moment-la que 
 raccord tient avec notre cadrage de fin (plus large que celui de la reference).
 Ne pas prejuger : c'est une verification, pas un probleme connu.
 
+
+## ⭐⭐ LE PLAN 2 N'EST PAS « DE LA TYPO » — c'est LA SUBMERSION (mesure 2026-08-26)
+
+> ⛔ Le tableau de decoupage annoncait pour ce segment « typo pure sur noir, mot par
+> mot ». **FAUX.** Le plan 2 (1,602 -> 5,597 s, borne de fin RE-MESUREE sur la zone
+> centrale propre : score 0,68) est le coeur narratif de la video.
+
+**Ce qui s'y passe reellement** — une conversation en direct, puis l'ensevelissement :
+
+| t (abs) | evenement |
+|---|---|
+| 1,602 | **COUPE FRANCHE en avant** (saut d'echelle sec, PAS un zoom continu) |
+| 2,05 | « I'll » commence a s'ecrire **DANS la bulle de la notification Ofsted** |
+| 2,35 | « I'll see » |
+| 2,50 | « I'll see how long » |
+| 2,65 | « I'll see how long it » + **le bouton bleu REPLY apparait** |
+| 3,00 | « I'll see how long it takes » (phrase finie) |
+| 3,80 | + « You got a new mail » — badge **11+** |
+| 4,30 | + « You got a new message » — badge **13+** |
+| 4,80 | + « You got a new mail » — badge **17+** |
+| 5,597 | coupe |
+
+⭐⭐ **LES BADGES MONTENT : 11+ -> 13+ -> 17+.** Le compteur grimpe pendant qu'on
+regarde. C'est LE detail qui raconte la submersion — on repond a une demande et on
+est enseveli. **C'est exactement le probleme que le SaaS pretend resoudre**, montre
+au lieu d'etre dit.
+
+**Details de mecanique mesures** :
+- ⛔ La reponse vit **DANS la meme bulle** que la notification (y~540/1080), ce n'est
+  pas un champ de saisie separe : la notification s'ETEND pour l'accueillir.
+- La frappe : 27 caracteres en 0,95 s ≈ **1,05 frame/caractere** — plus rapide que la
+  regle des 3 f/car du socle shotcraft — et **les mots arrivent par GROUPES**.
+  -> on bascule entre **9 plaques capturees** (`?state=r0..r5,s1..s3`), on ne simule
+  pas une frappe caractere par caractere.
+- La vue **DESCEND** quand la pile grandit (a 4,10 s la notif Ofsted sort par le haut).
+
+**⛔ Piege de cadrage paye ici** : une plaque 1179x2556 calee en hauteur sur le cadre
+montre son CENTRE (y=1278) — soit le bas du fond d'ecran, **aucune notification
+visible**. Les cartes vivent entre y=300 et y=1055 (bbox relevees a la capture dans
+`stack-layout.json`) => centre reel y=640. **Le cadrage se CALCULE sur les bbox, il
+ne se dose pas.** Meme famille d'erreur que le camZ mort du plan 1 : une valeur qui
+n'atteint pas le rendu.
+
+**Raccord verifie** : la coupe etant un saut d'echelle tres violent, notre fin de
+plan 1 (plus large que la reference) **ne se voit pas**. Ce qui compte est le
+contraste entre les deux echelles, aussi fort chez nous.
+
 ## CE QUI EST DÉJÀ PRÊT (acquis de la session 2026-08-25/26)
 - `devices/PhoneModel` · `LaptopModel` — mockups procéduraux, écran = zone d'accueil
 - `devices/DeviceInScene` — objet posé dans un décor, ombre 3 couches, allumage 0,30 s

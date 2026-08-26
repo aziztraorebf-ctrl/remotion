@@ -58,3 +58,23 @@ En mesurant la taille de l'objet frame par frame sur le rendu (constante a 1 px
 pres) au lieu de re-doser les valeurs. **Meme signature que le bug du globe D3
 du 2026-08-02** : un cablage mort qui se lit comme un probleme d'amplitude.
 Cf. `feedback_globe-d3-scaleMul-doit-piloter-tous-cercles`.
+
+
+---
+
+# ⛔ BONUS (meme session) : `npx tsc | grep` AVANT un render AVORTE le render
+
+```bash
+npx tsc --noEmit 2>&1 | grep -i MaComposition | head -3   # <-- grep sans match = exit 1
+npx remotion render ...                                    # <-- NE S'EXECUTE JAMAIS
+```
+
+Quand le `grep` ne trouve rien (= le typecheck est PROPRE, donc le cas nominal),
+il sort en statut 1 et la chaine s'interrompt : **le render n'est jamais lance**.
+Symptome : la sortie du job ne contient que les echos precedents, aucun message
+Remotion, et le `.mp4` n'existe pas — sans la moindre erreur affichee.
+
+**A coute 2 relances le 2026-08-26** (plan 1 v4, puis plan 2 v4).
+
+✅ **Fix** : lancer le typecheck et le render dans **deux commandes separees**, ou
+terminer le grep par `|| true`.
