@@ -423,6 +423,7 @@ import { Asset3DShowcase } from "./projects/_shared/_demos/Asset3DShowcase";
 import { PremiumCard3D, PREMIUM_CARD_3D_FRAMES } from "./projects/_shared/_demos/PremiumCard3D";
 import { KeyBenchA, KeyBenchB, KeyBenchGemini, KeyBenchGlm, KeyBenchKimi, KeyBenchGrok } from "./projects/_shared/_demos/keys/KeyBench";
 import { LaptopScreenDemo, PhoneScreenDemo } from "./projects/_shared/_demos/devices/DeviceScreenDemo";
+import { PhoneHeroShot, LaptopHeroShot, PhoneHeroClip } from "./projects/_shared/_demos/devices/DeviceHeroShot";
 import { DeviceBenchPhone, DeviceBenchLaptop, DeviceBenchPhoneVision, DeviceBenchPhoneVisionBlindLights, DeviceBenchPhoneOrigVisionLights } from "./projects/_shared/_demos/devices/DeviceBench";
 import { JetonWarMap3DCompare } from "./projects/_shared/_demos/JetonWarMap3DCompare";
 import { RapidFireCountries } from "./projects/_shared/mapbox/RapidFireCountries";
@@ -2732,6 +2733,10 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="Asset3DShowcase" component={Asset3DShowcase} durationInFrames={120} fps={30} width={1080} height={1080} />
         {/* PremiumCard3D — reverse engineering du workflow CapCut de Danny Why (2026-08-23) */}
         {/* Banc mockups d'appareils 3D — registre SaaS explainer (2026-08-25) */}
+        {/* Plan serre : la camera s'approche, l'UI joue dans l'ecran */}
+        <Composition id="PhoneHeroShot" component={PhoneHeroShot} durationInFrames={120} fps={30} width={1920} height={1080} />
+        <Composition id="LaptopHeroShot" component={LaptopHeroShot} durationInFrames={120} fps={30} width={1920} height={1080} />
+        <Composition id="PhoneHeroClip" component={PhoneHeroClip} durationInFrames={120} fps={30} width={1920} height={1080} />
         {/* Capture Shotcraft REELLE plaquee dans l'ecran 3D — pilier 3 x pilier 4 */}
         <Composition id="LaptopScreenDemo" component={LaptopScreenDemo} durationInFrames={1} fps={30} width={1920} height={1080} />
         <Composition id="PhoneScreenDemo" component={PhoneScreenDemo} durationInFrames={1} fps={30} width={1920} height={1080} />
