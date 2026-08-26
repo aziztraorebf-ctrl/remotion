@@ -232,9 +232,20 @@ méthode habituelle (le statique d'abord, nous animons), mais ce n'est PAS un bo
    ⏭️ **Reste ouvert sur le texte** : les `<tspan>` repositionnés individuellement (x/y/dy
    propres) sont fusionnés en une ligne — signalé, pas porté. Et le **contour** d'un texte
    (`stroke` sur un `<text>`) n'est pas rendu en vectorisé (le glyphe devient une surface).
-2. ⭐ **ANIMER UNE SCÈNE DENSE.** Tout est prouvé sur 24 calques (maison) et 8 groupes (Soudan) ;
-   **jamais sur 498** (aéroport). C'est le pas qui reste — sans animation qui joue, une scène
-   convertie ne sert à rien (formulation d'Aziz, 26/08).
+2. ✅ **ANIMER UNE SCÈNE DENSE — FERMÉ le 2026-08-26** sur le **Gazoduc Acte 4 « Objectifs »**,
+   108 éléments d'une vraie composition Remotion. Chaîne complète mesurée à chaque maillon :
+   `extract-remotion-svg.mjs` → `svg2lottie_scene.py` (112 portés) → `group_layers.py`
+   (108 calques → **5 groupes nommés**, rendu **identique** : 1,33 % avant comme après) →
+   `animate_scene.py` (partition `gazoduc-a4`) → `check_animation.py` (**7/7 frames
+   distinctes**, planche regardée).
+   ⛔ **Les bornes ne s'inventent pas** : recopiées du composant Remotion d'origine, où chaque
+   repère porte le mot de la voix off qui le déclenche. La cascade pays par pays raconte
+   « le projet traverse trois pays » ; trois pays allumés ensemble ne racontent rien.
+   ⚠️ **Piège de mesure évité** : le taux de pixels encrés reste à ~46 % du début à la fin —
+   ce n'est PAS une scène figée. Les pays **changent de couleur** sur un fond déjà encré, ils
+   n'ajoutent pas de surface. La mesure d'encre seule aurait fait conclure à tort ; **la
+   planche l'a montré**.
+   ⏭️ **Reste** : l'aéroport (498 calques) n'a toujours pas de carte de regroupement.
 3. ✅ **POINTILLÉS — FERMÉ le 2026-08-26** (découverts à l'oeil le jour même : ils étaient
    **ignorés en silence**). Portés et mesurés (0,07-0,10 %).
    ⛔⛔ **LA LEÇON, transposable bien au-delà des pointillés** : dans le tableau `d` d'un trait,
