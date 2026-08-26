@@ -181,9 +181,25 @@ originSessionId: ce6f8686-595b-4c06-97cf-65f9ba224146
 
 ---
 
-## LottieFiles Creator MCP — évalué et ÉCARTÉ (2026-08-04)
+## LottieFiles Creator MCP — ⭐ INSTALLÉ ET VALIDÉ EN DIRECT (2026-08-26)
 
-Doc officielle vérifiée via WebFetch (jamais installé/testé concrètement). **Ce n'est PAS un
+> ⛔⛔ **Le titre de cette section disait « évalué et ÉCARTÉ » jusqu'au 2026-08-26 — c'était PÉRIMÉ**,
+> et sur la source de vérité des outils un titre « ÉCARTÉ » fait refuser par réflexe un outil
+> opérationnel. C'est le 2e passage du même piège ici (cf. la qualification du 08-24 plus bas).
+>
+> **État réel** : `@lottiefiles/creator-mcp` v0.2.1 (MIT), **installé dans `.mcp.json`, 110 outils**,
+> `read_scene` / `create_shape` / `set_fill` exécutés en direct sur la scène d'Aziz. **Aucun plan
+> payant requis** (l'incertitude « gratuit/payant » ci-dessous est levée : c'est gratuit).
+> ⭐ Ce qu'il a débloqué : la doc de `set_fill` a révélé que chaque arrêt de dégradé porte une
+> `opacity` et que start/end sont des **coordonnées pixel** — exactement ce que notre convertisseur
+> ignorait. Aéroport **57,74 % → 11,58 %** d'écart.
+> ⛔ Il n'EXPORTE rien, et exige un humain devant l'écran (onglet ouvert + MCP activé).
+> 📄 Détail, installation et gotchas (port 3847 unique, CORS à l'import) :
+> `memory/tools/lottie-creator-mcp.md`
+
+### Verdict historique du 2026-08-04 (conservé — il portait sur un AUTRE usage)
+
+Doc officielle vérifiée via WebFetch (à l'époque : jamais installé/testé concrètement). **Ce n'est PAS un
 générateur d'illustration organique/personnages** — c'est un assistant d'ÉDITION d'animation :
 importer un SVG existant, puis retoucher position/timing/couleurs/courbes via IA en langage naturel.
 Registre = formes abstraites/UI (spinners, progress bars, icônes), pas personnages organiques.

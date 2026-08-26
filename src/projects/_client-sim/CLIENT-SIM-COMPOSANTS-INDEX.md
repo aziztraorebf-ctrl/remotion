@@ -44,25 +44,42 @@ indexer plutôt dans un futur `utils/` partagé studio entier si le besoin se r�
 
 | Outil | Chemin | Quand tu veux… | Statut |
 |---|---|---|---|
-| **Convertisseur SVG→Lottie** | `lottie-ui/tools/animate_start.py` | livrer un **composant animé au format du client** (`.json`/`.lottie`) plutôt qu'une vidéo — app, site, écran embarqué, contrôle par élément | **proto** (1 usage) |
+| **Chaîne SVG→Lottie** | `lottie-ui/tools/` (9 outils) | livrer un composant **animé au format du client** (`.json`/`.lottie`) plutôt qu'une vidéo | **prouvé** (25-26/08) |
 
-⭐ **Ce qu'il fait** : lit un SVG **structuré à ids imposés** (produit par Fable, zéro animation dedans)
-et écrit le Lottie JSON directement — pas de conversion approximative, pas d'After Effects. Applique le
-réflexe maison « le modèle dessine le STATIQUE, NOUS animons » à un nouveau format de sortie. Le SVG source
-n'est jamais modifié : **si le client envoie son Figma, on remplace le fichier et on relance**.
+⛔⛔ **CETTE ENTRÉE MENTAIT jusqu'au 2026-08-26** : elle désignait `animate_start.py` comme LE
+convertisseur et annonçait « segments **droits uniquement**, toute courbe lève une `ValueError` ».
+**Faux depuis le commit `4ce4b9ee`.** Un agent lisant ça refuserait un brief parfaitement faisable.
 
-**Validé** dans les 2 outils officiels de LottieFiles (Preview + Creator) + 2 moteurs (`rlottie`,
-`lottie-web`) : calques nommés, dépliables, **éléments déplaçables un par un**. 1 382 octets compressé.
+**Les outils, par usage** :
+| Outil | Quand |
+|---|---|
+| `svg2lottie_scene.py` ⭐ | **le point d'entrée** : SVG complet → Lottie. `--rapport` classe chaque élément PORTÉ/APPROXIMÉ/REFUSÉ et **répond à un brief client sur un fichier donné** |
+| `svgpath.py` | module : chemins SVG (grammaire complète + primitives) → polybézier Lottie |
+| `extract-remotion-svg.mjs` | extraire le SVG **résolu** d'une composition Remotion à une frame (⚠️ outil transversal, pas seulement Lottie) |
+| `transcribe_animation.py` | transcrire une animation **par recalcul de forme** (flamme qui ondule) |
+| `animate_scene.py` | poser une animation depuis une partition (tracé/fondu/pop) |
+| `group_layers.py` | regrouper les calques **par intention** (Soudan 71 → 8 groupes nommés) |
+| `smooth_polyline.py` | lisser des polylignes en vraies Béziers |
+| `compare_render.py` ⭐ | **le garde-fou** : rend SVG et Lottie dans Chromium et MESURE l'écart pixel |
+| `check_animation.py` ⭐ | vérifier qu'un Lottie **BOUGE vraiment** (hash de frames) — un JSON valide peut être figé |
 
-⚠️ **Statut `proto` et non `prouvé`** malgré la validation d'Aziz : c'est le **PIPELINE** qui est prouvé,
-sur **un seul artefact**. Le STATUS exige lui-même « 2 scènes de registres différents minimum » avant de
-conclure. `build()` est encore câblé en dur sur cet objet (ids, palette, constantes) — la généralisation
-est le travail du 2e usage, pas maintenant.
+**Ce qui est prouvé** : dégradés linéaires ET radiaux portés (`gf` natif, opacité comprise —
+aéroport **57,74 % → 11,58 %**) · animation dans les 2 registres · calques nommés et manipulables,
+**validés par Aziz dans LottieFiles Creator**. Poids : 10 s d'animation = **2,3 Ko** compressés.
 
-⛔ **4 limites** : segments **droits uniquement** (`M/L/H/V/Z` — toute courbe lève une `ValueError`, échec
-bruyant par choix) · aplatit `transform="translate()"` dans les points · **pas de source `.aep`** ·
-**parse en regex, sans parseur XML** — ne PAS l'exposer à un SVG client non fiable sans reprendre le
-durcissement XXE de `svg2lottie.py` (le prototype).
+⛔ **Limites réelles** : le **TEXTE** ne passe pas (bloqueur n°1 : 83 scènes sur 172) · filtres,
+masques, images, `use` refusés · un SVG **sans ids** (export Recraft brut) donne des calques
+`path-248` illisibles → devant un brief « calques manipulables », la question n'est pas « sait-on
+convertir ? » mais **« d'où vient le SVG ? »**.
+⚠️ **Dette de sécurité** : le durcissement XXE (`defusedxml`) est présent dans `svg2lottie_scene.py`
+mais l'entrée reste à valider si un SVG **client** non fiable est parsé.
+
+📄 **Table de décision client** (répondre à un brief en 30 s) :
+`memory/client-sim-tests/lottie-ui-lcd/CE-QUI-PASSE-EN-LOTTIE.md`
+📄 **MCP Creator** (installé, 110 outils, gotchas) : `memory/tools/lottie-creator-mcp.md`
+
+⚠️ `animate_start.py` est resté **figé sur la pièce LCD** (ids, palette, constantes en dur) — c'est
+un historique, pas le convertisseur générique.
 
 **Rejeté (remplacé dans la même session)** : `lottie-ui/tools/svg2lottie.py` — 1re version, ne lit que
 `<circle>`/`<line>`. Gardé pour l'historique **et** parce qu'il porte le bloc `defusedxml` à reprendre le

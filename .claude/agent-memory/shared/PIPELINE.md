@@ -100,13 +100,19 @@ voir `src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` brique n°7 +
 Acte 1 (hook, 84.68s, globe D3) validé par Aziz (render v6, 2026-08-03). Acte 2 **produit et validé en
 finale (2026-08-04)** : `out/episodes/gazoduc-aagp-tsgp/acte2-FINAL.mp4` (127.4s).
 
-**⛔⛔ Acte 3 — GELÉ EN WIP (décision Aziz 2026-08-14). NE PAS LE REPRENDRE.** Il n'est pas validé et il
+**⏭️ Acte 3 — GEL LEVÉ le 2026-08-18, c'est la PRIORITÉ 1.**
+⚠️ Ce paragraphe disait « GELÉ EN WIP, NE PAS LE REPRENDRE » jusqu'au 2026-08-26 : **c'était périmé**.
+Le gel du 14/08 avait UNE condition (produire les Actes 4 et 5 d'abord), remplie depuis. Autorité :
+`memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md` § en tête. Le texte ci-dessous décrit l'état
+mesuré de l'acte au moment du gel — il reste utile comme point de départ.
+(État conservé pour référence :) Il n'est pas validé et il
 reste du travail, mais on s'acharnait dessus depuis trop de sessions (même pattern que le Soudan Acte 4 :
 un acte du MILIEU se juge par rapport à ses voisins, or ses voisins 4/5 n'existaient pas). **On produit
 les Actes 4 et 5 d'abord.** Acquis à ne pas refaire : Beat 1 validé · Beat 2 = vrai insert composé (clip
 H3 + jauge + connecteur) · Segment B (aéroport) fait. État complet + ce qui reste cassé (mesuré) :
 `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md` § "ACTE 3 — GELÉ EN WIP" (en tête).
-⚠️ `memory/starters/STARTER-PROMPT-gazoduc-acte3-suite.md` est PÉRIMÉ (il fait reprendre l'Acte 3).
+⚠️ `memory/starters/STARTER-PROMPT-gazoduc-acte3-suite.md` : à RELIRE avant usage — il fait reprendre
+l'Acte 3 (ce qui est désormais la bonne action), mais son contenu date d'AVANT les Actes 4 et 5.
 
 **⭐ Acte 4 — état au 2026-08-15 soir** :
 - Audio `narration-p4.mp3` mesuré (124.04s), copié dans `public/`, timing des **3 mouvements** dérivé du
@@ -359,12 +365,21 @@ ci-dessus. Détail technique complet conservé dans `memory/episodes/_client-sim
   → script Python → `.json` Lottie. C'est « le modele dessine le STATIQUE, NOUS animons »
   applique a un nouveau format de sortie.
 - **Poids** : 1382 octets compresse — SOUS la reference que le client cite lui-meme (1,4 Ko).
-- **Code** : `src/projects/_client-sim/lottie-ui/` · recit + 3 limites + suites :
-  `memory/client-sim-tests/lottie-ui-lcd/STATUS.md` (commit 4039e8b9).
-- ⛔ **3 limites a annoncer, jamais a cacher** : courbes non gerees (echec bruyant par choix) ·
-  source `.aep` ⚠️ A TESTER (l'affirmation « AE n'importe pas » etait FAUSSE — Bodymovin fait
-  l'import, essai 7 j gratuit) · pas de personnages articules.
+- **Code** : `src/projects/_client-sim/lottie-ui/tools/` (9 outils, inventaire dans
+  `src/projects/_client-sim/CLIENT-SIM-COMPOSANTS-INDEX.md` § OUTILS). Le STATUS.md est le RECIT ;
+  les verdicts a jour sont dans `CE-QUI-PASSE-EN-LOTTIE.md`.
+- ⭐⭐ **2026-08-26 — CHAINE PROUVEE DE BOUT EN BOUT** (dessin ET animation, validee par Aziz dans
+  LottieFiles Creator). Grammaire SVG complete + primitives · degrades portes en `gf` natif
+  (aeroport 57,74 % -> 11,58 %) · animation dans les 2 registres (transformation ET recalcul de
+  forme) · calques groupes et nommes (Soudan 71 -> 8) · 10 s d'animation = 2,3 Ko compresses.
+  ⛔ **Limites REELLES** : le **TEXTE** ne passe pas (bloqueur n1, 83 scenes sur 172) · filtres,
+  masques, images, `use` refuses · source `.aep` ⚠️ A TESTER (Bodymovin fait l'import) · pas de
+  personnages articules.
+  ⚠️ Ce bloc annoncait « courbes non gerees » et « prochaine etape : les courbes » jusqu'au
+  2026-08-26 : **PERIME** (leve le 25/08, commit 4ce4b9ee).
+  📄 Table de decision : `memory/client-sim-tests/lottie-ui-lcd/CE-QUI-PASSE-EN-LOTTIE.md`
 - **Tri client applique** : 100 $/embauche sur 19 embauches, budget affiche 100 $ → aucune
   negociation possible, pas de candidature. Piece gardee au portfolio (UI generique).
-- **Prochaine etape** : etendre le convertisseur aux COURBES de Bezier (bloquant), puis
-  convertir une SCENE NARRATIVE complete et mesurer ce qui passe / ce qui ne passe pas.
+- **Prochaine etape** : le **TEXTE** (meme methode que les degrades : poser dans Creator via le
+  MCP, lire la structure, la porter), puis **animer une scene DENSE** (prouve sur 24 calques et
+  8 groupes, jamais sur 498). Starter : `memory/starters/STARTER-PROMPT-lottie-texte-et-animation.md`

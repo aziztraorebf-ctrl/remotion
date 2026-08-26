@@ -1,7 +1,7 @@
 # INSERT / SCÈNE SVG NARRATIVE — fiche de déclenchement
 > Injectée avant d'écrire du SVG dessiné dans un `.tsx`. Cause d'échec n°1 mesurée : **brique existante non trouvée** (6 cas, ~20 itérations perdues).
 > ⚠️ Si ce que tu lis ici ne correspond PAS au code que tu as sous les yeux : **c'est la fiche qui a tort**. Corrige-la immédiatement, ne contourne pas.
-> Dernière vérification contre le code : 2026-08-17.
+> Dernière vérification contre le code : 2026-08-26.
 
 ## ⛔⛔ CONTRAT « PRÊT À ANIMER » — À EXIGER DÈS LE PREMIER APPEL, QUEL QUE SOIT LE MODÈLE
 
@@ -43,14 +43,17 @@ xmllint --noout fichier.svg                              # XML valide
 ⚠️ Piège de vérification : `grep -c '<animate'` compte aussi le mot écrit dans un COMMENTAIRE —
 lire les occurrences avant de conclure à une violation (faux positif vécu le jour même).
 
-Gabarits de briefs qui ont marché : `/tmp/BRIEF-SVG-VERROU.md`, `/tmp/BRIEF-SVG-PONTS.md`
+Gabarits de briefs qui ont marché : ``memory/episodes/souverain/gazoduc-aagp-tsgp/BRIEF-SVG-VERROU.md``, ``memory/episodes/souverain/gazoduc-aagp-tsgp/BRIEF-SVG-PONTS.md``
 (recopiés dans `memory/episodes/souverain/gazoduc-aagp-tsgp/`).
 
 ⭐ **Le contrat sert AUSSI à SORTIR du repo** (2026-08-24, brief Lottie LCD) : ces mêmes règles
 (un `<g id>` par pièce, ids imposés, zéro `<animate>`, tout en attributs) sont exactement ce qui rend
 un SVG convertible en **Lottie standard** — calques nommés, dépliables et **déplaçables un par un**
 dans LottieFiles Creator. Le contrat n'est pas une commodité interne : c'est ce qui ouvre les briefs
-qui exigent un format tiers. Preuve + 3 limites : `memory/client-sim-tests/lottie-ui-lcd/STATUS.md`.
+qui exigent un format tiers. Table de décision à jour (répondre à un brief en 30 s) :
+`memory/client-sim-tests/lottie-ui-lcd/CE-QUI-PASSE-EN-LOTTIE.md`. ⭐ Chaîne prouvée dessin ET
+animation (25-26/08) ; le TEXTE reste le bloqueur (83 scènes/172). ⚠️ Le STATUS.md est le RÉCIT,
+pas la référence.
 
 ## BRIQUES EXISTANTES — vérifier AVANT de coder
 Ouvrir dans cet ordre, **lire chaque liste jusqu'au bout** (une brique en fin de liste a été ratée par 3 agents sur 3) :
@@ -63,6 +66,21 @@ Ouvrir dans cet ordre, **lire chaque liste jusqu'au bout** (une brique en fin de
 ⚠️ Un catalogue qui affirme une ABSENCE est faillible : vérifier par `ls` + `git ls-files` + `git log --all -- <nom>` (un registre « canonique » peut vivre sur une branche R&D jamais mergée — 4 occurrences). Un nom trouvé 2× (`find src -name '<Nom>*'`) = piège d'import.
 
 ## INTERDITS — erreurs déjà payées
+
+⛔⛔ **MÊME SIGNATURE 4 FOIS EN 2 JOURS : livrable valide + rapport « porté » + RIEN à l'écran.**
+(1) ordre de peinture — dans un calque Lottie le PREMIER groupe est peint EN DERNIER, le fill
+recouvrait le trait · (2) ancre restée à `[0,0]` = coin de l'écran, la forme se déploie depuis le
+bord au lieu de grandir sur place · (3) keyframes à t=100 sur un calque dont la plage `ip/op`
+s'arrête à 60 (mettre à jour `op` du DOCUMENT ne suffit pas, chaque CALQUE a la sienne) ·
+(4) type `gf` absent d'un tri qui ne connaissait que `fl`/`st` → jeté en silence (99,5 % d'écart).
+**L'élément était correct à chaque fois — c'est son AIGUILLAGE qui l'annulait.** Dans un format
+déclaratif à hiérarchie, chercher le défaut dans le CHEMIN (portée, ordre, plage de temps, dispatch
+par type), jamais dans l'élément. Détail : [[element-correct-aiguillage-qui-l-annule]] (2026-08-25/26)
+
+⛔⛔ **LA SPEC DÉCRIT LE RENDU SOURCE, PAS LA MEILLEURE CONVERSION.** Quand le format cible ne peut
+pas représenter la source (Lottie n'a qu'un rayon SCALAIRE là où SVG raisonne sur une boîte), aucune
+formule n'est « correcte » — seule la MESURE tranche. Corrigé le rayon radial d'après la spec sans
+mesurer : **régression 11,58 % → 11,91 %**. Les 4 candidates ont dû être mesurées. (2026-08-26)
 - ⛔⛔ **Un `tr` Lottie posé À CÔTÉ des formes au lieu de les ENVELOPPER** : il n'agit que sur les
   formes de son PROPRE `it`. Le JSON reste **valide et se charge sans erreur sur 4 moteurs** — le
   groupe ne bouge simplement pas. Seul le RENDU l'a dit. ⭐ Corollaire dur, valable pour tout format
@@ -136,12 +154,7 @@ Au **2e échec sur le même défaut** (y compris un rendu rejeté 2× sur le mê
 2. Puis le protocole agent-dédié du CLAUDE.md global (reverse engineering → agent frais qui RAPPORTE) — déjà en contexte à chaque session, pas repris ici.
 
 
-## ↔ OBJET 3D GÉNÉRÉ (React Three Fiber) — le registre voisin
-
-⛔⛔ **UN CLASSEMENT DE MODÈLES NE SE TRANSPOSE PAS D'UN REGISTRE À L'AUTRE.** Mesure 2026-08-25, même brief aux 5 modèles sur un objet **3D** : **Grok 4.6** (384 l / 243 s) > **Gemini 3.1 Pro** (219 l / 140 s) > **Kimi K3** (154 l / 179 s) > **GLM 5.2** (93 l / 71 s, « raquette percée », brief non suivi). Or GLM-5.2 est notre meilleur rapport qualité/prix en **SVG** — il finit **DERNIER** en 3D. Re-tester par registre, jamais présupposer. (GPT-5.5 non testé : 402 crédit OpenRouter épuisé — échec de paiement, pas un refus.) Script : `scripts/tools/llm-gen-3d.py --provider all`.
-
-⭐ **Le mode ÉLEVÉ suffit pour un objet GÉOMÉTRIQUE ornemental.** Test aveugle 2026-08-25 (2 agents, brief identique, Aziz juge sans connaître le mode) : max et élevé jugés **À ÉGALITÉ**. Mesures : max = 299 l / 16 meshes / 21 s ; élevé = 190 l / 12 meshes / 18 s. Garder le MAX pour l'organique/complexe — la doctrine ne change pas, elle se **précise** : le critère n'est pas « c'est important », c'est « est-ce organique ? ».
-
-⚠️ **Éclairage d'un objet AJOURÉ** : un éclairage **frontal seul** ne peut pas éclairer les parois intérieures d'un perçage — la tête noircit de face. 3 modèles sur 4 jugés à tort sur leur géométrie avant d'identifier que la cause était le **banc**. Ajouter un **contre-jour** avant de juger.
-
-⛔ **Cadre d'usage** : outil d'**APPOINT** (objet-emblème, pivot qui révèle, reflet métallique), **PAS** un registre de production vidéo. L'organique (visage/personnage/décor) n'est pas faisable par code — limite structurelle. Règle : « si tu peux décrire l'objet à un menuisier au téléphone, ça passe ; si tu dois lui montrer une photo, non. » Détail : `memory/doctrines/SVG-SCENES-GENERATIVES.md` § extension 3D.
+↔ **Objet 3D généré (R3F)** : registre voisin, outil d'APPOINT — détail dans
+`memory/doctrines/SVG-SCENES-GENERATIVES.md` § extension 3D.
+⛔ **Un classement de modèles ne se transpose PAS d'un registre à l'autre** : GLM 1er en SVG,
+DERNIER en 3D (mesuré 2026-08-25).

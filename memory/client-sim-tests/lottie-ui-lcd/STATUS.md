@@ -1,12 +1,10 @@
 # TEST CLIENT-SIM — LOTTIE UI (menu LCD embarqué)
 
-> Sessions des 2026-08-24 et **2026-08-25**. **Statut : pipeline PROUVÉ (outil officiel du client)
-> + COURBES ET PRIMITIVES FRANCHIES**, rendu vérifié pixel par pixel contre le SVG d'origine.
-> ✅ **ÉTAPES 1, 2 ET 3 FAITES** (courbes · 2 scènes réelles · liste ferme).
-> ⭐⭐ **LIVRABLE = `CE-QUI-PASSE-EN-LOTTIE.md`** (répondre à un brief en 30 s) — le lire AVANT
-> tout brief Lottie, et passer le SVG du client à `svg2lottie_scene.py --rapport`.
-> ⏭️ Reste : validation Creator sur une scène · animer une scène · test After Effects (§ 4 bis).
-> Méthode de candidature : `memory/fiches/FICHE-BRIEF-CLIENT.md` (auto-injectée).
+> Sessions des **2026-08-24, 25 et 26**. **Statut : chaîne PROUVÉE de bout en bout** — dessin ET
+> animation, validée par Aziz dans LottieFiles Creator.
+> ⭐⭐⭐ **CE FICHIER EST LE RÉCIT. Les VERDICTS à jour sont dans `CE-QUI-PASSE-EN-LOTTIE.md`**
+> (table de décision client) — ne pas trancher un brief depuis ce STATUS.
+> ⏭️ Reste : le TEXTE (83 scènes/172) · animer une scène dense · le test After Effects (§ 4 bis).
 
 ---
 
@@ -107,28 +105,21 @@ encore éprouvés :
 |---|---|
 | **Courbes** | ✅ franchi |
 | **Poids** | ⏭️ non mesuré sur une vraie scène (objets seuls : 3,5-18 Ko, très loin des 100 Ko) |
-| **Structure** | ⏭️ **non vérifié dans Creator** — 9 à 16 calques testés, jamais 60 |
+| **Structure** | ✅ **vérifié dans Creator (25-26/08)** — Soudan 71 calques → 8 groupes nommés, sélection et déplacement OK |
 | **Non-transportable** | 🟡 liste partielle ci-dessous, établie sur un SVG-piège fabriqué |
 
 ⛔ Toujours valable : **2 scènes de registres DIFFÉRENTS** (une abstraite/data-viz, une narrative).
 ⭐ Registre visé par Aziz : **animation vectorielle abstraite/éditoriale**, sans personnages articulés.
 
-**Étape 3 — Ce qui NE passe PAS (le livrable).** 🟡 **PREMIÈRE VERSION, à compléter sur une vraie scène.**
+**Étape 3 — Ce qui NE passe PAS.** ✅ **FAITE — et la liste ferme vit AILLEURS.**
 
-| Élément SVG | Verdict | Détail |
-|---|---|---|
-| `path` toutes commandes, `circle`, `ellipse`, `rect` (même `rx`/`ry`), `line`, `polygon`, `polyline` | ✅ **porté** | exact |
-| `transform` (translate/scale/rotate/skew/matrix) | ✅ **porté** | aplati dans les points |
-| `fill`, `stroke`, largeurs, `linecap`/`linejoin`, opacités | ✅ **porté** | — |
-| **Dégradés** (`linearGradient`, `radialGradient`) | 🟡 **approximé** | rabattu sur la couleur moyenne. ⚠️ Lottie **sait** faire les dégradés (`gf`) : le porter demande aussi son système de coordonnées et ses transforms — chantier à part, **pas une impossibilité** |
-| `filter` (flou, ombre portée) | ⛔ **refusé** | aucun équivalent générique |
-| `mask`, `clipPath` | ⛔ **refusé** | Lottie a des masques, d'un autre modèle ; le détourage doit être pré-appliqué |
-| `text` | ⛔ **refusé** | exige une police déclarée |
-| `image` (raster) | ⛔ **refusé** | embarquable en base64, mais alourdit beaucoup |
-| `use`, `symbol`, `pattern`, `marker` | ⛔ **refusé** | à aplatir avant conversion |
-| `animate*` (SMIL) | ⛔ **refusé** | l'animation vient de NOTRE code |
+⛔⛔ **Une table de décision existait ici ; elle a été SUPPRIMÉE le 2026-08-26.** Elle contredisait
+déjà `CE-QUI-PASSE-EN-LOTTIE.md` 24 h après sa rédaction (elle annonçait les dégradés « rabattus sur
+une couleur moyenne » alors qu'ils sont portés). Deux tables sur le même sujet garantissent qu'une
+session future lira la mauvaise — règle maison : **une seule source de vérité par sujet**.
 
-⚠️ **Cette liste vient d'un SVG-piège fabriqué, pas d'une scène réelle** — la compléter à l'étape 2.
+📄 **La table de décision fait foi ici → `CE-QUI-PASSE-EN-LOTTIE.md`** (établie sur 8 fichiers réels,
+tenue à jour). Ce STATUS reste le RÉCIT du chantier ; il ne porte plus de verdict.
 
 ### ⭐ Étape 4 bis (INDÉPENDANTE) — le test After Effects, 7 jours gratuits
 

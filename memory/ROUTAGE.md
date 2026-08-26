@@ -123,6 +123,21 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | Table intention → technique SVG (12 intentions : arbre qui pousse, buvard, sway, glow...) | `src/projects/_shared/svg-library/INTENTION-FORME-SVG.md` |
 | Index protos R&D validés (renders catbox, verdicts, fichiers source) | `src/projects/_shared/svg-library/RD-INDEX.md` |
 
+### 📦 Livrer en LOTTIE (`.json` / `.lottie`) — format standard du marché
+| Je veux… | Fichier |
+|---|---|
+| **répondre à un brief Lottie en 30 s** (ce qui passe / ce qui casse) | `memory/client-sim-tests/lottie-ui-lcd/CE-QUI-PASSE-EN-LOTTIE.md` ⭐⭐ |
+| convertir un SVG en Lottie + savoir ce qui est refusé | `src/projects/_client-sim/lottie-ui/tools/svg2lottie_scene.py --rapport` |
+| **extraire le SVG résolu d'une composition Remotion** (⚠️ transversal, pas que Lottie) | `src/projects/_client-sim/lottie-ui/tools/extract-remotion-svg.mjs` |
+| transcrire une animation par recalcul de forme (flamme qui ondule) | `…/transcribe_animation.py` |
+| regrouper des calques illisibles par intention | `…/group_layers.py` (Soudan 71 → 8) |
+| **vérifier qu'un Lottie BOUGE vraiment** / mesurer l'écart au SVG | `…/check_animation.py` · `…/compare_render.py` |
+| piloter LottieFiles Creator en direct (110 outils) | `memory/tools/lottie-creator-mcp.md` ⚠️ port 3847 unique |
+| l'inventaire complet des 9 outils | `src/projects/_client-sim/CLIENT-SIM-COMPOSANTS-INDEX.md` § OUTILS |
+
+⛔ **Le TEXTE ne passe pas** (83 scènes sur 172 en contiennent) — c'est le bloqueur n°1. Filtres,
+masques, images et `use` sont refusés aussi. Prochaine session : `memory/starters/STARTER-PROMPT-lottie-texte-et-animation.md`
+
 ### War-Map
 
 | Sujet | Fichier |
