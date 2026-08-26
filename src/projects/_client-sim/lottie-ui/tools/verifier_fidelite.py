@@ -268,6 +268,7 @@ def chercher_decalage(doc, frames, refs_dispo, dossier, ech, dec0):
     if not candidats:
         candidats = sorted(refs_dispo)
 
+    n_min = max(3, len(frames) - 1)
     meilleur, meilleur_score = dec0, None
     # On teste chaque decalage possible parmi les references extraites.
     for cand in candidats:
@@ -285,7 +286,16 @@ def chercher_decalage(doc, frames, refs_dispo, dossier, ech, dec0):
             diff = ImageChops.difference(a_, b_).getdata()
             total += sum(1 for v in diff if v > 16) / len(diff)
             n += 1
-        if n and (meilleur_score is None or total / n < meilleur_score):
+        # ⛔ LE BIAIS QUI A PRODUIT +207 : le score etait `total / n`, et `n`
+        # s'effondre des que le decalage sort de la plage. `d=207` n'etait note
+        # que sur UNE frame -- il n'avait qu'un seul accord a produire, pendant
+        # qu'un decalage honnete est juge sur 5 et paie chaque desaccord. Une
+        # moyenne sur un nombre VARIABLE de frames recompense mecaniquement les
+        # candidats sous-echantillonnes. On exige donc un minimum de frames
+        # notees, sinon le score n'est pas comparable.
+        if n < n_min:
+            continue
+        if meilleur_score is None or total / n < meilleur_score:
             meilleur_score, meilleur = total / n, d
     return round(meilleur)
 
@@ -593,10 +603,29 @@ def main():
     # Base de temps : une piece FINIE n'a plus la meme que sa source (amorce,
     # ouverture acceleree, tenue). Comparer frame N a frame N est alors faux.
     ech, dec = 1.0, 0.0
+    src = doc.get("__source__")
     if a.temps:
         ech, dec = (float(x) for x in a.temps.split(":"))
+    elif src and float(src.get("facteur", 1)) != 1.0:
+        # ⭐ La transformation est LUE, pas devinee : finir_piece.py la grave
+        # desormais dans le fichier. Retrouver par correlation d'images un
+        # decalage que l'outil d'en face CONNAIT exactement est fragile par
+        # construction -- c'est ce qui a produit +207 la ou la reponse etait
+        # +29. La loi est par morceaux, donc pas exprimable en `A:B` : on la
+        # applique telle quelle.
+        pivot = float(src.get("pivot", 0))
+        facteur = float(src.get("facteur", 1))
+        print(f"  base de temps LUE dans le fichier : ouverture 0-{pivot:g} "
+              f"acceleree x{facteur:g}"
+              f"  (Remotion = Lottie + {pivot * (facteur - 1):g} au-dela)")
 
     def vers_remotion(f):
+        if not a.temps and src and float(src.get("facteur", 1)) != 1.0:
+            pivot = float(src["pivot"])
+            facteur = float(src["facteur"])
+            seuil = pivot / facteur
+            return int(round(f * facteur if f < seuil
+                             else f + pivot * (facteur - 1)))
         return int(round(ech * f + dec))
 
     print(f"{os.path.basename(a.json)} — {duree} frames @ {doc.get('fr')}fps")
@@ -632,10 +661,29 @@ def main():
                 print(f"  ⭐ decalage mesure : Remotion = {ech:g} x Lottie "
                       f"+ {dec:g}")
             refs = {}
+            ecarts = []
             for f in frames:
                 cible = vers_remotion(f)
                 proche = min(brut, key=lambda r: abs(r - cible))
+                # ⛔ Ce reperage "au plus proche" etait SILENCIEUX : avec un
+                # mauvais decalage, 3 frames sur 5 pointaient sur la MEME image
+                # de reference. D'ou "bouge ref = 0,00 %" -- ce n'etait pas une
+                # scene figee, c'etait la meme image comparee a elle-meme, et
+                # l'amplitude sortait a 982 %. Un ecart important doit se voir.
+                if abs(proche - cible) > 3:
+                    ecarts.append((f, cible, proche))
                 refs[f] = brut[proche]
+            if ecarts:
+                print("  ⚠️ reference approximative (frame Lottie -> visee -> "
+                      "utilisee) :")
+                for f, cible, proche in ecarts:
+                    print(f"       {f} -> {cible} -> {proche}"
+                          f"   (ecart {abs(proche - cible)})")
+            doublons = len(frames) - len({id(v) for v in refs.values()})
+            if doublons:
+                print(f"  ⛔ {doublons} frame(s) partagent la MEME reference : "
+                      f"l'alignement temporel est faux, ne pas se fier a "
+                      f"l'amplitude.")
 
         paires, erreurs = rendre_tout(doc, refs, tmp)
 
@@ -691,8 +739,15 @@ def main():
     print()
     print(f"  ecart moyen        : {moyen:.2f} %")
     print(f"  PIRE frame         : {pire['ecart']:.2f} % (frame {pire['frame']})")
-    print(f"  amplitude restituee: {100*part:.0f} %  "
-          f"(reference {mv_ref:.1f} % — Lottie {mv_lot:.1f} %)")
+    if mv_ref > 0.5:
+        print(f"  amplitude restituee: {100*part:.0f} %  "
+              f"(reference {mv_ref:.1f} % — Lottie {mv_lot:.1f} %)")
+    else:
+        # Une reference quasi immobile ne permet AUCUN ratio utile : afficher
+        # "982 %" dans ce cas est pire que ne rien afficher.
+        print(f"  amplitude restituee: non mesurable — la reference ne bouge "
+              f"presque pas sur ces frames ({mv_ref:.2f} %). Choisir des frames "
+              f"dans la zone animee.")
     print(f"  planche            : {a.out}   [Remotion | Lottie | ecarts]")
 
     motifs = []

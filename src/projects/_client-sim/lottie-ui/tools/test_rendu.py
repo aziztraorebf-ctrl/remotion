@@ -41,13 +41,18 @@ CAS = [
 SCENES = [
     ("public/assets/geoafrique/recraft-v4/beat01-free-A2.svg", 0.5, None),
     ("src/projects/_rnd/chill-meter/chill-meter-mix.svg", 100.0,
-     "17 refus annonces (12 use, 5 filtres) : l'ecart mesure ~28 % CONFIRME "
-     "le rapport, il ne le contredit pas. Historique de la baisse, chaque "
-     "palier accompagne de la disparition des refus correspondants : "
-     "32,7 % -> 28,8 % (degrades portes, 2026-08-26) -> 28,05 % (TEXTE "
-     "vectorise, meme jour : les 13 refus <text> ont disparu). "
+     "19 refus annonces (12 use, 5 filtres, 2 pattern) : l'ecart mesure "
+     "~16 % CONFIRME le rapport, il ne le contredit pas. Historique de la "
+     "baisse, chaque palier accompagne d'un changement de traitement "
+     "IDENTIFIE : 32,7 % -> 28,8 % (degrades portes, 2026-08-26) -> 28,05 % "
+     "(TEXTE vectorise, meme jour : les 13 refus <text> ont disparu) -> "
+     "16,39 % (motifs NON PEINTS, meme jour : les 2 <pattern> gpt_scratches "
+     "et gpt_screenGrid sont passes d'un gris #808080 invente, peint par "
+     "dessus, a un refus declare qui laisse voir la couche du dessous -- "
+     "d'ou 17 refus puis 19). "
      "⛔ C'est le garde-fou du projet : si l'ecart baissait SANS que les "
-     "refus correspondants disparaissent, ce serait le rapport qui mentirait"),
+     "refus correspondants disparaissent ou soient declares, ce serait le "
+     "rapport qui mentirait"),
 ]
 
 fails = []

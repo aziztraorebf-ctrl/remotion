@@ -337,6 +337,7 @@ def main():
     avant = (doc["w"], doc["h"], doc["op"])
 
     # --- 1. ouverture ---------------------------------------------------------
+    pivot = 0          # defini hors du `if` : il est relu plus bas (__source__)
     if a.accelerer_ouverture and a.accelerer_ouverture != 1.0:
         pivot = a.jusqu_a
         if pivot is None:
@@ -379,6 +380,21 @@ def main():
     fin = derniere_keyframe(doc)
     nouvelle_fin = int(round(fin)) + a.tenir
     doc["op"] = nouvelle_fin
+
+    # ⭐ GRAVER la transformation temporelle dans le fichier. Sans cela, la
+    # verification de fidelite doit RETROUVER par correlation d'images un
+    # decalage que ce script CONNAIT exactement -- fragile par construction :
+    # elle a rapporte +207 la ou la reponse etait +29 (2026-08-26). Mesurer ce
+    # qu'on sait deja est une source de bugs, pas une securite.
+    # La loi est PAR MORCEAUX quand l'ouverture est acceleree :
+    #   Remotion = facteur x Lottie                 avant le pivot
+    #   Remotion = Lottie + pivot x (facteur - 1)   apres
+    doc["__source__"] = {
+        "pivot": int(pivot) if a.accelerer_ouverture != 1.0 else 0,
+        "facteur": float(a.accelerer_ouverture),
+        "tenir": int(a.tenir),
+        "amorce": float(a.amorce or 0),
+    }
     for c in doc["layers"]:
         c["op"] = nouvelle_fin
     print(f"  fin         : {avant[2]} -> {nouvelle_fin} frames "
