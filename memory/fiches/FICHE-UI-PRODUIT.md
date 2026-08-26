@@ -187,6 +187,49 @@ Decors generes (Gemini HQ, centre volontairement VIDE) : `public/_shared/refs/de
 reference : luma 5 -> 96 entre 0,90 s et 1,20 s, cale sur un pic sonore). Pas un fondu lent.
 ⭐ **`lidAngle`** du laptop est un parametre : le capot s'OUVRE pendant que la camera approche.
 
+### ⭐⭐⭐ SVG DESSINE vs 3D APLATI — LA REGLE (tranchee au banc, 2026-08-26)
+
+⛔ **J'ai affirme a tort qu'un SVG ne peut pas s'animer.** Aziz m'a repris, verification
+faite : le mockup de Fable (`public/_client-sim/noteshield/laptop-mockup.svg`) respecte le
+contrat « pret a animer » — **21 groupes nommes**, dont `lid`, `hinge`, `base` separes.
+Un SVG ouvre tres bien son capot, zoome, glisse. La vraie ligne de partage n'est PAS
+« animable ou pas ».
+
+**LA VRAIE LIGNE : le point de vue change-t-il, et y a-t-il quelque chose a REVELER ?**
+| Le geste | Qui gagne | Pourquoi |
+|---|---|---|
+| Point de vue fixe, objet deja ouvert (zoom, glissement, apparition) | **SVG** | plus leger, mieux integre a un fond dessine |
+| Un etat qui en REVELE un autre (capot qui se ferme, objet qui se retourne) | **3D** | il a un DOS ; le SVG s'ecrase, il ne se retourne pas |
+| Rotation dans l'espace, orbite, tour a 360 deg | **3D seul** | les faces cachees n'existent pas dans un dessin |
+| Besoin de parametrer (finesse, angle, teinte, taille) | **3D** | variables vs dessin fini |
+⭐ **DEFAUT = 3D APLATI** : il couvre les deux cas. Un modele 3D **contient plus
+d'information que ce qu'il montre** — c'est ce qui le rend reutilisable dans des plans
+non prevus. Le SVG reste superieur pour un registre franchement ILLUSTRE sur plan fixe.
+
+**LE MATERIAU APLATI** (`Flatten` dans `devices/FlatDeviceMotion.tsx`) : on n'echange pas
+les materiaux (ce serait perdre la hierarchie chassis/touches/trackpad), on annule ce qui
+fait « photo » — `metalness = 0`, `roughness = 1`, `envMapIntensity = 0` — et l'eclairage
+passe en ambiante dominante (2.5) + une directionnelle douce (1.2). ⛔ Exclure l'ecran du
+traitement (repere par la presence d'une `map`) : il doit rester emissif.
+Verifie EN MOUVEMENT : ecart-type des luminances 7,7-19,7 pendant une rotation complete —
+le volume ne s'effondre pas.
+
+**⭐ TOUCHES QUASI AFFLEURANTES** (retour d'Aziz) : le relief d'origine du clavier
+(depth 0.022 + bevel 0.008) etait plus REALISTE mais lisait « vieux laptop ». Un portable
+moderne a des touches presque a fleur. Reduit a 0.012 total. ⛔ Ne pas descendre sous
+0.008 : les touches disparaissent completement sous l'eclairage aplati.
+
+### ⭐ FOND SVG PARAMETRABLE PLUTOT QU'UNE PHOTO (`devices/GridBackdrop.tsx`)
+Une photo de decor porte des contraintes CACHEES qu'on ne controle pas (echelle implicite,
+direction de lumiere figee, angle de vue, profondeur de champ) — il faut faire coincider
+l'objet avec quatre choses qu'on n'a pas choisies, et chaque ecart se voit. Un fond dessine
+n'en a aucune, et **tout y est un parametre** : 6 variables (base, mat, line, lineStrong,
+accent, taille de carreau) => adaptable a la charte d'un client en changeant 6 valeurs.
+La grille respire (1,5 %), les graduations se tracent, un halo remplace l'ombre portee.
+⚠️ Aziz l'a observe sur le marche reel : l'objet-dans-un-decor-photo est **rare** dans les
+SaaS explainers (1 plan sur 8 chez la reference Foster) — le gros du registre est UI plein
+cadre, typo sur fond, degrades. Ne pas s'acharner sur le decor photo.
+
 ### ⛔⛔ L'ECHELLE SE CALCULE, ELLE NE SE DOSE PAS (paye 3 fois le 2026-08-26)
 Un mockup pose dans un decor photo doit occuper sa TAILLE REELLE. Choisir `scale` au
 juge donne des absurdites immediatement visibles : telephone 2,1x trop grand, tasse du

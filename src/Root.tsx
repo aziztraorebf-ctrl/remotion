@@ -425,6 +425,9 @@ import { KeyBenchA, KeyBenchB, KeyBenchGemini, KeyBenchGlm, KeyBenchKimi, KeyBen
 import { LaptopScreenDemo, PhoneScreenDemo } from "./projects/_shared/_demos/devices/DeviceScreenDemo";
 import { PhoneHeroShot, LaptopHeroShot, PhoneHeroClip } from "./projects/_shared/_demos/devices/DeviceHeroShot";
 import { DeviceShowreel } from "./projects/_shared/_demos/devices/DeviceShowreel";
+import { SvgVs3dBench } from "./projects/_shared/_demos/devices/SvgVs3dBench";
+import { LidOpenBench } from "./projects/_shared/_demos/devices/LidOpenBench";
+import { FlatLaptopMotion, FlatPhoneMotion } from "./projects/_shared/_demos/devices/FlatDeviceMotion";
 import { PhoneOnDesk, PhoneOnDeskExec, LaptopOnDesk, LaptopOnDeskLight, LaptopOnDeskDark } from "./projects/_shared/_demos/devices/DeviceInScene";
 import { DeviceBenchPhone, DeviceBenchLaptop, DeviceBenchPhoneVision, DeviceBenchPhoneVisionBlindLights, DeviceBenchPhoneOrigVisionLights } from "./projects/_shared/_demos/devices/DeviceBench";
 import { JetonWarMap3DCompare } from "./projects/_shared/_demos/JetonWarMap3DCompare";
@@ -2735,6 +2738,13 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="Asset3DShowcase" component={Asset3DShowcase} durationInFrames={120} fps={30} width={1080} height={1080} />
         {/* PremiumCard3D — reverse engineering du workflow CapCut de Danny Why (2026-08-23) */}
         {/* Banc mockups d'appareils 3D — registre SaaS explainer (2026-08-25) */}
+        {/* Le capot qui s'ouvre : SVG dessine vs 3D aplati, meme geste */}
+        <Composition id="LidOpenBench" component={LidOpenBench} durationInFrames={110} fps={30} width={1920} height={1080} />
+        {/* Le traitement APLATI en mouvement : tient-il quand l'objet tourne ? */}
+        <Composition id="FlatLaptopMotion" component={FlatLaptopMotion} durationInFrames={135} fps={30} width={1920} height={1080} />
+        <Composition id="FlatPhoneMotion" component={FlatPhoneMotion} durationInFrames={120} fps={30} width={1920} height={1080} />
+        {/* SVG dessine vs 3D : le meme plan, 3 traitements, jugement a l'aveugle */}
+        <Composition id="SvgVs3dBench" component={SvgVs3dBench} durationInFrames={90} fps={30} width={1920} height={1080} />
         {/* L'appareil POSE dans un decor — ombre portee + allumage de scene */}
         <Composition id="PhoneOnDesk" component={PhoneOnDesk} durationInFrames={110} fps={30} width={1920} height={1080} />
         <Composition id="PhoneOnDeskExec" component={PhoneOnDeskExec} durationInFrames={110} fps={30} width={1920} height={1080} />

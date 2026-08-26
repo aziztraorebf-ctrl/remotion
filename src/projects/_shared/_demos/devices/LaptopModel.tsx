@@ -181,11 +181,20 @@ export const LaptopModel: React.FC<{
   // 0.03), scaled per key. The tiny bevel distorts slightly under non-uniform
   // scale but stays unreadable at this key size.
   const keyGeometry = useMemo(() => {
-    const geo = new THREE.ExtrudeGeometry(roundedRectCentered(1, 1, 0.18), {
-      depth: 0.022,
+    /**
+     * ⭐ TOUCHES QUASI AFFLEURANTES (2026-08-26, retour d'Aziz sur comparatif
+     * SVG vs 3D). Le relief d'origine (depth 0.022 + bevel 0.008 = 0.030) etait
+     * plus REALISTE mais lisait "vieux laptop" : un portable moderne a des
+     * touches presque a fleur du chassis. Le SVG dessine, qui les suggere par
+     * des aplats, paraissait plus actuel. Releve divise par ~2,5 (0.012 total).
+     * ⚠️ Ne pas descendre plus bas : sous 0.008 les touches disparaissent
+     * completement sous l'eclairage aplati (plus aucune ombre entre elles).
+     */
+    const geo = new THREE.ExtrudeGeometry(roundedRectCentered(1, 1, 0.22), {
+      depth: 0.009,
       bevelEnabled: true,
-      bevelThickness: 0.008,
-      bevelSize: 0.05,
+      bevelThickness: 0.003,
+      bevelSize: 0.04,
       bevelSegments: 1,
       curveSegments: 6,
     });
