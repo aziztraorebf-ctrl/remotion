@@ -13,7 +13,7 @@ from google import genai
 from google.genai import types
 import sys as _sys
 _sys.path.insert(0, str(Path(__file__).resolve().parent))
-from gemini_models import IMAGE_MODEL
+from gemini_models import IMAGE_MODEL, IMAGE_MODEL_HQ
 
 ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(ROOT / ".env")
@@ -30,12 +30,16 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--prompt", required=True)
     ap.add_argument("--output", required=True)
+    ap.add_argument("--hq", action="store_true",
+                    help="Modele HQ (image PUBLIEE telle quelle, 2K/4K). Defaut = LITE.")
     args = ap.parse_args()
 
+    model = IMAGE_MODEL_HQ if args.hq else MODEL
+
     client = genai.Client(api_key=API_KEY)
-    print(f"Generating with {MODEL}...")
+    print(f"Generating with {model}...")
     resp = client.models.generate_content(
-        model=MODEL,
+        model=model,
         contents=[args.prompt],
         config=types.GenerateContentConfig(response_modalities=["IMAGE"]),
     )

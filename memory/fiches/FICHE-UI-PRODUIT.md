@@ -167,10 +167,43 @@ pourtant les intensités Three.js sont fausses. ⭐ **Identifier une lumière �
 → Garder les DIRECTIONS et COULEURS du rig vision, remonter les intensités.
 ⛔ Ne pas généraliser depuis le SVG : `memory/tools/openrouter-svg.md` porte déjà « classements SVG ≠ 3D ».
 
+### ⭐⭐⭐ POSER L'OBJET DANS UN DECOR (l'ecart n°1, comble le 2026-08-26)
+Un mockup qui **flotte dans le vide** est techniquement reussi et visuellement froid.
+La reference « Foster With Confidence » pose son telephone sur un vrai bureau — c'est ce
+qui separe un rendu produit d'une SCENE. Code : `devices/DeviceInScene.tsx`.
+Decors generes (Gemini HQ, centre volontairement VIDE) : `public/_shared/refs/decors-mockup/`
+— 2 flat-lay 90 deg pour le telephone (designer / executif), 2 trois-quarts pour le laptop
+(sombre facon Comma / clair SaaS), 1 studio neutre.
+
+**Les 3 conditions, aucune optionnelle** :
+1. **Meme direction de lumiere** — decors generes avec key light en HAUT-DROITE, donc le rig
+   3D garde cette direction et l'ombre tombe en bas-a-gauche comme celles des objets reels.
+2. **Une ombre portee** — un objet sans ombre est un collage. Ellipse floutee en DOM sous le
+   canvas (pas une shadow map) : moins cher et reglable au pixel.
+3. **Meme angle de vue** — un decor a 90 deg ne recoit qu'un objet vu de dessus ; un decor en
+   trois-quarts demande un objet incline. Melanger casse la scene immediatement.
+⭐ **Parallaxe** : faire grossir le decor un peu MOINS vite que l'objet pendant le zoom.
+⭐ **Allumage de scene** : le decor passe de noir a pleine lumiere en **0,30 s** (mesure sur la
+reference : luma 5 -> 96 entre 0,90 s et 1,20 s, cale sur un pic sonore). Pas un fondu lent.
+⭐ **`lidAngle`** du laptop est un parametre : le capot s'OUVRE pendant que la camera approche.
+
+### ⛔ CE QUI FAIT LE PREMIUM N'EST PAS LA BRIQUE (lecon de la 4e video, 2026-08-26)
+Analyse initiale faussee par un echantillonnage a **16 frames sur 1273** — juger un MONTAGE sur
+des photos espacees. Ce que la densite a revele :
+- **12 transitoires sonores en 8 s** : chaque apparition a son SFX. C'est ce qui rend « vrai ».
+- **Micro-etats** : notifications une par une, heure qui change, texte qui s'assemble
+  caractere par caractere. Rien n'apparait d'un bloc.
+- **Un zoom continu de 4 s** (une seule coupe mesuree entre 1,6 s et 5,6 s) qui va du bureau
+  jusqu'a l'interieur de l'ecran — avec une ELLIPSE TEMPORELLE dedans (12:57 -> 9:38) sans coupe.
+- **Le fond change selon le registre** : noir plat pour l'objet, degrade vert pour le produit.
+  ⛔ « fond uni toujours » etait une generalisation abusive tiree d'une seule reference.
+- **Le raccord carte -> sol** : Google Earth, puis un FLOU RADIAL croissant qui masque la coupe,
+  puis un plan de stock filme. Le flou n'est pas decoratif, c'est le MASQUE du raccord.
+
 ### Limite connue (non levée)
-Dans un mockup, l'écran est une **texture plate** : `PageCam` ne peut pas y opérer sa caméra 2.5D.
-Pour une UI qui s'anime dans l'appareil → rendre la séquence Shotcraft en vidéo puis `VideoTexture`
-(pas encore testé). D'où l'articulation de montage : **UI plein cadre** quand on montre COMMENT ça marche
+~~Dans un mockup, l'écran est une texture plate~~ — **LEVEE le 2026-08-25** : une séquence
+Shotcraft rendue joue dans l'écran via `THREE.VideoTexture`, et le rendu reste **déterministe**
+(`currentTime` piloté par la frame Remotion, jamais par l'horloge). Code : `DeviceHeroShot.tsx`. D'où l'articulation de montage : **UI plein cadre** quand on montre COMMENT ça marche
 (la caméra plonge dans la page) · **mockup 3D** quand on montre CE QUE C'EST (ouverture, CTA).
 
 ## Références
