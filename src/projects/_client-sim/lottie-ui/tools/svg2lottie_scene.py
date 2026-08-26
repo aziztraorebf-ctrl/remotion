@@ -483,6 +483,17 @@ def geometrie_gradient(g, boite):
         rr = (float(rayon[:-1]) / 100.0) if rayon.endswith("%") else float(rayon)
     except ValueError:
         rr = 0.5
+    # ⚠️ Rayon d'un gradient radial en `objectBoundingBox`. Lottie n'a qu'un
+    # rayon SCALAIRE (distance s->e) la ou SVG raisonne sur une boite : il
+    # faut donc choisir. Les 4 formules ont ete MESUREES sur l'aeroport
+    # (95 degrades, 11 radiaux), ecart au SVG d'origine :
+    #     moyenne (w+h)/2   11,58 %   <- retenue
+    #     diagonale/sqrt(2) 11,91 %
+    #     largeur w         12,65 %
+    #     max(w, h)         12,65 %
+    # ⛔ J'avais "corrige" vers la diagonale en raisonnant sur la spec, sans
+    # mesurer : c'etait une REGRESSION. La spec decrit le rendu SVG, pas la
+    # meilleure approximation dans un format qui n'a qu'un rayon.
     r_px = rr * ((w + h) / 2.0) if bbox else rr
     return ([cx, cy], [cx + r_px, cy])
 
