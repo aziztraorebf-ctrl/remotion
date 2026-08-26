@@ -68,6 +68,7 @@ Lire d'abord : memory/client-sim-tests/lottie-ui-lcd/CE-QUI-PASSE-EN-LOTTIE.md
    vérifié. Il ne la contrôle PAS à la lecture, sauf peut-être via state machines (point 1).
 
 ## Fichiers de test prêts
-`/tmp/LOTTIE-A-TESTER/` — ⚠️ **`/tmp` est effacé au redémarrage du Mac.**
-Les sources sont dans le repo ; le dossier se régénère avec les outils de
-`src/projects/_client-sim/lottie-ui/tools/`.
+📁 **`out/_r-and-d/lottie-a-tester/`** — 6 pièces (2 animées, 4 statiques) + 5 planches de
+contrôle + README. Déplacé de `/tmp` le 26/08 : l'emplacement est durable et `out/` est
+gitignoré (les fichiers survivent aux redémarrages sans alourdir git).
+Ils se régénèrent aussi avec les outils de `src/projects/_client-sim/lottie-ui/tools/`.
