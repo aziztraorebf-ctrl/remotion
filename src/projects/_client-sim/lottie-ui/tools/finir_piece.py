@@ -85,7 +85,22 @@ def est_un_fond(couche, w, h):
     e = emprise_calque(couche)
     if not e:
         return False
-    return (e[2] - e[0]) >= 0.98 * w and (e[3] - e[1]) >= 0.98 * h
+    if not ((e[2] - e[0]) >= 0.98 * w and (e[3] - e[1]) >= 0.98 * h):
+        return False
+    # ⛔ PAS SEULEMENT LA TAILLE (piege paye le 2026-08-26) : une courbe animee
+    # devenue large etait prise pour un fond et EXCLUE du cadrage -- l'emprise
+    # sortait incoherente et le recadrage ne corrigeait plus rien, en silence.
+    # Un vrai fond est un RECTANGLE PLEIN : peu de sommets, aucune animation
+    # de forme. Une illustration qui remplit le cadre n'en est pas un.
+    for groupe in couche.get("shapes") or []:
+        for it in groupe.get("it", []):
+            if it.get("ty") == "sh":
+                if it["ks"].get("a") == 1:
+                    return False              # forme animee : jamais un fond
+                k = it["ks"]["k"]
+                if isinstance(k, dict) and len(k.get("v", [])) > 8:
+                    return False              # trop de sommets pour un rectangle
+    return True
 
 
 def emprise_du_dessin(doc):
