@@ -45,6 +45,34 @@ toute action sur cette annonce — un résumé ne le remplace pas (2 erreurs pay
 
 ---
 
+## ⭐⭐⭐ LOTTIE — chaîne PROUVÉE de bout en bout (25-26 août) · suite : TEXTE puis ANIMER
+
+**Nos scènes React passent en Lottie standard**, dessin ET animation. Mesuré, vu, validé par
+Aziz dans LottieFiles Creator.
+
+| Acquis | Preuve |
+|---|---|
+| Dégradés (linéaires + radiaux) | aéroport **57,74 % → 11,58 %** d'écart |
+| Animation par recalcul de forme | flamme du Gazoduc : **78 px/frame** vs 98 à l'original |
+| Calques nommés et manipulables | Soudan **71 → 8 groupes**, validé dans Creator |
+| Poids | 10 s d'animation = **2,3 Ko** compressés |
+| MCP Creator | installé, 110 outils, lecture/écriture en direct |
+
+▶️ **Prochaine session — starter prêt** : `memory/starters/STARTER-PROMPT-lottie-texte-et-animation.md`
+1. **Le TEXTE** (83 scènes sur 172 — le bloqueur le plus fréquent), même méthode que les dégradés.
+2. **Animer une scène DENSE** — prouvé sur 24 calques, jamais sur 498. « Sans animation qui joue,
+   cela ne sert à rien » (Aziz). Candidat : une scène de rue/port.
+3. **Rétrospective** de tout ce qui a été prouvé.
+
+⛔ **Le piège récurrent, 4 fois en 2 jours** : fichier valide + rapport « porté » + rien à
+l'écran. L'élément était correct à chaque fois, c'est son AIGUILLAGE qui l'annulait.
+→ Ne jamais conclure sur le rapport : rendre et REGARDER.
+⚠️ **Le MCP exige UNE SEULE session Claude Code** (port 3847 unique) et une URL **HTTPS avec
+CORS** pour importer (Vercel Blob OK, uguu non). → `memory/tools/lottie-creator-mcp.md`
+📄 Table de décision client : `memory/client-sim-tests/lottie-ui-lcd/CE-QUI-PASSE-EN-LOTTIE.md`
+
+---
+
 ## 🔧 BACKLOG TECHNIQUE — dette Gemini/outillage (2026-08-20, non urgent)
 
 Migration image faite (preview mort → GA → **défaut LITE**, -50 %). Restes identifiés par l'audit de wrap :

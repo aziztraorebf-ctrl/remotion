@@ -1,6 +1,7 @@
 # LOTTIE — ce qui passe, ce qui casse (répondre à un brief en 30 secondes)
 
-> Établi le **2026-08-25** par MESURE sur 6 fichiers réels (4 objets de `svg-library`,
+> Établi le **2026-08-25**, enrichi le **2026-08-26** (dégradés portés · animation prouvée ·
+> MCP Creator), par MESURE sur 8 fichiers réels (4 objets de `svg-library`,
 > 2 scènes complètes de registres opposés), rendu comparé pixel par pixel au SVG d'origine
 > dans Chromium via `lottie-web`.
 > Outils : `src/projects/_client-sim/lottie-ui/tools/` — `svg2lottie_scene.py --rapport`
@@ -28,7 +29,7 @@ des dégradés, des filtres ou des images, une partie ne traverse pas.
 | Transformations (position, échelle, rotation, inclinaison) | ✅ **oui** | aplaties dans la géométrie |
 | Calques séparés, manipulables un par un | ✅ **oui** | ⚠️ dépend du nommage, voir plus bas |
 | **Texte** | ⛔ **non, tel quel** | à **vectoriser** (le texte devient des formes, non éditable) ou à déclarer une police |
-| **Dégradés** | 🟡 **pas encore** | Lottie **sait** les faire — notre convertisseur les rabat sur une couleur moyenne. Chantier identifié, pas une impossibilité |
+| **Dégradés** (linéaires ET radiaux) | ✅ **oui** — ⭐ **porté le 2026-08-26** | `gf` natif avec l'opacité de chaque arrêt. Aéroport : **57,74 % → 11,58 %**. ⚠️ Le rayon radial reste une approximation (Lottie n'a qu'un rayon scalaire) — formule choisie **par mesure**, pas par la spec |
 | **Flou, ombre portée, lueur** (`filter`) | ⛔ **non** | à refaire autrement (formes empilées) ou à retirer du brief |
 | **Masques, détourage** (`mask`, `clipPath`) | ⛔ **non** | à pré-appliquer à la géométrie en amont |
 | **Images / photos** (raster) | ⛔ **non** | Lottie sait embarquer en base64, mais le poids explose — déconseillé |
@@ -151,13 +152,46 @@ méthode habituelle (le statique d'abord, nous animons), mais ce n'est PAS un bo
 
 ---
 
-## Ce qui reste ouvert
+## Ce qui reste ouvert (au 2026-08-26)
 
-- **Dégradés** — le format les gère (`gf`), notre convertisseur non. Demande de porter aussi
-  leur système de coordonnées (`userSpaceOnUse` vs `objectBoundingBox`) et leurs transforms.
-  ⛔ **À ne faire que si un brief le paie** (règle du chantier : pas de générique en spéculation).
-- **Validation dans LottieFiles Creator** — les 260 calques nommés n'ont **pas** été ouverts
-  dans l'outil officiel. Testé seulement sur la pièce LCD (3 calques) le 2026-08-24.
-- **Animation d'une scène** — tout ceci convertit du **statique**. Animer 260 calques depuis
-  notre code n'a pas été éprouvé.
-- **Le test After Effects** (essai 7 jours) — indépendant, cf. `STATUS.md` § 4 bis.
+### ✅ Fermé depuis la v1
+- **Dégradés** — portés (`gf`, linéaires et radiaux, opacité comprise). Aéroport 57,74 → 11,58 %.
+- **Animation** — prouvée dans les deux registres : par transformation (apparaître, tracer) ET
+  **par recalcul de forme** (`transcribe_animation.py` : la flamme du Gazoduc vit, 78 px/frame
+  mesurés contre 98 à l'original). ⛔ Limite dure : un chemin dont le **nombre de sommets varie**
+  n'est pas interpolable par Lottie — le script refuse au lieu de produire faux.
+- **Validation dans Creator** — faite par Aziz les 25 et 26/08 : l'animation joue, les calques
+  sont nommés, il a pu sélectionner et déplacer un élément.
+- **Calques illisibles** — `group_layers.py` (Soudan : 71 calques → 8 groupes nommés).
+
+### ⏭️ Ouvert
+1. ⭐ **TEXTE — le bloqueur le plus fréquent : 83 scènes sur 172.** Le MCP Creator expose
+   6 outils dédiés (`create_text`, `set_text_style`, `split_text`, `measure_text_units`,
+   `list_fonts`) → même méthode que pour les dégradés : poser dans Creator, lire la structure,
+   la porter dans le convertisseur.
+2. ⭐ **ANIMER UNE SCÈNE DENSE.** Tout est prouvé sur 24 calques (maison) et 8 groupes (Soudan) ;
+   **jamais sur 498** (aéroport). C'est le pas qui reste — sans animation qui joue, une scène
+   convertie ne sert à rien (formulation d'Aziz, 26/08).
+3. **Grouper l'aéroport** avant toute livraison : 498 calques nommés `path-248` sont illisibles
+   pour un client, même si techniquement valides sur le web.
+4. ❓ **ANIMATION INTERACTIVE — à vérifier, pas un acquis.** Le MCP expose `add_state_machine`,
+   `add_input`, `add_pointer_interaction`, `add_transition` : Lottie semble savoir faire des
+   animations pilotées par l'utilisateur (clic, survol, état). **NON TESTÉ.** Enjeu réel : ça
+   séparerait « animation qui joue » de « composant interactif », et ouvrirait le pilier UI.
+5. **Masques et filtres** — refusés. Le flou gaussien sur les nuages de l'aéroport est le seul
+   refus restant sur cette scène.
+6. **Le test After Effects** (essai 7 jours) — indépendant, cf. `STATUS.md` § 4 bis.
+
+### ⚠️ Ce que le client contrôle, et ce qu'il ne contrôle pas
+- **Il PEUT modifier l'animation** : ouvrir le fichier dans Creator ou After Effects, déplacer
+  les keyframes, changer les couleurs. C'est l'intérêt du format, et c'est vérifié.
+- **Il ne la contrôle PAS à la lecture** : un Lottie standard joue comme il a été fabriqué.
+  (Sauf peut-être avec les state machines — cf. point 4, non testé.)
+
+### ⚠️ Combien de calques peut-on livrer ?
+Pas de norme universelle — ça dépend de la cible :
+| Cible | Verdict |
+|---|---|
+| Site web, présentation | 498 calques : aucun problème technique |
+| Écran embarqué, app mobile | rédhibitoire (le brief LCD exigeait « limited layers and keyframes ») |
+| Client qui veut modifier | **illisible sans regroupement**, quel que soit le nombre |
