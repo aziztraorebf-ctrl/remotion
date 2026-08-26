@@ -32,9 +32,13 @@ CAS = [
 SCENES = [
     ("public/assets/geoafrique/recraft-v4/beat01-free-A2.svg", 0.5, None),
     ("src/projects/_rnd/chill-meter/chill-meter-mix.svg", 100.0,
-     "30 refus annonces (13 text, 12 use, 5 filtres) : l'ecart mesure ~29 % CONFIRME "
-     "le rapport, il ne le contredit pas. Les 102 degrades sont PORTES depuis le "
-     "2026-08-26 (il n'en reste 2 en repli), d'ou 32,4 % -> 28,8 %"),
+     "17 refus annonces (12 use, 5 filtres) : l'ecart mesure ~28 % CONFIRME "
+     "le rapport, il ne le contredit pas. Historique de la baisse, chaque "
+     "palier accompagne de la disparition des refus correspondants : "
+     "32,7 % -> 28,8 % (degrades portes, 2026-08-26) -> 28,05 % (TEXTE "
+     "vectorise, meme jour : les 13 refus <text> ont disparu). "
+     "⛔ C'est le garde-fou du projet : si l'ecart baissait SANS que les "
+     "refus correspondants disparaissent, ce serait le rapport qui mentirait"),
 ]
 
 fails = []

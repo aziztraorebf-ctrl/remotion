@@ -41,6 +41,18 @@ except ImportError:                     # pragma: no cover
         return ET.fromstring(texte)
 
 from svgpath import parse_path, shape_to_path, PathError
+import svgtext
+
+# Voie de conversion du texte, fixee par --texte (voir main).
+#   "vectorise" : les glyphes deviennent des courbes -- fidele, non editable.
+#   "natif"     : un calque Lottie ty:5 -- editable, dependant de la police.
+MODE_TEXTE = "vectorise"
+
+# ⛔ Les pointillés (stroke-dasharray) sont PRETS mais DESACTIVES : la structure
+# Lottie "d" que nous produisons fige lottie-web (DOMLoaded jamais emis, aucune
+# erreur). Tant que la cause racine n'est pas prouvee, on rend le trait plein
+# ET on le signale dans le rapport -- jamais un fichier qui bloque le player.
+POINTILLES_ACTIFS = False
 
 NS = "{http://www.w3.org/2000/svg}"
 XLINK = "{http://www.w3.org/1999/xlink}"
@@ -264,8 +276,18 @@ def est_identite(m):
 def styles(el, herite):
     """Fusionne attributs de presentation et style="" avec l'heritage."""
     st = dict(herite)
+    # ⚠️ Les proprietes de POLICE s'heritent en SVG comme en CSS, et elles
+    # sont presque toujours posees sur un <g> parent plutot que sur le <text>
+    # lui-meme. Les oublier ici donnait un texte rendu dans la police par
+    # defaut sans le moindre avertissement.
     for k in ("fill", "stroke", "stroke-width", "opacity", "fill-opacity",
-              "stroke-opacity", "stroke-linecap", "stroke-linejoin", "display"):
+              "stroke-opacity", "stroke-linecap", "stroke-linejoin", "display",
+              # ⛔ Ajoutes le 2026-08-26 apres les avoir vus MANQUER a l'oeil
+              # sur une vraie scene : un attribut absent de cette liste est
+              # ignore EN SILENCE, quoi qu'en dise le rapport.
+              "stroke-dasharray", "stroke-dashoffset",
+              "font-family", "font-size", "font-weight", "font-style",
+              "letter-spacing", "text-anchor"):
         if k in el.attrib:
             st[k] = el.attrib[k]
     raw = el.attrib.get("style", "")
@@ -278,6 +300,34 @@ def styles(el, herite):
 
 _CAP = {"butt": 1, "round": 2, "square": 3}
 _JOIN = {"miter": 1, "round": 2, "bevel": 3}
+
+
+def _nb(v, defaut=0.0):
+    """Nombre SVG tolerant aux unites ('40px' -> 40.0)."""
+    if v is None:
+        return defaut
+    m = re.match(r"\s*(-?[\d.]+)", str(v))
+    return float(m.group(1)) if m else defaut
+
+
+def _dasharray(v):
+    """
+    'stroke-dasharray' -> liste de longueurs, ou [] si le trait est plein.
+
+    SVG accepte les separateurs virgule ET espace, le mot-cle 'none', et une
+    liste IMPAIRE qui se repete alors deux fois (5 = 5,5). Lottie veut des
+    paires tiret/espace : on double donc les listes impaires, sinon le motif
+    rendu n'est pas celui du SVG.
+    """
+    if not v or str(v).strip().lower() in ("none", ""):
+        return []
+    vals = [abs(_nb(x)) for x in re.split(r"[,\s]+", str(v).strip()) if x]
+    vals = [x for x in vals if x is not None]
+    if not vals or all(x == 0 for x in vals):
+        return []
+    if len(vals) % 2:
+        vals = vals + vals
+    return vals
 
 
 def shapes_de_style(st, rapport, nom):
@@ -335,11 +385,47 @@ def shapes_de_style(st, rapport, nom):
         if sc is not None:
             so = float(st.get("stroke-opacity", 1)) * float(st.get("opacity", 1))
             w = float(st.get("stroke-width", 1) or 1)
-            out.append({"ty": "st", "nm": "stroke",
-                        "o": {"a": 0, "k": round(so * 100, 2)},
-                        "w": {"a": 0, "k": w}, "c": {"a": 0, "k": sc},
-                        "lc": _CAP.get(st.get("stroke-linecap", "butt"), 1),
-                        "lj": _JOIN.get(st.get("stroke-linejoin", "miter"), 1)})
+            trait = {"ty": "st", "nm": "stroke",
+                     "o": {"a": 0, "k": round(so * 100, 2)},
+                     "w": {"a": 0, "k": w}, "c": {"a": 0, "k": sc},
+                     "lc": _CAP.get(st.get("stroke-linecap", "butt"), 1),
+                     "lj": _JOIN.get(st.get("stroke-linejoin", "miter"), 1)}
+            # ⛔ TROUVE A L'OEIL sur une VRAIE scene (Gazoduc Acte 4, 2026-08-26),
+            # pas par le rapport : `stroke-dasharray` etait IGNORE EN SILENCE.
+            # Le trace pointille vers l'Algerie ressortait CONTINU, sans le
+            # moindre avertissement -- meme famille que les 4 pieges de la
+            # semaine. Nos scenes s'en servent (4 occurrences sur cette seule
+            # frame) parce que c'est ainsi qu'on dessine un projet "pas encore
+            # construit" : le rendre plein CHANGE CE QUE LA CARTE RACONTE.
+            # Lottie a le champ prevu : une liste d'objets n="d"/"g" (tiret,
+            # espace) plus un decalage "o" optionnel.
+            tirets = _dasharray(st.get("stroke-dasharray"))
+            if tirets:
+                if POINTILLES_ACTIFS:
+                    d = []
+                    for i, v in enumerate(tirets):
+                        d.append({"n": "d" if i % 2 == 0 else "g", "nm": "dash",
+                                  "v": {"a": 0, "k": v}})
+                    decalage = _nb(st.get("stroke-dashoffset"), 0.0)
+                    if decalage:
+                        d.append({"n": "o", "nm": "offset",
+                                  "v": {"a": 0, "k": decalage}})
+                    trait["d"] = d
+                    rapport.ok(f"{nom}: pointilles")
+                else:
+                    # ⛔ MESURE 2026-08-26 : la structure "d" que nous ecrivons
+                    # FIGE lottie-web -- DOMLoaded n'arrive jamais, sans la
+                    # moindre erreur ni message console. Un fichier qui bloque
+                    # le player est PIRE qu'un trait plein : on desactive, et
+                    # surtout on le DIT au lieu d'ignorer en silence (c'est ce
+                    # silence, decouvert a l'oeil sur le Gazoduc Acte 4, qui a
+                    # motive tout ce bloc). Diagnostic en cours.
+                    rapport.approxime(
+                        f"{nom}: stroke-dasharray",
+                        "pointilles rendus PLEINS — la structure Lottie 'd' fige "
+                        "le player (mesure 2026-08-26) ; un trace 'prevu' "
+                        "ressort donc comme un trace 'construit'")
+            out.append(trait)
     return out
 
 
@@ -510,6 +596,10 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=()):
     """
     tag = el.tag.replace(NS, "")
 
+    if tag == "text":
+        collecter_texte(el, mat, herite, rapport, sortie, chemin)
+        return
+
     if tag in NON_PORTES:
         rapport.refuse(f"<{tag}>", NON_PORTES[tag])
         return
@@ -610,6 +700,139 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=()):
     sortie.append((nom, formes, shapes_de_style(st, rapport, nom)))
 
 
+def collecter_texte(el, mat, herite, rapport, sortie, chemin):
+    """
+    Un <text> SVG -> soit des courbes, soit un calque natif (MODE_TEXTE).
+
+    ⛔ CE QUI SE JOUE ICI (et qui a coute 4 fois cette semaine) : le texte
+    peut etre parfaitement converti et rester INVISIBLE si son AIGUILLAGE est
+    faux. Deux aiguillages a ne pas rater :
+      1. la LIGNE DE BASE -- l'attribut y d'un <text> n'est pas le haut du
+         bloc, c'est la baseline. Traiter y comme un haut decale tout d'une
+         hauteur de capitale ;
+      2. le TRANSFORM du parent -- il doit s'appliquer aux glyphes une fois
+         convertis, comme pour n'importe quelle geometrie.
+    """
+    st = styles(el, herite)
+    if st.get("display") == "none":
+        return
+
+    # Le contenu textuel : le noeud lui-meme plus ses <tspan> (dont on ignore
+    # pour l'instant le repositionnement individuel -- signale s'il y en a).
+    morceaux = [el.text or ""]
+    tspans = 0
+    for enfant in el:
+        if enfant.tag.replace(NS, "") == "tspan":
+            tspans += 1
+            morceaux.append(enfant.text or "")
+            morceaux.append(enfant.tail or "")
+        else:
+            morceaux.append(enfant.tail or "")
+    contenu = re.sub(r"\s+", " ", "".join(morceaux)).strip()
+
+    if not contenu:
+        rapport.refuse("<text> vide", "aucun contenu a rendre")
+        return
+
+    apercu = contenu if len(contenu) <= 24 else contenu[:21] + "..."
+
+    if tspans:
+        rapport.approxime(
+            f"<text> \"{apercu}\"",
+            f"{tspans} <tspan> fusionnes dans une seule ligne "
+            "— un tspan repositionne (x/y/dy propres) ne sera pas suivi")
+
+    taille = _nb(st.get("font-size"), 16.0)
+    ancrage = str(st.get("text-anchor", "start")).strip()
+    tracking = _nb(st.get("letter-spacing"), 0.0)
+    familles = svgtext.familles_css(st.get("font-family"))
+    gras = svgtext._gras(st.get("font-weight"))
+    ital = svgtext._italique(st.get("font-style"))
+    x = _nb(el.attrib.get("x"), 0.0)
+    y = _nb(el.attrib.get("y"), 0.0)
+
+    # Nom du calque : lisible dans Creator, comme pour les formes.
+    propre = el.attrib.get("id")
+    if propre:
+        nom = propre
+    else:
+        base = re.sub(r"[^\w -]", "", contenu)[:24].strip() or "texte"
+        rang = sum(1 for e in sortie if e[0] == base or e[0].startswith(base + "-"))
+        nom = base if not rang else f"{base}-{rang + 1}"
+
+    couleur_rgb, opacite = couleur(st.get("fill", "#000")), _nb(
+        st.get("fill-opacity"), 1.0) * _nb(st.get("opacity"), 1.0)
+
+    if MODE_TEXTE == "natif":
+        famille = familles[0] if familles else "sans-serif"
+        # ⛔ Le natif ne CONVERTIT pas la police, il la NOMME. Si le lecteur
+        # ne l'a pas, il rendra autre chose. On le dit franchement.
+        rapport.approxime(
+            f"<text> \"{apercu}\"",
+            f"calque natif editable en \"{famille}\" — le rendu depend de la "
+            "police disponible chez le lecteur (aucune n'est embarquee)")
+        m = _mul(mat, parse_transform(el.attrib.get("transform", "")))
+        px, py = appliquer(m, (x, y))
+        sortie.append((nom, None, None, {
+            "texte": contenu, "famille": famille, "taille": taille,
+            "x": px, "y": py, "couleur": couleur_rgb, "ancrage": ancrage,
+            "tracking": tracking, "opacite": opacite * 100.0,
+            "gras": gras, "ital": ital}))
+        return
+
+    # --- vectorisation ---
+    police, retenue, exacte, idx = svgtext.trouver_police(familles, gras, ital)
+    if police is None:
+        rapport.refuse(
+            f"<text> \"{apercu}\"",
+            f"aucune police installee pour {familles or ['(non declaree)']} "
+            "— impossible de vectoriser")
+        return
+    if not exacte:
+        rapport.approxime(
+            f"<text> \"{apercu}\"",
+            f"police \"{retenue}\" absente du systeme — dessine avec une "
+            "substitution, la largeur du texte change")
+
+    try:
+        formes, _largeur, manquants = svgtext.vectoriser(
+            contenu, police, taille, x, y, ancrage, tracking, idx)
+    except Exception as e:                        # police illisible, glyphe casse
+        rapport.refuse(f"<text> \"{apercu}\"", f"vectorisation impossible : {e}")
+        return
+
+    if manquants:
+        rapport.approxime(
+            f"<text> \"{apercu}\"",
+            f"glyphes absents de la police : {''.join(sorted(set(manquants)))}")
+
+    if not formes:
+        rapport.refuse(f"<text> \"{apercu}\"", "aucun glyphe dessinable")
+        return
+
+    m = _mul(mat, parse_transform(el.attrib.get("transform", "")))
+    if not est_identite(m):
+        lin = (m[0], m[1], m[2], m[3], 0.0, 0.0)
+        for f in formes:
+            k = f["ks"]["k"]
+            k["v"] = [appliquer(m, p) for p in k["v"]]
+            k["i"] = [appliquer(lin, p) for p in k["i"]]
+            k["o"] = [appliquer(lin, p) for p in k["o"]]
+
+    # ⚠️ Un glyphe vectorise est une SURFACE, jamais un trait : le contour du
+    # <text> (stroke) cerne la lettre, il ne doit pas devenir le trait des
+    # courbes du glyphe -- sinon un texte a contour double d'epaisseur.
+    st_glyphes = dict(st)
+    st_glyphes.pop("stroke", None)
+    if str(st.get("stroke", "none")).strip() not in ("none", ""):
+        rapport.approxime(
+            f"<text> \"{apercu}\"",
+            "contour du texte non porte — le glyphe est vectorise en surface")
+
+    rapport.ok(f"<text> \"{apercu}\" ({len(formes)} contours)")
+    sortie.append((nom, formes, shapes_de_style(st_glyphes, rapport, nom)))
+
+
 def viewbox(root):
     vb = root.attrib.get("viewBox")
     if vb:
@@ -649,7 +872,21 @@ def convertir(chemin, fps=30, frames=60):
                 "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0},
                 "o": {"a": 0, "k": 100}}
 
-    for i, (nom, formes, styles_) in enumerate(reversed(elements)):
+    fontes = {}
+    for i, entree in enumerate(reversed(elements)):
+        # Une entree de texte NATIF porte un 4e champ : elle ne produit pas un
+        # calque de formes (ty:4) mais un calque texte (ty:5).
+        if len(entree) == 4:
+            nom, _, _, t = entree
+            calque, fonte = svgtext.calque_natif(
+                t["texte"], t["famille"], t["taille"], t["x"], t["y"],
+                t["couleur"], t["ancrage"], t["tracking"], t["opacite"],
+                t["gras"], t["ital"], nom, frames, i)
+            fontes[fonte["fName"]] = fonte
+            layers.append(calque)
+            continue
+
+        nom, formes, styles_ = entree
         # ⛔ UN GROUPE PAR STYLE, jamais fill+stroke dans le meme groupe.
         # MESURE (profil de pixels, bord de la cabosse a y=180) : avec les
         # deux dans un seul groupe, lottie-web peint le remplissage APRES le
@@ -692,6 +929,11 @@ def convertir(chemin, fps=30, frames=60):
     doc = {"nm": os.path.splitext(os.path.basename(chemin))[0], "v": "5.5.2",
            "fr": fps, "ip": 0, "op": frames, "w": round(w), "h": round(h),
            "assets": [], "layers": layers}
+    # ⛔ Un calque ty:5 qui reference une fonte absente de ce tableau se rend
+    # VIDE, sans erreur -- exactement la famille de piege qui a coute 4 fois
+    # cette semaine (l'element est correct, son aiguillage l'annule).
+    if fontes:
+        doc["fonts"] = {"list": list(fontes.values())}
     return doc, rapport
 
 
@@ -705,7 +947,13 @@ def main():
                     help="analyse seule, n'ecrit pas de fichier")
     ap.add_argument("--detail", action="store_true",
                     help="liste element par element au lieu du groupement par cause")
+    ap.add_argument("--texte", choices=("vectorise", "natif"), default="vectorise",
+                    help="vectorise : glyphes en courbes, fidele, non editable (defaut) ; "
+                         "natif : calque ty:5 editable, mais dependant de la police du lecteur")
     a = ap.parse_args()
+
+    global MODE_TEXTE
+    MODE_TEXTE = a.texte
 
     try:
         doc, rapport = convertir(a.svg, a.fps, a.frames)
@@ -715,11 +963,16 @@ def main():
 
     # un meme chemin est duplique dans le groupe fill ET le groupe stroke :
     # on ne compte que le premier groupe de chaque calque
+    # ⚠️ Un calque texte NATIF (ty:5) n'a pas de "shapes" : il porte un
+    # TextDocument. Compter sans le filtrer levait un KeyError.
     nb_pts = sum(len(sh["ks"]["k"]["v"])
-                 for l in doc["layers"] for sh in l["shapes"][0]["it"]
-                 if sh.get("ty") == "sh")
+                 for l in doc["layers"] if l.get("shapes")
+                 for sh in l["shapes"][0]["it"] if sh.get("ty") == "sh")
+    nb_txt = sum(1 for l in doc["layers"] if l.get("ty") == 5)
     print(f"{os.path.basename(a.svg)} -> {len(doc['layers'])} calques, "
-          f"{nb_pts} sommets, {doc['w']}x{doc['h']}")
+          f"{nb_pts} sommets"
+          + (f", {nb_txt} texte(s) natif(s)" if nb_txt else "")
+          + f", {doc['w']}x{doc['h']}")
     rapport.afficher()
     if a.detail:
         rapport.detail()

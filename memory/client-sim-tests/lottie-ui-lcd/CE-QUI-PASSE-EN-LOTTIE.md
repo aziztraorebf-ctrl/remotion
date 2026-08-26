@@ -28,15 +28,74 @@ des dégradés, des filtres ou des images, une partie ne traverse pas.
 | Aplats de couleur, contours, épaisseurs, arrondis | ✅ **oui** | — |
 | Transformations (position, échelle, rotation, inclinaison) | ✅ **oui** | aplaties dans la géométrie |
 | Calques séparés, manipulables un par un | ✅ **oui** | ⚠️ dépend du nommage, voir plus bas |
-| **Texte** | ⛔ **non, tel quel** | à **vectoriser** (le texte devient des formes, non éditable) ou à déclarer une police |
+| **Texte** | ✅ **oui** — ⭐ **porté le 2026-08-26**, DEUX voies | **vectorisé** (défaut) : glyphes en courbes, fidèle partout, non éditable · **natif** (`--texte natif`) : calque `ty:5` éditable par le client, mais le rendu dépend de la police **chez le lecteur**. Voir le tableau des risques plus bas |
 | **Dégradés** (linéaires ET radiaux) | ✅ **oui** — ⭐ **porté le 2026-08-26** | `gf` natif avec l'opacité de chaque arrêt. Aéroport : **57,74 % → 11,58 %**. ⚠️ Le rayon radial reste une approximation (Lottie n'a qu'un rayon scalaire) — formule choisie **par mesure**, pas par la spec |
 | **Flou, ombre portée, lueur** (`filter`) | ⛔ **non** | à refaire autrement (formes empilées) ou à retirer du brief |
 | **Masques, détourage** (`mask`, `clipPath`) | ⛔ **non** | à pré-appliquer à la géométrie en amont |
 | **Images / photos** (raster) | ⛔ **non** | Lottie sait embarquer en base64, mais le poids explose — déconseillé |
 | Symboles réutilisés (`use`, `symbol`) | ⛔ **non** | à aplatir avant conversion (faisable, coût en amont) |
 | Motifs de remplissage (`pattern`) | ⛔ **non** | sans équivalent |
+| **Pointillés** (`stroke-dasharray`) | ⚠️ **rendus pleins**, et c'est **signalé** | ⛔ découvert à l'oeil le 26/08 : c'était **ignoré en silence** avant. Notre structure Lottie `d` **fige le player** (`DOMLoaded` jamais émis) — désactivée le temps du diagnostic. ⚠️ Enjeu narratif : un tracé « prévu » ressort comme « construit » |
 | Animation déjà dans le SVG (SMIL) | ⛔ **non** | normal : **l'animation vient de notre code**, c'est notre méthode |
 | **Personnages articulés** | ⛔ **non** | pas une limite du format — un métier différent (rigging) |
+
+---
+
+## ⭐⭐⭐ LE TEXTE — deux voies, et le choix n'est pas technique (2026-08-26)
+
+**83 scènes sur 172 contiennent du texte.** C'était le refus le plus fréquent ; il est levé.
+Deux voies coexistent, `--texte vectorise` (défaut) et `--texte natif`.
+
+### Ce que la MESURE dit (sonde 960×540, Georgia + Arial, 5 textes, accents ÉÈÀÇÙ)
+
+| Voie | police présente chez le lecteur | police **ABSENTE** | poids | client peut éditer ? |
+|---|---|---|---|---|
+| **vectorisé** (défaut) | **1,95 %** | **1,95 %** (indifférent) | 107 Ko | ⛔ non |
+| **natif** (`ty:5`) | **0,05 %** | ⛔ **5,74 %** | **3 Ko** | ✅ oui |
+| *(rien porté, l'état d'avant)* | *4,76 %* | *4,76 %* | — | — |
+
+⛔⛔ **LE CHIFFRE QUI TRANCHE** : sans la police, le natif fait **PIRE que ne rien porter du
+tout** (5,74 % contre 4,76 %). Le texte reste lisible mais **toute la mise en page glisse** —
+un titre plus étroit, des libellés qui se décalent. Sur une scène où un mot doit s'aligner
+avec un point de carte ou une barre de graphique, **c'est cassé**.
+
+⚠️ **Et le 1,95 % du vectorisé n'est PAS un décalage** : après érosion 3×3 il tombe à
+**0,010 %**, et le centre de gravité de l'encre est identique à **0,02 px** près. C'est
+l'antialiasing d'un glyphe en courbes contre un glyphe rendu par le moteur de texte —
+invisible à l'oeil. Le vectorisé est **fidèle**.
+
+### Ce qu'on répond au client
+
+> « Deux livraisons possibles. Soit le texte est **converti en formes** : identique partout,
+> sur n'importe quel appareil, mais figé — changer un mot demande de repasser par nous.
+> Soit il reste **du vrai texte éditable** : vous changez les mots vous-même dans Creator ou
+> After Effects, à condition que la police soit installée chez celui qui regarde — sinon la
+> mise en page se décale. Pour un livrable public, je recommande les formes. Pour un gabarit
+> que vous déclinez vous-même, le texte éditable. »
+
+⭐ **Le natif est un choix d'ÉDITABILITÉ, pas de qualité** — et un choix de RISQUE.
+
+### ⛔ Le fait qui pèse sur nos propres scènes
+Nos scènes écrivent en **Georgia (412 usages)**, Arial, Cinzel, Arial Black, IBM Plex Mono.
+**Aucune de ces familles n'est parmi les 17 que Creator embarque** (relevé par `list_fonts` :
+Inter, Roboto, Merriweather, Poppins, Space Grotesk…). Donc pour NOS scènes, la voie native
+part perdante par défaut : **vectoriser**, sauf si le client fournit et installe la police.
+
+### Ce que le portage a réglé au passage
+- **Accents français** : ÉÈÀÇÙ portés (testés). NO-EMOJIS ≠ NO-ACCENTS.
+- **Les trois ancrages** `start` / `middle` / `end` placés au bon endroit (la baseline SVG est
+  la baseline, pas le haut du bloc — les confondre décale d'une hauteur de capitale).
+- **Le gras dans un `.ttc`** : macOS range 6 graisses d'Helvetica dans UN fichier ; ouvrir sans
+  préciser l'index prenait toujours le Regular et rendait **tous les titres en maigre**
+  (2,69 % → 2,05 % une fois corrigé). Fichier valide, rapport content, titre faux :
+  **encore la même famille de piège** — l'élément est correct, son aiguillage l'annule.
+- **`font-family` sur un `<g>` parent** : hérité désormais (c'est l'usage le plus courant).
+- Un glyphe absent de la police, un `<text>` vide, des `<tspan>` fusionnés : **signalés**.
+
+### Effet mesuré sur le cas témoin
+`chill-meter-mix` : **32,74 % → 28,05 %**, et les **13 refus `<text>` ont disparu** du rapport
+(30 refus → 17). C'est la condition du garde-fou : l'écart ne baisse **qu'accompagné** de la
+disparition des refus correspondants.
 
 ---
 
@@ -165,22 +224,32 @@ méthode habituelle (le statique d'abord, nous animons), mais ce n'est PAS un bo
 - **Calques illisibles** — `group_layers.py` (Soudan : 71 calques → 8 groupes nommés).
 
 ### ⏭️ Ouvert
-1. ⭐ **TEXTE — le bloqueur le plus fréquent : 83 scènes sur 172.** Le MCP Creator expose
-   6 outils dédiés (`create_text`, `set_text_style`, `split_text`, `measure_text_units`,
-   `list_fonts`) → même méthode que pour les dégradés : poser dans Creator, lire la structure,
-   la porter dans le convertisseur.
+1. ✅ **TEXTE — FERMÉ le 2026-08-26** (voir la section dédiée plus haut). Les deux voies sont
+   portées et mesurées ; 17 tests dans `test_texte.py`. Méthode suivie à l'identique de celle
+   des dégradés : poser dans Creator via le MCP, lire la structure (`read_scene` +
+   `measure_text_units` donnent la baseline, les avances par glyphe, `line_height` = taille par
+   défaut, justification 2 = centre), la porter dans le convertisseur, MESURER.
+   ⏭️ **Reste ouvert sur le texte** : les `<tspan>` repositionnés individuellement (x/y/dy
+   propres) sont fusionnés en une ligne — signalé, pas porté. Et le **contour** d'un texte
+   (`stroke` sur un `<text>`) n'est pas rendu en vectorisé (le glyphe devient une surface).
 2. ⭐ **ANIMER UNE SCÈNE DENSE.** Tout est prouvé sur 24 calques (maison) et 8 groupes (Soudan) ;
    **jamais sur 498** (aéroport). C'est le pas qui reste — sans animation qui joue, une scène
    convertie ne sert à rien (formulation d'Aziz, 26/08).
-3. **Grouper l'aéroport** avant toute livraison : 498 calques nommés `path-248` sont illisibles
+3. ⛔ **POINTILLÉS (`stroke-dasharray`) — découvert le 26/08, à finir.** C'était **ignoré en
+   silence** (4 occurrences sur une seule frame du Gazoduc Acte 4 : un tracé « projet prévu »
+   ressortait plein, donc « construit » — le sens de la carte changeait). Le portage est écrit
+   mais **DÉSACTIVÉ** (`POINTILLES_ACTIFS = False`) : notre structure Lottie `d` **fige
+   lottie-web**, `DOMLoaded` n'est jamais émis, sans erreur ni message. En attendant, le trait
+   est rendu plein **et c'est signalé dans le rapport**. Diagnostic délégué à un agent.
+4. **Grouper l'aéroport** avant toute livraison : 498 calques nommés `path-248` sont illisibles
    pour un client, même si techniquement valides sur le web.
-4. ❓ **ANIMATION INTERACTIVE — à vérifier, pas un acquis.** Le MCP expose `add_state_machine`,
+5. ❓ **ANIMATION INTERACTIVE — à vérifier, pas un acquis.** Le MCP expose `add_state_machine`,
    `add_input`, `add_pointer_interaction`, `add_transition` : Lottie semble savoir faire des
    animations pilotées par l'utilisateur (clic, survol, état). **NON TESTÉ.** Enjeu réel : ça
    séparerait « animation qui joue » de « composant interactif », et ouvrirait le pilier UI.
-5. **Masques et filtres** — refusés. Le flou gaussien sur les nuages de l'aéroport est le seul
+6. **Masques et filtres** — refusés. Le flou gaussien sur les nuages de l'aéroport est le seul
    refus restant sur cette scène.
-6. **Le test After Effects** (essai 7 jours) — indépendant, cf. `STATUS.md` § 4 bis.
+7. **Le test After Effects** (essai 7 jours) — indépendant, cf. `STATUS.md` § 4 bis.
 
 ### ⚠️ Ce que le client contrôle, et ce qu'il ne contrôle pas
 - **Il PEUT modifier l'animation** : ouvrir le fichier dans Creator ou After Effects, déplacer
