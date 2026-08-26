@@ -294,6 +294,26 @@ def styles(el, herite):
         if ":" in decl:
             k, v = decl.split(":", 1)
             st[k.strip()] = v.strip()
+
+    # ⛔ `opacity` est la SEULE de ces proprietes qui se COMPOSE au lieu de
+    # s'ecraser : en SVG, l'opacite d'un groupe se multiplie a celle de ses
+    # enfants. Un enfant a opacity="0.5" dans un groupe a opacity="0" reste
+    # INVISIBLE. Le code ecrasait la valeur du parent des qu'un enfant portait
+    # la sienne -- le fondu d'ouverture de KhartoumEtatMajorSVG (groupe racine
+    # a opacity="0" en frame 0) etait donc entierement ignore : la scene
+    # apparaissait d'un coup au lieu de se reveler, et le Lottie dessinait
+    # 19,9 % d'encre la ou la source en montrait 0,5 % (mesure du 2026-08-26).
+    # Meme famille que les autres pieges de la semaine : la valeur est bien
+    # lue, c'est sa COMPOSITION qui etait fausse.
+    if "opacity" in el.attrib or "opacity" in raw:
+        propre = el.attrib.get("opacity")
+        for decl in raw.split(";"):
+            if ":" in decl and decl.split(":", 1)[0].strip() == "opacity":
+                propre = decl.split(":", 1)[1].strip()
+        try:
+            st["opacity"] = str(float(herite.get("opacity", 1)) * float(propre))
+        except (TypeError, ValueError):
+            pass
     return st
 
 
@@ -366,10 +386,34 @@ def shapes_de_style(st, rapport, nom):
             rapport.ok(f"{nom}: gradient {'radial' if grad['type']==2 else 'lineaire'}")
             fill = None
         else:
-            rapport.approxime(f"{nom}: fill=gradient",
-                              "degrade introuvable — replie sur une couleur pleine")
-            fill = st.get("_gradient_moyen", "#808080")
-            fo *= float(st.get("_gradient_opacite", 1.0))
+            # ⛔ Distinguer le MOTIF du degrade absent. Mesure du 2026-08-26 sur
+            # KhartoumEtatMajorSVG : `background-grid` est un <pattern> (une
+            # grille repetee), pas un degrade. Repli sur un gris #808080 arbitraire,
+            # il se peignait OPAQUE par-dessus `background-base` (#d9c092) et
+            # effacait tout le fond beige de la carte -- 82 % de l'image fausse
+            # pour UN element, pendant que le rapport le classait en simple
+            # "approximation" parmi six. Un motif non supporte ne doit RIEN
+            # peindre : on laisse voir la couche du dessous, ce qui est toujours
+            # plus proche de la verite qu'une couleur inventee.
+            ref = str(fill)[4:-1].lstrip("#") if str(fill).startswith("url(") else ""
+            if st.get("_est_motif"):
+                rapport.refuse(f"{nom}: fill=pattern (#{ref})",
+                               "motif de remplissage — sans equivalent Lottie ; "
+                               "non peint, la couche du dessous reste visible")
+                fill = None
+            else:
+                moyen = st.get("_gradient_moyen")
+                if moyen:
+                    rapport.approxime(f"{nom}: fill=gradient (#{ref})",
+                                      "degrade introuvable — replie sur sa couleur moyenne")
+                    fill = moyen
+                    fo *= float(st.get("_gradient_opacite", 1.0))
+                else:
+                    # Aucune couleur mesuree : ne rien inventer.
+                    rapport.refuse(f"{nom}: fill=url(#{ref})",
+                                   "remplissage introuvable et aucune couleur "
+                                   "mesurable — non peint plutot qu'invente")
+                    fill = None
     if fill is None:
         c = None
     else:
@@ -467,6 +511,16 @@ def gradients_complets(root):
     car la boite n'est connue qu'apres conversion du chemin.
     """
     out = {}
+    # Les <pattern> sont recenses eux aussi, marques comme motifs : un `url(#x)`
+    # qui ne designe AUCUNE definition connue et un `url(#x)` qui designe un
+    # motif sont deux situations differentes, et il faut pouvoir les distinguer
+    # au moment du repli (cf. shapes_de_style). Sans ce recensement, un motif
+    # tombait dans la branche "degrade introuvable" et se repliait sur un gris
+    # invente qui effacait le fond -- mesure Khartoum, 2026-08-26.
+    for pat in root.iter(NS + "pattern"):
+        pid = pat.attrib.get("id")
+        if pid:
+            out[pid] = {"motif": True}
     for tag, genre in (("linearGradient", 1), ("radialGradient", 2)):
         for g in root.iter(NS + tag):
             gid = g.attrib.get("id")
@@ -678,7 +732,9 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=()):
         v = str(st.get(cle, ""))
         if v.startswith("url("):
             gid = v[v.find("#") + 1:].rstrip(")").strip('"\'')
-            if gid in grads:
+            if gid in grads and grads[gid].get("motif"):
+                st["_est_motif"] = True
+            elif gid in grads:
                 g = grads[gid]
                 st["_gradient_objet"] = g
                 # replis si la geometrie s'avere inexploitable
