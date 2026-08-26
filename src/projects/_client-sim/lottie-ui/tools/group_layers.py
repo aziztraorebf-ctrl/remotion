@@ -32,6 +32,7 @@ Usage :
 
 import argparse
 import json
+import re
 import os
 import sys
 
@@ -153,18 +154,48 @@ def regrouper(doc, carte):
         for i, c in enumerate(peinture):
             if i in attribue:
                 continue
-            if i in idx or any(m.lower() in c["nm"].lower() for m in motifs):
+            noms = regle.get("noms")
+            if (i in idx
+                    or (noms is not None and c["nm"] in noms)
+                    or any(m.lower() in c["nm"].lower() for m in motifs)):
                 attribue[i] = nom_groupe
 
+    # ⛔⛔ LE SAC "divers" DETRUISAIT L'ORDRE DE PEINTURE (mesure 2026-08-26).
+    # Tous les calques non attribues tombaient dans UN SEUL groupe, ajoute EN
+    # DERNIER dans l'ordre -- donc peint AU-DESSUS de tout. Sur Khartoum, ce sac
+    # contenait `background-base` : un aplat beige OPAQUE plein cadre
+    # (opacite 100, bbox 0,0->1920,1080). Un aplat opaque au sommet occulte
+    # 100 % du cadre : la scene entiere disparaissait (1,30 % -> 11,90 %
+    # d'ecart), et le chiffre devenait INSENSIBLE a l'ordre des 16 autres
+    # groupes -- il ne mesurait plus que "fond beige uni vs reference".
+    # Les cartes manuelles ne l'avaient jamais montre parce qu'elles attribuent
+    # le fond a un groupe ; --par-nom est le premier mode a l'envoyer dans le
+    # sac, `background-base` etant unique donc sous le seuil.
+    # -> Un calque non attribue reste un calque A SA PLACE, avec SON NOM. Plus
+    #    lisible dans Creator qu'un "divers" opaque, et l'ordre est preserve.
     rapport = {}
     groupes = {}
+    ordre_vu = []
     for i, c in enumerate(peinture):
-        nom = attribue.get(i, "divers")
+        nom = attribue.get(i)
+        if nom is None:
+            nom = f"__isole__{i}"          # cle unique : jamais de fusion
+        if nom not in groupes:
+            ordre_vu.append(nom)
         groupes.setdefault(nom, []).append(c)
-        rapport[nom] = rapport.get(nom, 0) + 1
+        cle = "(isoles, gardes a leur place)" if nom.startswith("__isole__") else nom
+        rapport[cle] = rapport.get(cle, 0) + 1
 
     # Un calque par groupe, contenant tous les shapes de ses membres.
-    ordre = [g for g in carte["_ordre"] if g in groupes]
+    # Les groupes NOMMES suivent l'ordre de la carte ; les isoles gardent la
+    # position qu'ils avaient dans l'ordre de peinture.
+    nommes = [g for g in carte["_ordre"] if g in groupes]
+    ordre = []
+    for g in ordre_vu:
+        if g.startswith("__isole__"):
+            ordre.append(g)
+        elif g in nommes and g not in ordre:
+            ordre.append(g)
     ordre += [g for g in groupes if g not in ordre]
 
     nouvelles = []
@@ -202,13 +233,16 @@ def regrouper(doc, carte):
                 it.append({"ty": "gr", "nm": c["nm"], "it": sous + [tr]})
             else:
                 it.extend(sous)
+        # Un isole reprend son nom d'origine : c'est justement ce qui le rend
+        # manipulable dans Creator (background-base, PALAIS PRESIDENTIEL...).
+        nom_sortie = (membres[0].get("nm") or nom) if nom.startswith("__isole__") else nom
         nouvelles.append({
-            "ddd": 0, "ty": 4, "ind": rang, "nm": nom, "st": 0,
+            "ddd": 0, "ty": 4, "ind": rang, "nm": nom_sortie, "st": 0,
             "ip": couches[0].get("ip", 0), "op": doc.get("op", 60),
             "ks": {"a": {"a": 0, "k": [0, 0]}, "p": {"a": 0, "k": [0, 0]},
                    "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0},
                    "o": {"a": 0, "k": 100}},
-            "shapes": [{"ty": "gr", "nm": nom, "it": it + [tr_neutre()]}],
+            "shapes": [{"ty": "gr", "nm": nom_sortie, "it": it + [tr_neutre()]}],
         })
 
     # Les calques texte natifs reprennent leur place, au-dessus des groupes :
@@ -225,24 +259,130 @@ def regrouper(doc, carte):
     return doc, rapport
 
 
+def carte_par_nom(doc, minimum=2):
+    """Deduit une carte de regroupement depuis les NOMS des calques.
+
+    ⭐ Pourquoi ce mode existe : les cartes ci-dessus sont ecrites a la main,
+    par indices (0-2 = le ciel, 3-13 = le soleil...), parce que les scenes qui
+    les ont motivees sortaient des calques illisibles ("ellipse-71"). Mais nos
+    scenes bien construites sortent des noms SEMANTIQUES -- KhartoumEtatMajorSVG
+    donne target-palace, target-tower, staging-rsf, river, terrain. Sur
+    celles-la, une carte manuelle est du travail jete : les indices cassent au
+    moindre changement de la scene, alors que les noms survivent.
+
+    Regle : on groupe sur le prefixe du nom, en retirant le suffixe numerique
+    que la conversion ajoute (target-palace-12 -> target-palace). Un prefixe
+    qui ne rassemble pas au moins `minimum` calques part dans "divers" : un
+    groupe d'un seul element n'apporte aucune prise de plus qu'un calque nu.
+
+    ⛔ Ce mode ne devine PAS l'intention narrative -- il n'invente aucun
+    regroupement que les noms ne portent pas deja. Une scene aux calques
+    "path-248" en sortira avec un seul groupe "divers", et c'est le bon
+    resultat : il faut alors une carte manuelle ou de meilleurs noms.
+    """
+    import collections
+    couches = [c for c in doc.get("layers", []) if c.get("ty") == 4]
+    base = {}
+    for c in couches:
+        nom = c.get("nm", "") or ""
+        # retire le suffixe numerique ajoute a la conversion
+        prefixe = re.sub(r"[-_]?\d+$", "", nom).strip() or "divers"
+        base.setdefault(prefixe, []).append(nom)
+
+    # ⛔ ORDRE DE PEINTURE, pas ordre de liste. Dans un Lottie, l'indice 0 est
+    # AU-DESSUS : la liste des calques est donc l'inverse de l'ordre de
+    # peinture, et `regrouper()` travaille sur `reversed(couches)`. Construire
+    # l'ordre sur la liste brute le met exactement a l'envers -- mesure du
+    # 2026-08-26 : `background-base` se retrouvait peint EN DERNIER, donc
+    # par-dessus toute la scene, et Khartoum ressortait vide (1,30 % -> 11,90 %
+    # d'ecart). Rattrape par verifier_fidelite.py, invisible autrement.
+    vus, ordre = set(), []
+    for c in reversed(couches):
+        prefixe = re.sub(r"[-_]?\d+$", "", c.get("nm", "") or "").strip() or "divers"
+        if prefixe not in vus:
+            vus.add(prefixe)
+            ordre.append(prefixe)
+
+    # ⚠️ Un prefixe qui n'est que le nom d'une PRIMITIVE SVG ne porte aucune
+    # intention : "ellipse", "circle", "rect" sont exactement les calques
+    # illisibles que cet outil doit eliminer. Les regrouper ne les rend pas
+    # lisibles -- on les groupe quand meme (c'est mieux que 18 calques nus),
+    # mais on le SIGNALE : le probleme est alors le NOMMAGE de la scene, pas
+    # le regroupement, et c'est une information que l'appelant doit avoir.
+    PRIMITIVES = {"circle", "ellipse", "rect", "path", "polygon", "polyline",
+                  "line", "g", "divers"}
+    retenus = [p for p in ordre if len(base[p]) >= minimum]
+    carte = {"_ordre": retenus,
+             "_generiques": [p for p in retenus if p.lower() in PRIMITIVES]}
+    for prefixe in retenus:
+        # motif ancre sur le nom complet : "river" ne doit pas happer
+        # "riverbank". On liste donc les noms EXACTS rencontres.
+        carte[prefixe] = {"noms": set(base[prefixe])}
+    return carte, {p: len(base[p]) for p in ordre}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("json")
-    ap.add_argument("--carte", required=True, help=f"une de : {', '.join(CARTES)}")
+    ap.add_argument("--carte", help=f"une de : {', '.join(CARTES)}")
+    ap.add_argument("--par-nom", action="store_true",
+                    help="deduit les groupes des NOMS des calques (pour toute "
+                         "scene nommee semantiquement : pas de carte a ecrire)")
+    ap.add_argument("--minimum", type=int, default=2,
+                    help="taille minimale d'un groupe deduit (defaut 2)")
     ap.add_argument("-o", "--out")
     a = ap.parse_args()
 
-    if a.carte not in CARTES:
-        print(f"carte inconnue : {a.carte}", file=sys.stderr)
+    if not a.carte and not a.par_nom:
+        print("ECHEC : donner --carte <nom> ou --par-nom", file=sys.stderr)
+        return 2
+    if a.carte and a.carte not in CARTES:
+        print(f"ECHEC : carte inconnue '{a.carte}'. Disponibles : "
+              f"{', '.join(CARTES)}", file=sys.stderr)
         return 2
 
     doc = json.load(open(a.json, encoding="utf-8"))
     avant = len(doc["layers"])
-    doc, rapport = regrouper(doc, CARTES[a.carte])
+    if a.par_nom:
+        carte, releve = carte_par_nom(doc, a.minimum)
+        isoles = {p: n for p, n in releve.items() if n < a.minimum}
+        print(f"carte deduite des NOMS : {len(carte['_ordre'])} groupe(s)")
+        generiques = carte.get("_generiques") or []
+        if generiques:
+            n = sum(1 for c in doc.get("layers", [])
+                    if re.sub(r"[-_]?\d+$", "", c.get("nm", "") or "").strip()
+                    in generiques)
+            print(f"   ⚠️ {len(generiques)} groupe(s) portent un nom de "
+                  f"PRIMITIVE SVG ({', '.join(sorted(generiques))}) : "
+                  f"{n} calques restent illisibles dans Creator. "
+                  f"C'est le NOMMAGE de la scene qu'il faut corriger, "
+                  f"pas le regroupement.", file=sys.stderr)
+        if isoles:
+            # Ne pas taire ce qui part dans "divers" : c'est la seule facon de
+            # voir qu'une scene est mal nommee plutot que mal regroupee.
+            print(f"   ({len(isoles)} prefixe(s) sous le seuil de {a.minimum} "
+                  f"-> divers : {', '.join(sorted(isoles)[:8])}"
+                  f"{'...' if len(isoles) > 8 else ''})")
+    else:
+        carte = CARTES[a.carte]
+    doc, rapport = regrouper(doc, carte)
 
     sortie = a.out or os.path.splitext(a.json)[0] + "-groupe.json"
     with open(sortie, "w", encoding="utf-8") as f:
         json.dump(doc, f, separators=(",", ":"))
+
+    # ⛔ Un regroupement qui n'attribue presque RIEN est une panne silencieuse :
+    # le fichier sort valide et d'apparence normale. Cas reel : appliquer une
+    # carte a un fichier DEJA regroupe -- plus aucun nom ne matche, tout devient
+    # isole, et avant le correctif du sac "divers" les calques fusionnaient en
+    # un seul, detruisant la piece sans un mot. Meme famille que les autres
+    # pieges de la chaine : perdre de l'information sans jamais le signaler.
+    isoles = rapport.get("(isoles, gardes a leur place)", 0)
+    if avant and isoles > avant * 0.5:
+        print(f"   ⚠️ {isoles}/{avant} calques n'ont ete attribues a AUCUN "
+              f"groupe. La carte ne correspond probablement pas a ce fichier "
+              f"(deja regroupe ? mauvaise carte ? essayer --par-nom).",
+              file=sys.stderr)
 
     print(f"{os.path.basename(sortie)} : {avant} calques -> {len(doc['layers'])}")
     for nom, n in rapport.items():

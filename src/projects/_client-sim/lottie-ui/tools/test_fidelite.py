@@ -84,6 +84,47 @@ def test_url_inconnue_ne_peint_pas_de_couleur_inventee():
     print("  ok  url inconnue : rien de peint, rien d'invente")
 
 
+def test_calque_non_attribue_garde_sa_place_et_son_nom():
+    """Un calque qu'aucun groupe ne reclame ne doit PAS finir dans un sac.
+
+    Bug reel (le 3e de regroupement en une semaine) : tous les non-attribues
+    tombaient dans un unique groupe "divers", ajoute EN DERNIER dans l'ordre,
+    donc peint AU-DESSUS de tout. Sur Khartoum ce sac contenait
+    `background-base` -- un aplat beige OPAQUE plein cadre (opacite 100,
+    bbox 0,0->1920,1080). Un aplat opaque au sommet occulte 100 % du cadre :
+    la scene entiere disparaissait (1,30 % -> 11,90 % d'ecart) et la mesure
+    devenait INSENSIBLE a l'ordre des autres groupes -- elle ne mesurait plus
+    que "fond uni vs reference".
+    """
+    import group_layers as G
+
+    def calque(nom, ind):
+        return {"ty": 4, "ind": ind, "nm": nom,
+                "ks": {"o": {"a": 0, "k": 100}},
+                "shapes": [{"ty": "gr", "nm": nom, "it": [
+                    {"ty": "fl", "nm": "fill", "c": {"a": 0, "k": [0, 0, 0, 1]},
+                     "o": {"a": 0, "k": 100}, "r": 1}]}]}
+
+    # ordre de peinture : le fond d'abord (indice le plus haut dans la liste
+    # Lottie, ou l'indice 0 est AU-DESSUS).
+    doc = {"w": 100, "h": 100, "op": 60, "fr": 30,
+           "layers": [calque("cible-2", 0), calque("cible-1", 1),
+                      calque("fond", 2)]}
+    carte = {"_ordre": ["cible"], "cible": {"motifs": ["cible"]}}
+    sortie, rapport = G.regrouper(doc, carte)
+
+    noms = [c["nm"] for c in sortie["layers"]]
+    assert "divers" not in noms, f"le sac 'divers' est de retour : {noms}"
+    assert "fond" in noms, f"le calque isole a perdu son nom : {noms}"
+
+    # Le fond doit rester SOUS le groupe : dans la liste Lottie, l'indice 0 est
+    # au-dessus, donc le fond doit etre le DERNIER de la liste.
+    assert noms[-1] == "fond", (
+        f"le calque isole doit rester sous le groupe (peint en premier), "
+        f"ordre obtenu : {noms}")
+    print("  ok  calque isole : garde sa place dans l'ordre de peinture, et son nom")
+
+
 def main():
     print("test_fidelite — non-regression des defauts Khartoum (2026-08-26)")
     echecs = 0
