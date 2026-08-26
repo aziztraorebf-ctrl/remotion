@@ -37,7 +37,7 @@ Transitions douces (seuil 0.12) ajoute : 11,44 · 11,51 · 11,57 · 11,64 · 13,
 
 | # | Temps | Contenu | Moteur | Notre brique | État |
 |---|---|---|---|---|---|
-| 1 | 0 → 1,6 | Téléphone seul sur noir, écran allumé **12:57** | 3D + UI | `PhoneModel` + plaque | ✅ |
+| 1 | 0 → 1,6 | Téléphone **+ notification Ofsted** sur le bureau, pull back reveal x2,12 | 3D + UI | `Plan01Lockscreen` | ✅ **FAIT/VALIDE** |
 | 2 | 1,6 → 5,6 | **Le décor s'allume** (bureau vu du dessus, tapis de découpe) puis **zoom continu de 4 s** jusqu'à l'intérieur de l'écran. Ellipse temporelle : 12:57 → 9:38 **sans coupe** | décor + caméra | `DeviceInScene` + décors générés | ✅ |
 | 3 | 5,6 → 11,4 | Typo pure sur noir : *« Still unresolved, »* mot par mot | typo | `DeviceShowreel` ch. 3-4 | ✅ |
 | 4 | 11,4 → 13,6 | **6 portraits d'enfants** en couronne autour de « Assembles », fond dégradé vert | images + compo | ⚠️ **à générer (Gemini)** | 🔶 |
@@ -145,6 +145,30 @@ telephone ; une a donne « x2,55 » et une autre « 79 px » au lieu de 214).
 ### Detail visuel note au passage
 Les « eclats bleus » derriere le telephone sont des **fragments geometriques nets
 disposes en anneau** (visibles a 0,60 s), pas un halo diffus.
+
+
+## ✅ PLAN 1 — VALIDE PAR AZIZ (2026-08-26)
+
+**Verdict** : « on peut considerer qu'elle est assez proche de la reference sans etre
+100 % la meme chose — **c'est notre version differente qu'on livrerait** ».
+Livrable : `out/episodes/foster-repro/plan01-FINAL.mp4` (48 frames, 1,602 s).
+
+**Ce qui a ete valide explicitement** :
+- le **pull back reveal** (plein ecran -> recul successif) : « une autre version, elle
+  fonctionne, elle est fonctionnelle »
+- la **transition du noir a la table** : « fonctionne bien aussi »
+- le **cadrage de depart moins serre** que la reference : accepte tel quel, ce n'est
+  **pas** un defaut a rattraper (notre version laisse lire la notification plus tot).
+
+⭐ **REGLE DE CADENCE POSEE PAR AZIZ** : « pas la peine de devenir fou avec » sur un
+plan de moins de 2 secondes. Le contrat est **structure + gestes**, pas le pixel —
+une variante qui tient le meme role narratif dans la meme duree REMPLIT le contrat.
+⛔ Ne pas relancer d'iteration de finition sur un plan deja fonctionnel : passer au suivant.
+
+⚠️ **Consequence pour la suite** : cette version devient la **reference interne**. Le
+plan 2 etant un TRES GROS PLAN sur la notification, verifier a ce moment-la que le
+raccord tient avec notre cadrage de fin (plus large que celui de la reference).
+Ne pas prejuger : c'est une verification, pas un probleme connu.
 
 ## CE QUI EST DÉJÀ PRÊT (acquis de la session 2026-08-25/26)
 - `devices/PhoneModel` · `LaptopModel` — mockups procéduraux, écran = zone d'accueil
