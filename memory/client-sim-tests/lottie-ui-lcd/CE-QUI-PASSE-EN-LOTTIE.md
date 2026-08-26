@@ -20,16 +20,52 @@ pointillés passent désormais ; les filtres, masques et images ne traversent to
 
 ---
 
-## ⛔⛔ LE TROU DE VÉRIFICATION — à savoir avant de citer un chiffre de cette page
+## ✅ LE TROU DE VÉRIFICATION — COMBLÉ le 2026-08-26 (`verifier_fidelite.py`)
 
-Toutes nos mesures comparent **une image FIXE à une image FIXE**. Le **2026-08-26, TROIS fois**, un
-fichier était valide, l'outillage disait OK, et le rendu était **FAUX** : pointillés ignorés en
-silence · animations perdues au regroupement (`check_animation.py` disait « ça bouge ») · fondu en
-marches d'escalier. **À chaque fois, seul l'OEIL l'a vu** — c'est la même cause qui a laissé passer
-une courbe **FIGÉE pendant deux jours**.
-→ Manque outillé : comparer la **VIDÉO** d'origine au Lottie **image par image**. Chantier n°1.
-⚠️ En attendant : **`compare_render.py` est la seule preuve** ; `check_animation.py` dit « ça
-bouge » même quand l'histoire est détruite.
+**Le trou (historique)** : toutes nos mesures comparaient **une image FIXE à une image FIXE**. Le
+**2026-08-26, TROIS fois**, un fichier était valide, l'outillage disait OK, et le rendu était
+**FAUX** : pointillés ignorés en silence · animations perdues au regroupement (`check_animation.py`
+disait « ça bouge ») · fondu en marches d'escalier. **À chaque fois, seul l'OEIL l'a vu.**
+
+**La cause, précisément** : nos deux vérificateurs validaient chacun une MOITIÉ, et le défaut
+passait exactement entre les deux. `compare_render.py` comparait le Lottie au SVG — mais à **une
+seule frame**, or l'animation ne vient PAS du SVG (les `interpolate` y sont « cuits ») : la
+référence ne contenait donc pas ce qu'on voulait vérifier. `check_animation.py` comparait le Lottie
+**à lui-même** d'une frame à l'autre : c'est de l'auto-cohérence, pas de la fidélité — d'où « ça
+bouge » alors que 23 opacités étaient perdues.
+
+**→ `verifier_fidelite.py`** met les deux face à face sur l'**axe du temps** et mesure **deux
+choses distinctes** :
+- **FIDÉLITÉ** — Lottie[i] vs Remotion[i]. Refus sur la **PIRE frame**, jamais sur la moyenne
+  (une moyenne dilue 23 opacités perdues dans une scène dense — c'est ainsi que le piège est passé).
+- **AMPLITUDE** — le mouvement réel de chaque côté. Deux animations peuvent être fidèles frame par
+  frame et l'une être **FIGÉE**. C'est ce chiffre qui aurait crié au lieu de deux jours de silence.
+
+⚠️ **Il DIRIGE l'œil, il ne le remplace pas** : il dit *quelle frame* regarder, la planche
+(Remotion | Lottie | écarts) montre *quoi*. Le jugement « est-ce beau » reste celui d'Aziz.
+
+### Ce qu'il a trouvé en une passe (invisible au rapport du convertisseur)
+| Défaut | Coût réel | Ce que disait le rapport |
+|---|---|---|
+| `<pattern>` replié sur un gris `#808080` **inventé**, peint OPAQUE par-dessus le fond beige de la carte et l'effaçant | **82 %** de l'image fausse pour **UN** élément | « approximation » parmi six ⚠️ |
+| `opacity` de groupe **écrasée** au lieu d'être **multipliée** (SVG : elle se compose) — le fondu d'ouverture était ignoré, la scène apparaissait d'un coup | frame 0 à **19,86 %** | **rien du tout** |
+
+**Résultat Khartoum** (la scène la plus dure : 10 filtres, 9 textes, 12 dégradés, jetons) :
+**82 % → 1,17 %** d'écart moyen, frame 0 de 19,86 % → **0,07 %**. ✅ ACCEPTÉ.
+Effet de bord mesuré : `chill-meter-mix` **28,05 % → 16,39 %**. Non-régression : `test_fidelite.py`.
+
+### Usage
+```
+# depuis une composition Remotion (anime)   -- ajouter --chercher-temps si la piece est RETIMEE
+python3 verifier_fidelite.py <CompositionId> <anime.json> [--frames 0,60,120]
+# une SERIE de couples SVG/JSON (fidelite de CONVERSION seule, sans le timing)
+python3 verifier_fidelite.py --refs "scene-f*.svg" --serie "scene-f*.json"
+```
+⚠️ Il gère le **recadrage** (compare la zone dessinée commune) et le **retiming** — sans quoi il
+produit de faux refus sur toute pièce finie par `finir_piece.py`.
+⛔ **Réserve connue (non résolue)** : `--chercher-temps` rapporte un décalage faux sur
+`maison-courbe-vivante.json` (+207, cale sur la fin figée de la scène). En cours de diagnostic —
+**ne pas se fier au décalage automatique sans regarder la planche**.
 
 ---
 
@@ -60,11 +96,11 @@ Détail : [[feedback_prouver-une-capacite-nest-pas-produire-un-livrable]]
 | Calques séparés, manipulables un par un | ✅ **oui** | ⚠️ dépend du nommage, voir plus bas |
 | **Texte** | ✅ **oui** — ⭐ **porté le 2026-08-26**, DEUX voies | **vectorisé** (défaut) : glyphes en courbes, fidèle partout, non éditable · **natif** (`--texte natif`) : calque `ty:5` éditable par le client, mais le rendu dépend de la police **chez le lecteur**. Voir le tableau des risques plus bas |
 | **Dégradés** (linéaires ET radiaux) | ✅ **oui** — ⭐ **porté le 2026-08-26** | `gf` natif avec l'opacité de chaque arrêt. Aéroport : **57,74 % → 11,58 %**. ⚠️ Le rayon radial reste une approximation (Lottie n'a qu'un rayon scalaire) — formule choisie **par mesure**, pas par la spec |
-| **Flou, ombre portée, lueur** (`filter`) | ⛔ **non** | à refaire autrement (formes empilées) ou à retirer du brief |
+| **Flou, ombre portée, lueur** (`filter`) | ⛔ **non** | à refaire autrement (formes empilées) ou à retirer du brief. ⭐ **Coût visuel MESURÉ** (Khartoum, 8 filtres non portés) : l'écart total reste à **1,17 %** — les filtres coûtent **peu**, le fond coûtait tout |
 | **Masques, détourage** (`mask`, `clipPath`) | ⛔ **non** | à pré-appliquer à la géométrie en amont |
 | **Images / photos** (raster) | ⛔ **non** | Lottie sait embarquer en base64, mais le poids explose — déconseillé |
 | Symboles réutilisés (`use`, `symbol`) | ⛔ **non** | à aplatir avant conversion (faisable, coût en amont) |
-| Motifs de remplissage (`pattern`) | ⛔ **non** | sans équivalent |
+| Motifs de remplissage (`pattern`) | ⛔ **non** | sans équivalent — ⭐ **non peint** depuis le 2026-08-26 : la couche du dessous reste visible. ⛔ Avant, replié sur un gris inventé qui **effaçait le fond** (82 % de l'image fausse sur Khartoum, cf. plus haut) |
 | **Pointillés** (`stroke-dasharray`) | ✅ **oui** — ⭐ **porté le 2026-08-26** | mesuré à **0,07 %** (2 valeurs) et **0,10 %** (4 valeurs). ⚠️ Le motif peut être **déphasé** (Chromium et lottie-web ne démarrent pas au même point d'un cercle) : même nombre, même espacement, départ différent. ⛔ C'était **ignoré en silence** avant — enjeu narratif réel : un tracé « projet prévu » ressortait plein, donc « construit » |
 | Animation déjà dans le SVG (SMIL) | ⛔ **non** | normal : **l'animation vient de notre code**, c'est notre méthode |
 | **Personnages articulés** | ⛔ **non** | pas une limite du format — un métier différent (rigging) |

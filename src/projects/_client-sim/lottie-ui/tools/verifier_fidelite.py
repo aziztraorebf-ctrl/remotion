@@ -248,6 +248,26 @@ def chercher_decalage(doc, frames, refs_dispo, dossier, ech, dec0):
     from PIL import Image, ImageChops
     lot = rendre_lottie_seul(doc, frames, dossier)
     candidats = sorted(refs_dispo)
+
+    # ⛔ Ne PAS chercher l'alignement sur une zone immobile. Une fin de scene
+    # figee offre des dizaines de decalages "aussi bons" -- la recherche s'y
+    # accroche et rapporte un decalage absurde (mesure : +207 sur la maison,
+    # cale sur la fin ou `bouge ref` vaut 0,00 %). On ne retient donc que les
+    # candidats dont la reference bouge REELLEMENT : un alignement temporel ne
+    # se lit que dans le mouvement.
+    bouge = {}
+    ordonnes = sorted(refs_dispo)
+    for i, f in enumerate(ordonnes[:-1]):
+        a_ = rendre_svg_seul(refs_dispo[f], doc, dossier)
+        b_ = rendre_svg_seul(refs_dispo[ordonnes[i + 1]], doc, dossier)
+        bouge[f] = mouvement(a_, b_)
+    if bouge:
+        vifs = max(bouge.values())
+        if vifs > 0.05:
+            candidats = [c for c in candidats if bouge.get(c, 0) > vifs * 0.15]
+    if not candidats:
+        candidats = sorted(refs_dispo)
+
     meilleur, meilleur_score = dec0, None
     # On teste chaque decalage possible parmi les references extraites.
     for cand in candidats:
