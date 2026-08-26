@@ -231,6 +231,39 @@ class Conversion(unittest.TestCase):
 
         self.assertAlmostEqual(gauche(avec) - gauche(sans), 50, delta=0.5)
 
+    def test_pointilles_nm_uniques(self):
+        """
+        ⛔⛔ LA REGRESSION LA PLUS COUTEUSE A EMPECHER (2026-08-26).
+        `nm` n'est PAS decoratif dans le tableau `d` d'un trait : lottie-web
+        en fait une CLE D'OBJET (Object.defineProperty(dashOb, d[i].nm, ...),
+        lottie.js v5.13 l.15497). Deux `nm` identiques -> "Cannot redefine
+        property" jetee en ASYNCHRONE dans initExpressions : le player FIGE,
+        DOMLoaded n'arrive jamais, et il n'y a NI erreur console NI pageerror.
+        Un `nm` absent ne sauve pas non plus (cle "undefined", dupliquee).
+        Symptome cote outil : compare_render.py part en TimeoutError.
+        """
+        svg = ('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200">'
+               '<path d="M 40 100 L 360 100" fill="none" stroke="#FFC742" '
+               'stroke-width="6" stroke-dasharray="20 12 4 12"/></svg>')
+        doc, _r = _convertir(svg, "vectorise")
+        trait = [x for g in doc["layers"][0]["shapes"] for x in g["it"]
+                 if x.get("ty") == "st"][0]
+        self.assertIn("d", trait, "les pointilles doivent etre portes")
+        noms = [e["nm"] for e in trait["d"]]
+        self.assertTrue(all(noms), "aucun `nm` ne doit etre vide ou absent")
+        self.assertEqual(len(noms), len(set(noms)),
+                         f"les `nm` doivent etre UNIQUES, sinon le player fige : {noms}")
+        # Le rendu ne lit que `n` et `v` : ils doivent rester justes.
+        self.assertEqual([e["n"] for e in trait["d"]], ["d", "g", "d", "g"])
+        self.assertEqual([e["v"]["k"] for e in trait["d"]], [20.0, 12.0, 4.0, 12.0])
+
+    def test_dasharray_impair_double(self):
+        """SVG : une liste impaire se repete deux fois ('5' = 5,5)."""
+        self.assertEqual(conv._dasharray("5"), [5.0, 5.0])
+        self.assertEqual(conv._dasharray("10 5 10"), [10.0, 5.0, 10.0] * 2)
+        self.assertEqual(conv._dasharray("none"), [])
+        self.assertEqual(conv._dasharray(None), [])
+
     def test_tspans_signales(self):
         """Fusionner des tspans est une APPROXIMATION : il faut le dire."""
         svg = ('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200">'

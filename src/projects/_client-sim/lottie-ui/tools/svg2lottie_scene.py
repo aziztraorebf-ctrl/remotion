@@ -48,11 +48,10 @@ import svgtext
 #   "natif"     : un calque Lottie ty:5 -- editable, dependant de la police.
 MODE_TEXTE = "vectorise"
 
-# ⛔ Les pointillés (stroke-dasharray) sont PRETS mais DESACTIVES : la structure
-# Lottie "d" que nous produisons fige lottie-web (DOMLoaded jamais emis, aucune
-# erreur). Tant que la cause racine n'est pas prouvee, on rend le trait plein
-# ET on le signale dans le rapport -- jamais un fichier qui bloque le player.
-POINTILLES_ACTIFS = False
+# Pointilles (stroke-dasharray) : ACTIFS depuis que la cause du blocage est
+# prouvee (voir le bloc `nm` dans shapes_de_style). Garde-fou conserve : le
+# passer a False rend les traits pleins ET le signale dans le rapport.
+POINTILLES_ACTIFS = True
 
 NS = "{http://www.w3.org/2000/svg}"
 XLINK = "{http://www.w3.org/1999/xlink}"
@@ -402,9 +401,26 @@ def shapes_de_style(st, rapport, nom):
             tirets = _dasharray(st.get("stroke-dasharray"))
             if tirets:
                 if POINTILLES_ACTIFS:
+                    # ⛔⛔ `nm` N'EST PAS DECORATIF ICI : lottie-web s'en sert
+                    # comme CLE D'OBJET --
+                    #   Object.defineProperty(dashOb, shape.d[i].nm, ...)
+                    #   (node_modules/lottie-web/.../lottie.js v5.13, l.15497)
+                    # Deux `nm` identiques -> "Cannot redefine property", jetee
+                    # DANS initExpressions, en asynchrone : DOMLoaded n'arrive
+                    # JAMAIS, sans une seule erreur console ni pageerror. Le
+                    # player fige en silence, et un `nm` absent ne sauve pas
+                    # (la cle devient "undefined", dupliquee pareil).
+                    # Le rendu, lui, ne lit que `n` et `v`.
+                    # -> `nm` doit etre PRESENT et UNIQUE. Convention After
+                    # Effects (Bodymovin) : "dash 1" / "gap 1" / "dash 2"...
+                    # Mesure apres correction : 0,07 % d'ecart (2 valeurs),
+                    # 0,10 % (4 valeurs). Les pointilles PASSENT.
                     d = []
                     for i, v in enumerate(tirets):
-                        d.append({"n": "d" if i % 2 == 0 else "g", "nm": "dash",
+                        pair = "d" if i % 2 == 0 else "g"
+                        d.append({"n": pair,
+                                  "nm": f"{'dash' if pair == 'd' else 'gap'} "
+                                        f"{i // 2 + 1}",
                                   "v": {"a": 0, "k": v}})
                     decalage = _nb(st.get("stroke-dashoffset"), 0.0)
                     if decalage:

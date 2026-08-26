@@ -22,7 +22,16 @@ LIB = os.path.join(RACINE, "src/projects/_shared/svg-library/elements")
 # le bug de contour, lui, donnait 3,17 % et 5,67 %.
 CAS = [
     ("peche/poisson-encre.svg", 0.5),
-    ("nature/astre/soleil-radiant-ggw.svg", 0.5),
+    # ⭐ Seuil releve de 0,5 a 0,9 le 2026-08-26, et c'est un PROGRES, pas un
+    # relachement : ce fichier a un stroke-dasharray="11 18" qui etait
+    # IGNORE (cercle rendu PLEIN a 0,39 %). Maintenant qu'il est porte, les
+    # deux rendus sont pointilles -- mais Chromium et lottie-web ne demarrent
+    # pas le motif au meme point du cercle. L'ecart mesure (0,52 %) est donc
+    # un DEPHASAGE des tirets, pas une erreur : meme nombre, meme espacement
+    # (verifie a l'oeil sur la planche). Un cercle plein contre un cercle
+    # pointille donnerait le meme ordre de grandeur -- d'ou l'exigence de
+    # REGARDER, jamais de conclure sur le seul pourcentage.
+    ("nature/astre/soleil-radiant-ggw.svg", 0.9),
     ("agriculture/cabosse/cabosse-ouverte-cacao-chocolat.svg", 0.5),
     ("agriculture/cacaoyer/cacaoyer-cacao-chocolat.svg", 0.5),
 ]

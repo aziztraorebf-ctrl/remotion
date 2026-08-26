@@ -35,7 +35,7 @@ des dégradés, des filtres ou des images, une partie ne traverse pas.
 | **Images / photos** (raster) | ⛔ **non** | Lottie sait embarquer en base64, mais le poids explose — déconseillé |
 | Symboles réutilisés (`use`, `symbol`) | ⛔ **non** | à aplatir avant conversion (faisable, coût en amont) |
 | Motifs de remplissage (`pattern`) | ⛔ **non** | sans équivalent |
-| **Pointillés** (`stroke-dasharray`) | ⚠️ **rendus pleins**, et c'est **signalé** | ⛔ découvert à l'oeil le 26/08 : c'était **ignoré en silence** avant. Notre structure Lottie `d` **fige le player** (`DOMLoaded` jamais émis) — désactivée le temps du diagnostic. ⚠️ Enjeu narratif : un tracé « prévu » ressort comme « construit » |
+| **Pointillés** (`stroke-dasharray`) | ✅ **oui** — ⭐ **porté le 2026-08-26** | mesuré à **0,07 %** (2 valeurs) et **0,10 %** (4 valeurs). ⚠️ Le motif peut être **déphasé** (Chromium et lottie-web ne démarrent pas au même point d'un cercle) : même nombre, même espacement, départ différent. ⛔ C'était **ignoré en silence** avant — enjeu narratif réel : un tracé « projet prévu » ressortait plein, donc « construit » |
 | Animation déjà dans le SVG (SMIL) | ⛔ **non** | normal : **l'animation vient de notre code**, c'est notre méthode |
 | **Personnages articulés** | ⛔ **non** | pas une limite du format — un métier différent (rigging) |
 
@@ -235,12 +235,16 @@ méthode habituelle (le statique d'abord, nous animons), mais ce n'est PAS un bo
 2. ⭐ **ANIMER UNE SCÈNE DENSE.** Tout est prouvé sur 24 calques (maison) et 8 groupes (Soudan) ;
    **jamais sur 498** (aéroport). C'est le pas qui reste — sans animation qui joue, une scène
    convertie ne sert à rien (formulation d'Aziz, 26/08).
-3. ⛔ **POINTILLÉS (`stroke-dasharray`) — découvert le 26/08, à finir.** C'était **ignoré en
-   silence** (4 occurrences sur une seule frame du Gazoduc Acte 4 : un tracé « projet prévu »
-   ressortait plein, donc « construit » — le sens de la carte changeait). Le portage est écrit
-   mais **DÉSACTIVÉ** (`POINTILLES_ACTIFS = False`) : notre structure Lottie `d` **fige
-   lottie-web**, `DOMLoaded` n'est jamais émis, sans erreur ni message. En attendant, le trait
-   est rendu plein **et c'est signalé dans le rapport**. Diagnostic délégué à un agent.
+3. ✅ **POINTILLÉS — FERMÉ le 2026-08-26** (découverts à l'oeil le jour même : ils étaient
+   **ignorés en silence**). Portés et mesurés (0,07-0,10 %).
+   ⛔⛔ **LA LEÇON, transposable bien au-delà des pointillés** : dans le tableau `d` d'un trait,
+   le champ **`nm` n'est PAS décoratif** — lottie-web en fait une **clé d'objet**
+   (`Object.defineProperty(dashOb, shape.d[i].nm, …)`, `lottie.js` v5.13 l.15497). Deux `nm`
+   identiques → `Cannot redefine property`, **jetée en asynchrone** dans `initExpressions` :
+   le player **fige**, `DOMLoaded` n'arrive jamais, et il n'y a **ni erreur console ni
+   pageerror**. Un `nm` absent ne sauve pas (clé `"undefined"`, dupliquée pareil). Le rendu ne
+   lit que `n` et `v`. → `nm` **présent et unique** (`dash 1` / `gap 1` / `dash 2`…).
+   Symptôme côté outil : `compare_render.py` part en `TimeoutError`.
 4. **Grouper l'aéroport** avant toute livraison : 498 calques nommés `path-248` sont illisibles
    pour un client, même si techniquement valides sur le web.
 5. ❓ **ANIMATION INTERACTIVE — à vérifier, pas un acquis.** Le MCP expose `add_state_machine`,

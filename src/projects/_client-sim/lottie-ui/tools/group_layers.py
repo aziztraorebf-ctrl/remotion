@@ -63,6 +63,29 @@ CARTES = {
         "lingot": {"indices": range(45, 63)},
         "vignettage": {"indices": range(63, 200)},
     },
+
+    # Gazoduc Acte 4 "Objectifs" (frame 120) — carte etablie en MESURANT
+    # couleur, taille et position de chacun des 108 elements, jamais en
+    # devinant des tranches (methode Soudan). Les familles sautent aux yeux
+    # une fois mesurees, et PAS avant :
+    #   0-75    tous en fill (0.09,0.19,0.31) = la carte de fond, pays neutres
+    #   76-81   fill (0.18,0.62,0.83) bleu clair, par paires fill+stroke
+    #           = les 3 pays CONCERNES (Maroc, Algerie, Nigeria)
+    #   82-83   stroke or (1.0,0.78,0.26), 4 et 24 points = LE GAZODUC
+    #   84-101  six triplets identiques (trait or + trait clair + cercle
+    #           creme de 6 px) = les jalons/etapes du trace
+    #   102-107 rect sombre a bord bleu + son texte = les 3 cartouches
+    # ⭐ Ces groupes sont ceux qu'on ANIME : le trace se dessine, les jalons
+    # s'allument, les cartouches apparaissent. Le fond, lui, ne bouge pas.
+    "gazoduc-a4": {
+        "_ordre": ["carte-fond", "pays-concernes", "gazoduc-trace",
+                   "jalons", "cartouches"],
+        "carte-fond": {"indices": range(0, 76)},
+        "pays-concernes": {"indices": range(76, 82)},
+        "gazoduc-trace": {"indices": range(82, 84)},
+        "jalons": {"indices": range(84, 102)},
+        "cartouches": {"indices": range(102, 200)},
+    },
 }
 
 
@@ -97,6 +120,13 @@ def regrouper(doc, carte):
     # Les calques sont deja en ordre inverse de peinture (indice 0 = au-dessus).
     # On repasse en ordre de peinture pour raisonner simplement.
     peinture = list(reversed(couches))
+
+    # ⛔ Un calque TEXTE NATIF (ty:5) n'a pas de "shapes" : il porte un
+    # TextDocument. Le fondre dans un groupe de formes le SUPPRIMERAIT en
+    # silence -- exactement le piege que tout cet outillage cherche a eviter.
+    # On les met de cote et on les remet au-dessus, intacts et editables.
+    natifs = [c for c in peinture if c.get("ty") == 5]
+    peinture = [c for c in peinture if c.get("ty") != 5]
 
     attribue = {}
     for nom_groupe in carte["_ordre"]:
@@ -138,6 +168,12 @@ def regrouper(doc, carte):
                    "o": {"a": 0, "k": 100}},
             "shapes": [{"ty": "gr", "nm": nom, "it": it + [tr_neutre()]}],
         })
+
+    # Les calques texte natifs reprennent leur place, au-dessus des groupes :
+    # ils restent selectionnables et editables un par un dans Creator.
+    nouvelles.extend(natifs)
+    if natifs:
+        rapport["(texte natif, garde intact)"] = len(natifs)
 
     # remettre en ordre d'affichage Lottie (indice 0 au-dessus)
     nouvelles.reverse()
