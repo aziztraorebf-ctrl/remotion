@@ -429,6 +429,7 @@ import { SvgVs3dBench } from "./projects/_shared/_demos/devices/SvgVs3dBench";
 import { LidOpenBench } from "./projects/_shared/_demos/devices/LidOpenBench";
 import { FlatLaptopMotion, FlatPhoneMotion } from "./projects/_shared/_demos/devices/FlatDeviceMotion";
 import { PhoneOnDesk, PhoneOnDeskExec, LaptopOnDesk, LaptopOnDeskLight, LaptopOnDeskDark } from "./projects/_shared/_demos/devices/DeviceInScene";
+import { Plan01Lockscreen } from "./projects/_client-sim/foster/scenes/Plan01Lockscreen";
 import { DeviceBenchPhone, DeviceBenchLaptop, DeviceBenchPhoneVision, DeviceBenchPhoneVisionBlindLights, DeviceBenchPhoneOrigVisionLights } from "./projects/_shared/_demos/devices/DeviceBench";
 import { JetonWarMap3DCompare } from "./projects/_shared/_demos/JetonWarMap3DCompare";
 import { RapidFireCountries } from "./projects/_shared/mapbox/RapidFireCountries";
@@ -731,6 +732,16 @@ export const RemotionRoot: React.FC = () => {
       
       
       <Folder name="atlas-peste-1347">
+        {/* FOSTER — reproduction de la video vendue sur Fiverr.
+            Plan 1 : 0 -> 1,602 s = 48 frames a 30 fps (coupe MESUREE). */}
+        <Composition
+          id="FosterPlan01"
+          component={Plan01Lockscreen}
+          durationInFrames={48}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
         <Composition
           id="HeroDataShowcase"
           component={HeroDataShowcase}

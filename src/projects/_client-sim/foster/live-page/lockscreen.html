@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Foster - iOS lockscreen plate</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:1179px; height:2556px; }
+  body {
+    font-family: -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color:#fff; overflow:hidden; position:relative;
+    background:#0a0a0c;
+  }
+  .wall { position:absolute; inset:0; }
+  .dune {
+    position:absolute; left:-25%; width:150%;
+    filter:blur(26px);
+  }
+  .d1 { top:58%; height:34%; border-radius:50% 50% 0 0 / 100% 100% 0 0;
+        background:linear-gradient(180deg,#303035 0%,#191a1d 60%,#0e0e10 100%); opacity:.55; }
+  .d2 { top:70%; height:30%; border-radius:50% 50% 0 0 / 100% 100% 0 0;
+        background:linear-gradient(180deg,#232327 0%,#121214 70%,#0a0a0c 100%); opacity:.6; }
+  .d3 { top:82%; height:26%; border-radius:50% 50% 0 0 / 100% 100% 0 0;
+        background:linear-gradient(180deg,#1e1e22 0%,#0b0b0d 100%); }
+  .status { position:absolute; top:58px; left:0; right:0; display:flex;
+            justify-content:space-between; padding:0 108px; font-size:40px; font-weight:600; }
+  .status .r { display:flex; gap:14px; align-items:center; opacity:.95; }
+  .date { position:absolute; top:300px; left:0; right:0; text-align:center;
+          font-size:52px; font-weight:600; letter-spacing:.2px; opacity:.95; }
+  .time { position:absolute; top:352px; left:0; right:0; text-align:center;
+          font-size:250px; font-weight:250; letter-spacing:-6px; line-height:1.05; }
+  .widgets { position:absolute; top:690px; left:0; right:0;
+             display:flex; justify-content:center; gap:46px; }
+  .w { width:132px; height:132px; border-radius:50%;
+       border:5px solid rgba(255,255,255,.92);
+       display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .w.dim { border-color:rgba(255,255,255,.45); background:rgba(255,255,255,.10); }
+  .w .big { font-size:52px; font-weight:600; }
+  .w .sub { font-size:24px; opacity:.75; margin-top:2px; }
+  .w .lbl { font-size:19px; opacity:.7; letter-spacing:.5px; }
+  .rings2 { position:relative; width:74px; height:74px; }
+  .rings2 i { position:absolute; border-radius:50%; border:5px solid rgba(255,255,255,.9); }
+  .rings2 i:nth-child(1){ inset:0; }
+  .rings2 i:nth-child(2){ inset:20px; border-color:rgba(255,255,255,.7); }
+  .rings { position:relative; width:132px; height:132px; }
+  .rings i { position:absolute; border-radius:50%; border:5px solid rgba(255,255,255,.9); }
+  .rings i:nth-child(1){ inset:0; }
+  .rings i:nth-child(2){ inset:20px; border-color:rgba(255,255,255,.75); }
+  .rings i:nth-child(3){ inset:40px; border-color:rgba(255,255,255,.6); }
+  .lock { width:52px; height:52px; border:5px solid #fff; border-radius:14px; position:relative; }
+  .lock:after { content:""; position:absolute; left:50%; top:-20px; transform:translateX(-50%);
+                width:28px; height:24px; border:5px solid #fff; border-bottom:none;
+                border-radius:14px 14px 0 0; }
+  /* NOTIFICATION - le coeur du plan */
+  .notif { position:absolute; top:900px; left:74px; right:74px; align-items:flex-start;
+           background:rgba(38,38,42,.82);
+           -webkit-backdrop-filter:blur(30px); backdrop-filter:blur(30px);
+           border-radius:44px; padding:34px 38px; display:flex; gap:26px;
+           box-shadow:0 2px 30px rgba(0,0,0,.4); }
+  .avatar { width:78px; height:78px; border-radius:50%; position:relative; overflow:hidden;
+            background:radial-gradient(circle at 50% 34%, #f6d3ad 0%, #e8b98c 55%, #c9946a 100%); }
+  .avatar .hair { position:absolute; left:-6%; right:-6%; top:-14%; height:52%;
+                  border-radius:50% 50% 44% 44% / 70% 70% 30% 30%;
+                  background:#5b4632; opacity:.92; }
+  .avwrap { position:relative; flex:0 0 78px; width:78px; height:78px; margin-top:2px; }
+  .dot { position:absolute; right:-1px; bottom:0; width:24px; height:24px;
+                 border-radius:50%; background:#30d158; border:4px solid #26262a; }
+  .avatar .hairfix{}
+  .ntxt { flex:1; min-width:0; }
+  .nhead { display:flex; justify-content:space-between; align-items:baseline; }
+  .nfrom { font-size:33px; font-weight:600; }
+  .nwhen { font-size:29px; opacity:.55; }
+  .nbody { font-size:33px; line-height:1.28; margin-top:5px; opacity:.97; }
+  .reply { position:absolute; top:1160px; left:118px; font-size:34px; opacity:.9; }
+  .bottom { position:absolute; bottom:150px; left:0; right:0;
+            display:flex; justify-content:center; align-items:center; gap:340px; }
+  .bicon { width:56px; height:56px; opacity:.92; }
+  .torch { border:5px solid #fff; border-radius:8px 8px 14px 14px; width:34px; height:56px;
+           margin:0 auto; }
+  .cam { border:5px solid #fff; border-radius:14px; width:56px; height:46px; position:relative; }
+  .cam:after{ content:""; position:absolute; inset:12px; border:4px solid #fff; border-radius:50%; }
+  .persona { position:absolute; bottom:152px; left:0; right:0; text-align:center;
+             font-size:28px; opacity:.8; display:flex; gap:12px; justify-content:center; }
+  .home { position:absolute; bottom:46px; left:50%; transform:translateX(-50%);
+          width:420px; height:12px; border-radius:6px; background:rgba(255,255,255,.85); }
+</style>
+</head>
+<body>
+  <div class="wall">
+    <div class="dune d1"></div><div class="dune d2"></div><div class="dune d3"></div>
+  </div>
+
+  <div class="status"><span>9:41</span><span class="r">&#9679;&#9679;&#9679; &#9605; &#9646;</span></div>
+
+  <div class="date">Wednesday 7 September</div>
+  <div class="time">12:57</div>
+
+  <div class="widgets">
+    <div class="w"><div class="lock"></div></div>
+    <div class="w"><div class="rings2"><i></i><i></i></div></div>
+    <div class="w"><div class="big">23</div><div class="sub">15&nbsp;&nbsp;26</div></div>
+    <div class="w dim"><div class="lbl">CUP</div><div class="big" style="font-size:38px">9:38</div></div>
+  </div>
+
+  <div class="notif">
+    <div class="avwrap"><div class="avatar"><div class="hair"></div></div><div class="dot"></div></div>
+    <div class="ntxt">
+      <div class="nhead"><span class="nfrom">Head Of Service</span><span class="nwhen">now</span></div>
+      <div class="nbody">Ofsted are coming. Can you assemble an evidence pack?</div>
+    </div>
+  </div>
+
+  <div class="persona">&#9679; Personal</div>
+  <div class="bottom">
+    <div class="bicon"><div class="torch"></div></div>
+    <div class="bicon"><div class="cam"></div></div>
+  </div>
+  <div class="home"></div>
+</body>
+</html>

@@ -56,6 +56,49 @@ Transitions douces (seuil 0.12) ajoute : 11,44 · 11,51 · 11,57 · 11,64 · 13,
    fixes dans la référence, pas des vidéos). ⚠️ Passer par les templates avant tout prompt
    (règle projet : diversité des visages, ethnicity, enfant en scène — erreurs déjà payées).
 
+
+## ⚠️ CORRECTIONS MESURÉES (session 2026-08-26, sur la source réelle)
+
+**1. La source est une CAPTURE D'ÉCRAN de la page Fiverr, pas la vidéo brute.**
+L'interface du lecteur (croix, « 7 of 20 », barre de progression, témoignage client)
+recouvre la **première seconde** ; le watermark `fiverr.` reste tout du long.
+⛔ Impossible d'obtenir mieux : le clic qui lance la lecture EST ce qui fait apparaître
+le lecteur (constaté par Aziz). Le lien catbox répond toujours mais rend le **même
+fichier** (MD5 `3945894a5d3bf232e9d11f580df2d721`) — inutile de re-télécharger.
+ℹ️ Gotcha catbox : `HEAD` renvoie `content-length: 0` alors que le `GET` rend bien les
+62 Mo. **Ne jamais conclure « lien mort » sur un HEAD.**
+→ Le plan #1 reste **jugeable** : le téléphone est dégagé sur presque toute sa hauteur.
+Sa validation se fera sur la **zone centrale**, pas sur le cadre entier.
+
+**2. Le plan #1 ne contient PAS « un téléphone seul sur noir ».** Il contient :
+- écran verrouillé iOS, « Wednesday 7 September », **12:57**, 4 widgets circulaires
+- ⭐ **une notification — le vrai contenu du plan, absent du découpage initial** :
+  « **Head Of Service — Ofsted are coming. Can you assemble an evidence pack?** »
+  (avatar rond, pastille verte). C'est l'accroche narrative de toute la vidéo.
+- le fond n'est pas noir plat : des **éclats bleus** apparaissent dès 0,5 s
+- l'**allumage du décor appartient au plan #1** (montée mesurée 0,53 s → 1,20 s),
+  pas au plan #2.
+
+**3. La coupe de 1,602 s est RÉELLE** (score 0,60 mesuré sur la zone centrale propre,
+hors overlay — vérifié, ce n'est pas un artefact de l'interface).
+⛔ Mais ce n'est **pas** « un zoom continu de 4 s » comme l'indiquait le tableau :
+c'est une **COUPE CUT EN AVANT** — saut d'échelle sec du plan large (bureau vu du
+dessus) au **très gros plan sur la notification**. Le resserrement se poursuit ensuite
+progressivement, et vers **2,20 s un « I'll » s'écrit** sous la notification (quelqu'un
+tape une réponse).
+
+**4. Reste à re-vérifier** : les autres transitions du tableau ont été mesurées sur la
+surface entière, interface comprise. Les re-mesurer sur la zone centrale au fur et à
+mesure des plans.
+
+## DÉCISIONS D'AZIZ (2026-08-26)
+- **Niveau visé : structure + gestes.** Le pixel est un bonus.
+- **Validation : côte-à-côte réf/nôtre à chaque plan**, séquentiellement, avec un point
+  de contrôle entre chaque.
+- **Contenu reproduit tel quel** (même produit, mêmes textes Ofsted, mêmes montants) —
+  l'argument commercial « voici la vidéo vendue, voici la nôtre » exige la comparaison directe.
+- **Branche : `feat/repro-foster`.**
+
 ## CE QUI EST DÉJÀ PRÊT (acquis de la session 2026-08-25/26)
 - `devices/PhoneModel` · `LaptopModel` — mockups procéduraux, écran = zone d'accueil
 - `devices/DeviceInScene` — objet posé dans un décor, ombre 3 couches, allumage 0,30 s
