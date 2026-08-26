@@ -32,8 +32,9 @@ CAS = [
 SCENES = [
     ("public/assets/geoafrique/recraft-v4/beat01-free-A2.svg", 0.5, None),
     ("src/projects/_rnd/chill-meter/chill-meter-mix.svg", 100.0,
-     "30 refus annonces (13 text, 12 use, 5 filtres) + 102 degrades approximes : "
-     "l'ecart mesure ~33 % CONFIRME le rapport, il ne le contredit pas"),
+     "30 refus annonces (13 text, 12 use, 5 filtres) : l'ecart mesure ~29 % CONFIRME "
+     "le rapport, il ne le contredit pas. Les 102 degrades sont PORTES depuis le "
+     "2026-08-26 (il n'en reste 2 en repli), d'ou 32,4 % -> 28,8 %"),
 ]
 
 fails = []

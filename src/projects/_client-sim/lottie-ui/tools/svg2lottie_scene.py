@@ -297,12 +297,34 @@ def shapes_de_style(st, rapport, nom):
     fill = st.get("fill", "#000000")
     fo = float(st.get("fill-opacity", 1)) * float(st.get("opacity", 1))
     if str(fill).startswith("url("):
-        rapport.approxime(f"{nom}: fill=gradient",
-                          "degrade converti en couleur pleine (moyenne des arrets, "
-                          "opacite moyenne comprise)")
-        fill = st.get("_gradient_moyen", "#808080")
-        fo *= float(st.get("_gradient_opacite", 1.0))
-    c = couleur(fill)
+        grad = st.get("_gradient_objet")
+        boite = st.get("_gradient_boite")
+        if grad and boite:
+            # ⭐ VRAI DEGRADE Lottie ('gf'), plus une couleur moyenne.
+            depart, arrivee = geometrie_gradient(grad, boite)
+            out.append({
+                "ty": "gf", "nm": "gradient",
+                "o": {"a": 0, "k": round(fo * 100, 2)},
+                "r": 1,
+                "t": grad["type"],                 # 1 = lineaire, 2 = radial
+                "s": {"a": 0, "k": [round(depart[0], 3), round(depart[1], 3)]},
+                "e": {"a": 0, "k": [round(arrivee[0], 3), round(arrivee[1], 3)]},
+                "g": {"p": len(grad["arrets"]),
+                      "k": {"a": 0, "k": table_couleurs(grad["arrets"])}},
+            })
+            if grad["type"] == 2:
+                out[-1]["h"] = {"a": 0, "k": 0}    # highlight neutre
+            rapport.ok(f"{nom}: gradient {'radial' if grad['type']==2 else 'lineaire'}")
+            fill = None
+        else:
+            rapport.approxime(f"{nom}: fill=gradient",
+                              "degrade introuvable — replie sur une couleur pleine")
+            fill = st.get("_gradient_moyen", "#808080")
+            fo *= float(st.get("_gradient_opacite", 1.0))
+    if fill is None:
+        c = None
+    else:
+        c = couleur(fill)
     if c is not None:
         out.append({"ty": "fl", "nm": "fill", "r": 1,
                     "o": {"a": 0, "k": round(fo * 100, 2)}, "c": {"a": 0, "k": c}})
@@ -323,49 +345,146 @@ def shapes_de_style(st, rapport, nom):
 
 # --- Parcours du SVG ---------------------------------------------------------
 
-def gradients_moyens(root):
+def gradients_complets(root):
     """
-    Couleur moyenne de chaque gradient, pour l'approximation.
+    Lit CHAQUE gradient en entier : type, geometrie et tous ses arrets.
 
-    ⚠️ Lottie SAIT faire des degrades lineaires et radiaux ('gf'). On
-    approxime ici volontairement, parce que porter un degrade demande aussi
-    de porter son systeme de coordonnees (userSpaceOnUse vs objectBoundingBox)
-    et ses transformations propres -- un chantier a part entiere. Le rapport
-    le signale a chaque fois, il n'y a pas de perte silencieuse.
+    ⭐ Remplace l'ancienne "moyenne des arrets". Le format Lottie sait porter
+    les degrades ('gf') — verifie sur la spec officielle ET teste en direct
+    dans LottieFiles Creator via son MCP le 2026-08-26 (radial 3 arrets +
+    lineaire 0,30 -> 0,02 : rendu correct, halo qui s'estompe).
+
+    Structure Lottie du tableau de couleurs (spec `values.md`) : un tableau
+    PLAT. D'abord tous les arrets de COULEUR (offset, r, g, b), puis, si au
+    moins un arret est transparent, tous les arrets d'ALPHA (offset, alpha)
+    a la suite. Toutes les valeurs entre 0 et 1.
+
+    ⚠️ Les coordonnees `s`/`e` sont en PIXELS dans l'espace de la forme (pas
+    des ratios 0-1). Pour un gradient SVG en `objectBoundingBox` (le defaut),
+    il faut donc les convertir avec la boite de la forme -- fait a l'usage,
+    car la boite n'est connue qu'apres conversion du chemin.
     """
     out = {}
-    for tag in ("linearGradient", "radialGradient"):
+    for tag, genre in (("linearGradient", 1), ("radialGradient", 2)):
         for g in root.iter(NS + tag):
             gid = g.attrib.get("id")
             if not gid:
                 continue
-            cols, opacites = [], []
+            arrets = []
             for stop in g.iter(NS + "stop"):
-                st = stop.attrib.get("stop-color") or ""
+                brut = stop.attrib.get("stop-color") or ""
                 op = stop.attrib.get("stop-opacity")
-                if "style" in stop.attrib:
-                    m = re.search(r"stop-color\s*:\s*([^;]+)", stop.attrib["style"])
-                    st = st or (m.group(1) if m else "")
-                    m = re.search(r"stop-opacity\s*:\s*([\d.]+)", stop.attrib["style"])
-                    op = op or (m.group(1) if m else None)
-                c = couleur(st, None)
-                if c:
-                    cols.append(c)
-                    try:
-                        opacites.append(float(op) if op is not None else 1.0)
-                    except ValueError:
-                        opacites.append(1.0)
-            if cols:
-                out[gid] = {
-                    "couleur": [round(sum(c[i] for c in cols) / len(cols), 4) for i in range(3)],
-                    # ⛔ TROUVE PAR AZIZ (courbe "moins belle que l'original") : on
-                    # moyennait la COULEUR mais on ignorait l'OPACITE des arrets.
-                    # L'aire sous la courbe du Gazoduc va de 0,30 a 0,02 ; on la
-                    # rendait a 1,00 — soit 3 a 50x trop opaque. La forme etait
-                    # juste, la matiere completement fausse.
-                    "opacite": round(sum(opacites) / len(opacites), 4),
-                }
+                style = stop.attrib.get("style", "")
+                if style:
+                    m = re.search(r"stop-color\s*:\s*([^;]+)", style)
+                    brut = brut or (m.group(1) if m else "")
+                    m = re.search(r"stop-opacity\s*:\s*([\d.]+)", style)
+                    op = op if op is not None else (m.group(1) if m else None)
+                c = couleur(brut, None)
+                if c is None:
+                    continue
+                pos = stop.attrib.get("offset", "0")
+                try:
+                    pos = float(pos[:-1]) / 100.0 if str(pos).endswith("%") else float(pos)
+                except ValueError:
+                    pos = 0.0
+                try:
+                    alpha = float(op) if op is not None else 1.0
+                except ValueError:
+                    alpha = 1.0
+                arrets.append((max(0.0, min(1.0, pos)), c, max(0.0, min(1.0, alpha))))
+            if not arrets:
+                continue
+            arrets.sort(key=lambda a: a[0])
+            out[gid] = {
+                "type": genre,
+                "arrets": arrets,
+                "unites": g.attrib.get("gradientUnits", "objectBoundingBox"),
+                # coordonnees brutes ; interpretees a l'usage selon `unites`
+                "x1": g.attrib.get("x1"), "y1": g.attrib.get("y1"),
+                "x2": g.attrib.get("x2"), "y2": g.attrib.get("y2"),
+                "cx": g.attrib.get("cx"), "cy": g.attrib.get("cy"),
+                "r": g.attrib.get("r"),
+                # moyennes conservees : repli si la geometrie est inexploitable
+                "couleur": [round(sum(a[1][i] for a in arrets) / len(arrets), 4)
+                            for i in range(3)],
+                "opacite": round(sum(a[2] for a in arrets) / len(arrets), 4),
+            }
     return out
+
+
+def table_couleurs(arrets):
+    """
+    Arrets SVG -> tableau PLAT Lottie.
+
+    [offset, r, g, b] x N  puis  [offset, alpha] x N si au moins un arret
+    est transparent (spec : "gradients with transparency include an
+    additional alpha component ... after the RGB values").
+    """
+    plat = []
+    for pos, c, _ in arrets:
+        plat += [round(pos, 4), round(c[0], 4), round(c[1], 4), round(c[2], 4)]
+    if any(a[2] < 1.0 for a in arrets):
+        for pos, _, alpha in arrets:
+            plat += [round(pos, 4), round(alpha, 4)]
+    return plat
+
+
+def boite_des_formes(formes):
+    """Boite englobante des chemins deja convertis (pour situer le gradient)."""
+    xs, ys = [], []
+    for f in formes:
+        for x, y in f["ks"]["k"]["v"]:
+            xs.append(x)
+            ys.append(y)
+    if not xs:
+        return None
+    return min(xs), min(ys), max(xs), max(ys)
+
+
+def geometrie_gradient(g, boite):
+    """
+    Points de depart/arrivee du gradient, en coordonnees ABSOLUES.
+
+    SVG place le gradient soit dans la boite de la forme (`objectBoundingBox`,
+    coordonnees 0-1 -- le defaut), soit dans l'espace utilisateur
+    (`userSpaceOnUse`, coordonnees absolues). Lottie, lui, veut des pixels.
+    """
+    x0, y0, x1b, y1b = boite
+    w, h = max(1e-6, x1b - x0), max(1e-6, y1b - y0)
+    bbox = g["unites"] != "userSpaceOnUse"
+
+    def val(v, defaut, axe):
+        if v is None:
+            v = defaut
+        v = str(v)
+        try:
+            if v.endswith("%"):
+                r = float(v[:-1]) / 100.0
+                return (x0 + r * w) if axe == "x" else (y0 + r * h)
+            f = float(v)
+        except ValueError:
+            return x0 + 0.5 * w if axe == "x" else y0 + 0.5 * h
+        if bbox:
+            return (x0 + f * w) if axe == "x" else (y0 + f * h)
+        return f
+
+    if g["type"] == 1:                       # lineaire
+        return ([val(g["x1"], "0%", "x"), val(g["y1"], "0%", "y")],
+                [val(g["x2"], "100%", "x"), val(g["y2"], "0%", "y")])
+    # radial : `s` = centre, `e` = un point du bord (la distance donne le rayon)
+    cx = val(g["cx"], "50%", "x")
+    cy = val(g["cy"], "50%", "y")
+    rayon = g["r"]
+    if rayon is None:
+        rayon = "50%"
+    rayon = str(rayon)
+    try:
+        rr = (float(rayon[:-1]) / 100.0) if rayon.endswith("%") else float(rayon)
+    except ValueError:
+        rr = 0.5
+    r_px = rr * ((w + h) / 2.0) if bbox else rr
+    return ([cx, cy], [cx + r_px, cy])
 
 
 def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=()):
@@ -444,6 +563,8 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=()):
             gid = v[v.find("#") + 1:].rstrip(")").strip('"\'')
             if gid in grads:
                 g = grads[gid]
+                st["_gradient_objet"] = g
+                # replis si la geometrie s'avere inexploitable
                 st["_gradient_moyen"] = "#%02x%02x%02x" % tuple(
                     int(round(x * 255)) for x in g["couleur"])
                 st["_gradient_opacite"] = g["opacite"]
@@ -466,6 +587,14 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=()):
 
     if tag == "path":
         rapport.ok(f"<path> {nom}")
+
+    # ⚠️ La boite des formes n'est connue qu'ICI, apres conversion ET
+    # application du transform : un gradient SVG en `objectBoundingBox` (le
+    # defaut) s'exprime en fractions de cette boite, alors que Lottie veut
+    # des pixels. On la passe donc au styleur, pas avant.
+    if "_gradient_objet" in st:
+        st = dict(st)
+        st["_gradient_boite"] = boite_des_formes(formes)
 
     sortie.append((nom, formes, shapes_de_style(st, rapport, nom)))
 
@@ -496,7 +625,7 @@ def convertir(chemin, fps=30, frames=60):
     root = _xml_fromstring(texte)
     x0, y0, w, h = viewbox(root)
     rapport = Rapport()
-    grads = gradients_moyens(root)
+    grads = gradients_complets(root)
     elements = []
     base = (1, 0, 0, 1, -x0, -y0)          # ramene le viewBox a l'origine
     collecter(root, base, {}, rapport, grads, elements)
@@ -518,8 +647,15 @@ def convertir(chemin, fps=30, frames=60):
         # restait valide et le rapport annoncait "transportable a l'identique".
         # Deux groupes (remplissage dessous, contour dessus) rendent l'ordre
         # de peinture explicite, comme dans un navigateur.
-        fills = [x for x in styles_ if x.get("ty") == "fl"]
-        strokes = [x for x in styles_ if x.get("ty") == "st"]
+        # ⛔ PIEGE PAYE (2026-08-26) : ce tri ne connaissait que "fl" et "st".
+        # Un remplissage en DEGRADE a le type "gf" -- il n'entrait dans aucune
+        # des deux listes et etait SILENCIEUSEMENT JETE : fichier valide,
+        # rapport annoncant "gradient porte", et rendu quasi vide (99,5 %
+        # d'ecart, 1,1 % de pixels encres). Meme famille que les 3 bugs
+        # precedents : l'element est correct, c'est son AIGUILLAGE qui l'annule.
+        # "gs" = gradient de CONTOUR, prevu ici par symetrie.
+        fills = [x for x in styles_ if x.get("ty") in ("fl", "gf")]
+        strokes = [x for x in styles_ if x.get("ty") in ("st", "gs")]
         groupes = []
         # ⛔ ORDRE : dans un calque, le PREMIER groupe de la liste est peint
         # EN DERNIER (au-dessus). Le contour doit donc venir en tete, sinon le
