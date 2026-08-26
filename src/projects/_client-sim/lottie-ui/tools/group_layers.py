@@ -86,6 +86,23 @@ CARTES = {
         "jalons": {"indices": range(84, 102)},
         "cartouches": {"indices": range(102, 200)},
     },
+
+    # ⭐ Maison chauffee au gaz (Gazoduc Acte 5) -> PIECE DE DEMONSTRATION.
+    # Ici le regroupement se fait PAR MOTIF DE NOM, pas par indices : ces
+    # calques portent deja leur intention (house, heating, flame, link, chart),
+    # heritee des variables du composant Remotion. C'est le cas ideal -- quand
+    # les noms veulent dire quelque chose, la carte s'ecrit toute seule.
+    # 24 calques plats -> 6 blocs qu'un client peut ouvrir et comprendre.
+    # ⛔ L'ordre est celui de la PEINTURE : le fond dessous, la courbe dessus.
+    "maison": {
+        "_ordre": ["fond", "maison", "chauffage", "flamme", "tuyau", "courbe"],
+        "fond": {"motifs": ["rect"]},
+        "maison": {"motifs": ["house"]},
+        "chauffage": {"motifs": ["heating"]},
+        "flamme": {"motifs": ["flame"]},
+        "tuyau": {"motifs": ["link"]},
+        "courbe": {"motifs": ["chart"]},
+    },
 }
 
 
@@ -156,10 +173,35 @@ def regrouper(doc, carte):
         it = []
         # dans le calque, on inverse : premier de la liste = peint en dernier
         for c in reversed(membres):
+            # ⛔⛔ LE BUG QUI A DETRUIT UNE ANIMATION (mesure 2026-08-26) :
+            # ce code ne recopiait QUE les formes et JETAIT `c["ks"]` -- or
+            # c'est la que vivent les animations du calque (opacite, echelle,
+            # position). Sur la maison : 23 opacites animees et 9 traces
+            # PERDUS. Le fichier restait valide, `check_animation` comptait
+            # meme des frames distinctes ("ca bouge"), mais tout apparaissait
+            # EN MEME TEMPS : le triangle de la courbe visible des la frame 0
+            # au lieu de la 89, la flamme allumee avant que la maison existe.
+            # L'histoire etait detruite, la mesure disait OK.
+            # -> On DESCEND le transform du calque dans le sous-groupe, ou il
+            #    s'applique exactement de la meme facon.
+            sous = []
             for g in collecter_formes(c):
                 g = dict(g)
                 g["nm"] = c["nm"]          # garde la trace de l'element d'origine
-                it.append(g)
+                sous.append(g)
+            if not sous:
+                continue
+            ks = c.get("ks") or {}
+            anime = any(isinstance(ks.get(k), dict) and ks[k].get("a") == 1
+                        for k in ("o", "p", "s", "r", "a"))
+            if anime:
+                tr = {"ty": "tr", "nm": c["nm"] + "-transform"}
+                for cle, defaut in (("a", [0, 0]), ("p", [0, 0]),
+                                    ("s", [100, 100]), ("r", 0), ("o", 100)):
+                    tr[cle] = ks.get(cle, {"a": 0, "k": defaut})
+                it.append({"ty": "gr", "nm": c["nm"], "it": sous + [tr]})
+            else:
+                it.extend(sous)
         nouvelles.append({
             "ddd": 0, "ty": 4, "ind": rang, "nm": nom, "st": 0,
             "ip": couches[0].get("ip", 0), "op": doc.get("op", 60),

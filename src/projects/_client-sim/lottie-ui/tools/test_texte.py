@@ -264,6 +264,46 @@ class Conversion(unittest.TestCase):
         self.assertEqual(conv._dasharray("none"), [])
         self.assertEqual(conv._dasharray(None), [])
 
+    def test_regroupement_preserve_les_animations(self):
+        """
+        ⛔⛔ LA REGRESSION LA PLUS SOURNOISE (mesure 2026-08-26, maison-gaz).
+        `group_layers` ne recopiait que les FORMES et jetait `ks` -- ou vivent
+        les animations. Resultat : 23 opacites animees et 9 traces PERDUS, le
+        fichier restant valide et `check_animation` comptant meme des frames
+        distinctes ("ca bouge"). Mais tout apparaissait EN MEME TEMPS :
+        l'histoire etait detruite pendant que la mesure disait OK.
+        -> le transform du calque doit DESCENDRE dans le sous-groupe.
+        """
+        import group_layers
+        doc = {"w": 100, "h": 100, "fr": 30, "op": 60, "layers": [
+            {"ty": 4, "nm": "house-1", "ip": 0, "op": 60,
+             "ks": {"a": {"a": 0, "k": [0, 0]}, "p": {"a": 0, "k": [0, 0]},
+                    "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0},
+                    "o": {"a": 1, "k": [{"t": 0, "s": [0]}, {"t": 30, "s": [100]}]}},
+             "shapes": [{"ty": "gr", "nm": "g", "it": [
+                 {"ty": "sh", "ks": {"a": 0, "k": {"c": True, "v": [[0, 0], [1, 1]],
+                                                   "i": [[0, 0]] * 2, "o": [[0, 0]] * 2}}},
+                 {"ty": "fl", "c": {"a": 0, "k": [1, 1, 1]}, "o": {"a": 0, "k": 100}},
+             ]}]},
+        ]}
+        carte = {"_ordre": ["bloc"], "bloc": {"motifs": ["house"]}}
+        out, _rap = group_layers.regrouper(doc, carte)
+
+        def opacites_animees(items):
+            n = 0
+            for it in items:
+                if it.get("ty") == "gr":
+                    n += opacites_animees(it.get("it", []))
+                elif it.get("ty") == "tr" and it.get("o", {}).get("a") == 1:
+                    n += 1
+            return n
+
+        total = sum(opacites_animees(g.get("it", []))
+                    for c in out["layers"] for g in (c.get("shapes") or []))
+        self.assertEqual(total, 1,
+                         "l'animation d'opacite du calque doit survivre au "
+                         "regroupement, descendue dans le sous-groupe")
+
     def test_tspans_signales(self):
         """Fusionner des tspans est une APPROXIMATION : il faut le dire."""
         svg = ('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200">'
