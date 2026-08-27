@@ -2,9 +2,9 @@
 
 ## ⚡ REPRISE : COMMENCER ICI (session du 2026-08-27)
 
-**Etat : 8 plans sur 11 livres — 27,07 s / 42,75 s = 63 %.**
-Livrables valides par Aziz : `plan0{1..5}-FINAL.mp4` · plan 6 (`plan06_v7`) ·
-plan 7 (`plan07_v7`) · plan 8 (`plan08_v11`). A promouvoir en FINAL.
+**Etat : 9 plans sur 11 CODES — 28,07 s / 42,75 s = 66 %.**
+⚠️ Le plan 9 (`plan09_v3`) est code et mesure, **en attente de validation d'Aziz**.
+Livrables valides : `plan0{1..8}-FINAL.mp4` (les plans 6, 7 et 8 ont ete promus).
 Code : `src/projects/_client-sim/foster/scenes/Plan0{1..8}*.tsx`
 Branche : `feat/repro-foster`.
 
@@ -18,9 +18,14 @@ plutot que d'attaquer la fin avec un contexte sature.
 
 | # | Bornes | Contenu | Notre brique | Difficulte |
 |---|---|---|---|---|
-| 9 | 27,07 -> 28,07 s | Transition (1 s) | a MESURER — le tableau ne dit rien | faible |
+| 9 | 27,07 -> 28,07 s | ✅ CODE — la plaque Billing vue EN ENTIER, pan horizontal pur | `Plan09PullBack` (PageCam) | faite |
 | 10 | 28,07 -> 40,46 s | Typo sur degrade vert-brun, montee vers le CTA « Foster With Clarity / Certainty / Confidence » | meme moteur que les plans 3 et 5 (typo) | **le plus long : 12,4 s** |
 | 11 | 40,46 -> 42,75 s | Fondu au noir, texture pointillee | trivial | faible |
+
+⭐ **MESURE UTILE POUR LE PLAN 10** : sa 1re frame (28,067 s) porte DEJA le mot
+« Not » — la typo du CTA commence donc par une phrase NEGATIVE, elle n'ouvre pas
+directement sur « Foster With ». Fond mesure a l'entree : vert tres sombre
+(16, 32, 27) de moyenne.
 
 **PUIS** : SFX + musique sur l'ensemble, et assemblage des 11 plans.
 ⛔ Rappel de la fiche UI-PRODUIT : **PAS de whoosh sur les coupes d'UI** (retire
@@ -42,6 +47,78 @@ gardant l'audio normal, indetectable sur des frames isolees.
 5. ⭐⭐ **RAPPELER l'appel externe EN COURS de correction**, pas seulement au
    demarrage (5 rendus perdus au plan 7 faute de l'avoir fait).
 6. ⭐⭐ **Reprendre le releve LIGNE PAR LIGNE avant de declarer fini.**
+
+### ✅ PLAN 9 — CODE ET MESURE (27/08), en attente de validation
+`Plan09PullBack.tsx` · 30 frames · `plan09_v3.mp4`.
+
+⛔⛔ **LE TABLEAU DISAIT « transition (1 s) » : C'EST UN PLAN A PART ENTIERE** — la
+plaque Billing vue EN ENTIER, dernier temps du dashboard. Les 2 coupes qui
+l'encadrent sont franches et mesurees (diff inter-frames 94,3 a 27,067 s et 150,5
+a 28,067 s, contre ~3 hors coupe).
+
+⭐⭐ **ET CE N'EST PAS UN PULL BACK, MALGRE L'IMPRESSION.** La bbox de la plaque
+mesuree frame par frame donne **W = 1678 et H = 904, CONSTANTS a 1 px pres** sur
+toute la duree : c'est un **PAN HORIZONTAL PUR** de 79 px vers la gauche, fortement
+amorti (55 px dans les 200 premieres ms). Le sentiment d'ouverture vient de la
+COUPE qui precede, pas d'un mouvement d'echelle. J'ai failli coder un dezoom —
+c'est exactement le piege n°2 de ce fichier (« ne jamais convertir une impression
+en facteur sans mesurer le rapport reel »), evite cette fois-ci par la mesure.
+
+**Resultat mesure** : largeur a 1 px de la reference (1679 vs 1678), positions de
+depart et d'arrivee exactes, ecart moyen 5 px sur x0 (concentre au milieu du
+mouvement : notre exponentielle descend un peu plus vite). Easing retenu :
+`Easing.out(Easing.exp)` — la decroissance mesuree va de 8,00 a 0,02 en 30 frames.
+
+### ⭐⭐⭐ LE VRAI ENSEIGNEMENT DU PLAN 9 : UN TROU CACHE PAR LE CADRAGE DU PLAN 8
+La v1 sortait une plaque dont **tout le bas etait un aplat creme**. Diagnostic :
+l'etat `billing` de `live-page/billing.html` **n'a jamais contenu le tableau des
+lignes** — il s'arretait au titre « Per-council billing ». Le plan 8 ne l'avait
+jamais montre parce qu'il zoome a 1,55 sur les montants du HAUT : le vide restait
+hors cadre. Le plan 9, qui cadre la plaque entiere, l'a expose.
+⭐ **Un defaut d'asset peut dormir plusieurs plans avant d'etre vu — ce n'est pas
+le plan qui le revele qui l'a introduit.** Le tableau (7 lignes, colonnes COUNCIL /
+PACKAGE / MONTHLY / ANNUAL / STATUS) a ete ajoute a la page et la plaque recapturee.
+
+⚠️ **CONSEQUENCE SUR LE PLAN 8, A ARBITRER PAR AZIZ** : `dash-billing.png` est la
+plaque que le plan 8 utilise DIRECTEMENT. Le re-rendu du plan 8 donne une diff
+moyenne de 8 a 9 (donc non nulle) : son bas de cadre, jusqu'ici vide, affiche
+desormais le tableau. Cadrage, pan et montants sont inchangés — verifie sur 3
+frames. C'est une amelioration, mais elle touche un plan DEJA VALIDE : ne pas
+re-promouvoir `plan08-FINAL.mp4` sans l'accord d'Aziz.
+
+⛔ **ECART ASSUME (non corrige)** : notre fenetre d'app a un ratio de **1,904**
+contre **1,856** pour la reference — a largeur egale elle est **22 px trop plate**
+(2,4 %), et son contenu demarre ~70 px plus bas. La cause est la FORME de la
+fenetre dans la page HTML, pas le cadrage (ni le zoom ni le cy n'y changeraient
+rien). Corriger imposerait de retoucher le CSS et de recapturer les plaques du
+plan 8 valide. Vu le contrat (structure + gestes) et la regle de cadence d'Aziz
+sur les plans courts, laisse tel quel.
+
+⛔ **Gotcha outil rencontre** : `puppeteer` n'est PAS installe dans ce projet (ni
+localement ni en global) — `capture-foster-billing.mjs` echoue en
+`ERR_MODULE_NOT_FOUND`. Les NAVIGATEURS, eux, sont en cache. Capture faite en
+ligne de commande, sans rien installer :
+`~/.cache/puppeteer/chrome-headless-shell/mac_arm-152.0.7977.54/chrome-headless-shell-mac-arm64/chrome-headless-shell --headless --force-device-scale-factor=2 --window-size=1920,1080 --screenshot=<out> <url>`
+(les erreurs `CVDisplayLinkCreateWithCGDisplay` sont cosmetiques sur macOS.)
+⚠️ Ce chemin de contournement ne regenere PAS `dash-layout.json` ni les decoupes —
+verifie : layout identique, MD5 des decoupes inchanges, donc plan 8 non impacte
+au-dela de la plaque elle-meme.
+
+⛔ **Contrainte structurelle trouvee par le calcul, pas par le dosage** : a la bonne
+echelle, le bord gauche de la page tombait **a +67 px DANS le cadre** — aucune
+valeur de `cx` ne pouvait le sauver, PageCam remplissant le hors-champ avec son
+`#faf7f2` (code EN DUR, aucune prop de fond). `PageCam` etant partage avec
+noteshield, on n'y a pas touche : on a **adapte l'ENTREE** (regle 3 du protocole).
+`dash-billing-wide.png` = la plaque elargie de 130 px de page de chaque cote,
+remplis avec le PROFIL VERTICAL du fond echantillonne sur ses propres colonnes de
+bord. ⚠️ `PageCam` force `width: 1920` : une plaque plus large se comprimerait,
+d'ou `pageH = 951` (hauteur proportionnelle).
+
+⚠️ **Defaut de structure repere dans `src/Root.tsx` (NON corrige, hors scope)** :
+le `<Folder name="client-sim-foster">` est ouvert puis un `<Folder
+name="atlas-peste-1347">` est imbrique dedans et contient les compositions Foster.
+La correction annoncee en commentaire n'est appliquee qu'a moitie. La toucher
+deplacerait les 9 compositions d'un coup — a faire deliberement, pas en passant.
 
 ### ✅ PLAN 8 — FAIT ET VALIDE (27/08)
 2 plaques capturees + decoupes + `PageCam`. Verdict d'Aziz : « l'UI est tres bien

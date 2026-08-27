@@ -112,6 +112,33 @@
   .search { margin-left:auto; width:420px; background:#fff; border:1px solid #e6e1d8;
             border-radius:14px; padding:14px 20px; font-size:16px; color:#a8b0ab; }
 
+  /* ── TABLEAU DE FACTURATION (etat billing) ──
+     ⛔ Ajoute le 2026-08-27 pour le PLAN 9. L'etat `billing` s'arretait au titre
+     « Per-council billing » : le bas de la plaque etait un grand aplat creme.
+     Invisible au plan 8 (zoom 1,55 sur les montants du haut, le vide restait
+     hors cadre), mais le plan 9 cadre la plaque ENTIERE et l'exposait —
+     42 % du cadre en blanc. La reference y montre bien 7 lignes. */
+  .bt { margin-top:18px; }
+  .bt-head { display:flex; align-items:center; gap:14px; padding:0 0 12px;
+             border-bottom:1px solid #ece7df; font-size:12px; letter-spacing:0.7px;
+             color:#a8b0ab; text-transform:uppercase; }
+  .brow { display:flex; align-items:center; gap:14px; padding:13px 0;
+          border-bottom:1px solid #f2eee7; }
+  .brow .av { width:30px; height:30px; }
+  .c-council { width:300px; display:flex; align-items:center; gap:11px;
+               font-size:15px; color:#1d2b24; font-weight:600; }
+  .c-package { width:330px; display:flex; align-items:center; gap:8px; }
+  .c-month { width:150px; text-align:right; font-size:15px; color:#1d2b24; }
+  .c-annual { width:170px; text-align:right; font-size:15px; color:#1d2b24; }
+  .c-status { margin-left:auto; display:flex; align-items:center; gap:11px;
+              font-size:14px; color:#2b3833; }
+  .sw { width:38px; height:22px; border-radius:999px; background:#3f7a5e;
+        position:relative; }
+  .sw::after { content:''; position:absolute; top:3px; right:3px; width:16px;
+               height:16px; border-radius:50%; background:#fff; }
+  .dots { display:flex; gap:5px; }
+  .dots i { width:9px; height:9px; border-radius:50%; background:#cfd6d1; }
+
   [hidden] { display:none !important; }
 </style>
 </head>
@@ -202,6 +229,16 @@
             <p>Live package rates &middot; click a row to open council</p>
           </div>
           <div class="search">Search by council or plan&hellip;</div>
+        </div>
+        <div class="bt">
+          <div class="bt-head"><span class="c-council">Council</span><span class="c-package">Package</span><span class="c-month">Monthly</span><span class="c-annual">Annual</span><span class="c-status">Status</span></div>
+          <div class="brow" data-capture="brow"><span class="c-council"><i class="av"></i><span class="dots"><i></i><i></i><i></i></span></span><span class="c-package"><span class="tag b">Core</span><span class="tag b">No subscription</span></span><span class="c-month">&pound;49</span><span class="c-annual">&pound;588</span><span class="c-status"><span class="sw"></span>Active</span></div>
+          <div class="brow" data-capture="brow"><span class="c-council"><i class="av"></i><span class="dots"><i></i><i></i><i></i><i></i><i></i><i></i></span></span><span class="c-package"><span class="tag b">Core</span><span class="tag b">No subscription</span></span><span class="c-month">&pound;49</span><span class="c-annual">&pound;588</span><span class="c-status"><span class="sw"></span>Active</span></div>
+          <div class="brow" data-capture="brow"><span class="c-council"><i class="av"></i><span>Alexa Stevenson</span></span><span class="c-package"><span class="tag b">Starter</span><span class="tag">Subscribed</span></span><span class="c-month">&pound;1,225</span><span class="c-annual">&pound;14,700</span><span class="c-status"><span class="sw"></span>Active</span></div>
+          <div class="brow" data-capture="brow"><span class="c-council"><i class="av"></i><span>Alyssa Cunningham</span></span><span class="c-package"><span class="tag b">Starter</span><span class="tag b">Payment failed</span></span><span class="c-month">&pound;1,225</span><span class="c-annual">&pound;14,700</span><span class="c-status"><span class="sw"></span>Active</span></div>
+          <div class="brow" data-capture="brow"><span class="c-council"><i class="av"></i><span>Apex Care</span></span><span class="c-package"><span class="tag b">Daily Stater</span><span class="tag b">Payment failed</span></span><span class="c-month">&pound;2,450</span><span class="c-annual">&pound;29,400</span><span class="c-status"><span class="sw"></span>Active</span></div>
+          <div class="brow" data-capture="brow"><span class="c-council"><i class="av"></i><span>Apex Care</span></span><span class="c-package"><span class="tag b">Growth</span><span class="tag">Subscribed</span></span><span class="c-month">&pound;5,880</span><span class="c-annual">&pound;70,560</span><span class="c-status"><span class="sw"></span>Active</span></div>
+          <div class="brow" data-capture="brow"><span class="c-council"><i class="av"></i><span>Apex Care</span></span><span class="c-package"><span class="tag b">Core</span><span class="tag b">No subscription</span></span><span class="c-month">&pound;49</span><span class="c-annual">&pound;588</span><span class="c-status"><span class="sw"></span>Active</span></div>
         </div>
       </div>
     </div>
