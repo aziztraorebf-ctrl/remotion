@@ -78,3 +78,24 @@ Remotion, et le `.mp4` n'existe pas — sans la moindre erreur affichee.
 
 ✅ **Fix** : lancer le typecheck et le render dans **deux commandes separees**, ou
 terminer le grep par `|| true`.
+
+
+---
+
+# ⛔ `interpolate` : bornes STRICTEMENT croissantes (piege du « pas de fondu de sortie »)
+
+```tsx
+// ⛔ PLANTE : « je veux qu'il reste affiche jusqu'a la coupe a 11,44 s »
+interpolate(t, [9.7, 9.95, 11.44, 11.44], [0, 1, 1, 0])
+//  Error: inputRange must be strictly monotonically increasing
+```
+
+Deux bornes egales suffisent a faire echouer le render **a la frame 0**.
+
+✅ **Fix** : borner AU-DELA de la fin du plan, l'element reste alors visible
+jusqu'a la coupe : `interpolate(t, [9.7, 9.95, 12.5, 13.0], [0, 1, 1, 0])`.
+
+⚠️ **Le job de render sort en `exit code 0` malgre l'echec** — la notification dit
+« completed », mais aucun fichier n'est produit. **Toujours verifier le FICHIER
+(existence + `nb_frames` attendu), jamais le statut du job.** Vaut pour tout render
+lance en arriere-plan.

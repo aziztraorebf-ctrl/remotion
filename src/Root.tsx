@@ -431,6 +431,7 @@ import { FlatLaptopMotion, FlatPhoneMotion } from "./projects/_shared/_demos/dev
 import { PhoneOnDesk, PhoneOnDeskExec, LaptopOnDesk, LaptopOnDeskLight, LaptopOnDeskDark } from "./projects/_shared/_demos/devices/DeviceInScene";
 import { Plan01Lockscreen } from "./projects/_client-sim/foster/scenes/Plan01Lockscreen";
 import { Plan02NotifStack } from "./projects/_client-sim/foster/scenes/Plan02NotifStack";
+import { Plan03Typo } from "./projects/_client-sim/foster/scenes/Plan03Typo";
 import { DeviceBenchPhone, DeviceBenchLaptop, DeviceBenchPhoneVision, DeviceBenchPhoneVisionBlindLights, DeviceBenchPhoneOrigVisionLights } from "./projects/_shared/_demos/devices/DeviceBench";
 import { JetonWarMap3DCompare } from "./projects/_shared/_demos/JetonWarMap3DCompare";
 import { RapidFireCountries } from "./projects/_shared/mapbox/RapidFireCountries";
@@ -733,6 +734,15 @@ export const RemotionRoot: React.FC = () => {
       
       
       <Folder name="atlas-peste-1347">
+        {/* FOSTER plan 3 : 5,597 -> 11,44 s = 175 frames a 30 fps. */}
+        <Composition
+          id="FosterPlan03"
+          component={Plan03Typo}
+          durationInFrames={175}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
         {/* FOSTER plan 2 : 1,602 -> 5,597 s = 120 frames a 30 fps (coupes MESUREES). */}
         <Composition
           id="FosterPlan02"

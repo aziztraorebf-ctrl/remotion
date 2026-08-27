@@ -248,6 +248,46 @@ decor ne couvre pas) a tranche en 1 passe. **Le protocole disait de mesurer des 
 `backgroundImage` + `backgroundSize` sur la couche, **jamais une `<Img>` positionnee
 a la main** (arithmetique de position = source d'erreur repetee).
 
+
+## PLAN 3 (5,597 -> 11,44 s) — LE PIVOT PROBLEME -> SOLUTION
+
+> ⚠️ Le tableau n'avait que la MOITIE : il annoncait « typo *Still unresolved,*
+> mot par mot » et placait « Introducing » dans un autre plan. **Tout est dans le
+> meme plan**, et son evenement central est le BASCULEMENT NOIR -> VERT.
+
+| t (abs) | evenement |
+|---|---|
+| 6,20 | « 09:00 Am » |
+| 6,80 | « **04:00 Pm** » — l'heure a CHANGE : le temps passe, la demande reste |
+| 8,00 -> 9,20 | « Still unresolved, Still overwhelming » mot par mot |
+| 9,80 | la phrase s'estompe, **le degrade vert monte**, « Introducing » |
+| 10,40 -> 11,30 | « Introducing x FosterWith » |
+| 11,44 | coupe (des rectangles blancs entrent) |
+
+**Typo mesuree** : la phrase occupe **55 % de la largeur** du cadre => police
+**70 px** (62 px donnait 48,4 %). Ligne placee a **46,5 %** de hauteur, pas 50 %.
+⭐ Les mots deja poses restent BLANCS, celui qui arrive est GRIS puis s'eclaircit —
+ce n'est pas un fondu global, c'est ce qui donne la sensation d'ecriture.
+
+### ⛔⛔ LE DEGRADE VERT : la FORME etait fausse, pas le dosage (3 versions)
+v1 trop saturee, v2 sur-corrigee dans l'autre sens — **l'aller-retour classique**.
+La sortie est venue d'une MESURE du profil vertical (canal vert moyen par bande de
+10 % de hauteur) :
+
+| bande | 40-50 | 50-60 | 60-70 | 70-80 | 80-90 | 90-100 |
+|---|---|---|---|---|---|---|
+| REF | 12 | 28 | 42 | 58 | **59** | **49 (redescend)** |
+
+⭐ **Ce n'est PAS un halo centre sous le cadre** (ce que modelisaient mes v1 et v2,
+donc aucune ne pouvait tomber juste) : c'est une **BANDE lumineuse dont le coeur est
+a 85 % de hauteur et qui s'attenue au bord inferieur**. Modelise en
+`linear-gradient` a paliers cales sur ces valeurs.
+Puis intensite divisee par **2,55** (facteur mesure au rendu : 159 de vert moyen au
+coeur contre 59 attendu). Resultat final : ecart de -2 a +3 par bande.
+
+**Lecon** : quand deux dosages successifs ratent dans des sens opposes, ce n'est pas
+le dosage — **c'est la forme du modele**. Mesurer un PROFIL, pas une valeur.
+
 ## CE QUI EST DÉJÀ PRÊT (acquis de la session 2026-08-25/26)
 - `devices/PhoneModel` · `LaptopModel` — mockups procéduraux, écran = zone d'accueil
 - `devices/DeviceInScene` — objet posé dans un décor, ombre 3 couches, allumage 0,30 s
