@@ -400,6 +400,57 @@ le temps du PLAN. Une vignette qui arrive tard rejoint un nuage DEJA en rotation
 ⚠️ Reste un ecart visible : nos vignettes se CHEVAUCHENT plus que dans la reference,
 qui reste plus aeree (lie au resserrement du nuage, pas a la rotation).
 
+
+## PLAN 5 (13,59 -> 17,40 s) — LE DIAGRAMME DU SYSTEME, PUIS LA PLONGEE
+
+⛔ Le tableau annoncait « suite typo sur degrade vert ». **FAUX sur toute la ligne.**
+Le plan contient un **DIAGRAMME CIRCULAIRE des acteurs du placement familial** :
+« FosterWith » dans un disque blanc au centre, orbite pointillee, et 4 etiquettes —
+**FOSTER CARER · COUNCILS & IFAS · SOCIAL WORKER · CHILD**. Puis un zoom traversant
+plonge dans le disque. Et le degrade est **DORE**, pas vert (le vert etait au plan 3).
+
+### ⭐⭐⭐ PREMIER PLAN AVEC ANALYSE/ANIMATION SEPAREE — et ca a paye immediatement
+Protocole propose par Aziz, outil : `scripts/tools/motion-breakdown.py` (Gemini
+video native + GPT frames 6 fps, en parallele, **63 s**).
+**4 details releves par les modeles que j'aurais rates** :
+1. le texte **CHANGE DE COULEUR** (« Foster » noir sur le disque blanc -> gris clair
+   une fois le disque parti). Sans ca il devient invisible.
+2. **PARALLAXE** : le disque grandit BEAUCOUP plus vite que le texte qu'il contient.
+   Ils ne sont pas solidaires.
+3. **FONDU CROISE** texte/globe, pas une coupe.
+4. les etiquettes **NE TOURNENT PAS sur elles-memes** — leur texte reste horizontal.
+   (Exactement le type de detail rate au plan 4.)
+⛔ **Aucun modele n'a donne une seule VALEUR** — tous les chiffres viennent de mes
+mesures. C'est la repartition juste : **ils decrivent QUOI, je mesure COMBIEN.**
+✅ GPT a vu **4 etiquettes**, Gemini seulement 3 : la double voix se justifie.
+
+### MESURES
+- Disque : 13 px -> **PIC A 245** vers 13,95 -> se cale a **210**. C'est un `spring`
+  avec OVERSHOOT, pas un grossissement simple.
+- Orbite : ellipse centree (910,540), rayons 300 x 330 (decentree a gauche du disque).
+- Etiquettes, apparition mesuree, **intervalle regulier de 0,26 s** :
+  FOSTER CARER 14,47 · COUNCILS 14,73 · SOCIAL WORKER 14,99 · CHILD 15,25.
+- Texte final : **30,3 % de la largeur** du cadre (le mien faisait 40,8 % => x0,74).
+
+### ⛔⛔ LE DEGRADE DORE : 3 VERSIONS, ET LA LECON PORTE SUR LA MESURE ELLE-MEME
+1. `linear-gradient` : bord horizontal NET, la reference est diffuse.
+2. `radial-gradient` centre : clair au CENTRE, sombre aux BORDS.
+3. ✅ `linear` tres etale : une NAPPE qui couvre tout le bas.
+
+⭐⭐⭐ **Le profil par BANDES HORIZONTALES donnait des valeurs quasi identiques**
+(ecarts de 1 a 15 sur 26..186) — j'en avais conclu « le dore est deja juste ».
+**Il ne l'etait pas : une moyenne par bande ne voit PAS la forme.**
+C'est le profil par **COLONNES** qui a tranche :
+| | gauche | centre | droite |
+|---|---|---|---|
+| REF | 199 | 149 | 210 |
+| v3 | 77 | 147 | 77 |
+=> la reference est **plus lumineuse AUX BORDS qu'au centre** : ce n'est pas un halo,
+c'est une nappe. (Le creux central vient du TEXTE qui masque le dore, pas du degrade.)
+
+**REGLE** : mesurer ne suffit pas — il faut **mesurer selon le BON AXE**. Une
+statistique aveugle a la difference reelle donne une fausse validation.
+
 ## CE QUI EST DÉJÀ PRÊT (acquis de la session 2026-08-25/26)
 - `devices/PhoneModel` · `LaptopModel` — mockups procéduraux, écran = zone d'accueil
 - `devices/DeviceInScene` — objet posé dans un décor, ombre 3 couches, allumage 0,30 s
