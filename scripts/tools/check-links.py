@@ -72,7 +72,13 @@ def scan_file(path, label=None, base_dir=None):
     full = path if os.path.isabs(path) else os.path.join(ROOT, path)
     if not os.path.exists(full):
         return [("-", label, False, "FICHIER NAV ABSENT")]
-    resolve_dir = base_dir or ROOT
+    # ⛔ 3e occurrence du meme pattern (2026-08-27, wrap) : le script rapportait « OK, aucun lien
+    # mort » alors que NEXT-ACTION.md portait 4 liens RELATIFS casses. Cause : sans base_dir, les
+    # liens courts etaient resolus depuis ROOT, alors qu'un lien markdown se resout depuis le
+    # DOSSIER DU FICHIER qui le contient. `[x](projects/A.md)` ecrit dans memory/NEXT-ACTION.md
+    # pointe sur memory/projects/A.md, pas sur projects/A.md.
+    # Defaut de RESOLUTION cette fois, pas seulement de couverture.
+    resolve_dir = base_dir or os.path.dirname(full) or ROOT
     results = []
     with open(full, encoding="utf-8", errors="ignore") as f:
         for i, line in enumerate(f, 1):
@@ -85,8 +91,11 @@ def scan_file(path, label=None, base_dir=None):
             for c in SHORT_REL_RE.findall(line):
                 if "*" in c or "|" in c:
                     continue
-                target = os.path.join(resolve_dir, c)
-                results.append((i, c, os.path.exists(target), label))
+                # valide si le lien resout depuis le dossier du fichier (comportement markdown
+                # reel) OU depuis ROOT (convention historique de certains fichiers de navigation)
+                ok = (os.path.exists(os.path.join(resolve_dir, c))
+                      or os.path.exists(os.path.join(ROOT, c)))
+                results.append((i, c, ok, label))
     return results
 
 

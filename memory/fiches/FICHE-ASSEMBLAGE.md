@@ -62,11 +62,11 @@ Coût documenté : Soudan mid-form v4 (2026-07-22), **image figée ~4 minutes** 
 - **Hygiène out/** : `wip/beatN_v3.mp4` → présenté `beatN_V3.mp4` → validé `beatN-FINAL.mp4` → `out/PRET-PUBLICATION/<ep>-FINAL.mp4`. Jamais de fichier à la racine de `out/`, jamais de dossier par date. À validation : promouvoir `versions/` → FINAL, purger `wip/` + `versions/`.
 
 ## PRÉSENTER À AZIZ (il est sur mobile)
-- **Uploader AVANT de présenter, jamais un chemin local.** ⛔⛔ **QUOTA VERCEL BLOB : le plan gratuit est à 75 % de sa limite mensuelle** (décision Aziz 2026-08-17) — Vercel Blob est réservé aux **MP4 / rendus vidéo**, PAS aux images ni au reste.
-  - **MP4 / rendu vidéo → Vercel Blob** : `python3 scripts/tools/upload-to-blob.py <fichier> --folder <dossier>`.
-  - **PNG / image / autre → catbox → Imgur → uguu → Litterbox** (ordre CLAUDE.md § Communication mobile, TOUJOURS valide). catbox est instable (HTTP 200 + `content-length: 0` silencieux) → **vérifier `curl -sI <url> | grep content-length` avant de donner le lien**. uguu ~3 h de rétention, Litterbox 72 h.
-  - **Page HTML → ni Blob ni catbox** (voir ligne suivante).
-- **Page HTML → ⛔ JAMAIS Vercel Blob ni catbox** (confirmé 2×) → `~/.claude/skills/atlas-video-preproduction/scripts/publish-here-now.sh`. Page autonome (CSS/JS inline, images `data:`).
+- **Uploader AVANT de présenter, jamais un chemin local.** ⭐⭐⭐ **ARTIFACT = LE DÉFAUT** (décision Aziz 2026-08-27) : image, page HTML **et vidéo compressée**, tant que la page tient sous **16 Mo**. Je le crée et le mets à jour moi-même, sans script ni hôte externe.
+  - **Image · page HTML · vidéo < 16 Mo → ARTIFACT.** ⭐ **1 page par SUJET**, enrichie toute la session (même URL redéployée) — le lien vit dans le **STARTER de reprise du sujet**, ⛔ jamais dans `MEMORY.md`.
+  - **Rendu > 16 Mo → Vercel Blob** : `python3 scripts/tools/upload-to-blob.py <fichier> --folder <dossier>`. Réservé à ça (quota à 75 %). Mesuré le 27/08 sur 60 rendus : un **BEAT** fait 2,4 Mo de médiane (100 % passent en Artifact), un **ASSEMBLAGE complet** 230-400 Mo → Blob. La coupure tombe sur la nature du livrable.
+  - **Blob ou Artifact indisponible → catbox → Litterbox.** catbox est instable (HTTP 200 + `content-length: 0` silencieux) → **vérifier `curl -sI <url> | grep content-length` avant de donner le lien**. uguu ~3 h de rétention, Litterbox 72 h.
+- **Page HTML → ⛔ JAMAIS Vercel Blob ni catbox** (confirmé 2×) → **Artifact**. Repli si la page dépasse 16 Mo (HTML avec vidéos lourdes) : `~/.claude/skills/atlas-video-preproduction/scripts/publish-here-now.sh`. Page autonome (CSS/JS inline, images `data:`).
 **Page HTML avec des VIDÉOS → GitHub Pages** (here.now sert aussi les `.mp4` : `video/mp4` +
 `accept-ranges` + HTTP 206 vérifiés le 2026-08-21, son API accepte un TABLEAU de fichiers). 3 gotchas
 payés : (1) **`workflow_dispatch` n'est déclenchable que si le workflow est sur la branche par défaut** —
@@ -90,14 +90,15 @@ heterogenes (notre cas : extraits Mapbox + D3 + motion melanges), `xfade` echoue
 ℹ️ La fiche couvrait le `concat` (raccord franc), pas le fondu. Zero occurrence de `xfade` dans
 `scripts/` et `memory/` avant ce jour.
 
-## ARTIFACT CLAUDE = APERCU, JAMAIS HEBERGEUR (mesure 2026-08-23)
+## ARTIFACT = LE DÉFAUT, BORNÉ À 16 Mo/PAGE (mesures 2026-08-23, conclusion révisée le 08-27)
 
 L'artifact **affiche bien** la video (`data:video/mp4;base64`, lecture confirmee) — ce n'est pas la
 lecture qui bloque, c'est le POIDS. **Plafond 16 Mo/page, et le base64 coute x1,34.**
 Mesure : 4 showcases = **41,6 Mo bruts -> 55,4 Mo encodes** = impossible.
 La version qui passe : `-crf 30 -vf scale=620:-2` -> **0,27-0,56 Mo par video, 2,18 Mo la page**.
 -> Calcul avant d'essayer : **~12 Mo de video brute maximum** par page, tout compris.
--> Le lien de livraison d'un MP4 reste Vercel Blob. Pour les **IMAGES**, l'artifact reste le 1er choix.
+-> ⭐ Ce plafond n'EXCLUT plus la vidéo, il la BORNE : un **beat** (2,4 Mo de médiane) part en
+Artifact, un **assemblage complet** (230-400 Mo) part en Blob. Images et HTML : Artifact d'office.
 
 ⚠️ **Une vignette extraite d'une video recadree DEPUIS est perimee** — elle montre l'ancien
 decoupage, sans erreur. Test : `[ vignette -nt video ] || echo PERIME`.

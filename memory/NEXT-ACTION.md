@@ -1,6 +1,6 @@
 # NEXT-ACTION — Recommandations actives
 
-## ⭐⭐⭐ CHANTIER ARMÉ — REPRODUIRE « Foster With Confidence » de A à Z
+## ⭐⭐⭐ REPRO FOSTER — EN COURS · ⛔ compteur dans `projects/REPRO-FOSTER.md` § REPRISE (jamais recopié ici)
 > ⚠️ **Ordre à trancher par Aziz** : décidé le 2026-08-26 *avant* le recadrage Lottie de fin de
 > session, qui a verrouillé « contrôle qualité automatique PUIS Khartoum, et rien d'autre ».
 > Les deux viennent d'Aziz — je ne réordonne pas seul. À enchaîner, ou à faire d'abord ?
@@ -67,7 +67,7 @@ toute action sur cette annonce — un résumé ne le remplace pas (2 erreurs pay
 
 ---
 
-## ⭐⭐⭐ LOTTIE — une PIÈCE LIVRABLE existe (26 août) · suite : CONTRÔLE QUALITÉ puis Khartoum
+## ⭐⭐ LOTTIE — chaîne PROUVÉE, pièce livrable acquise · ⏭️ en attente : contrôle qualité puis Khartoum
 
 **La maison-gaz est un livrable, pas une démo** : 1346×805, 9,6 s, 6 blocs nommés, **16 Ko**
 en `.lottie`, validée par Aziz dans Creator (blocs dépliables, animation qui joue).
@@ -262,10 +262,10 @@ si le workflow tient sans explication. Si oui → on le grave. Sinon → on note
 > ⚠️ **Priorité 1 reste GAZODUC Acte 3** (seul chantier avec un livrable bloquant + une action spécifiée au pixel près). Ce chantier-ci est exploratoire : le prendre quand l'Acte 3 est soldé, ou dans une session dédiée comme Aziz les mène d'habitude.
 
 **Enjeu** : on tient peut-être la voie pour produire de VRAIS inserts animés de scènes (cf. règle des
-3 plans → [MOTEURS-VISUELS-ET-SOCLE](../doctrines/MOTEURS-VISUELS-ET-SOCLE.md) § LE RACCORD, statut PISTE CADRÉE : 1 seul cas, MESO jamais traversé), **sans passer par les modèles propriétaires** (Seedance 2.5 à 4,17 $, Omni à 1,10 $).
+3 plans → [MOTEURS-VISUELS-ET-SOCLE](doctrines/MOTEURS-VISUELS-ET-SOCLE.md) § LE RACCORD, statut PISTE CADRÉE : 1 seul cas, MESO jamais traversé), **sans passer par les modèles propriétaires** (Seedance 2.5 à 4,17 $, Omni à 1,10 $).
 **Acquis de la session du 18/08** : éditer l'image source (Gemini, ~0,10 $) + régénérer H3 avec le seed
 d'origine (GPU Comfy, **0 crédit**) donne un clip jugé par Aziz *« quasiment une copie image par image »*
-— artefact d'origine compris. Recette complète : [edition-video-ciblee-omni-seedance](../tools/edition-video-ciblee-omni-seedance.md).
+— artefact d'origine compris. Recette complète : [edition-video-ciblee-omni-seedance](tools/edition-video-ciblee-omni-seedance.md).
 **À tester la prochaine fois** : le style **Vector Poster** et le style **storyboard Sunjata** sur ce même
 chemin. Si ça tient → argument B2B/freelance direct (scène quasi-identique reproductible, coût ~0 $).
 **⛔ La seule limite connue à lever** : l'audio est RÉGÉNÉRÉ (corrélation 0,46, la voix change).
@@ -290,8 +290,8 @@ musique) → index interne 3-4 min → **cut vente 60-90 s**. ⛔ Ne plus annonc
 vivant à halos au lieu d'aplat `#16213a`) — ~1/2 journée, ⛔ **zéro composant neuf à coder**. C'est le
 chaînon manquant du cut vente, identifié par le benchmark de 3 références Fiverr. Ensuite seulement :
 déroulé (ordre/durée/musique) → index interne 3-4 min → cut vente 60-90 s.
-→ **[SHOWCASE-CAPACITES.md](memory/projects/SHOWCASE-CAPACITES.md)** (§ Benchmark ÉLARGI + § CE QUI
-MANQUE VRAIMENT) · **[planche-contact = archive](memory/projects/SHOWCASE-PLANCHE-CONTACT.md)**
+→ **[SHOWCASE-CAPACITES.md](projects/SHOWCASE-CAPACITES.md)** (§ Benchmark ÉLARGI + § CE QUI
+MANQUE VRAIMENT) · **[planche-contact = archive](projects/SHOWCASE-PLANCHE-CONTACT.md)**
 
 ## 💼 GIG FIVERR ENTRÉE DE GAMME (2026-08-12/13)
 

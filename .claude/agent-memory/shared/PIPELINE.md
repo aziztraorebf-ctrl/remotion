@@ -280,28 +280,13 @@ TodoWrite cross-agent.
 > Un agent ajoute son entrée en terminant son stage. **Elle se supprime** une fois le stage suivant
 > engagé — l'état durable va dans `memory/episodes/<ep>/STATUS.md`.
 
-## CIRCUIT BREAKER RE-OPEN — Plan06GoogleEarth.tsx (2026-08-27)
+## REPRO FOSTER — état courant
 
-**Pourquoi le compteur a saute** : 6 editions successives, mais ce ne sont PAS 6 tentatives
-ratees sur le meme defaut. Sequence reelle : 1-2 ecriture initiale, 3 garde-fou token,
-4 synchro tuiles par frame, 5 choix du style justifie, 6 zoom de depart corrige par mesure.
-C'est de la construction incrementale, pas une boucle de dosage.
+> ⛔ **Le compteur d'avancement vit dans `memory/projects/REPRO-FOSTER.md` § REPRISE.**
+> Ne pas le recopier ici : le 2026-08-27, trois fichiers portaient trois valeurs
+> différentes (5/11, « plan 6 », 7/11) dont deux dans le même MEMORY.md.
 
-**Direction confirmee, inchangee** : reproduire le plan 6 de « Foster With Confidence »
-(17,40 -> 18,45 s) — globe satellite puis plongee vers le Nebraska — avec Mapbox
-frame-driven. Le geste et les valeurs viennent de MESURES sur la reference, pas
-d'impressions (protocole REPRO-FOSTER etape 2).
-
-**Etat au moment de la reouverture** : v1 rendue et REGARDEE. La mecanique marche
-(globe, projection, plongee, labels, flou de sortie). 3 ecarts MESURES restent :
-| Ecart | Mesure | Correction |
-|---|---|---|
-| Globe trop petit | 72,7 % du cadre vs 89,4 % ref | zoom depart 3,08 -> 3,38 (fait) |
-| Logo Mapbox visible | — | `MapboxBrandingHide` (fait) |
-| Dominante trop chaude | B 50,9 vs 97,4 ref (R et G justes) | desaturer + refroidir (en cours) |
-
-⭐ Le 3e point est le seul a risque : R et G etant deja bons, corriger la LUMINOSITE
-aurait laisse le desequilibre intact. On traite la cause (bleu absent), pas l'impression.
-
-**Prochaine etape** : appliquer l'etalonnage, re-rendre, mesurer a nouveau les 3 chiffres,
-puis comparatif A/B avec `proportions-diff.py` avant de montrer a Aziz.
+Plans 6 et 7 validés par Aziz le 27/08, plan 8 codé (`a2e99bfb`).
+Le bloc « circuit breaker Plan06 » qui vivait ici décrivait un étalonnage « en cours »
+déjà terminé — retiré selon la règle de ce fichier : un handoff se supprime une fois
+le stage suivant démarré.
