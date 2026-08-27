@@ -2,38 +2,55 @@
 
 ## ⚡ REPRISE : COMMENCER ICI (session du 2026-08-27)
 
-**Etat : 7 plans sur 11 livres — 23,40 s / 42,75 s = 55 %.**
-Livrables : `out/episodes/foster-repro/plan0{1..5}-FINAL.mp4` · plan 6 (`plan06_v7`)
-et plan 7 (`plan07_v7`) VALIDES par Aziz le 27/08, a promouvoir en FINAL.
-Code : `src/projects/_client-sim/foster/scenes/Plan0{1..7}*.tsx`
+**Etat : 8 plans sur 11 livres — 27,07 s / 42,75 s = 63 %.**
+Livrables valides par Aziz : `plan0{1..5}-FINAL.mp4` · plan 6 (`plan06_v7`) ·
+plan 7 (`plan07_v7`) · plan 8 (`plan08_v11`). A promouvoir en FINAL.
+Code : `src/projects/_client-sim/foster/scenes/Plan0{1..8}*.tsx`
 Branche : `feat/repro-foster`.
 
 ⚠️ **La branche a change sous nos pieds en pleine session** (un chantier parallele
 a bascule le working tree sur `chore/memoire-eviction-contexte`). Verifier
-`git branch --show-current` AVANT de commiter quoi que ce soit ici.
+`git branch --show-current` AVANT de commiter.
 
-### LA PROCHAINE ACTION : PLAN 8 (23,40 -> 27,07 s) — LE DASHBOARD QUI MONTE
-⭐ **Notre terrain le plus fort** : c'est le pilier UI PRODUIT.
-⛔ **LIRE `memory/fiches/FICHE-UI-PRODUIT.md` AVANT DE CODER** — sa regle n°1 est
-« NE PAS REDESSINER L'UI EN REACT » (on capture une vraie page, on ne la remime pas).
-⚠️ Borne de depart CORRIGEE : 23,40 s (le tableau annoncait 25,06 — mesure faite
-au plan 7). Et la transition entre 7 et 8 est un **FONDU CROISE**, pas une coupe :
-a 23,28 s le dashboard est deja superpose a la maison et les cartouches « Jenny »
-restent lisibles par-dessus, avant d'etre **recyclees dans l'UI**. Ce fondu
-appartient a l'ASSEMBLAGE des deux plans, aucun des deux composants ne le porte.
+### ⚡ LA PROCHAINE SESSION — 3 PLANS, PUIS L'AUDIO
+Decision d'Aziz (27/08) : **s'arreter ici et finir dans une session fraiche**,
+plutot que d'attaquer la fin avec un contexte sature.
+
+| # | Bornes | Contenu | Notre brique | Difficulte |
+|---|---|---|---|---|
+| 9 | 27,07 -> 28,07 s | Transition (1 s) | a MESURER — le tableau ne dit rien | faible |
+| 10 | 28,07 -> 40,46 s | Typo sur degrade vert-brun, montee vers le CTA « Foster With Clarity / Certainty / Confidence » | meme moteur que les plans 3 et 5 (typo) | **le plus long : 12,4 s** |
+| 11 | 40,46 -> 42,75 s | Fondu au noir, texture pointillee | trivial | faible |
+
+**PUIS** : SFX + musique sur l'ensemble, et assemblage des 11 plans.
+⛔ Rappel de la fiche UI-PRODUIT : **PAS de whoosh sur les coupes d'UI** (retire
+apres un retour d'Aziz — c'est un vocabulaire de mouvement physique sans rapport
+avec un logiciel). Le FlashCut visuel suffit.
+⚠️ L'assemblage est un point de vigilance connu : verifier `nb_frames` sur le flux
+VIDEO et hasher un echantillonnage dense — un concat casse peut figer l'image en
+gardant l'audio normal, indetectable sur des frames isolees.
 
 ### ⭐ LE PROTOCOLE, TEL QU'IL DOIT ETRE APPLIQUE (corrige par Aziz le 27/08)
-1. `motion-breakdown.py` AVANT de coder — **3 voix desormais** (Gemini video +
-   GPT frames + **GROK frames**, ajoute le 27/08 : le plus riche des trois).
+1. `motion-breakdown.py` AVANT de coder — **3 voix** (Gemini video + GPT frames +
+   **GROK frames**, ajoute le 27/08 : le plus riche des trois).
 2. **Trier le releve en 3 categories** : ce qu'eux seuls voient (PRENDRE) ·
    proportions (CIBLE puis verifier) · dynamique (MESURER soi-meme).
-3. Coder, rendre, mesurer.
-4. ⭐⭐ **RAPPELER l'appel externe EN COURS de correction**, pas seulement au
-   demarrage du plan. Vecu au plan 7 : 5 rendus perdus a deviner seul une
-   chronologie qu'un appel de 60 s donnait d'emblee.
-5. ⭐⭐ **Reprendre le releve LIGNE PAR LIGNE avant de declarer fini** et cocher
-   « traite / ecarte et pourquoi ». Au plan 7 ca a rapporte un point que ni la
-   mesure ni l'oeil n'auraient trouve (cf `REVUE-RELEVE-PLAN07.md`).
+3. **Chercher la brique EXISTANTE avant de coder** — c'est la lecon du plan 8.
+   ⛔ Si je me bats 2 fois contre l'outil, je prends le probleme a l'envers :
+   adapter l'ENTREE a ce que le socle sait faire, pas contourner le socle.
+4. Coder, rendre, mesurer.
+5. ⭐⭐ **RAPPELER l'appel externe EN COURS de correction**, pas seulement au
+   demarrage (5 rendus perdus au plan 7 faute de l'avoir fait).
+6. ⭐⭐ **Reprendre le releve LIGNE PAR LIGNE avant de declarer fini.**
+
+### ✅ PLAN 8 — FAIT ET VALIDE (27/08)
+2 plaques capturees + decoupes + `PageCam`. Verdict d'Aziz : « l'UI est tres bien
+reproduite, je ne vois vraiment pas de difference ; tout fonctionne tres bien ».
+⭐ Les 3 lecons de ce plan sont gravees hors de ce fichier, car elles depassent
+Foster : `memory/fiches/FICHE-UI-PRODUIT.md` (le fond fait le plan · la borne de
+pan se calcule · les bbox changent a chaque recapture) et
+`memory/key-learnings.md` (se battre contre l'outil est le signal · la regression
+silencieuse · quand 2 corrections ne bougent pas le chiffre).
 
 ### ✅ PLAN 7 — FAIT ET VALIDE (27/08)
 Clip MiniMax H3 (previs de bascule d'axe) + cartouches iOS animes.
@@ -618,9 +635,14 @@ marchait parfaitement).
 - **12 transitoires sonores en 8 s** : chaque apparition a son SFX. C'est ce qui rend
   « vrai ». ⛔ Pas de whoosh sur une UI.
 
-## PREMIÈRE ACTION DE LA PROCHAINE SESSION
-Trancher le niveau de réussite visé, puis attaquer dans l'ordre du découpage —
-les plans ✅ d'abord (ils valident le rythme), les 🔶 ensuite (ils demandent des assets).
+## ⛔ SECTION PÉRIMÉE (26/08) — conservée pour mémoire, NE PAS SUIVRE
+> « Trancher le niveau de réussite visé, puis attaquer dans l'ordre du découpage. »
+> C'était l'action du 26/08. **Le niveau est tranché depuis** (structure + gestes,
+> le pixel est un bonus) et 8 plans sur 11 sont livrés.
+> ⚠️ Deux « prochaines actions » qui se contredisent dans le même fichier, c'est
+> exactement le piège du fichier de navigation périmé contre lequel le projet met
+> en garde. **L'action courante est en TÊTE de ce fichier**, section
+> « LA PROCHAINE SESSION ».
 
 
 ## PLAN 7 (18,45 -> 23,40 s) — LA DESCENTE VERS LA MAISON  ✅ FAIT

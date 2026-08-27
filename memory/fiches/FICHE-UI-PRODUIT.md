@@ -126,3 +126,50 @@ Repo source : https://github.com/Vincentwei1021/video-shotcraft (152 fiches, 209
 Fiches lues et appliquées : `opening/brand-ink-open` · `ui-entrance/row-embed` · `ui-entrance/list-reveal` ·
 `interaction/type-and-filter` · `camera/cursor-flyover` · `sequences/promo-energy-arc`.
 ⚠️ Les fiches sont **en chinois** — lisibles par un modèle, pas par Aziz.
+
+## ⭐⭐⭐ LE FOND N'EST PAS UN DETAIL — c'est ce qui fait d'une capture un PLAN
+
+**Constat d'Aziz (2026-08-27, repro Foster plan 8)** : « au lieu d'avoir juste un
+background blanc ou noir, avoir un degrade permet de rajouter de la vie, un cote
+beaucoup plus premium — c'est peut-etre l'une des raisons pour lesquelles ils
+utilisent ceci dans l'original ».
+
+**La reference le fait, et c'est mesurable** : la fenetre de l'app est DETOUREE
+(marge ~108 px) sur un degrade vert sombre avec un halo qui monte du bas —
+teinte mesuree R30,4 G41,0 B31,3. Ce n'est ni du noir ni du blanc.
+→ Une UI collee bord a bord sur du blanc reste une CAPTURE D'ECRAN. Detouree sur
+un degrade, avec une ombre portee, elle devient un OBJET FILME. C'est le meme
+ecran, et pourtant ce n'est plus le meme registre.
+
+⛔⛔ **LE DEGRADE DOIT VIVRE DANS LA PAGE HTML, PAS DANS LE COMPOSANT REACT.**
+Paye 1 rendu : `PageCam` affiche la plaque PLEIN CADRE et masque tout ce qu'on
+pose derriere lui — un fond React n'a AUCUN effet mesurable (verifie : la teinte
+n'avait pas bouge d'un point apres correction). Le fond se regle dans le `body`
+de la page servie, puis se capture avec elle.
+
+## ⭐⭐⭐ LE PAN NE DOIT PAS DEPASSER LE BORD DE LA PAGE — ca se CALCULE
+
+Symptome vu par Aziz : « a la fin du mouvement on se retrouve avec une page
+blanche tout a droite, comme si c'etait un second ecran ». Ce n'etait ni un 2e
+ecran ni un probleme de vitesse : la camera sortait de la page, et PageCam
+remplit le hors-champ avec son fond papier `#faf7f2`.
+
+`PageCam` pose la page par `translate(960 - cx*zoom)` puis `scale(zoom)`. Le bord
+droit reste donc hors cadre tant que :
+
+    cx <= largeurPage - 960/zoom          (et symetriquement cx >= 960/zoom)
+
+A zoom 1,55 sur une page de 1920 : **cx <= 1300**. Viser le centre de la derniere
+carte (1596) mettait la camera 300 px trop loin.
+⭐ Cette borne se CALCULE avant de coder les keyframes — elle ne se dose pas au
+rendu. Meme logique pour l'axe vertical avec `pageH`.
+
+## ⚠️ LES BBOX CHANGENT A CHAQUE RECAPTURE — les RELIRE, jamais les supposer
+
+Vecu 3 fois dans la meme session : en changeant la marge de la page (64/96 ->
+96/120 -> 104/130 px), TOUTES les coordonnees ont bouge (cartes x 425 -> 449 ->
+459, montants cx 588 -> 606 -> 614). Un `dash-layout.json` lu une fois et garde
+en tete est un piege.
+⛔ Corollaire deja dans cette fiche (piege n°1) mais re-paye ce jour : j'ai code
+`y = 295 - 212` (centre moins hauteur) alors que `y: 189` etait ECRIT dans le
+fichier — les cartes recouvraient le titre. **La valeur etait sous mes yeux.**

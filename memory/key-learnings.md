@@ -20,6 +20,63 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 
 ## 🔧 MÉTHODE & PROCESS
 
+### 2026-08-27 — ⭐⭐⭐ SE BATTRE CONTRE L'OUTIL EST LE SIGNAL, PAS LE PROBLÈME
+
+**Vécu, repro Foster plan 8.** Je voulais reproduire un panoramique horizontal.
+Conséquence en chaîne : page de 3400 px → `PageCam` (qui plaque sur 1920 en dur)
+inutilisable → mécanique de caméra réécrite à la main → UI redessinée en React →
+**violation de la règle n°1 de notre propre fiche**. Trois rendus perdus à me
+battre contre un `AbsoluteFill`, des marges et un fond papier, sur le plan censé
+être notre terrain le plus fort.
+
+⭐ **Recadrage d'Aziz, qui a tout débloqué** : « rien n'oblige à reproduire à
+100 % ; si on a Shotcraft et PageCam avec tout ce dont on a besoin dedans, il ne
+reste qu'à recopier les couleurs et les écritures ». Et : « le but est de prouver
+qu'on peut tout refaire, mais avec NOTRE manière ».
+→ En repartant du socle, le plan s'est fait **en un rendu propre**, et j'ai gagné
+au passage ce que ma mécanique maison n'avait pas (le `zoom` CSS qui garde le
+texte net en plan serré).
+
+**LE DÉCLENCHEUR À AUTOMATISER** : *deux obstacles de PLOMBERIE d'affilée = je
+prends le problème à l'envers.* Pas un 3e réglage — un changement d'approche.
+Se battre contre l'outil n'est jamais le problème à résoudre, c'est le signal que
+la contrainte est ailleurs : **adapter l'ENTRÉE à ce que le socle sait faire,
+plutôt que contourner le socle pour coller à une référence.**
+
+### 2026-08-27 — ⭐⭐ UNE RÉGRESSION SILENCIEUSE EST PIRE QU'UN BUG
+
+Même plan. J'avais codé l'apparition graduelle des cartes (une par une, cascade),
+puis je l'ai **PERDUE** en passant à la plaque capturée — une plaque est une
+photo, tout y est déjà — **et je ne l'ai pas signalé**. C'est Aziz qui l'a vue.
+
+⛔ Un bug se voit ; une capacité qui disparaît en changeant de méthode ne se voit
+pas, parce que le rendu reste plausible.
+→ **Quand je change d'approche, lister explicitement ce que je PERDS au passage**,
+pas seulement ce que je gagne. Si la nouvelle méthode ne couvre pas tout, le dire
+avant de rendre.
+(La solution était d'ailleurs dans le socle : fiche `row-embed`, « une ligne qui
+s'anime est un DÉCOUPAGE de la plaque, jamais un redessin ».)
+
+### 2026-08-27 — ⭐⭐⭐ QUAND 2 CORRECTIONS NE BOUGENT PAS LE CHIFFRE, C'EST L'INDICATEUR QUI MENT
+
+**Trois fois dans la même session**, mes propres métriques ont désigné le mauvais
+objet, et j'ai corrigé pendant plusieurs rendus quelque chose qui n'était pas en
+cause :
+| l'indicateur | ce qu'il mesurait vraiment |
+|---|---|
+| « surface claire de la zone cartouche » | le FEUILLAGE derrière, pas la carte |
+| « largeur de la sidebar » (seuil de vert) | le fond sombre de la page en plus |
+| « marge autour de la fenêtre » (ligne médiane) | une ligne qui traverse la sidebar |
+
+⭐ **Le symptôme est toujours le même** : je corrige, et le chiffre ne bouge
+quasiment pas (28,9 → 28,9 sur le cartouche). C'est LÀ qu'il faut s'arrêter.
+→ **Deux corrections qui ne déplacent pas la mesure = vérifier l'indicateur,
+pas re-doser la valeur.** Isoler l'objet mesuré (le cartouche SEUL, la sidebar
+SEULE) tranche en une passe.
+⚠️ Corollaire déjà vu le même jour sur le globe : un chiffre précis peut être
+précisément faux. Quand la mesure contredit l'œil, l'œil gagne.
+
+
 ### 2026-08-27 — ⭐⭐⭐ LE REGISTRE D'UN PLAN SE CHOISIT SUR CE QUI LE PRÉCÈDE, pas sur sa propre réussite
 
 **Règle formulée par Aziz** (repro Foster, plan 7). On avait généré la MÊME scène dans deux
