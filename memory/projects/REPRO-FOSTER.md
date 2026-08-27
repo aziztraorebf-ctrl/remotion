@@ -1,4 +1,56 @@
-# REPRODUCTION — « Foster With Confidence » (chantier prochaine session)
+# REPRODUCTION — « Foster With Confidence »
+
+## ⚡ REPRISE : COMMENCER ICI (session du 2026-08-27)
+
+**Etat : 5 plans sur 11 livres — 17,40 s / 42,75 s = 41 %.**
+Livrables : `out/episodes/foster-repro/plan0{1..5}-FINAL.mp4`
+Code : `src/projects/_client-sim/foster/scenes/Plan0{1..5}*.tsx`
+Branche : `feat/repro-foster` · 13 commits.
+
+### LA PROCHAINE ACTION : PLAN 6 (17,40 -> 18,41 s) — le GLOBE puis GOOGLE EARTH
+C'est le **premier plan cartographique** : registre different de tout ce qui
+precede. Notre terrain fort (Mapbox).
+⚠️ Bornes a RE-MESURER : le globe apparait des **17,40 s** (mesure), alors que le
+tableau d'origine annonce 18,03 s.
+⛔ Mapbox = pipeline dedie : lire `memory/doctrines/SOUVERAIN-VISUAL-PLAYBOOK.md`
+et rendre via `scripts/render-mapbox.sh` (WebGL, pas le render classique).
+
+### LE PROTOCOLE ETABLI — a appliquer tel quel pour chaque plan restant
+1. **AVANT de coder** : `python3 scripts/tools/motion-breakdown.py --video <ref>
+   --start <a> --end <b> --label planNN --crop 1920:1080:270:0`
+   (Gemini video + GPT frames 6 fps en parallele, ~65 s) -> quels GESTES existent,
+   et desormais les TAILLES en % du cadre.
+2. **Mesurer moi-meme** les valeurs (les modeles donnent des ordres de grandeur,
+   pas des px). Methode fiable : **grille de reperes tracee sur la frame**, lue a
+   l'oeil. Les detecteurs automatiques derapent des que le decor s'allume.
+3. **Coder**, rendre, puis **`proportions-diff.py`** sur une planche A/B ->
+   qu'est-ce qui n'est pas a la bonne taille, chiffre.
+4. **Verifier chaque chiffre du modele avant de l'appliquer** (cf. les 2 erreurs
+   systematiques plus bas).
+5. Comparatif video, upload Vercel Blob, validation d'Aziz, promotion en FINAL.
+
+### ⛔⛔ LES 5 PIEGES QUI ONT COUTE LE PLUS (relire avant de coder)
+1. **`<ThreeCanvas camera>` n'est PAS reactif** — animer camZ ne fait RIEN. Le
+   mouvement passe par le `scale`. -> `memory/tools/threecanvas-camera-non-reactive.md`
+2. **Ne jamais convertir une impression en facteur sans mesurer le RAPPORT reel.**
+   Aziz : « plus gros » -> j'ai mis 1,28 sans mesurer -> c'etait DEJA juste, et
+   la vraie cause etait ailleurs (les etiquettes).
+3. **Quand 2 corrections ratent dans des SENS OPPOSES : RESOUDRE, pas doser.**
+   (N cibles mesurees, N inconnues, N equations.) Vecu 3 fois.
+4. **Mesurer selon le BON AXE** : un profil par bandes horizontales validait a
+   tort un degrade dont la forme etait fausse. Le profil par colonnes a tranche.
+5. **Mesurer une dimension d'un mouvement ne dit rien des autres** : j'ai mesure
+   la contraction du rayon au pixel pres et invente la vitesse de rotation
+   (7,5x trop lente). Un mouvement composite se mesure composante par composante.
+
+### ⚠️ LES 2 ERREURS SYSTEMATIQUES DES MODELES (verifier, toujours)
+- **« tout est ~10 % trop bas »** : FAUX (biais du format A/B empile). Ne jamais
+  appliquer une correction VERTICALE sans la remesurer.
+- ils reclament le **watermark fiverr**, qu'on ne reproduit evidemment pas.
+=> Les TAILLES sont fiables, les POSITIONS VERTICALES non.
+
+---
+
 
 > **Décision d'Aziz, 2026-08-26** : arrêter d'inventer nos propres clients fictifs et
 > **reproduire de A à Z une vidéo réellement vendue sur Fiverr**. Si on reproduit
