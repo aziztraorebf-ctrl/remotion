@@ -1,3 +1,5 @@
+> ⭐ **PORTE D'ENTRÉE : `memory/projects/RECHERCHE-MARCHE-INDEX.md`** — l'ouvrir en premier (8 verdicts, mots, prix, plan). Ce fichier-ci porte le DÉTAIL chiffré.
+
 # Marché LOTTIE / animation freelance — état mesuré au 2026-08-26
 
 > Première donnée COMMERCIALE jamais collectée sur le canal Lottie. Toute la veille antérieure

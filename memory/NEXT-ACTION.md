@@ -127,9 +127,14 @@ Migration image faite (preview mort → GA → **défaut LITE**, -50 %). Restes 
    un bug de k3 (`reasoning_content`) — le migrer demande d'appliquer le VRAI fix, cf.
    `memory/tools/kimi-k3-reasoning-borne.md`. ⏭️ GPT (`gpt-5.5` 15× vs `gpt-5.6-sol` 10×) : non tranché.
 
-4. **Budgets de `memory/fiches/` désynchronisés** : FICHE-CLIP-GENERE 173 lignes (plafond déclaré 132),
-   FICHE-STORYBOARD 171 (114), FICHE-UI-PRODUIT 114 (55, non déclarée en exception). Re-mesurer et
-   re-déclarer le tableau du README — décision de structure, à valider avec Aziz.
+4. **Budgets de `memory/fiches/`** — ⛔⛔ **NE JAMAIS RE-GRAVER DE CHIFFRE ICI.** Les 3 nombres qui
+   figuraient à cette ligne étaient **tous faux** (mesuré 2026-08-27), et le README avait justement
+   supprimé sa propre liste chiffrée le 08-23 parce qu'« elle a menti 4 wraps de suite ». Le chiffre
+   avait simplement migré vers ce fichier-ci. **Mesurer à la demande** : `wc -l memory/fiches/*.md`.
+   Les exceptions assumées sont déclarées dans `memory/fiches/README.md`, pas ici.
+   ⏭️ **1 arbitrage ouvert pour Aziz** : `FICHE-MOCKUP-3D` a hérité en silence du statut d'exception
+   lors de sa scission d'UI-PRODUIT (08-26) — soit l'inscrire au README, soit tailler son doublon de
+   fin (le § « une affirmation de capacité se vérifie » répète le § SVG/3D qui ouvre la fiche).
 5. **`scripts/tools/mkprevis-camera-seule.py`** non commité (chantier previs H3) — à commiter ou écarter.
 
 ---
@@ -781,14 +786,6 @@ Détail historique : `episodes/warmap-sahel/STATUS.md`.
 
 ---
 
-## 1. Maroc Batteries Short — reste A5 Géographie + assemblage
-
-⚠️ L'état « A5 = STUB » est FAUX (`Beat4Geographie.tsx` fait 417 lignes, Mapbox complet, vérifié
-2026-07-30). Les 5 autres beats sont FINAUX. RENDRE ET REGARDER avant de conclure quoi que ce soit.
-Starter (à revérifier) : `archive/starters-perimes-2026-06-15/STARTER-PROMPT-maroc-a5-geographie.md`.
-
----
-
 ## ⏳ ACTIONS OUVERTES
 
 ### Recharger le crédit OpenAI
@@ -818,7 +815,7 @@ spécifiques Remotion, traces d'usage réel, doublons fonctionnels, agents-vierg
 - **Xénophobie SA** — angle validé (« double face »), données 2026 intégrées. Gate : demande TubeLab.
   Dossier : `episodes/souverain/xenophobie-sa-EXPLORATION/`.
 - **Pipeline Shorts automatisé trending** — pas maintenant, revenir quand le long format est en place.
-- **Peste 1347 mid-form horizontal** — concept validé, backlog après AES + Maroc Batteries.
+- **Peste 1347 mid-form horizontal** — concept validé, backlog (AES et Maroc Batteries sont abandonnés).
   Fiche : `projects/peste-1347-midform.md`. 2 chantiers actés (narration voix vivante, multi-agent
   post-fix) : `episodes/peste-1347/STATUS.md`.
 - ~~**`GeoFlowConnection`** — « à coder au 1er sujet à flux »~~ ⛔ **LIGNE PÉRIMÉE, retirée 2026-08-15** :

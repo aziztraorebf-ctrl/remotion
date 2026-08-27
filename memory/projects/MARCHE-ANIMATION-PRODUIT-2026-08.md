@@ -1,3 +1,5 @@
+> ⭐ **PORTE D'ENTRÉE : `memory/projects/RECHERCHE-MARCHE-INDEX.md`** — l'ouvrir en premier (8 verdicts, mots, prix, plan). Ce fichier-ci porte le DÉTAIL chiffré.
+
 # Marché ANIMATION PRODUIT & IDÉES COMPLEXES — état mesuré au 2026-08-26/27
 
 > ⭐⭐⭐ **Le recadrage d'Aziz qui a déclenché cette étude** : « Lottie n'est pas un métier, c'est une

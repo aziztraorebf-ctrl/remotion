@@ -91,8 +91,8 @@ est trop discret).
 
 ## LE SON
 
-SFX repris de leur banque (149 fichiers, 16 catégories) → `public/_client-sim/noteshield/sfx/`.
-⛔⛔ **PAS de whoosh sur les coupes d'UI** (retiré 2026-08-20, retour Aziz) : `whoosh-fast.mp3` est un
+SFX repris de leur banque (**19 fichiers** retenus sur les 149 du repo amont) → `public/_client-sim/noteshield/sfx/`.
+⛔⛔ **PAS de whoosh sur les coupes d'UI** (retiré 2026-08-20, retour Aziz) : `whoosh.mp3` est un
 sifflement d'AIR, un vocabulaire de mouvement physique sans rapport avec un logiciel — sur 5 coupes il
 devenait le son le plus présent du film. **Le FlashCut visuel suffit.**
 Musique : leurs 5 BGM sont gratuites (Apache-2.0) — **tester le gratuit AVANT de générer** (réflexe

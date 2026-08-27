@@ -1,5 +1,16 @@
 # STATUS — Maroc Batteries Short
 
+> ⛔⛔ **CHANTIER ABANDONNÉ — décision d'Aziz du 2026-08-27.**
+> « Je ne vais probablement jamais le toucher, ça fait des mois qu'il est là, je l'avais oublié. »
+> Arrêté au 2026-06-03 : 3 beats Mapbox FINAUX (0, 1, 3), 3 beats jamais faits (2, 4, 5).
+> **Ne PAS reprendre ce chantier ; ne pas le proposer en début de session.**
+>
+> ✅ **Ce qui reste UTILE** (raison pour laquelle le code n'est pas supprimé) : les 3 beats Mapbox
+> finalisés servent d'EXEMPLE dans 5 doctrines — pattern or africain, philosophie mapbox→remotion,
+> karaoké, d3-pattern-utility-only, SOUVERAIN-SHORT-SKELETON. Le code reste dans
+> `src/projects/souverain/maroc-batteries/` et les renders dans `out/episodes/maroc-batteries/`
+> comme matière de référence, PAS comme travail à finir.
+
 > Fiche de reprise. Lire en début de session pour reprendre sans friction.
 > Mis à jour : 2026-06-03. **BLOC CARTE (Mapbox) TERMINÉ.** Reste le bloc Remotion.
 

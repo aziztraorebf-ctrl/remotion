@@ -155,13 +155,6 @@ l'Acte 3 (ce qui est désormais la bonne action), mais son contenu date d'AVANT 
 Source de vérité : `memory/NEXT-ACTION.md` § "GAZODUC ACTE 4" (à rafraîchir en Phase 3 — le bloc actuel
 décrit encore l'état PRÉ-session, 4A "à re-rendre").
 
-### Maroc Batteries Short — reste A5 Géographie + assemblage
-⚠️ Le NEXT historique de ce fichier annonçait « Beat 2 Cailloux à produire » / « bloc Remotion
-Beat 2/4/5 » — **FAUX, vérifié 2026-07-30** : A3 Cailloux, A4 Acteurs et A6 Question sont FINAUX.
-Seul **A5 Géographie** (Mapbox) reste à produire — et son état « stub/placeholder » annoncé depuis
-le 3 juin est LUI AUSSI faux (`Beat4Geographie.tsx` fait 417 lignes, Mapbox complet). **Rendre et
-regarder le beat avant de conclure quoi que ce soit.**
-
 ### Kora & Cartes — piste mythologie africaine (R&D exploratoire, 2026-08-13)
 2 registres visuels testés sur le même beat (pacte/négociation Anansi/Nyame, Akan/Ghana), même
 méthode H3 R2V (`submit_workflow` graphe API en dur).
@@ -209,7 +202,7 @@ mais non traitées (trou VirtualCursor ~4s en P6, bonus P7) — décision Aziz d
 Source de vérité : `memory/episodes/_client-sim/noteshield/STATUS.md`.
 
 ### 💤 Dormants
-Hannibal (Beat 2 Phase C non codée) · Xénophobie SA (gelé, gate audience) · Maroc Batteries
+Hannibal (Beat 2 Phase C non codée) · Xénophobie SA (gelé, gate audience)
 mid-form (backlog, après le Short).
 
 ---

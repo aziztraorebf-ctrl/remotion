@@ -20,6 +20,10 @@
   des personnages. Écarté explicitement comme « un métier différent ».
 - ⚠️ **Sous un seuil de couverture, le prix ne se discute même pas** — ce n'est pas cher, c'est
   hors zone. Un brief à 0 % de couverture se paie en temps, pas en réputation.
+- ⛔⛔ **Le `.aep` n'est PAS un critère d'exclusion** (mesuré 2026-08-27) : sur Fiverr c'est un **Gig
+  Extra payant**, sur Upwork **1 annonce sur 7** — et c'est **la moins bien payée** (5-15 $/h). Le
+  client veut de la **réversibilité**, pas un logiciel : un JSON aux **calques nommés** y répond.
+  Ne rien promettre, mais ne pas écarter. → `memory/projects/MARCHE-LOTTIE-2026-08.md` § 1
 
 ### Q2 — LE PRIX COUVRE-T-IL *NOS* HEURES ? (pas celles d'un animateur générique)
 ⛔⛔ **L'ERREUR À NE PAS REFAIRE** : j'ai calculé « 160 $ ÷ 40 h = 4 $/h » en prenant les heures
@@ -103,7 +107,7 @@ l'explainer pour un motif solide. C'est ce changement d'ordre qui fait toute la 
 - ⭐⭐ **Cadrage « proof of concept, not the finished piece »** : montrer du travail fait est fort, MAIS laisser croire que tout est fait crée 2 risques opposés — le client se demande pourquoi il paie, ou il découvre après coup ce qui manque. Dire ce qui reste.
 - ⭐⭐ **Position haute, jamais suppliante** : ouvrir sur LE RISQUE TECHNIQUE du projet, pas sur son envie de travailler. « J'ai testé le point qui fait échouer la plupart de ces livraisons » ≠ « j'ai fait votre objet en espérant que ça plaise ». Le prototype devient la conséquence d'une vérification, pas un cadeau.
 - ⛔ **Ne pas annoncer TOUT ce qu'on a déjà produit** — le garder pour l'entretien, où c'est un atout de négociation.
-- **Vendre le livrable + la révision, jamais la technique.** Aucun des 3 briefs ne nomme une technique. ⭐ Argument qui porte : *« changer la vitesse / la couleur est un paramètre, tout le reste ne bouge pas »* — en vidéo générée, la même demande relance tout (vérifié en conditions réelles, cf. `PILIERS-B2B.md`).
+- **Vendre le livrable + la révision, jamais la technique** (mesuré 08-27 : « Remotion » = **1 job Upwork, à 15 $**). ⛔ Ni `explainer video` en tête (mot des gigs à 5 $), ni `data visualization` (= acheteurs Power BI). ✅ Les mots qui portent : `UI animation`, `motion design`, `B2B`, `launch`/`landing page`/`release`. Aucun des 3 briefs ne nomme une technique. ⭐ Argument qui porte : *« changer la vitesse / la couleur est un paramètre, tout le reste ne bouge pas »* — en vidéo générée, la même demande relance tout (vérifié en conditions réelles, cf. `PILIERS-B2B.md`).
 - **Jalons** : proposer les dates SOI-MÊME (sinon le client projette les siennes, plus courtes) avec une marge — le 1er jalon dépend souvent de SON approbation.
 
 ## 4. ENVOYER
