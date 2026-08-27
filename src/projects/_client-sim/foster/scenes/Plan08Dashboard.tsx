@@ -40,6 +40,11 @@
  *    cadre, la notre non — notre parcours est donc plus court que le leur.
  *
  * ── LES VALEURS (mesurees, `dash-layout.json`) ─────────────────────────────
+ * Cartes overview : x = 459 · 787 · 1114 · 1442 · y 229 · 310x212
+ * Lignes overview : x 459 · y = 533 · 598 · 663 · 728 · 1292x65
+ * Montants billing : cx = 614 · 941 · 1269 · 1596 · cy 331
+ * ⚠️ Ces valeurs ont CHANGE quand la marge de la page est passee de 64/96 a
+ * 96/120 px — toujours les RELIRE apres une recapture, jamais les supposer stables.
  * Cartes (les 2 etats) : cx = 588 · 933 · 1277 · 1622 · largeur 327
  *   overview cy = 295 · billing cy = 291
  * Lignes overview : y = 493 · 558 · 623 · 688, hauteur 65
@@ -77,14 +82,14 @@ const SCREENS = "_client-sim/foster/screens";
  * « MESURER sur la plaque, ne jamais deduire » — que je venais de citer dans mon
  * propre commentaire deux lignes plus haut.
  */
-const CARD_X = [425, 770, 1114, 1459];
-const CARD_Y = 189;
-const CARD_W = 327;
+const CARD_X = [459, 787, 1114, 1442];
+const CARD_Y = 229;
+const CARD_W = 310;
 const CARD_H = 212;
-const CARD_CX = [588, 933, 1277, 1622];
-const ROW_X = 425;
-const ROW_W = 1360;
-const ROW_Y = [493, 558, 623, 688];
+const CARD_CX = [614, 941, 1269, 1596];
+const ROW_X = 459;
+const ROW_W = 1292;
+const ROW_Y = [533, 598, 663, 728];
 const ROW_H = 65;
 
 /**
@@ -176,7 +181,27 @@ const Overview: React.FC = () => {
 
 export const Plan08Dashboard: React.FC = () => {
   return (
-    <AbsoluteFill style={{ backgroundColor: "#0b100d" }}>
+    /**
+     * ⚠️ LE FOND N'EST PAS NOIR PLAT (correction d'Aziz) — mesure sur la frame
+     * 24,60 s de la reference : la fenetre de l'app est detouree sur un DEGRADE
+     * VERT SOMBRE, avec un halo plus clair qui monte du bas. Un noir plat fait
+     * « capture d'ecran collee sur du vide ».
+     * ⛔ Ce fond doit vivre ICI et pas seulement dans la page HTML : PageCam
+     * remplit tout ce qui deborde de la page avec SON propre fond papier, donc
+     * le degrade de la page ne suffit pas a couvrir le hors-champ.
+     */
+    <AbsoluteFill
+      style={{
+        /**
+         * ⚠️ Ce fond n'est qu'un filet de securite : c'est le degrade de la PAGE
+         * qui est visible, car PageCam affiche la plaque plein cadre et masque
+         * tout ce qu'on met derriere lui (constate au rendu v9 : eclaircir ce
+         * fond-ci n'avait AUCUN effet mesurable). La vraie teinte se regle donc
+         * dans `live-page/billing.html`.
+         */
+        backgroundColor: "#16241b",
+      }}
+    >
       {/*
         A — la camera reste posee (la reference ne bouge pas ici) ; ce sont les
         elements qui arrivent. Une derive tres legere evite le plan mort.
@@ -217,11 +242,25 @@ export const Plan08Dashboard: React.FC = () => {
              * un peu plus bas — les montants restent dans le tiers superieur,
              * comme dans la reference.
              */
-            { frame: 0, cx: CARD_CX[0], cy: 400, zoom: 1.55, rotX: 0 },
+            /**
+             * ⛔⛔ LA « PAGE BLANCHE QUI APPARAIT A DROITE » (defaut vu par Aziz)
+             * n'etait ni un 2e ecran ni un probleme de vitesse : la camera
+             * DEPASSAIT le bord droit de la page, et PageCam remplit le
+             * hors-champ avec son fond papier `#faf7f2` — d'ou un grand aplat
+             * creme qui ressemble a un autre document.
+             * ⭐ La limite se CALCULE, elle ne se dose pas. PageCam positionne la
+             * page par `translate(960 - cx*zoom)` puis `scale(zoom)`, donc le
+             * bord droit reste hors cadre tant que :
+             *     cx <= 1920 - 960/zoom
+             * A zoom 1,55 : cx <= 1300,6. Je visais 1622 (le centre de la 4e
+             * carte) — 320 px au-dela. On s'arrete a 1281 (limite - 20 de marge),
+             * position ou les 4 cartes restent visibles (fenetre x 661 -> 1900).
+             */
+            { frame: 0, cx: CARD_CX[0], cy: 430, zoom: 1.55, rotX: 0 },
             {
               frame: F_END - F_CUT,
-              cx: CARD_CX[3],
-              cy: 400,
+              cx: 1281,
+              cy: 430,
               zoom: 1.55,
               rotX: 0,
             },
