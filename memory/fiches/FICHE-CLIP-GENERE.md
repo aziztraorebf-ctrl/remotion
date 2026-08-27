@@ -214,3 +214,21 @@ tête rectangulaire, plein cadre à 4 s**. Ce n'est pas une limite du modèle, c
 2. **Sujet qui grandit + zoom = tête coupée**. Un personnage qui se redresse grandit DÉJÀ ; le zoom s'y
    ajoute. → dimensionner par le CALCUL (viser ~45 px de marge au-dessus du crâne à la frame finale),
    jamais à l'estime, et faire suivre le centre de visée.
+
+## ⭐⭐ UPSCALE 480p -> 1080p — 2 effets de bord MESURES (2026-08-27)
+
+Le saut direct 480p -> 1080p (ByteDance, ~0,07 $) est confirme sur un clip
+**PHOTOREALISTE** — la fiche ne le validait jusqu'ici que sur du flat-vector.
+Verifie par crop serre : barreaux de rampe, bardeaux, croisillons de fenetres tous
+nets, zero sur-lissage plastique. Cas testé : maison + arbres, sans visage ni texte fin.
+
+⛔ **MAIS l'upscaler modifie 2 choses SANS le dire — mesurer apres, toujours** :
+| | source | apres upscale |
+|---|---|---|
+| resolution | 864x480 | **1944**x1080 (pas 1920 : il preserve le ratio 1,8 de la source, pas le 16:9) |
+| cadence | 24 fps, 124 frames | **30 fps**, 154 frames (il INTERPOLE) |
+
+-> Recadrer au format cible : `crop=1920:1080:12:0`.
+-> Le passage a 30 fps tombe bien pour nous (nos compositions Remotion sont a 30),
+   mais c'est une conversion NON DEMANDEE : sur un projet a 24 ou 25 fps, elle
+   desynchroniserait le montage sans aucun message d'erreur.

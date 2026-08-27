@@ -20,6 +20,43 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 
 ## 🔧 MÉTHODE & PROCESS
 
+### 2026-08-27 — ⭐⭐⭐ LE REGISTRE D'UN PLAN SE CHOISIT SUR CE QUI LE PRÉCÈDE, pas sur sa propre réussite
+
+**Règle formulée par Aziz** (repro Foster, plan 7). On avait généré la MÊME scène dans deux
+registres — maison photoréaliste et maison vectorielle plate — pour choisir le meilleur.
+Le vectoriel gagnait sur presque tous les chiffres : amplitude 70,6 vs 46,7, et il allait
+jusqu'au bout de la bascule de caméra là où le réaliste s'arrêtait en oblique.
+
+⭐ **Aziz a tranché POUR le réaliste, et sur un autre critère que la qualité du clip** :
+> « si nous avions eu une carte style vectoriel D3, une maison vectorielle aurait fait du
+> sens. Mais étant donné que nous avons une carte réaliste style Google Earth et qu'on
+> plonge vers le sol, on devrait finir avec une maison réaliste. »
+
+**Le principe** : dans un MOUVEMENT CONTINU (une plongée, un zoom traversant, un fondu
+enchaîné), le plan d'arrivée hérite du registre du plan de départ. Changer de matière au
+milieu d'un geste continu ne se lit pas comme un choix graphique — **ça se lit comme une
+COUPE**, précisément là où le montage essaie de la masquer. Le plan 6 finit sur des tuiles
+satellite photographiques ; un aplat vectoriel juste après aurait cassé l'illusion de
+continuité que tout le plan construit.
+✅ **Vérifié sur la référence elle-même** : leur chaîne est photographique de bout en bout,
+du globe jusqu'à la pelouse. Ils n'ont pas mélangé les registres dans un mouvement continu.
+
+**Corollaire pratique** : le choix de registre se pose AU MOMENT DU RACCORD, pas au moment
+de produire l'asset. Générer deux variantes reste utile (coût quasi nul, et c'est le
+GABARIT DE CHOIX en avant-vente, cf `doctrines/PILIERS-B2B.md`) — mais la décision se prend
+en regardant le plan d'AVANT, pas en comparant les deux variantes entre elles.
+
+⛔ **Ne PAS en déduire « toujours du réaliste »** : la règle est relationnelle. Si le plan
+d'avant avait été une carte D3 vectorielle, c'est le vectoriel qui aurait gagné — Aziz le
+dit explicitement. Le mauvais réflexe serait de retenir « le réaliste est meilleur ».
+
+⚠️ **Un seuil de contrôle peut être inapplicable à un registre** (trouvé le même jour) :
+le gradient minimum du clip vectoriel est tombé à 4,16, sous notre seuil d'alerte de 8
+censé détecter la copie des blocs du previs. **Aucun décrochage à l'oeil** — le seuil a été
+calibré sur de l'illustration détaillée, et un aplat vectoriel a naturellement moins de
+gradient. Un seuil hérité doit être requalifié quand le registre change.
+
+
 ### 2026-08-27 — ⭐⭐⭐ LES CHIFFRES D'UN MODÈLE : les DEMANDER toujours, les TRIER en 3 catégories
 
 **Le contexte** : nos appels de relevé visuel (`motion-breakdown.py`, DA-brief, review) demandent
