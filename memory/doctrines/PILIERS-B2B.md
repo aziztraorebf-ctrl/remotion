@@ -186,6 +186,16 @@ vs 5,90 % avec) — un lien demande un effort, un aperçu n'en demande aucun. C'
 Chiffres, sources et le positionnement qui en découle (« vidéo DÉTERMINISTE avec de l'IA dedans », pas
 « vidéo IA » qui est commoditisée à −13 %/contrat) : [[freelance-dataviz-fiverr-pro]] § VEILLE MARCHÉ.
 
+> ⚠️⚠️ **MISE À JOUR 2026-08-27 — le positionnement ci-dessus est SUPERSÉDÉ.** En vigueur :
+> **« rendre visible ce qui est compliqué — interfaces, données, mécanismes — et le livrer au format
+> que le client utilise »**. Le créneau mesuré est `ui-animation` (969 services sur Fiverr contre
+> 27 366 pour la démo produit générique).
+> ⛔⛔ **Le « déterminisme » n'est PAS un positionnement acquis, c'est l'HYPOTHÈSE CENTRALE NON
+> VALIDÉE** — aucun acheteur ne l'a jamais confirmée, et « Remotion » remonte **1 seul job Upwork,
+> à 15 $**. Le code est un avantage de **COÛT INTERNE**, jamais un argument de vente.
+> → Source unique : **`memory/projects/RECHERCHE-MARCHE-INDEX.md`** (8 verdicts, mots, prix,
+> et ce qu'on ne sait pas).
+
 ⭐ **Bonus** : le triptyque est aussi la **démo d'entrée** qui manquait — un prospect comprend la
 méthode en 10 s, sans explication. Plus court à produire que le cut vente 60-90 s en attente.
 Recette technique + prompts + livrables : [[REVERSE-STYLE-VIDEO-VERS-ASSETS]] § EXTENSION 2026-08-20.
@@ -206,12 +216,12 @@ Recette technique + prompts + livrables : [[REVERSE-STYLE-VIDEO-VERS-ASSETS]] §
 - ⛔ **Le gabarit de choix se dépense sur un prospect QUALIFIÉ, jamais en tête de tunnel** (recherche
   démarchage 2026-08-21) : à ~10 réponses/100 messages, personnaliser en amont = ~100 clips sur mesure
   pour ~2 clients, ce qui détruit justement l'avantage du registre réutilisable à coût marginal nul.
-  Détail : `memory/projects/freelance-dataviz-fiverr-pro.md`.
+  Détail : `.claude/projects/-Users-clawdbot-Workspace-remotion/memory/projects/freelance-dataviz-fiverr-pro.md` (auto-mémoire, PAS dans le repo).
 
 ## Liens
 `memory/fiches/FICHE-UI-PRODUIT.md` (pilier 3, détail) · `memory/doctrines/SVG-SCENES-GENERATIVES.md`
 (pilier 2) · `memory/doctrines/CHARTE-DA-FREELANCE.md` (la DA commune) ·
 `memory/projects/SHOWCASE-CAPACITES.md` (le cut vente) · `memory/tools/minimax-h3-*.md` (pilier 5).
 
-⭐⭐ **Le segment est MESURÉ (2026-08-26)** : sur les 4 vidéos du portfolio d'une vendeuse Fiverr Level 2 du registre SaaS explainer, **3 n'ont aucun personnage** et **3 n'ont pas de voix off** (musique seule, le récit porté par la TYPO). Le « ce pilier ne fait pas de personnages » n'est donc pas une faiblesse à assumer : c'est **la norme du segment**. Prix observés : **~10 $ CA la seconde livrée**. Détail et réserves : `memory/projects/freelance-dataviz-fiverr-pro.md` § BENCHMARK 4 VIDÉOS.
+⭐⭐ **Le segment est MESURÉ (2026-08-26)** : sur les 4 vidéos du portfolio d'une vendeuse Fiverr Level 2 du registre SaaS explainer, **3 n'ont aucun personnage** et **3 n'ont pas de voix off** (musique seule, le récit porté par la TYPO). Le « ce pilier ne fait pas de personnages » n'est donc pas une faiblesse à assumer : c'est **la norme du segment**. Prix observés : **~10 $ CA la seconde livrée**. Détail et réserves : `.claude/projects/-Users-clawdbot-Workspace-remotion/memory/projects/freelance-dataviz-fiverr-pro.md` (auto-mémoire, PAS dans le repo) § BENCHMARK 4 VIDÉOS.
 ⭐ Le pilier 3 se marie au pilier 4 via un **mockup d'appareil 3D** (la capture devient la texture de l'écran). Ce n'est pas un 6e pilier. Socle + 4 pièges payés : `memory/fiches/FICHE-MOCKUP-3D.md`.

@@ -34,6 +34,13 @@ NAV_FILES = [
     # Ajoute 2026-07-25 : CLAUDE.md en fait une lecture OBLIGATOIRE de debut de session (etape 2),
     # mais ses liens n'etaient jamais verifies -> un pointeur vers un fichier absent y a survecu.
     "memory/NEXT-ACTION.md",
+    # Ajoutes 2026-08-27 (wrap) : MEME INCIDENT QUE CI-DESSUS, 2e occurrence. Le script rapportait
+    # "OK, aucun lien mort" sur 558 chemins alors que PILIERS-B2B.md portait 2 pointeurs MORTS vers
+    # freelance-dataviz-fiverr-pro.md (fichier en auto-memoire, pas dans le repo). Cause : couverture
+    # du gate trop etroite, pas defaut de logique. PILIERS-B2B est marque ⭐⭐⭐ dans MEMORY.md et
+    # sert de doctrine d'aiguillage ; RECHERCHE-MARCHE-INDEX est la porte d'entree du marche.
+    "memory/doctrines/PILIERS-B2B.md",
+    "memory/projects/RECHERCHE-MARCHE-INDEX.md",
 ]
 
 # L'auto-memory MEMORY.md vit hors repo (chemin fixe). On le scanne aussi s'il existe.

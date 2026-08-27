@@ -91,15 +91,18 @@ chez moi »*. S'ils réagissent, on le saura. S'ils n'en parlent jamais, on le s
 
 ## 🧹 DETTE À SOLDER (pas en fin de session)
 
-1. **Index mémoire à 20,2 Ko** sur un plafond DUR de 24,4 → compacter. Demande d'arbitrer quoi
-   supprimer, donc à faire en DÉBUT de session avec du contexte disponible.
-2. **Collision mémoire** : `feedback_worktree-git-isolation-gotchas.md` existe en 2 versions
-   divergentes (20 Ko repo / 2,7 Ko auto). ⛔ Ne PAS trancher sur la taille — diffuser, rapatrier,
-   laisser un stub.
-3. **`freelance-dataviz-fiverr-pro.md` contredit partiellement** les conclusions du 08-27 (il a été
-   écrit pour un marché de cartes animées). À réconcilier en connaissance de cause.
-4. `PILIERS-B2B.md` pointe 2× `freelance-dataviz-fiverr-pro.md` avec un **chemin MORT** (le fichier
-   vit dans `.claude/projects/.../memory/projects/`, pas dans le repo).
+1. ⛔⛔ **MEMORY.md à ~21 Ko sur un plafond DUR de 25 Ko** (alerte 20 Ko franchie). La troncature est
+   **silencieuse** et emporte la FIN du fichier (catalogues, archive). **PREMIÈRE ACTION de la
+   prochaine session, avant tout ajout.** Compacter demande d'arbitrer quels pointeurs deviennent
+   invisibles → décision de contenu, pas de mise en forme.
+2. ✅ **Collision worktree : DÉJÀ RÉSOLUE** le 2026-08-27 (stub propre, 2 fragments rapatriés,
+   `check-memoire-doublons.py` → 0 collision sur 15). ⛔ Ne PAS refaire ce travail.
+   ⭐ Leçon à garder : **un stub de redirection peut MASQUER du contenu non rapatrié** — il se
+   présentait comme résolu, 2 fragments sont restés invisibles 4 jours. Vérifier par **grep du
+   contenu**, jamais par l'apparence du stub.
+3. ✅ `freelance-dataviz-fiverr-pro.md` : bandeau « FICHIER HISTORIQUE » posé le 08-27 (ce qui reste
+   valide / ce qui est périmé). ✅ Les 2 chemins morts de `PILIERS-B2B.md` sont corrigés, et le gate
+   `check-links.py` couvre désormais PILIERS-B2B + RECHERCHE-MARCHE-INDEX (570 chemins / 11 fichiers).
 5. ⛔ **3 dettes documentées jamais exécutées** (trouvées au wrap du 08-27) :
    - ⚠️ **SÉCURITÉ** : `scripts/tools/svg2lottie.py` parse le SVG **en regex, sans parseur XML**.
      `memory/tools/lottie-claude-inventaire.md:123` dit de **ne PAS l'exposer à un SVG client non

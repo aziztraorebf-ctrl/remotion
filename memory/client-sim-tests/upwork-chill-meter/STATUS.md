@@ -3,7 +3,36 @@
 > Prototype de bout en bout sur un VRAI brief client Upwork (350 $, overlay YouTube animé).
 > Session du 2026-08-22. Rien n'a été envoyé à la cliente, aucun engagement pris.
 
-## ETAT : proposition ENVOYÉE le 2026-08-23, en attente de réponse
+## ⭐⭐⭐ ETAT AU 2026-08-27 : ELLE A RÉPONDU 4 FOIS — PHASE FINALE DE DÉCISION
+
+**Chronologie réelle** : 23/08 candidature envoyée · 24/08 elle demande le clip + les livrables ·
+25/08 elle pose 4 confirmations + le look glacé · 26/08 « before I make my final decision » + elle
+signale l'identité non vérifiée · 27/08 « **I'm reviewing everything carefully now** ».
+
+**CE QU'ELLE A VALIDÉ** (toutes ses questions sont fermées) :
+- Exports **ProRes 4444 plein cadre 1920×1080 pré-positionnés** · 6 fichiers séparés par état
+- **Dossier source zippé + README** — cadré honnêtement : « ce n'est pas propriétaire, pas lié à moi,
+  n'importe quel dev React peut l'ouvrir ; mais dans les deux cas c'est un professionnel qui modifie ».
+  Sa réponse : *« that actually makes sense for this project »*.
+- Disponibilité future à tarif convenu (porte du retainer) · **2 révisions PAR JALON** · délais 3/5/4 j
+- ⭐ **Le malentendu du compteur givré est désamorcé** : elle a écrit *« You are right about the starting
+  meter. The reference image I provided is probably closer to the 50 % or 75 % look »*. Le châssis DOIT
+  rester propre au départ, sinon la progression du givre n'a nulle part où aller.
+  Son exigence : base *« polished, cinematic, cold, high quality »* mais **pas encore fortement givrée**.
+- ✅ **Identité vérifiée le 26/08** (badge bleu confirmé sur le profil).
+
+⭐ **Rien en suspens de notre côté.** Relance légitime après **3-4 jours ouvrés** sans nouvelle.
+
+**SI CONTRAT, dans cet ordre** : (1) **le SON** (seul point promis jamais démontré) · (2) **écrire le
+README** (promis, n'existe pas) · (3) jalon 1 = l'image du compteur, elle existe déjà (rendu vérifié
+le 27/08 : plein cadre, alpha réel 86 %, placement bas-gauche conforme au brief).
+⛔ **Ne PAS lui dire que les 6 états sont déjà rendus** — atout de négociation.
+
+⭐ **Leçon de communication tirée de ce dossier** → `feedback_message-client-ne-pas-sonner-genere.md` :
+zéro tiret cadratin (5 messages en contenaient) · zéro reformulation · **ne jamais présumer sa
+décision** (« if we end up working together », formulation trouvée par Aziz).
+
+<details><summary>Historique : l'envoi du 2026-08-23</summary>
 
 Branche : `feat/proto-chill-meter-upwork` (3 commits, mergeable ou à garder en R&D).
 
@@ -19,7 +48,9 @@ Branche : `feat/proto-chill-meter-upwork` (3 commits, mergeable ou à garder en 
 ✅ **Les 6 MOV sont A JOUR (regeneres le 2026-08-23 16h20, posterieurs au fix `d9737af7`).**
 Alpha verifie deux fois — cf. § PROCHAINE SESSION point 2 pour la commande et les mesures.
 
-## PROCHAINE SESSION — 2026-08-23, dans cet ordre
+</details>
+
+## Historique — préparation de l'envoi (2026-08-23, RÉSOLU)
 
 > Statut au 2026-08-23 17h03 : ① test CapCut **VALIDE** · ② 6 MOV **regeneres et a jour**.
 > **Seul reste ③ l'envoi — bloque par les connects a 0** (10 gratuits le 1er du mois).

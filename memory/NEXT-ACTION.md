@@ -43,17 +43,23 @@ INFIRME l'hypothèse d'un défaut systématique (les formes divergent).
 
 ---
 
-## ⏸️ CANDIDATURE UPWORK chill-meter — ENVOYÉE 2026-08-23, EN ATTENTE (rien à faire de notre côté)
+## ⭐⭐⭐ CLIENTE UPWORK chill-meter — ELLE A RÉPONDU (4 échanges), PHASE FINALE DE DÉCISION (2026-08-27)
 
-**Profil et portfolio FAITS** : titre, résumé, 20 compétences, photo, Working style, 4 showcases +
-11 pièces EN (`out/_r-and-d/portfolio-en/UPWORK/`, manifeste versionné dans
-`memory/client-sim-tests/upwork-chill-meter/PORTFOLIO-MANIFESTE.md`).
+⭐ **La condition d'ouverture EST REMPLIE.** 4 échanges en 4 jours (23→27/08). Dernier message :
+*« I'm reviewing everything carefully now and will let you know soon. »*
 
-**Les 3 étapes sont FAITES.** Test CapCut validé sur l'outil de la cliente · 6 MOV régénérés,
-alpha vérifié 2× · **proposition envoyée** (7 connects, pas de boost, solde ≈143).
-⛔ **Décision d'Aziz : ne RIEN produire de plus avant d'avoir le contrat.** Cette ligne ne rouvre
-que si **elle répond** — alors : arbitrer une éventuelle négociation (350 $ = le prix DU BRIEF,
-pas une enchère), puis prototyper le SON en premier (seul point promis non démontré).
+**Tout ce qu'elle a demandé est validé** : exports ProRes 4444 plein cadre pré-positionnés · 6 fichiers
+séparés par état · dossier source + README · disponibilité future à tarif convenu · **2 révisions par
+jalon** · délais 3/5/4 j · le look glacé (elle a reconnu que sa référence est le palier 50-75 %, pas le
+0 %). **Identité vérifiée le 26/08** (elle l'avait relevé).
+⭐ **Rien en suspens de notre côté.** Relance légitime après **3-4 jours ouvrés** sans nouvelle, pas avant.
+
+**SI CONTRAT** — dans cet ordre : (1) **prototyper le SON** (seul point promis jamais démontré ;
+~5 essais par son, calage sur des ÉVÉNEMENTS MÉCANIQUES dont la frame est connue) · (2) **écrire le
+README** (promis, n'existe pas) · (3) jalon 1 = envoyer l'image du compteur, elle existe déjà.
+⛔ **Ne PAS lui dire que les 6 états sont déjà rendus** — atout de négociation.
+⛔ 350 $ = le prix DU BRIEF, pas une enchère.
+⛔ **Décision d'Aziz maintenue : ne RIEN produire de plus avant d'avoir le contrat.**
 ⭐ Le **brief client PDF est sur disque** (`BRIEF-CLIENT-ORIGINAL.pdf`, gitignoré) : le RELIRE avant
 toute action sur cette annonce — un résumé ne le remplace pas (2 erreurs payées le 23/08).
 → Candidature complète (lettre + 5 réponses + jalons + « pas de boost ») :
