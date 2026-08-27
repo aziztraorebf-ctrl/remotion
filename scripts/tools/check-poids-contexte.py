@@ -44,7 +44,11 @@ PROJ_MEM = CLAUDE_HOME / "projects" / "-Users-clawdbot-Workspace-remotion" / "me
 # (chemin, seuil_octets, plafond_dur_ou_None)
 # MEMORY.md : plafond SYSTEME a 25000 o / 200 lignes, troncature SILENCIEUSE au-dela.
 CHAINE = [
-    (REPO / "CLAUDE.md", 30000, None),
+    # 34 Ko : CLAUDE.md est le SEUL fichier charge dans les subagents (MEMORY.md ne l'est
+    # pas). Il accueille donc les GATES migres le 2026-08-27 — ce poids est un transfert
+    # depuis MEMORY.md, pas une derive. Vraie limite technique : 4 MiB. Le garde-fou reel
+    # ici est le nombre de LIGNES (adherence < 200), suivi ci-dessous.
+    (REPO / "CLAUDE.md", 34000, None),
     (CLAUDE_HOME / "CLAUDE.md", 18000, None),
     (PROJ_MEM / "MEMORY.md", 20000, 25000),
     (REPO / "memory" / "NEXT-ACTION.md", 35000, None),
@@ -211,6 +215,13 @@ def main() -> int:
                 alertes.append(f"        · {s}")
             if len(closes) > 4:
                 alertes.append(f"        · … et {len(closes) - 4} autre(s)")
+
+    claude = REPO / "CLAUDE.md"
+    if claude.exists():
+        n = claude.read_text(encoding="utf-8").count("\n") + 1
+        if n > 200:
+            alertes.append(f"  ⚠️  CLAUDE.md : {n} lignes — au-dela de ~200 l'adherence baisse "
+                           f"(doc officielle). Deplacer vers une doctrine pointee.")
 
     for m in memory_sections_hors_borne():
         alertes.append(f"  ⚠️  MEMORY.md : {m}")

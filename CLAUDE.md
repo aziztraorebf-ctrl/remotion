@@ -67,6 +67,26 @@ Ne JAMAIS dire « je ne peux pas / je n'ai pas accès » sans avoir consulté la
 
 ---
 
+## ⛔⛔ GATES — les interdits qui ont déjà coûté (valent AUSSI pour tout agent)
+
+> Ces 6 gates vivaient dans `MEMORY.md`, **qui n'est PAS chargé dans les subagents** (doc officielle).
+> Ils sont ici pour que tout agent les reçoive. Chacun vient d'un incident réel.
+
+- ⛔⛔ **AUCUNE commande git destructive dans un répertoire partagé** — ni `checkout`, ni `reset`,
+  ni `stash`/`stash pop`. Vécu 2×: un agent a écrasé le travail d'un autre par `git checkout`
+  (2026-07-01) ; un agent `/wrap` a fait un `git stash` pendant que la session avait 25 fichiers non
+  commités — `git status` est revenu VIDE, tout semblait perdu (2026-08-01). Un agent commite
+  NOMMÉMENT ses propres fichiers, jamais `git add -A`.
+- ⛔ **NOM PROPRE à l'écran → vérifier l'orthographe (Wikipédia) AVANT le render.** « HEMETI » au
+  lieu de « HEMEDTI » en ouverture d'un Acte : perte de crédibilité documentaire immédiate.
+- ⛔ **Whisper : API seulement, JAMAIS en local** (fallback ElevenLabs).
+- ⛔ **Pas de sous-titres en bas d'écran** — cette zone est réservée aux SOURCES.
+- ⛔ **Un nom de chaîne n'est pas un nom de voix** : « Kora & Cartes » ≠ la voix GéoAfrique.
+  → `feedback_nom-chaine-kora-et-cartes-pas-geoafrique.md`
+- ⛔ **Tester avant de douter** · **relire la leçon** avant de re-tenter une variante de dosage.
+
+---
+
 ## ⛔ RÈGLES DE TRAVAIL NON-NEGOTIABLES (résumé dense — détail en pointeur)
 
 
@@ -87,7 +107,7 @@ Ne JAMAIS dire « je ne peux pas / je n'ai pas accès » sans avoir consulté la
 - **Langage naturel d'Aziz → Claude traduit** : Aziz parle visuel/narratif, Claude traduit en technique sans demander chemin/frame/variable. Demander un chemin à Aziz = mal faire son travail. Refs persos : `public/assets/library/`. Manifests timing/couleurs : `src/projects/*/manifests/`.
 - **STORYBOARD = le modèle PROPOSE, on valide, PUIS breakdown** (prouvé 4× le 2026-06-20). Pour une scène, le modèle (Gemini/GPT via `storyboard-dual-gen.py`) propose une DIRECTION créative qu'on n'a pas (storyboard multi-états, évolution + épure), Aziz valide, et SEULEMENT APRÈS on décode le breakdown technique → code. Déplace le jugement de goût d'après-render (cher) vers avant-code (gratuit). Mapbox : le modèle approxime la géo (proposition de direction, vraie géo au CODE). Doctrines : `memory/doctrines/STORYBOARD-MAPBOX.md` · `public/_shared/refs/backgrounds/_PALETTE-BACKGROUNDS.md` (§ storyboard) · arsenal/palette : `public/_shared/refs/cartes/_ARSENAL.md` + `backgrounds/`.
 - **GUIDER SANS BRIDER** : fixer l'EXIGENCE (« carte vivante », « chiffre qui frappe ») + INFORMER des capacités (« voici notre arsenal, VA PLUS LOIN ») + poser les INTERDITS (pas de 3D, géo réelle) — mais JAMAIS dicter la technique ni transformer une liste en checklist. Une liste de techniques = brider ; une exigence + un arsenal d'inspiration = le modèle propose mieux. Prouvé : les agents ont transformé/dépassé l'arsenal (dissolution de frontières, « l'État saigne ») au lieu de le cocher.
-- **DÉLÉGUER à un agent frais** (orchestration) : un agent vierge (contexte propre, effort élevé) bat souvent l'instance principale au contexte saturé pour produire OU vérifier une scène. Claude = chef d'orchestre (découpe, lance N agents, vérifie, synthétise), pas exécutant de chaque pixel. Isolation `worktree` pour le code parallèle, handoff = fichier disque (jamais TodoWrite cross-agent). Plan : `memory/SYSTEME-AGENTIQUE.md`.
+- **DÉLÉGUER à un agent frais** (orchestration) : un agent vierge (contexte propre, effort élevé) bat souvent l'instance principale au contexte saturé pour produire OU vérifier une scène. Claude = chef d'orchestre (découpe, lance N agents, vérifie, synthétise), pas exécutant de chaque pixel. Isolation `worktree` pour le code parallèle, handoff = fichier disque (jamais TodoWrite cross-agent). ⛔ **Prompt multi-agents parallèles : préciser explicitement l'indépendance** (« toi seul, mission autonome, ne pas attendre ni mentionner d'autres agents ») — sans ça, 2 agents sur 4 se sont mis en attente au lieu de produire (vécu 2026-08-07). Plan : `memory/SYSTEME-AGENTIQUE.md`.
 - **Documenter une méthode prouvée AVANT de la généraliser en code** (2026-08-03) : quand une technique marche sur 1 cas concret (ex. un fix de continuité entre 2 gestes), graver le PRINCIPE dans la doctrine (avec le cas comme preuve) plutôt que d'extraire tout de suite une fonction/abstraction générique réutilisable pour N cas futurs jamais testés. Une abstraction écrite sur un seul exemple est un pari, pas une brique — le prototype du sac (poses inventées, jamais vérifiées sur un 2e cas) est l'anti-exemple direct de ce que ça évite. Généraliser en code SEULEMENT après un 2e cas d'usage réel qui confirme la forme.
 
 ---

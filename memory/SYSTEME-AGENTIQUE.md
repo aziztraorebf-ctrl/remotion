@@ -129,17 +129,15 @@ Ex : refonte Sénégal V3 (voix V3), refonte AES, ou toute scène à refaire. Su
 
 ---
 
-## LES 3 PRINCIPES QUI GOUVERNENT (rappel — détail dans CLAUDE.md § règles de travail)
+## LES 3 PRINCIPES QUI GOUVERNENT
 
-1. **Le modèle PROPOSE, on valide, PUIS breakdown → code.** Goût jugé avant-code (gratuit), pas après-render (cher).
-2. **Guider sans brider** : exigence + arsenal d'inspiration (« va plus loin ») + interdits, JAMAIS dicter la
-   technique ni cocher une checklist.
-3. **Déléguer à un agent frais** : un contexte vierge bat un contexte saturé pour produire/vérifier. Claude =
-   chef d'orchestre, pas exécutant de chaque pixel.
-   ⚠️ **Prompt multi-agents parallèles = préciser explicitement l'indépendance** ("toi seul, mission
-   autonome, ne pas attendre/mentionner d'autres agents") — vécu 2026-08-07 (session studio réutilisable) :
-   2 agents sur 4 lancés en parallèle se sont mis en "attente des autres agents" au lieu de produire leur
-   rapport solo, faute de cette précision dans le prompt. Coût : relance nécessaire, tokens perdus.
+> ⛔ **SOURCE = `CLAUDE.md` § RÈGLES DE TRAVAIL** (chargé à chaque session ET dans chaque
+> subagent ; ce fichier-ci ne l'est pas). Ne PAS re-détailler ici — c'était une boucle :
+> les deux fichiers se renvoyaient l'un à l'autre. Résolu le 2026-08-27.
+
+1. **Le modèle PROPOSE, on valide, PUIS breakdown → code.**
+2. **Guider sans brider** : exigence + arsenal, jamais dicter la technique.
+3. **Déléguer à un agent frais** : contexte vierge > contexte saturé.
 
 ---
 
