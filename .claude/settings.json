@@ -174,6 +174,11 @@
             "type": "command",
             "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/session-start-capitalisation.sh",
             "timeout": 15
+          },
+          {
+            "type": "command",
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/session-start-poids-contexte.sh",
+            "timeout": 15
           }
         ]
       }
