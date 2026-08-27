@@ -79,6 +79,62 @@ def sections_closes(path: Path) -> list[str]:
     return out
 
 
+# Plafond par SECTION de MEMORY.md (octets). La borne force l'arbitrage — c'est
+# l'effet utile de la « fenetre glissante » du retour d'experience public, mais
+# indexee sur le SUJET et non sur la DATE : ici l'index est thematique, l'age ne
+# predit pas la valeur (agents-paralleles date de juillet et reste vital).
+SECTIONS_MEMORY = {
+    "Méthode & feedbacks-clés": 8000,
+    "Projets actifs": 4000,
+    "SVG, outils & workflows": 4000,
+}
+# Une ligne d'index = un POINTEUR (nom + chemin + declencheur), pas un resume.
+# ⛔ NE PAS mesurer la longueur BRUTE : verifie le 2026-08-27, sur 31 lignes de
+# plus de 300 o, 12 etaient des LISTES DE POINTEURS legitimes (jusqu'a 12 refs
+# sur une ligne) — les raccourcir aurait supprime des entrees, soit exactement
+# le mauvais geste. Ce qui distingue un index d'un resume est la DENSITE :
+# combien d'octets par reference. Une liste dense est saine a 500 o ; une ligne
+# de 350 o avec une seule reference est du contenu qui appartient au fichier pointe.
+LIGNE_MAX = 320          # plancher : en dessous, on ne regarde meme pas
+OCTETS_PAR_REF_MAX = 160  # au-dela = du texte explicatif, pas un index
+
+
+def memory_sections_hors_borne() -> list[str]:
+    """Sections de MEMORY.md au-dela de leur plafond, et lignes trop longues.
+
+    POURQUOI (mesure du 2026-08-27) : MEMORY.md etait a 92 % du cap OCTETS mais
+    seulement 52 % du cap LIGNES — 224 o/ligne de moyenne. La contrainte n'est
+    donc PAS le nombre d'entrees mais leur LONGUEUR : le bon geste est de
+    raccourcir, pas de supprimer. Croissance mesuree : ~217 o/jour.
+    """
+    mem = PROJ_MEM / "MEMORY.md"
+    if not mem.exists():
+        return []
+    out = []
+    cur, buf = None, 0
+    longues = []
+    for line in mem.read_text(encoding="utf-8").split("\n"):
+        if line.startswith("## "):
+            if cur and buf > SECTIONS_MEMORY.get(cur, 10 ** 9):
+                out.append(f"section « {cur[:38]} » : {buf} o "
+                           f"(plafond {SECTIONS_MEMORY[cur]})")
+            titre = line[3:].strip()
+            cur = next((k for k in SECTIONS_MEMORY if k in titre), None)
+            buf = 0
+        buf += len(line.encode()) + 1
+        if len(line.encode()) > LIGNE_MAX and not line.startswith("#"):
+            refs = (len(re.findall(r"[a-z0-9]+(?:-[a-z0-9]+){2,}", line))
+                    + len(re.findall(r"`[^`]+\.(?:md|py|sh|tsx)`", line)))
+            if len(line.encode()) / max(refs, 1) > OCTETS_PAR_REF_MAX:
+                longues.append((len(line.encode()), refs))
+    if cur and buf > SECTIONS_MEMORY.get(cur, 10 ** 9):
+        out.append(f"section « {cur[:38]} » : {buf} o (plafond {SECTIONS_MEMORY[cur]})")
+    if longues:
+        out.append(f"{len(longues)} ligne(s) peu denses (> {OCTETS_PAR_REF_MAX} o/ref) "
+                   f"— du CONTENU a deplacer vers le fichier pointe, pas des entrees a supprimer")
+    return out
+
+
 def mentions_orphelines() -> list[str]:
     """Les noms de feedbacks cites NUS dans MEMORY.md (sans lien markdown).
 
@@ -155,6 +211,9 @@ def main() -> int:
                 alertes.append(f"        · {s}")
             if len(closes) > 4:
                 alertes.append(f"        · … et {len(closes) - 4} autre(s)")
+
+    for m in memory_sections_hors_borne():
+        alertes.append(f"  ⚠️  MEMORY.md : {m}")
 
     orph = mentions_orphelines()
     if orph:
