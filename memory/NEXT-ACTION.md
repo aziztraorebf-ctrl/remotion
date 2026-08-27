@@ -100,6 +100,32 @@ faux. **Aucun trouvé par un rapport — tous à l'OEIL.**
 
 ---
 
+## 🔧 SESSION D'AUDIT DU WORKSPACE — à planifier (constitué le 2026-08-27)
+
+> Session dédiée, pas un fix au fil de l'eau. Les points s'ajoutent ici au fur et à mesure
+> qu'on en repère. Rien n'est urgent ; tout est du durcissement de système.
+
+**1. ⭐⭐⭐ Outiller le protocole des 2 échecs (le point le plus rentable)**
+La règle existe (`CLAUDE.md` global § « Protocole agent de diagnostic dédié ») : à la **2e**
+tentative infructueuse sur le même blocage → déléguer à un agent, NON-NÉGOCIABLE. Elle documente
+2 preuves de valeur : 40 min perdues sur des appels API (18/07), et **4 itérations complètes** de
+dosage caméra sur le globe D3 avant de déléguer (02/08) — l'agent a trouvé la vraie cause en 1 passe.
+⛔ **Mais rien ne compte les tentatives.** C'est une règle écrite sans gate, soit exactement le
+pattern `regle-ecrite-insuffisante-sans-gate-outille` — celui qui a fait échouer 3 fois la règle
+d'éviction de NEXT-ACTION avant qu'on l'outille le 27/08.
+Base de départ : `.claude/hooks/circuit-breaker.sh` compte déjà les éditions répétées d'un même
+fichier. Reste à décider ce qui définit une « tentative sur le même problème » (rendu rejeté sur le
+même défaut ≠ édition de fichier) et à quel seuil il propose la délégation plutôt qu'il ne bloque.
+
+**2. Audit des ~90 skills** (demandé le 2026-07-11, jamais fait — non urgent : les skills sont
+chargées sur description, elles ne coûtent rien tant qu'elles ne servent pas).
+
+**3. Vérifier que les gates ne meurent pas en silence.** Les 14 hooks sont câblés et s'exécutent
+(vérifié 27/08), mais le circuit-breaker était mort le 12/07 sans que personne le remarque. Un
+test d'exécution périodique de chaque hook éviterait la rechute.
+
+---
+
 ## 🔧 BACKLOG TECHNIQUE — dette Gemini/outillage (2026-08-20, non urgent)
 
 Migration image faite (preview mort → GA → **défaut LITE**, -50 %). Restes identifiés par l'audit de wrap :
