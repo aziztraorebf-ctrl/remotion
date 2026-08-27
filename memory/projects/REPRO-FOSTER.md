@@ -288,6 +288,49 @@ coeur contre 59 attendu). Resultat final : ecart de -2 a +3 par bande.
 **Lecon** : quand deux dosages successifs ratent dans des sens opposes, ce n'est pas
 le dosage — **c'est la forme du modele**. Mesurer un PROFIL, pas une valeur.
 
+
+## PLAN 4 (11,44 -> 13,59 s) — « ASSEMBLES » : NOTRE VERSION ILLUSTREE
+
+**Mecanique** : 6 vignettes se posent UNE PAR UNE (sur ~1,2 s, rythme mesure par
+comptage de zones claires frame par frame) en couronne autour du mot « Assembles »,
+legerement inclinees, cadre blanc facon polaroid — puis TOUT DISPARAIT d'un coup a
+13,59 s. Ca raconte **l'assemblage d'un dossier de preuves** : chaque vignette est
+une piece. C'est le sens du mot.
+
+### ⭐⭐ DECISION D'AZIZ : illustration vectorielle, PAS de photos
+La reference utilise des PHOTOS d'enfants (portraits cadres serres). Nous utilisons
+des **illustrations vectorielles generees par Gemini** (Lite, 1 planche de 6
+vignettes decoupee — 1 seul appel).
+- **Pourquoi** : des photos d'enfants generees posent une question de droit a
+  l'image et de realisme trompeur qu'un client B2B souleverait. L'illustration
+  l'evite, et c'est defendable comme parti pris.
+- ⛔ **Le SVG pur a ete ECARTE par Aziz** : notre doctrine dit deja que l'organique
+  (figures humaines) n'y fonctionne pas. **J'avais propose des « scenes SVG avec
+  figures d'enfants » — ca allait contre ce qu'on sait deja.** Correction d'Aziz.
+
+### ✅ FAIT VERIFIE : GEMINI NE CENSURE PAS LES ENFANTS
+Test reel du 2026-08-26 : `gemini-3.1-flash-lite-image`, prompt decrivant 6 enfants
+(ages, morphologies, teints varies) en style vectoriel plat -> **image generee,
+AUCUN refus**. Info reutilisable sur d'autres projets.
+⚠️ Passer par le template (`memory/templates/narratif.md`) reste obligatoire :
+« pas d'enfants sauf si le script le demande » — ici le script le demande (SaaS pour
+familles d'accueil), et « diversite des visages : chaque individu decrit separement »
+evite 6 clones.
+
+### ⛔⛔ POSITIONS : 3 relevés, et le bon diagnostic n'etait pas celui que je voyais
+1. releve sur grille grossiere (96 px) -> faux, vide a gauche + chevauchement.
+2. releve sur grille fine (48 px) -> nuage juste, mais **il SEMBLAIT decale a droite**.
+3. ⭐ **Verification par CALCUL avant de corriger** : centre de gravite du nuage a
+   **+8 px du centre du cadre** — il etait DEJA centre. Le vrai defaut etait
+   l'**AMPLITUDE** : la reference etale sur 970 px en x, nous sur 660.
+   **Un nuage centre mais trop compact SE LIT comme decale. Le recentrer aurait
+   empire les choses.**
+
+⭐ **Regle qui se confirme (2e fois apres le degrade vert du plan 3)** : ce que je
+prends pour un probleme de POSITION ou de DOSAGE est souvent un probleme de FORME
+ou d'AMPLITUDE. Calculer une statistique globale (centre de gravite, profil) AVANT
+de corriger ce qu'on croit voir.
+
 ## CE QUI EST DÉJÀ PRÊT (acquis de la session 2026-08-25/26)
 - `devices/PhoneModel` · `LaptopModel` — mockups procéduraux, écran = zone d'accueil
 - `devices/DeviceInScene` — objet posé dans un décor, ombre 3 couches, allumage 0,30 s
