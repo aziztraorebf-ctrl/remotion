@@ -405,3 +405,31 @@ ci-dessus. Détail technique complet conservé dans `memory/episodes/_client-sim
 **HANDOFF -> prochaine session** : `memory/projects/REPRO-FOSTER.md`. Reproduire de A a Z une vidéo
 Fiverr reellement vendue (« Foster With Confidence », source sur disque). 11 plans mesures, 9 couverts
 par la stack. 2 trous tranches : maison filmee -> Minimax H3 · portraits -> images Gemini.
+
+---
+
+## CIRCUIT BREAKER RE-OPEN — Plan06GoogleEarth.tsx (2026-08-27)
+
+**Pourquoi le compteur a saute** : 6 editions successives, mais ce ne sont PAS 6 tentatives
+ratees sur le meme defaut. Sequence reelle : 1-2 ecriture initiale, 3 garde-fou token,
+4 synchro tuiles par frame, 5 choix du style justifie, 6 zoom de depart corrige par mesure.
+C'est de la construction incrementale, pas une boucle de dosage.
+
+**Direction confirmee, inchangee** : reproduire le plan 6 de « Foster With Confidence »
+(17,40 -> 18,45 s) — globe satellite puis plongee vers le Nebraska — avec Mapbox
+frame-driven. Le geste et les valeurs viennent de MESURES sur la reference, pas
+d'impressions (protocole REPRO-FOSTER etape 2).
+
+**Etat au moment de la reouverture** : v1 rendue et REGARDEE. La mecanique marche
+(globe, projection, plongee, labels, flou de sortie). 3 ecarts MESURES restent :
+| Ecart | Mesure | Correction |
+|---|---|---|
+| Globe trop petit | 72,7 % du cadre vs 89,4 % ref | zoom depart 3,08 -> 3,38 (fait) |
+| Logo Mapbox visible | — | `MapboxBrandingHide` (fait) |
+| Dominante trop chaude | B 50,9 vs 97,4 ref (R et G justes) | desaturer + refroidir (en cours) |
+
+⭐ Le 3e point est le seul a risque : R et G etant deja bons, corriger la LUMINOSITE
+aurait laisse le desequilibre intact. On traite la cause (bleu absent), pas l'impression.
+
+**Prochaine etape** : appliquer l'etalonnage, re-rendre, mesurer a nouveau les 3 chiffres,
+puis comparatif A/B avec `proportions-diff.py` avant de montrer a Aziz.

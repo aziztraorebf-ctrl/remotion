@@ -434,6 +434,7 @@ import { Plan02NotifStack } from "./projects/_client-sim/foster/scenes/Plan02Not
 import { Plan03Typo } from "./projects/_client-sim/foster/scenes/Plan03Typo";
 import { Plan04Assembles } from "./projects/_client-sim/foster/scenes/Plan04Assembles";
 import { Plan05Diagram } from "./projects/_client-sim/foster/scenes/Plan05Diagram";
+import { Plan06GoogleEarth } from "./projects/_client-sim/foster/scenes/Plan06GoogleEarth";
 import { DeviceBenchPhone, DeviceBenchLaptop, DeviceBenchPhoneVision, DeviceBenchPhoneVisionBlindLights, DeviceBenchPhoneOrigVisionLights } from "./projects/_shared/_demos/devices/DeviceBench";
 import { JetonWarMap3DCompare } from "./projects/_shared/_demos/JetonWarMap3DCompare";
 import { RapidFireCountries } from "./projects/_shared/mapbox/RapidFireCountries";
@@ -736,6 +737,16 @@ export const RemotionRoot: React.FC = () => {
       
       
       <Folder name="atlas-peste-1347">
+        {/* FOSTER plan 6 : 17,40 -> 18,45 s = 32 frames a 30 fps.
+            Bornes MESUREES (le tableau annoncait 18,03 -> 18,41). */}
+        <Composition
+          id="FosterPlan06"
+          component={Plan06GoogleEarth}
+          durationInFrames={32}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
         {/* FOSTER plan 5 : 13,59 -> 17,40 s = 114 frames a 30 fps. */}
         <Composition
           id="FosterPlan05"
