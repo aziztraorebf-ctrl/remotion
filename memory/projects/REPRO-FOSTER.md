@@ -451,6 +451,56 @@ c'est une nappe. (Le creux central vient du TEXTE qui masque le dore, pas du deg
 **REGLE** : mesurer ne suffit pas — il faut **mesurer selon le BON AXE**. Une
 statistique aveugle a la difference reelle donne une fausse validation.
 
+
+## ⭐⭐⭐ COMPARATIF A/B CHIFFRE PAR LES MODELES — l'idee d'Aziz qui change la boucle
+
+> **Aziz (2026-08-27)** : « au lieu de se fier juste a toi, donne aux modeles le
+> COMPARATIF entre les frames de l'original et ta reproduction. Le resultat risque
+> d'etre surprenant. » Il l'etait.
+
+**Outil** : `scripts/tools/proportions-diff.py`. Planche = original EN HAUT,
+notre repro EN BAS, **grille commune graduee en %**, question unique : « qu'est-ce
+qui n'est pas a la bonne taille / au bon endroit, AVEC DES CHIFFRES ».
+Complementaire de `motion-breakdown.py` :
+  - **motion-breakdown** = AVANT de coder -> quels GESTES existent
+  - **proportions-diff** = APRES un rendu -> quelle GEOMETRIE est fausse
+
+### CE QUE CA A TROUVE (et que ni Aziz ni moi ne voyions)
+✅ **Les ETIQUETTES etaient trop petites** : 12,2 % de la largeur du cadre en
+reference contre 9,6 % chez nous => facteur **1,27**. GPT l'avait chiffre a
+« +21 % ». **Je n'avais jamais mesure les etiquettes separement.**
+
+⛔⛔ **ET SURTOUT : ma correction precedente allait DANS LE MAUVAIS SENS.**
+Aziz trouvait le diagramme trop petit (v4), j'ai applique `DIAG = 1,28` **sans
+mesurer**. Verification : disque REF = **10,8 %** de la largeur, le notre avec
+1,28 = **14,0 %** => facteur correct 0,77, soit DIAG ≈ **0,99**.
+**Le diagramme d'origine etait DEJA a la bonne taille.** L'agrandissement poussait
+en plus les etiquettes de ±90 px hors de leurs positions relevees — ce que les
+modeles signalaient comme « etiquettes trop basses ». **Une seule cause, plusieurs
+symptomes.**
+⭐ Ce qu'Aziz percevait comme « trop petit » venait des ETIQUETTES et du FLOU de la
+reference (qui etale visuellement le texte), pas du cercle.
+
+### ⚠️ LES 2 ERREURS SYSTEMATIQUES DES MODELES SUR CE FORMAT (verifier toujours)
+1. **« tout est ~10 % trop bas »** — affirme 2 fois par GPT, FAUX les 2 fois
+   (mesure : centre y = 20,6 % des DEUX cotes). **Biais du format A/B EMPILE** :
+   ils lisent la position dans la planche entiere (ou B occupe la moitie basse)
+   au lieu du cadre de B. ⛔ Ne jamais appliquer une correction VERTICALE sans la
+   remesurer soi-meme.
+2. GPT a reproche a B l'absence du **watermark fiverr**... qu'on ne veut
+   evidemment pas reproduire.
+=> Sur ~8 points rendus : les TAILLES sont fiables, les POSITIONS VERTICALES non.
+
+### ⛔ GOTCHA API : GPT-5.5 rendait `[vide]` — ce n'etait NI l'image NI un refus
+`finish_reason: length`, **3500 tokens factures et 0 caractere**. Le modele
+consomme son budget en RAISONNEMENT INTERNE avant d'ecrire.
+✅ Fix : `max_tokens: 12000` + consigne « reponds directement, sans raisonnement
+etale ». Diagnostique en isolant l'appel (un prompt court sur la MEME image
+marchait parfaitement).
+
+**Resultat final plan 5** : disque 10,8 % (ref) vs 11,0 % (nous) · etiquettes
+12,2 % des deux cotes · positions a 0,1 % pres.
+
 ## CE QUI EST DÉJÀ PRÊT (acquis de la session 2026-08-25/26)
 - `devices/PhoneModel` · `LaptopModel` — mockups procéduraux, écran = zone d'accueil
 - `devices/DeviceInScene` — objet posé dans un décor, ombre 3 couches, allumage 0,30 s

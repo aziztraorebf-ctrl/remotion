@@ -72,13 +72,35 @@ const ORB = { cx: 910, cy: 540, rx: 300, ry: 330 };
 const DISC = { cx: 960, cy: 540, d: 210 };
 
 /**
- * ⭐ FACTEUR D'ENSEMBLE (retour d'Aziz sur la v4) : « le logo devrait etre
- * beaucoup plus gros, et les ecritures tout autour agrandies aussi ».
- * On multiplie disque + orbite + etiquettes par le MEME facteur pour garder
- * les proportions relatives (verifiees justes au zoom : notre texte occupe
- * deja la bonne part du disque).
+ * ⛔⛔ FACTEUR D'ENSEMBLE — REVENU A 1,0 APRES MESURE.
+ *
+ * Aziz a trouve le diagramme trop petit (v4), j'ai applique 1,28 SANS MESURER
+ * d'abord. Le comparatif A/B chiffre (`proportions-diff.py`, idee d'Aziz) puis
+ * ma propre mesure ont montre que **c'etait l'inverse** :
+ *     disque REF = 10,8 % de la largeur · avec DIAG=1,28 il faisait 14,0 %
+ *     => facteur correct 10,8/14,0 = 0,77, soit DIAG = 1,28 x 0,77 ≈ **0,99**
+ * Autrement dit **le diagramme d'origine etait DEJA a la bonne taille**, et
+ * l'agrandissement a aussi pousse les etiquettes de +/-90 px hors de leurs
+ * positions relevees a la regle.
+ *
+ * ⭐ Ce qu'Aziz percevait comme « trop petit » venait d'ailleurs (le flou de la
+ * reference etale visuellement le texte), pas de la geometrie.
+ * LECON : ne pas convertir une impression en facteur sans mesurer le rapport
+ * reel — meme quand l'impression est juste, le sens de la correction peut etre
+ * l'inverse de celui qu'on croit.
  */
-const DIAG = 1.28;
+const DIAG = 1.0;
+
+/**
+ * ⭐ Facteur PROPRE AUX ETIQUETTES, mesure apres coup : la pastille
+ * « SOCIAL WORKER » fait **12,2 % de la largeur** du cadre dans la reference
+ * contre 9,6 % chez nous => 1,27.
+ * ⛔ Il ne touche NI le disque NI l'orbite (mesures conformes a 0,2 % pres) :
+ * c'est bien la TYPO des etiquettes qui etait trop petite, pas le diagramme.
+ * Trouve par le comparatif A/B chiffre (`proportions-diff.py`) — GPT avait vu
+ * juste sur ce point (« agrandir de 21 % »).
+ */
+const LABEL = 1.27;
 
 export const Plan05Diagram: React.FC = () => {
   const frame = useCurrentFrame();
@@ -253,11 +275,11 @@ export const Plan05Diagram: React.FC = () => {
                 background: l.green ? "#1d5c4f" : "#f0a83c",
                 color: l.green ? "#eaf5f1" : "#2a1a05",
                 fontFamily: MONO,
-                fontSize: px(17) * DIAG,
+                fontSize: px(17) * DIAG * LABEL,
                 fontWeight: 600,
-                letterSpacing: px(1.2) * DIAG,
-                padding: `${px(9) * DIAG}px ${px(18) * DIAG}px`,
-                borderRadius: px(24) * DIAG,
+                letterSpacing: px(1.2) * DIAG * LABEL,
+                padding: `${px(9) * DIAG * LABEL}px ${px(18) * DIAG * LABEL}px`,
+                borderRadius: px(24) * DIAG * LABEL,
                 whiteSpace: "nowrap",
                 boxShadow: "0 6px 18px rgba(0,0,0,0.5)",
               }}
