@@ -103,6 +103,19 @@ chez moi »*. S'ils réagissent, on le saura. S'ils n'en parlent jamais, on le s
 3. ✅ `freelance-dataviz-fiverr-pro.md` : bandeau « FICHIER HISTORIQUE » posé le 08-27 (ce qui reste
    valide / ce qui est périmé). ✅ Les 2 chemins morts de `PILIERS-B2B.md` sont corrigés, et le gate
    `check-links.py` couvre désormais PILIERS-B2B + RECHERCHE-MARCHE-INDEX (570 chemins / 11 fichiers).
+4bis. 🧹 **265 Mo de purge PROPOSÉE mais NON exécutée** (wrap 08-27 — une autre session tournait sur
+   le repo, purger aurait été risqué) :
+   - `out/_rnd/` (**252 Mo**, 19 entrées de juillet, 100 % > 30 j) — POC périmés, aucun référencé dans
+     NEXT-ACTION. ⚠️ **Doublon de rôle** : la doctrine ne nomme que `out/_r-and-d/` (1,2 Go, actif).
+     → purger `_rnd/`, ne pas fusionner.
+   - `out/_wip/` (13 Mo) — **hors nomenclature** (le wip appartient à `out/episodes/<ep>/wip/`).
+     ⚠️ Contient 4 mp4 de test **Acte 3 Gazoduc** → confirmer avec Aziz avant de purger (Acte 3 = priorité 1).
+   - ⛔ **À CONSERVER** : `out/episodes/gazoduc-aagp-tsgp/wip/acte3-v3.review-override.md` (4 Ko) —
+     c'est un override de review, pas un render.
+   ℹ️ `out/` pèse **10 Go** (episodes 5,5 · PRET-PUBLICATION 2,1 intouchable · _r-and-d 1,2).
+4ter. ⚠️ **6 erreurs TypeScript PRÉEXISTANTES** (commitées en mai, aucun lien avec ces sessions) :
+   `GlobalPulse.tsx` (4× types mapbox-gl périmés `ProjectionSpecification`/`FogSpecification`),
+   `GoldVein.tsx` (1× idem), `LoomWeaver.tsx` (1× `spring` utilisé comme type). Non bloquantes.
 5. ⛔ **3 dettes documentées jamais exécutées** (trouvées au wrap du 08-27) :
    - ⚠️ **SÉCURITÉ** : `scripts/tools/svg2lottie.py` parse le SVG **en regex, sans parseur XML**.
      `memory/tools/lottie-claude-inventaire.md:123` dit de **ne PAS l'exposer à un SVG client non
