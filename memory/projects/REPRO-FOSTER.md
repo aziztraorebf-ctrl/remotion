@@ -50,10 +50,18 @@ gardant l'audio normal, indetectable sur des frames isolees.
 
 ### ✅ PLAN 9 — CODE ET MESURE (27/08), en attente de validation
 `Plan09PullBack.tsx` · 30 frames · `plan09_v3.mp4`.
-📎 **Page Artifact du sujet** (comparatif A/B + mesures + les 2 arbitrages ouverts) :
+📎 **PAGE ARTIFACT DU SUJET — LA GALERIE DES COMPARATIFS** :
 https://claude.ai/code/artifact/d5fb3169-7cb4-47e8-a94a-dfca377d204f
-⭐ 1 page par SUJET : l'ENRICHIR pour les plans 10 et 11 (meme URL redeployee),
-ne pas creer un lien par livrable.
+Contient les **9 comparatifs A/B** (ref a gauche, nous a droite, synchro frame a
+frame), la progression, et les 2 arbitrages ouverts.
+⭐ 1 page par SUJET : l'ENRICHIR pour les plans 10 et 11 (meme URL redeployee, meme
+fichier `scratchpad/foster-plan09.html`), ne pas creer un lien par livrable.
+⚠️ Le plan 8 en ligne est la version VALIDEE (sans le tableau de facturation) — la
+remplacer seulement si Aziz tranche pour le re-rendu.
+⛔ **Gotcha ffmpeg local** : le binaire n'a PAS le filtre `drawtext` (etiquettes
+faites en PIL sur les frames extraites). Et extraire un segment par `-t <duree>`
+donne un arrondi a +/-1 frame : utiliser **`-frames:v <N>`** pour une synchro exacte
+des 2 volets (les plans 4 et 7 etaient desynchronises d'1 frame avant correction).
 
 ⛔⛔ **LE TABLEAU DISAIT « transition (1 s) » : C'EST UN PLAN A PART ENTIERE** — la
 plaque Billing vue EN ENTIER, dernier temps du dashboard. Les 2 coupes qui
