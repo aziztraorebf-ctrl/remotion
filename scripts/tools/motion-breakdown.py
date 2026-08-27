@@ -211,9 +211,20 @@ def call_openrouter(name, model, prompt, frames, results):
         with open(f, "rb") as fh:
             b64 = base64.b64encode(fh.read()).decode()
         content.append({"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{b64}"}})
+    # ⛔⛔ max_tokens 4000 NE SUFFIT PAS pour GPT-5.5 : le modele consomme son budget
+    # en RAISONNEMENT INTERNE avant d'ecrire, et rend une reponse tronquee (voire
+    # vide) avec `finish_reason: length` — 3500 tokens factures pour 0 caractere,
+    # vecu le 2026-08-27. Le symptome etait DEJA documente dans la docstring de
+    # cette fonction, mais seul un AVERTISSEMENT avait ete ajoute : la valeur, elle,
+    # n'avait jamais ete corrigee. On instrumentait la detection sans appliquer le fix.
+    # Meme mecanisme que Kimi k3 (cf. `da-brief.py` : « part en reasoning long AVANT
+    # tout content »). D'ou les deux mesures ci-dessous :
+    #   1. un budget large (12000) pour que le contenu tienne APRES le raisonnement ;
+    #   2. `reasoning.max_tokens` pour BORNER ce raisonnement a la source.
     body = {"model": model,
             "messages": [{"role": "user", "content": content}],
-            "max_tokens": 4000, "temperature": 0.3}
+            "max_tokens": 12000, "temperature": 0.3,
+            "reasoning": {"max_tokens": 2000}}
     req = urllib.request.Request(
         OPENROUTER_URL, data=json.dumps(body).encode(),
         headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"})
@@ -221,13 +232,20 @@ def call_openrouter(name, model, prompt, frames, results):
         print(f"[{name}] envoi {len(frames)} frames ({model})...")
         with urllib.request.urlopen(req, timeout=300) as r:
             data = json.loads(r.read().decode())
-        txt = data["choices"][0]["message"]["content"]
+        choice = data["choices"][0]
+        txt = choice["message"]["content"]
+        fin = choice.get("finish_reason") or "?"
+        usage = data.get("usage") or {}
         results[name] = txt
         if len(txt) < 1500:
-            print(f"[{name}] ⚠️ REPONSE COURTE ({len(txt)} car.) — probablement "
-                  "tronquee, la relire avant de s'y fier")
+            # ⭐ Afficher finish_reason ET l'usage : « reponse courte » seul ne dit pas
+            # POURQUOI. `length` + beaucoup de tokens sortis = budget mange par le
+            # raisonnement (relever reasoning.max_tokens) ; `stop` + peu de tokens =
+            # le modele a vraiment peu ecrit, c'est un probleme de prompt.
+            print(f"[{name}] ⚠️ REPONSE COURTE ({len(txt)} car.) — finish_reason={fin} "
+                  f"tokens_sortis={usage.get('completion_tokens','?')} — la relire avant de s'y fier")
         else:
-            print(f"[{name}] OK ({len(txt)} car.)")
+            print(f"[{name}] OK ({len(txt)} car., finish_reason={fin})")
     except Exception as e:
         results[name] = f"[ERREUR {name}] {e}"
         print(f"[{name}] ERREUR: {e}")

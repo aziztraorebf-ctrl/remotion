@@ -438,6 +438,7 @@ import { Plan06GoogleEarth } from "./projects/_client-sim/foster/scenes/Plan06Go
 import { Plan07Maison } from "./projects/_client-sim/foster/scenes/Plan07Maison";
 import { Plan08Dashboard } from "./projects/_client-sim/foster/scenes/Plan08Dashboard";
 import { Plan09PullBack } from "./projects/_client-sim/foster/scenes/Plan09PullBack";
+import { Plan10Cta } from "./projects/_client-sim/foster/scenes/Plan10Cta";
 import { DeviceBenchPhone, DeviceBenchLaptop, DeviceBenchPhoneVision, DeviceBenchPhoneVisionBlindLights, DeviceBenchPhoneOrigVisionLights } from "./projects/_shared/_demos/devices/DeviceBench";
 import { JetonWarMap3DCompare } from "./projects/_shared/_demos/JetonWarMap3DCompare";
 import { RapidFireCountries } from "./projects/_shared/mapbox/RapidFireCountries";
@@ -731,6 +732,8 @@ const MilitaryMarchLineDemo: React.FC = () => (
   />
 );
 
+import { FontProbe } from "./projects/_client-sim/foster/scenes/_FontProbe";
+
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -745,6 +748,25 @@ export const RemotionRoot: React.FC = () => {
       
       
       <Folder name="atlas-peste-1347">
+        {/* FOSTER plan 10 : 28,07 -> 40,46 s = 372 frames a 30 fps.
+            Le plus long. ⛔ Pas de coupes internes (diff max 3,08) et ancres
+            gauches FIXES par phrase — les 3 voix se trompaient sur les deux. */}
+        <Composition
+          id="FontProbe"
+          component={FontProbe}
+          durationInFrames={1}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="FosterPlan10"
+          component={Plan10Cta}
+          durationInFrames={372}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
         {/* FOSTER plan 9 : 27,07 -> 28,07 s = 30 frames a 30 fps.
             ⛔ Le tableau annoncait « transition » : c'est un PLAN, la plaque vue
             en entier, pan horizontal PUR de 79 px (taille constante, mesuree). */}
