@@ -59,6 +59,9 @@ const STATES = [
   { at: 4.8, src: "_client-sim/foster/screens/stack-s3.png" },
 ] as const;
 
+/** Le tapis de decoupe, visible de part et d'autre du telephone. */
+const DECOR = "_shared/refs/decors-mockup/desk-designer-top.png";
+
 /** Temps ABSOLU du debut du plan dans la video de reference. */
 const PLAN_START = 1.602;
 
@@ -70,6 +73,8 @@ const PLAN_START = 1.602;
  * ⛔ Sans ce recentrage, caler la plaque en hauteur montre son CENTRE (y=1278),
  * c'est-a-dire le bas du fond d'ecran : on ne voyait aucune notification.
  */
+/** Largeur du chassis de chaque cote, MESUREE : ~55 px sur un cadre 1920. */
+const CHASSIS_PX = 55;
 const PLATE_W = 1179;
 const PLATE_H = 2556;
 const STACK_TOP = 300;
@@ -132,19 +137,20 @@ export const Plan02NotifStack: React.FC = () => {
    * (mesure : le telephone continue de grandir jusqu'a ~2,2 s), puis se cale.
    */
   /**
-   * ZOOM — CALCULE sur la LARGEUR, pas sur la hauteur.
-   * ⛔ Erreur payee 2 fois : piloter la hauteur d'une plaque tres verticale
-   * (1179x2556) ne l'elargit presque pas — a 2,5x la hauteur du cadre elle ne
-   * fait que 1258 px de large, a peine plus que le cadre lui-meme.
-   * MESURE sur la reference (a la regle) : la bulle occupe **1100 px sur 1920**
-   * (x=400 -> x=1500), et les bords du telephone sont a x=290 et x=1610.
-   * Notre carte fait 1031 px sur 1179 de plaque => pour couvrir 1100 px il faut
-   * une plaque affichee a 1100/1031 * 1179 = **1258 px de large**... ce qui
-   * correspond a une largeur de 1258/1920 = 0,655 du cadre pour l'ECRAN SEUL.
-   * Comme la reference montre l'ecran a ~1320 px de large (bords x=290->1610
-   * moins le chassis), on vise **1,30 fois la largeur du cadre** en fin de plan.
+   * ZOOM — GEOMETRIE MESUREE A LA REGLE sur la reference (frame 4,30 s,
+   * cadre 1920 de large) :
+   *     tapis bleu   x=0    -> 430      |  x=1490 -> 1920
+   *     chassis      x=430  -> 490      |  x=1440 -> 1490   (~55 px)
+   *     ECRAN        x=490  -> 1440     => **950 px sur 1920 = 49 % du cadre**
+   * Le telephone entier fait ~1060 px et son coin arrondi est visible en bas.
+   *
+   * ⛔⛔ RETOUR D'AZIZ : la v5 affichait l'ecran a 2458 px (il DEBORDAIT du
+   * cadre), donc plus de chassis, plus de tapis — les notifications avaient
+   * l'air de flotter sur un fond noir au lieu d'etre DANS un telephone pose.
+   * C'est le chassis + le tapis qui font lire « telephone », pas la taille du
+   * texte. On reduit donc l'ecran a sa largeur reelle et on rebatit le contexte.
    */
-  const zoomW = interpolate(tAbs, [1.602, 2.2, 5.597], [1.22, 1.28, 1.31], {
+  const zoomW = interpolate(tAbs, [1.602, 2.2, 5.597], [0.60, 0.63, 0.645], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: Easing.out(Easing.cubic),
@@ -159,14 +165,45 @@ export const Plan02NotifStack: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
-      {/*
-        ⛔ PAS de couche de contexte (tapis floute, bandes de chassis) : elles
-        ont ete codees puis RETIREES apres mesure — a ce cadrage la plaque fait
-        2458 px de large sur un cadre de 1920, elle DEBORDE de 269 px de chaque
-        cote et recouvre integralement ce qui est derriere. C'etait du code mort.
-        La reference montre les bords du telephone parce qu'elle cadre un peu
-        plus large ; chez nous l'ecran remplit le cadre — parti pris assume.
-      */}
+      {/* LE TAPIS — net, comme dans la reference (quadrillage bleu lisible).
+          ⛔ 3 tentatives ratees avant celle-ci, toutes avec une <Img> :
+          %+translate puis position absolue laissaient une bande noire de 313 px
+          au bord droit (mesure : noir PUR (0,0,0) de x=1606 a 1919, donc le
+          fond de l'AbsoluteFill, pas le decor).
+          ✅ FIX : `backgroundImage` + `backgroundSize: cover` sur la couche
+          elle-meme. Le navigateur gere le recouvrement, il n'y a plus aucune
+          arithmetique de position a se tromper. `backgroundPosition` recadre
+          sur la zone de tapis voulue (pas la regle Staedtler). */}
+      <AbsoluteFill
+        style={{
+          backgroundImage: `url(${staticFile(DECOR)})`,
+          backgroundSize: "170% auto",
+          backgroundPosition: "42% 38%",
+          backgroundRepeat: "no-repeat",
+          filter: "brightness(0.95)",
+        }}
+      />
+
+      {/* LE CORPS DU TELEPHONE — une plaque noire, plus large que l'ecran de
+          2 x 55 px (chassis mesure), avec les coins arrondis et le reflet
+          vertical qui court sur la tranche. C'est ce reflet qui fait « metal »
+          plutot que « rectangle noir ». */}
+      <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
+        <div
+          style={{
+            width: width * (zoomW + impact) + CHASSIS_PX * 2,
+            height: "138%",
+            borderRadius: width * 0.055,
+            background:
+              "linear-gradient(90deg," +
+              " #000 0%, #2e2e34 3%, #6c6c76 6%, #17171b 11%," +
+              " #0a0a0c 16%, #0a0a0c 84%," +
+              " #17171b 89%, #6c6c76 94%, #2e2e34 97%, #000 100%)",
+            boxShadow: "0 30px 90px rgba(0,0,0,0.75)",
+          }}
+        />
+      </AbsoluteFill>
+
       {/* SFX : la coupe, puis un son par notification qui tombe. */}
       <Sequence from={0} durationInFrames={Math.round(0.5 * fps)}>
         <Audio src={staticFile(SFX.cut)} volume={SFX_VOL * 0.8} />
@@ -184,27 +221,41 @@ export const Plan02NotifStack: React.FC = () => {
       {/* LA PLAQUE — on bascule d'un etat a l'autre, on ne redessine jamais l'UI.
           Le zoom se fait par `scale` sur l'image : la plaque est capturee en
           1179x2556 natif, donc elle reste nette a ce facteur. */}
+      {/* L'ECRAN — clippe aux coins arrondis du telephone (sinon on voit un
+          rectangle net par-dessus un corps arrondi, et l'illusion tombe). */}
       <AbsoluteFill
         style={{
           justifyContent: "center",
           alignItems: "center",
-          overflow: "hidden",
         }}
       >
-        <Img
-          src={staticFile(state.src)}
+        <div
           style={{
-            width: width * (zoomW + impact),
-            /* Recentrage sur la pile (mesure) + descente de la vue quand elle
-               grandit. Les deux sont exprimes en fraction de la hauteur AFFICHEE
-               de la plaque, pas du cadre : sinon le decalage change avec le zoom. */
-            /* Le decalage s'exprime en fraction de la HAUTEUR AFFICHEE de la
-               plaque. Celle-ci vaut largeur_affichee * (2556/1179). */
-            transform: `translateY(${
-              (-CENTER_OFFSET - scroll) * width * (zoomW + impact) * (PLATE_H / PLATE_W)
-            }px)`,
+            /* L'ecran est plus etroit que le corps de 2 x CHASSIS_PX : c'est
+               precisement ce qui fait apparaitre la tranche sur les COTES. */
+            width: width * (zoomW + impact) - CHASSIS_PX * 0.6,
+            height: "129%",
+            borderRadius: width * 0.042,
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
-        />
+        >
+          <Img
+            src={staticFile(state.src)}
+            style={{
+              width: width * (zoomW + impact),
+              /* Recentrage sur la pile (bbox mesurees) + descente de la vue
+                 quand elle grandit. Exprime en fraction de la HAUTEUR AFFICHEE
+                 de la plaque (= largeur affichee * 2556/1179), pas du cadre :
+                 sinon le decalage changerait avec le zoom. */
+              transform: `translateY(${
+                (-CENTER_OFFSET - scroll) * width * (zoomW + impact) * (PLATE_H / PLATE_W)
+              }px)`,
+            }}
+          />
+        </div>
       </AbsoluteFill>
 
     </AbsoluteFill>
