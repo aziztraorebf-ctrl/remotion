@@ -79,6 +79,49 @@ def sections_closes(path: Path) -> list[str]:
     return out
 
 
+def mentions_orphelines() -> list[str]:
+    """Les noms de feedbacks cites NUS dans MEMORY.md (sans lien markdown).
+
+    ANGLE MORT DE check-links.py : il ne verifie que les CHEMINS ecrits en
+    toutes lettres. Un nom nu comme `globe-d3-briques-exactes-pas-variante-maison`
+    n'est pas un chemin — il passait donc au vert alors que 14 mentions sur 43
+    ne correspondaient a AUCUN fichier (constate le 2026-08-27 : des abreviations
+    du nom reel, ecrites de memoire). Rien n'etait perdu, mais un grep exact
+    echouait et l'index devenait trompeur.
+    """
+    mem = PROJ_MEM / "MEMORY.md"
+    if not mem.exists():
+        return []
+    stems = set()
+    for root in (PROJ_MEM, REPO / "memory"):
+        if root.exists():
+            for f in root.rglob("*.md"):
+                stems.add(f.stem)
+                stems.add(f.stem.replace("feedback_", ""))
+    txt = mem.read_text(encoding="utf-8")
+    orphelins = []
+    for line in txt.split("\n"):
+        if not line.strip().startswith("- "):
+            continue
+        s = re.sub(r"\[[^\]]*\]\([^)]*\)", "", line)   # retire les liens markdown
+        s = re.sub(r"`[^`]*`", "", s)                    # retire les chemins en backticks
+        for m in re.findall(r"(?<![\w/.-])([a-z0-9]+(?:-[a-z0-9]+){2,})(?![\w/.-])", s):
+            if re.match(r"^\d{4}-\d{2}-\d{2}$", m):
+                continue
+            # faux positifs : du francais courant qui ressemble a du kebab-case
+            # ("retention seconde-par-seconde", "gotcha texte-au-lieu-d'image").
+            # Un nom de feedback fait au moins 4 segments ; le francais courant, 3.
+            if m.count("-") < 3:
+                continue
+            # une apostrophe colle au motif = du francais, pas un nom de fichier
+            # ("texte-au-lieu-d'image" -> le motif capture "texte-au-lieu-d")
+            if re.search(re.escape(m) + r"['\u2019]", s):
+                continue
+            if m not in stems and f"feedback_{m}" not in stems:
+                orphelins.append(m)
+    return orphelins
+
+
 def main() -> int:
     alertes, infos = [], []
     total = 0
@@ -112,6 +155,16 @@ def main() -> int:
                 alertes.append(f"        · {s}")
             if len(closes) > 4:
                 alertes.append(f"        · … et {len(closes) - 4} autre(s)")
+
+    orph = mentions_orphelines()
+    if orph:
+        alertes.append(
+            f"  ⚠️  MEMORY.md : {len(orph)} mention(s) NUE(S) sans fichier correspondant "
+            f"(angle mort de check-links) —")
+        for m in orph[:5]:
+            alertes.append(f"        · {m}")
+        if len(orph) > 5:
+            alertes.append(f"        · … et {len(orph) - 5} autre(s)")
 
     if total > BUDGET_TOTAL:
         alertes.insert(0, (
