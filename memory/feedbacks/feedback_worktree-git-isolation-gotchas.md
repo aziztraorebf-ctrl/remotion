@@ -51,6 +51,16 @@ metadata:
 - **Assets gitignorés ABSENTS du worktree neuf** (`.env`, `node_modules`, `public/_shared/audio` + `sfx` mp3) → les LIER par symlink depuis le repo principal, ne pas copier :
   `ln -s /Users/clawdbot/Workspace/remotion/{node_modules,.env} .` puis remplacer les sous-dossiers `public/_shared/{audio,sfx}` par des symlinks vers le repo principal.
 - **Symlink par-dessus un chemin qui contient des fichiers TRACKÉS** → git les voit "deleted" (fantômes). Fix : `git update-index --skip-worktree <fichiers>` sur ces fichiers. Et **NE JAMAIS `git add -A`** dans un worktree (risque de committer les suppressions) — toujours `git add <fichier précis>`.
+  ⛔⛔ **VAUT AUSSI HORS WORKTREE, en session normale** (vécu 2026-08-27, session mémoire) :
+  `git add -A memory/` a emporté du travail d'une AUTRE session déjà en cours et non commité
+  (`RECHERCHE-MARCHE-INDEX.md` 138 l., `STARTER-repro-ui-animation.md` 113 l., 2 fiches) dans un
+  commit intitulé « fermer le chantier Maroc ». Rien de perdu, mais le commit ment sur son contenu.
+  **Le `git status` de début de session montrait déjà ces fichiers modifiés — je ne l'ai pas relu
+  avant de commiter.** Ajouter NOMMÉMENT les fichiers qu'on a soi-même touchés, toujours.
+  ⛔ **Corollaire — vérifier `git branch --show-current` AVANT chaque commit** : la branche avait
+  changé en cours de session (`chore/memoire-eviction-contexte` → `feat/repro-foster`) sans que je
+  le détecte, et 2 commits sont partis sur la mauvaise branche. Une branche créée en début de
+  session n'est pas une branche encore active 20 tool-calls plus tard.
 - ⚠️⚠️ **UN WORKTREE D'AGENT QUI SE NETTOIE PEUT EMPORTER LE `node_modules` DU REPO PRINCIPAL**
   (vécu 2026-07-28) : en pleine session, `npx remotion render` s'est mis à échouer avec
   `npm error could not determine executable to run`, et `ls node_modules` renvoyait « No such file
