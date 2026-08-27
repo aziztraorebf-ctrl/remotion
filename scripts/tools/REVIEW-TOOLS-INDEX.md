@@ -160,3 +160,34 @@ cadre » alors que la mesure donnait 61 %. Sur planche propre, le même modèle 
 
 ⛔ **Un point de modèle ne s'applique jamais sans vérification** : sur 7 points reçus au comparatif
 final, 2 étaient NUISIBLES (violer un interdit client, supprimer une décision d'Aziz).
+
+## ⛔⛔ PROJETS `_client-sim/` — la review juge contre la MAUVAISE CHARTE (2026-08-27)
+
+**Vécu 3 fois dans une même session** (repro Foster, plans 6/7/8) : `visual_review.py` a rendu des verdicts
+du type « remplacez l'Amérique du Nord par de l'Afrique, appliquez la palette navy/or, ajoutez des données
+à l'écran ». C'est la charte **GéoAfrique/Souverain** — or ces plans reproduisent une vidéo **client
+britannique** (SaaS de familles d'accueil) : le Nebraska, l'imagerie satellite et l'absence de data-overlay
+**sont le brief**, pas des défauts. Appliquer ces « critical fixes » aurait détruit le travail.
+
+⭐ **Même famille que le faux-positif « palette navy » déjà corrigé plus haut par `--palette`** : le prompt
+juge contre un registre codé en dur. La différence, c'est qu'ici c'est le SUJET et la DOCTRINE éditoriale
+qui ne s'appliquent pas, pas seulement les couleurs.
+
+**Conduite à tenir tant qu'il n'y a pas de flag dédié** :
+1. Lancer la review quand même (le gate `pre-presentation-review.sh` l'exige pour tout `.mp4` sous `out/`).
+2. **Annoter le `.review.json`** avec un champ `_note_orchestrateur` disant pourquoi le verdict est
+   hors-sujet — ne PAS supprimer le fichier (traçabilité), ne PAS suivre ses recommandations.
+3. Retenir seulement ce qui est vrai indépendamment de la charte (netteté, lisibilité, mouvement).
+💡 Piste non faite : un `--charte {souverain|client-sim}` sur `visual_review.py`, exactement comme `--palette`.
+
+## ⚠️ L'ORDRE QUI ÉVITE 3 BLOCAGES DU GATE (2026-08-27)
+
+`pre-presentation-review.sh` vérifie qu'un `<mp4-sans-ext>.review.json` existe **au moment où la commande
+d'upload est évaluée**. Donc :
+
+⛔ `python3 visual_review.py X.mp4 --output X.review.json ; python3 upload-to-blob.py X.mp4`
+   → **BLOQUÉ** : le hook lit la commande AVANT exécution, la review n'existe pas encore.
+✅ Deux commandes SÉPARÉES : la review d'abord, l'upload ensuite.
+
+Payé 3 fois dans la même session avant que je fasse le lien. Ce n'est pas un bug du hook — c'est un
+PreToolUse, il ne peut voir que ce qui est déjà sur le disque.

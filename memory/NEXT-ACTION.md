@@ -1,9 +1,9 @@
 # NEXT-ACTION — Recommandations actives
 
 ## ⭐⭐⭐ REPRO FOSTER — EN COURS · ⛔ compteur dans `projects/REPRO-FOSTER.md` § REPRISE (jamais recopié ici)
-> ⚠️ **Ordre à trancher par Aziz** : décidé le 2026-08-26 *avant* le recadrage Lottie de fin de
-> session, qui a verrouillé « contrôle qualité automatique PUIS Khartoum, et rien d'autre ».
-> Les deux viennent d'Aziz — je ne réordonne pas seul. À enchaîner, ou à faire d'abord ?
+> ✅ **Ordre TRANCHÉ DANS LES FAITS le 2026-08-27** : Foster d'abord (3 plans livrés dans la
+> journée), Lottie en attente. La question « enchaîner ou faire d'abord ? » posée le 26/08 est
+> close — ne plus la reposer à Aziz.
 
 **Décision d'Aziz 2026-08-26** : arrêter d'inventer des clients fictifs, **reproduire une
 vidéo réellement vendue sur Fiverr**. Si on reproduit plusieurs vidéos dans des registres
@@ -11,9 +11,11 @@ différents, on sait qu'on est outillé pour la plupart des scénarios.
 
 → **Plan complet, découpage plan par plan mesuré : `memory/projects/REPRO-FOSTER.md`**
 → Source sécurisée : `public/_client-sim/_references/foster/foster-with-confidence.mp4`
-→ 11 plans, 13 transitions mesurées. **9 plans sur 11 sont déjà couverts** par notre stack.
-→ 2 trous, décision prise : maison filmée → **Minimax H3** · portraits d'enfants → **images Gemini**.
-→ 1re action : trancher le niveau visé (structure+gestes recommandé, pixel = bonus).
+→ 11 plans, 13 transitions mesurées. ⛔ **Aucun compteur ici** — l'avancement vit dans
+  `REPRO-FOSTER.md` § REPRISE. (Un « 9 plans sur 11 couverts » figurait ici : c'était un
+  comptage de COUVERTURE stack du 26/08, lu à tort comme un avancement.)
+→ ✅ Les 2 trous d'assets sont COMBLÉS (clip maison H3 · portraits Gemini).
+→ ⏭️ Prochaine session : plans 9, 10, 11 · puis SFX/musique · puis assemblage.
 
 > Mis a jour : 2026-08-22 (purge : 26,5 Ko → ce fichier. Sections closes/mergées/dupliquées supprimées, git garde tout)
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
@@ -285,11 +287,12 @@ publiée** (Sénégal, Soudan, AES, CFA, Gazoduc Actes 1-2-4-5 ; ⛔ Acte 3 excl
 ✅ **CHARTE DE DA FAITE le 2026-08-15** (`memory/doctrines/CHARTE-DA-FREELANCE.md`, 166 lignes,
 palette + exceptions datées + preuve interne). ⏭️ **PROCHAINE ACTION = le DÉROULÉ** (ordre/durée/
 musique) → index interne 3-4 min → **cut vente 60-90 s**. ⛔ Ne plus annoncer la charte comme « à
-écrire » (dérive détectée au wrap du 2026-08-20). Ancien libellé conservé pour mémoire : palette
-4 couleurs + 1 typo + fond en dégradé
-vivant à halos au lieu d'aplat `#16213a`) — ~1/2 journée, ⛔ **zéro composant neuf à coder**. C'est le
-chaînon manquant du cut vente, identifié par le benchmark de 3 références Fiverr. Ensuite seulement :
-déroulé (ordre/durée/musique) → index interne 3-4 min → cut vente 60-90 s.
+écrire » — dérive détectée DEUX FOIS (wraps du 20/08 et du 27/08).
+⛔⛔ Le 20/08 l'avertissement avait été écrit MAIS le texte fautif conservé « pour mémoire » : il a
+donc re-trompé une semaine plus tard. **Un texte périmé gardé pour mémoire reste lu comme actif** —
+il se SUPPRIME, l'avertissement seul suffit.
+⏭️ **PROCHAINE ACTION = le DÉROULÉ** (ordre/durée/musique) → index interne 3-4 min → **cut vente
+60-90 s**. ⛔ zéro composant neuf à coder.
 → **[SHOWCASE-CAPACITES.md](projects/SHOWCASE-CAPACITES.md)** (§ Benchmark ÉLARGI + § CE QUI
 MANQUE VRAIMENT) · **[planche-contact = archive](projects/SHOWCASE-PLANCHE-CONTACT.md)**
 

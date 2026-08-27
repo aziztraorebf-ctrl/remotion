@@ -736,6 +736,11 @@ export const RemotionRoot: React.FC = () => {
       
       
       
+        {/* Reproduction « Foster With Confidence » — les 8 plans livres.
+            ⚠️ Ces compositions etaient jusqu'ici imbriquees dans le Folder
+            « atlas-peste-1347 » (heritage d'une insertion successive) : mauvaise
+            etiquette dans le Studio. Elles ont desormais leur propre dossier. */}
+        <Folder name="client-sim-foster">
       
       
       <Folder name="atlas-peste-1347">
@@ -815,6 +820,7 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
         />
+        </Folder>
         <Composition
           id="HeroDataShowcase"
           component={HeroDataShowcase}

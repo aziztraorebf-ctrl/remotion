@@ -40,6 +40,7 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | **Doute catalogue / démarrer War-Map** | `src/projects/warmap/WARMAP-INDEX.md` ⭐ (LA réf = `SudanWarMapEpic60`) |
 | **Assets / templates / refs (source unique)** | `public/_shared/ASSETS-INDEX.md` |
 | **Tests client-sim (SaaS, hors-Souverain — Flowdesk, NorthShield...)** | `memory/client-sim-tests/INDEX.md` ⭐ sujet SECONDAIRE volontairement isolé de `MEMORY.md` (qui garde juste un pointeur) pour ne pas diluer le thème principal YouTube/Souverain. Méthode standard (Direction A/B, grille INFORMATION/REPRÉSENTATION/MEDIUM/SEMANTIC TEST, règle draw-on/mouvement/vie) + tests réalisés/en préparation y sont listés. Composants réutilisables (registre SaaS/dashboard, distinct du cartographique/narratif) : `src/projects/_client-sim/CLIENT-SIM-COMPOSANTS-INDEX.md` (créé rattrapage 2026-08-07). |
+| **Reproduire une vidéo CLIENTE réelle** (repro Foster, « Foster With Confidence ») | `memory/projects/REPRO-FOSTER.md` ⭐⭐⭐ — le premier test qui peut dire NON : ni le sujet ni le niveau d'ambition ne sont de nous. ⛔ Le compteur d'avancement vit UNIQUEMENT dans son § REPRISE, jamais recopié ailleurs. Le protocole mesuré y est gravé (relevé 3 voix `motion-breakdown.py` → tri en 3 catégories → chercher la brique EXISTANTE → mesurer) ainsi que les pièges déjà payés. Code : `src/projects/_client-sim/foster/scenes/`. |
 
 ### 📤 Publier une vidéo (titre · miniature · calendrier)
 

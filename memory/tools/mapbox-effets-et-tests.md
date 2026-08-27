@@ -35,6 +35,16 @@ type: reference
 
 ### Branding et droits
 - **`<MapboxBrandingHide />`** — composant CSS, retire logo + copyright Mapbox. À placer en 1er enfant AbsoluteFill. Légal si attribution dans description vidéo. Validé Or Africain.
+  ⛔⛔ **MESURÉ INSUFFISANT sur une carte satellite plein cadre (2026-08-27, Foster plan 6)** :
+  ni `attributionControl:false` (qui ne retire que l'attribution TEXTE) ni le composant CSS n'ont
+  fait disparaître le logo — **encore mesuré à y 486-536 / x 4-191** sur le rendu. Il a fallu
+  supprimer les nœuds du DOM à la main après l'init :
+  `containerRef.current?.querySelectorAll(".mapboxgl-ctrl-logo, .mapboxgl-ctrl-attrib, .mapboxgl-ctrl-bottom-left, .mapboxgl-ctrl-bottom-right").forEach(n => n.remove())`
+  (référence : `src/projects/_client-sim/foster/scenes/Plan06GoogleEarth.tsx`).
+  ⚠️ Le « Validé Or Africain » reste vrai pour SON cas ; il ne se généralise pas. **Vérifier au
+  render, ne jamais supposer** — 2 doctrines (`DOCTRINE-SOUVERAIN.md:133`,
+  `SOUVERAIN-SHORT-SKELETON.md:55`) présentent encore le composant comme suffisant : elles décrivent
+  l'INTENTION, cette fiche décrit le COMPORTEMENT RÉEL. En cas de doute, c'est la mesure qui tranche.
 
 ### Render
 - **`./scripts/render-mapbox.sh <CompId> <out.mp4>`** — Chrome for Testing + `--gl=angle`. Obligatoire (npx remotion render direct = WebGL fail). Validé.

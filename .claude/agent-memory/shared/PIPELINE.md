@@ -286,7 +286,9 @@ TodoWrite cross-agent.
 > Ne pas le recopier ici : le 2026-08-27, trois fichiers portaient trois valeurs
 > différentes (5/11, « plan 6 », 7/11) dont deux dans le même MEMORY.md.
 
-Plans 6 et 7 validés par Aziz le 27/08, plan 8 codé (`a2e99bfb`).
+Plans 6, 7 et 8 VALIDÉS par Aziz le 27/08 (verdict plan 8 : « l'UI est très bien reproduite,
+je ne vois vraiment pas de différence »). Promus en `plan0{6,7,8}-FINAL.mp4`.
+⏭️ Reste : plans 9, 10, 11 · puis SFX/musique · puis assemblage des 11 plans.
 Le bloc « circuit breaker Plan06 » qui vivait ici décrivait un étalonnage « en cours »
 déjà terminé — retiré selon la règle de ce fichier : un handoff se supprime une fois
 le stage suivant démarré.

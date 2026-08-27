@@ -20,6 +20,44 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 
 ## 🔧 MÉTHODE & PROCESS
 
+### 2026-08-27 — ⛔⛔ UNE ACTION PEUT ÉCHOUER EN TOTAL SILENCE (3 cas le même jour)
+
+Trois systèmes ont refusé quelque chose **sans crash, sans log, sans exception** — l'échec ne se
+voyait que dans le résultat mesuré. C'est la forme de panne la plus coûteuse : indiscernable d'un
+succès.
+
+| Système | Ce qui échoue en silence | Comment le rendre visible |
+|---|---|---|
+| **Mapbox** | `setLayoutProperty` avec une expression invalide fait un `return` nu ; l'erreur part en `map.fire(ErrorEvent)` — **aucun `try/catch` ne l'attrape** | `map.on("error", e => console.warn(e?.error?.message))` dès l'init |
+| **Un modèle LLM** | réponse **tronquée en plein milieu d'une phrase**, en HTTP 200 (GPT, 2× le même jour : 2 956 car. contre 10 815 pour Grok) | alerter sous un seuil de longueur (fait dans `motion-breakdown.py`) |
+| **Un hook de gate** | `pre-commit` qui sort tôt sans fichier staged → un test sans staging ne teste rien | tester **dans les deux sens** : silencieux sur le réel, déclenché sur un cas marqué |
+
+⭐ **Le cas Mapbox en détail, parce qu'il se reproduira** : l'évidence pour agrandir une taille est
+`["*", <expression existante>, k]`. C'est **rejeté** — une expression `["zoom"]` ne peut vivre qu'au
+sommet d'un `step`/`interpolate`, jamais imbriquée. La parade est de descendre dans l'expression et
+de multiplier ses **valeurs de sortie** (préserve la hiérarchie pays > États > villes).
+Implémentation : `scaleTextSize` dans `Plan06GoogleEarth.tsx`.
+
+⛔ **La règle générale** : tout appel de style Mapbox — et plus largement toute écriture dont on ne
+voit pas le résultat immédiatement — doit être considéré **non-appliqué tant qu'il n'est pas MESURÉ
+sur le rendu**. Même famille que « un chiffre précis peut être précisément faux » : ici c'est une
+ACTION qui ment, pas une mesure.
+
+### 2026-08-27 — ⭐⭐ AVANT DE DIRE « IMPOSSIBLE », SÉPARER LA LIMITE DE L'OUTIL DE LA MIENNE
+
+**Vécu** : Aziz demande si un mouvement latéral est reproductible. J'ai répondu **non**, trop vite.
+Faux — `PageCam` interpole `cx` librement. Ma limite venait de MON ENTRÉE (je voulais une page de
+3400 px, or il plaque sur 1920), pas de l'outil.
+
+⭐ **Le test avant toute déclaration d'impossibilité** : *est-ce l'outil qui refuse, ou mon entrée qui
+sort de son domaine ?* Dans le second cas la réponse n'est pas « impossible » mais « possible en
+adaptant l'entrée » — le geste exact de la règle « se battre contre l'outil est le signal ».
+
+⛔ **Pourquoi l'erreur est asymétrique** : dire « je vérifie » coûte une minute ; dire « impossible »
+à tort **ferme une option qu'Aziz ne rouvrira pas**. C'est une capacité perdue pour toute la suite du
+projet. (Applique la règle CLAUDE.md « vérification avant affirmation, cas 1 : capacité d'un outil ».)
+
+
 ### 2026-08-27 — ⭐⭐⭐ SE BATTRE CONTRE L'OUTIL EST LE SIGNAL, PAS LE PROBLÈME
 
 **Vécu, repro Foster plan 8.** Je voulais reproduire un panoramique horizontal.

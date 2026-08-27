@@ -338,8 +338,14 @@ export const Plan06GoogleEarth: React.FC = () => {
    * ⭐ Une plongee de ~5 niveaux en 1 s traverse un nouveau palier de tuiles a
    * presque chaque frame. Sans attente explicite, le render headless capture
    * des tuiles basse resolution : la plongee devient une bouillie qui « pompe ».
-   * Le repo ne synchronisait jusqu'ici qu'a l'INIT (cf. Beat0Accroche,
-   * CartoSouverainV5) — cette attente par frame est ajoutee ici.
+   * ⛔ CORRECTION (wrap 2026-08-27) : j'avais ecrit « le repo ne synchronisait
+   * qu'a l'init — cette attente est ajoutee ici ». C'est FAUX, et le
+   * commentaire se contredisait lui-meme 20 lignes plus bas en creditant
+   * « (Pattern WarMapEngine) ». Ce pattern existe DEJA a l'identique dans 6
+   * fichiers (WarMapEngine, SahelWarMapEngine, MapAnimationShowcase,
+   * LobitoWarmapScene, LobitoVersionA), memes constantes 300/1200 incluses.
+   * ⚠️ La vraie dette est donc INVERSE : 6 copies non factorisees. Seule
+   * celle-ci ajoute le cleanup `clearTimeout(guard)` que les autres n'ont pas.
    */
   useEffect(() => {
     const map = mapRef.current;

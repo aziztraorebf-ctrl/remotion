@@ -138,24 +138,33 @@ qu'on sait recopier.
 
 ## DÉCOUPAGE MESURÉ — 13 transitions détectées
 
+⛔⛔ **LA COLONNE DE DROITE DIT « LIVRÉ ? », PAS « couvert par la stack ».** Corrigé au wrap du
+27/08 : elle marquait 🔶 « à générer » sur les plans 4, 5 et 7 **déjà livrés**, et ✅ sur les
+plans 9, 10 et 11 **qui restent à faire** — deux sémantiques opposées dans la même colonne, dans
+le fichier que la prochaine session ouvre en premier. C'est le genre d'erreur qui fait refaire un
+travail fini. ⚠️ Les bornes en **gras** ont été re-mesurées et corrigées ; celles des plans non
+encore faits viennent du découpage d'origine et restent à vérifier.
+
 Coupes franches (seuil 0.30) : **1,60 · 5,60 · 18,03 · 18,41 · 25,06 · 27,07 · 28,07**
 Transitions douces (seuil 0.12) ajoute : 11,44 · 11,51 · 11,57 · 11,64 · 13,59 · 40,46
 
-| # | Temps | Contenu | Moteur | Notre brique | État |
+| # | Temps | Contenu | Moteur | Notre brique | LIVRÉ ? |
 |---|---|---|---|---|---|
 | 1 | 0 → 1,6 | Téléphone **+ notification Ofsted** sur le bureau, pull back reveal x2,12 | 3D + UI | `Plan01Lockscreen` | ✅ **FAIT/VALIDE** |
 | 2 | 1,6 → 5,6 | ✅ **FAIT/VALIDE** — **Le décor s'allume** (bureau vu du dessus, tapis de découpe) puis **zoom continu de 4 s** jusqu'à l'intérieur de l'écran. Ellipse temporelle : 12:57 → 9:38 **sans coupe** | décor + caméra | `DeviceInScene` + décors générés | ✅ |
 | 3 | 5,6 → 11,4 | Typo pure sur noir : *« Still unresolved, »* mot par mot | typo | `DeviceShowreel` ch. 3-4 | ✅ |
-| 4 | 11,4 → 13,6 | **6 portraits d'enfants** en couronne autour de « Assembles », fond dégradé vert | images + compo | ⚠️ **à générer (Gemini)** | 🔶 |
-| 5 | 13,6 → 18,0 | Suite typo sur dégradé vert | typo + fond | `GridBackdrop` (variante dégradé à faire) | 🔶 |
-| 6 | 18,0 → 18,4 | **Google Earth**, vue satellite du Nebraska avec labels | carte | **Mapbox 3D** (supérieur : frame-driven) | ✅ |
-| 7 | 18,4 → 25,1 | **Descente** vers une maison + **flou radial** qui masque le raccord + **vraie vidéo** de maison + cartouches iOS flottants | raccord | Mapbox + ⚠️ **clip à générer (H3)** | 🔶 |
-| 8 | 25,1 → 27,1 | **Dashboard qui monte par le bas**, zoom sur les montants (£49,245 / £590,940) | UI produit | **`PageCam`** — notre point fort | ✅ |
-| 9 | 27,1 → 28,1 | Transition | — | — | ✅ |
-| 10 | 28,1 → 40,5 | Typo sur **dégradé vert-brun**, montée vers le CTA *« Foster With Clarity / Certainty / Confidence »* | typo + fond | idem #5 | 🔶 |
-| 11 | 40,5 → 42,8 | Fondu au noir, texture pointillée | fondu | trivial | ✅ |
+| 4 | 11,4 → 13,6 | **6 portraits d'enfants** en couronne autour de « Assembles », fond dégradé vert | images + compo | `Plan04Assembles` · images Gemini ✅ générées | ✅ **LIVRÉ** |
+| 5 | 13,6 → 18,0 | ⛔ PAS « suite typo » : **diagramme circulaire des acteurs** + zoom traversant, dégradé DORÉ | diagramme | `Plan05Diagram` | ✅ **LIVRÉ** |
+| 6 | **17,40 → 18,45** | ⛔ commence sur un **GLOBE vu de l'espace**, pas une carte plate | carte | `Plan06GoogleEarth` (Mapbox frame-driven) | ✅ **LIVRÉ** |
+| 7 | **18,45 → 23,40** | Descente vers la maison (**bascule d'axe**, pas un push-in) + 2 cartouches iOS | raccord | `Plan07Maison` · clip H3 ✅ généré | ✅ **LIVRÉ** |
+| 8 | **23,40 → 27,07** | ⛔ PAS « qui monte » : **2 sous-plans** séparés par une coupe à 25,05 s | UI produit | `Plan08Dashboard` (plaques + PageCam) | ✅ **LIVRÉ** |
+| 9 | 27,07 → 28,07 | Transition (1 s) — contenu à MESURER, le tableau n'en dit rien | — | à déterminer | ⏭️ **RESTE** |
+| 10 | 28,07 → 40,46 | Typo sur **dégradé vert-brun**, montée vers le CTA *« Foster With Clarity / Certainty / Confidence »* | typo + fond | même moteur que les plans 3 et 5 | ⏭️ **RESTE** (le plus long : 12,4 s) |
+| 11 | 40,46 → 42,75 | Fondu au noir, texture pointillée | fondu | trivial | ⏭️ **RESTE** |
 
-## LES 2 TROUS, ET LA DÉCISION D'AZIZ
+## ✅ LES 2 TROUS SONT COMBLÉS (27/08) — section conservée pour la méthode
+> Les 2 assets manquants ont été produits : clip maison (H3, plan 7) et portraits d'enfants
+> (Gemini, plan 4). Ce qui suit reste utile pour la MÉTHODE, plus pour l'état.
 1. **La maison filmée (#7)** → **Minimax H3**. Aziz : « juste les mouvements de caméra
    qui se rapprochent de la maison », donc un clip court suffit. Fiche : `memory/fiches/FICHE-CLIP-GENERE.md`.
 2. **Les portraits d'enfants (#4)** → **images générées Gemini** (ce sont des photos

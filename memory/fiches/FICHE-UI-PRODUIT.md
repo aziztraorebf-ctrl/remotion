@@ -154,13 +154,20 @@ blanche tout a droite, comme si c'etait un second ecran ». Ce n'etait ni un 2e
 ecran ni un probleme de vitesse : la camera sortait de la page, et PageCam
 remplit le hors-champ avec son fond papier `#faf7f2`.
 
-`PageCam` pose la page par `translate(960 - cx*zoom)` puis `scale(zoom)`. Le bord
-droit reste donc hors cadre tant que :
+`PageCam` place tout point page `p` a **`960 + zoom*(p - cx)`** px ecran — et
+c'est IDENTIQUE dans ses 2 branches (2D `scale`, 3D `zoom` CSS ; verifie, le
+fichier le dit lui-meme en commentaire). Le bord droit reste donc hors cadre
+tant que :
 
     cx <= largeurPage - 960/zoom          (et symetriquement cx >= 960/zoom)
 
-A zoom 1,55 sur une page de 1920 : **cx <= 1300**. Viser le centre de la derniere
-carte (1596) mettait la camera 300 px trop loin.
+A zoom 1,55 sur une page de 1920 : **cx <= 1300,6**. Viser le centre de la
+derniere CARTE (1622) mettait la camera **320 px** trop loin.
+⚠️ Ne pas confondre les 2 series de coordonnees d'une meme page : le 4e MONTANT
+est a 1596, la 4e CARTE a 1622.
+⭐ `rotX: 0` suffit a basculer PageCam en branche 3D (`has3D`, PageCam.tsx:57) —
+c'est VOULU (c'est ce qui donne le `zoom` CSS et le texte net), mais ne pas lire
+le code de la branche 2D pour raisonner sur un plan qui porte un `rotX`.
 ⭐ Cette borne se CALCULE avant de coder les keyframes — elle ne se dose pas au
 rendu. Meme logique pour l'axe vertical avec `pageH`.
 
