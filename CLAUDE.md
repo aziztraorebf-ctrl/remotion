@@ -146,7 +146,7 @@ Nommage : `beatN_v3.mp4` (wip) → `beatN_V3.mp4` (présenté) → `beatN-FINAL.
 ## Communication mobile (Aziz est sur mobile la majorité du temps — NON-NEGOTIABLE)
 
 - **Texte long (script, plan, brief, liste) → directement en texte dans le chat, JAMAIS dans un fichier `.md` créé pour l'occasion.** Un fichier est dur à copier/coller/modifier sur mobile ; du texte en chat se sélectionne, se cite et s'édite facilement. Exception : fichier attendu par un pipeline/skill (manifest, script verrouillé qui sera lu par un script) — dans ce cas le fichier est nécessaire, mais en informer Aziz en clair plutôt que de le laisser deviner qu'il doit l'ouvrir.
-- **Tout render (vidéo/image) → uploader AVANT de le présenter, jamais un chemin local.** Ordre de priorité : catbox.moe → Imgur (fallback si catbox down) → uguu.se → Litterbox (dernier recours, 72h seulement). Détail + gotchas (fichier vide silencieux malgré HTTP 200, limite 1min Imgur) : `.claude/.../memory/feedback_upload-hosts-fallback.md`. Toujours vérifier `curl -sI <url> | grep content-length` après upload avant de donner le lien.
+- **Tout render (vidéo/image) → uploader AVANT de le présenter, jamais un chemin local.** ⛔ L'hôte dépend du TYPE : **MP4 → Vercel Blob** (`scripts/tools/upload-to-blob.py`, réservé à ça — quota à 75 %) · **image PNG/JPG → catbox → Imgur → uguu → Litterbox** (72 h) · **page HTML → here.now ou Artifact** (⛔ ni Blob ni catbox, les deux cassent le HTML, confirmé 2×). Détail + gotchas (fichier vide silencieux malgré HTTP 200, limite 1min Imgur) : `.claude/.../memory/feedback_upload-hosts-fallback.md`. Toujours vérifier `curl -sI <url> | grep content-length` après upload avant de donner le lien.
 
 ---
 
