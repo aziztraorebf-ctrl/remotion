@@ -151,8 +151,10 @@ export const SvgVs3dBench: React.FC = () => {
   /**
    * Les 3 traitements doivent faire la MEME largeur d'objet a l'ecran, sinon la
    * comparaison est faussee. Cible : 82 % de la cellule.
-   * 3D : le modele fait 3.2 unites de large ; a fov 40 et camZ 7.2 sur 1080 px
-   * de haut, cela donne unitsToPx(3.2, 7.2) px. On aligne le SVG dessus.
+   * 3D : le modele fait 3.2 unites de large ; a fov 40 et camZ 9.05 sur 1080 px
+   * de haut, cela donne unitsToPx(3.2, 9.05) px. On aligne le SVG dessus.
+   * (Le commentaire disait 7.2 alors que le code utilise 9.05 depuis toujours —
+   *  corrige au /wrap 2026-08-27 : recalculer depuis 7.2 donnait +25 % d'erreur.)
    */
   const targetW = cellW * 0.82;
   const svgScale = targetW / SVG_LAPTOP_W_IN_VB;

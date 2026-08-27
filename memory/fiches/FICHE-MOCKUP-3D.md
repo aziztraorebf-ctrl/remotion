@@ -1,5 +1,20 @@
 # MOCKUP D'APPAREIL 3D — fiche de déclenchement (lire AVANT de coder un mockup)
 
+## ⛔⛔ PIEGE N°1 — `<ThreeCanvas camera>` N'EST PAS REACTIF (2 rendus perdus)
+
+La prop `camera={{ position: [0,0,camZ] }}` est lue **A L'INITIALISATION**. Animer
+`camZ` sort un objet de taille **strictement constante** — aucune erreur, aucun warning.
+⚠️ **Le piege du piege** : `DeviceInScene.tsx` SEMBLE animer sa camera. Son zoom vient
+en fait du `scale` recalcule sur camZ a chaque frame (`scaleForRealSize`).
+⛔ Corollaire : « figer le scale a la distance finale pour ne pas fausser l'echelle »
+supprime le SEUL mecanisme qui marchait (= plan totalement immobile).
+✅ **FIX : `camZ` FIXE, le geste porte par le `scale`** (du modele ou d'un `<group>`),
+les couches 2D (decor, ombre, halo) multipliees par le MEME facteur.
+-> `memory/tools/threecanvas-camera-non-reactive.md`
+(Cout : Foster plan 1 v3 et v4 + un faux diagnostic « probleme de dosage ». Meme
+signature que le bug du globe D3 du 2026-08-02 : cablage mort lu comme une amplitude.)
+
+
 > Injectée quand on touche `_demos/devices/` ou un modèle d'appareil (`PhoneModel`, `LaptopModel`,
 > `GridBackdrop`, `FlatDeviceMotion`…). **Scindée de `FICHE-UI-PRODUIT.md` le 2026-08-26** : ces
 > 170 lignes y étaient PAYÉES MAIS MORTES — le hook ne déclenchait jamais cette fiche sur
@@ -163,19 +178,6 @@ rend la scene « vraie ». Banque deja sur disque : `public/_client-sim/noteshie
 (1,10 s) sur la pose / l'ouverture du capot · `tone` (0,20 s) sur un micro-etat.
 Volume SFX **0,50**. ⛔ **JAMAIS de whoosh sur une UI** (vocabulaire d'AIR, sans rapport
 avec un logiciel — retire le 2026-08-20 apres retour d'Aziz).
-
-### ⛔ CE QUI FAIT LE PREMIUM N'EST PAS LA BRIQUE (lecon de la 4e video, 2026-08-26)
-Analyse initiale faussee par un echantillonnage a **16 frames sur 1273** — juger un MONTAGE sur
-des photos espacees. Ce que la densite a revele :
-- **12 transitoires sonores en 8 s** : chaque apparition a son SFX. C'est ce qui rend « vrai ».
-- **Micro-etats** : notifications une par une, heure qui change, texte qui s'assemble
-  caractere par caractere. Rien n'apparait d'un bloc.
-- **Un zoom continu de 4 s** (une seule coupe mesuree entre 1,6 s et 5,6 s) qui va du bureau
-  jusqu'a l'interieur de l'ecran — avec une ELLIPSE TEMPORELLE dedans (12:57 -> 9:38) sans coupe.
-- **Le fond change selon le registre** : noir plat pour l'objet, degrade vert pour le produit.
-  ⛔ « fond uni toujours » etait une generalisation abusive tiree d'une seule reference.
-- **Le raccord carte -> sol** : Google Earth, puis un FLOU RADIAL croissant qui masque la coupe,
-  puis un plan de stock filme. Le flou n'est pas decoratif, c'est le MASQUE du raccord.
 
 ### Limite connue (non levée)
 ~~Dans un mockup, l'écran est une texture plate~~ — **LEVEE le 2026-08-25** : une séquence

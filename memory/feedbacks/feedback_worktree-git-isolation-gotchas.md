@@ -1,4 +1,39 @@
 ---
+
+## ⛔⛔ L'ISOLATION `worktree` N'EST PAS UNE PROTECTION CONTRE UN AUTRE AGENT (2026-08-23)
+
+Tout ce fichier traite des gotchas d'UN worktree. **Il ne dit nulle part que deux agents lances en
+parallele avec `isolation: "worktree"` peuvent s'ecraser — et ils le peuvent.** L'isolation porte sur
+l'etat GIT, pas sur les fichiers source partages : `src/Root.tsx` et les composants communs restent
+un terrain commun ou le dernier ecrivain gagne, sans erreur.
+
+2e mode d'echec du meme jour : le commit d'un agent worktree reste sur SA branche. J'ai commite un
+`Root.tsx` important un fichier absent du repo principal — le typecheck ne l'a pas vu.
+→ **Avant de fermer un worktree : `git log <branche-worktree> --not HEAD`, puis `git cherry-pick`.**
+
+→ Detail complet, test de decision et methode de detection : [[agents-paralleles-ecrasement-src-partage]].
+
+## ⛔⛔ DEUX SESSIONS SUR LE MEME REPO : LA BRANCHE CHANGE SOUS TES PIEDS (2026-08-26)
+
+Cas different des deux precedents — ici il n'y a **aucun worktree et aucun agent** : deux sessions
+Claude interactives travaillaient sur le meme repertoire, l'une sur Lottie, l'autre sur les mockups 3D.
+
+**Le symptome** : j'ouvre `feat/mockups-3d-saas-explainer`, je commite 4 fois dessus. L'autre session
+bascule le repo sur `feat/lottie-texte`. Mes 2 commits suivants partent sur SA branche sans aucun
+signal — `git commit` reussit, rien n'avertit. Au `/wrap` je decouvre mes commits `devices` **intercales
+dans une serie de commits Lottie**, et la branche de mon chantier en retard de 9 commits.
+
+**Ce qui rend le piege silencieux** : contrairement a un worktree, `git commit` ne dit jamais sur quelle
+branche il ecrit. On ne le voit qu'en le cherchant.
+
+**Le reflexe** : `git branch --show-current` AVANT chaque commit d'un chantier long, pas seulement au
+debut. Une seule commande, et c'est le seul moment ou l'erreur est encore gratuite.
+
+**La reparation, quand c'est deja arrive** : ⛔ NE PAS cherry-pick ni rebase — les commits sont valides,
+seulement mal ranges. Verifier d'abord si la branche cible a du travail EXCLUSIF
+(`git log <cible>..<courante>` et l'inverse). Si la cible n'a rien d'exclusif, elle est juste en retard :
+`git branch -f <cible> <courante>` suffit. Zero commit reecrit, zero travail perdu.
+
 name: worktree-git-isolation-gotchas
 description: Travailler dans un worktree git dédié pour s'isoler d'une session concurrente — gotchas assets gitignorés, symlinks, render vidéo qui hang.
 metadata:

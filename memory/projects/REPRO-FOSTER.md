@@ -165,11 +165,18 @@ Les 4 points, tous **mesures** sur la reference :
 1. **PULL BACK REVEAL x2,2** (mesure a la regle, plein cadre) :
    largeur du chassis 342 px a t=0,05 s -> 322 px a 0,60 s -> **155 px a 1,45 s**.
    Le recul est concentre **entre 0,9 et 1,3 s** ; avant, le cadrage bouge a peine.
-   ⛔ **Se code par la DISTANCE CAMERA** (camZ 3.5 -> 8.4), jamais par le scale du
-   groupe 3D : scale-er le groupe fausse l'echelle reelle calculee et l'effet est
-   bien trop faible (constate au rendu v3).
-   ⛔⛔ **Et l'echelle se calcule a la distance FINALE**, pas a `camZ` courant —
-   sinon le telephone garde la meme taille a l'ecran et le pull back s'annule.
+   ⛔⛔ **Se code par le SCALE du modele — PAS par la distance camera.**
+   ⚠️ Cette ligne a d'abord ete ecrite a l'ENVERS (« se code par la distance
+   camera, jamais par le scale »), en pleine session, APRES avoir pourtant
+   diagnostique le contraire 130 lignes plus haut. C'est exactement le mode
+   d'echec `feedback_commentaire-code-perime-bat-doctrine` : le prochain agent
+   lit la section detaillee du plan, pas la liste des pieges en tete. Corrige au
+   /wrap du 2026-08-27 (detecte par un agent, pas par moi).
+   **La verite mesuree** : `camZ` reste FIXE a 8.4, `pull` va de 2,2 a 1,0 sur le
+   `scale` du modele, et les couches 2D (decor, ombre, halo) sont multipliees par
+   ce MEME `pull`. La prop `camera` de `<ThreeCanvas>` etant lue a
+   l'initialisation seulement, animer camZ ne produit RIEN.
+   -> `memory/tools/threecanvas-camera-non-reactive.md`
 
 2. **L'ECRAN EST VIVANT** — la notification s'ECRIT en 3 temps :
    bulle vide (0,05 s) -> « Head Of Service / Ofsted » (0,30 s) -> phrase complete
