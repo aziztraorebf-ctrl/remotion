@@ -82,13 +82,3 @@ Viser sweet spot impact/complexite. Jamais 100% (trop complexe).
 - Lottie : package `@remotion/lottie` UNIQUEMENT (pas `lottie-react`)
 
 
-<claude-mem-context>
-# Recent Activity
-
-### Feb 24, 2026
-
-| ID | Time | T | Title | Read |
-|----|------|---|-------|------|
-| #528 | 12:10 AM | 🔵 | HookBlocE scene demonstrates 6-character archetype reveal with audio synchronization | ~574 |
-| #522 | " | 🔵 | Master composition pattern using Remotion Series for sequential scene assembly | ~476 |
-</claude-mem-context>

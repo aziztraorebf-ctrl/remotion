@@ -49,14 +49,14 @@ Détails (caméra, blur whip pan 60f, Pull Back Reveal, fond `#16213a`, timing, 
 **Début de session (avant toute réponse technique)** :
 1. `MEMORY.md` auto-chargé — repérer les fichiers thématiques pertinents.
 2. Lire `memory/NEXT-ACTION.md` — recommandations actives (« Que fait-on maintenant ? »).
-3. Lire `.claude/agent-memory/shared/PIPELINE.md` — état exact de chaque projet (source inter-agents). Sur handoff `[STAGE-N] COMPLETE` → proposer de spawner l'agent suivant (storyboarder→visual-producer→remotion-composer→quality-reviewer). Chaining jamais automatique hors session `/goal`.
+3. Lire `.claude/agent-memory/shared/PIPELINE.md` — état exact de chaque projet (source inter-agents). Chaînage d'agents (storyboarder→visual-producer→remotion-composer→quality-reviewer) : jamais automatique, toujours proposé.
 4. Charger les fichiers pertinents via `memory/ROUTAGE.md`.
 
 Ne JAMAIS dire « je ne peux pas / je n'ai pas accès » sans avoir consulté la mémoire.
 
 **⭐ SYSTÈME AGENTIQUE** : si Aziz dit « consulte notre système agentique » / « active le système » (ou toute formulation proche), OU si on s'apprête à produire/refaire une scène d'une vidéo → ouvrir **`memory/SYSTEME-AGENTIQUE.md`** (carte d'orientation : le flux storyboard→validation→breakdown→code→review, l'orchestration, où est chaque brique). Activable à n'importe quel moment d'une session.
 
-**Fin de session** : mettre à jour `PIPELINE.md` (statut) + `NEXT-ACTION.md` (priorités/décisions en attente) + `memory/episodes/<projet>/STATUS.md` si on a touché un épisode (5 sections, max 30 lignes — modèle : `senegal-petrole-gaz/STATUS.md`).
+**Fin de session** : mettre à jour `PIPELINE.md` (statut) + `NEXT-ACTION.md` (priorités/décisions en attente) + `memory/episodes/<projet>/STATUS.md` si on a touché un épisode (5 sections, max 30 lignes — modèle : `memory/episodes/souverain/senegal-petrole-gaz/STATUS.md`).
 
 **Sauvegarde autonome EN COURS de session** (sans qu'Aziz le demande, immédiatement, bref/factuel, annoncer en 1 ligne) :
 - API/outil découvert → `memory/apis-and-tools.md` · Leçon/bug/anti-pattern → `memory/key-learnings.md` · État projet → `memory/NEXT-ACTION.md` + `episodes/<ep>/STATUS.md` · Gotcha outil → `memory/tools/<outil>.md` · Nouveau routage → `memory/ROUTAGE.md`.
@@ -69,13 +69,6 @@ Ne JAMAIS dire « je ne peux pas / je n'ai pas accès » sans avoir consulté la
 
 ## ⛔ RÈGLES DE TRAVAIL NON-NEGOTIABLES (résumé dense — détail en pointeur)
 
-> **Carte des 17 règles (repère avant de lire le détail) :**
-> · *Décider avec Aziz* — trancher le technique/regrouper le goût · guider sans brider · langage naturel→traduit
-> · *Concevoir une scène* — intention→forme→template · effet vivant Mapbox · storyboard PROPOSE→valide · matière finale d'abord
-> · *Avant asset payant* — templates obligatoires avant prompt · workflow visual-producer (valider le prompt)
-> · *Vérifier avant d'affirmer* — code+visuel sur livrable passé · vérif avant affirmation (4 cas) · agent « terminé » ≠ fichier · downscale+review avant Kimi
-> · *Proactivité & mémoire* — signalement ET proposition · améliorer l'existant avant de créer · code vs décision documentée
-> · *Orchestration* — déléguer à un agent frais
 
 - **Trancher le technique, regrouper le goût.** Réponse technique objective (frameCount, import, fix évident, API documentée) → trancher seul, mentionner en 1 ligne. Goût/vision/narratif OU coûteux à défaire (asset payant, refaire un beat) → demander, MA reco en 1ère option. Regrouper les questions de goût en UN point de contrôle espacé (AskUserQuestion multi), puis exécuter longtemps sans interrompre.
 - **INTENTION → FORME → ⭐MOTEUR → TEMPLATE, dans CET ordre** (jamais l'inverse — c'est la cause racine des boucles d'essais). **⛔ L'étape MOTEUR ne se saute pas** : entre la forme et le template il y a le REGISTRE D'EXPRESSION (carte Mapbox · géométrie D3 · objet/métaphore SVG · acteur stick-figure · **matière filmée H3** · **le RACCORD/montage — on a le droit de QUITTER la carte, de couper, d'alterner**). La sauter = rabattre la scène sur le moteur déjà en tête et produire une redite du beat précédent (vécu 2026-08-15, storyboard Gazoduc 4B intégralement en flèches/tracés parce que le brief n'ouvrait aucune autre porte). Autorité + **amplitude prouvée de chaque moteur** + les **8 trous** non couverts : `memory/doctrines/MOTEURS-VISUELS-ET-SOCLE.md`. **À rouvrir aussi dès qu'une scène part en redite, ET avant d'écrire tout brief de storyboard envoyé à un modèle externe** (un moteur absent du brief est un moteur que le modèle ne proposera jamais). D'abord déduire l'intention (1 verbe : ce qu'on veut faire RESSENTIR), puis la forme (le geste visuel), PUIS seulement consulter les catalogues, comme question binaire « a-t-on déjà cette forme ? » : oui → adapter, non → coder en sachant exactement quoi. Le scan de templates est une AIDE À LA DÉDUCTION, jamais le point de départ (« voici 71 composants, lequel colle ? » = le piège qui paralyse : ~10 essais vs 1). Porte d'entrée = `src/projects/_shared/INTENTION-FORME-INDEX.md`, ouverte APRÈS avoir déduit l'intention. Doctrine maîtresse : `memory/doctrines/CONTINUITE-SCENE-INTENTION-DABORD.md` ⭐⭐. Une fois la forme connue : ne jamais re-coder un effet qui existe déjà (Aziz ne mémorise pas 70+ composants, moi oui). Carte vivante = FlagFill (drapeaux/couleurs dans polygones) reste la réponse n°1 pour la forme « territoire qui prend une couleur/un camp ».
@@ -128,7 +121,7 @@ Ne JAMAIS dire « je ne peux pas / je n'ai pas accès » sans avoir consulté la
 
 **Async PixelLab** : jamais annoncer « j'attends » sans exécuter le `sleep` Bash réel. Détail du flow (`animate_character` → `sleep 120` → `get_character()`, relance si "None yet") : `memory/doctrines/ATLAS-PIXELLAB-PLAYBOOK.md`.
 
-**Config** : Node v24.6.0, npm (pas bun), macOS. Packages : `@remotion/paths`, `@remotion/shapes`, `lucide-react`. Clés API : `.env` racine + `quebec-jacques-poc/.env` (Mapbox), jamais hardcoder, détail `memory/apis-and-tools.md`. ⛔ **`scripts/tools/render-on-vercel.py` = POC ABANDONNÉ, NE PAS UTILISER** (confirmé 2026-08-02 : pointe vers un repo Vercel séparé `aziztraorebf-ctrl/remotion-renderer` figé au 2026-03-27, 3 compositions de démo `MyComp`/`GeoTest`/`NextLogo` seulement — ne verra jamais nos vraies compositions, porter est disproportionné vu nos 2.3 Go d'assets + Mapbox/deck.gl). Render >30s (D3/SVG pur, PAS Mapbox/WebGL) → `npx remotion render` classique en local. **EXCEPTION Mapbox/WebGL → `scripts/render-mapbox.sh` OBLIGATOIRE** (Vercel ne supporte pas WebGL headless). QA : `scripts/visual_review.py` (routeur multi-modèles review). Audio : `scripts/generate-narration-expressive.py` (narration ElevenLabs) + `scripts/generate-sfx-elevenlabs.py` (SFX).
+**Config** : Node v24.6.0, npm (pas bun), macOS. Packages : `@remotion/paths`, `@remotion/shapes`, `lucide-react`. Clés API : `.env` racine (Mapbox inclus), jamais hardcoder, détail `memory/apis-and-tools.md`. ⛔ **`scripts/tools/render-on-vercel.py` = POC ABANDONNÉ, NE PAS UTILISER** (confirmé 2026-08-02 : pointe vers un repo Vercel séparé `aziztraorebf-ctrl/remotion-renderer` figé au 2026-03-27, 3 compositions de démo `MyComp`/`GeoTest`/`NextLogo` seulement — ne verra jamais nos vraies compositions, porter est disproportionné vu nos 2.3 Go d'assets + Mapbox/deck.gl). Render >30s (D3/SVG pur, PAS Mapbox/WebGL) → `npx remotion render` classique en local. **EXCEPTION Mapbox/WebGL → `scripts/render-mapbox.sh` OBLIGATOIRE** (Vercel ne supporte pas WebGL headless). QA : `scripts/visual_review.py` (routeur multi-modèles review). Audio : `scripts/generate-narration-expressive.py` (narration ElevenLabs) + `scripts/generate-sfx-elevenlabs.py` (SFX).
 
 ---
 
