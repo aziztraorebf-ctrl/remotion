@@ -219,7 +219,7 @@ qui vaut = dashboards/UI, logos, icônes, schémas, objets qui racontent. Procha
 |---|---|
 | Remotion, animation, render, headless, composition | `memory/tools/remotion.md` + skills `remotion-best-practices/rules/`, `remotion-video-toolkit/rules/rendering.md` |
 | Render long (>30s) D3/SVG pur | `npx remotion render` local (défaut). ⛔ `render-on-vercel.py` = POC abandonné 2026-03-27 (repo séparé jamais synchronisé), NE PAS UTILISER. Mapbox/WebGL → `scripts/render-mapbox.sh` obligatoire. |
-| **Montrer un render/image à Aziz (mobile — JAMAIS de chemin local)** | Uploader d'abord : ordre catbox.moe → Imgur → uguu.se → Litterbox (dernier recours, 72h). Détail + gotchas (fichier vide silencieux, limite 1min Imgur) : `.claude/.../memory/feedback_upload-hosts-fallback.md`. Contexte mobile : `.claude/.../memory/feedback_aziz-mobile-uploads-vercel.md`. |
+| **Montrer un render/image à Aziz (mobile — JAMAIS de chemin local)** | ⭐ **Artifact Claude par défaut** (image · HTML · vidéo < 16 Mo), **1 page par SUJET**, lien gardé dans le STARTER du sujet. Rendu > 16 Mo → Vercel Blob (`scripts/tools/upload-to-blob.py`) ; Blob/Artifact HS → catbox → Litterbox. Détail : `feedback_upload-hosts-fallback.md` |
 | Règles outils techniques (Lottie, Mapbox headless, audio, geo) | `memory/rules/rules-outils-techniques.md` |
 | Publier YouTube + Instagram + Facebook | `memory/tools/trypost.md` (TryPost, limites 50MB, jamais REST `/api/uploads`) |
 | Publier TikTok | `memory/tools/postiz.md` (Postiz REST, coverB obligatoire) |
