@@ -2,18 +2,26 @@
 
 ## ⚡ REPRISE : COMMENCER ICI (session du 2026-08-27)
 
-**Etat : 5 plans sur 11 livres — 17,40 s / 42,75 s = 41 %.**
-Livrables : `out/episodes/foster-repro/plan0{1..5}-FINAL.mp4`
-Code : `src/projects/_client-sim/foster/scenes/Plan0{1..5}*.tsx`
-Branche : `feat/repro-foster` · 13 commits.
+**Etat : 6 plans sur 11 livres — 18,45 s / 42,75 s = 43 %.**
+Livrables : `out/episodes/foster-repro/plan0{1..5}-FINAL.mp4` + plan 6 (v7, VALIDE
+par Aziz le 27/08, a promouvoir en FINAL).
+Code : `src/projects/_client-sim/foster/scenes/Plan0{1..6}*.tsx`
+Branche : `feat/repro-foster`.
 
-### LA PROCHAINE ACTION : PLAN 6 (17,40 -> 18,41 s) — le GLOBE puis GOOGLE EARTH
-C'est le **premier plan cartographique** : registre different de tout ce qui
-precede. Notre terrain fort (Mapbox).
-⚠️ Bornes a RE-MESURER : le globe apparait des **17,40 s** (mesure), alors que le
-tableau d'origine annonce 18,03 s.
-⛔ Mapbox = pipeline dedie : lire `memory/doctrines/SOUVERAIN-VISUAL-PLAYBOOK.md`
-et rendre via `scripts/render-mapbox.sh` (WebGL, pas le render classique).
+⚠️ **La branche a change sous nos pieds en pleine session** (un chantier parallele
+a bascule le working tree sur `chore/memoire-eviction-contexte`). Verifier
+`git branch --show-current` AVANT de commiter quoi que ce soit ici.
+
+### LA PROCHAINE ACTION : PLAN 7 (18,45 -> 25,06 s) — LA DESCENTE VERS LA MAISON
+Voir la section « PLAN 7 » en bas de ce fichier : bornes re-mesurees (le mouvement
+ne dure que **2,5 s**, pas 6,6), c'est une **BASCULE D'AXE** et non un push-in, et
+le test des **2 registres** (realiste vs vectoriel) est en cours.
+
+### ✅ PLAN 6 — FAIT ET VALIDE (27/08)
+Globe Mapbox + plongee satellite. `Plan06GoogleEarth.tsx`. Verdict d'Aziz :
+« c'est du Google Earth... quasiment identique ». Les mesures et les 2 pieges
+majeurs (metriques automatiques qui mentent · expression Mapbox rejetee en
+silence) sont dans l'en-tete du .tsx et dans `memory/key-learnings.md`.
 
 ### LE PROTOCOLE ETABLI — a appliquer tel quel pour chaque plan restant
 1. **AVANT de coder** : `python3 scripts/tools/motion-breakdown.py --video <ref>
@@ -584,3 +592,48 @@ marchait parfaitement).
 ## PREMIÈRE ACTION DE LA PROCHAINE SESSION
 Trancher le niveau de réussite visé, puis attaquer dans l'ordre du découpage —
 les plans ✅ d'abord (ils valident le rythme), les 🔶 ensuite (ils demandent des assets).
+
+
+## PLAN 7 (18,45 -> 25,06 s) — LA DESCENTE VERS LA MAISON
+
+### ⛔ CE QUE LE TABLEAU ANNONCAIT vs LA MESURE
+Le tableau disait « descente vers une maison + flou radial + vraie video + cartouches ».
+Trois corrections mesurees :
+
+**1. Le mouvement dure 2,5 s, pas 6,6 s.** Amplitude inter-frames mesuree (0,1 s d'ecart) :
+forte descente jusqu'a ~19,6 · amortissement jusqu'a ~20,9 · **quasi immobile de 21,0 a
+23,1** (sous 2/255) · rupture a 23,2.
+=> Le clip GENERE ne couvre que **18,45 -> 20,90**. La fin du plan est un plan FIXE ou
+seuls les cartouches iOS s'animent : c'est du Remotion, pas du clip genere.
+
+**2. Ce n'est PAS un push-in, c'est une BASCULE D'AXE.**
+  18,80 s : vue du DESSUS, on voit le TOIT · 19,50 s : oblique ~45 deg · 20,50 s : FRONTALE au sol.
+Un drone qui descend EN SE REDRESSANT. Aucun de nos 6 modes de previs ne faisait ca
+-> nouveau generateur `scripts/tools/mkprevis-drone-descente.py`.
+
+**3. Le flou se dissipe LENTEMENT** (nettete 1,26 -> 3,26 entre 18,5 et 22,1), sans rupture.
+⭐ Consequence utile pour le raccord : la portion la plus floue (18,45-19,5) peut rester
+**notre Mapbox prolonge**, le clip genere ne prenant le relais qu'en sortant du flou.
+Le raccord est donc plus facile que prevu — on n'a pas a faire coincider deux images nettes.
+
+### LE TEST DES 2 REGISTRES (decision d'Aziz)
+« On devrait animer les deux et voir ce qui fonctionne le mieux avec le meme prompt. »
+Une seule variable change : **l'image de depart**. Meme previs, meme prompt, **meme seed
+(771106)** — sinon on ne compare rien. C'est aussi un test grandeur nature du GABARIT DE
+CHOIX en avant-vente (`memory/doctrines/PILIERS-B2B.md`) : montrer 2 registres au client
+sur la MEME scene.
+
+| | image de depart | fichier |
+|---|---|---|
+| A | photographique | `out/_r-and-d/foster-plan7/maison-A-realiste.png` |
+| B | vectoriel plat | `out/_r-and-d/foster-plan7/maison-B-vectoriel.png` |
+
+⚠️ **Gotcha image B** : Gemini a rendu l'illustration AVEC UNE BORDURE CREME (il a compris
+« illustration encadree »). Detectee par mesure (lignes/colonnes d'ecart-type < 6 et
+luminance > 225), recadree sur le contenu utile puis reramenee en 16:9. Sans ca, H3 aurait
+anime le cadre avec le reste.
+
+### LES 3 CONTROLES A FAIRE SUR CHAQUE CLIP (avant de juger)
+1. **le style tient** : gradient minimum >= 8 (en dessous : le modele copie les blocs du previs)
+2. **l'amplitude est reelle** : ecart 1re/derniere frame >= 35/255 (0,68 = clip FIGE)
+3. **le mouvement est bien reparti** : H3 precipite volontiers tout le geste dans le premier tiers
