@@ -100,7 +100,39 @@ Reponds dans cet ordre, en francais :
    quelqu'un qui regarde vite, mais rendrait la reproduction « cheap » s'il
    etait oublie ? Sois precis et concret.
 
+6. TON NIVEAU DE CONFIANCE, chiffre par chiffre. Termine par un tableau court :
+   pour chaque valeur donnee plus haut, dis si tu la considares COMPTEE (tu l'as
+   lue ou denombree : un texte affiche, un nombre d'elements, un ordre
+   d'apparition), ESTIMEE (une proportion jugee a l'oeil : une taille en % du
+   cadre) ou DEDUITE (une dynamique inferee : vitesse, acceleration, courbe).
+   ⚠️ Sois honnete : une valeur ESTIMEE ou DEDUITE annoncee comme sure nous
+   coute plus cher qu'un « je ne sais pas ». Nous re-mesurons systematiquement
+   ces deux categories — dis-nous simplement lesquelles elles sont.
+
 Sois exhaustif sur le point 5 : c'est le plus utile."""
+
+# Rappel imprime APRES chaque appel. Le prompt obtient les chiffres ; ce bloc
+# traite le vrai point faible, qui est ce qu'on FAIT du releve ensuite.
+# Vecu 2026-08-27 (Foster plan 6) : le releve contenait « hauteur de capitale
+# ~2,2 % » ; la ligne n'a pas ete exploitee et c'est Aziz qui a vu le defaut sur
+# le rendu final. Detail : memory/key-learnings.md, section METHODE & PROCESS.
+TRI_RAPPEL = """
+================================================================================
+AVANT DE CODER — trier le releve en 3 categories (ne pas le lire une fois puis l'oublier)
+
+  1. CE QU'EUX SEULS VOIENT (noms de lieux, textes affichés, nombre d'elements,
+     ordre d'apparition)                                  -> PRENDRE tel quel.
+  2. PROPORTIONS ET TAILLES (« X fait 11 % de la largeur ») -> CIBLE, puis VERIFIER
+     sur le rendu. Le sens est presque toujours juste, la valeur souvent fausse
+     (mesure du 27/08 : un « 2,2 % » valait 0,46 % — surestime x5).
+  3. DYNAMIQUE (vitesse, acceleration, courbe)              -> MESURER soi-meme.
+     C'est la categorie ou ils se trompent le plus, et l'erreur est invisible
+     sur une frame figee.
+
+AVANT DE DECLARER LE PLAN FINI : reprendre ce releve LIGNE PAR LIGNE et cocher
+« traite / ecarte et pourquoi ». Ce qu'on ne mesure pas, on ne le corrige pas.
+================================================================================
+"""
 
 
 def build_frames(video, start, end, fps, crop, tmpdir):
@@ -229,7 +261,11 @@ def main():
             f.write(f"# Releve de mouvements — {args.label} ({name})\n")
             f.write(f"Segment {args.start:.2f} -> {args.end:.2f} s\n\n")
             f.write(results.get(name, "[absent]"))
+            f.write("\n\n---\n")
+            f.write(TRI_RAPPEL)
         print(f"  -> {p}")
+
+    print(TRI_RAPPEL)
 
 
 if __name__ == "__main__":

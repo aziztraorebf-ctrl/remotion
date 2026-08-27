@@ -121,6 +121,59 @@ const TARGET = { lon: -99.75, lat: 40.72 } as const;
  * cadre) : la loi est juste entre 3,0 et 3,5, pas au-dela.
  */
 const START = { lon: -104.5, lat: 44.0, zoom: 3.635 } as const;
+
+/**
+ * Multiplie par k les valeurs de SORTIE d'une expression de taille Mapbox.
+ *
+ * ⛔⛔ POURQUOI CETTE FONCTION EXISTE — le piege coute 1 render pour rien.
+ * L'evidence est d'ecrire `["*", <expression existante>, k]`. Mapbox la REJETTE :
+ * une expression `["zoom"]` ne peut vivre qu'au sommet d'un `step`/`interpolate`,
+ * jamais imbriquee dans autre chose. Message du parseur :
+ *   « "zoom" expression may only be used as input to a top-level "step" or
+ *     "interpolate" expression. »
+ * ⛔ Et le rejet est SILENCIEUX : `setLayoutProperty` fait un `return` nu apres
+ * validation, et l'erreur part en `map.fire(ErrorEvent)` — elle n'est jamais
+ * levee. Donc AUCUN try/catch ne l'attrape, aucun crash, aucun log : la valeur
+ * n'est simplement jamais ecrite. C'est un echec 100 % invisible, du genre que
+ * seule une MESURE sur le rendu revele (hauteur des lettres inchangee).
+ *
+ * La parade : ne pas envelopper l'expression, mais descendre dedans et
+ * multiplier ses valeurs de sortie. On preserve ainsi la hierarchie
+ * pays > Etats > villes que la reference montre clairement — ces expressions
+ * imbriquent un `step` sur `symbolrank` (et un `match` sur `type` pour les
+ * subdivisions), d'ou la recursion.
+ */
+const scaleTextSize = (e: unknown, k: number): unknown => {
+  if (typeof e === "number") return e * k;
+  if (!Array.isArray(e)) return e;
+  const [op, ...rest] = e as [string, ...unknown[]];
+  if (typeof op === "string" && op.startsWith("interpolate")) {
+    const [interp, input, ...stops] = rest;
+    const out: unknown[] = [op, interp, input];
+    for (let i = 0; i < stops.length; i += 2) {
+      out.push(stops[i], scaleTextSize(stops[i + 1], k));
+    }
+    return out;
+  }
+  if (op === "step") {
+    const [input, def, ...stops] = rest;
+    const out: unknown[] = [op, input, scaleTextSize(def, k)];
+    for (let i = 0; i < stops.length; i += 2) {
+      out.push(stops[i], scaleTextSize(stops[i + 1], k));
+    }
+    return out;
+  }
+  if (op === "match") {
+    const [input, ...cases] = rest;
+    const out: unknown[] = [op, input];
+    for (let i = 0; i < cases.length - 1; i += 2) {
+      out.push(cases[i], scaleTextSize(cases[i + 1], k));
+    }
+    out.push(scaleTextSize(cases[cases.length - 1], k));
+    return out;
+  }
+  return e;
+};
 const END = { zoom: 7.94 } as const;
 
 /** Bornes du flou radial final, en secondes depuis le debut du plan. */
@@ -189,6 +242,17 @@ export const Plan06GoogleEarth: React.FC = () => {
       fadeDuration: 0,
     });
 
+    /**
+     * ⭐ Sans cette ecoute, une propriete de style refusee par le validateur
+     * echoue en TOTAL SILENCE (Mapbox `fire` un ErrorEvent au lieu de lever) :
+     * pas de crash, pas de log, la valeur n'est juste jamais appliquee. C'est
+     * ce qui a rendu invisible le premier essai d'agrandissement des labels.
+     */
+    map.on("error", (e) => {
+      // eslint-disable-next-line no-console
+      console.warn("[Plan06] mapbox:", (e as { error?: Error }).error?.message);
+    });
+
     map.on("style.load", () => {
       try {
         (
@@ -197,6 +261,53 @@ export const Plan06GoogleEarth: React.FC = () => {
       } catch {
         /* projection globe indisponible : on reste en mercator */
       }
+      /**
+       * ⭐ LABELS AGRANDIS x1,25 — defaut repere a l'oeil par Aziz, puis MESURE.
+       * Histoire de ce chiffre, parce qu'elle est instructive :
+       *   - le releve GPT annoncait « hauteur de capitale ~2,2 % du cadre » ;
+       *   - la MESURE sur la reference donne 0,46 % (et 0,37 % chez nous).
+       * L'estimation du modele etait donc surestimee d'un facteur ~5. Elle
+       * signalait un VRAI defaut (nos labels sont bien trop petits) avec un
+       * FAUX chiffre. Applique tel quel, il aurait produit des labels enormes.
+       * => facteur reel mesure : 0,46/0,37 = 1,25.
+       * On MULTIPLIE les valeurs de sortie des expressions existantes au lieu
+       * de les remplacer : Mapbox fait varier text-size avec le zoom et le rang
+       * de la ville, et ecraser ces formules aplatirait la hierarchie
+       * (pays > Etats > villes) que la reference montre clairement.
+       * ⚠️ Le « comment » n'est pas trivial : cf. `scaleTextSize` ci-dessus —
+       * envelopper l'expression est rejete EN SILENCE par Mapbox.
+       */
+      const LABEL_SCALE = 1.25;
+      for (const id of [
+        "country-label",
+        "state-label",
+        "settlement-major-label",
+        "settlement-minor-label",
+        "settlement-subdivision-label",
+      ]) {
+        try {
+          if (!map.getLayer(id)) continue;
+          const current = map.getLayoutProperty(id, "text-size");
+          if (current === undefined) continue;
+          map.setLayoutProperty(
+            id,
+            "text-size",
+            scaleTextSize(current, LABEL_SCALE) as never,
+          );
+          /**
+           * Halo : le style en pose DEJA un (largeur 1,0 a 1,25, noir OPAQUE).
+           * ⛔ Ma 1re version demandait `rgba(0,0,0,0.55)` : passer d'un noir
+           * opaque a 55 % d'alpha AFFAIBLISSAIT le halo au lieu de le renforcer
+           * — d'ou « aucun halo n'apparait » alors que l'appel etait valide et
+           * bien applique. On garde donc une couleur OPAQUE et on n'augmente
+           * que la largeur.
+           */
+          map.setPaintProperty(id, "text-halo-width", 2);
+        } catch {
+          /* une couche absente du style ne doit pas casser le render */
+        }
+      }
+
       // Suppression effective du branding : on retire les noeuds du DOM plutot
       // que de compter sur une regle CSS (cf. commentaire dans les options).
       try {

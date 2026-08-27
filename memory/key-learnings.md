@@ -20,6 +20,51 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 
 ## 🔧 MÉTHODE & PROCESS
 
+### 2026-08-27 — ⭐⭐⭐ LES CHIFFRES D'UN MODÈLE : les DEMANDER toujours, les TRIER en 3 catégories
+
+**Le contexte** : nos appels de relevé visuel (`motion-breakdown.py`, DA-brief, review) demandent
+déjà explicitement des chiffres — tailles et positions en % du cadre, vitesses en deg/s, le prompt
+interdit même « de taille moyenne ». C'est bien, **il faut continuer** : sans chiffres demandés, on
+repart en allers-retours (« pas centré », « pas assez gros ») — vécu sur le plan 4 Foster.
+⛔ Ne PAS en conclure « les modèles ne donnent pas de chiffres fiables, je mesure tout moi-même » :
+c'est une simplification fausse qui jette l'information la plus utile qu'ils produisent.
+
+**Le vrai problème n'est pas la DEMANDE, c'est le TRI de la réponse.** Les chiffres d'un modèle
+n'ont pas tous la même valeur. Trois catégories, trois traitements :
+
+| Catégorie | Exemples | Traitement |
+|---|---|---|
+| **1. Ce qu'eux seuls voient** | noms de villes/lieux lus sur l'image, texte affiché, nombre d'éléments, ordre d'apparition | **PRENDRE tel quel.** Aucune mesure de pixels ne me les donnerait. (Plan 6 : « Lexington · Johnson Lake · Elwood » = la géographie exacte de la cible.) |
+| **2. Proportions et tailles** | « le disque fait 11 % de la largeur », « hauteur de capitale 2,2 % » | **PRENDRE comme CIBLE, puis VÉRIFIER le résultat.** Le sens est presque toujours juste, la valeur souvent fausse. |
+| **3. Dynamique** | vitesse, accélération, courbe, « ça accélère exponentiellement » | **MESURER.** C'est là qu'ils se trompent le plus, et l'erreur est invisible sur une frame. |
+
+**Les 2 preuves du jour, opposées et complémentaires** :
+- ⭐ Catégorie 3 — Gemini : « accélération exponentielle » du zoom. **Faux au sens où il l'entendait** :
+  mesure = facteur CONSTANT ×1,125 par frame, donc zoom LINÉAIRE en niveaux Mapbox. L'appliquer
+  aurait accéléré par-dessus une exponentielle déjà présente.
+- ⭐ Catégorie 2 — GPT : labels « hauteur de capitale ~2,2 % du cadre ». **Le défaut était RÉEL**
+  (Aziz l'a vu à l'œil : « leurs écritures sont bien plus visibles »), **mais le chiffre était
+  surestimé ×5** — mesure réelle 0,46 % (réf) vs 0,37 % (nous), soit un facteur **1,25**, pas 5.
+  Appliqué tel quel il produisait des labels énormes.
+=> Le modèle avait **raison sur l'existence** du défaut et **tort sur son ampleur**. Les deux
+enseignements tiennent ensemble : sans son relevé je ne cherchais pas ; sans ma mesure je sur-corrigeais.
+
+**⛔⛔ LE MANQUE QUI A COÛTÉ LE DÉFAUT — passer le relevé EN REVUE avant de déclarer fini.**
+La ligne « hauteur de capitale ~2,2 % » était **dans le rapport que j'avais sous les yeux** depuis
+le début. Je ne l'ai pas exploitée, et c'est Aziz qui a vu le défaut sur le rendu final.
+=> **Avant de déclarer un plan/beat fini : reprendre le relevé ligne par ligne et cocher
+« traité / écarté et pourquoi ».** Ce que je ne mesure pas, je ne le corrige pas — et un rapport
+lu une fois au début n'est pas un rapport exploité.
+
+**Corollaire, valable au-delà des modèles** : un OUTIL de mesure automatique n'est pas plus fiable
+qu'un modèle. Le même jour, 2 métriques maison ont menti sur la taille d'un globe (seuil de pixels
+non-noirs cassé par un voile bleu ajouté entre-temps ; puis détection de bord par gradient qui
+s'accrochait aux côtes et au terminateur jour/nuit). Elles annonçaient 99,9 % là où l'œil voyait un
+globe trop petit. **Un chiffre précis peut être précisément faux.** Quand la mesure contredit
+l'œil, l'œil gagne — et c'est la mesure qu'il faut réparer. Méthode qui a tranché : **grille de
+repères tracée sur les 2 images, lue à l'œil** (déjà prescrite par le protocole REPRO-FOSTER).
+
+
 ### 2026-08-20 — ⛔ Un identifiant de modele/API en dur est une dette : centraliser des le 2e usage
 
 **Vecu** (migration Gemini image) : l'identifiant du modele etait ecrit en dur **188 fois dans
