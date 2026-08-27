@@ -50,6 +50,10 @@ gardant l'audio normal, indetectable sur des frames isolees.
 
 ### ✅ PLAN 9 — CODE ET MESURE (27/08), en attente de validation
 `Plan09PullBack.tsx` · 30 frames · `plan09_v3.mp4`.
+📎 **Page Artifact du sujet** (comparatif A/B + mesures + les 2 arbitrages ouverts) :
+https://claude.ai/code/artifact/d5fb3169-7cb4-47e8-a94a-dfca377d204f
+⭐ 1 page par SUJET : l'ENRICHIR pour les plans 10 et 11 (meme URL redeployee),
+ne pas creer un lien par livrable.
 
 ⛔⛔ **LE TABLEAU DISAIT « transition (1 s) » : C'EST UN PLAN A PART ENTIERE** — la
 plaque Billing vue EN ENTIER, dernier temps du dashboard. Les 2 coupes qui
