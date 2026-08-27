@@ -99,7 +99,18 @@ const CARDS = [
  * On applique donc une contraction amortie a partir de la pose de chaque
  * vignette, et une rotation lente et constante du nuage entier.
  */
-const ORBIT_DEG_PER_SEC = 11;   // rotation lente : le nuage tourne, il ne file pas
+/**
+ * ⭐ VITESSE ANGULAIRE MESUREE, pas dosee (retour d'Aziz : « ca devrait etre 2 a
+ * 3 fois plus rapide, la c'est presque statique »).
+ * Methode : angle du CENTRE DE GRAVITE du nuage frame par frame (il tourne a la
+ * meme vitesse que les vignettes puisque le nuage n'est pas symetrique).
+ *   valeurs relevees entre 12,45 et 13,49 s : 30 a 152 deg/s
+ *   => moyenne 83 deg/s, mediane 89. Sur les 2,15 s du plan : ~180 deg, un
+ *      DEMI-TOUR complet.
+ * ⛔ Ma v8 tournait a 11 deg/s, soit **7,5x trop lent** — d'ou l'impression de
+ * statique. Une valeur choisie « pour que ca ne file pas » sans la mesurer.
+ */
+const ORBIT_DEG_PER_SEC = 83;
 /**
  * ⭐ Contraction RESOLUE, pas dosee.
  * J'ai ajuste ce parametre 4 fois dans les deux sens (trop faible, puis trop
@@ -181,9 +192,11 @@ export const Plan04Assembles: React.FC = () => {
           loin (echelle > 1) et se cale. Une piece qu'on POSE, pas qui apparait. */}
       {CARDS.map((c) => {
         const local = frame - Math.round((c.at - PLAN_START) * fps);
-        /* Temps ecoule depuis la pose de CETTE vignette : pilote la ROTATION
-           (chaque vignette tourne depuis qu'elle est posee). */
-        const since = Math.max(0, local / fps);
+        /* ⛔ La ROTATION est pilotee par le temps du PLAN, pas par la pose de
+           chaque vignette : Aziz veut qu'elle « tienne durant toute la duree de
+           la scene ». Une vignette qui arrive tard rejoint le nuage deja en
+           rotation, elle ne repart pas de son angle initial. */
+        const since = frame / fps;
         /*
           ⛔ La CONTRACTION, elle, est pilotee par le temps du PLAN, pas par
           celui de chaque vignette : sinon les dernieres posees (a 12,38 s)

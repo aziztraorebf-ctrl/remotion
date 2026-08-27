@@ -369,6 +369,37 @@ dit de deleguer/changer de methode des le 2e echec : je ne l'ai applique qu'au 4
 
 **Typo** : 70 -> 88 px (retour d'Aziz : « le mot au milieu devrait etre plus grand »).
 
+
+### ⛔⛔⛔ J'AI MESURE LE RAYON ET INVENTE LA VITESSE — l'erreur la plus instructive
+
+**Retour d'Aziz sur la v8** : « la vitesse de rotation est beaucoup plus lente que
+dans la reference, ca devrait etre 2 a 3 fois plus rapide, la c'est presque statique ».
+
+**Ce que j'avais fait** : mesure rigoureuse de la CONTRACTION du rayon (4 iterations,
+resolution d'un systeme a 2 inconnues)... et dans le meme fichier, `ORBIT_DEG_PER_SEC
+= 11` pose **au juge**, avec en commentaire une justification inventee : « rotation
+lente : le nuage tourne, il ne file pas ».
+
+**Mesure reelle** (angle du centre de gravite du nuage frame par frame — il tourne a
+la meme vitesse que les vignettes puisque le nuage n'est pas symetrique) :
+valeurs de **30 a 152 deg/s, moyenne 83, mediane 89** => un **DEMI-TOUR (180 deg)**
+sur les 2,15 s du plan. J'etais **7,5x trop lent**.
+
+⭐⭐⭐ **LA LECON** : mesurer UNE dimension d'un mouvement ne dit rien des autres.
+Un mouvement composite (ici rotation + contraction) doit etre mesure **sur chaque
+composante separement**. Le pire signal d'alerte : **un commentaire de code qui
+JUSTIFIE une valeur jamais mesuree** (« pour que ca ne file pas ») — c'est une
+rationalisation, pas une donnee. Grep les commentaires de ce type dans un fichier
+ou l'on vient de mesurer autre chose.
+
+2e correction du meme retour : la rotation etait pilotee par le temps depuis la pose
+de CHAQUE vignette, donc les dernieres arrivees repartaient de leur angle initial.
+Aziz : « la rotation devrait tenir durant toute la duree de la scene » -> pilotee par
+le temps du PLAN. Une vignette qui arrive tard rejoint un nuage DEJA en rotation.
+
+⚠️ Reste un ecart visible : nos vignettes se CHEVAUCHENT plus que dans la reference,
+qui reste plus aeree (lie au resserrement du nuage, pas a la rotation).
+
 ## CE QUI EST DÉJÀ PRÊT (acquis de la session 2026-08-25/26)
 - `devices/PhoneModel` · `LaptopModel` — mockups procéduraux, écran = zone d'accueil
 - `devices/DeviceInScene` — objet posé dans un décor, ombre 3 couches, allumage 0,30 s
