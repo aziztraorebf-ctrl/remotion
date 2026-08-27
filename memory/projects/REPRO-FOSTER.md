@@ -38,7 +38,7 @@ Transitions douces (seuil 0.12) ajoute : 11,44 · 11,51 · 11,57 · 11,64 · 13,
 | # | Temps | Contenu | Moteur | Notre brique | État |
 |---|---|---|---|---|---|
 | 1 | 0 → 1,6 | Téléphone **+ notification Ofsted** sur le bureau, pull back reveal x2,12 | 3D + UI | `Plan01Lockscreen` | ✅ **FAIT/VALIDE** |
-| 2 | 1,6 → 5,6 | **Le décor s'allume** (bureau vu du dessus, tapis de découpe) puis **zoom continu de 4 s** jusqu'à l'intérieur de l'écran. Ellipse temporelle : 12:57 → 9:38 **sans coupe** | décor + caméra | `DeviceInScene` + décors générés | ✅ |
+| 2 | 1,6 → 5,6 | ✅ **FAIT/VALIDE** — **Le décor s'allume** (bureau vu du dessus, tapis de découpe) puis **zoom continu de 4 s** jusqu'à l'intérieur de l'écran. Ellipse temporelle : 12:57 → 9:38 **sans coupe** | décor + caméra | `DeviceInScene` + décors générés | ✅ |
 | 3 | 5,6 → 11,4 | Typo pure sur noir : *« Still unresolved, »* mot par mot | typo | `DeviceShowreel` ch. 3-4 | ✅ |
 | 4 | 11,4 → 13,6 | **6 portraits d'enfants** en couronne autour de « Assembles », fond dégradé vert | images + compo | ⚠️ **à générer (Gemini)** | 🔶 |
 | 5 | 13,6 → 18,0 | Suite typo sur dégradé vert | typo + fond | `GridBackdrop` (variante dégradé à faire) | 🔶 |
@@ -216,6 +216,37 @@ n'atteint pas le rendu.
 **Raccord verifie** : la coupe etant un saut d'echelle tres violent, notre fin de
 plan 1 (plus large que la reference) **ne se voit pas**. Ce qui compte est le
 contraste entre les deux echelles, aussi fort chez nous.
+
+
+## ✅ PLAN 2 — VALIDE PAR AZIZ (2026-08-26)
+
+Livrable : `out/episodes/foster-repro/plan02-FINAL.mp4` (120 frames, 3,995 s).
+Verdict : « beaucoup mieux, ca correspond a ce qui est dans la video initiale.
+Ce n'est pas parfait mais ca se rapproche beaucoup — assez bon pour continuer. »
+
+⭐⭐ **CE QUI A FAIT BASCULER LE PLAN (retour d'Aziz, a retenir pour TOUS les plans
+d'ecran)** : sans le CHASSIS et le TAPIS autour, les notifications avaient l'air de
+« cartes qui apparaissent sur un fond noir », pas d'un telephone. **Ce n'est pas la
+taille du texte qui fait lire « telephone », c'est le contexte autour de l'ecran.**
+
+⛔⛔ **MON ERREUR DE RAISONNEMENT, a ne pas refaire** : j'avais code les bandes de
+chassis, constate qu'elles n'apparaissaient pas, et conclu qu'il fallait les
+**SUPPRIMER**. La vraie cause etait que l'ecran faisait 2458 px de large sur un cadre
+de 1920 — il DEBORDAIT et les recouvrait. **J'ai supprime le bon element au lieu de
+corriger la taille.** Quand un element code n'apparait pas : mesurer ce qui le
+recouvre AVANT de conclure qu'il est inutile.
+
+**Geometrie de reference pour tout plan d'ecran de telephone** (mesuree a la regle,
+cadre 1920) : tapis 0..430 | chassis 430..490 (~55 px) | **ECRAN 490..1440 = 950 px
+(49 % du cadre)** | chassis 1440..1490 | tapis 1490..1920.
+
+⛔ **3 tentatives ratees sur une bande noire au bord droit** avant de mesurer. La
+mesure (noir PUR (0,0,0) de x=1606 a 1919 => c'est le fond de l'AbsoluteFill, donc le
+decor ne couvre pas) a tranche en 1 passe. **Le protocole disait de mesurer des le
+2e echec — pas applique a temps.**
+✅ Fix generique : pour une couche de fond qui doit couvrir tout le cadre, utiliser
+`backgroundImage` + `backgroundSize` sur la couche, **jamais une `<Img>` positionnee
+a la main** (arithmetique de position = source d'erreur repetee).
 
 ## CE QUI EST DÉJÀ PRÊT (acquis de la session 2026-08-25/26)
 - `devices/PhoneModel` · `LaptopModel` — mockups procéduraux, écran = zone d'accueil
