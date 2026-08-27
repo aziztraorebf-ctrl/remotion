@@ -71,6 +71,15 @@ const ORB = { cx: 910, cy: 540, rx: 300, ry: 330 };
 /** Le cercle blanc : centre du cadre, diametre stabilise mesure. */
 const DISC = { cx: 960, cy: 540, d: 210 };
 
+/**
+ * ⭐ FACTEUR D'ENSEMBLE (retour d'Aziz sur la v4) : « le logo devrait etre
+ * beaucoup plus gros, et les ecritures tout autour agrandies aussi ».
+ * On multiplie disque + orbite + etiquettes par le MEME facteur pour garder
+ * les proportions relatives (verifiees justes au zoom : notre texte occupe
+ * deja la bonne part du disque).
+ */
+const DIAG = 1.28;
+
 export const Plan05Diagram: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps, width, height } = useVideoConfig();
@@ -102,7 +111,7 @@ export const Plan05Diagram: React.FC = () => {
     config: { damping: 9, mass: 0.7, stiffness: 150 },
     durationInFrames: Math.round(0.75 * fps),
   });
-  const discD = interpolate(grow, [0, 1], [13, DISC.d]);
+  const discD = interpolate(grow, [0, 1], [13, DISC.d * DIAG]);
 
   /** L'orbite se deploie apres le disque. */
   const orbit = interpolate(tAbs, [14.05, 14.75], [0, 1], {
@@ -147,7 +156,7 @@ export const Plan05Diagram: React.FC = () => {
   const g = Math.round(20 + 210 * (1 - onWhite));  // suit le disque
   const fosterColor = `rgb(${g},${g},${g})`;
   /** Taille du texte : petit dans le disque, grand apres le zoom. */
-  const fontSize = px(34) * zoomText;
+  const fontSize = px(34) * DIAG * zoomText;
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#000", opacity: fadeOut }}>
@@ -208,8 +217,8 @@ export const Plan05Diagram: React.FC = () => {
           <ellipse
             cx={px(ORB.cx)}
             cy={(ORB.cy / 1080) * height}
-            rx={px(ORB.rx) * orbit}
-            ry={px(ORB.ry) * orbit}
+            rx={px(ORB.rx) * DIAG * orbit}
+            ry={px(ORB.ry) * DIAG * orbit}
             fill="none"
             stroke="rgba(225,225,230,0.55)"
             strokeWidth={px(2)}
@@ -236,17 +245,19 @@ export const Plan05Diagram: React.FC = () => {
             <div
               style={{
                 position: "absolute",
-                left: px(l.x),
-                top: (l.y / 1080) * height,
+                /* Position dilatee autour du centre de l'orbite, pour suivre
+                   l'agrandissement du cercle. */
+                left: px(ORB.cx + (l.x - ORB.cx) * DIAG),
+                top: ((ORB.cy + (l.y - ORB.cy) * DIAG) / 1080) * height,
                 transform: `translate(-50%,-50%) scale(${s})`,
                 background: l.green ? "#1d5c4f" : "#f0a83c",
                 color: l.green ? "#eaf5f1" : "#2a1a05",
                 fontFamily: MONO,
-                fontSize: px(17),
+                fontSize: px(17) * DIAG,
                 fontWeight: 600,
-                letterSpacing: px(1.2),
-                padding: `${px(9)}px ${px(18)}px`,
-                borderRadius: px(24),
+                letterSpacing: px(1.2) * DIAG,
+                padding: `${px(9) * DIAG}px ${px(18) * DIAG}px`,
+                borderRadius: px(24) * DIAG,
                 whiteSpace: "nowrap",
                 boxShadow: "0 6px 18px rgba(0,0,0,0.5)",
               }}

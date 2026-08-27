@@ -63,15 +63,28 @@ demande pas si c'est beau ou efficace. On te demande CE QUI BOUGE.
 
 Reponds dans cet ordre, en francais :
 
-1. INVENTAIRE — liste TOUS les elements visibles (texte, images, formes, fond,
-   objets). Pour chacun : est-il FIXE ou EN MOUVEMENT ?
+1. INVENTAIRE + TAILLES ET POSITIONS — liste TOUS les elements visibles (texte,
+   images, formes, fond, objets). Pour CHACUN, donne :
+   - est-il FIXE ou EN MOUVEMENT ?
+   - sa TAILLE, en POURCENTAGE DE LA LARGEUR (ou de la hauteur) DU CADRE.
+     Ex. « le disque blanc fait ~11 % de la largeur », « le texte occupe 30 % ».
+   - sa POSITION : centre de l'element en % du cadre, origine en haut a gauche.
+     Ex. « centre a 50 % / 50 % » pour un element parfaitement centre.
+   - pour un TEXTE : sa hauteur de capitale en % de la hauteur du cadre.
+   ⭐ CES CHIFFRES SONT LA PARTIE LA PLUS UTILE DE TA REPONSE. Estime-les
+   soigneusement, meme approximativement — un ordre de grandeur vaut mieux que
+   rien. Ne dis jamais « de taille moyenne » : donne un pourcentage.
 
 2. POUR CHAQUE ELEMENT EN MOUVEMENT :
    - la NATURE du geste (translation, rotation, zoom, contraction, fondu,
      changement d'echelle, deformation...)
    - le SENS et la DIRECTION (vers le haut / horaire / vers le centre...)
-   - la VITESSE RELATIVE (lent / moyen / rapide) et si elle est CONSTANTE,
-     ACCELEREE ou AMORTIE
+   - la VITESSE, CHIFFREE quand c'est possible : une rotation en DEGRES PAR
+     SECONDE (« ~90 deg/s », « un demi-tour sur le plan »), un deplacement en
+     % du cadre par seconde, un zoom en facteur (« x2 en 0,7 s »). Precise si
+     elle est CONSTANTE, ACCELEREE ou AMORTIE.
+   - AMPLITUDE : de combien l'element se deplace / grandit AU TOTAL
+     (« de 20 % a 45 % de la largeur », « il parcourt un demi-cercle »)
    - QUAND il commence et finit dans le plan
 
 3. LA CAMERA — bouge-t-elle ? (zoom avant/arriere, travelling, panoramique,
