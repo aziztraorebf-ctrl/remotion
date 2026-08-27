@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Foster - dashboard plates</title>
+<!--
+  PLAQUES DU PLAN 8. DEUX ETATS dans une seule page, pilotes par ?state= :
+    ?state=overview  -> « Platform overview », les 4 KPI + la liste des comptes
+    ?state=billing   -> « Billing », les 4 montants
+
+  ⛔ REGLE N°1 DU PILIER UI PRODUIT : une UI se CAPTURE, elle ne se redessine pas
+  en React. Les deux etats sont donc de vraies pages, photographiees puis
+  animees par `PageCam`. Doctrine : `memory/fiches/FICHE-UI-PRODUIT.md`.
+
+  ⭐⭐ LARGEUR 1920 — DECISION D'AZIZ, ET ELLE CORRIGE UNE DERIVE.
+  Une 1re version faisait 3400 px de large pour reproduire le PANORAMIQUE
+  horizontal de la reference. Consequence : `PageCam` plaque la page sur 1920 en
+  dur, donc il etait inutilisable — et j'ai commence a reecrire sa mecanique a la
+  main, puis a redessiner l'UI en React. Trois rendus perdus en plomberie, sur le
+  plan cense etre notre terrain le plus fort.
+  Recadrage d'Aziz : « rien n'oblige a reproduire a 100 % ; si on a Shotcraft et
+  PageCam avec tout ce dont on a besoin dedans, il ne reste qu'a recopier les
+  couleurs et les ecritures ». -> on adapte la PAGE a ce que le socle sait faire,
+  on ne contourne pas le socle pour coller a la reference.
+  ⚠️ Consequence assumee : le mouvement sera un enchainement de zooms plutot
+  qu'un pan continu. Le geste raconte la meme chose (on parcourt les montants) ;
+  il ne sera pas superposable image par image. C'est un CHOIX, pas un echec.
+
+  Les libelles et les 4 montants sont ceux lus sur la reference. Donnees
+  fictives mais credibles (jamais de vraies donnees client, jamais de lorem).
+-->
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:1920px; height:1080px; }
+  body {
+    font-family:-apple-system,"SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;
+    /* Le fond n'est PAS noir plat : mesure sur la frame 24,60 s, la fenetre est
+       detouree sur un degrade vert sombre avec un halo qui monte du bas. */
+    background:radial-gradient(120% 90% at 50% 108%, #1d3b2e 0%, #14251d 45%, #0b100d 100%);
+    overflow:hidden;
+  }
+
+  /* La fenetre de l'app, ENTIERE dans le cadre (liseré or sur ses 4 cotes). */
+  .win { position:absolute; inset:64px 96px; background:#fbfaf7; border:3px solid #d9a441;
+         border-radius:22px; overflow:hidden; display:flex;
+         box-shadow:0 30px 90px rgba(0,0,0,.45); }
+
+  /* ── SIDEBAR ── */
+  .side { width:290px; background:#17362c; color:#e8efe9; padding:30px 24px;
+          display:flex; flex-direction:column; }
+  .brand { font-size:32px; font-weight:700; letter-spacing:-.4px; }
+  .brand em { font-style:normal; color:#e0a83f; }
+  .brand-sub { margin-top:6px; font-size:13px; color:#8fa79a; }
+  .nav { margin-top:38px; display:flex; flex-direction:column; gap:4px; }
+  .nav a { display:flex; align-items:center; gap:11px; padding:11px 14px; border-radius:11px;
+           font-size:16px; color:#c3d3c9; text-decoration:none; }
+  .nav a.on { background:#e0a83f; color:#17362c; font-weight:650; }
+  .dot { width:16px; height:16px; border-radius:5px; background:currentColor; opacity:.5; }
+  .pill-n { margin-left:auto; background:#24483c; color:#cfe0d5; font-size:12px;
+            padding:2px 9px; border-radius:999px; }
+  .side-foot { margin-top:auto; display:flex; flex-direction:column; gap:4px; }
+
+  /* ── CONTENU ── */
+  .main { flex:1; display:flex; flex-direction:column; }
+  .head { height:96px; background:#fff; border-bottom:1px solid #ece8e0;
+          display:flex; align-items:center; padding:0 36px; gap:22px; }
+  .h1 { font-size:34px; font-weight:700; color:#1d2b24; letter-spacing:-.6px; }
+  .date { background:#f1efea; color:#4a5651; font-size:16px; padding:9px 18px;
+          border-radius:999px; white-space:nowrap; }
+  .head-right { margin-left:auto; display:flex; align-items:center; gap:18px; }
+  .export { display:flex; align-items:center; gap:8px; border:1px solid #ddd8ce;
+            border-radius:10px; padding:9px 17px; font-size:15px; color:#2b3833; }
+  .who { text-align:right; line-height:1.25; }
+  .who b { display:block; font-size:16px; color:#1d2b24; }
+  .who span { font-size:13px; color:#8b948f; }
+  .avatar { width:40px; height:40px; border-radius:50%; background:#17362c; color:#e8efe9;
+            display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:600; }
+  .body { flex:1; padding:26px 36px; }
+
+  /* ── LES CARTES — 4 en rangee, elles tiennent dans 1920 ── */
+  .cards { display:flex; gap:18px; }
+  .card { flex:1; background:#fff; border:1px solid #eeeae2; border-radius:18px;
+          padding:22px 24px; }
+  .ico { width:48px; height:48px; border-radius:14px; margin-bottom:16px; }
+  .big { font-size:44px; font-weight:700; color:#12201a; letter-spacing:-1.4px; }
+  .lab { margin-top:7px; font-size:17px; color:#5d6a64; }
+  .sub { margin-top:5px; font-size:14px; color:#9aa39e; }
+  /* Sur l'etat BILLING les montants sont plus longs : on retrecit un peu. */
+  body[data-state="billing"] .big { font-size:38px; letter-spacing:-1.6px; }
+
+  /* ── LISTE DES COMPTES (etat overview) ── */
+  .sect { margin-top:30px; font-size:22px; font-weight:650; color:#1d2b24; }
+  .sect-sub { margin-top:5px; font-size:14px; color:#8b948f; }
+  .row { display:flex; align-items:center; gap:14px; padding:15px 0;
+         border-bottom:1px solid #f0ece5; }
+  .av { width:34px; height:34px; border-radius:50%; background:#e9efe9; }
+  .nm { font-size:16px; color:#1d2b24; font-weight:600; }
+  .tag { font-size:12px; color:#3f7a5e; background:#e7f2ec; padding:3px 11px; border-radius:999px; }
+  .tag.b { color:#7a6a3e; background:#f6efdd; }
+  .view { margin-left:auto; font-size:14px; color:#2b3833; border:1px solid #ddd8ce;
+          border-radius:9px; padding:7px 15px; }
+
+  /* ── BAS (etat billing) ── */
+  .foot { margin-top:34px; display:flex; align-items:flex-end; }
+  .foot h2 { font-size:26px; color:#1d2b24; font-weight:650; }
+  .foot p { margin-top:6px; font-size:15px; color:#8b948f; }
+  .search { margin-left:auto; width:420px; background:#fff; border:1px solid #e6e1d8;
+            border-radius:14px; padding:14px 20px; font-size:16px; color:#a8b0ab; }
+
+  [hidden] { display:none !important; }
+</style>
+</head>
+<body>
+<div class="win">
+  <div class="side">
+    <div class="brand">Foster<em>With</em></div>
+    <div class="brand-sub">Platform admin</div>
+    <nav class="nav">
+      <a id="nav-ov"><i class="dot"></i>Overview</a>
+      <a><i class="dot"></i>Councils &amp; IFAs<span class="pill-n">19</span></a>
+      <a id="nav-bi"><i class="dot"></i>Billing</a>
+      <a><i class="dot"></i>Reports</a>
+      <a><i class="dot"></i>All users</a>
+      <a><i class="dot"></i>Packages &amp; Pricing</a>
+    </nav>
+    <div class="side-foot">
+      <a><i class="dot"></i>My account</a>
+      <a><i class="dot"></i>Sign out</a>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="head">
+      <div class="h1" id="title">Platform overview</div>
+      <div class="date">Saturday, August 15th, 2026</div>
+      <div class="head-right">
+        <div class="export" id="export" hidden>Export</div>
+        <div class="who"><b>Alex Morgan</b><span>Super admin</span></div>
+        <div class="avatar">AM</div>
+      </div>
+    </div>
+
+    <div class="body">
+      <!-- ETAT OVERVIEW -->
+      <div id="s-overview">
+        <div class="cards">
+          <div class="card" data-capture="card">
+            <div class="ico" style="background:#f3ede1"></div>
+            <div class="big">19</div><div class="lab">Active councils</div><div class="sub">0 disabled</div>
+          </div>
+          <div class="card" data-capture="card">
+            <div class="ico" style="background:#efeafb"></div>
+            <div class="big">2</div><div class="lab">Foster carers</div><div class="sub">Across all councils</div>
+          </div>
+          <div class="card" data-capture="card">
+            <div class="ico" style="background:#e8f0fb"></div>
+            <div class="big">3</div><div class="lab">Looked-after children</div><div class="sub">Active placements</div>
+          </div>
+          <div class="card" data-capture="card">
+            <div class="ico" style="background:#fbe9ec"></div>
+            <div class="big">&pound;0</div><div class="lab">Platform spend</div><div class="sub">Approved &middot; all councils</div>
+          </div>
+        </div>
+        <div class="sect">Council accounts</div>
+        <div class="sect-sub">All councils on the platform</div>
+        <div style="margin-top:14px">
+          <div class="row" data-capture="row"><i class="av"></i><span class="nm">Broadfield Council</span><span class="tag">Active</span><span class="tag b">Core</span><span class="view">View</span></div>
+          <div class="row" data-capture="row"><i class="av"></i><span class="nm">Alexa Stevenson</span><span class="tag">Active</span><span class="tag b">Starter</span><span class="view">View</span></div>
+          <div class="row" data-capture="row"><i class="av"></i><span class="nm">Alyssa Cunningham</span><span class="tag">Active</span><span class="tag b">Starter</span><span class="view">View</span></div>
+          <div class="row" data-capture="row"><i class="av"></i><span class="nm">Apex Care</span><span class="tag">Active</span><span class="tag b">Daily Stater</span><span class="view">Open as admin</span></div>
+        </div>
+      </div>
+
+      <!-- ETAT BILLING — les 4 montants -->
+      <div id="s-billing" hidden>
+        <div class="cards">
+          <div class="card" data-capture="amount">
+            <div class="ico" style="background:#e8f0fb"></div>
+            <div class="big">&pound;49,245</div><div class="lab">Monthly recurring</div><div class="sub">7 subscribed &middot; 19 active</div>
+          </div>
+          <div class="card" data-capture="amount">
+            <div class="ico" style="background:#efeafb"></div>
+            <div class="big">&pound;590,940</div><div class="lab">Annual recurring</div><div class="sub">Active councils only</div>
+          </div>
+          <div class="card" data-capture="amount">
+            <div class="ico" style="background:#fbf3e4"></div>
+            <div class="big">&pound;422,780.82</div><div class="lab">Collected revenue</div><div class="sub">25 invoices</div>
+          </div>
+          <div class="card" data-capture="amount">
+            <div class="ico" style="background:#fbe9ec"></div>
+            <div class="big">&pound;2,592</div><div class="lab">Avg per council</div><div class="sub">Monthly &middot; active only</div>
+          </div>
+        </div>
+        <div class="foot">
+          <div>
+            <h2>Per-council billing</h2>
+            <p>Live package rates &middot; click a row to open council</p>
+          </div>
+          <div class="search">Search by council or plan&hellip;</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var st = new URLSearchParams(location.search).get('state') || 'overview';
+  document.body.dataset.state = st;
+  var bill = st === 'billing';
+  document.getElementById('s-overview').hidden = bill;
+  document.getElementById('s-billing').hidden = !bill;
+  document.getElementById('title').textContent = bill ? 'Billing' : 'Platform overview';
+  document.getElementById('export').hidden = !bill;
+  document.getElementById(bill ? 'nav-bi' : 'nav-ov').classList.add('on');
+</script>
+</body>
+</html>
