@@ -149,3 +149,40 @@ existants `jury-*-llm.py` ne couvrent pas ce cas) :
   PNG, envoyée via `openrouter-vision-breakdown.py` (GPT) et l'appel direct ci-dessus (Grok).
   Préciser explicitement dans le prompt que l'image est une planche contact et que le jugement
   de mouvement doit se faire par comparaison entre les 3 frames d'une même ligne.
+
+## ⭐⭐⭐ GROK 3e VOIX DE RELEVE VISUEL — TESTÉ ET ADOPTÉ (2026-08-27)
+
+**Le test** (demandé par Aziz après un échec de GPT) : mêmes 27 frames, même prompt,
+même segment — les 3 voix en parallèle sur les cartouches du plan 7 Foster.
+Modèle : **`x-ai/grok-4.6`** via OpenRouter (slug pris dans ce fichier, PAS deviné).
+Désormais dans `scripts/tools/api_models.py` sous `GROK_TEXT_VISION`, et branché
+comme 3e voix dans `motion-breakdown.py`.
+
+| voix | longueur | verdict |
+|---|---|---|
+| **Grok** `x-ai/grok-4.6` | **10 815 car.** | ⭐ le plus riche et le plus utile |
+| Gemini `3.1-pro-preview` | 3 243 car. | correct, seul à voir la VIDÉO |
+| GPT `openai/gpt-5.5` | 2 956 car. | **TRONQUÉ 2× de suite** |
+
+### Ce que Grok a vu et que les autres ont manqué
+⭐ **Le titre du cartouche s'écrit MOT PAR MOT** — « Jenny » → « Jenny Foster » →
+« Jenny Foster Care », avec élargissement du conteneur à chaque palier. **Vérifié à
+l'oeil sur les frames 20,70 et 21,25 s : exact.** Je l'affichais d'un bloc, et ni
+Gemini ni ma propre lecture ne l'avaient releve.
+Il donne aussi la nature du geste caméra avec la bonne granularité (« nadir → ¾
+plongeant », parallaxe, flou radial frames 1-4 puis absent dès la 7).
+
+### ⚠️ La nuance honnête sur GPT — vu, mais perdu
+GPT **avait vu les paliers lui aussi** : sa dernière ligne dit « Texte titre *Jenny*
+puis *Jenny Foster* puis… » et **s'arrête net au milieu de la phrase**. Ce n'est donc
+pas un défaut de PERCEPTION mais de FIABILITÉ : sa réponse se coupe sans aucune
+erreur HTTP. Ne pas en conclure « GPT voit moins bien » — conclure « une réponse
+peut être tronquée en silence », ce qui est plus grave car indétectable sans regarder.
+-> `motion-breakdown.py` alerte maintenant sur toute réponse < 1500 caractères.
+
+### Complémentaire, PAS un remplaçant
+- **Gemini** reste le SEUL à ingérer la vidéo → seul à juger le mouvement réel.
+- **Grok** est le meilleur sur l'INVENTAIRE et la CHRONOLOGIE fine des apparitions.
+- **GPT** garde sa place : il voit juste, mais son relevé doit être vérifié complet.
+⛔ Ne pas retirer GPT sur ce seul test : 2 troncatures ne prouvent pas une régression
+durable, et il avait raison sur le fond. Re-mesurer avant toute décision de retrait.

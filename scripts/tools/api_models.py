@@ -55,6 +55,11 @@ KIMI_VISION_SVG = KIMI   # vision -> SVG one-shot, visage organique
 GPT_TEXT_VISION = "openai/gpt-5.5"        # texte + vision (SVG, breakdown, ideation)
 GPT_IMAGE = "gpt-5.4-image-2"             # ⛔ PAS `gpt-5.5-image` : n'existe pas
 GPT_SOL = "openai/gpt-5.6-sol"            # variante Sol (usage SVG specifique)
+GROK_TEXT_VISION = "x-ai/grok-4.6"        # texte + vision via OpenRouter.
+# ⛔ NE PAS deviner ce numero de version : « x-ai/grok-4.1 » a ete invente le
+# 2026-08-22 et a coute un appel en HTTP 400. Lister l'API avant de supposer.
+# ⚠️ 3 familles Grok distinctes : image = API xAI directe (grok-imagine-image-2.0)
+# · texte+vision = OpenRouter (ci-dessus) · jurys = xAI directe (grok-4.20-reasoning).
 GLM_SVG = "z-ai/glm-5.2"                  # jetons/assets low-cost, planches en lot
 DEEPSEEK_TEXT = "deepseek/deepseek-v4-pro"  # 3e voix DA-brief — TEXTE only, PAS de vision
 
@@ -70,6 +75,7 @@ __all__ = [
     "GPT_TEXT_VISION",
     "GPT_IMAGE",
     "GPT_SOL",
+    "GROK_TEXT_VISION",
     "GLM_SVG",
     "DEEPSEEK_TEXT",
     "MINIMAX_MUSIC",

@@ -112,9 +112,29 @@ export const Plan07Maison: React.FC = () => {
    * LE TITRE n'apparait qu'une fois la pastille assez large pour l'accueillir —
    * sinon il deborde du cartouche pendant l'ouverture.
    */
+  /**
+   * ⭐⭐ LE TITRE S'ECRIT MOT PAR MOT, LUI AUSSI — « Jenny » puis « Foster »
+   * puis « Care », chaque mot arrivant d'abord en gris clair avant de blanchir.
+   * ⛔ Je l'affichais d'un seul bloc. Ni Gemini ni ma propre lecture des frames
+   * ne l'avaient vu : c'est GROK (3e voix ajoutee ce jour) qui l'a releve, et
+   * la verification a l'oeil sur les frames 20,70 et 21,25 s le confirme
+   * exactement. GPT l'avait vu aussi mais sa reponse s'est trouvee TRONQUEE en
+   * plein milieu de cette ligne — vu, mais perdu.
+   * Mesure des paliers : « Jenny » ~20,65 s · « Foster » ~20,95 · « Care » ~21,25.
+   */
+  const motsTitre = TITRE.split(" ");
+  const titreVisible = interpolate(
+    frame,
+    [F_TITRE, F_TITRE + 27],
+    // +1 pour que le DERNIER mot atteigne lui aussi son opacite pleine :
+    // sans ca l'interpolation s'arrete pile a son arrivee et « Care » reste gris.
+    [0, motsTitre.length + 1],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+  );
+  /** Le conteneur ne doit exister qu'a partir du 1er mot. */
   const titreOpacity = interpolate(
     frame,
-    [F_TITRE, F_TITRE + 8],
+    [F_TITRE, F_TITRE + 5],
     [0, 1],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
   );
@@ -201,11 +221,27 @@ export const Plan07Maison: React.FC = () => {
                 fontSize: 34,
                 fontWeight: 700,
                 color: "#fff",
-                opacity: titreOpacity,
                 letterSpacing: -0.2,
               }}
             >
-              {TITRE}
+              {motsTitre.map((mot, i) => (
+                <span
+                  key={i}
+                  style={{
+                    // Le mot en cours arrive en gris clair puis blanchit —
+                    // visible a l'oeil sur « Foster » a 20,70 s et « Care » a 21,25.
+                    opacity:
+                      i < Math.floor(titreVisible)
+                        ? 1
+                        : i === Math.floor(titreVisible)
+                          ? 0.35 + 0.3 * (titreVisible % 1)
+                          : 0,
+                  }}
+                >
+                  {mot}
+                  {i < motsTitre.length - 1 ? " " : ""}
+                </span>
+              ))}
             </span>
           </div>
 

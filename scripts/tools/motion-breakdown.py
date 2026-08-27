@@ -38,7 +38,7 @@ import subprocess  # noqa: E402
 import threading  # noqa: E402
 import urllib.request  # noqa: E402
 
-from api_models import GPT_TEXT_VISION  # noqa: E402
+from api_models import GPT_TEXT_VISION, GROK_TEXT_VISION  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -192,12 +192,16 @@ def call_gemini(prompt, video_path, results):
         print(f"[gemini] ERREUR: {e}")
 
 
-def call_gpt(prompt, frames, results):
-    """⛔ GPT n'accepte PAS la video via OpenRouter (« No endpoints found that
-    support input video », verifie 2026-08-03) — on envoie des FRAMES DENSES."""
+def call_openrouter(name, model, prompt, frames, results):
+    """Voix « frames » via OpenRouter (GPT, Grok...).
+    ⛔ Ces modeles n'acceptent PAS la video (« No endpoints found that support
+    input video », verifie 2026-08-03) — on envoie des FRAMES DENSES.
+    ⚠️ Une reponse TRONQUEE est possible sans aucune erreur HTTP : le 2026-08-27,
+    GPT a rendu 1188 octets (en-tete seul) la ou Gemini en rendait 3243. Le
+    script signale desormais toute reponse anormalement courte."""
     key = os.getenv("OPENROUTER_API_KEY")
     if not key:
-        results["gpt"] = "[ERREUR] OPENROUTER_API_KEY absente"
+        results[name] = "[ERREUR] OPENROUTER_API_KEY absente"
         return
     content = [{"type": "text", "text": prompt + f"\n\n(Tu recois {len(frames)} frames "
                 "consecutives, dans l'ordre chronologique, echantillonnees a intervalle "
@@ -207,21 +211,26 @@ def call_gpt(prompt, frames, results):
         with open(f, "rb") as fh:
             b64 = base64.b64encode(fh.read()).decode()
         content.append({"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{b64}"}})
-    body = {"model": GPT_TEXT_VISION,
+    body = {"model": model,
             "messages": [{"role": "user", "content": content}],
             "max_tokens": 4000, "temperature": 0.3}
     req = urllib.request.Request(
         OPENROUTER_URL, data=json.dumps(body).encode(),
         headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"})
     try:
-        print(f"[gpt] envoi {len(frames)} frames...")
+        print(f"[{name}] envoi {len(frames)} frames ({model})...")
         with urllib.request.urlopen(req, timeout=300) as r:
             data = json.loads(r.read().decode())
-        results["gpt"] = data["choices"][0]["message"]["content"]
-        print("[gpt] OK")
+        txt = data["choices"][0]["message"]["content"]
+        results[name] = txt
+        if len(txt) < 1500:
+            print(f"[{name}] ⚠️ REPONSE COURTE ({len(txt)} car.) — probablement "
+                  "tronquee, la relire avant de s'y fier")
+        else:
+            print(f"[{name}] OK ({len(txt)} car.)")
     except Exception as e:
-        results["gpt"] = f"[ERREUR gpt] {e}"
-        print(f"[gpt] ERREUR: {e}")
+        results[name] = f"[ERREUR {name}] {e}"
+        print(f"[{name}] ERREUR: {e}")
 
 
 def main():
@@ -245,9 +254,18 @@ def main():
     frames = build_frames(args.video, args.start, args.end, args.fps, args.crop, tmp)
     print(f"segment {args.end - args.start:.2f} s · {len(frames)} frames a {args.fps} fps")
 
+    # 3 voix en parallele. Gemini voit la VIDEO (seul a juger le mouvement reel),
+    # GPT et Grok voient des FRAMES DENSES. Grok ajoute le 2026-08-27 sur demande
+    # d'Aziz apres un echec de GPT (reponse tronquee sans erreur) : une 3e voix
+    # protege contre la defaillance silencieuse d'une des deux autres.
     results = {}
-    threads = [threading.Thread(target=call_gemini, args=(PROMPT, seg, results)),
-               threading.Thread(target=call_gpt, args=(PROMPT, frames, results))]
+    threads = [
+        threading.Thread(target=call_gemini, args=(PROMPT, seg, results)),
+        threading.Thread(target=call_openrouter,
+                         args=("gpt", GPT_TEXT_VISION, PROMPT, frames, results)),
+        threading.Thread(target=call_openrouter,
+                         args=("grok", GROK_TEXT_VISION, PROMPT, frames, results)),
+    ]
     t0 = time.time()
     for t in threads:
         t.start()
@@ -255,7 +273,7 @@ def main():
         t.join()
     print(f"termine en {time.time() - t0:.0f} s")
 
-    for name in ("gemini", "gpt"):
+    for name in ("gemini", "gpt", "grok"):
         p = os.path.join(OUT_DIR, f"{args.label}-{name}.md")
         with open(p, "w") as f:
             f.write(f"# Releve de mouvements — {args.label} ({name})\n")
