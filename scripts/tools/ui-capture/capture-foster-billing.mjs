@@ -30,7 +30,10 @@ const layout = {};
 for (const st of ['overview', 'billing']) {
   await page.goto(`http://localhost:8899/billing.html?state=${st}`, { waitUntil: 'networkidle0' });
   await new Promise((r) => setTimeout(r, 400));
+
+  // 1. la plaque PLEINE
   await page.screenshot({ path: `${OUT}/dash-${st}.png` });
+
   layout[st] = await page.evaluate(() => {
     const grab = (sel) => [...document.querySelectorAll(sel)].map((el) => {
       const r = el.getBoundingClientRect();
@@ -38,11 +41,51 @@ for (const st of ['overview', 'billing']) {
         x: Math.round(r.x), y: Math.round(r.y),
         w: Math.round(r.width), h: Math.round(r.height),
         cx: Math.round(r.x + r.width / 2), cy: Math.round(r.y + r.height / 2),
-        txt: el.querySelector('.big')?.textContent?.trim() ?? null,
+        txt: el.querySelector('.big')?.textContent?.trim()
+          ?? el.querySelector('.nm')?.textContent?.trim() ?? null,
       };
     });
-    return { cards: grab('[data-capture="card"]'), amounts: grab('[data-capture="amount"]') };
+    return {
+      cards: grab('[data-capture="card"]'),
+      amounts: grab('[data-capture="amount"]'),
+      rows: grab('[data-capture="row"]'),
+    };
   });
+
+  /**
+   * 2. LES DECOUPES — une PNG par carte et par ligne.
+   * ⭐ C'est ce qui permet l'APPARITION GRADUELLE sans redessiner : on pose les
+   * morceaux de la PHOTO un par un sur une plaque vide. Fiche `row-embed` :
+   * « une ligne qui s'anime est un decoupage de la plaque, JAMAIS un redessin —
+   * le rendu de police d'un redessin differe visiblement de celui de la plaque ».
+   * ⛔ Manque de la 1re version : je n'avais capture que la plaque entiere, donc
+   * tout etait deja la des la 1re frame. Defaut vu par Aziz.
+   */
+  const sel = st === 'billing' ? '[data-capture="amount"]' : '[data-capture="card"]';
+  const els = await page.$$(sel);
+  for (let i = 0; i < els.length; i++) {
+    await els[i].screenshot({ path: `${OUT}/dash-${st}-card${i + 1}.png` });
+  }
+  if (st === 'overview') {
+    const rows = await page.$$('[data-capture="row"]');
+    for (let i = 0; i < rows.length; i++) {
+      await rows[i].screenshot({ path: `${OUT}/dash-overview-row${i + 1}.png` });
+    }
+  }
+
+  /**
+   * 3. LA PLAQUE VIDE — la meme page sans les cartes ni les lignes. C'est le
+   * fond sur lequel les decoupes viennent se poser. `visibility:hidden` et non
+   * `display:none` : la mise en page ne doit PAS bouger, sinon les bbox
+   * mesurees a l'etape 1 ne correspondent plus a rien.
+   */
+  await page.evaluate((s) => {
+    document.querySelectorAll(s + ', [data-capture="row"]').forEach((el) => {
+      el.style.visibility = 'hidden';
+    });
+  }, sel);
+  await new Promise((r) => setTimeout(r, 150));
+  await page.screenshot({ path: `${OUT}/dash-${st}-empty.png` });
 }
 
 fs.writeFileSync(`${OUT}/dash-layout.json`, JSON.stringify(layout, null, 2));
