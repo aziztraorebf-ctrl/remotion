@@ -331,6 +331,44 @@ prends pour un probleme de POSITION ou de DOSAGE est souvent un probleme de FORM
 ou d'AMPLITUDE. Calculer une statistique globale (centre de gravite, profil) AVANT
 de corriger ce qu'on croit voir.
 
+
+### ⭐⭐⭐ LES VIGNETTES ORBITENT — et comment j'ai enfin cale le mouvement
+
+**Retour d'Aziz sur la v3** : « les images tournent dans une sorte de cercle autour
+du mot. On a presque la meme chose mais sans l'animation. **Ca fait une version
+cheap, ce n'est pas du tout pareil.** » Mes vignettes se posaient puis restaient
+FIGEES — defaut de fond, pas de detail.
+
+**Mesure du mouvement reel** (centre de gravite + rayon moyen des pixels clairs du
+nuage, mot et watermark masques — methode robuste, pas besoin d'identifier chaque
+vignette) :
+| t | 12,60 | 12,92 | 13,08 | 13,40 | 13,48 |
+|---|---|---|---|---|---|
+| rayon moyen REF | 443 | 401 | 394 | 385 | 381 |
+
+=> **CONTRACTION EN SPIRALE** : elles convergent vers le mot en tournant, et ca
+s'amortit. Le mot reste FIXE. Positions reecrites en POLAIRE (angle + rayon), ce qui
+est ce qui permet d'orbiter (conversion verifiee : < 10 px des positions relevees).
+
+### ⛔⛔ 4 ITERATIONS DANS LES DEUX SENS AVANT DE RESOUDRE — la vraie lecon
+v4 : contraction 5x trop faible (-2,7 % contre -13,1 %).
+v5 : mieux, mais la contraction demarrait a la pose de CHAQUE vignette -> les
+     dernieres n'avaient pas le temps de converger. Passee au temps du PLAN.
+v6 : partait trop serre (410 contre 443) — la contraction avait deja tout consomme.
+v7 : **sur-corrige** (496 contre 443), ecart moyen 64 px.
+v8 : ✅ **RESOLU** — 2 cibles mesurees (443 px a 12,60 s, 385 px a 13,40 s), 2
+     inconnues (R0, CONTRACT), 2 equations => CONTRACT = 0,247, R0 moyen = 474.
+     Verifie par calcul AVANT de rendre : 443,1 et 385,1. Ecart mesure au rendu :
+     **11,4 px de moyenne** (contre 64,3 en v7).
+
+⭐⭐⭐ **REGLE (3e occurrence dans cette session, apres le degrade vert et le nuage
+"decale")** : quand deux corrections successives ratent dans des SENS OPPOSES, le
+probleme n'est pas la valeur — **poser le systeme et le RESOUDRE** (N cibles
+mesurees, N inconnues) au lieu d'ajuster un parametre de plus. Le protocole projet
+dit de deleguer/changer de methode des le 2e echec : je ne l'ai applique qu'au 4e.
+
+**Typo** : 70 -> 88 px (retour d'Aziz : « le mot au milieu devrait etre plus grand »).
+
 ## CE QUI EST DÉJÀ PRÊT (acquis de la session 2026-08-25/26)
 - `devices/PhoneModel` · `LaptopModel` — mockups procéduraux, écran = zone d'accueil
 - `devices/DeviceInScene` — objet posé dans un décor, ombre 3 couches, allumage 0,30 s

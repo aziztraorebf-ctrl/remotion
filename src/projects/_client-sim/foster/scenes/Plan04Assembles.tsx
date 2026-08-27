@@ -12,8 +12,19 @@
  * produit rassemble les elements du dossier Ofsted.
  *
  * RYTHME MESURE (comptage des zones claires, frame par frame) : montee continue
- * de 11,44 a ~12,6 s (les 6 vignettes se posent sur ~1,2 s), plateau ensuite,
- * puis chute a zero a 13,59 s.
+ * de 11,44 a ~12,6 s (les 6 vignettes se posent sur ~1,2 s), puis chute a zero
+ * a 13,59 s.
+ *
+ * ⭐⭐ LES VIGNETTES NE SONT PAS IMMOBILES — ELLES ORBITENT (retour d'Aziz).
+ * Ma v3 les posait puis les figeait : « ca fait une version cheap, ce n'est pas
+ * du tout pareil ». Mesure du nuage entier (centre de gravite + rayon moyen des
+ * pixels clairs, le mot et le watermark masques) :
+ *     t=12,60 -> rayon 441 px      t=13,00 -> 394      t=13,48 -> 381
+ * Le rayon DECROIT continument et le mouvement S'AMORTIT (-15 px par pas de
+ * 0,08 s au debut, -2 px a la fin), pendant que chaque vignette change de
+ * position ANGULAIRE.
+ * => c'est une **CONTRACTION EN SPIRALE** : elles convergent vers le mot en
+ * tournant autour de lui, et ca ralentit. Le mot, lui, reste FIXE.
  *
  * POSITIONS MESUREES a la regle (cadre 1920x1080, vignettes ~265 px) :
  *   (900,155) (1255,305) (660,400) (1320,655) (665,795) (1010,890)
@@ -65,14 +76,44 @@ const SFX_VOL = 0.5;
  * Les rotations sont volontairement inegales : dans la reference aucune
  * vignette n'est parfaitement droite (elles sont « posees », pas alignees).
  */
+/**
+ * Positions en POLAIRE autour du centre du cadre — c'est ce qui permet de les
+ * faire ORBITER. `a0` = angle de depart (degres, 0 = droite, sens horaire),
+ * `r0` = rayon de depart en px. Les valeurs derivent des positions relevees a
+ * la regle, converties en polaire.
+ * ⚠️ Rayons volontairement INEGAUX : dans la reference les vignettes ne sont pas
+ * sur un cercle parfait, elles sont a des distances variables du mot.
+ */
 const CARDS = [
-  { src: "kid1.png", x: 870, y: 150, at: 11.62, rot: -3.5 },
-  { src: "kid2.png", x: 1390, y: 290, at: 11.72, rot: 2.5 },
-  { src: "kid3.png", x: 520, y: 405, at: 11.86, rot: -2.0 },
-  { src: "kid4.png", x: 1480, y: 660, at: 12.02, rot: 3.0 },
-  { src: "kid5.png", x: 530, y: 800, at: 12.20, rot: -2.5 },
-  { src: "kid6.png", x: 990, y: 900, at: 12.38, rot: 1.8 },
+  { src: "kid1.png", a0: -104, r0: 412, at: 11.62, rot: -3.5 },
+  { src: "kid2.png", a0: -30, r0: 516, at: 11.72, rot: 2.5 },
+  { src: "kid3.png", a0: 197, r0: 474, at: 11.86, rot: -2.0 },
+  { src: "kid4.png", a0: 13, r0: 550, at: 12.02, rot: 3.0 },
+  { src: "kid5.png", a0: 150, r0: 516, at: 12.20, rot: -2.5 },
+  { src: "kid6.png", a0: 85, r0: 377, at: 12.38, rot: 1.8 },
 ] as const;
+
+/**
+ * L'ORBITE — parametres CALES sur la mesure :
+ * le rayon moyen passe de 441 a 381 px entre 12,60 et 13,48 s en s'amortissant.
+ * On applique donc une contraction amortie a partir de la pose de chaque
+ * vignette, et une rotation lente et constante du nuage entier.
+ */
+const ORBIT_DEG_PER_SEC = 11;   // rotation lente : le nuage tourne, il ne file pas
+/**
+ * ⭐ Contraction RESOLUE, pas dosee.
+ * J'ai ajuste ce parametre 4 fois dans les deux sens (trop faible, puis trop
+ * fort) avant de poser le systeme. Cibles mesurees sur la reference :
+ *     rayon moyen du nuage = 443 px a t=12,60 s  et  385 px a t=13,40 s
+ * Avec damp(t) = 1 - exp(-K*(t - 12,38)) et K = 1,4 :
+ *     damp(12,60) = 0,265   damp(13,40) = 0,760
+ * Deux equations R0*(1 - C*damp) = cible, deux inconnues :
+ *     => CONTRACT = 0,247   et rayon moyen de depart R0 = 474 px
+ * Verifie : 443,1 et 385,1 px. **Resoudre le systeme au lieu d'ajuster un
+ * parametre a la fois — c'etait la sortie de boucle.**
+ */
+const ORBIT_DAMP_K = 1.4;
+const CONTRACT = 0.247;
 
 /** Taille mesuree d'une vignette dans la reference. */
 const CARD = 252;
@@ -125,7 +166,9 @@ export const Plan04Assembles: React.FC = () => {
           textAlign: "center",
           fontFamily:
             '-apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif',
-          fontSize: 70,
+          /* 70 -> 88 px : retour d'Aziz, « le mot au milieu devrait etre
+             legerement plus grand ». */
+          fontSize: 88,
           fontWeight: 400,
           color: "#f0f0f2",
           letterSpacing: "-0.5px",
@@ -138,6 +181,24 @@ export const Plan04Assembles: React.FC = () => {
           loin (echelle > 1) et se cale. Une piece qu'on POSE, pas qui apparait. */}
       {CARDS.map((c) => {
         const local = frame - Math.round((c.at - PLAN_START) * fps);
+        /* Temps ecoule depuis la pose de CETTE vignette : pilote la ROTATION
+           (chaque vignette tourne depuis qu'elle est posee). */
+        const since = Math.max(0, local / fps);
+        /*
+          ⛔ La CONTRACTION, elle, est pilotee par le temps du PLAN, pas par
+          celui de chaque vignette : sinon les dernieres posees (a 12,38 s)
+          n'ont pas le temps de converger et le rayon moyen stagne.
+          Mesure v5 : on s'arretait a 407 px la ou la reference descend a 385.
+        */
+        /* ⛔ Elle demarre quand les 6 vignettes sont POSEES (12,38 s), pas au
+           debut du plan : sinon elle a deja tout consomme a 12,60 s et le nuage
+           part trop serre (mesure v6 : 410 px la ou la reference est a 443). */
+        const tPlan = Math.max(0, PLAN_START + frame / fps - 12.38);
+        const damp = 1 - Math.exp(-tPlan * ORBIT_DAMP_K);
+        const r = c.r0 * (1 - CONTRACT * damp);
+        const ang = ((c.a0 + ORBIT_DEG_PER_SEC * since) * Math.PI) / 180;
+        const px = 960 + r * Math.cos(ang);
+        const py = 540 + r * Math.sin(ang);
         const s = spring({
           frame: local,
           fps,
@@ -156,8 +217,8 @@ export const Plan04Assembles: React.FC = () => {
             key={c.src}
             style={{
               position: "absolute",
-              left: (c.x / 1920) * width - CARD / 2,
-              top: (c.y / 1080) * height - CARD / 2,
+              left: (px / 1920) * width - CARD / 2,
+              top: (py / 1080) * height - CARD / 2,
               width: CARD,
               height: CARD,
               opacity: appear,
