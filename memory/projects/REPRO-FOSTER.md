@@ -2,20 +2,49 @@
 
 ## ⚡ REPRISE : COMMENCER ICI (session du 2026-08-27)
 
-**Etat : 6 plans sur 11 livres — 18,45 s / 42,75 s = 43 %.**
-Livrables : `out/episodes/foster-repro/plan0{1..5}-FINAL.mp4` + plan 6 (v7, VALIDE
-par Aziz le 27/08, a promouvoir en FINAL).
-Code : `src/projects/_client-sim/foster/scenes/Plan0{1..6}*.tsx`
+**Etat : 7 plans sur 11 livres — 23,40 s / 42,75 s = 55 %.**
+Livrables : `out/episodes/foster-repro/plan0{1..5}-FINAL.mp4` · plan 6 (`plan06_v7`)
+et plan 7 (`plan07_v7`) VALIDES par Aziz le 27/08, a promouvoir en FINAL.
+Code : `src/projects/_client-sim/foster/scenes/Plan0{1..7}*.tsx`
 Branche : `feat/repro-foster`.
 
 ⚠️ **La branche a change sous nos pieds en pleine session** (un chantier parallele
 a bascule le working tree sur `chore/memoire-eviction-contexte`). Verifier
 `git branch --show-current` AVANT de commiter quoi que ce soit ici.
 
-### LA PROCHAINE ACTION : PLAN 7 (18,45 -> 25,06 s) — LA DESCENTE VERS LA MAISON
-Voir la section « PLAN 7 » en bas de ce fichier : bornes re-mesurees (le mouvement
-ne dure que **2,5 s**, pas 6,6), c'est une **BASCULE D'AXE** et non un push-in, et
-le test des **2 registres** (realiste vs vectoriel) est en cours.
+### LA PROCHAINE ACTION : PLAN 8 (23,40 -> 27,07 s) — LE DASHBOARD QUI MONTE
+⭐ **Notre terrain le plus fort** : c'est le pilier UI PRODUIT.
+⛔ **LIRE `memory/fiches/FICHE-UI-PRODUIT.md` AVANT DE CODER** — sa regle n°1 est
+« NE PAS REDESSINER L'UI EN REACT » (on capture une vraie page, on ne la remime pas).
+⚠️ Borne de depart CORRIGEE : 23,40 s (le tableau annoncait 25,06 — mesure faite
+au plan 7). Et la transition entre 7 et 8 est un **FONDU CROISE**, pas une coupe :
+a 23,28 s le dashboard est deja superpose a la maison et les cartouches « Jenny »
+restent lisibles par-dessus, avant d'etre **recyclees dans l'UI**. Ce fondu
+appartient a l'ASSEMBLAGE des deux plans, aucun des deux composants ne le porte.
+
+### ⭐ LE PROTOCOLE, TEL QU'IL DOIT ETRE APPLIQUE (corrige par Aziz le 27/08)
+1. `motion-breakdown.py` AVANT de coder — **3 voix desormais** (Gemini video +
+   GPT frames + **GROK frames**, ajoute le 27/08 : le plus riche des trois).
+2. **Trier le releve en 3 categories** : ce qu'eux seuls voient (PRENDRE) ·
+   proportions (CIBLE puis verifier) · dynamique (MESURER soi-meme).
+3. Coder, rendre, mesurer.
+4. ⭐⭐ **RAPPELER l'appel externe EN COURS de correction**, pas seulement au
+   demarrage du plan. Vecu au plan 7 : 5 rendus perdus a deviner seul une
+   chronologie qu'un appel de 60 s donnait d'emblee.
+5. ⭐⭐ **Reprendre le releve LIGNE PAR LIGNE avant de declarer fini** et cocher
+   « traite / ecarte et pourquoi ». Au plan 7 ca a rapporte un point que ni la
+   mesure ni l'oeil n'auraient trouve (cf `REVUE-RELEVE-PLAN07.md`).
+
+### ✅ PLAN 7 — FAIT ET VALIDE (27/08)
+Clip MiniMax H3 (previs de bascule d'axe) + cartouches iOS animes.
+`Plan07Maison.tsx`. 148 frames.
+⚠️ **DETTE ASSUMEE, signalee par Aziz** : « la camera dans l'original s'approche
+beaucoup plus vite et ralentit a la fin ; nous c'est plus lent, mais ca fonctionne
+tres bien aussi ». Mesure a l'appui : Grok releve **80 % du travelling dans le
+premier quart** cote reference, notre clip fait **42,6 %**. Verdict d'Aziz :
+« si on avait voulu refaire on aurait pu changer cela, mais je ne pense pas que
+cela vaille la peine » -> **NE PAS y revenir** sauf demande explicite.
+Pour un futur previs de descente : concentrer davantage l'amortissement au debut.
 
 ### ✅ PLAN 6 — FAIT ET VALIDE (27/08)
 Globe Mapbox + plongee satellite. `Plan06GoogleEarth.tsx`. Verdict d'Aziz :
@@ -594,7 +623,7 @@ Trancher le niveau de réussite visé, puis attaquer dans l'ordre du découpage 
 les plans ✅ d'abord (ils valident le rythme), les 🔶 ensuite (ils demandent des assets).
 
 
-## PLAN 7 (18,45 -> 25,06 s) — LA DESCENTE VERS LA MAISON
+## PLAN 7 (18,45 -> 23,40 s) — LA DESCENTE VERS LA MAISON  ✅ FAIT
 
 ### ⛔ CE QUE LE TABLEAU ANNONCAIT vs LA MESURE
 Le tableau disait « descente vers une maison + flou radial + vraie video + cartouches ».

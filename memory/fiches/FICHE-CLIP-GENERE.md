@@ -204,8 +204,9 @@ branché directement sur `ref_videos.ref_video_0`, node 141 supprimé). Validé 
 ⛔ **Vécu (couloir b5)** : deux corps entiers dessinés au previs → H3 a sorti **deux rectangles gris à
 tête rectangulaire, plein cadre à 4 s**. Ce n'est pas une limite du modèle, c'est mon previs.
 → Générateur **caméra pure** (aucun corps) : `scripts/tools/mkprevis-camera-seule.py --out X --gif`.
-**Les 4 cas réels** : `mkprevis.py` (scribe) · `-chantier.py` (Adrar, extérieur nocturne) ·
-`-couloir.py` (2 persos, l'échec) · `-camera-seule.py` (le fix).
+**Les 5 cas réels** : `mkprevis.py` (scribe) · `-chantier.py` (Adrar, extérieur nocturne) ·
+`-couloir.py` (2 persos, l'échec) · `-camera-seule.py` (le fix) ·
+**`-drone-descente.py`** (bascule d'axe vertical→horizontal, § dédié en bas de fiche).
 
 **⭐ 2 corrections de previs à faire d'office sur un DÉCOR EXTÉRIEUR** (chacune aurait coûté un essai) :
 1. **Un décor en bandes horizontales pures rend le push-in invisible autour du sujet** (mesuré 7,29 sur
@@ -232,3 +233,40 @@ nets, zero sur-lissage plastique. Cas testé : maison + arbres, sans visage ni t
 -> Le passage a 30 fps tombe bien pour nous (nos compositions Remotion sont a 30),
    mais c'est une conversion NON DEMANDEE : sur un projet a 24 ou 25 fps, elle
    desynchroniserait le montage sans aucun message d'erreur.
+
+## ⭐⭐ 5e GENERATEUR — LA BASCULE D'AXE (`mkprevis-drone-descente.py`, 2026-08-27)
+
+**Le mouvement** : la camera part a la VERTICALE au-dessus du sujet et finit
+HORIZONTALE devant lui. Ni un push, ni un crane, ni une orbite — nos 6 modes
+existants ne le faisaient pas. Cas reel : reproduction de « Foster With
+Confidence », plan 7 (drone qui descend vers une maison en se redressant).
+
+**Comment il est dessine** (sans vraie 3D) : on interpole entre DEUX LECTURES du
+meme objet — la maison passe d'un quadrilatere plat (le toit vu de haut) a une
+facade haute ; les arbres passent de DISQUES a des silhouettes a tronc. Grossier,
+et c'est le but : un previs doit etre LAID, il ne transporte qu'une trajectoire.
+
+**Resultats mesures sur 2 registres (meme previs, meme prompt, meme seed)** :
+| registre | amplitude | gradient min | repartition |
+|---|---|---|---|
+| photorealiste | 46,7 | 11,02 | 42,6 / 39,4 / 18,0 % |
+| vectoriel plat | **70,6** | 4,16 | 53,4 / 38,3 / 8,3 % |
+Rappel : sans previs, l'amplitude est de **0,68**. La regle « le previs porte la
+CAMERA » se verifie donc une 3e fois, et sur un geste jamais tente.
+
+⚠️ **Le vectoriel va PLUS LOIN dans la bascule** (frontale au sol) que le
+photorealiste (oblique haute), a previs identique. Le registre de l'image de
+depart influe donc sur l'amplitude obtenue — ne pas conclure d'un seul essai
+qu'un previs « ne va pas jusqu'au bout ».
+
+⛔ **Un seuil de controle peut etre INAPPLICABLE a un registre** : le gradient du
+vectoriel tombe a 4,16, sous notre seuil d'alerte de 8 cense detecter la copie
+des blocs du previs. **Aucun decrochage a l'oeil** — le seuil etait calibre sur de
+l'illustration detaillee, un aplat vectoriel a naturellement moins de gradient.
+Requalifier un seuil herite quand le registre change.
+
+⚠️ **DETTE CONNUE sur ce generateur** : la reference concentre **80 % du
+travelling dans le premier quart** ; notre clip fait 42,6 %. La descente est donc
+plus lineaire, moins « lachee puis freinee ». Accepte par Aziz sur le plan 7
+(« ca fonctionne tres bien aussi »), mais pour un futur previs de descente :
+concentrer davantage l'amortissement au debut de la courbe.
