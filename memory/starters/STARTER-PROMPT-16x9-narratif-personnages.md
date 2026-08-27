@@ -1,5 +1,11 @@
 # STARTER — Format 16:9 NARRATIF + PERSONNAGES (prochaine session)
 
+> ✅ **VÉRIFIÉ LE 2026-08-27 — CONSERVÉ DÉLIBÉRÉMENT** (audit des starters périmés).
+> Le hook `check-capitalisation` le signale comme périmé : c'est un faux positif.
+> Son volet DÉCOR reste valide et il est cité comme source dans
+> `memory/tools/seedance-storyboard-technique.md`. Ne pas le supprimer sans
+> vérifier cette référence.
+
 > ⛔⛔ **MISE À JOUR 2026-07-28 — LE VOLET « PERSONNAGES » DE CE STARTER EST DÉPASSÉ.**
 > Ce document date de juillet et suppose le **GeminiRig** (personnage riche articulé) — registre
 > ÉCARTÉ en production (« pantin bien animé, pas maîtrisé »).
