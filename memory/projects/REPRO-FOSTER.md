@@ -2,9 +2,11 @@
 
 ## ⚡ REPRISE : COMMENCER ICI (session du 2026-08-27)
 
-**Etat : 9 plans sur 11 CODES — 28,07 s / 42,75 s = 66 %.**
-⚠️ Le plan 9 (`plan09_v3`) est code et mesure, **en attente de validation d'Aziz**.
-Livrables valides : `plan0{1..8}-FINAL.mp4` (les plans 6, 7 et 8 ont ete promus).
+**Etat : 10 plans sur 11 CODES — 40,46 s / 42,75 s = 95 %.**
+Plan 9 VALIDE par Aziz (« quasiment la meme chose, quasi exact ») -> `plan09-FINAL.mp4`.
+⚠️ Le plan 10 (`plan10_v9` -> `plan10-FINAL.mp4`) est code et mesure, **en attente
+de validation**. Ecart moyen de largeur : 1,09 % (etait 3,43 % avant diagnostic).
+Livrables : `plan0{1..9}-FINAL.mp4` + `plan10-FINAL.mp4`.
 Code : `src/projects/_client-sim/foster/scenes/Plan0{1..8}*.tsx`
 Branche : `feat/repro-foster`.
 
@@ -48,7 +50,92 @@ gardant l'audio normal, indetectable sur des frames isolees.
    demarrage (5 rendus perdus au plan 7 faute de l'avoir fait).
 6. ⭐⭐ **Reprendre le releve LIGNE PAR LIGNE avant de declarer fini.**
 
-### ✅ PLAN 9 — CODE ET MESURE (27/08), en attente de validation
+### ✅ PLAN 10 — CODE ET MESURE (27/08), en attente de validation
+`Plan10Cta.tsx` · 372 frames (le plus long) · `plan10-FINAL.mp4`.
+
+**Contenu** : 5 phrases enchainees en fondu vers le CTA, avec la pile doree
+Clarity / Certainty / Confidence (chaque mot nait sur la ligne de base et pousse
+les precedents d'un cran de 86 px ; le plus ancien grise).
+
+### ⛔⛔ LES 3 VOIX SE SONT TROMPEES SUR 2 POINTS STRUCTURANTS
+Coder d'apres le releve sans mesurer aurait produit un faux plan :
+1. **« Coupes franches entre les phrases »** (Grok en annoncait 5, Gemini idem)
+   -> **FAUX** : la diff inter-frames PLAFONNE A 3,08 sur 372 frames. Ce sont des
+   fondus. Une vraie coupe donne > 90 (mesure aux plans 8 et 9 : 94,3 et 150,5).
+2. **« Tout est centre a 50 % »** (Gemini ET GPT) -> **FAUX** : chaque phrase a
+   une ANCRE GAUCHE FIXE (282 · 719 · 602 · 579 · 762). Pendant que la phrase 1
+   s'allonge de 99 a 1355 px, x0 ne bouge pas d'un pixel.
+   ⚠️ Piege : mesurer les seules frames FINALES montre 5 phrases centrees a 1 px
+   pres, ce qui suggere `textAlign: center`. C'est la mesure PENDANT la
+   construction qui tranche. J'ai failli conclure a l'envers.
+⭐ **Grok reste la voix la plus riche** (10 331 car. vs 4 085 a Gemini) : seul a
+voir `FosterWith` colle sans espace, le « x » plus petit, le logo sur le noir final.
+
+### ⭐⭐⭐ LA CAUSE RACINE : UNE POLICE QUI SATURE (diagnostic delegue)
+Le texte GRAS sortait 2 a 5 % trop etroit. **3 corrections sans effet** (police
+62->68, duree du fondu, marges -> vrais espaces) : 3,5 % -> 3,43 %. Delegue a un
+agent dedie (protocole 2+ echecs), **puis verifie independamment**.
+
+**Mesure (largeur de « Confidence » a 68 px, pile systeme)** :
+  400 -> 340 px · 500 -> 352 · **600 -> 363 · 700 -> 363 · 800 -> 363 · 900 -> 363**
+La pile `-apple-system / SF Pro Display / Helvetica Neue / Arial` se resout aux
+faces **DISCRETES** de Helvetica Neue : au-dela de 600, Chromium **SATURE**. Cible
+375 px => **aucune valeur de `fontWeight` ne pouvait l'atteindre**. Ce n'etait pas
+un dosage a trouver, c'etait un PLAFOND DE LA FONTE — d'ou 3 corrections inertes.
+
+⭐ **Ce qui rendait le symptome illisible** : l'ecart ne portait QUE sur les mots
+gras (-2,77 %), pas sur les clairs (-0,06 %). Les phrases « justes » l'etaient par
+COMPENSATION (P1 melange 4 clairs exacts + 4 gras etroits ; P5 n'a aucun gras).
+Un seul parametre faux, applique a une moitie du texte : ca ressemblait a du desordre.
+
+✅ **FIX = changer de fonte, pas compenser.** Un letter-spacing sur les gras a ete
+teste par l'agent (-0,04 % en moyenne) mais laisse une dispersion : il s'ajoute
+PAR CARACTERE alors que le manque est PROPORTIONNEL a la largeur.
+  Inter @68px : 400 -> 360 · 500 -> 366 · 600 -> 371 · **700 -> 376** (cible 375)
+⚠️ **Mais Inter en 400 est 5 % TROP LARGE sur le clair** (« Foster » 191 vs 181),
+la ou la pile systeme est exacte. Basculer TOUTE la scene sur Inter aurait DEPLACE
+le probleme. => **pile systeme pour le clair + Inter 700 pour le gras seulement**
+(« Built » 142/140, « Confidence » 376/375).
+**Resultat : ecart moyen 3,43 % -> 1,09 %.**
+
+### LES 2 CORRECTIFS INDEPENDANTS (isoles par l'agent, verifies)
+- **P3** : la pile demarrait 16 px trop a gauche. Au plateau, la reference laisse
+  **42 px** entre « With » et la pile contre 26 chez nous, alors que l'espace
+  inter-mots ordinaire est identique (18 px des deux cotes) -> espace PROPRE a la
+  pile, corrige par un `marginLeft: 16` local. P3 : -2,4 % -> +0,3 %.
+- **P4** : le « x » faisait 22 px contre 30 en reference -> `FONT * 0.62` -> `0.72`.
+
+### ⭐⭐ LE FOND : JUSTE SUR UN AXE NE SUFFIT PAS (piege du plan 5, re-vecu)
+Profil par BANDES cale a 0,6 point pres... et le fond restait faux. Le profil par
+**COLONNES** l'a montre :
+  REF  59 63 57 51 49 54 60 60 53   <- varie de 49 a 63
+  nous 63 63 63 63 63 63 63 63 63   <- rigoureusement uniforme
+La reference n'est pas une nappe lineaire, ce sont des **HALOS** diffus. Modelises
+par 3 taches radiales. ⚠️ Une couche additive **se soustrait de celle du dessous** :
+les halos apportaient +13 points, il a fallu RABAISSER la nappe d'autant.
+Resultat : ecart 2,6 en colonnes, 3,4 en bandes.
+⚠️ **Contre-intuitif** : a l'oeil notre fond semblait TROP present ; la mesure disait
+l'inverse (trop pale). Encore une raison de mesurer un profil plutot que de
+corriger ce qu'on croit voir.
+
+### AUTRE CORRECTION
+**P2 « Built with them » est gras EN ENTIER** dans la reference (vu sur la planche
+A/B ; aucune des 3 voix ne l'avait releve — elles ne signalaient une hierarchie de
+graisse que sur P1). -6,5 % -> -1,7 %.
+
+### ⛔ GOTCHA OUTIL RESOLU — GPT rendait des reponses tronquees
+`motion-breakdown.py` avait `max_tokens: 4000` alors que le fichier projet
+documentait deja le fix a **12000**. Le symptome avait ete constate le 27/08 et un
+AVERTISSEMENT ajoute dans la docstring de la fonction — **mais la valeur n'avait
+jamais ete corrigee**. On avait instrumente la detection sans appliquer le remede.
+✅ Fix : `max_tokens: 12000` + `reasoning: {max_tokens: 2000}` (meme mecanisme que
+Kimi k3, cf. `da-brief.py`) + affichage de `finish_reason` et des tokens sortis.
+Resultat : 18 278 car., `finish_reason=stop`.
+⭐ **Lecon** : documenter un symptome n'est pas le corriger. Un avertissement dans
+un commentaire donne l'ILLUSION que le probleme est traite.
+
+### ✅ PLAN 9 — VALIDE PAR AZIZ (27/08)
+Verdict : « quasiment la meme chose, quasi exact ». Promu en `plan09-FINAL.mp4`.
 `Plan09PullBack.tsx` · 30 frames · `plan09_v3.mp4`.
 📎 **PAGE ARTIFACT DU SUJET — LA GALERIE DES COMPARATIFS** :
 https://claude.ai/code/artifact/d5fb3169-7cb4-47e8-a94a-dfca377d204f

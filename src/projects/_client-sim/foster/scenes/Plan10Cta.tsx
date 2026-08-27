@@ -73,6 +73,43 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import { loadFont } from "@remotion/google-fonts/Inter";
+
+/**
+ * ⛔⛔ POURQUOI DEUX POLICES DANS LA MEME SCENE — la cause racine du plan 10.
+ *
+ * Le texte gras sortait 2 a 5 % TROP ETROIT, et trois corrections successives
+ * (taille de police, duree du fondu, remplacement des marges par de vrais
+ * espaces) n'ont pas bouge le chiffre d'un dixieme. Diagnostic delegue a un
+ * agent dedie (protocole projet : 2 echecs sur le meme blocage = deleguer),
+ * puis VERIFIE independamment ici.
+ *
+ * ✅ MESURE (largeur rendue de « Confidence » a 68 px, pile systeme) :
+ *      400 -> 340 px · 500 -> 352 · 600 -> 363 · 700 -> 363 · 800 -> 363 · 900 -> 363
+ * La pile `-apple-system / SF Pro Display / Helvetica Neue / Arial` se resout
+ * aux faces DISCRETES de Helvetica Neue (Regular/Medium/Bold) : au-dela de 600,
+ * Chromium n'a plus rien et SATURE. La cible etant 375 px, AUCUNE valeur de
+ * `fontWeight` ne pouvait l'atteindre. Ce n'etait donc pas un dosage a trouver,
+ * c'etait un plafond de la fonte — d'ou trois corrections sans effet.
+ *
+ * ⭐ Ce qui rendait le symptome illisible : l'ecart ne portait QUE sur les mots
+ * gras (-2,77 %) et pas sur les clairs (-0,06 %). Les phrases « justes » l'etaient
+ * par COMPENSATION (P1 melange 4 mots clairs exacts et 4 gras etroits, la moyenne
+ * tombe juste ; P5 n'a aucun gras). Un seul parametre faux, mais applique a une
+ * moitie du texte seulement : ca ressemblait a du desordre.
+ *
+ * ✅ LA SORTIE N'EST PAS DE COMPENSER (un letter-spacing sur les gras a ete
+ * teste : il ramene l'ecart a -0,04 % en moyenne mais laisse une dispersion,
+ * parce qu'il s'ajoute PAR CARACTERE alors que le manque est PROPORTIONNEL a la
+ * largeur). On embarque une police dont l'axe de graisse ne sature pas :
+ *      Inter @68px : 400 -> 360 · 500 -> 366 · 600 -> 371 · 700 -> 376 (cible 375)
+ * ⚠️ Mais Inter en 400 est 5 % TROP LARGE sur le texte clair (« Foster » 191 vs
+ * 181), alors que la pile systeme y est exacte. Basculer TOUTE la scene sur Inter
+ * deplacerait donc le probleme au lieu de le resoudre.
+ * => On garde la pile SYSTEME pour le clair, et Inter 700 UNIQUEMENT pour le gras,
+ *    ou elle tombe a 1-2 px de la reference (« Built » 142/140, « Confidence » 376/375).
+ */
+const { fontFamily: INTER } = loadFont();
 
 /** Temps ABSOLU du debut du plan dans la reference. */
 const PLAN_START = 28.07;
@@ -187,6 +224,9 @@ const WordSpan: React.FC<{ word: Word; tAbs: number }> = ({ word, tAbs }) => {
       style={{
         opacity: appear,
         color: `rgb(${g},${g},${g})`,
+        /* Le gras est rendu par Inter 700 (axe complet), le clair par la pile
+           systeme qui y est deja exacte — cf. l'en-tete du fichier. */
+        fontFamily: word.bold ? INTER : undefined,
         fontWeight: word.bold ? 700 : 400,
         /* ⛔⛔ PAS de `marginRight` ici — c'etait une MARGE ARTIFICIELLE qui
            s'AJOUTAIT a l'espace naturel de la police. Avec 0,28em, P1 tombait
@@ -361,8 +401,15 @@ export const Plan10Cta: React.FC = () => {
           </React.Fragment>
         ))}{" "}
         {/* Conteneur de la pile : les mots y sont positionnes en absolu par
-            rapport a la ligne de base, pour pouvoir monter independamment. */}
-        <span style={{ position: "relative", display: "inline-block" }}>
+            rapport a la ligne de base, pour pouvoir monter independamment.
+            ⭐ `marginLeft: 16` — MESURE, pas dose : au plateau, la reference
+            laisse 42 px entre « With » et la pile, contre 26 chez nous, alors
+            que l'espace inter-mots ordinaire est identique des deux cotes
+            (18 px). C'est donc un espace PROPRE a la pile, pas un ecart de
+            largeur — d'ou un decalage local plutot qu'un reglage global. */}
+        <span
+          style={{ position: "relative", display: "inline-block", marginLeft: 16 }}
+        >
           {STACK.map((s, i) => {
             /* Combien de mots sont arrives APRES celui-ci = de combien de crans
                il est monte. */
@@ -395,6 +442,7 @@ export const Plan10Cta: React.FC = () => {
                   top: -rise,
                   opacity: appear,
                   color,
+                  fontFamily: INTER,
                   fontWeight: 700,
                   whiteSpace: "nowrap",
                 }}
@@ -405,7 +453,9 @@ export const Plan10Cta: React.FC = () => {
           })}
           {/* Reserve la largeur du plus long mot de la pile pour que la ligne
               garde sa geometrie (les mots empiles sont en position absolue). */}
-          <span style={{ visibility: "hidden", fontWeight: 700 }}>Confidence</span>
+          <span style={{ visibility: "hidden", fontFamily: INTER, fontWeight: 700 }}>
+            Confidence
+          </span>
         </span>
       </Line>
 
@@ -428,7 +478,9 @@ export const Plan10Cta: React.FC = () => {
               extrapolateRight: "clamp",
             }),
             color: WHITE,
-            fontSize: FONT * 0.62,
+            /* 0,62 donnait 22 px de large contre 30 dans la reference (hauteur
+               23 px contre 37) — releve par l'agent de diagnostic, verifie. */
+            fontSize: FONT * 0.72,
           }}
         >
           x
@@ -439,6 +491,7 @@ export const Plan10Cta: React.FC = () => {
               extrapolateLeft: "clamp",
               extrapolateRight: "clamp",
             }),
+            fontFamily: INTER,
             fontWeight: 700,
             whiteSpace: "nowrap",
           }}

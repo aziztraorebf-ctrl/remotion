@@ -732,8 +732,6 @@ const MilitaryMarchLineDemo: React.FC = () => (
   />
 );
 
-import { FontProbe } from "./projects/_client-sim/foster/scenes/_FontProbe";
-
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -751,14 +749,6 @@ export const RemotionRoot: React.FC = () => {
         {/* FOSTER plan 10 : 28,07 -> 40,46 s = 372 frames a 30 fps.
             Le plus long. ⛔ Pas de coupes internes (diff max 3,08) et ancres
             gauches FIXES par phrase — les 3 voix se trompaient sur les deux. */}
-        <Composition
-          id="FontProbe"
-          component={FontProbe}
-          durationInFrames={1}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
         <Composition
           id="FosterPlan10"
           component={Plan10Cta}
