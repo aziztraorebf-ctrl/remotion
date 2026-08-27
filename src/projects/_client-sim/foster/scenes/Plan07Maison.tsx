@@ -246,12 +246,15 @@ export const Plan07Maison: React.FC = () => {
           </div>
 
           {/* CARTOUCHE 2 — le corps, qui s'ecrit mot par mot.
-              ⛔ Il n'est monte QUE lorsqu'il a du texte a montrer : un cartouche
-              vide en attente occupait de la place et eclaircissait la zone
-              (c'est ce qui faisait 28,9 % contre 13,9 mesures sur la reference).
-              Retarder son apparition ne suffisait pas — il fallait qu'il
-              n'existe pas du tout. */}
-          {motsVisibles > 0 && (
+              ⭐ Il NAIT VIDE (contour seul) puis son texte tape dedans : ce sont
+              DEUX animations distinctes, pas une seule. Point releve par Grok
+              (« le second bloc nait apres le titre, vide, puis le texte tape a
+              l'interieur ») et trouve NI par la mesure — l'ecart ne dure que
+              ~0,2 s — NI a l'oeil. Il vient de la relecture ligne par ligne du
+              releve, ce a quoi cette consigne sert exactement.
+              ⛔ Une version anterieure ne le montait qu'avec son 1er mot : le
+              cartouche n'existait alors jamais vide. */}
+          {frame >= F_TITRE + 12 && (
           <div
             style={{
               marginTop: 18,
