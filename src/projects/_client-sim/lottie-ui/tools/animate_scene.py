@@ -15,6 +15,12 @@ Trois primitives, choisies parce qu'elles couvrent nos scenes reelles :
                l'equivalent Lottie natif de nos interpolate sur strokeDashoffset
   - "fondu"  : apparition en opacite               -> ks.o
   - "pop"    : apparition avec un ressort discret  -> ks.s (echelle)
+  - "geste3" : monte haut -> SUSPEND -> retombe    -> ks.p (position) + ks.s
+               Le geste en 3 temps de FICHE-GESTE-ANIME : la suspension cree
+               une ATTENTE, la chute la resout. Regle a 4 reperes au lieu de 3 :
+               ("geste3", f_depart, f_haut, f_fin_suspension, f_impact, hauteur).
+               ⛔ Ce n'est PAS un ressort : le depassement d'un spring est une
+               consequence physique, il ne raconte rien. Ici la pause est ECRITE.
 
 ⛔ CE QUI RESTE DU TRAVAIL HUMAIN : la partition. On ne devine pas l'intention
 narrative d'une scene depuis sa geometrie -- c'est le realisateur qui dit
@@ -90,6 +96,23 @@ PARTITIONS = {
     },
     # Revelation generique : tout apparait EN MEME TEMPS. Utile pour un test
     # de tuyauterie, pauvre comme demonstration.
+    # ⭐ Logo LoadUp — PORTAGE DE L'ANIMATION REMOTION (LoadUpAnime.tsx).
+    # Valeurs REPRISES du fichier source, pas re-inventees :
+    #   lettres  spring d'apparition            -> fondu 0-25
+    #   fleche   3 temps 12/30/38/46, HAUT=-95  -> geste3 (le point focal)
+    #   p        fondu 50-62      marque  fondu 62-76
+    # ⛔ Les lettres sont des groupes SEPARES dans le fichier (plus editable pour
+    # le client) mais recoivent LE MEME timing : dans Remotion elles forment un
+    # seul <g> exprès — les faire cascader volerait l'attention a la fleche.
+    # Regle du POINT FOCAL UNIQUE : on anime ce qui porte le sens, pas tout.
+    "loadup": {
+        "_duree": 150,
+        "fleche-up": ("geste3", 12, 30, 38, 46, 95),
+        "lettre-p": ("fondu", 50, 62),
+        "marque-deposee": ("fondu", 62, 76),
+        "lettre-": ("fondu", 0, 25),
+        "fond": ("aucun", 0, 0),
+    },
     "cascade": {"_duree": 120, "*": ("fondu", 0, 24)},
     # ⭐ Cascade ECHELONNEE : chaque calque demarre un peu apres le precedent,
     # du fond vers le premier plan. Une scene sans id exploitables (calques
@@ -165,7 +188,7 @@ def animer(doc, partition):
     for rang, couche in enumerate(doc["layers"]):
         regle = trouver_partition(couche["nm"], partition)
         if echelonne and regle:
-            genre, _, longueur = regle
+            genre, _, longueur = regle[0], regle[1], regle[2]
             ordre = n_couches - 1 - rang          # du fond vers l'avant
             depart = int(ordre / max(1, n_couches - 1) * duree * 0.62)
             regle = (genre, depart, depart + max(8, longueur))
@@ -173,7 +196,7 @@ def animer(doc, partition):
         if not regle:
             ignores += 1
             continue
-        genre, debut, fin = regle
+        genre, debut, fin = regle[0], regle[1], regle[2]
         if genre == "aucun":            # visible des le debut, jamais anime
             ignores += 1
             continue
@@ -194,6 +217,35 @@ def animer(doc, partition):
             couche["ks"]["s"] = keyframes(
                 [(debut, [0, 0]), (int(debut + (fin - debut) * 0.6), [108, 108]),
                  (fin, [100, 100])])
+
+        elif genre == "geste3":
+            # ⭐ LE GESTE EN 3 TEMPS (FICHE-GESTE-ANIME, regle n.4) : la forme
+            # monte HAUT, marque un temps SUSPENDU en l'air, puis RETOMBE d'un
+            # coup et se cale. La suspension n'est pas un temps mort : la forme
+            # y est immobile mais l'oeil attend.
+            # Timing ASYMETRIQUE : la montee ralentit en arrivant (sortie douce),
+            # la chute accelere jusqu'a l'impact (entree brutale).
+            # ⛔ Sans recentrer ancre ET position, un calque converti les a a
+            # [0,0] : l'ecrasement se ferait depuis le coin de l'ecran.
+            _, f0, f_haut, f_susp, f_impact, hauteur = regle
+            centre = centre_du_calque(couche)
+            if centre:
+                couche["ks"]["a"] = {"a": 0, "k": centre}
+                cx, cy = centre
+            else:
+                cx, cy = 0, 0
+            bas = hauteur * 1.4   # depart hors cadre, sous sa place
+            couche["ks"]["p"] = keyframes(
+                [(f0, [cx, cy + bas]), (f_haut, [cx, cy - hauteur]),
+                 (f_susp, [cx, cy - hauteur]), (f_impact, [cx, cy])],
+                easing=(0.23, 0.32))   # valeur EXACTE relevee, jamais approximee
+            # Ecrasement a l'impact : sans lui, la chute s'arrete net et se lit
+            # comme un bug de timing plutot que comme un poids.
+            couche["ks"]["s"] = keyframes(
+                [(f_impact, [100, 100]), (f_impact + 3, [100, 86]),
+                 (f_impact + 9, [100, 100])])
+            couche["ks"]["o"] = keyframes(
+                [(0, [0]), (f0, [0]), (f0 + 10, [100])])
 
         elif genre == "trace":
             # ⭐ trimPath ('tm') = l'equivalent Lottie natif du trait qui se

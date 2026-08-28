@@ -129,3 +129,129 @@ Le logo etait le cas de test le plus simple pour l'eprouver.
 > avant de commencer plutot qu'apres."
 ⚠️ Nuance exacte : on SAIT faire de la 3D (ThreeCanvas, plan Foster). Ce qu'on ne fait pas,
 c'est de la 3D EN LOTTIE — la frontiere est le FORMAT, pas notre capacite.
+
+---
+
+# SESSION 2026-08-28 (suite) — LE TEST CREATOR
+
+## ✅ CE QUI EST ETABLI (mesure, pas rapport)
+
+| Question | Reponse |
+|---|---|
+| Le pont MCP fonctionne ? | **OUI** — `read_scene` repond. Port 3847 libre, 1 seul processus : **pas de collision** |
+| Le SVG s'importe ? | **OUI**, inline (`import_asset` asset_type=SVG, contenu colle) |
+| ...en gardant la structure ? | ⛔ **NON — 1 SEUL CALQUE.** Le SVG inline est APLATI. La structure editable est perdue |
+| Le Lottie s'importe par URL ? | **OUI pour une URL PUBLIQUE.** ⛔ `127.0.0.1` et `localhost` sont REFUSES (« Invalid URL ») |
+
+⭐⭐ **LE SVG INLINE N'EST PAS UNE VOIE DE LIVRAISON** : il arrive en 1 calque unique. C'est
+exactement ce que notre Lottie, lui, porte (15 calques pour LoadUp). L'interet de notre chaine
+est donc CONFIRME PAR LA NEGATIVE — la voie facile perd ce qu'on sait preserver.
+
+## ⛔⛔ DECOUVERTE QUI CHANGE LA LECTURE DU CHANTIER
+
+**Nos 2 `.json` ne portent AUCUNE animation.** Mesure : 0 propriete animee, 0 `"a":1`.
+`op=60` (2 s) n'est que la duree par defaut.
+=> Ce sont des **logos VECTORISES PORTES en Lottie**, PAS des logos animes. L'animation de
+LoadUp vit dans **Remotion** (`LoadUpAnime.tsx`), pas dans le fichier livre.
+
+⭐ Consequence : le test Creator repond a « le client peut-il **OUVRIR et EDITER** ? »
+Il ne repond PAS a « l'animation **survit-elle** au transport ? » — 2e question, distincte,
+qui exige un `.json` portant reellement des cles. **Ne pas confondre les deux.**
+
+## PALETTES RELEVEES (verite terrain, avant tout jugement sur Creator)
+
+- `rc-loadup.json` : 15 remplissages, 4 couleurs — #FFFFFF x7 (fond opaque) · #414343 x4
+  (lettrage) · #6E6F72 x2 (symbole R) · **#7DC145 x2 (le vert de la fleche)**
+- `rc-yoga.json` : 59 remplissages, 3 couleurs — #000000 x39 · #FEFEFE x19 · #3D3A3F x1
+
+⚠️ **PIEGE DE MESURE EVITE** : j'ai d'abord compte 0 `"ty":"fl"` et failli conclure « logo sans
+couleur » (= le defaut « tout noir » deja paye). **FAUX** : le JSON est ecrit espace
+(`"ty": "fl"`), mon motif etait compact. **Compter sur le JSON PARSE, jamais sur la chaine brute.**
+
+## GOTCHA CREATOR — l'import CREE une scene et BASCULE l'active
+
+Un `read_scene` a soudain renvoye une scene « hi » 800x800 / 14 calques inconnue → cru a un
+ecrasement du travail d'Aziz. **RIEN N'ETAIT ECRASE** : `list_scenes` a montre 3 scenes
+coexistantes, dont une **« file » 964x518 creee AUTOMATIQUEMENT par l'import du SVG** (aux
+dimensions exactes de l'asset). L'erreur « Layer not found » venait de la meme cause : je
+cherchais le calque dans la mauvaise scene.
+⭐⭐ **REGLE : toujours `list_scenes` AVANT toute ecriture** — `read_scene` seul ne dit pas
+DANS QUELLE scene on se trouve. Ne jamais conclure a un ecrasement sans avoir liste les scenes.
+
+## VERCEL BLOB ETAIT SATURE (1,02 Go / 1 Go) — debloque
+
+Cause du blocage d'upload : quota, **pas** un probleme de compte (`Storage quota exceeded for
+Hobby plan`). Decision d'Aziz : Blob = lieu de DEPOT pour partager, pas une archive ; vider.
+**355 Mo liberes** (gazoduc-acte3*, review/, client-sim/, rnd/, foster/, lottie/, etc.).
+⭐ `verrou-FINAL-AUDIO.mp4` (seul FINAL sans copie locale) **RAPATRIE AVANT SUPPRESSION** dans
+`out/episodes/gazoduc-aagp-tsgp/versions/` — taille verifiee a l'octet pres.
+
+⛔⛔ **VERIFIER PAR LA TAILLE, PAS PAR LE NOM** : sur 80 « doublons » par nom, **3 avaient un
+CONTENU DIFFERENT** (2x `maison-gaz-facture.json`, `DEMO-FINALE.mp4`). Un menage sur le seul nom
+les aurait detruits. Meme nom != meme fichier.
+
+⚠️ Menage INCOMPLET : 179 fichiers / 643 Mo restent a la racine du Blob. Le garde-fou de securite
+bloque les suppressions trop larges (prefixes d'1 lettre, ou 10 prefixes d'un coup) — **c'est
+sain, ne pas chercher a le contourner**. Supprimer par prefixe explicite, en petits lots.
+Pas bloquant : la place liberee suffit tres largement.
+
+## ✅✅ RESULTAT — LE TEST CREATOR EST PASSE (2026-08-28)
+
+`rc-loadup.json` importe dans LottieFiles Creator par URL publique (Vercel Blob).
+
+| Critere | Attendu | **Obtenu** |
+|---|---|---|
+| Le fichier s'ouvre | sans erreur | **OUI** |
+| Il se DEPLIE | 15 calques | **15 calques** — `path-1` a `path-15` |
+| Les formes sont a leur place | geometrie du logo | **OUI, verifie calque par calque** |
+| Les calques sont manipulables | editables | **OUI** |
+| Il s'ANIME apres edition | cles acceptees | **OUI — 4 cles relues, geste en 3 temps** |
+
+⭐⭐ **CREATOR CREE UNE SCENE-COMPOSANT** a l'import : une scene `recraft-loadup` 2048x1100
+(= dimensions exactes du fichier), `is_nestable: true`, contenant les 15 calques. La scene
+d'accueil ne porte qu'UN calque de REFERENCE vers ce composant. ⛔ **Ne pas lire ce calque
+unique comme un aplatissement** — c'est l'erreur que j'ai failli commettre : il faut
+`switch_scene` vers le composant pour voir la structure.
+
+**Verification faite par la GEOMETRIE, pas par le compte** (un compte de 15 ne prouve rien) :
+chaque calque tombe a la position attendue, croisee avec le PNG rendu depuis le SVG source —
+`path-1` fond plein cadre 2048x1100 · `path-2` la fleche verte (174x220, en haut a droite du
+centre) · `path-11` le « L » (le plus a gauche) · `path-13/14/15` le symbole ® (9 a 33 px,
+extreme droite). ⭐ **C'est la concordance geometrique qui valide, pas le code de retour.**
+
+**Le geste ecrit pour eprouver l'edition** (fiche GESTE-ANIME appliquee) : la fleche verte —
+le seul element qui porte le sens (« LoadUp » = ce qui monte) — en 3 temps, `y` 0 -> -70
+(f0-18, `gentle-out`) -> SUSPENSION 8 frames (f18-26) -> chute (f26-34, bezier accelere).
+Relu depuis Creator : les 4 cles sont bien la. **Montee 18 f / chute 8 f = ratio 0,44**,
+identique a celui mesure sur LoadUp dans Remotion.
+
+## ⛔ CE QUE CE TEST NE DIT PAS (ne pas sur-conclure)
+
+1. **Il ne teste PAS la survie d'une animation existante** — nos `.json` n'en portent aucune.
+   J'ai ANIME DANS Creator, je n'ai pas verifie qu'une animation FAITE CHEZ NOUS y arrive intacte.
+   ⭐ C'est LA question suivante, et elle exige un `.json` portant deja des cles.
+2. **Les couleurs n'ont pas pu etre relues par l'API** (`fill_color` / `fill_opacity` :
+   « property not on layer » sur un calque importe). La palette est verifiee cote FICHIER
+   (4 couleurs, dont le vert #7DC145) mais **pas relue depuis Creator**. A confirmer a l'oeil.
+3. **`visual_bounds` ne se rafraichit pas** apres une cle de `scale` unique : les bornes restent
+   calculees sur l'ancienne echelle et `center_layer` renvoie `target_reached: false` alors que
+   la valeur EST ecrite (relue a 42). ⛔ Artefact de lecture — ne pas re-doser a l'aveugle dessus.
+
+## ⏭️ SUITE
+
+1. **Animer 1-2 des 6 logos restants** (`public/_client-sim/_references/logos-fiverr/` : L1 Hinch,
+   L3/L4 Kanvas, L5 Tigerwild, L7 renard veterinaire, L8 Fokus) en visant un registre DIFFERENT
+   de LoadUp — mascotte ou embleme — pour eprouver si le geste se generalise.
+2. **Tester le transport d'une animation REELLE** : produire un `.json` qui porte des cles
+   (depuis Remotion via l'atelier) et verifier qu'elles arrivent dans Creator. C'est la moitie
+   manquante de la question « source files ».
+3. Le nommage des calques reste a ZERO (`path-1..15`) — la clause « source files for easy future
+   edits » n'est PAS tenue tant que les calques sont anonymes. Chainer `planche_calques.py`
+   (produit la matiere a voir) avec `group_layers.py` (applique la carte).
+
+## URL / IDS UTILES
+
+- Lottie en ligne : `https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/rc-loadup-Euko0pMRrsJL3xfJLXZTnWJ1wt3gls.json`
+- Verite terrain rendue (rsvg-convert depuis les SVG) : `<scratchpad>/creator-test/verite-{loadup,yoga}.png`
+- ⛔ `import_asset` LOTTIE exige une URL **PUBLIQUE** : `127.0.0.1` et `localhost` sont refuses
+  (« Invalid URL »). Passer par `scripts/tools/upload-to-blob.py`.

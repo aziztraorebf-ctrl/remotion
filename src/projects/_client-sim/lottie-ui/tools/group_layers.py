@@ -104,6 +104,41 @@ CARTES = {
         "tuyau": {"motifs": ["link"]},
         "courbe": {"motifs": ["chart"]},
     },
+
+    # -- Logo LoadUp (client reel) -> CAS DU LOGO CLIENT, le plus dur.
+    # Ici les calques s'appellent path-1..path-15 et le SVG ne donne AUCUN
+    # indice (ids compresses par l'optimiseur d'export). La carte a ete etablie
+    # en REGARDANT la planche de `planche_calques.py` -- chaque calque rendu
+    # seul, identifie a l'oeil. C'est la boucle complete : voir -> nommer.
+    #   path-1        aplat plein cadre 2048x1100      = le fond
+    #   path-2        fleche montante (173x206)        = LE POINT FOCAL
+    #   path-11       "L" (plein, pas de contre-forme)
+    #   path-7 + 8    "o" + SON TROU        path-9 + 10   "a" + son trou
+    #   path-5 + 6    "d" + son trou        path-3 + 4    "p" VERT + son trou
+    # -- REGLE LUE DANS LA MESURE : chaque lettre pleine est suivie de sa
+    # CONTRE-FORME BLANCHE, aux memes coordonnees (o: x=767/773 · a: 893/892 ·
+    # d: 1026/1020 · p: 1289/1298). Une contre-forme separee de sa lettre est
+    # peinte au mauvais moment et BOUCHE le trou.
+    # ERREUR REELLE (2026-08-28) : j'avais lu path-8 comme "la tige du d" sur la
+    # planche et l'avais mise dans lettre-d -> le "o" est sorti DISQUE PLEIN.
+    # Le chiffre ne l'a PAS vu (0,14 % d'ecart, "vert"), l'IMAGE si.
+    #   path-12..15   4 formes minuscules a x=1382     = le symbole (R)
+    # ATTENTION `noms` = correspondance EXACTE (obligatoire ici : `motifs`
+    # matche par SOUS-CHAINE, donc "path-1" happerait path-11..path-15).
+    # Chaque lettre reste un groupe SEPARE : c'est ce qui permet une
+    # cascade. La fleche reste seule -- on n'anime qu'un seul point focal.
+    "loadup": {
+        "_ordre": ["fond", "lettre-l", "lettre-o", "lettre-a", "lettre-d",
+                   "lettre-p", "fleche-up", "marque-deposee"],
+        "fond": {"noms": ["path-1"]},
+        "lettre-l": {"noms": ["path-11"]},
+        "lettre-o": {"noms": ["path-7", "path-8"]},
+        "lettre-a": {"noms": ["path-9", "path-10"]},
+        "lettre-d": {"noms": ["path-5", "path-6"]},
+        "lettre-p": {"noms": ["path-3", "path-4"]},
+        "fleche-up": {"noms": ["path-2"]},
+        "marque-deposee": {"noms": ["path-12", "path-13", "path-14", "path-15"]},
+    },
 }
 
 
