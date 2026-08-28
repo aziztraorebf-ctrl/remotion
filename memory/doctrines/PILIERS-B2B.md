@@ -225,3 +225,41 @@ Recette technique + prompts + livrables : [[REVERSE-STYLE-VIDEO-VERS-ASSETS]] §
 
 ⭐⭐ **Le segment est MESURÉ (2026-08-26)** : sur les 4 vidéos du portfolio d'une vendeuse Fiverr Level 2 du registre SaaS explainer, **3 n'ont aucun personnage** et **3 n'ont pas de voix off** (musique seule, le récit porté par la TYPO). Le « ce pilier ne fait pas de personnages » n'est donc pas une faiblesse à assumer : c'est **la norme du segment**. Prix observés : **~10 $ CA la seconde livrée**. Détail et réserves : `.claude/projects/-Users-clawdbot-Workspace-remotion/memory/projects/freelance-dataviz-fiverr-pro.md` (auto-mémoire, PAS dans le repo) § BENCHMARK 4 VIDÉOS.
 ⭐ Le pilier 3 se marie au pilier 4 via un **mockup d'appareil 3D** (la capture devient la texture de l'écran). Ce n'est pas un 6e pilier. Socle + 4 pièges payés : `memory/fiches/FICHE-MOCKUP-3D.md`.
+
+---
+
+## ⛔ CE QU'ON NE VEND PAS : le logo animé à l'unité (décision d'Aziz, 2026-08-28)
+
+Vendeur vu à **60 $** pour du logo animé multi-secondes en offre avancée. Marché de **volume**,
+produit standardisé : on ne gagne pas sur le prix, et notre avantage réel (révision instantanée,
+source déterministe) est **invisible avant l'achat**.
+
+⭐ Ce qu'on a bâti n'est pas une offre de logos, c'est une **CHAÎNE** :
+`image PNG du client → Recraft → SVG → notre convertisseur → Lottie → Remotion → MP4`
+Pertes mesurées : image→vectoriel **0,1 %** · vectoriel→Lottie **0,01 %**. Sortie 12 à 53 Ko.
+Elle sert les piliers où on est réellement différenciés (UI produit, motion design React, scène
+SVG). **Le logo était le cas de test le plus simple pour l'éprouver, pas la cible.**
+
+⭐ Nuance de marché à garder (observation d'Aziz, non mesurée) : **le client qui fait animer son
+logo l'a déjà payé** — il a une identité, un budget, une entreprise qui tourne. Contexte d'achat
+différent de celui qui cherche un logo à 15 $. Le logo animé reste une bonne **porte d'entrée
+conversationnelle**, pas un gig à lister.
+
+### Formulation retenue pour le « pas de 3D » (⛔ ne PAS l'écrire comme un manque)
+
+> « Animations vectorielles livrées en Lottie ou MP4 — légères, modifiables, prêtes pour le web
+> et les apps. Pas d'effets 3D lourds : si votre projet en demande, je vous le dirai avant de
+> commencer plutôt qu'après. »
+
+⚠️ Nuance exacte : on **sait** faire de la 3D (`ThreeCanvas`, plan 1 de la repro Foster). Ce qu'on
+ne fait pas, c'est de la **3D en Lottie** — la frontière est le FORMAT, pas notre capacité.
+
+### Règle commerciale réglée au passage
+
+Un client peut fournir un **.mp4** en demandant un Lottie (cas réel, avis client Cravvy).
+Convertir une vidéo en Lottie n'a que 2 voies : redessiner à la main, ou vectoriser
+automatiquement (formes tremblantes, fichier énorme, illivrable).
+⛔ **Refuser la conversion automatique, toujours. Mais proposer le redessin** — service légitime,
+plus cher, et force prouvée chez nous.
+
+→ Détail et mesures : `memory/client-sim-tests/repro-vendeur-lottie/` (sur `feat/repro-ui`)

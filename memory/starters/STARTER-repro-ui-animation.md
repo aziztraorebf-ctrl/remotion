@@ -29,9 +29,14 @@ Méthode = celle de REPRO-FOSTER, appliquée cette fois à l'animation d'UI prod
    portfolios de studios (Vidico, Ordinary Folk). ⚠️ 15-90 s par pièce, pas 5 minutes.
 
 3. Pour CHAQUE pièce, produire et NOTER :
-   - le temps réel passé
+   - ⛔ **PAS le temps** (décision d'Aziz, 2026-08-28). Une session dure 8-14 h dont l'essentiel
+     hors travail (mobile, sommeil) : le temps écoulé mesure le CANAL DE COMMUNICATION, pas la
+     production. Un chiffre d'heures est ininterprétable et invite à de fausses comparaisons.
+   - **le nombre d'aller-retours** avant que ce soit juste
    - ce qui a coincé (geste manquant, brique absente, réglage inexistant)
    - ce qu'il a fallu contourner et à quel coût
+   - ⭐ **départ de zéro, ou d'une brique existante ?** ← le plus révélateur : si tout part de
+     zéro à chaque fois, la stack n'est pas prête.
    ⭐ LE LIVRABLE DE LA SESSION EST CETTE LISTE, pas les 3 vidéos.
    Un plan raté proprement documenté vaut plus que 3 plans réussis.
 
@@ -63,7 +68,9 @@ marché, c'est de savoir ce qui BLOQUE chez nous.** Écrire l'offre avant, c'est
 ## LA SESSION D'APRÈS (ne pas la faire avant)
 
 Écrire l'offre **sur du réel** : titre (`UI animation` / `motion design` / `B2B` — ⛔ jamais
-`explainer video`), prix calés sur les temps mesurés en session 1, vignette = l'animation DANS une
+`explainer video`), **prix calés sur la COMPLEXITÉ, jamais sur la durée ni sur un temps mesuré**
+(le vendeur Fiverr étudié le 08-28 ne facture PAS à la seconde : 3 paliers distingués par des cases
+à cocher — icône / logo / UI complexe, 35,85 · 81,97 · 158,84 CAD), vignette = l'animation DANS une
 interface. ⭐ Les 3 pièces SONT le portfolio — et sur Upwork la sélection se fait sur portfolio,
 pas sur compteur d'avis.
 

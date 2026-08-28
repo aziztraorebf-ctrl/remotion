@@ -135,3 +135,38 @@ Flowdesk — premier usage concret documente hors pipeline video ci-dessus).
   noir/blanc pur malgre une consigne explicite de palette (bleu marine/orange) dans le prompt.
   Toujours prevoir un **recolor manuel** (Python/Pillow, remplacement RGB direct) apres generation
   si une palette de marque stricte est requise — ne pas compter sur le prompt seul face au style.
+
+## ⛔ VECTORISER N'EST PAS GÉNÉRER (recadrage d'Aziz, 2026-08-28)
+
+| | Modèle GÉNÉRATIF (Fable, Kimi, GLM) | VECTORISEUR (`vectorize_image`) |
+|---|---|---|
+| Ce qu'il fait | **Crée** depuis son entraînement | **Calcule** des contours depuis les pixels |
+| Sur un logo existant | une INTERPRÉTATION | une COPIE |
+| Quand l'utiliser | le client veut qu'on CRÉE | le client a DÉJÀ son identité |
+
+**Mesure sur 2 logos de vrais clients** (récupérés dans des avis Fiverr) :
+
+| logo | Fable 5 | Recraft | groupes nommés |
+|---|---|---|---|
+| LoadUp (logotype) | bon mais interprété | **0,1 %** d'écart | Fable oui / Recraft **aucun** |
+| Yoga (lettrage manuscrit) | **11,3 %** d'écart | **0,6 %** | idem |
+
+⛔ Un logo est l'identité d'une entreprise, payée à un designer. Le client ne veut pas qu'on
+l'« améliore » : il veut qu'on le **transporte fidèlement**. Un modèle génératif qui interprète
+au passage est un DÉFAUT, pas une qualité.
+⭐ Le vectoriseur est fidèle **parce qu'il ne comprend rien** — il ne peut pas inventer.
+
+⚠️ **CONTREPARTIE, et elle nuance la note plus haut sur les « milliers de paths »** : les deux
+constats sont vrais sur des axes différents. `vectorize_image` est **disqualifié pour produire une
+scène animable** (formes anonymes, rien de nommé — 59 sur le logo Yoga) et **référence pour
+reproduire une identité existante** (0,1 % d'écart). L'axe n'est pas la qualité, c'est
+**fidélité contre manipulabilité**.
+⭐ Voie hybride prouvée : géométrie Recraft → `planche_calques.py` (rend chaque calque seul pour
+l'identifier) → `group_layers.py` (applique la carte de noms).
+
+⚠️ **Piège de mesure** : un SVG sans fond donne 98,9 % d'écart contre une image à fond blanc.
+Rendre avec `-b white` avant de conclure.
+
+⭐ Apport de Fable à garder comme TECHNIQUE (pas comme voie de reproduction) : il structure
+**pour l'animation** (groupes nommés, lettres séparées) et choisit des TRAITS plutôt que des
+contours pleins, ce qui ouvre l'animation d'écriture progressive.
