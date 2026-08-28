@@ -352,3 +352,92 @@ aucun changement — la reserve « palette non relue depuis Creator » est LEVEE
 2. Le nommage reste **MANUEL** (je regarde la planche, j'ecris la carte). Le chainage
    planche -> carte n'est toujours pas automatise — mais il est desormais PROUVE.
 3. Les 13 degrades a `gradientTransform` et les filtres : intacts, non traites.
+
+---
+
+# ✅ L'ALLER-RETOUR CREATOR EST FIDELE (2026-08-28, teste par Aziz)
+
+⭐ **Aziz a eu raison d'insister pour TESTER** : j'avais recommande de ne pas depenser
+un export en disant « il n'y a pas de raison que ca differe » — c'etait une SUPPOSITION,
+et je l'avais moi-meme signalee comme non prouvee. Un export brule, la question est reglee.
+
+`rc-loadup-ANIME.json` importe dans Creator, puis **reexporte en Lottie JSON** :
+
+| | Notre fichier | Retour de Creator |
+|---|---|---|
+| Dimensions / fps / duree | 2048x1100 · 30 · 150 f | **identiques** |
+| Noms des calques | 8 | **8, memes noms, meme ordre** |
+| Geste fleche | 4 cles, suspension 8 f | **4 cles, suspension 8 f** |
+| Ratio chute/montee | 0,44 | **0,44** |
+| Poids | 13,2 Ko | 44,9 Ko |
+
+**RIEN n'est perdu, RIEN n'est gagne.** Les 44,9 Ko contre 13,2 ne sont PAS du contenu en
+plus : Creator reecrit le JSON en clair avec tous les champs par defaut explicites (le
+notre est ecrit compact). Seul ajout reel : `meta.g = "@lottiefiles/toolkit-js 0.76.1"`.
+Seule difference de contenu : une cle d'opacite REDONDANTE supprimee sur 4 lettres
+(0,0,25 -> 0,25 — deux cles a la meme valeur au meme endroit). Nettoyage, pas perte.
+
+=> **NE PAS depenser d'export pour livrer** : le fichier local est equivalent et 3,4x plus
+leger. ⛔ **Les 293 $/an ne se justifient pas** : ils achetent l'« Optimized JSON » (44,48 Ko
+sur leur propre exemple) alors que NOTRE fichier brut fait deja 13,2 Ko.
+⚠️ Seul cas ou l'export sert : si on MODIFIE dans Creator et qu'on veut recuperer la modif.
+Regle retenue : demander la modif a Claude (portee dans le code), le fichier local reste
+la source unique.
+
+## ⭐⭐ LA REFERENCE « MAISON » DE LOTTIEFILES EST EN BITMAP — pas en vectoriel
+
+Fichier de comparaison exporte par Aziz (scene d'exemple fournie par Creator, personnage
+« HELLO! », 115 Ko, 14 s). Mesure :
+
+| | Leur reference | Le notre |
+|---|---|---|
+| Nature | **14 images BITMAP** (`ty=2`, PNG base64) | **15 chemins VECTORIELS** (`ty=4`) |
+| Chemins / aplats / degrades | **0 / 0 / 0** | 15 / 15 / 0 |
+| Redimensionnable | non (pixellise) | **oui, a l'infini** |
+| Recolorable | non (refaire les PNG) | **oui, une valeur** |
+| Poids | 115 Ko | **13 Ko** |
+
+⭐⭐ **C'EST EXACTEMENT L'ECART DEJA MESURE FACE AU VENDEUR FIVERR** (qui convertit un MP4).
+Ici c'est LottieFiles eux-memes qui emballent du pixel dans du Lottie. Ce n'est pas « mal
+fait » — pour un personnage illustre complexe c'est legitime et rapide — mais **ce n'est
+pas ce qu'on livre**, et notre sortie est structurellement superieure sur les 3 criteres
+qui comptent pour un client : poids, redimensionnement, recoloration.
+⛔ Ne PAS en conclure « on fait mieux qu'eux » en general : c'est UN fichier d'exemple,
+pas leur production de reference. Ce qui est etabli, c'est que **bitmap-dans-Lottie est un
+usage courant, y compris chez eux** — donc notre vectoriel est un argument de vente reel.
+
+⚠️ **Gotcha export** : Creator a exporte la scene ACTIVE, pas celle affichee dans la fenetre
+de telechargement. Le fichier contenait la scene de la session precedente ; le personnage
+vivait dans un **precomp** (`assets[]`), pas dans `layers[]`. **Toujours regarder `assets`
+avant de conclure qu'un Lottie est vide.**
+
+## LISIBILITE DU LIVRABLE (question d'Aziz : « un dev peut-il lire ca ? »)
+
+**OUI.** Ce qui le rend illisible dans VS Code, c'est qu'il est sur **UNE SEULE LIGNE**
+(ecriture compacte pour le poids) — pas sa nature. `Format Document` (Maj+Alt+F) et tout
+devient clair : `"nm"` = nom, `"ks"."p"` = position, `"a":1` = animee, `"t"` = frame,
+`"s"` = valeur, `"o"`/`"i"` = courbes (on y relit notre 0.23/0.32).
+3 arguments a donner a un client inquiet : (1) format PUBLIC documente (Airbnb -> LottieFiles),
+(2) personne ne le lit a la main — il s'ouvre dans Creator / After Effects, (3) **la preuve
+est faite** : Creator l'a lu, joue et reexporte a l'identique. Un fichier non standard
+n'aurait pas survecu a ce parcours.
+
+## LES FORMATS DE SORTIE — verifie sur la machine
+
+Creator propose Lottie/dotLottie/SVG anime/GIF/MP4/MOV. ⭐ **Constat commercial d'Aziz** :
+ce sont des SORTIES DU MEME FICHIER, pas des travaux differents — le vendeur en liste 5
+pour elargir sa clientele a cout marginal quasi nul. Lecon d'OFFRE, pas de technique.
+
+| Format | Chez nous ? | Par quoi |
+|---|---|---|
+| Lottie `.json` | ✅ natif | notre chaine |
+| MP4 | ✅ | `libx264` present |
+| MOV transparent | ✅ | `prores_ks` + `qtrle` presents |
+| GIF | ✅ | encodeur `gif` present |
+| dotLottie | ⚠️ a ecrire (c'est un ZIP du json) | trivial |
+| SVG anime | ⚠️ a ecrire | on a le SVG + le timing |
+| WebP anime | ⛔ **NON** | `libwebp` ABSENT de ffmpeg |
+
+⛔ Precision : le **GIF n'est pas « fige »** (il bouge) — ce qu'il perd c'est la palette
+(256 couleurs) et le poids. Le vrai clivage est **vecteur vs pixel** : MP4/GIF/MOV sont du
+pixel, donc plus editables ni redimensionnables.
