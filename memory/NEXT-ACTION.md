@@ -103,50 +103,29 @@ test d'exécution périodique de chaque hook éviterait la rechute.
 
 ---
 
-## 🔧 BACKLOG TECHNIQUE — dette Gemini/outillage (2026-08-20, non urgent)
+## 🔧 BACKLOG TECHNIQUE — dette Gemini/outillage (2026-08-20, NON URGENT)
 
-Migration image faite (preview mort → GA → **défaut LITE**, -50 %). Restes identifiés par l'audit de wrap :
-1. **~35 fichiers mémoire/doctrines/templates** citent encore l'ancien identifiant image. Les 7 qui
-   *agissaient* sont corrigés (hook `beat-preflight`, `PACKAGING-YOUTUBE`, `gemini.md`, `PAYSAGE`,
-   `MEMORY.md`, 2 scripts non migrés). Restent des mentions **passives** (templates de brief, doctrines
-   WARMAP, `gemini-pipelines.md`, `rules-gemini.md`, ~12 docstrings) — à corriger au fil de l'eau.
-   ⚠️ `.claude/agents/visual-producer.md:407` = l'agent qui **dépense de l'argent réel**, à traiter en premier.
-   ⛔ NE PAS toucher aux ~120 fichiers d'archives.
-2. ✅ **VÉRIFIÉ (2026-08-20) : PAS d'exposition.** Ni `gemini-3.1-pro-preview` ni `gemini-2.5-flash`
-   n'ont de date de shutdown annoncée, et **`gemini-3.1-pro` (GA) N'EXISTE PAS** — Google pousse VERS
-   le preview. ⚠️ Le « 2 octobre 2026 » qui circule appartient au modèle **image** 2.5-flash, pas à
-   notre fallback texte. **MAIS 2 trouvailles :**
-   ⛔ **(a) La centralisation vision N'EXISTE PAS** : `VISION_MODEL` n'est importé par **AUCUN** script,
-   l'identifiant est en dur dans **42 fichiers actifs** (79 occurrences), parfois DANS UNE URL. Changer
-   la constante ne change actuellement RIEN. C'est le scénario « 121 fichiers » encore intact.
-   → Réparer la centralisation AVANT toute bascule, sinon elle est ingérable.
-   💡 **(b) Gisement : `gemini-3.7-flash` (STABLE, août 2026)** = **−62 % input / −69 % output** et
-   **4× plus rapide en vidéo** (1,8 s vs 7,2 s, mesuré). ⛔ Capacité vision vérifiée, **qualité de
-   jugement NON testée** sur nos cas exigeants (breakdown JSON, DA-brief, jury) — Flash n'est pas Pro.
-   Protocole : même test à l'aveugle que pour l'image, sur un cas réel, avant de basculer.
-   ⭐ **Leçon** : l'ancien modèle image RÉPOND ENCORE 56 jours après son shutdown.
-   **Un modèle qui répond ne prouve pas qu'il est vivant** — seule la page deprecations fait foi.
-3. ✅ **Module `scripts/tools/api_models.py` CRÉÉ** (2026-08-20) : voix ElevenLabs, Kimi, GPT/OpenRouter,
-   GLM, DeepSeek, Minimax music. ⏭️ **Reste la migration des ~75 fichiers actifs** (voix 9 · Kimi 34 ·
-   GPT 20 · GLM 9), volontairement ÉTALÉE : la migration Gemini a montré qu'un remplacement de masse
-   se relit fichier par fichier. Règle en vigueur : **tout NOUVEAU script importe du module** ; les
-   anciens se migrent quand on les touche.
-   ✅ **Kimi TRANCHÉ (Aziz, 2026-08-20) : `kimi-k3` UNIQUEMENT.** k2.5/k2.6/k26 périmés, à remplacer
-   quand on touche un fichier (~34 fichiers). ⚠️ `da-brief.py` est resté sur k2.5 en **contournant**
-   un bug de k3 (`reasoning_content`) — le migrer demande d'appliquer le VRAI fix, cf.
-   `memory/tools/kimi-k3-reasoning-borne.md`. ⏭️ GPT (`gpt-5.5` 15× vs `gpt-5.6-sol` 10×) : non tranché.
+Migration image faite (preview mort → GA → **défaut LITE**, -50 %). **Les 5 actions qui restent** :
+1. ⚠️ **`.claude/agents/visual-producer.md:407`** cite encore l'ancien identifiant image — **c'est
+   l'agent qui dépense de l'argent réel, à traiter en premier.** Les ~28 autres mentions sont
+   PASSIVES (templates, docstrings), à corriger au fil de l'eau. ⛔ NE PAS toucher aux archives.
+2. ⛔⛔ **Réparer la centralisation VISION AVANT toute bascule** : `VISION_MODEL` n'est importé par
+   AUCUN script — l'identifiant est en dur dans **42 fichiers actifs** (79 occurrences), parfois dans
+   une URL. Changer la constante ne change RIEN aujourd'hui.
+3. 💡 **Gisement à tester : `gemini-3.7-flash`** (stable) = −62 % input / −69 % output, 4× plus rapide
+   en vidéo. ⛔ Qualité de jugement NON testée sur nos cas exigeants — protocole = test à l'aveugle
+   sur un cas réel avant bascule. Détail : `memory/tools/gemini.md`.
+4. **Migrer les ~75 fichiers vers `scripts/tools/api_models.py`** (voix 9 · Kimi 34 · GPT 20 · GLM 9),
+   volontairement étalée : **tout NOUVEAU script importe du module**, les anciens se migrent quand on
+   les touche. ⚠️ `da-brief.py` reste sur k2.5 en contournant un bug de k3 → appliquer le vrai fix
+   (`memory/tools/kimi-k3-reasoning-borne.md`). ⏭️ GPT (`gpt-5.5` vs `gpt-5.6-sol`) : non tranché.
+5. **`scripts/tools/mkprevis-camera-seule.py`** non commité — à commiter ou écarter.
 
-4. **Budgets de `memory/fiches/`** — ⛔⛔ **NE JAMAIS RE-GRAVER DE CHIFFRE ICI.** Les 3 nombres qui
-   figuraient à cette ligne étaient **tous faux** (mesuré 2026-08-27), et le README avait justement
-   supprimé sa propre liste chiffrée le 08-23 parce qu'« elle a menti 4 wraps de suite ». Le chiffre
-   avait simplement migré vers ce fichier-ci. **Mesurer à la demande** : `wc -l memory/fiches/*.md`.
-   Les exceptions assumées sont déclarées dans `memory/fiches/README.md`, pas ici.
-   ⏭️ **1 arbitrage ouvert pour Aziz** : `FICHE-MOCKUP-3D` a hérité en silence du statut d'exception
-   lors de sa scission d'UI-PRODUIT (08-26) — soit l'inscrire au README, soit tailler son doublon de
-   fin (le § « une affirmation de capacité se vérifie » répète le § SVG/3D qui ouvre la fiche).
-5. **`scripts/tools/mkprevis-camera-seule.py`** non commité (chantier previs H3) — à commiter ou écarter.
+⏭️ **1 arbitrage ouvert pour Aziz** : `FICHE-MOCKUP-3D` a hérité en silence du statut d'exception lors
+de sa scission (08-26) — soit l'inscrire au README des fiches, soit tailler son doublon de fin.
+⛔⛔ **NE JAMAIS RE-GRAVER UN CHIFFRE DE LIGNES DE FICHE ICI** (les 3 précédents étaient tous faux) :
+mesurer à la demande avec `wc -l memory/fiches/*.md`.
 
----
 
 ## ⛔⛔ AVANT DE LIRE QUOI QUE CE SOIT — LES CHANTIERS VIVANTS SONT DANS DES WORKTREES
 
@@ -183,45 +162,18 @@ Migration image faite (preview mort → GA → **défaut LITE**, -50 %). Restes 
 
 ---
 
-## 🔧 BACKLOG — 2e test du workflow démo client (carto), starter prêt (2026-08-22, en attente)
+## 🔧 BACKLOG — 2e test du workflow démo client (carto) — EN ATTENTE
 
-> **Pourquoi une 2e fois avant de graver** : le workflow a été validé sur UN seul brief (Zambie).
-> Doctrine maison : *une abstraction écrite sur un seul cas est un pari, pas une brique*.
-> On ne sait pas si `carto-selfreview` tient sur une carte CLAIRE, un globe D3 ou un format vertical.
+> Le workflow n'a été validé que sur UN brief (Zambie) : *une abstraction écrite sur un seul cas est
+> un pari, pas une brique*. On ne sait pas si `carto-selfreview` tient sur une carte claire, un globe
+> D3 ou un format vertical.
+> ▶️ **Starter complet (6 rappels payés) : `memory/starters/STARTER-PROMPT-2e-test-demo-carto.md`**
+> — extrait d'ici au wrap du 28/08.
 
-### ▶️ STARTER PROMPT — copier-coller tel quel en début de session
+**Reste ouvert sur la Zambie (non bloquant)** : concept A sans tilt ni relief (décision de goût,
+l'ajouter affaiblirait le contraste du gabarit) · filigrane discret validé mais jamais posé ·
+GPT-5.5 en relecteur systématique à tester (il a battu les auteurs des planches — frames only, pas de vidéo).
 
-```
-Session : 2e test du workflow DÉMO CLIENT cartographique.
-Objectif : rejouer la chaîne complète sur un brief NEUF, sans rien réinventer, pour savoir
-si le workflow tient sans explication. Si oui → on le grave. Sinon → on note ce qui casse.
-
-1. Lire out/_r-and-d/zambia-peacecorps/MANIFESTE.md (le cas de référence, 2 concepts validés)
-   et memory/feedbacks/feedback_comparatif-storyboard-mesurer-pas-demander.md (les pièges payés).
-2. Choisir un brief cartographique neuf — idéalement une VRAIE offre client, sinon un sujet
-   de la chaîne. Contrainte : 5-10 s max, 2 traitements.
-3. Dérouler SANS RACCOURCI :
-   brief lavé → audit du brief par un modèle tiers → 3 storyboards (gemini,gpt,grok)
-   → arbitrage Aziz → breakdown par le modèle QUI A DESSINÉ → code
-   → `carto-selfreview.py` (bloquant, AVANT de présenter) → comparatif planche PLEINE TAILLE
-   → corriger par la MESURE.
-4. Noter tout ce qui a dû être expliqué/adapté : c'est ce qui manque au workflow.
-
-⛔ Rappels non négociables (chacun a coûté cette session) :
- - Ne PAS coder avant storyboard, même pour « aller vite ».
- - Ne PAS comparer sur des vignettes (2 modèles ont halluciné « 15-20 % du cadre » vs 61 % réel).
- - VÉRIFIER chaque point d'un modèle avant de l'appliquer (2 des 7 étaient nuisibles).
- - Mapbox : déclarer `projection: {name:"mercator"}` sous zoom 5, sinon globe silencieux.
- - Mapbox : appeler `applyGeoAfriqueV5()`, sinon fond noir.
- - Créer un .tsx en Bash déclenche les gates depuis le 2026-08-22 : déclarer `// MOTEUR:`.
-```
-
-### Ce qui reste ouvert sur la Zambie (non bloquant)
-- **Concept A n'a ni tilt ni relief** (D3 n'en a pas nativement). Les ajouter le rapprocherait de B
-  et affaiblirait le contraste du gabarit → décision de goût, à trancher avec Aziz.
-- **Filigrane discret** validé par Aziz, jamais posé.
-- **Tester GPT-5.5 en relecteur systématique** : sur ce cas il a battu les auteurs des planches
-  (seul à voir un manque narratif, seul à donner des px). ⚠️ pas de vidéo en entrée — frames only.
 
 ---
 
@@ -231,45 +183,31 @@ si le workflow tient sans explication. Si oui → on le grave. Sinon → on note
 > Il était enterré sous un titre « ✅ SYSTÈME GRAVÉ » qui le faisait passer pour clos.
 > Phase A entière à faire — ne pas croire qu'on a de l'avance.
 
-## 🔬 PISTE OUVERTE (non urgente) — H3 : injecter NOTRE audio via `reference_audio_urls` (jamais testé)
-> ✅ **Le volet STYLES est FAIT le 2026-08-20** : Vector Poster ET Sunjata (+ gravure sépia) prouvés
-> transposables à seed constant, et l'argument B2B est formalisé en GABARIT DE CHOIX.
-> → § RECETTE DE MONTAGE B2B · `memory/doctrines/PILIERS-B2B.md`. **Ce qui reste ouvert ci-dessous
-> est UNIQUEMENT la limite audio.** Le prérequis seed/`.meta.json` reste valide.
-> ⚠️ **Priorité 1 reste GAZODUC Acte 3** (seul chantier avec un livrable bloquant + une action spécifiée au pixel près). Ce chantier-ci est exploratoire : le prendre quand l'Acte 3 est soldé, ou dans une session dédiée comme Aziz les mène d'habitude.
+## 🔬 PISTE OUVERTE (non urgente) — H3 : injecter NOTRE audio via `reference_audio_urls`
 
-**Enjeu** : on tient peut-être la voie pour produire de VRAIS inserts animés de scènes (cf. règle des
-3 plans → [MOTEURS-VISUELS-ET-SOCLE](doctrines/MOTEURS-VISUELS-ET-SOCLE.md) § LE RACCORD, statut PISTE CADRÉE : 1 seul cas, MESO jamais traversé), **sans passer par les modèles propriétaires** (Seedance 2.5 à 4,17 $, Omni à 1,10 $).
-**Acquis de la session du 18/08** : éditer l'image source (Gemini, ~0,10 $) + régénérer H3 avec le seed
-d'origine (GPU Comfy, **0 crédit**) donne un clip jugé par Aziz *« quasiment une copie image par image »*
-— artefact d'origine compris. Recette complète : [edition-video-ciblee-omni-seedance](tools/edition-video-ciblee-omni-seedance.md).
-**À tester la prochaine fois** : le style **Vector Poster** et le style **storyboard Sunjata** sur ce même
-chemin. Si ça tient → argument B2B/freelance direct (scène quasi-identique reproductible, coût ~0 $).
-**⛔ La seule limite connue à lever** : l'audio est RÉGÉNÉRÉ (corrélation 0,46, la voix change).
-⚠️ **Piège de grep** : `reference_audio_urls` (H3, **pluriel**, jamais testé) ≠ `reference_audio_url`
-(minimax-music, **singulier**, N'EXISTE PAS en v2.6). Un grep fait conclure à tort que le champ est mort.
-Piste ouverte : injecter NOTRE audio via `reference_audio_urls` (existe sur `minimax/h3/reference-to-video`,
-jamais testé) plutôt que de subir celui de H3.
-**⭐ Prérequis non négociable** : archiver `.prompt.txt` + `.meta.json` (avec le **SEED**) à côté de chaque
-clip — sans le seed, ce chemin est impossible.
+✅ Le volet STYLES est **FAIT** (20/08) : Vector Poster et Sunjata prouvés transposables à seed
+constant → `memory/doctrines/PILIERS-B2B.md` § GABARIT DE CHOIX.
+⛔ **La seule limite qui reste** : l'audio est RÉGÉNÉRÉ par H3 (corrélation 0,46, la voix change).
+Piste jamais testée : `reference_audio_urls` sur `minimax/h3/reference-to-video`.
+⚠️ **Piège de grep** : `reference_audio_urls` (H3, **pluriel**) ≠ `reference_audio_url` (minimax-music,
+singulier, n'existe PAS en v2.6) — un grep fait conclure à tort que le champ est mort.
+⭐ **Prérequis non négociable** : archiver `.prompt.txt` + `.meta.json` (avec le **SEED**) à côté de
+chaque clip, sinon ce chemin est impossible. Recette d'édition :
+`memory/tools/edition-video-ciblee-omni-seedance.md`.
+⚠️ Exploratoire — à prendre quand l'Acte 3 est soldé.
 
-## 🎬 Showcase des capacités — VIRAGE : source = production vivante publiée (2026-08-15 soir)
+## 🎬 Showcase des capacités — reste LE DÉROULÉ (2026-08-15)
 
-⛔ **L'arbitrage des 2 planches-contact est ANNULÉ** — ne PAS le redemander à Aziz. Les 53 templates
-sont **archivés** (consultables, pas supprimés) : ils ne sont plus la source de la showcase (« des
-templates qui défilent sans intention ne veulent rien dire »). Nouvelle source = **production vivante
-publiée** (Sénégal, Soudan, AES, CFA, Gazoduc Actes 1-2-4-5 ; ⛔ Acte 3 exclu tant que l'acte ENTIER n'est pas validé (son Segment C est FINAL depuis le 18/08, mais l'acte ne l'est pas)).
-✅ **CHARTE DE DA FAITE le 2026-08-15** (`memory/doctrines/CHARTE-DA-FREELANCE.md`, 166 lignes,
-palette + exceptions datées + preuve interne). ⏭️ **PROCHAINE ACTION = le DÉROULÉ** (ordre/durée/
-musique) → index interne 3-4 min → **cut vente 60-90 s**. ⛔ Ne plus annoncer la charte comme « à
-écrire » — dérive détectée DEUX FOIS (wraps du 20/08 et du 27/08).
-⛔⛔ Le 20/08 l'avertissement avait été écrit MAIS le texte fautif conservé « pour mémoire » : il a
-donc re-trompé une semaine plus tard. **Un texte périmé gardé pour mémoire reste lu comme actif** —
+⏭️ **PROCHAINE ACTION = le DÉROULÉ** (ordre / durée / musique) → index interne 3-4 min → **cut vente
+60-90 s**. ⛔ Zéro composant neuf à coder.
+✅ Charte de DA FAITE (`memory/doctrines/CHARTE-DA-FREELANCE.md`) — ⛔ ne plus l'annoncer « à écrire »,
+dérive détectée 2 fois (wraps du 20/08 et 27/08).
+⛔ **L'arbitrage des 2 planches-contact est ANNULÉ** — ne PAS le redemander. Les 53 templates sont
+archivés : la source est désormais la **production vivante publiée** (Sénégal, Soudan, AES, CFA,
+Gazoduc Actes 1-2-4-5 ; ⛔ Acte 3 exclu tant que l'acte ENTIER n'est pas validé).
+⛔⛔ **Leçon de méthode (payée 2×)** : un texte périmé gardé « pour mémoire » **reste lu comme actif** —
 il se SUPPRIME, l'avertissement seul suffit.
-⏭️ **PROCHAINE ACTION = le DÉROULÉ** (ordre/durée/musique) → index interne 3-4 min → **cut vente
-60-90 s**. ⛔ zéro composant neuf à coder.
-→ **[SHOWCASE-CAPACITES.md](projects/SHOWCASE-CAPACITES.md)** (§ Benchmark ÉLARGI + § CE QUI
-MANQUE VRAIMENT) · **[planche-contact = archive](projects/SHOWCASE-PLANCHE-CONTACT.md)**
+→ `memory/projects/SHOWCASE-CAPACITES.md`
 
 ## 💼 GIG FIVERR ENTRÉE DE GAMME (2026-08-12/13)
 
@@ -279,51 +217,22 @@ Reste ouvert : prix réels, nom commercial, portfolio de démo. Détail :
 
 ---
 
-## ⭐ KORA & CARTES — 2 pistes de sujet en exploration (2026-08-12/13)
+## ⭐ KORA & CARTES — 2 pistes de sujet, RIEN N'EST TRANCHÉ (2026-08-12/13)
 
-Piste A retenue : "pourquoi l'Afrique évolue / pays qui montent" (entrepreneuriat, démographie) —
-relancer SUJET-PRIME 6 étapes dessus en priorité. Piste B (FMI/dette) : angle + squelette narratif
-posés ("comment une dette remboursée peut ne jamais diminuer ?"), décision en suspens = script direct
-OU fact-check du chiffre-choc d'abord. Diagnostic flop Short CFA CLOS (miniature illisible, fixé).
-Détail complet des 3 : `projects/EXPLORATION-DIVERSIFICATION-CHAINES.md` § sessions 2026-08-12 et 2026-08-12/13.
+**Les 2 décisions qui restent ouvertes** (le reste de cette section est de la preuve déjà gravée) :
+- **Quel sujet ?** Piste A « pourquoi l'Afrique évolue / pays qui montent » (relancer SUJET-PRIME
+  6 étapes) **vs** mythologie africaine (mythe Anansi testé). Non tranché.
+- **Quel format ?** Insert dans une vidéo Mapbox/D3 existante **vs** vidéo complète. Non tranché.
+- Piste B (FMI/dette) : angle et squelette posés → `memory/projects/CHANTIER-FMI.md`.
 
-**⭐⭐ Piste Poster Vector/Whiteboard Doodle pour Kora & Cartes — 2 styles VALIDÉS sur mythe Anansi, dialogue+animation OK (2026-08-13)**
-Test complet mené sur le mythe Anansi/Nyame (Akan/Ghana, pacte des histoires du monde — angle
-"ruse > force pour capturer la valeur", mythologie africaine pure retenue vs piste A/pays-qui-montent).
-2 styles H3 VALIDÉS bout en bout par Aziz, chacun en V2 corrigée (dialogue FR propre + geste
-animé + upscale 1080p sans passer par le 720p) : **Poster Vector** (flat vector, orbite dorée continue)
-et **Whiteboard Doodle** (couleur sélective jaune/bleu choisie spontanément par le modèle, très
-appréciée par Aziz — comparable à notre pratique SVG maison). Défaut résiduel (œil qui semblait
-"morphé" en 480p) confirmé être un simple artefact de basse résolution, réglé par l'upscale — pas un
-vrai défaut H3. Détail technique complet + prompts reproductibles + syntaxe dialogue validée :
-`tools/minimax-h3-styles-tests.md`. Assets : `episodes/_rnd/kora-cartes-mythologie/tests-visuels/`.
-(ces tests du 2026-08-13 utilisaient le format 6-sections, depuis remplacé par le format officiel
-H3-Base — voir `tools/minimax-h3-styles-tests.md` § "FORMAT DE PROMPT OFFICIEL" avant de reproduire
-cette méthode sur un nouveau sujet).
-**Reste ouvert** : décision de format (insert dans vidéo Mapbox/D3 existante vs vidéo complète) — pas
-encore tranché, sujet pas encore choisi non plus (piste A "pays qui montent" vs mythe reste à trancher).
+**Acquis déjà gravés ailleurs — ne pas les redire ici** :
+2 styles H3 validés sur le mythe Anansi (Poster Vector · Whiteboard Doodle) + prompts reproductibles
+et format officiel H3-Base → `memory/tools/minimax-h3-styles-tests.md` ·
+SVG codé direct par Fable 5 mode MAX, validé sur 2 cas → `memory/doctrines/SVG-SCENES-GENERATIVES.md`
+(⛔ dont la règle : **jamais dessiner un contour de pays à l'œil**, utiliser `d3-geo`/Natural Earth) ·
+storyboard multi-modèles refondu le 18/08 → `memory/fiches/FICHE-STORYBOARD.md` (auto-injectée).
+Détail des pistes : `memory/projects/EXPLORATION-DIVERSIFICATION-CHAINES.md`.
 
-**⭐⭐ SVG codé direct (Fable5 mode MAX, sans jury LLM) — VALIDÉ sur 2 cas distincts, méthode fiable (2026-08-13)**
-Hypothèse d'Aziz confirmée deux fois : un agent Claude en mode MAX, codant DIRECTEMENT en SVG en
-observant une image de référence Gemini (zéro appel API externe, zéro jury), produit un résultat au
-niveau ou au-dessus de la référence — ET produit des groupes SVG adressables/animables (avantage net
-sur une image figée). **Cas 1** (scène dette/FMI, objets fabriqués simples — piles de billets,
-factures, flèches, pièces) : réussi, mais géographie réelle (continent Afrique) a échoué 2× à main
-levée avant de pivoter vers de vraies données `d3-geo`/Natural Earth — **jamais dessiner un contour de
-pays à l'œil, même dans une scène par ailleurs simple**, règle confirmée sur ce 2e cas aussi. **Cas 2**
-(décor complet aéroport Niamey Gazoduc Acte 3 — architecture + atmosphère nocturne + lumières
-multiples, PAS juste des objets simples) : jugé par Aziz supérieur au décor existant, **action directe
-prise** — voir bloc GAZODUC ci-dessous. Composants sources : `src/projects/_rnd/svg-scenes/
-DetteFmiMecanismeSVG.tsx` + `GazoducAeroportFable5Test.tsx`. Réserve d'Aziz : pas encore un pilier
-du workflow, à retester sur plusieurs styles/registres dans une session dédiée avant de généraliser
-davantage — mais déjà utilisable au cas par cas dès maintenant (2 preuves suffisantes pour un test
-ponctuel, pas encore pour une automatisation).
-
-**⭐ Storyboard multi-modèles** → ⚠️ **méthode REFONDUE le 2026-08-18**, version en vigueur :
-`memory/fiches/FICHE-STORYBOARD.md` (audit du brief obligatoire · 3 dessinateurs dont Grok · le modèle
-pose un liseré au lieu d'écrire). Le bloc du 13/08 décrivait Gemini+GPT seuls — Grok manquait.
-
----
 
 ## ⭐⭐ NOUVELLE CHAÎNE CANADA EN — test PIPELINE en cours (2026-08-14)
 

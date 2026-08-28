@@ -1,15 +1,25 @@
-# ⛔⛔ PÉRIMÉ (2026-08-15) — NE PAS UTILISER CE STARTER
+# ⚠️ BANDEAU CORRIGÉ AU WRAP DU 2026-08-28 — LE GEL EST LEVÉ
 
-> **L'Acte 3 a été GELÉ par Aziz le 2026-08-15.** Ce starter fait reprendre l'Acte 3 : le suivre
-> irait à l'encontre de la décision. La priorité est désormais l'**Acte 4** (mouvement A fait,
-> B et C à produire), puis l'Acte 5.
->
-> **Aller à** : `memory/NEXT-ACTION.md` § « GAZODUC ACTE 4 — REPRENDRE ICI ».
-> Raison du gel + ce qui reste à faire sur l'Acte 3 quand on y reviendra :
-> `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md` § « ACTE 3 — GELÉ EN WIP ».
->
-> (Conservé pour trace : le contenu ci-dessous reste exact sur l'ÉTAT de l'Acte 3 au 2026-08-14,
-> seule sa consigne « reprendre l'Acte 3 » est caduque.)
+> ⛔ **L'ancien bandeau disait « PÉRIMÉ, l'Acte 3 est GELÉ » (15/08). C'EST FAUX DEPUIS.**
+> Le gel a été levé : `MEMORY.md` et `NEXT-ACTION.md` désignent l'**Acte 3 comme PRIORITÉ 1**.
+> Ce starter est donc de nouveau le bon point de reprise. (Cas d'école : un fichier de navigation
+> périmé se lit comme actif — il fallait le corriger, pas seulement le contourner.)
+
+## ⛔⛔ LES 3 INTERDITS PAYÉS — LIRE AVANT DE CODER UNE SEULE LIGNE
+
+Recopiés depuis `NEXT-ACTION.md` au wrap du 28/08 : ils n'étaient **dans aucun fichier de reprise**,
+alors que c'est ce fichier-ci qu'on ouvre pour reprendre. Chacun a déjà coûté un aller-retour.
+
+- ⛔ **NE PAS ressortir la TRANCHÉE** (codée puis retirée le 18/08) : le script ne parle jamais de
+  creusement — c'est le BRIEF qui l'avait soufflée aux modèles.
+- ⛔ **NE PAS prolonger la rupture plein écran au-delà de 155 frames** : le clip ne boucle pas.
+- ⛔ **NE PAS remettre l'encart Adrar après la rupture** : décision d'Aziz, ce serait une redite.
+
+⚠️ Vérifier aussi `out/episodes/gazoduc-aagp-tsgp/wip/acte3-v3.review-override.md` (12/08) avant de
+reprendre : c'est un review-override, il peut porter un verdict de rejet encore valide.
+
+> État de l'Acte 3 décrit ci-dessous : exact au 2026-08-14. Croiser avec
+> `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md` § ACTE 3.
 
 ---
 

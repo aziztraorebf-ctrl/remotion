@@ -147,6 +147,11 @@ produit. ⛔ Et son titre porte **`explainer video`**, mot **banni depuis** par 
 ⛔ `data visualization` (= acheteurs Power BI, canal mort).
 
 **Les prix** : sans avis, la réalité Fiverr est **50-150 $** (afficher 390 $ ne produit pas 390 $).
+⚠️⚠️ **NUANCÉ le 2026-08-28 par mesure terrain — lire § MESURE TERRAIN plus haut AVANT de fixer un
+prix.** Le prix ne suit PAS mécaniquement le compteur d'avis : **Nimra K vend son premium 537 CAD
+avec 25 avis**. Le **REGISTRE** compte autant (pièce Lottie 145 CAD vs explainer 537 CAD). Et Fiverr
+**dépriorise volontairement le bas de gamme** (annoncé aux actionnaires Q1 2026) : entrer bas n'achète
+plus de visibilité.
 Après 20-50 avis : 200-400 $. Plafond Fiverr : 600-1 000 $ via clients récurrents.
 ⭐ **Sur Upwork, 1 000-1 500 $ sont accessibles immédiatement** — la sélection s'y fait sur **portfolio**,
 pas sur compteur d'avis, ce qui neutralise l'absence d'historique.
