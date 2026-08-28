@@ -34,7 +34,18 @@ fkey() {
 PARTS=""
 add_fiche() {
   local name="$1" label="$2" scopekey="$3"
-  local f="$FICHES_DIR/$name"
+  # ⛔ 2026-08-28 : un chemin fige rend une fiche NEUVE muette dans un worktree (elle
+  # n'existe que la). Mais "premier trouve" et "le plus recent" sont FAUX AUSSI : la date
+  # d'un fichier de worktree est celle de sa CREATION par git, pas de son contenu — mesure
+  # d'une fiche plus "recente" et pourtant amputee de 41 %.
+  # Regle retenue : **la plus RICHE gagne** (une fiche amputee est un sous-ensemble).
+  local f="$FICHES_DIR/$name" alt sz bestsz
+  bestsz=$(wc -c < "$f" 2>/dev/null | tr -d ' '); bestsz=${bestsz:-0}
+  alt="${CLAUDE_PROJECT_DIR:-$PWD}/memory/fiches/$name"
+  if [ -f "$alt" ]; then
+    sz=$(wc -c < "$alt" 2>/dev/null | tr -d ' ')
+    [ "${sz:-0}" -gt "$bestsz" ] && f="$alt"
+  fi
   [ -f "$f" ] || return 0
   local key; key=$(fkey "${scopekey}::${name}")
   [ -f "$SENTINEL_DIR/$key" ] && return 0
@@ -199,7 +210,15 @@ HAS_D=$(printf '%s' "$SCOPE" | grep -oE 'd=\{|d="[Mm]' | wc -l | tr -d ' ')
 # QUE `interpolate(` (score 1, sous le seuil 2) — FICHE-CAMERA ne s'est donc PAS declenchee
 # sur PremiumCard3D.tsx alors que la session y a paye 3 rendus sur un piege de CAMERA
 # (angle mort d'un objet en rotation). Regle ecrite sans gate outille = regle qui ne se declenche pas.
-CAM=$(printf '%s' "$SCOPE" | grep -oE 'camAt|scaleMul|getCam|lerpCam|camFor|jumpTo|bearing|pitch:|interpolate\(|rotationY|ThreeCanvas|useFrame|rotation=\{\[' | wc -l | tr -d ' ')
+# ⛔ CORRIGE 2026-08-28 : `interpolate(` etait compte comme motif de CAMERA. Or c'est la
+# fonction de base de TOUTE animation Remotion — une animation de logo en contenait 7, et
+# FICHE-CAMERA se declenchait a tort pendant que FICHE-GESTE-ANIME restait muette.
+# La camera se reconnait a ses motifs PROPRES ; interpolate( ne compte plus qu'en appoint.
+# (les motifs 3D rotationY/ThreeCanvas/useFrame/rotation={[ restent des motifs PROPRES.)
+CAM_PROPRE=$(printf '%s' "$SCOPE" | grep -oE 'camAt|scaleMul|getCam|lerpCam|camFor|jumpTo|bearing|pitch:|rotationY|ThreeCanvas|useFrame|rotation=\{\[' | wc -l | tr -d ' ')
+CAM_GEN=$(printf '%s' "$SCOPE" | grep -oE 'interpolate\(' | wc -l | tr -d ' ')
+CAM=$(( CAM_PROPRE * 2 + CAM_GEN ))
+ANIM=$(printf '%s' "$SCOPE" | grep -oE 'spring\(|interpolate\(|Easing\.|useCurrentFrame\(' | wc -l | tr -d ' ')
 
 # SVG dessine : double critere + garde-fou anti-icone (PRIMS>=2).
 if { [ "${PRIMS:-0}" -ge 4 ] || [ "${HAS_D:-0}" -ge 1 ]; } && [ "${PRIMS:-0}" -ge 2 ]; then
@@ -207,8 +226,13 @@ if { [ "${PRIMS:-0}" -ge 4 ] || [ "${HAS_D:-0}" -ge 1 ]; } && [ "${PRIMS:-0}" -g
 fi
 
 # Camera : transversal (D3, Mapbox, SVG) — declencheur = motifs de code camera.
-if [ "${CAM:-0}" -ge 2 ]; then
-  add_fiche "FICHE-CAMERA.md" "FICHE CAMERA" "$FILE_PATH"
+# GESTE ANIME : dit COMMENT doser un mouvement d'OBJET (FICHE-CAMERA couvre l'OBJECTIF).
+if [ "${ANIM:-0}" -ge 3 ] && [ "${CAM_PROPRE:-0}" -lt 1 ]; then
+  add_fiche "FICHE-GESTE-ANIME.md" "FICHE GESTE ANIME" "$FILE_PATH"
+fi
+
+if [ "${CAM_PROPRE:-0}" -ge 1 ] && [ "${CAM:-0}" -ge 2 ]; then
+add_fiche "FICHE-CAMERA.md" "FICHE CAMERA" "$FILE_PATH"
 fi
 
 # ARSENAL DE SCENE (ajoute 2026-08-21) : les autres fiches enseignent la METHODE, aucune ne

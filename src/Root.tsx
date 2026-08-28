@@ -140,6 +140,7 @@ import { AtlasFormat3SmartCrop } from "./projects/souverain/carousels/hybrid/Atl
 import { AtlasFormat4PanneauOpaque } from "./projects/souverain/carousels/hybrid/AtlasFormat4PanneauOpaque";
 import { SEGMENTS as MAROC_SEGMENTS } from "./projects/souverain/maroc-batteries/timing";
 import { BlankComposition } from "./BlankComposition";
+import { LoadUpAnime, LOADUP_DUREE } from "./projects/_client-sim/logo-anim/LoadUpAnime";
 import { HeroDataShowcase, HERO_DATA_SHOWCASE_FRAMES } from "./projects/_shared/demos/HeroDataShowcase";
 import { A3Cailloux, A3_CAILLOUX_FRAMES } from "./projects/souverain/maroc-batteries/A3Cailloux";
 import { A6Question, A6_QUESTION_FRAMES } from "./projects/souverain/maroc-batteries/A6Question";
@@ -750,6 +751,14 @@ export const RemotionRoot: React.FC = () => {
       <Folder name="atlas-peste-1347">
         {/* FOSTER — L'ASSEMBLAGE : les 11 plans + musique + SFX.
             1283 frames = 42,77 s (reference 42,75 s). */}
+        <Composition
+          id="LoadUpAnime"
+          component={LoadUpAnime}
+          durationInFrames={LOADUP_DUREE}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
         <Composition
           id="FosterFull"
           component={FosterFull}
