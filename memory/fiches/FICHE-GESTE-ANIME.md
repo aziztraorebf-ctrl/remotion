@@ -83,6 +83,41 @@ Ce qui transfère : la **hiérarchie** (petit = rapide, grand = lent) et la dur�
 à la taille de l'élément. Repères : micro-retour 100-160 ms · élément 200-320 ms ·
 section 400-800 ms · plan entier 800-1600 ms.
 
+## ⭐⭐ LES PRIMITIVES OUTILLÉES — ne pas les re-coder à la main (2026-08-28)
+
+`src/projects/_client-sim/lottie-ui/tools/animate_scene.py`, appelées par une **partition**
+`{motif_de_nom: (type, ...)}`. ⛔ Vérifier qu'une primitive n'existe pas AVANT d'écrire des
+clés à la main — les 4 dernières sont nées de gestes que j'avais d'abord codés en dur.
+
+| Primitive | Ce qu'elle fait | Signature |
+|---|---|---|
+| `fondu` | apparition en opacité | `(debut, fin)` |
+| `pop` | apparition + ressort discret | `(debut, fin)` |
+| `trace` | le trait se dessine (trimPath) | `(debut, fin)` |
+| ⭐ `geste3` | **monte haut → SUSPEND → retombe** + écrasement | `(f0, f_haut, f_susp, f_impact, hauteur)` |
+| ⭐ `respire` | oscillation lente, EN BOUCLE | `(debut, fin, ampleur, periode)` |
+| ⭐ `balance` | rotation alternée, ancrée à la BASE | `(debut, fin, angle, periode, ancre_y)` |
+| ⭐ `cligne` | les yeux se ferment 2 frames | `(debut, fin, periode)` |
+
+### ⭐ LA BOUCLE DE VIE — le défaut qu'on ne voit pas en regardant le début
+Sur le renard, tout était juste **jusqu'à f70**… puis **plus rien pendant 80 frames**.
+**Une mascotte figée n'est pas une mascotte, c'est une image qui est apparue.** `respire`,
+`balance` et `cligne` existent pour ça. ⭐ **Aucun rigging nécessaire** — que des rotations
+sur des groupes déjà nommés. Repères mesurés : clignement **2 frames** (66 ms — plus long,
+le personnage a l'air endormi), période **~38 frames**, balance **4,5°**.
+⛔ `balance` doit AUSSI poser un fondu d'entrée : il n'anime que la rotation, donc sans lui
+l'élément est visible dès la frame 0, avant tout le reste.
+
+### ⛔⛔ LE PIÈGE D'ANCRAGE — il a touché LoadUp sans qu'on le voie
+Un calque converti a son ancre ET sa position à **`[0,0]`** (la géométrie porte ses
+coordonnées absolues). Sans recentrage, **la forme pivote et grandit depuis le COIN DE
+L'ÉCRAN** — sans aucune erreur. `centre_du_calque()` le fait, mais elle **renvoyait `None`**
+sur tout fichier passé par `group_layers.py` (elle cherchait les chemins à une profondeur
+fixe et trouvait des `gr`). ⭐ **Conséquence rétroactive** : l'écrasement de LoadUp validé
+le 28/08 était ancré à `[0,0]` — il « marchait » par chance. Corrigé.
+⛔ Pour une rotation, l'ancre va à la **BASE** de la forme, pas à son centre (une queue
+pivote où elle s'attache) — d'où le paramètre `ancre_y` de `balance`.
+
 ## LE VOCABULAIRE (les 4 termes qui ont servi)
 
 **anticipation** petit élan en sens INVERSE avant de partir · **follow-through** des parties

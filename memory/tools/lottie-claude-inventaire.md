@@ -15,6 +15,69 @@ maison (§ ci-dessous).
 
 ---
 
+## ⭐⭐ L'ATELIER DE CONVERSION SVG → LOTTIE (mis à jour 2026-08-28)
+
+> **C'est ici qu'on convertit un fichier qu'on n'a PAS écrit** (logo client, SVG d'un
+> designer). Tout vit dans `src/projects/_client-sim/lottie-ui/tools/`.
+> ⛔ Le chemin `scripts/tools/svg2lottie.py` cité ailleurs en mémoire **n'est pas** l'atelier.
+
+| Outil | Ce qu'il fait | Quand |
+|---|---|---|
+| `svg2lottie_scene.py` | SVG → Lottie, **et déclare ce qu'il approxime ou refuse** | toujours en 1er |
+| `planche_calques.py` | rend **chaque calque SEUL** en vignettes | pour VOIR ce qu'on a |
+| ⭐ `proposer_carte.py` | propose des **blocs** géométriquement sûrs (contigus, contre-formes rattachées) | entre la planche et la carte |
+| `group_layers.py` | applique une carte `{nom: [calques]}` → calques **nommés** | après avoir nommé les blocs |
+| `animate_scene.py` | pose une animation depuis une **partition** | pour faire bouger |
+| `compare_render.py` | **écart mesuré** entre le SVG et le Lottie, avec planche | ⛔ AVANT de conclure |
+| `test_rendu.py` · `test_logo_client.py` | non-régression (7 assets · 4 volets) | avant de commiter |
+
+**LA CHAÎNE COMPLÈTE** (prouvée de bout en bout sur 2 logos de vrais clients) :
+`image → Recraft (vectorise) → svg2lottie_scene → planche_calques → proposer_carte → [NOMMER] → group_layers → animate_scene → Lottie`
+
+### Ce qui est PORTÉ (mesuré, pas supposé)
+- **Dégradés** linéaires et radiaux (`gf`), y compris sous un `transform` de groupe.
+- ⭐ **`gradientTransform`** quand c'est une **similitude** (translation · rotation · échelle
+  UNIFORME et leurs compositions) : Lottie porte un SEGMENT, déplacer ses 2 points suffit.
+- ⭐⭐ **Le FLOU** (`feGaussianBlur` seul) via l'effet Lottie `ty: 29`. **MESURÉ le 2026-08-28** :
+  `lottie-web` le rend — un carré passe de 0 à 5360 pixels de bord adouci, vérifié à l'image.
+  ⛔ **La note « les filtres sont une limite du FORMAT » était FAUSSE** : le format sait, c'est
+  notre convertisseur qui ne l'émettait pas.
+- **`<use>`** (aplatis), **texte** (vectorisé), **feuilles `<style>`** (Illustrator).
+
+### Ce qui reste REFUSÉ — et pourquoi
+- **Filtres COMPOSITES** (`feOffset`+`feMerge` = ombre portée, `feColorMatrix`) : pas d'équivalent.
+- **`gradientTransform` avec cisaillement ou échelle NON uniforme** : rendrait un radial
+  elliptique, que le format n'exprime pas.
+- **`<pattern>`** (motifs répétés), **masques** (le prochain gros chantier).
+
+### ⛔⛔ LES 3 RÈGLES QUI ONT COÛTÉ
+1. **Un rapport VERT ne prouve rien.** « transportable à l'identique » a menti **3 fois**
+   (logo tout noir, blason amputé, dégradés hors cadre). **RENDRE ET REGARDER.**
+2. **Un groupe doit être CONTIGU.** L'ordre de peinture est une séquence : grouper par NATURE
+   (« tous les éléments de blouse ») fait passer un groupe devant ce qui doit rester entre ses
+   membres → tache noire entre les yeux du renard, 0,37 % d'écart. Un nom parlant qui casse la
+   séquence est pire qu'un nom terne qui la respecte.
+3. **Une contre-forme voyage avec sa lettre.** Séparée, elle bouche le trou — le « o » sort en
+   disque plein, et le chiffre global (0,14 %) passe pour bon.
+
+### ⛔⛔ LA FAMILLE DE BUGS À CONNAÎTRE — 6 occurrences en 4 jours
+**L'élément est CORRECT, c'est son AIGUILLAGE qui l'annule** — sans erreur, JSON valide :
+flamme figée · tri `fl`/`st` qui jetait les `gf` · sonde de test à un niveau fixe ·
+`centre_du_calque` → ancre à `[0,0]` (la forme pivote depuis le coin de l'écran) · ménage
+« dégradé sans arrêt » qui supprimait les `<filter>` · `len(entree)==4` pris pour « c'est du texte ».
+⭐ **2 règles** : chercher les `sh`/les defs **EN PROFONDEUR**, jamais à un niveau fixe ·
+ne jamais discriminer sur la **LONGUEUR** d'une structure, c'est le **CONTENU** qui discrimine.
+
+### Le nommage : ce qui est outillé, ce qui ne l'est pas
+`proposer_carte.py` fait le travail **mécanique** (quelles formes vont ensemble) mais **ne nomme
+rien** — il sort `bloc-1`, `bloc-2`. Rendement mesuré : **40 % sur un logotype**, **6 % sur une
+mascotte** — et **il le dit** en sortie au lieu de laisser croire qu'il a travaillé.
+⭐ Pourquoi cet écart : la règle suppose un détail **ENFERMÉ et CLAIR** (le trou d'un « o »).
+Une mascotte **juxtapose** ses éléments au lieu de les emboîter. Là, le regroupement reste
+MANUEL — en croisant **forme + couleur + position** sur la planche annotée.
+
+---
+
 ## Ce que Claude PEUT faire seul (zéro asset externe)
 
 ### Icônes géométriques simples (validé)

@@ -218,7 +218,12 @@ HAS_D=$(printf '%s' "$SCOPE" | grep -oE 'd=\{|d="[Mm]' | wc -l | tr -d ' ')
 CAM_PROPRE=$(printf '%s' "$SCOPE" | grep -oE 'camAt|scaleMul|getCam|lerpCam|camFor|jumpTo|bearing|pitch:|rotationY|ThreeCanvas|useFrame|rotation=\{\[' | wc -l | tr -d ' ')
 CAM_GEN=$(printf '%s' "$SCOPE" | grep -oE 'interpolate\(' | wc -l | tr -d ' ')
 CAM=$(( CAM_PROPRE * 2 + CAM_GEN ))
-ANIM=$(printf '%s' "$SCOPE" | grep -oE 'spring\(|interpolate\(|Easing\.|useCurrentFrame\(' | wc -l | tr -d ' ')
+# ⛔ CORRIGE 2026-08-28 : ces motifs ne couvraient que REMOTION (spring/interpolate).
+# Or on ecrit desormais aussi des mouvements en PARTITION LOTTIE (animate_scene.py) :
+# `("geste3", ...)`, `("balance", ...)`. Aucun motif Remotion dedans -> la fiche NE SE
+# DECLENCHAIT PAS au moment precis ou elle sert. Meme famille que le bug interpolate(
+# ci-dessus : une regle ecrite ne vaut que par son declencheur.
+ANIM=$(printf '%s' "$SCOPE" | grep -oE 'spring\(|interpolate\(|Easing\.|useCurrentFrame\(|"geste3"|"respire"|"balance"|"cligne"|apply_keyframes|animate_property' | wc -l | tr -d ' ')
 
 # SVG dessine : double critere + garde-fou anti-icone (PRIMS>=2).
 if { [ "${PRIMS:-0}" -ge 4 ] || [ "${HAS_D:-0}" -ge 1 ]; } && [ "${PRIMS:-0}" -ge 2 ]; then
