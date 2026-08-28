@@ -42,6 +42,44 @@
 
 ---
 
+## ⚖️ UPWORK vs FIVERR — l'arbitrage (tranché 2026-08-28, après 5 annonces analysees)
+
+**Ce n'est PAS un « ou bien ». Les deux resolvent des problemes differents DANS LE TEMPS.**
+
+| | Upwork | Fiverr |
+|---|---|---|
+| Effort | **jetable** — la 51e candidature ne rend pas la 50e visible | **cumulatif** — la page travaille pendant qu'on dort |
+| Prix | negocie (on enchérit contre des inconnus) | **determine** — le tarif affiche est ce qui est paye |
+| Concurrence | ~50 propositions par annonce | **27 366 services** sur `product-demo-video` : pas moins, AUTREMENT (referencement, pas proposition) |
+| Delai de retour | possible cette semaine | investissement amont, retour plus tard |
+| Convient a | relation qui dure, horaire | **one-off, transaction** = notre forme actuelle |
+
+⛔ **L'ERREUR À NE PAS FAIRE : croire Fiverr moins concurrentiel.** Il l'est DAVANTAGE pour un
+nouveau — l'algorithme favorise les vendeurs deja notes. Le combat change de forme, il ne
+disparait pas.
+⛔ **Ne pas conclure « les bonnes offres Upwork sont rares » sur un echantillon non filtre.** Sur
+5 annonces lues a la main (sans les filtres Q0), **2 etaient alignees = 40 %**. Le ratio se juge
+APRES avoir applique les filtres, pas avant.
+
+**La decision** : garder Upwork **filtre et rare** (2-3 candidatures/mois sur du fortement aligne ;
+118 connects deja payes = un actif, ne pas le jeter) + mettre l'effort de CONSTRUCTION sur UNE page
+Fiverr, sur le creneau etroit `ui-animation`. ⛔ Jamais sur le rayon generique.
+
+⭐⭐ **Upwork est le LABORATOIRE DE VOCABULAIRE de la page Fiverr.** Les annonces donnent les mots
+exacts des acheteurs (« polished advertisement, not a screen recording » · « maintaining the white
+glow is mandatory » · « bring your own creative ideas »). Une page ecrite avec LEURS mots bat une
+page inventee. **Raison de continuer a lire des annonces meme sans y repondre.**
+
+⚠️ **LE GARDE-FOU (a relire avant de basculer)** : une page Fiverr est un LIVRABLE, et on sait
+faire des livrables. Basculer vers Fiverr peut etre une façon elegante d'eviter le refus d'un
+client. Fixer D'AVANCE ce qui ferait dire « ca ne marche pas » (delai, nb de vues) — sinon on
+construit indefiniment sans jamais avoir de reponse du marche.
+
+⛔⛔ **ETAT REEL (verifie 2026-08-28)** : `GIG-PAGE-VALIDEE.md` existe (validee 12/08) mais
+**N'EST PAS PUBLIEE** — prix non figes, delais estimes jamais mesures, aucun exemple de portfolio
+produit. ⛔ Et son titre porte **`explainer video`**, mot **banni depuis** par la recherche du 27/08
+(= le mot des gigs a 5 $). **La page est a REECRIRE avant publication, pas a coller.**
+
 ## 🎯 CE QUI EN DÉCOULE POUR VENDRE
 
 **Le positionnement (formulation stabilisée le 2026-08-27)** :

@@ -76,6 +76,35 @@ stack aligné = exactement la configuration à saisir. Trancher par Q1, pas par 
 ⭐ La méthode par le stack **retient** l'EdTech que le ratio seul rejetait, et **rejette**
 l'explainer pour un motif solide. C'est ce changement d'ordre qui fait toute la différence.
 
+### ⭐⭐⭐ LE PRIX AFFICHÉ A 3 SENS — ne jamais le lire au premier degré (2026-08-28)
+Mesuré sur 4 annonces réelles en un jour. **Toujours chercher lequel des 3 avant de juger.**
+
+| Type | Signature dans le texte | Cas mesuré | Ce qu'il faut faire |
+|---|---|---|---|
+| **PLACEHOLDER** | le brief demande « let us know the total cost » | AutoArch : **5 $** affichés, mais 2 STL de 4,8 Mo joints + accès démo offert, 15,91 $/h payés sur 120 embauches | Ignorer le montant. Le vrai repère = `total spent ÷ hires` |
+| **PRIX FERME** | « Budget: $X fixed price » en 1re ligne | Protejo : **60 $**, ratio 120 $/embauche | Le prendre au mot |
+| **PREUVE DE SOLVABILITÉ + APPEL D'OFFRES** | « the budget is accurate to show I have the money… bid what YOU FEEL IS FAIR » | Vecteurs néon : **2 500 $** affichés, mais historique à 136 $/embauche et **Entry level** | ⛔ Piège à foule : 20-50 propositions attirées par le nombre |
+
+⛔ **`Experience Level` contredit souvent le budget — et c'est LUI qui dit l'attente réelle.**
+2 500 $ affichés + **Entry level** = le client ne s'attend pas à un tarif senior.
+⭐ **Un montant élevé ATTIRE la masse** : plus de propositions = moins de chances d'être lu, et
+20 connects dépensés dans une pile. Le budget haut n'est pas un signal de bonne affaire.
+
+### ⭐⭐ L'AUTORISATION DU STOCK = le brief achète de l'ASSEMBLAGE, pas de la CRÉATION
+Marqueur plus fiable que le délai. Protejo : « livrer ce soir » semblait absurde jusqu'à lire
+« you may purchase/adapt premium stock icon packs ». Le client ne demandait pas de créer un set 3D
+en un jour — il demandait de SOURCER, adapter aux couleurs, et intégrer dans Framer. Brief
+parfaitement calibré, pour un autre métier. ⛔ Ne pas juger un délai avant d'avoir cherché si la
+matière première est fournie ou achetable.
+
+### ⭐⭐⭐ LE VRAI TRI EST PARFOIS UN DÉTAIL TECHNIQUE DE 3 MOTS
+Vecteurs néon : « transparent background » + « white glow is mandatory » sont **en tension** — le
+halo est un FILTRE (`feGaussianBlur`), pas du dessin, et nos filtres ne traversent pas encore
+(17,19 % → 6,68 % le 28/08, pas fermé). Aucun des 20-50 candidats ne l'aura vu ; ils le
+découvriront après avoir été engagés. ⭐ **C'est exactement là qu'un atelier qui MESURE bat un
+concurrent qui dessine** — et c'est l'ouverture de proposition la plus forte (position haute :
+« j'ai testé le point qui fait échouer ces livraisons »).
+
 ### Q0 — LE TRI EN 15 SECONDES, AVANT D'OUVRIR L'ANNONCE (ajouté 2026-08-28)
 > Ces 3 signaux se lisent sur la CARTE de l'annonce. Ils ne remplacent pas Q1-Q4, ils évitent
 > d'ouvrir ce qui ne mérite pas d'être lu.
