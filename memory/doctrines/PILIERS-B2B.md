@@ -18,6 +18,33 @@
 > ⛔ Ce n'est PAS un catalogue de composants (ça c'est `INTENTION-FORME-INDEX.md`), ni une doctrine
 > de production. C'est un **aiguillage**.
 
+## ⭐⭐⭐ COMMENT LE DIRE AU CLIENT (2026-08-28) — meme capacite, 2 formulations qui portent
+
+⛔ **« Deterministe » est un mot d'INGENIEUR** : il decrit notre moat, il ne le VEND pas. Deux
+reformulations, tirees de 5 videos freelance analysees (le reste du corpus etait du bruit) :
+
+**1. « Pourquoi vous plutot qu'un PROMPT ? »** — la question a laquelle une offre doit repondre en
+2026 n'est plus « pourquoi vous plutot qu'un autre freelance ». ⭐ Fait dur : **Shopify** a inscrit
+dans son processus de recrutement qu'on verifie d'abord si une IA peut faire le travail **avant tout
+recrutement humain, salarie OU freelance** (memo public, politique d'achat ecrite — pas une
+prediction).
+
+**2. « Ce qui SURVIT a votre depart. »** ⭐⭐ Le plus exploitable. Ce que les clients detestent, c'est
+la dependance : si le prestataire part, tout s'ecroule. **On livre litteralement le contraire** — un
+`.json` Lottie ou un composant React reste dans SA codebase : versionnable, modifiable, reexecutable
+**sans nous**. Un MP4 sorti d'After Effects, non. Argument qu'on possede deja techniquement et qu'on
+ne formulait pas.
+
+**Corollaire — l'IA a devalue la PREUVE, pas le travail.** Fabriquer une facade credible (logos,
+temoignages, portfolio) coute desormais zero. Donc la **verifiabilite** devient l'actif rare : un
+rendu qui bouge reellement, heberge, verifiable, vaut parce qu'il est **couteux a falsifier** — pas
+parce qu'il est joli.
+
+⚠️ **Axe orthogonal releve, non tranche** : la reponse la plus courante a la commoditisation n'est pas
+la superiorite technique mais **l'elargissement du perimetre** (prendre en charge l'amont et l'aval :
+audit → production → integration → iterations mensuelles). Un SaaS change tous les mois, donc la
+recurrence est defendable dans notre metier. **Hypothese a tester, pas un acquis.**
+
 ## Pourquoi ce fichier existe
 
 Cinq capacités ont été construites séparément, pour la chaîne. Mises ensemble, elles couvrent la

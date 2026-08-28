@@ -42,6 +42,35 @@
 
 ---
 
+## ⭐⭐⭐ MESURE TERRAIN 2026-08-28 — le marche TRANSIGE (1re donnee de PREMIERE MAIN)
+
+⛔ **Prime sur toute veille relayee.** Fait par Aziz lui-meme sur Fiverr, pas par un agent.
+
+**LE TEST DE PROFONDEUR** (2 gestes, 2 min) : trier les avis d'un vendeur **par date**, puis
+descendre **PAGE 2** des resultats et verifier si CES vendeurs-la transigent encore. Le n°1 recoit
+des commandes parce qu'il est n°1 — c'est la page 2 qui dit si le marche absorbe un ENTRANT.
+Transposable hors Fiverr (Upwork, Contra, LottieFiles Hire).
+
+| Vendeur | Avis | Rythme des avis | Prix CAD (base/mid/premium) |
+|---|---|---|---|
+| **Stanislav B** (Lottie web/app, Level 2 + **Vetted Pro**) | **433** · 4,9 | **9 h, 1 j, 3 j, 5 j, 6 j** = flux QUOTIDIEN | 29 / 73 / **145** |
+| **Nimra K** (explainer SaaS, Level 2) | **25** · 4,8 | plusieurs a « 1 semaine » | 112 / 266 / **537** |
+
+⭐ Clients US, Allemagne, Serbie, Suede. ⭐ Les DEUX ont **20 pieces de portfolio** → objectif chiffre.
+⛔⛔ **CORRIGE le repere « sans avis = 50-150 $ »** : Nimra a **25 avis** et vend son premium
+**537 CAD**. Le prix ne suit PAS mecaniquement le nombre d'avis — le REGISTRE compte autant
+(piece Lottie 145 vs explainer 537).
+⚠️ **Le « 3-7 mois avant la 1re commande » est de SECONDE MAIN** (temoignages Reddit = survivants).
+Ne pas l'opposer a cette mesure : l'amorcage peut etre long ET le marche actif.
+⭐ **Vetted Pro observe en vrai** = la voie « jugee sur portfolio » est reellement empruntee.
+
+### Fiabilite des sources de la veille du 28/08 (l'agent s'est auto-corrige)
+✅ **Lu sur page officielle** : mur des Briefs (score ≥7) · verrou Ads (Level 1+) · -21,9 % acheteurs
+(Q2 2026) · Fiverr Pro ouvert aux nouveaux · **LottieFiles Hire (195 animateurs, 10 animations +
+19,99 $/mois)**.
+⚠️ **De seconde main, a re-verifier avant d'agir** : tunnel Toptal 3 % · liste pays Malt · exigences
+Superside · fermeture Working Not Working · comptages Hacker News · adresse freelance Ordinary Folk.
+
 ## ⚖️ UPWORK vs FIVERR — l'arbitrage (tranché 2026-08-28, après 5 annonces analysees)
 
 **Ce n'est PAS un « ou bien ». Les deux resolvent des problemes differents DANS LE TEMPS.**
