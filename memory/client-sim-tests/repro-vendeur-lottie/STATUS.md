@@ -40,21 +40,36 @@ Le convertisseur annoncait "transportable a l'identique" dans les 3 cas.
 | `scripts/tools/test-groupement.py` | composition par loi de proximite | ⚠️ aide a l'oeil, PAS un juge |
 | `.../lottie-ui/tools/planche_calques.py` | rend chaque calque SEUL pour le nommer | valide 8/8 |
 
-## ⛔⛔ ACTION 0 DE LA PROCHAINE SESSION — RECONCILIER CE WORKTREE
+## ✅ RECONCILIATION FAITE (2026-08-28) — tout est sur master
 
-`feat/repro-ui` est a **124 commits de retard sur master** (Foster a ete fusionnee et fermee le
-2026-08-28). Consequences MESUREES, pas supposees :
-- **6 fiches amputees ici** et **2 absentes** (`FICHE-BRIEF-CLIENT` 13 Ko, `FICHE-MOCKUP-3D` 15 Ko).
-  `FICHE-UI-PRODUIT` : 7765 o ici contre 13147 sur master (**-41 %**) — et c'est celle qui s'est
-  injectee pendant la session. On a code avec une fiche amputee sans le voir.
-- Le hook la rattrape desormais (regle "la plus RICHE gagne", commit 5796f8ef) mais **ne repare rien**.
-- `check-links.py` et `check-fiches.py` produisent des FAUX POSITIFS depuis ce worktree
-  (8 et 7 chemins "morts" qui existent tous sur master). ⛔ Ne jamais conclure a une absence
-  depuis un worktree — verifier `git ls-tree master` d'abord.
+La branche `feat/repro-ui` et son worktree sont **fermes**. Foster aussi. Une seule
+branche vit desormais : `master`.
 
-⚠️ **Un rebase entrerait en CONFLIT** (verifie) : `fiche-inject.sh`, `src/Root.tsx` et tout
-`lottie-ui/tools/` ont bouge des deux cotes. C'est un chantier a mener au calme, pas en fin de
-session. Faire un `git diff master...HEAD` fichier par fichier avant de trancher.
+⚠️ Ce n'etait PAS un simple merge — la simulation a montre 5 conflits et **master etait
+PLUS AVANCE** sur l'atelier Lottie (`svg2lottie_scene.py` : 1061 lignes contre 870).
+L'autre session l'avait fait evoluer pendant que je travaillais sur une copie ancienne.
+Un merge direct aurait ecrase 191 lignes de son travail.
+
+**Decoupe en 3 temps, chacun verifie :**
+1. **12 fichiers sans conflit** reportes tels quels (les 3 outils de mesure, la fiche,
+   l'animation, les notes). Verifies sur master : les 4 outils repondent, `test-pause.py`
+   tourne sur un livrable Foster reel.
+2. **L'atelier Lottie** : mes 3 correctifs REPORTES sur la version de master (pas l'inverse),
+   par un agent dedie. Master avait deja 70 % du travail sur les degrades — j'avais
+   surestime ce qui manquait. Chiffres re-mesures par moi-meme apres coup :
+   Stripe 44,11 % -> **1,22 %** · armoiries 46,34 % -> **7,03 %** · Inkscape 37,70 % -> **17,19 %**.
+   `test_rendu.py` vert sur 7 cas.
+3. **Le hook et `Root.tsx`** : GREFFES sur la version de master, jamais ecrases — master
+   avait 38 lignes que je n'avais pas (declencheurs `FICHE-MOCKUP-3D` et `FICHE-BRIEF-CLIENT`,
+   4 motifs 3D). Sans ce report, la fiche du geste ne se serait JAMAIS declenchee et
+   l'animation n'etait pas rendable : le travail serait reste inerte.
+
+⭐ **LECON** : quand deux branches ont touche les memes fichiers, ne jamais merger sans
+simuler (`git merge --no-commit --no-ff` puis `--abort`). Ici la simulation a evite
+d'ecraser du travail, et a revele que **master etait le plus riche des deux cotes**.
+⛔ Corollaire : mes conclusions tirees depuis le worktree etaient faussees (j'ai ecrit que
+l'atelier n'etait "sur aucune branche mergee" — il etait sur master avec 19 fichiers).
+**Ne jamais conclure a une absence depuis un worktree : verifier `git ls-tree master`.**
 
 ## ⛔ CE QUI RESTE — par ordre de valeur
 
