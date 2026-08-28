@@ -7,6 +7,26 @@
 > structure de tiers) : `BRIEF-GIG-ENTREE-DE-GAMME.md` — ce fichier-ci est le LIVRABLE texte prêt à
 > coller sur Fiverr, pas l'analyse.
 
+⛔⛔ **AVANT DE FIXER LES PRIX — LIRE CECI (2026-08-28).** La grille envisagee (45 / 100 / 300 $)
+est probablement **TROP BASSE A L'ENTREE**, et le conseil « commencer bas pour recolter des avis »
+decrit **un Fiverr qui n'existe plus** :
+- **Fiverr a annonce a ses ACTIONNAIRES (lettre Q1 2026)** qu'il **depriorise volontairement
+  l'optimisation des transactions bas de gamme**. Ce n'est pas une opinion de createur : c'est une
+  strategie ecrite. Un gig bas de gamme n'est donc plus seulement mal paye — il est **moins pousse**.
+- **-21,9 % d'acheteurs actifs** en un an, MAIS **+15,6 % de depense par acheteur** (368 $). Le
+  mouvement porteur est vers le HAUT.
+- ⭐ **Mesure terrain d'Aziz (28/08)** : **Nimra K vend son premium 537 CAD avec 25 avis SEULEMENT**.
+  Le prix ne suit pas mecaniquement le nombre d'avis — le REGISTRE compte autant.
+- ⚠️ **Risque de STATUT** (temoignage d'un ex-vendeur Pro, video du 13/08) : le Success Score est
+  recalcule **quotidiennement sur 30 jours glissants**, formule non publiee. Un vendeur etabli peut
+  etre **retrograde pour simple baisse de volume** (maladie, vacances) et la **visibilite s'effondre
+  avec le badge**. Sur Fiverr le statut est une LOCATION, pas un acquis — a peser avant de miser
+  l'effort ici plutot que sur une vitrine jugee sur portfolio.
+→ Detail et sources : `memory/projects/RECHERCHE-MARCHE-INDEX.md`
+
+⛔ **Le titre de cette page porte `explainer video`** — mot **banni** depuis la recherche du 27/08
+(mot des gigs a 5 $). **Page a REECRIRE avant publication, pas a coller.**
+
 ⚠️ **Prix non finalisés** — les tiers ci-dessous n'ont pas encore de montant en CA$/US$ figé (voir
 brief § "ce qui reste à trancher"). Délais estimés à partir du pipeline connu, pas encore mesurés sur
 une vraie commande de bout en bout — à valider avant publication réelle.
