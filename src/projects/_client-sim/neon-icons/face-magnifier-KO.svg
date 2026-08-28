@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <g id="face">
+    <path d="M150 256 C150 190 200 142 262 142 C324 142 374 190 374 256 C374 322 324 370 262 370 C200 370 150 322 150 256 Z" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="left-eye">
+    <path d="M204 228 C210 218 224 218 230 228" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="mouth">
+    <path d="M212 300 C232 320 264 320 284 300" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="magnifier-lens">
+    <circle cx="330" cy="238" r="104" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="round"/>
+  </g>
+  <g id="magnified-eye">
+    <path d="M300 232 C312 206 348 206 360 232" fill="none" stroke="#ffffff" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="330" cy="244" r="15" fill="none" stroke="#ffffff" stroke-width="14"/>
+  </g>
+  <g id="magnifier-handle">
+    <path d="M404 312 L462 370" fill="none" stroke="#ffffff" stroke-width="22" stroke-linecap="round"/>
+  </g>
+</svg>

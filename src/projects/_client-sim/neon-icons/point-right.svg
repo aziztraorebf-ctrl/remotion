@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <g id="cuff">
+    <path d="M78 196 H136 C148 196 157 205 157 217 V299 C157 311 148 320 136 320 H78 C66 320 57 311 57 299 V217 C57 205 66 196 78 196 Z" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="palm">
+    <path d="M157 217 C186 214 214 216 240 224 L240 300 C214 310 186 314 157 311" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="index">
+    <path d="M240 224 C240 210 250 200 264 200 H418 C432 200 442 210 442 224 C442 238 432 248 418 248 H240 Z" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="folded-fingers">
+    <path d="M244 268 H300 C314 268 322 276 322 286 C322 296 314 304 300 304 H244" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M244 312 H292 C306 312 314 320 314 330 C314 340 306 348 292 348 H244" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M244 356 H278 C292 356 300 364 300 373 C300 382 292 390 278 390 H244" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="thumb">
+    <path d="M240 256 C218 262 206 278 208 300 C210 320 226 332 246 330" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

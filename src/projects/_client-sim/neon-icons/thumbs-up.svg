@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <g id="wrist">
+    <path d="M89 239 H147 C159 239 168 248 168 260 V405 C168 417 159 426 147 426 H89 C77 426 68 417 68 405 V260 C68 248 77 239 89 239 Z" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="hand">
+    <path d="M168 260 C187 258 202 249 216 230 L256 172 C270 152 276 130 277 104 L278 92 C279 79 288 72 299 72 C321 72 340 90 348 111 C358 138 354 165 349 187 L337 237 C336 242 339 245 344 245 H408 C427 245 442 258 443 276 C444 292 435 305 421 311 C437 314 447 328 447 344 C447 362 435 375 420 378 C432 383 439 395 438 409 C437 426 426 438 414 440 C425 444 431 454 429 466 C426 482 414 490 397 490 H272 C231 490 201 470 168 426" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="upper-fold">
+    <path d="M399 311 C407 311 414 311 421 311" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="middle-fold">
+    <path d="M399 378 C407 378 414 378 420 378" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="lower-fold">
+    <path d="M392 440 C400 440 407 440 414 440" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
