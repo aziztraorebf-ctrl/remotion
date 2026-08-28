@@ -19,6 +19,7 @@
 | Sujet | Lien | Contenu |
 |---|---|---|
 | **Repro Foster** (vidéo Fiverr) | https://claude.ai/code/artifact/d5fb3169-7cb4-47e8-a94a-dfca377d204f | Les 11 plans côte à côte avec l'original, lecture image par image. 1 page par SUJET — à enrichir, pas à dupliquer. |
+| **Repro Foster — le montage complet** | https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/foster-FINAL-zGlYVidLOsQZncjnceaYO3KbQv6isp.mp4 | 42,77 s, musique + SFX. Hébergé sur Blob : 29 Mo, au-delà du plafond Artifact (16 Mo). |
 
 ## 🔊 Banque audio (Artifact)
 
