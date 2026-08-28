@@ -142,9 +142,42 @@ const BASELINE_TOP = 508;
 const STACK_STEP = 86;
 
 const WHITE = "rgb(252,255,255)";
-const GOLD = "rgb(165,133,73)";
-const GOLD_PAST = "rgb(162,135,97)";
-const GREY = "rgb(102,97,92)";
+/**
+ * ⛔⛔ CES 3 DORES ONT ETE MESURES DEUX FOIS, ET LA 1re MESURE ETAIT FAUSSE.
+ *
+ * Retour d'Aziz sur le rendu v9 : « les mots qui ont une couleur d'accent sont
+ * beaucoup trop ternes, la couleur devrait plus ressortir ». Verifie, il a raison,
+ * et la cause est ma methode d'echantillonnage.
+ *
+ * 1re mesure (percentile 97 des pixels du mot) -> rgb(165,133,73). Ce seuil
+ * embarque les pixels de BORD, anti-aliases contre un fond sombre : ils tirent la
+ * moyenne vers le bas et rendent le dore terne.
+ * ✅ 2e mesure (percentile 99,5 = le seul coeur du glyphe) :
+ *      REFERENCE  rgb(204,165,93)  saturation 0,540
+ *      NOUS (v9)  rgb(171,145,95)  saturation 0,449
+ * Soit 33 points de rouge en moins et 20 % de saturation en moins — exactement
+ * l'impression d'Aziz, en chiffres.
+ *
+ * ⭐ LECON : sur du TEXTE, une couleur se releve au COEUR du glyphe. Tout seuil
+ * plus large melange l'encre et le fond, et le biais va toujours dans le meme
+ * sens — vers le fond. C'est le pendant, pour la couleur, du « mesurer selon le
+ * bon axe » deja paye sur les degrades des plans 5 et 10.
+ */
+/**
+ * ⚠️ VALEURS PRE-COMPENSEES, ce ne sont PAS les couleurs cibles telles quelles.
+ * Poser exactement rgb(204,165,93) rendait rgb(209,178,114) — la chaine (rendu
+ * Chromium, sous-pixels, encodage h264 en yuv420p) ECLAIRCIT, et surtout pas de
+ * facon neutre : biais mesure +5 R, +13 G, **+21 B**. Le bleu remontant le plus,
+ * c'est la SATURATION qui s'effondre (0,454 rendu contre 0,540 vise) — donc
+ * exactement le « trop terne » signale par Aziz, meme apres avoir corrige la
+ * luminosite.
+ * ✅ On pose donc cible MOINS biais. Verifie au rendu : sat 0,53 contre 0,540.
+ * ⭐ Une couleur de texte se valide sur le RENDU FINAL, jamais sur la valeur
+ * ecrite dans le code.
+ */
+const GOLD = "rgb(199,152,72)";
+const GOLD_PAST = "rgb(158,128,81)";
+const GREY = "rgb(93,89,89)";
 
 type Word = { w: string; at: number; bold?: boolean };
 

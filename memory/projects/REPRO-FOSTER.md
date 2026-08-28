@@ -2,11 +2,18 @@
 
 ## ⚡ REPRISE : COMMENCER ICI (session du 2026-08-27)
 
-**Etat : 10 plans sur 11 CODES — 40,46 s / 42,75 s = 95 %.**
-Plan 9 VALIDE par Aziz (« quasiment la meme chose, quasi exact ») -> `plan09-FINAL.mp4`.
-⚠️ Le plan 10 (`plan10_v9` -> `plan10-FINAL.mp4`) est code et mesure, **en attente
-de validation**. Ecart moyen de largeur : 1,09 % (etait 3,43 % avant diagnostic).
-Livrables : `plan0{1..9}-FINAL.mp4` + `plan10-FINAL.mp4`.
+**Etat : LES 11 PLANS SONT PRODUITS — 42,75 s / 42,75 s = 100 %.**
+Plans 1-10 valides par Aziz. Plan 11 (`plan11-FINAL.mp4`) en attente de validation.
+Plan 10 valide avec une correction : « les mots d'accent sont beaucoup trop ternes ».
+
+### ⏭️ IL RESTE : LE SON, PUIS L'ASSEMBLAGE
+1. SFX + musique sur l'ensemble. ⛔ Rappel fiche UI-PRODUIT : **PAS de whoosh sur
+   les coupes d'UI** (vocabulaire de mouvement physique, sans rapport avec un
+   logiciel) — le FlashCut visuel suffit.
+2. Assemblage des 11 plans. ⚠️ Point de vigilance connu : verifier `nb_frames` sur
+   le flux VIDEO (pas `format=duration`) ET hasher un echantillonnage dense — un
+   concat casse peut figer l'image en gardant l'audio normal, indetectable sur des
+   frames isolees.
 Code : `src/projects/_client-sim/foster/scenes/Plan0{1..8}*.tsx`
 Branche : `feat/repro-foster`.
 
@@ -50,7 +57,63 @@ gardant l'audio normal, indetectable sur des frames isolees.
    demarrage (5 rendus perdus au plan 7 faute de l'avoir fait).
 6. ⭐⭐ **Reprendre le releve LIGNE PAR LIGNE avant de declarer fini.**
 
-### ✅ PLAN 10 — CODE ET MESURE (27/08), en attente de validation
+### ✅ PLAN 11 — CODE ET MESURE (27/08), en attente de validation
+`Plan11Fondu.tsx` · 69 frames · `plan11-FINAL.mp4`.
+
+⛔⛔ **LE TABLEAU DISAIT « fondu au noir, texture pointillee » : LES DEUX MOITIES
+DE LA PHRASE SONT FAUSSES.**
+1. **Aucun fondu.** Le noir est DEJA la des la frame 0 (luminance 1,275 puis 1,153
+   stable — aucune rampe). Le fondu appartient a la FIN DU PLAN 10, qui l'execute
+   deja (`greenOut`, 39,4 -> 40,2 s). Le coder ici l'aurait joue DEUX FOIS.
+2. **Ce ne sont pas des points, c'est un GRAIN.** Mesure hors watermark :
+   fond a luminance 1 · « points » a 6 (max 14) · couverture **1,354 %** ·
+   trame ~81 px en X, ~51 px en Y. A 6/255 sur un fond a 1/255, c'est a la limite
+   du visible : le rendre plus lisible serait PLUS FAUX que de ne rien mettre.
+
+⭐⭐ **CE QUI APPARAIT APRES 42,19 s N'EST PAS LA VIDEO** : c'est l'INTERFACE DU
+LECTEUR FIVERR qui revient en fin de lecture (« 7 of 20 », barre de progression,
+temoignage client, spinner). Meme artefact de capture que sur la 1re seconde du
+plan 1. On ne le reproduit pas. ⚠️ La source s'arrete a 42,752 s : seules 59
+frames portent de la matiere, pas 69.
+
+**Implementation** : 520 `<div>` au 1er jet ne couvraient que 0,007 % de la
+surface (200x trop peu ; il en aurait fallu ~7 000). Remplaces par un
+`radial-gradient` REPETE — la trame mesuree etant reguliere, une tuile CSS la
+decrit exactement pour une seule couche. Resultat : couverture 1,293 % contre
+1,354 %, ecart-type 0,754 contre 0,718.
+⚠️ Grain FIXE, pas anime : la diff inter-frames de la reference est a 0,00 sur
+tout le plan.
+
+### ⭐⭐⭐ PLAN 10 — LA COULEUR SE RELEVE AU COEUR DU GLYPHE (correction d'Aziz)
+Retour sur le rendu v9 : « les mots qui ont une couleur d'accent sont beaucoup
+trop ternes, la couleur devrait plus ressortir ». Verifie — il avait raison, et la
+cause etait MA METHODE DE MESURE.
+
+**1re mesure** (percentile 97 des pixels du mot) -> `rgb(165,133,73)`. Ce seuil
+embarque les pixels de BORD, anti-aliases contre un fond sombre : ils tirent la
+moyenne vers le fond et rendent le dore terne.
+**2e mesure** (percentile 99,5 = le seul coeur du glyphe) :
+  REFERENCE `rgb(204,165,93)` saturation 0,540 · NOUS `rgb(171,145,95)` sat 0,449
+Soit 33 points de rouge en moins et 20 % de saturation en moins.
+
+⛔⛔ **ET POSER LA BONNE VALEUR N'A PAS SUFFI** : ecrire exactement
+`rgb(204,165,93)` rendait `rgb(209,178,114)`, saturation 0,454. La chaine (rendu
+Chromium + encodage h264 yuv420p) ECLAIRCIT, et **pas de facon neutre** : biais
+mesure **+5 R, +13 G, +21 B**. Le bleu remontant le plus, c'est la SATURATION qui
+s'effondre — donc toujours « terne » malgre une luminosite correcte.
+✅ Fix : poser **cible MOINS biais** -> `rgb(199,152,72)`. Rendu final :
+`rgb(204,166,94)` sat **0,542** contre 0,540 vise. Idem pour les 2 autres etats.
+
+⭐⭐⭐ **DEUX LECONS TRANSPOSABLES** :
+1. Sur du TEXTE, une couleur se releve **au coeur du glyphe** (percentile 99+).
+   Tout seuil plus large melange l'encre et le fond, et le biais va **toujours
+   dans le meme sens** — vers le fond. C'est le pendant, pour la couleur, du
+   « mesurer selon le bon axe » deja paye sur les degrades des plans 5 et 10.
+2. Une couleur se valide **sur le RENDU FINAL**, jamais sur la valeur ecrite dans
+   le code : la chaine de rendu a un biais propre, qu'il faut mesurer et
+   pre-compenser.
+
+### ✅ PLAN 10 — VALIDE PAR AZIZ (27/08), apres correction du dore
 `Plan10Cta.tsx` · 372 frames (le plus long) · `plan10-FINAL.mp4`.
 
 **Contenu** : 5 phrases enchainees en fondu vers le CTA, avec la pile doree

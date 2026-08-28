@@ -439,6 +439,7 @@ import { Plan07Maison } from "./projects/_client-sim/foster/scenes/Plan07Maison"
 import { Plan08Dashboard } from "./projects/_client-sim/foster/scenes/Plan08Dashboard";
 import { Plan09PullBack } from "./projects/_client-sim/foster/scenes/Plan09PullBack";
 import { Plan10Cta } from "./projects/_client-sim/foster/scenes/Plan10Cta";
+import { Plan11Fondu } from "./projects/_client-sim/foster/scenes/Plan11Fondu";
 import { DeviceBenchPhone, DeviceBenchLaptop, DeviceBenchPhoneVision, DeviceBenchPhoneVisionBlindLights, DeviceBenchPhoneOrigVisionLights } from "./projects/_shared/_demos/devices/DeviceBench";
 import { JetonWarMap3DCompare } from "./projects/_shared/_demos/JetonWarMap3DCompare";
 import { RapidFireCountries } from "./projects/_shared/mapbox/RapidFireCountries";
@@ -746,6 +747,17 @@ export const RemotionRoot: React.FC = () => {
       
       
       <Folder name="atlas-peste-1347">
+        {/* FOSTER plan 11 : 40,46 -> 42,75 s = 69 frames a 30 fps.
+            ⛔ PAS de fondu (le noir est deja la des f0 : le fondu appartient a la
+            fin du plan 10) et la « texture pointillee » est un GRAIN a 6/255. */}
+        <Composition
+          id="FosterPlan11"
+          component={Plan11Fondu}
+          durationInFrames={69}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
         {/* FOSTER plan 10 : 28,07 -> 40,46 s = 372 frames a 30 fps.
             Le plus long. ⛔ Pas de coupes internes (diff max 3,08) et ancres
             gauches FIXES par phrase — les 3 voix se trompaient sur les deux. */}
