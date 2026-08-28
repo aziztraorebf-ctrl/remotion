@@ -6,7 +6,33 @@
 Plans 1-10 valides par Aziz. Plan 11 (`plan11-FINAL.mp4`) en attente de validation.
 Plan 10 valide avec une correction : « les mots d'accent sont beaucoup trop ternes ».
 
-### ⏭️ IL RESTE : LE SON, PUIS L'ASSEMBLAGE
+### ✅ SON + ASSEMBLAGE FAITS (27/08) — `foster-FINAL.mp4`, 1283 frames / 42,77 s
+`src/projects/_client-sim/foster/FosterFull.tsx` · composition `FosterFull`.
+⚠️ Rendu via `./scripts/render-mapbox.sh` (OBLIGATOIRE : le plan 6 est du WebGL).
+
+⭐⭐ **ZERO ASSET GENERE — tout vient de la banque** (question d'Aziz : « on regarde
+dans notre banque avant de generer, non ? » — oui, et l'index le dit noir sur blanc).
+- **Musique** : `_client-sim/flowdesk/audio/music-flowdesk-45s.mp3`, la piste de NOTRE
+  AUTRE client-sim SaaS. Les 53 pistes uniques de la banque sont toutes en registre
+  documentaire/geopolitique africain (kora, djembe, tension epique) — hors sujet pour
+  un SaaS britannique. Verifiee sur les criteres de l'index : ampl 12,2 dB (< 15 OK) ;
+  loop 7,7 dB SANS OBJET (49 s de piste pour 42,77 s, on ne boucle pas).
+  ⭐ Son PROFIL colle a la reference : toutes deux MONTENT vers le CTA
+  (ref -45,8 -> -33,5 dB · flowdesk -31,2 -> -16,9 dB).
+- **SFX** : `_shared/sfx/` + `noteshield/`. Places sur les **18 transitoires MESURES**
+  dans l'audio de la reference (enveloppe 20 ms, seuil +4 sigma) — ils tombent
+  exactement sur les evenements visuels (cartes du dashboard 24-26 s, pile doree 32 et 37 s).
+- ⚠️ **Les plans 1 a 5 sonorisent DEJA leurs propres evenements** (2 balises `Audio`
+  chacun) : n'ajouter des SFX que sur les plans 6 a 11, sinon on double les effets.
+- ⛔ Aucun whoosh sur les coupes d'UI (fiche UI-PRODUIT) — c'est delibere.
+
+**Verification de l'assemblage** (le piege connu des concats) : `nb_frames` sur le flux
+VIDEO = 1283 ✅ · audio 42,816 s pour 42,767 s de video ✅ · hash d'un echantillonnage
+dense (1 frame / 0,5 s) = 80 uniques sur 86. ⚠️ Les 5 echantillons identiques a partir
+de 40,5 s ne sont PAS un gel : c'est le plan 11 (noir + grain fixe), verifie a la
+luminance (1,00). **Un controle automatique qui alerte se VERIFIE avant de conclure.**
+
+### ⏭️ IL RESTAIT : LE SON, PUIS L'ASSEMBLAGE — FAIT
 1. SFX + musique sur l'ensemble. ⛔ Rappel fiche UI-PRODUIT : **PAS de whoosh sur
    les coupes d'UI** (vocabulaire de mouvement physique, sans rapport avec un
    logiciel) — le FlashCut visuel suffit.
