@@ -419,13 +419,21 @@ def shapes_de_style(st, rapport, nom):
         grad = st.get("_gradient_objet")
         boite = st.get("_gradient_boite")
         if grad and grad.get("gtransform"):
-            # ⛔ Une matrice propre au degrade (rotation/cisaillement) n'a pas
-            # d'equivalent Lottie ici : la porter a moitie donnerait un rendu
-            # faux SANS le dire. On declare l'approximation et on se replie.
-            rapport.approxime(f"{nom}: gradientTransform",
-                              "matrice propre au degrade non portee — "
-                              "repli sur la couleur moyenne")
-            grad = None
+            # ⭐ AVANT (jusqu'au 2026-08-28) : on jetait TOUTE gradientTransform
+            # et on se repliait sur la couleur moyenne. C'etait trop prudent —
+            # une translation / rotation / echelle uniforme se transporte
+            # EXACTEMENT en deplacant les 2 points du segment Lottie.
+            # ⛔ Seuls le cisaillement et l'echelle non uniforme restent hors
+            # format (ils rendraient un radial elliptique) : on se replie alors,
+            # et on DIT laquelle des deux causes c'est.
+            portable, raison = gtransform_portable(parse_transform(grad["gtransform"]))
+            if portable:
+                rapport.ok(f"{nom}: gradientTransform portee")
+            else:
+                rapport.approxime(f"{nom}: gradientTransform",
+                                  f"{raison} — hors format Lottie, "
+                                  "repli sur la couleur moyenne")
+                grad = None
         if grad and boite:
             # ⭐ VRAI DEGRADE Lottie ('gf'), plus une couleur moyenne.
             depart, arrivee = geometrie_gradient(
@@ -586,6 +594,14 @@ def gradients_complets(root):
         pid = pat.attrib.get("id")
         if pid:
             out[pid] = {"motif": True}
+    # ⭐ Les <filter> vivent dans le meme espace de noms que les gradients : un
+    # `url(#x)` peut designer l'un ou l'autre. On les recense ici pour pouvoir
+    # PORTER le cas du simple flou au lieu de le refuser en bloc.
+    for flt in root.iter(NS + "filter"):
+        fid = flt.attrib.get("id")
+        if fid:
+            r = flou_du_filtre(flt)
+            out[fid] = {"filtre": True, "flou": r}
     for tag, genre in (("linearGradient", 1), ("radialGradient", 2)):
         for g in root.iter(NS + tag):
             gid = g.attrib.get("id")
@@ -665,8 +681,14 @@ def gradients_complets(root):
             cur = liens.get(cur)
 
     # Un degrade reste sans arret (chaine cassee) : il n'est pas exploitable.
+    # ⛔ PIEGE PAYE (2026-08-28) : ce menage, ecrit pour les degrades casses,
+    # supprimait AUSSI les <filter> recenses (ils n'ont ni "motif" ni "arrets").
+    # Le recensement etait correct, c'est le NETTOYAGE qui l'annulait en aval —
+    # meme famille que les 4 bugs precedents : l'element est bon, son
+    # AIGUILLAGE le detruit. Diagnostique en appelant la fonction isolement.
     for gid in list(out):
-        if not out[gid].get("motif") and not out[gid].get("arrets"):
+        e = out[gid]
+        if not e.get("motif") and not e.get("filtre") and not e.get("arrets"):
             del out[gid]
     return out
 
@@ -712,6 +734,89 @@ def boite_des_formes(formes):
     return min(xs), min(ys), max(xs), max(ys)
 
 
+def flou_du_filtre(el_filtre):
+    """
+    Un <filter> SVG est-il un SIMPLE FLOU, portable en Lottie ? (2026-08-28)
+
+    ⭐⭐ CONTREDIT LA NOTE "les filtres sont une limite du FORMAT". MESURE le
+    2026-08-28 : lottie-web rend bien l'effet Gaussian Blur (`ty: 29`) — un carre
+    passe de 0 a 5360 pixels de bord adouci, verifie A L'IMAGE. Ce n'est donc PAS
+    le format qui bloque, c'est que notre convertisseur ne l'emettait pas.
+
+    ⛔ CE QUI RESTE HORS PORTEE : tout filtre COMPOSITE (feOffset + feMerge =
+    ombre portee, feColorMatrix, feTurbulence...). On ne porte que le cas d'un
+    <filter> ne contenant QU'UN feGaussianBlur — le plus frequent, et le seul
+    dont l'equivalence est exacte.
+
+    Retourne le rayon en px, ou None si non portable.
+    """
+    enfants = [e for e in el_filtre if isinstance(e.tag, str)]
+    if len(enfants) != 1:
+        return None
+    e = enfants[0]
+    if e.tag.split("}")[-1] != "feGaussianBlur":
+        return None
+    sd = e.attrib.get("stdDeviation")
+    if not sd:
+        return None
+    try:
+        vals = [float(x) for x in re.split(r"[\s,]+", sd.strip()) if x]
+    except ValueError:
+        return None
+    if not vals:
+        return None
+    # stdDeviation peut etre "x y" : un flou anisotrope n'a pas d'equivalent
+    if len(vals) > 1 and abs(vals[0] - vals[1]) > 1e-6:
+        return None
+    # SVG raisonne en ecart-type, After Effects/Lottie en "blurriness".
+    # Facteur ~3 (regle usuelle : rayon visible ~ 3 sigma).
+    return round(vals[0] * 3.0, 3)
+
+
+def effet_flou(rayon):
+    """Effet Lottie Gaussian Blur (ty 29), teste en direct sur lottie-web."""
+    return {"ty": 29, "nm": "Gaussian Blur", "ix": 1, "ef": [
+        {"ty": 0, "nm": "Blurriness", "ix": 1, "v": {"a": 0, "k": rayon}},
+        {"ty": 7, "nm": "Dimensions", "ix": 2, "v": {"a": 0, "k": 1}},
+        {"ty": 7, "nm": "Repeat Edge Pixels", "ix": 3, "v": {"a": 0, "k": 0}}]}
+
+
+def gtransform_portable(gm):
+    """
+    Une `gradientTransform` est-elle transportable en Lottie ? (ajout 2026-08-28)
+
+    ⭐ POURQUOI CE N'EST PAS TOUT-OU-RIEN. Lottie ne porte pas de matrice sur un
+    degrade : il porte un SEGMENT (`s` depart -> `e` arrivee). Or deplacer les
+    deux points reproduit EXACTEMENT une translation, une rotation, une echelle
+    UNIFORME, et toute composition de celles-ci -- ce sont des similitudes, elles
+    conservent les angles. L'ancienne version refusait TOUTES les
+    gradientTransform et se repliait sur la couleur moyenne : elle jetait donc
+    des cas parfaitement portables (13 degrades chez nous).
+
+    ⛔ CE QUI RESTE IRRECUPERABLE : le cisaillement et l'echelle NON uniforme.
+    Ils rendraient un degrade radial ELLIPTIQUE, ce que le format ne sait pas
+    exprimer. Sur ceux-la on continue de se replier -- et on le DIT.
+
+    Test : la partie lineaire (a,b,c,d) doit etre une similitude, c'est-a-dire
+    colonne1 perpendiculaire a colonne2 ET de meme norme.
+    """
+    a, b, c, d, _, _ = gm
+    n1 = math.hypot(a, b)
+    n2 = math.hypot(c, d)
+    if n1 < 1e-9 or n2 < 1e-9:
+        return False, "matrice degeneree (echelle nulle)"
+    # ⛔ Tester le CISAILLEMENT D'ABORD : un skew fait aussi varier les normes,
+    # et l'annoncer comme "echelle non uniforme" donne un diagnostic FAUX
+    # (verifie : skewX(20) et matrix(1,0,0.5,1,0,0) sortaient "echelle 1 vs 1.06").
+    # Le verdict etait bon, le motif trompeur — et c'est le motif qu'on lit
+    # pour decider quoi corriger.
+    if abs(a * c + b * d) > 1e-6 * n1 * n2:
+        return False, "cisaillement (skew)"
+    if abs(n1 - n2) > 1e-6 * max(n1, n2):
+        return False, f"echelle NON uniforme ({n1:.4g} vs {n2:.4g})"
+    return True, ""
+
+
 def geometrie_gradient(g, boite, mat=(1, 0, 0, 1, 0, 0)):
     """
     Points de depart/arrivee du gradient, en coordonnees ABSOLUES.
@@ -727,6 +832,13 @@ def geometrie_gradient(g, boite, mat=(1, 0, 0, 1, 0, 0)):
     x0, y0, x1b, y1b = boite
     w, h = max(1e-6, x1b - x0), max(1e-6, y1b - y0)
     bbox = g["unites"] != "userSpaceOnUse"
+
+    # ⭐ gradientTransform : matrice PROPRE au degrade, appliquee a ses points
+    # AVANT celle de la forme (c'est l'ordre de la spec SVG). Portee seulement
+    # si elle est une similitude -- l'appelant a deja verifie et refuse sinon.
+    gm = parse_transform(g.get("gtransform")) if g.get("gtransform") else None
+    if gm is not None and est_identite(gm):
+        gm = None
 
     def val(v, defaut, axe):
         if v is None:
@@ -747,6 +859,10 @@ def geometrie_gradient(g, boite, mat=(1, 0, 0, 1, 0, 0)):
     # matrice accumulee doit leur etre appliquee, comme elle l'a ete aux
     # sommets. En objectBoundingBox elle l'est deja, via la boite.
     def sortie(depart, arrivee):
+        # ⛔ ORDRE : gradientTransform d'abord (repere du degrade), matrice de la
+        # forme ensuite (repere du dessin). L'inverse donne un degrade decale.
+        if gm is not None:
+            depart, arrivee = appliquer(gm, depart), appliquer(gm, arrivee)
         if bbox or est_identite(mat):
             return depart, arrivee
         return appliquer(mat, depart), appliquer(mat, arrivee)
@@ -820,12 +936,40 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=(),
     # comme ATTRIBUTS (filter="url(#flou)") et pas seulement comme balises.
     # Ne detecter que les balises laissait un flou disparaitre EN SILENCE --
     # le rapport annoncait "porte" sur un element dont le rendu changeait.
+    flou_a_poser = None
     for attr, raison in (("filter", NON_PORTES["filter"]),
                          ("clip-path", NON_PORTES["clipPath"]),
                          ("mask", NON_PORTES["mask"])):
         v = el.attrib.get(attr) or st.get(attr)
-        if v and str(v).strip() not in ("none", ""):
-            rapport.refuse(f"attribut {attr}=", raison)
+        if not v or str(v).strip() in ("none", ""):
+            continue
+        # ⭐ Un filtre qui n'est QU'UN feGaussianBlur se porte (effet ty 29,
+        # verifie sur lottie-web le 2026-08-28). Les composites (ombre portee =
+        # feOffset + feMerge, feColorMatrix...) restent refuses, et on le dit.
+        if attr == "filter" and str(v).startswith("url("):
+            ref = str(v)[4:-1].strip().lstrip("#").strip("'\"")
+            d = grads.get(ref) if grads else None
+            if d is None:
+                # ⭐ MESURE (logo Inkscape, 2026-08-28) : 14 des 16 references
+                # `filter:url(#...)` pointent vers des ids QUI N'EXISTENT PAS —
+                # supprimes a l'optimisation d'export, la reference est restee.
+                # Un navigateur ignore un filtre introuvable : il n'y a donc
+                # RIEN a porter, et le rendu de reference ne l'applique pas non
+                # plus. L'annoncer comme "non porte" faisait croire a une perte.
+                rapport.approxime(f"attribut filter= (#{ref})",
+                                  "filtre INTROUVABLE dans le fichier — "
+                                  "ignore, comme le fait un navigateur")
+                continue
+            if d.get("filtre"):
+                if d.get("flou"):
+                    flou_a_poser = d["flou"]
+                    rapport.ok(f"filtre #{ref}: flou {d['flou']}px")
+                else:
+                    rapport.refuse(f"attribut filter= (#{ref})",
+                                   "filtre COMPOSITE (ombre portee, colorMatrix...) — "
+                                   "seul un feGaussianBlur seul est portable")
+                continue
+        rapport.refuse(f"attribut {attr}=", raison)
 
     m = _mul(mat, parse_transform(el.attrib.get("transform", "")))
 
@@ -896,7 +1040,7 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=(),
         nom = propre
     elif chemin:
         base = chemin[-1]
-        rang = sum(1 for n, _, _ in sortie if n == base or n.startswith(base + "-")) + 1
+        rang = sum(1 for e in sortie if e[0] == base or e[0].startswith(base + "-")) + 1
         nom = f"{base}-{rang}"
     else:
         nom = f"{tag}-{len(sortie) + 1}"
@@ -952,7 +1096,9 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=(),
         # les sommets DEJA transformes, donc deja en coordonnees finales.
         st["_gradient_mat"] = m
 
-    sortie.append((nom, formes, shapes_de_style(st, rapport, nom)))
+    # ⭐ 4e element = le flou eventuel. Les autres appelants poussent des tuples
+    # a 3 ou 4 elements : l'assemblage lit donc l'index 3 avec un defaut.
+    sortie.append((nom, formes, shapes_de_style(st, rapport, nom), flou_a_poser))
 
 
 def collecter_texte(el, mat, herite, rapport, sortie, chemin, css=None):
@@ -1130,9 +1276,12 @@ def convertir(chemin, fps=30, frames=60):
 
     fontes = {}
     for i, entree in enumerate(reversed(elements)):
-        # Une entree de texte NATIF porte un 4e champ : elle ne produit pas un
-        # calque de formes (ty:4) mais un calque texte (ty:5).
-        if len(entree) == 4:
+        # ⛔ AVANT (bug du 2026-08-28) : on reconnaissait le texte a
+        # `len(entree) == 4`. Des que les formes ont eu, elles aussi, un 4e champ
+        # (le flou), toute forme floutee partait dans la branche TEXTE et
+        # plantait sur `t["texte"]`. La LONGUEUR n'est pas un discriminant :
+        # c'est le CONTENU qui l'est — une entree de texte n'a pas de formes.
+        if len(entree) == 4 and entree[1] is None and isinstance(entree[3], dict):
             nom, _, _, t = entree
             calque, fonte = svgtext.calque_natif(
                 t["texte"], t["famille"], t["taille"], t["x"], t["y"],
@@ -1142,7 +1291,9 @@ def convertir(chemin, fps=30, frames=60):
             layers.append(calque)
             continue
 
-        nom, formes, styles_ = entree
+        # 4e element optionnel : le flou a poser (cf. collecter()).
+        nom, formes, styles_ = entree[0], entree[1], entree[2]
+        flou = entree[3] if len(entree) > 3 else None
         # ⛔ UN GROUPE PAR STYLE, jamais fill+stroke dans le meme groupe.
         # MESURE (profil de pixels, bord de la cabosse a y=180) : avec les
         # deux dans un seul groupe, lottie-web peint le remplissage APRES le
@@ -1174,13 +1325,16 @@ def convertir(chemin, fps=30, frames=60):
         if not groupes:                       # ni fill ni stroke : geometrie seule
             groupes.append({"ty": "gr", "nm": nom, "it": list(formes) + [_tr()]})
 
-        layers.append({
+        couche = {
             "ddd": 0, "ty": 4, "ind": i, "nm": nom, "st": 0, "ip": 0, "op": frames,
             "ks": {"a": {"a": 0, "k": [0, 0]}, "p": {"a": 0, "k": [0, 0]},
                    "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0},
                    "o": {"a": 0, "k": 100}},
             "shapes": groupes,
-        })
+        }
+        if flou:
+            couche["ef"] = [effet_flou(flou)]
+        layers.append(couche)
 
     doc = {"nm": os.path.splitext(os.path.basename(chemin))[0], "v": "5.5.2",
            "fr": fps, "ip": 0, "op": frames, "w": round(w), "h": round(h),
