@@ -76,6 +76,36 @@ stack aligné = exactement la configuration à saisir. Trancher par Q1, pas par 
 ⭐ La méthode par le stack **retient** l'EdTech que le ratio seul rejetait, et **rejette**
 l'explainer pour un motif solide. C'est ce changement d'ordre qui fait toute la différence.
 
+### Q0 — LE TRI EN 15 SECONDES, AVANT D'OUVRIR L'ANNONCE (ajouté 2026-08-28)
+> Ces 3 signaux se lisent sur la CARTE de l'annonce. Ils ne remplacent pas Q1-Q4, ils évitent
+> d'ouvrir ce qui ne mérite pas d'être lu.
+
+- ⭐⭐⭐ **`Invites sent` vs `Unanswered invites` = LE VERDICT DU MARCHÉ, gratuit** (trouvé par Aziz
+  le 2026-08-28). Les invitations sont envoyées PAR le client (gratuit pour lui, coûteuses pour
+  qui répond). **70 envoyées / 68 sans réponse en 25 min** = envoi en masse + refus collectif des
+  freelances invités. ⛔ Ne pas lire ce vide comme « offre récente » : 70 invitations en 25 minutes
+  n'est pas de la lenteur. Un client qui doit inviter 70 personnes pour en intéresser 2 a un
+  problème de PRIX, pas de visibilité.
+- **`$/hr avg paid`** (affiché sur le profil client) = son plafond RÉEL, pas un point de départ.
+  Cas mesuré : annonce « high-level editor, not entry-level » à 4-7 $/h → moyenne payée **5,81 $/h**
+  sur 4 668 h. Il paie exactement ce qu'il annonce.
+- **Les AUTRES offres ouvertes du client.** 15 offres simultanées toutes en support bas coût
+  (appointment setter, email marketing, HR) = **agence qui constitue une équipe offshore**, pas un
+  acheteur de prestation. Le pays du client ne dit rien (il recrute « Worldwide », son marché de
+  référence est mondial).
+- ⛔ **Le coût en connects est un signal inversé** : 17 connects = Upwork classe l'offre comme
+  attractive. Sur une annonce à 16-49 $/semaine, les connects mangent une part réelle du gain.
+
+### ⛔ LA FRONTIÈRE : prestation à l'HEURE vs livraison de PIÈCE
+**C'est le filtre le plus rentable, et il se règle dans les filtres de recherche, pas à la lecture.**
+- **À l'heure** (montage de rushes, exécution, présence) : notre vitesse nous PÉNALISE — produire
+  plus vite baisse le revenu. Notre déterminisme n'a aucune valeur sur un montage qu'on ne refera
+  jamais. Et la matière première (rushes filmés) n'entre dans aucun de nos outils.
+- **À la pièce** (un composant, un asset, un système) : la vitesse et le déterminisme PAIENT.
+  C'est le cadre du chill-meter (350 $ pour une pièce, pas pour des heures).
+→ **Filtre Upwork : Fixed-Price uniquement, et décocher Entry Level.** Ces 2 réglages seuls
+éliminent l'essentiel du bruit.
+
 ### Coûts et connects
 - ⛔ **Un job coûte 4 à 16 connects, pas 1** (0,15 $/connect, vérifié page officielle). 100 connects
   ≈ **10-25 candidatures**. Bonus de **50 connects après le 1er achat** (nouveau freelance).
