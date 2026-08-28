@@ -1775,3 +1775,25 @@ avant de lire sa popularité comme un signal de qualité.
 
 **Écartés** : `OpenMontage` (49221 ★ mais **AGPL**) · `heygen/hyperframes` (41933 ★ mais framework de
 rendu **concurrent** — il ship un `/remotion-to-hyperframes`, c'est une migration hors de notre stack).
+
+## ⛔⛔ UNE PAGE D'ELIGIBILITE DIT QUI PEUT POSTULER, JAMAIS QUI EST RETENU (2026-08-28)
+
+**Vecu, corrige par Aziz le jour meme.** Un agent a lu la page d'eligibilite de LottieFiles Hire
+(« 10 animations publiees + un plan payant ») et j'ai grave dans la memoire que c'etait « la
+meilleure porte d'entree, mecanique, zero avis requis ». Aziz est alle regarder **QUI est
+reellement liste** : des animateurs installes depuis longtemps, des CENTAINES d'animations chacun,
+parfois des studios entiers. Les 195 profils sont une **SELECTION**, pas une file d'attente courte.
+
+**La regle** : des CONDITIONS D'ACCES publiees decrivent le minimum pour etre *considere*. Elles ne
+disent RIEN du taux d'admission ni du niveau reel des admis. Pour le savoir il faut **regarder les
+admis**, pas relire la page.
+
+⭐ **Meme famille que [[feedback_rapport-vert-ne-prouve-rien-regarder-l-image]]** : la page mesure
+sa propre porte, pas ce qu'il y a derriere. Et meme famille que
+[[feedback_chiffre-audit-relaye-sans-verification]] — mais ce cas-la visait les CHIFFRES ; ici
+c'etait une **regle d'acces**, cas non couvert jusqu'ici.
+
+⛔ **Corollaire de niveau de preuve** : ne pas melanger dans une meme reponse ce qui est lu sur une
+page officielle et ce qui vient de temoignages (le « 3-7 mois avant la 1re commande » venait de fils
+Reddit = des SURVIVANTS, ceux qui ont abandonne n'ecrivent pas). **Etiqueter la source AVANT de
+conclure**, pas apres.

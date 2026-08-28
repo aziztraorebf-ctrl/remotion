@@ -83,3 +83,19 @@ Usage : `python3 scripts/tools/run_ipv4.py scripts/tools/gemini-vision-breakdown
 (Un fichier `.pth` dans un dossier arbitraire ajouté à `PYTHONPATH` NE fonctionne PAS pour ça — les `.pth` ne s'exécutent que scannés depuis un vrai `site-packages`. Le wrapper `runpy` est la méthode qui marche.)
 
 **Ne PAS** : changer d'interpréteur Python, suspecter un throttling anti-bot ou une clé API invalide, ou conclure à une limitation d'environnement non contournable AVANT d'avoir testé `curl -6` vs `curl -4` sur le host concerné — ce test isole la cause en 20 secondes. Si un script Python "traîne" sans output ni erreur sur N'IMPORTE QUEL appel réseau externe dans ce projet, suspecter CE gotcha en premier.
+
+## Gotcha 429 sur les SOUS-TITRES (2026-08-28) — le contournement est TubeLab, pas une variante yt-dlp
+
+`--write-auto-sub` / `--write-sub` renvoient **HTTP 429 Too Many Requests** sur la piste de
+sous-titres alors que la video elle-meme se resout. Change de client n'y fait rien : `android`
+echoue pareil, et `player_client=web,tv` renvoie « The page needs to be reloaded » (deja documente
+plus haut — **je l'ai retente quand meme, ne pas refaire**).
+
+⭐ **Contournement qui marche : le MCP TubeLab** (`get_video_transcript` + `get_video`). Il rend le
+transcript complet ET les metadonnees (titre, chaine, date, vues, description — la description sert
+a peser le BIAIS de la source : ce que la chaine vend).
+⚠️ Le transcript revient souvent **trop gros** et est sauve dans un fichier dont les lignes sont
+trop longues pour `Read` → le lire par tranches en python (`open(f).read()[A:B]`), jamais avec Read.
+
+⛔ **Regle des 2 echecs appliquee** : 2 tentatives yt-dlp infructueuses = changer d'OUTIL, pas
+essayer un 3e flag.
