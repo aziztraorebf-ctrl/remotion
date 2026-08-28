@@ -42,6 +42,28 @@
 
 ---
 
+## ⛔⛔ CORRECTION — LottieFiles Hire N'EST PAS une porte mecanique (verifie par Aziz, 28/08)
+
+**Ce que l'agent avait lu** : eligibilite = 10 animations publiees + plan payant 19,99 $/mois →
+j'en ai conclu « la meilleure porte, mecanique, zero avis requis ». **FAUX.**
+**Ce qu'Aziz a vu en allant regarder QUI est reellement liste** : des animateurs installes depuis
+longtemps, **des CENTAINES d'animations chacun**, parfois des **studios entiers**. Les 195 ne sont
+pas une file d'attente courte — c'est une **selection**. Les 10 animations sont le minimum pour etre
+CONSIDERE, pas pour etre LISTE. (Exemple de niveau : `kamotionstudio.site` — studio dedie Lottie/UI
+SaaS, devis sur demande, aucun tarif affiche.)
+⭐ **La lecon de methode** : une page d'eligibilite dit qui peut POSTULER, jamais qui est RETENU.
+Meme famille que « rapport vert ne prouve rien » — il a fallu REGARDER les profils.
+→ **Reclasser LottieFiles Hire en OBJECTIF, pas en prochaine etape.**
+
+### ⭐⭐⭐ MAIS le vrai gisement est la, et il vaut mieux que l'annuaire
+**La page des animateurs est un CORPUS DE REFERENCE.** Sur Fiverr on voit des vignettes
+promotionnelles ; ici on voit **les animations ELLES-MEMES qui jouent** (gratuites ou payantes,
+indifferent). C'est la reponse a notre vrai blocage : on sait convertir et animer, on ne savait pas
+**QUOI mettre dans le portfolio**. Registre, duree, niveau de detail, ce qui bouge et ce qui ne
+bouge pas — execute par des gens qui en vivent.
+⭐ Meme methode que REPRO-FOSTER (reproduire un livrable reellement vendu, mesurer l'ecart), mais
+sur une matiere **plus proche de nous et beaucoup plus abondante**.
+
 ## ⭐⭐⭐ MESURE TERRAIN 2026-08-28 — le marche TRANSIGE (1re donnee de PREMIERE MAIN)
 
 ⛔ **Prime sur toute veille relayee.** Fait par Aziz lui-meme sur Fiverr, pas par un agent.
