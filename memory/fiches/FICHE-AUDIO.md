@@ -41,6 +41,44 @@ Musique : `fal-ai/minimax-music/v2.6`, `{prompt, is_instrumental:true}`, PAS de 
 7. **Garde-fou** : re-aligner, vérifier que tous les mots sont présents. Prouve l'absence de perte de TEXTE — jamais la qualité SONORE.
 8. **Mix** : SFX plancher **0.50** (jusqu'à 0.60 sur gros moment) · **musique = 0.13 au départ** (valeur harmonisée par Aziz le 2026-08-17 sur le code réel — les anciennes 0.07 / 0.12-0.15 / 0.10-0.14 sont périmées ; on part de 0.13 et on monte ou descend à l'oreille) · SFX ponctuels uniquement, jamais de nappe continue. Musique tardive : si `(durée_piste − startFrom) < durée_beat` → 2e `<Audio startFrom={0}>` en relais.
 
+## ⭐⭐ OÙ placer les SFX — sur l'IMAGE, jamais sur un pic sonore
+
+> Ajouté le 2026-08-27 (repro Foster). Verdict d'Aziz sur le montage : « les SFX sont
+> parfois un peu décalés, et dans l'originale ils sont **deux fois plus nombreux** —
+> c'est littéralement ce qui donne le côté premium ». Mesuré : il avait raison deux fois.
+
+**L'erreur de méthode** : j'ai posé les SFX sur les pics d'un signal AUDIO relevé dans la
+vidéo de référence. Deux défauts, tous deux mesurés après coup :
+1. l'audio de la référence était une **capture dégradée** (16 kHz mono) → 18 transitoires
+   détectés là où l'image en compte **68** ;
+2. surtout, **le pic sonore de LEUR montage ne dit pas où l'image bouge dans le NÔTRE** :
+   seuls **7 de nos 13 SFX** tombaient à moins de 3 frames d'un événement visuel réel.
+⭐ Sur un rendu muet — le cas de toute scène Remotion avant mixage — il n'y a de toute
+façon aucun audio à analyser. **Le repère est l'image.**
+
+**L'outil** : `python3 scripts/tools/sfx-cues.py <video.mp4> [--crop W:H:X:Y] [--json out]`
+Il classe trois familles d'événements, seuils **relatifs** à la vidéo analysée (un seuil
+absolu ne survit pas au changement de registre) :
+| type | ce que c'est | son par défaut |
+|---|---|---|
+| `COUPE` | rupture franche, **rare et isolée** | `ui/plate-pop.mp3` |
+| `APPARITION` | un élément entre : l'encre augmente sans que tout change | `ui/node-appear.mp3` |
+| `POSE` | un mouvement continu **s'arrête** — le temps fort qu'on oublie | `data/stat-tick.mp3` |
+Sortie : un bloc `{ at, src, vol }` prêt à coller.
+
+⭐ **Validé objectivement** : sur la référence Foster, ses 7 `COUPE` retrouvent **exactement**
+les 7 bornes de plans mesurées à la main pendant la session (1,600 · 5,600 · 13,600 ·
+25,067 · 27,067 · 28,067 · 40,467 s).
+
+⛔ **Une COUPE est rare et isolée** : le seuil d'intensité ne suffit pas, il faut le CONTEXTE.
+Sans ce garde-fou, une salve d'apparitions rapides (une phrase qui s'écrit mot à mot) sortait
+entièrement en « COUPE ». Une vraie coupe **domine largement ses voisines** (× 2,5).
+
+⚠️ **La sortie donne des CANDIDATS, pas une vérité.** Garder ce qui porte un sens narratif,
+retirer le reste : un SFX par micro-mouvement fatigue autant que pas de SFX du tout. L'outil
+dit **OÙ**, jamais **QUOI** — le choix du fichier reste un jugement.
+⭐ Banque écoutable (SFX + 2 pages musique) : voir `memory/INDEX-LIENS.md`.
+
 ## SI ÇA RATE 2×
 **Symptôme audio ≠ cause audio.** Avant de retoucher le son, MESURER :
 `ffmpeg -hide_banner -nostats -i <audio> -af "silencedetect=noise=-38dB:d=0.5" -f null /dev/null 2>&1 | grep silence`

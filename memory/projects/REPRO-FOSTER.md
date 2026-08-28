@@ -1,5 +1,31 @@
 # REPRODUCTION — « Foster With Confidence »
 
+## 🏁 CHANTIER TERMINE ET VALIDE (2026-08-27)
+**Les 11 plans + le montage complet sont valides par Aziz.** Verdict :
+« si le but etait de prouver qu'on pouvait reproduire une video comme la sienne,
+c'est fait. Ce n'est pas 100 % parfait, ce n'etait pas le but non plus — je ne
+pense pas que ca serve a grand-chose de continuer d'iterer. »
+⛔ **NE PAS RELANCER D'ITERATION** sur cette video sans demande explicite.
+
+- **Retrospective** (le livrable n°1 du chantier) :
+  https://claude.ai/code/artifact/6bfbbd43-9720-4055-9918-9487b89f3a7d
+- Comparatifs des 11 plans : https://claude.ai/code/artifact/d5fb3169-7cb4-47e8-a94a-dfca377d204f
+- Montage complet : `out/episodes/foster-repro/foster-FINAL.mp4`
+
+### ⭐ LA DETTE ASSUMEE — et ce qu'elle a produit
+Aziz : « il nous faudrait un systeme pour placer parfaitement les SFX ; dans la
+video originale ils sont **deux fois plus nombreux** et c'est litteralement ce qui
+donne le cote premium ». Mesure : seuls **7 de nos 13 SFX** tombaient a moins de
+3 frames d'un evenement visuel reel.
+✅ **Outil cree en reponse** : `scripts/tools/sfx-cues.py` — detecte les evenements
+dans l'IMAGE (coupes / apparitions / poses), pas les pics audio. Valide
+objectivement : ses 7 `COUPE` retrouvent exactement les 7 bornes de plans mesurees
+a la main pendant la session. Methode gravee dans `memory/fiches/FICHE-AUDIO.md`
+(§ OU placer les SFX), hook branche sur `sfx-cues`.
+
+---
+
+
 ## ⚡ REPRISE : COMMENCER ICI (session du 2026-08-27)
 
 **Etat : LES 11 PLANS SONT PRODUITS — 42,75 s / 42,75 s = 100 %.**

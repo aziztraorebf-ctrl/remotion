@@ -18,6 +18,7 @@
 
 | Sujet | Lien | Contenu |
 |---|---|---|
+| **Rétrospective Foster** ⭐ | https://claude.ai/code/artifact/6bfbbd43-9720-4055-9918-9487b89f3a7d | Ce que le test a prouvé, les 3 façons de se tromper en mesurant, le signal « plafond vs dosage ». À relire avant une repro ou un chantier de mesure. |
 | **Repro Foster** (vidéo Fiverr) | https://claude.ai/code/artifact/d5fb3169-7cb4-47e8-a94a-dfca377d204f | Les 11 plans côte à côte avec l'original, lecture image par image. 1 page par SUJET — à enrichir, pas à dupliquer. |
 | **Repro Foster — le montage complet** | https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/foster-FINAL-zGlYVidLOsQZncjnceaYO3KbQv6isp.mp4 | 42,77 s, musique + SFX. Hébergé sur Blob : 29 Mo, au-delà du plafond Artifact (16 Mo). |
 

@@ -79,7 +79,7 @@ if [ -n "$BASH_CMD" ]; then
   if printf '%s' "$BASH_CMD" | grep -qE 'ffmpeg|render-mapbox\.sh|remotion render|-FINAL\.mp4|upload-to-blob|concat='; then
     add_fiche "FICHE-ASSEMBLAGE.md" "FICHE ASSEMBLAGE" "bash-assemblage"
   fi
-  if printf '%s' "$BASH_CMD" | grep -qE 'generate-narration|generate-sfx|forced-align|splice-segment|elevenlabs|minimax-music'; then
+  if printf '%s' "$BASH_CMD" | grep -qE 'generate-narration|generate-sfx|forced-align|splice-segment|elevenlabs|minimax-music|sfx-cues'; then
     add_fiche "FICHE-AUDIO.md" "FICHE AUDIO" "bash-audio"
   fi
   # CLIP GENERE (MiniMax H3 / Comfy Cloud) : 3 pieges ont coute un essai chacun

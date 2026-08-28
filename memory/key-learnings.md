@@ -6,7 +6,7 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 
 ## 📑 INDEX
 
-- **🔧 MÉTHODE & PROCESS** — reorg workspace (liens en dur dans le code), grand ménage mémoire+disque (baseline), bug visuel = extraire frames + instrumenter, validation mini-renders comparatifs (pas des stills), ⛔ identifiant de modele/API en dur = dette (centraliser des le 2e usage), ⛔⛔ HTTP 200 ≠ livrable (changer un defaut = tester chaque chemin), modele en `-preview` = compte a rebours, repo tiers = lire ses prompts avant son code
+- **🔧 MÉTHODE & PROCESS** — ⭐⭐⭐ la mesure est biaisée par la FAÇON de mesurer (couleur au cœur du glyphe · bon AXE · pendant la transition), ⛔⛔ 3 corrections sans effet = un PLAFOND, pas un dosage (balayer le paramètre), reorg workspace (liens en dur dans le code), grand ménage mémoire+disque (baseline), bug visuel = extraire frames + instrumenter, validation mini-renders comparatifs (pas des stills), ⛔ identifiant de modele/API en dur = dette (centraliser des le 2e usage), ⛔⛔ HTTP 200 ≠ livrable (changer un defaut = tester chaque chemin), modele en `-preview` = compte a rebours, repo tiers = lire ses prompts avant son code
 - **🗺️ WAR-MAP — grammaire & narration** — HOOK partir de NOS templates (pas grammaire externe), GRAMMAIRE CAUSALE + AUDIO-FIRST (standard), scanner catalogue carte-vivante avant code, structure linéaire + fact-check avant audio lock, sprite invisible = CONTRASTE, vrai coupable B1 = CODE LEGACY parallèle
 - **🎬 DA-BRIEF & review externe** — DA-brief causalité phrase-par-phrase + chaînes réf + catalogue, DeepSeek V4 3e voix conceptuelle (aveugle visuel), Gemini diff visuel obligatoire après 1er render, **DA-brief VIDÉO (analyse d'écart vers refs, scène finie)**
 - **🎨 SVG GÉNÉRATIF ANIMÉ** (2026-06-21, ⭐ NOUVELLE VOIE) — Gemini génère une SCÈNE illustrée complexe en SVG propre (50-100 paths, ~20Ko, groupes #id sémantiques) → animable PAR PARTIES dans Remotion via useCurrentFrame (pas Lottie, pas AE). Net à toute taille, couleurs modifiables à la frame. GOTCHA : ne JAMAIS sortir un élément du cadre clippé (artefact de coupe) → "repart" = avance légère + fade out · **BIBLIOTHÈQUE SVG** (2026-06-25) — capitaliser chaque projet SVG en éléments (.svg) + techniques (.md) + index R&D (RD-INDEX.md avec renders catbox + verdicts). Un agent vierge peut réutiliser sans relire les TSX source. · **TEST NAVIGABILITÉ** : lancer un agent vierge avec 5 questions concrètes → les lacunes qu'il ne trouve pas = trous à corriger immédiatement (lien mort, prompt TODO, décision non tranchée) · **PERSONNAGE VIVANT** (2026-06-30) — perso d'encre animé par CODE (frame-driven, pas sprites) ; FOOT-PLANT / compensation bassin / objet-enfant-de-la-main ; LLM=banc d'idées pas rig-en-bloc → biblio `personnage-vivant-svg/`
@@ -19,6 +19,47 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 ---
 
 ## 🔧 MÉTHODE & PROCESS
+
+### 2026-08-27 — ⭐⭐⭐ CE QUE JE MESURE EST BIAISÉ PAR LA FAÇON DONT JE MESURE (3 cas, repro Foster)
+
+Trois fois dans la même reproduction, une mesure rigoureuse a donné un résultat **faux** — non
+par erreur de calcul, mais parce que **l'instrument regardait au mauvais endroit**. Le biais va
+toujours dans le même sens, ce qui le rend crédible et donc dangereux.
+
+| Ce que je mesurais | Le biais | La mesure juste |
+|---|---|---|
+| **La couleur d'un texte** | Échantillonner au percentile 97 embarque les pixels de BORD, lissés contre le fond. Sur fond sombre → la couleur tire vers le gris. Relevé : `rgb(165,133,73)` au lieu de `rgb(204,165,93)`, saturation 0,449 au lieu de 0,540. Aziz l'a vu à l'œil avant que je le mesure : « beaucoup trop terne ». | **Percentile 99+ = le cœur du glyphe seul.** |
+| **Un dégradé de fond** | Le profil par BANDES horizontales était juste à 0,6 point près... et le fond restait faux. Une moyenne par bande ne voit pas la FORME. | **Mesurer selon le BON AXE** : le profil par COLONNES a montré une variation de 49 à 63 (des halos) là où nous étions plats à 63. |
+| **La largeur d'un texte** | Mesurer les phrases COMPLÈTES montrait 5 blocs centrés à 1 px près → j'ai conclu à un `textAlign: center`. Faux : mesurée PENDANT la construction, l'ancre gauche ne bouge pas d'un pixel. | **Mesurer pendant la transition, pas seulement aux états stables.** |
+
+⭐ **La règle** : une mesure ne se valide pas par sa précision mais par le fait qu'elle porte sur
+**la bonne grandeur, au bon endroit, au bon moment**. Un chiffre précis sur la mauvaise grandeur
+est plus dangereux qu'une absence de mesure — il donne confiance.
+
+### 2026-08-27 — ⛔⛔ UN PLAFOND N'EST PAS UN RÉGLAGE : quand 3 corrections ne bougent pas le chiffre
+
+**Vécu (repro Foster, plan 10).** Le texte gras sortait 2 à 5 % trop étroit. Trois corrections
+successives — taille de police, durée du fondu, remplacement des marges par de vrais espaces —
+n'ont pas bougé l'écart moyen (3,5 % → 3,43 %). Diagnostic délégué à un agent dédié
+(protocole 2+ échecs), **puis vérifié indépendamment**.
+
+**La cause** : la pile `-apple-system / SF Pro Display / Helvetica Neue / Arial` se résout aux
+faces **DISCRÈTES** de Helvetica Neue. Largeur rendue de « Confidence » à 68 px :
+`400 → 340 px · 500 → 352 · 600 → 363 · 700 → 363 · 800 → 363 · 900 → 363`.
+**Au-delà de 600, Chromium n'a plus rien et sature.** La cible étant 375 px, aucune valeur de
+`fontWeight` ne pouvait l'atteindre.
+
+⭐ **Le signal à reconnaître** : quand N corrections ne changent RIEN au chiffre (pas « trop peu »,
+mais *rien*), on n'est pas face à un dosage mal réglé — on est **contre une borne du système**.
+Le réflexe n'est pas d'essayer une 4e valeur, c'est de **mesurer la réponse du paramètre**
+(balayer 400→900 et regarder la courbe : elle était plate).
+
+⛔ **Et le fix n'est pas de compenser.** Un letter-spacing correctif ramenait l'écart moyen à
+−0,04 % mais laissait une dispersion (il s'ajoute PAR CARACTÈRE quand le manque est PROPORTIONNEL
+à la largeur). On change de fonte : Inter, dont l'axe ne sature pas (700 → 376 px pour 375 visés).
+⚠️ **Mais pas partout** : Inter en 400 est 5 % TROP LARGE sur le texte clair, où la pile système
+est exacte. Basculer toute la scène aurait DÉPLACÉ le problème. → pile système pour le clair,
+Inter 700 pour le gras seulement. **Un fix global à un problème local en crée un autre.**
 
 ### 2026-08-27 — ⛔⛔ UNE ACTION PEUT ÉCHOUER EN TOTAL SILENCE (3 cas le même jour)
 
