@@ -10,12 +10,14 @@ pour bon. C'est l'IMAGE qui a montre le defaut, jamais le nombre.
 => Ce test ne se contente pas d'un seuil global : il verifie NOMMEMENT que
 chaque contre-forme voyage avec sa lettre, et que le geste garde sa pause.
 
-Ce qu'il verrouille, en 3 volets :
+Ce qu'il verrouille, en 4 volets :
   1. NOMMAGE  -- 8 groupes nommes, 15 calques couverts, aucun orphelin,
                  et chaque lettre creuse embarque sa contre-forme.
   2. FIDELITE -- le regroupement ne change pas le dessin (ecart <= 0,05 %).
   3. GESTE    -- la fleche porte ses 4 cles, la SUSPENSION existe, et le
                  ratio montee/chute reste asymetrique (cf. FICHE-GESTE-ANIME).
+  4. PROPOSITION -- `proposer_carte.py` ne melange jamais deux objets dans un
+                 meme bloc, et ses blocs restent contigus.
 
 ⛔ Le volet 2 exige rsvg-convert ; il est saute proprement s'il manque, et
 le test le DIT au lieu de passer en silence.
@@ -172,6 +174,49 @@ def volet_geste(anime):
     return ecarts
 
 
+# ---------------------------------------------------------------------------
+# Volet 4 — la PROPOSITION de carte (proposer_carte.py), ajoute le 2026-08-28.
+# ⭐ Ce qu'on verrouille n'est PAS "l'outil trouve les bons noms" (il n'en trouve
+# aucun, par conception) mais deux garanties MECANIQUES :
+#   a) chaque bloc propose est un SOUS-ENSEMBLE d'un groupe de la carte manuelle
+#      -- l'outil peut sur-decouper, jamais melanger deux objets ;
+#   b) les blocs sont CONTIGUS dans l'ordre de peinture.
+# ⛔ (a) est le vrai garde-fou : sur-decouper est recuperable en une seconde,
+# melanger deux objets produit un rendu faux (le "o" en disque plein).
+def volet_proposition():
+    import importlib.util
+    sp = importlib.util.spec_from_file_location(
+        "pc", os.path.join(ICI, "proposer_carte.py"))
+    pc = importlib.util.module_from_spec(sp)
+    sp.loader.exec_module(pc)
+
+    doc = json.load(open(JSON_BRUT, encoding="utf-8"))
+    blocs = pc.proposer(doc)
+    ecarts = []
+
+    # (a) aucun bloc ne doit chevaucher deux groupes de la carte manuelle
+    from group_layers import CARTES
+    appartenance = {}
+    for groupe in CARTES["loadup"]["_ordre"]:
+        for n in CARTES["loadup"][groupe]["noms"]:
+            appartenance[n] = groupe
+    for etiquette, membres in blocs:
+        vus = {appartenance.get(n) for n in membres}
+        if len(vus) > 1:
+            ecarts.append(f"{etiquette} melange {sorted(vus)} : "
+                          f"deux objets dans un meme bloc")
+
+    # (b) contiguite : les membres se suivent dans l'ordre de peinture
+    ordre = [c["nm"] for c in reversed(doc["layers"])]
+    rang = {n: i for i, n in enumerate(ordre)}
+    for etiquette, membres in blocs:
+        rangs = sorted(rang[n] for n in membres if n in rang)
+        if rangs and rangs != list(range(rangs[0], rangs[0] + len(rangs))):
+            ecarts.append(f"{etiquette} n'est PAS contigu : {rangs}")
+
+    return ecarts, len(blocs)
+
+
 def main():
     tmp = tempfile.mkdtemp(prefix="logo-client-")
     nomme = os.path.join(tmp, "nomme.json")
@@ -213,13 +258,23 @@ def main():
               f"ratio chute/montee {(t[3]-t[2])/(t[1]-t[0]):.2f}")
     echecs += eg
 
+    print("4. PROPOSITION DE CARTE")
+    ep, nb = volet_proposition()
+    for e in ep:
+        print(f"   ECHEC  {e}")
+    if not ep:
+        print(f"   OK     {nb} blocs, tous contigus et tous inclus dans un "
+              f"seul groupe de la carte manuelle")
+    echecs += ep
+
     print()
     if echecs:
         print(f"ECHEC : {len(echecs)} probleme(s)")
         return 1
-    print("Les 3 volets passent.")
+    print("Les 4 volets passent.")
     return 0
 
 
 if __name__ == "__main__":
     sys.exit(main())
+
