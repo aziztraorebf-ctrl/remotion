@@ -659,3 +659,69 @@ jamais discriminer sur la **LONGUEUR** d'une structure — c'est le **CONTENU** 
 
 1. **Les 4 logos restants** : L1 Hinch, L3/L4 Kanvas, L5 Tigerwild, L8 Fokus.
 2. **Le rig** — session SEPAREE : `memory/starters/STARTER-RIG-PERSONNAGE-EXISTANT.md`.
+
+---
+
+# ✅ TEST A BLANC — TIGERWILD (505 formes), 2026-08-28
+
+> **Demande d'Aziz** : reprendre un des 4 logos restants **en ne se servant que de ce qui est
+> TROUVABLE en memoire**, pour verifier que le workflow tient sans le contexte de la session
+> qui vient de l'ecrire. ⭐ **Le workflow a tenu.**
+
+## LA CHAINE S'EST RETROUVEE TOUTE SEULE
+
+`grep proposer_carte memory/` -> 5 fichiers, dont l'inventaire qui donne la chaine complete
+en une ligne. ⭐ **Et c'est ainsi que j'ai (re)trouve `LOGOS-CLIENTS-REELS.md`**, que je
+n'avais pas relu : il classe les 8 logos par difficulte et designe **L5 Tigerwild comme
+« le plus detaille »**. Choisi pour ca — un test a blanc doit EPROUVER la chaine, pas la flatter.
+
+## LE CAS — le plus dur des trois
+
+Logo **au TRAIT** (tigre dessine d'une ligne, paysage complet dans le corps) pose sur une
+**PHOTO de foret**, avec une **texture volontairement usee**.
+⛔ Le recadrage « pixels non blancs » du renard **ne marchait pas** (fond photo) : recadre en
+ciblant la **TEINTE DOREE** -> 472x480.
+
+| | LoadUp | Renard | **Tigerwild** |
+|---|---|---|---|
+| paths | 15 | 31 | **505** |
+| couleurs | 4 | 9 | **34** |
+| poids SVG | 5,5 Ko | 23 Ko | **219 Ko** |
+| ecart Lottie | 0,01 % | 0,00 % | **0,00 %** |
+
+**0,00 % d'ecart sur 505 formes**, verifie A L'IMAGE : la texture usee elle-meme a traverse.
+
+## ⭐⭐ CE QUE CE LOGO APPREND — UN TRAIT TEXTURE SE FRAGMENTE
+
+Mesure : **285 des 505 calques (56 %) font moins de 400 px2**, 2 a 5 sommets, en couleurs
+delavees (`#C2B878`, `#CCCBC8`). Ce sont les **ECLATS de la texture**, pas des elements du
+dessin. **Aucun nom sematique n'a de sens sur une miette.**
+=> `proposer_carte.py` groupe desormais les **SUITES CONTIGUES** de miettes en blocs
+`texture-N`. ⛔ Uniquement contigues.
+
+| | avant | apres |
+|---|---|---|
+| LoadUp | 40 % | 40 % (inchange) |
+| Renard | 6 % | 6 % (inchange) |
+| **Tigerwild** | **1 %** | **38 %** (505 -> 312) |
+
+⭐ La regle est **CIBLEE** : elle ne touche que les logos textures. Verifie : 505/505 calques
+couverts, **aucun doublon, aucun bloc non contigu**, 56 blocs de texture. `test_logo_client` 4/4.
+
+## ⛔ DEUX LIMITES MESUREES, A NE PAS OUBLIER
+
+1. **POIDS : 433 Ko** (contre 13 Ko LoadUp, 38 Ko renard). ⛔ **Hors cible pour un splash
+   screen** (~50-100 Ko), qui est l'usage meme du client Cravvy cite dans BRIEF-MESURE.
+   Un logo au trait texture est structurellement lourd — c'est la TEXTURE qui coute, pas le
+   dessin. Piste non testee : proposer au client une version **sans grain** (bien plus legere)
+   a cote de la version fidele.
+2. ⚠️ **CREATOR N'A PAS PU L'AVALER** : `import_asset` **timeout a 70 s**. Diagnostic fait —
+   le pont est VIVANT (2 connexions ESTABLISHED au `lsof`) et le fichier est servi
+   integralement (HTTP 200, 443 381 octets). **C'est le traitement des 505 calques dans
+   Creator qui depasse 70 s.** ⛔ **NON VALIDE dans Creator** : ne pas ecrire que ce logo y
+   fonctionne tant que l'import n'a pas abouti.
+
+## ⏭️ RESTE
+
+3 logos : **L1 Hinch** (embleme, texte en arc) · **L3/L4 Kanvas** (monogramme isometrique) ·
+**L8 Fokus** (texte tres fin). Le rig : session separee.
