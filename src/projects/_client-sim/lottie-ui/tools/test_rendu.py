@@ -41,18 +41,28 @@ CAS = [
 SCENES = [
     ("public/assets/geoafrique/recraft-v4/beat01-free-A2.svg", 0.5, None),
     ("src/projects/_rnd/chill-meter/chill-meter-mix.svg", 100.0,
-     "19 refus annonces (12 use, 5 filtres, 2 pattern) : l'ecart mesure "
-     "~16 % CONFIRME le rapport, il ne le contredit pas. Historique de la "
+     "13 refus annonces (11 filtres, 2 pattern) : l'ecart mesure "
+     "~14 % CONFIRME le rapport, il ne le contredit pas. Historique de la "
      "baisse, chaque palier accompagne d'un changement de traitement "
      "IDENTIFIE : 32,7 % -> 28,8 % (degrades portes, 2026-08-26) -> 28,05 % "
      "(TEXTE vectorise, meme jour : les 13 refus <text> ont disparu) -> "
      "16,39 % (motifs NON PEINTS, meme jour : les 2 <pattern> gpt_scratches "
      "et gpt_screenGrid sont passes d'un gris #808080 invente, peint par "
      "dessus, a un refus declare qui laisse voir la couche du dessous -- "
-     "d'ou 17 refus puis 19). "
+     "d'ou 17 refus puis 19) -> 13,88 % (<use> APLATIS, 2026-08-28 : les 12 "
+     "refus <use> ont disparu, la geometrie referencee est reellement "
+     "dessinee -- 401 calques au lieu de 273). "
      "⛔ C'est le garde-fou du projet : si l'ecart baissait SANS que les "
      "refus correspondants disparaissent ou soient declares, ce serait le "
      "rapport qui mentirait"),
+    # ⛔ NON-REGRESSION du bug "degrade hors cadre" (2026-08-28) : les
+    # coordonnees userSpaceOnUse vivent dans le repere du path, AVANT la
+    # matrice accumulee. Sans la porter, cx=400 sur un cadre 200x200 sort du
+    # champ et le degrade disparait. Mesure : 3,70 % divergents sans le
+    # correctif, 0,21 % avec. Fixture volontairement autonome (pas d'asset
+    # externe) pour que ce test ne SKIP jamais.
+    ("src/projects/_client-sim/lottie-ui/tools/fixtures/degrade-sous-transform.svg",
+     0.5, "degrade radial ET lineaire sous transform de groupe"),
 ]
 
 fails = []

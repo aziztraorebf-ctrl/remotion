@@ -67,10 +67,8 @@ NON_PORTES = {
     "clipPath": "detourage — portable seulement en le pre-appliquant a la geometrie",
     "image": "images raster — a embarquer en base64, alourdit beaucoup",
     "text": "texte — Lottie exige une police declaree, pas de rendu direct",
-    "use": "reutilisation par reference — a aplatir avant conversion",
     "pattern": "motifs de remplissage — sans equivalent",
     "marker": "marqueurs de fleche — sans equivalent",
-    "symbol": "symboles — a aplatir avant conversion",
     "foreignObject": "contenu HTML embarque — hors format",
     "animate": "animation SMIL — l'animation doit venir de NOTRE code",
     "animateTransform": "animation SMIL — l'animation doit venir de NOTRE code",
@@ -272,9 +270,61 @@ def est_identite(m):
 
 # --- Styles ------------------------------------------------------------------
 
-def styles(el, herite):
-    """Fusionne attributs de presentation et style="" avec l'heritage."""
+def feuille_css(root):
+    """
+    Regles d'une balise <style> -> {nom_de_classe: {propriete: valeur}}.
+
+    ⛔ TROUVE PAR MESURE (2026-08-28, logo Stripe) : Adobe Illustrator n'ecrit
+    PAS les couleurs sur les formes. Il les met dans une feuille de style et
+    pose class="st0" sur chaque forme. Sans lire ces regles, le convertisseur
+    ne trouve aucun fill, applique le noir par defaut, et le rapport annonce
+    quand meme "transportable a l'identique" — un logo violet livre en noir,
+    SANS AUCUN signal.
+
+    Ampleur mesuree sur 6 fichiers reels : 2 concernes, dont les armoiries avec
+    236 elements a classe. C'est la cause des grandes zones noires observees,
+    attribuees a tort aux <use> refuses.
+
+    ⭐ Illustrator est l'outil standard des designers de logos : ce cas n'est
+    pas un cas limite, il est probablement majoritaire chez un vrai client.
+
+    Volontairement simple : selecteurs de CLASSE uniquement (.st0, .a), qui est
+    ce que produisent Illustrator et les optimiseurs. Les selecteurs complexes
+    (descendants, pseudo-classes, media queries) ne sont pas geres — ils
+    n'apparaissent pas dans un export de logo.
+    """
+    regles = {}
+    for el in root.iter(NS + "style"):
+        texte = "".join(el.itertext())
+        texte = re.sub(r"/\*.*?\*/", "", texte, flags=re.S)   # commentaires CSS
+        for bloc_css in re.findall(r"([^{}]+)\{([^{}]*)\}", texte):
+            selecteurs, corps = bloc_css
+            decls = {}
+            for decl in corps.split(";"):
+                if ":" in decl:
+                    k, v = decl.split(":", 1)
+                    decls[k.strip()] = v.strip()
+            if not decls:
+                continue
+            for sel in selecteurs.split(","):
+                sel = sel.strip()
+                if sel.startswith(".") and re.fullmatch(r"\.[\w-]+", sel):
+                    regles.setdefault(sel[1:], {}).update(decls)
+    return regles
+
+
+def styles(el, herite, css=None):
+    """
+    Fusionne feuille CSS, attributs de presentation et style="" avec l'heritage.
+
+    ⛔ ORDRE DE PRIORITE (celui d'un navigateur, du plus faible au plus fort) :
+    herite < regle de classe CSS < attribut de presentation < style="" en ligne.
+    Se tromper d'ordre fait gagner la mauvaise couleur en silence.
+    """
     st = dict(herite)
+    for cls in (el.attrib.get("class") or "").split():
+        if css and cls in css:
+            st.update(css[cls])
     # ⚠️ Les proprietes de POLICE s'heritent en SVG comme en CSS, et elles
     # sont presque toujours posees sur un <g> parent plutot que sur le <text>
     # lui-meme. Les oublier ici donnait un texte rendu dans la police par
@@ -368,9 +418,18 @@ def shapes_de_style(st, rapport, nom):
     if str(fill).startswith("url("):
         grad = st.get("_gradient_objet")
         boite = st.get("_gradient_boite")
+        if grad and grad.get("gtransform"):
+            # ⛔ Une matrice propre au degrade (rotation/cisaillement) n'a pas
+            # d'equivalent Lottie ici : la porter a moitie donnerait un rendu
+            # faux SANS le dire. On declare l'approximation et on se replie.
+            rapport.approxime(f"{nom}: gradientTransform",
+                              "matrice propre au degrade non portee — "
+                              "repli sur la couleur moyenne")
+            grad = None
         if grad and boite:
             # ⭐ VRAI DEGRADE Lottie ('gf'), plus une couleur moyenne.
-            depart, arrivee = geometrie_gradient(grad, boite)
+            depart, arrivee = geometrie_gradient(
+                grad, boite, st.get("_gradient_mat", (1, 0, 0, 1, 0, 0)))
             out.append({
                 "ty": "gf", "nm": "gradient",
                 "o": {"a": 0, "k": round(fo * 100, 2)},
@@ -511,6 +570,12 @@ def gradients_complets(root):
     car la boite n'est connue qu'apres conversion du chemin.
     """
     out = {}
+    # ⛔ MESURE (logo Inkscape, 2026-08-28) : 23 des 38 degrades du fichier
+    # n'ont AUCUN arret propre — ils heritent tout d'un autre degrade via
+    # xlink:href / href. Sans resoudre cette chaine, on lit 23 degrades VIDES
+    # et on les perd silencieusement (repli sur la couleur pleine). On note
+    # donc les liens ici, et on les suit apres la lecture (cf. plus bas).
+    liens = {}
     # Les <pattern> sont recenses eux aussi, marques comme motifs : un `url(#x)`
     # qui ne designe AUCUNE definition connue et un `url(#x)` qui designe un
     # motif sont deux situations differentes, et il faut pouvoir les distinguer
@@ -526,6 +591,9 @@ def gradients_complets(root):
             gid = g.attrib.get("id")
             if not gid:
                 continue
+            for k, v in g.attrib.items():
+                if k.endswith("href") and str(v).startswith("#"):
+                    liens[gid] = str(v)[1:]
             arrets = []
             for stop in g.iter(NS + "stop"):
                 brut = stop.attrib.get("stop-color") or ""
@@ -549,8 +617,9 @@ def gradients_complets(root):
                 except ValueError:
                     alpha = 1.0
                 arrets.append((max(0.0, min(1.0, pos)), c, max(0.0, min(1.0, alpha))))
-            if not arrets:
-                continue
+            # ⛔ NE PAS sauter un degrade sans arret : il peut n'etre qu'un
+            # MAILLON qui herite ses couleurs d'un autre via href. On
+            # l'enregistre avec une liste vide, la resolution la remplira.
             arrets.sort(key=lambda a: a[0])
             out[gid] = {
                 "type": genre,
@@ -561,12 +630,57 @@ def gradients_complets(root):
                 "x2": g.attrib.get("x2"), "y2": g.attrib.get("y2"),
                 "cx": g.attrib.get("cx"), "cy": g.attrib.get("cy"),
                 "r": g.attrib.get("r"),
+                # gradientTransform : matrice propre au degrade. Master ne
+                # sait pas la porter ; on la retient pour pouvoir REFUSER
+                # explicitement plutot que de la perdre en silence.
+                "gtransform": g.attrib.get("gradientTransform"),
                 # moyennes conservees : repli si la geometrie est inexploitable
-                "couleur": [round(sum(a[1][i] for a in arrets) / len(arrets), 4)
-                            for i in range(3)],
-                "opacite": round(sum(a[2] for a in arrets) / len(arrets), 4),
+                "couleur": _moyenne_couleur(arrets),
+                "opacite": _moyenne_opacite(arrets),
             }
+
+    # --- Heritage par xlink:href / href --------------------------------------
+    # La chaine peut avoir plusieurs maillons ; garde anti-boucle car un SVG
+    # malforme peut se referencer lui-meme.
+    for gid in list(out):
+        cible = out[gid]
+        if cible.get("motif") or cible.get("arrets"):
+            continue
+        vu = {gid}
+        cur = liens.get(gid)
+        while cur and cur not in vu:
+            vu.add(cur)
+            src = out.get(cur)
+            if src and not src.get("motif") and src.get("arrets"):
+                cible["arrets"] = src["arrets"]
+                cible["couleur"] = src["couleur"]
+                cible["opacite"] = src["opacite"]
+                # la geometrie s'herite aussi quand elle est absente
+                if all(cible.get(k) is None for k in
+                       ("x1", "y1", "x2", "y2", "cx", "cy", "r")):
+                    for k in ("x1", "y1", "x2", "y2", "cx", "cy", "r"):
+                        cible[k] = src.get(k)
+                    cible["unites"] = src.get("unites", cible["unites"])
+                break
+            cur = liens.get(cur)
+
+    # Un degrade reste sans arret (chaine cassee) : il n'est pas exploitable.
+    for gid in list(out):
+        if not out[gid].get("motif") and not out[gid].get("arrets"):
+            del out[gid]
     return out
+
+
+def _moyenne_couleur(arrets):
+    if not arrets:
+        return None
+    return [round(sum(a[1][i] for a in arrets) / len(arrets), 4) for i in range(3)]
+
+
+def _moyenne_opacite(arrets):
+    if not arrets:
+        return 1.0
+    return round(sum(a[2] for a in arrets) / len(arrets), 4)
 
 
 def table_couleurs(arrets):
@@ -598,13 +712,17 @@ def boite_des_formes(formes):
     return min(xs), min(ys), max(xs), max(ys)
 
 
-def geometrie_gradient(g, boite):
+def geometrie_gradient(g, boite, mat=(1, 0, 0, 1, 0, 0)):
     """
     Points de depart/arrivee du gradient, en coordonnees ABSOLUES.
 
     SVG place le gradient soit dans la boite de la forme (`objectBoundingBox`,
     coordonnees 0-1 -- le defaut), soit dans l'espace utilisateur
     (`userSpaceOnUse`, coordonnees absolues). Lottie, lui, veut des pixels.
+
+    `mat` = matrice accumulee de la forme. Elle n'est appliquee QUE dans le cas
+    `userSpaceOnUse` (cf. le commentaire au point d'appel) : en
+    `objectBoundingBox`, la boite est deja exprimee apres transformation.
     """
     x0, y0, x1b, y1b = boite
     w, h = max(1e-6, x1b - x0), max(1e-6, y1b - y0)
@@ -625,9 +743,17 @@ def geometrie_gradient(g, boite):
             return (x0 + f * w) if axe == "x" else (y0 + f * h)
         return f
 
+    # En userSpaceOnUse les coordonnees sont dans le repere du DESSIN : la
+    # matrice accumulee doit leur etre appliquee, comme elle l'a ete aux
+    # sommets. En objectBoundingBox elle l'est deja, via la boite.
+    def sortie(depart, arrivee):
+        if bbox or est_identite(mat):
+            return depart, arrivee
+        return appliquer(mat, depart), appliquer(mat, arrivee)
+
     if g["type"] == 1:                       # lineaire
-        return ([val(g["x1"], "0%", "x"), val(g["y1"], "0%", "y")],
-                [val(g["x2"], "100%", "x"), val(g["y2"], "0%", "y")])
+        return sortie([val(g["x1"], "0%", "x"), val(g["y1"], "0%", "y")],
+                      [val(g["x2"], "100%", "x"), val(g["y2"], "0%", "y")])
     # radial : `s` = centre, `e` = un point du bord (la distance donne le rayon)
     cx = val(g["cx"], "50%", "x")
     cy = val(g["cy"], "50%", "y")
@@ -651,10 +777,19 @@ def geometrie_gradient(g, boite):
     # mesurer : c'etait une REGRESSION. La spec decrit le rendu SVG, pas la
     # meilleure approximation dans un format qui n'a qu'un rayon.
     r_px = rr * ((w + h) / 2.0) if bbox else rr
-    return ([cx, cy], [cx + r_px, cy])
+    # ⚠️ `e` est un POINT du bord, pas un vecteur : on le transforme comme le
+    # centre. La distance s->e suit donc l'echelle de la matrice, ce qui est
+    # bien le comportement voulu (un degrade sur une forme agrandie grandit).
+    return sortie([cx, cy], [cx + r_px, cy])
 
 
-def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=()):
+def index_ids(root):
+    """{id: element} pour resoudre les <use href="#id">."""
+    return {e.attrib["id"]: e for e in root.iter() if "id" in e.attrib}
+
+
+def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=(),
+              css=None, ids=None, pile=()):
     """
     Parcourt l'arbre SVG et produit une liste de (nom, formes, styles).
 
@@ -667,7 +802,7 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=()):
     tag = el.tag.replace(NS, "")
 
     if tag == "text":
-        collecter_texte(el, mat, herite, rapport, sortie, chemin)
+        collecter_texte(el, mat, herite, rapport, sortie, chemin, css)
         return
 
     if tag in NON_PORTES:
@@ -677,7 +812,7 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=()):
                "desc", "metadata", "style"):
         return
 
-    st = styles(el, herite)
+    st = styles(el, herite, css)
     if st.get("display") == "none":
         return
 
@@ -694,11 +829,50 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=()):
 
     m = _mul(mat, parse_transform(el.attrib.get("transform", "")))
 
+    if tag == "use":
+        # ⭐ APLATISSEMENT (2026-08-28). Un <use> reprend une forme deja definie,
+        # en la decalant (x/y) ou en la transformant (souvent matrix(-1 0 0 1 ..)
+        # = le MIROIR d'un blason). Refuser ces elements ne produit pas une
+        # absence discrete : il manque LA MOITIE du dessin.
+        #
+        # ⛔ MESURE (armoiries d'Equateur) : 44 <use> refuses = la bande droite
+        # perdait 90 % de son encre, et le rapport gauche/droite passait de 1,03
+        # (source, symetrique) a 1,83. Le cote droit EST le cote gauche repete.
+        #
+        # x/y sont une translation ajoutee APRES le transform propre (spec SVG).
+        cible = None
+        ref = None
+        for k, v in el.attrib.items():
+            if k.endswith("href") and str(v).startswith("#"):
+                ref = str(v)[1:]
+                cible = (ids or {}).get(ref)
+                break
+        if cible is None:
+            rapport.refuse("<use>", "cible introuvable — reference cassee dans le SVG")
+            return
+        if ref in pile:
+            rapport.refuse("<use>", "reference circulaire — aplatissement interrompu")
+            return
+        try:
+            dx = float(el.attrib.get("x", 0) or 0)
+            dy = float(el.attrib.get("y", 0) or 0)
+        except ValueError:
+            dx = dy = 0.0
+        m2 = _mul(m, (1, 0, 0, 1, dx, dy)) if (dx or dy) else m
+        rapport.ok("<use> aplati")
+        # La cible peut etre un <symbol>/<defs> : on descend dans ses enfants.
+        sous = list(cible) if cible.tag.replace(NS, "") in ("symbol", "defs") else [cible]
+        for enfant in sous:
+            collecter(enfant, m2, st, rapport, grads, sortie, profondeur + 1, chemin,
+                      css, ids, pile + (ref,))
+        return
+
     if tag in ("svg", "g", "a"):
         gid = el.attrib.get("id")
         suite = chemin + (gid,) if gid else chemin
         for enfant in el:
-            collecter(enfant, m, st, rapport, grads, sortie, profondeur + 1, suite)
+            collecter(enfant, m, st, rapport, grads, sortie, profondeur + 1, suite,
+                      css, ids, pile)
         return
 
     if tag not in GEOM:
@@ -768,11 +942,20 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=()):
     if "_gradient_objet" in st:
         st = dict(st)
         st["_gradient_boite"] = boite_des_formes(formes)
+        # ⛔⛔ CAUSE RACINE MESUREE (logo Inkscape, 2026-08-28) : les coordonnees
+        # `userSpaceOnUse` vivent dans le MEME repere que le "d" du path, donc
+        # AVANT la matrice accumulee (transform du path + des <g> parents). Les
+        # sommets, eux, ont deja subi cette matrice juste au-dessus. Sans la
+        # porter aussi au degrade, il atterrit hors du cadre : 7 degrades sur 8
+        # invisibles, s=[95, 208] sur un cadre 128x128.
+        # `objectBoundingBox` n'a PAS ce probleme : sa boite est calculee sur
+        # les sommets DEJA transformes, donc deja en coordonnees finales.
+        st["_gradient_mat"] = m
 
     sortie.append((nom, formes, shapes_de_style(st, rapport, nom)))
 
 
-def collecter_texte(el, mat, herite, rapport, sortie, chemin):
+def collecter_texte(el, mat, herite, rapport, sortie, chemin, css=None):
     """
     Un <text> SVG -> soit des courbes, soit un calque natif (MODE_TEXTE).
 
@@ -785,7 +968,7 @@ def collecter_texte(el, mat, herite, rapport, sortie, chemin):
       2. le TRANSFORM du parent -- il doit s'appliquer aux glyphes une fois
          convertis, comme pour n'importe quelle geometrie.
     """
-    st = styles(el, herite)
+    st = styles(el, herite, css)
     if st.get("display") == "none":
         return
 
@@ -934,7 +1117,8 @@ def convertir(chemin, fps=30, frames=60):
     grads = gradients_complets(root)
     elements = []
     base = (1, 0, 0, 1, -x0, -y0)          # ramene le viewBox a l'origine
-    collecter(root, base, {}, rapport, grads, elements)
+    collecter(root, base, {}, rapport, grads, elements,
+              css=feuille_css(root), ids=index_ids(root))
 
     layers = []
     # Lottie dessine le calque d'indice 0 AU-DESSUS : on inverse pour garder
