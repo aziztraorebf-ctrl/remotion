@@ -494,3 +494,90 @@ dix animateurs le font dix facons, toutes acceptables. On y perd ce qui nous dis
 ⭐ Coherent avec le tri deja fait par Aziz dans `FICHE-BRIEF-CLIENT` : « personnages articules
 (rigging, poses, expressions) = ⛔ Nul, un metier different ». Decision prise sur des briefs
 REELS, pas sur une intuition — cette analyse la confirme, elle ne la revise pas.
+
+---
+
+# ✅ RENARD VETERINAIRE — 2e LOGO, REGISTRE MASCOTTE (2026-08-28)
+
+Capture 1080x2460 -> recadrage (logo reel 251x331) -> Recraft -> 31 paths / 9 couleurs
+-> Lottie 0,00 % -> 14 groupes nommes -> anime + BOUCLE DE VIE -> valide dans Creator par Aziz.
+
+## ⭐⭐ CE QUE LA MASCOTTE APPREND, QUE LOADUP NE POUVAIT PAS DIRE
+
+Sur un LOGOTYPE chaque calque est une LETTRE : la planche se lit d'un coup d'oeil.
+Sur une MASCOTTE, la moitie des vignettes sont des TACHES NOIRES indiscernables
+(3 ovales identiques : iris ? pupille ?). **LA FORME SEULE NE SUFFIT PLUS** — il faut
+croiser FORME + COULEUR + POSITION. Planche annotee (hex + centre + aire), 9 calques
+douteux mesures un par un. 2 erreurs de lecture attrapees AVANT le rendu.
+=> **Reponse a "le nommage se generalise-t-il ?" : OUI, mais la methode change.**
+
+## ⛔⛔ LA REGLE MAJEURE : UN GROUPE DOIT ETRE CONTIGU
+
+L'ordre de peinture du renard est STRICTEMENT p1 -> p31. Ma 1re carte groupait par
+NATURE ("tous les elements de blouse ensemble") -> la blouse passait AVANT truffe,
+branches et sourire -> **grosse TACHE NOIRE entre les yeux**, 0,37 % d'ecart.
+⛔ Ma 1re correction (separer monture/branches) : 0,37 -> **0,36 %. RIEN.** J'avais
+re-DOSE au lieu de chercher la cause. La cause s'est vue en AFFICHANT LES DEUX ORDRES
+DE PEINTURE COTE A COTE. Apres correction : **0,00 %**.
+=> **Ne grouper que des calques CONTIGUS.** Un nom parlant qui casse la sequence est
+pire qu'un nom moins joli qui la respecte (d'ou `col-et-boutons`, `plis-blouse`).
+
+## ⛔⛔ BUG SILENCIEUX TROUVE AU PASSAGE — `centre_du_calque` renvoyait None
+
+Elle ne cherchait les chemins qu'a la profondeur `shapes[].it[]`. Sur tout fichier passe
+par `group_layers.py` (qui imbrique chaque calque dans un groupe), elle trouvait des `gr`
+-> **None** -> `if centre:` faux -> **ancre laissee a [0,0]** -> la forme pivote et grandit
+depuis **LE COIN DE L'ECRAN, SANS AUCUNE ERREUR**.
+⭐ **Consequence retroactive** : l'ecrasement de LoadUp valide le 28/08 etait ancre a
+[0,0], pas sur la fleche — il "marchait" par chance. Corrige (ancre [1183, 488]),
+LoadUp regenere, test 3 volets toujours vert.
+⛔ 3e occurrence de la MEME famille : "la flamme ne s'anime pas" (25/08), le bug de sonde
+du test (27/08), celui-ci. **TOUJOURS chercher les `sh` en PROFONDEUR, jamais a un
+niveau fixe.** Un fichier regroupe a toujours un cran d'imbrication en plus.
+⛔ METHODE : j'ai re-dose 2 FOIS avant de diagnostiquer. Le protocole dit de chercher la
+cause des le 2e echec — pas applique a temps, 2e fois dans la meme session.
+
+## ⭐ BOUCLE DE VIE — 3 primitives neuves (`respire` / `balance` / `cligne`)
+
+Le vrai defaut n'etait pas l'apparition : **apres f70 il ne se passait PLUS RIEN pendant
+80 frames**. Une mascotte figee n'est pas une mascotte, c'est une image qui est apparue.
+Queue qui bat (rotation ancree a sa BASE), yeux qui clignent 7x (2 frames = 66 ms ; plus
+long = l'air endormi). ⛔ `balance` doit AUSSI poser un fondu d'entree : il n'anime que la
+rotation, donc sans lui la queue etait visible des f0, avant la tete.
+⭐ **AUCUN rigging necessaire** — que des rotations sur des groupes deja nommes.
+Verdict d'Aziz : « c'est un peu a la limite de ce qu'on peut faire en vectoriel sans rigging ».
+
+## ⚠️ 2 DEFAUTS REELS TROUVES PAR AZIZ (tous deux dus a RECRAFT, en amont)
+
+| Ce qu'il a vu | Mesure | Cause |
+|---|---|---|
+| Blouse en 2 couleurs | ecart **15 pts** chez nous vs **3 pts** dans l'original | **TROU dans `path-17`** : le fond blanc traverse le pan gauche |
+| Main droite confondue avec la queue | confirme | pointe de queue **arrondie** a la vectorisation |
+
+⛔ **MA 1re MESURE ETAIT BIAISEE PAR L'ENDROIT OU J'AI ECHANTILLONNE** (je tombais sur un
+pli `#DEE1DA`). J'ai failli conclure « artefact de sonde, rien a signaler ». C'est
+l'insistance d'Aziz qui a fait re-mesurer proprement — **le defaut est reel**.
+-> recoupe « la mesure est biaisee par la FACON de mesurer » (`key-learnings.md` § METHODE).
+⭐ Le reste est excellent : proportions identiques a **0,2 point** pres sur toute la silhouette.
+
+## ⛔ PAS DE RIGGING DANS LE MCP (verifie, 110 outils)
+
+Ni bones, ni squelette, ni parentage de calques. ⚠️ Ne pas exclure que l'interface Creator
+le propose sans l'exposer au MCP — mais **ce n'est pas pilotable par Claude**.
+⭐ 3 outils qu'on n'utilisait PAS et qui doublonnent notre code maison :
+`apply_bounce` / `apply_squash` (physique toute faite) · **`set_layer_time` +
+`timeline_offset` = la primitive de CASCADE native**, que sa propre doc dit preferable a
+un decalage d'opacites manuel.
+
+## ⭐⭐ DISTINCTION DE MARCHE (Aziz) — 2 mondes, 2 outils
+
+| | Lottie sur un site | Explainer SaaS |
+|---|---|---|
+| Livrable | `.json` dans du code | **MP4** |
+| Personnage ? | rare (micro-animation) | souvent, **en pixels = aucun probleme** |
+| Notre outil | chaine SVG->Lottie | **H3 / Minimax** |
+
+⭐ **Le probleme du rigging NE SE POSE PAS sur l'explainer** : le livrable est une video,
+donc tout ce qui bloque en Lottie disparait. ⚠️ Nuance : H3 est GENERATIF (non
+deterministe). La vraie frontiere n'est pas "video vs Lottie" mais **"ce qui doit etre
+EXACT vs ce qui doit etre EVOCATEUR"**.
