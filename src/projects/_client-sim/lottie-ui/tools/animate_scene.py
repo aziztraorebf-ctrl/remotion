@@ -113,6 +113,31 @@ PARTITIONS = {
         "lettre-": ("fondu", 0, 25),
         "fond": ("aucun", 0, 0),
     },
+    # -- Logo RENARD VETERINAIRE -> REGISTRE DIFFERENT DE LOADUP (mascotte).
+    # ⭐ LoadUp = un geste unique et brutal (chute + impact) sur un logotype.
+    # Une mascotte n'a pas de "sens directionnel" a jouer : elle doit PARAITRE
+    # VIVANTE. Le geste est donc une PRESENCE qui s'installe, pas un impact.
+    # POINT FOCAL = le STETHOSCOPE : c'est l'objet qui dit le metier (veterinaire).
+    # Il arrive en dernier et en "pop" — tout le reste se pose avant, en fondu.
+    # ⛔ Pas de cascade sur les 6 formes des yeux : elles forment UN regard, les
+    # faire entrer separement ferait loucher la mascotte.
+    "renard": {
+        "_duree": 150,
+        "stethoscope": ("pop", 46, 70),
+        "plis-blouse": ("fondu", 40, 58),
+        "col-et-boutons": ("fondu", 34, 52),
+        "blouse": ("fondu", 26, 46),
+        "pattes": ("fondu", 20, 40),
+        "queue": ("fondu", 14, 34),
+        "sourire": ("fondu", 30, 44),
+        "branches": ("fondu", 12, 26),
+        "truffe": ("fondu", 22, 34),
+        "museau": ("fondu", 8, 24),
+        "yeux": ("fondu", 16, 30),
+        "monture": ("fondu", 10, 26),
+        "tete": ("fondu", 0, 18),
+        "fond": ("aucun", 0, 0),
+    },
     "cascade": {"_duree": 120, "*": ("fondu", 0, 24)},
     # ⭐ Cascade ECHELONNEE : chaque calque demarre un peu apres le precedent,
     # du fond vers le premier plan. Une scene sans id exploitables (calques

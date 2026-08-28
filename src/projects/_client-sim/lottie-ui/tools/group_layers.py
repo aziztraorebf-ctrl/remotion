@@ -139,6 +139,56 @@ CARTES = {
         "fleche-up": {"noms": ["path-2"]},
         "marque-deposee": {"noms": ["path-12", "path-13", "path-14", "path-15"]},
     },
+
+    # -- Logo RENARD VETERINAIRE (client reel) -> CAS MASCOTTE, le vrai test.
+    # ⭐⭐ CE QUE CE CAS APPREND, QUE LOADUP NE POUVAIT PAS DIRE : sur un logotype,
+    # chaque calque est une LETTRE, la planche se lit d'un coup d'oeil. Sur une
+    # MASCOTTE, la moitie des vignettes sont des TACHES NOIRES indiscernables
+    # (3 ovales identiques = 2 iris + 1 pupille ?). LA FORME SEULE NE SUFFIT PLUS.
+    # -> Il faut croiser FORME + COULEUR + POSITION. La planche a donc ete annotee
+    #    (couleur hex + centre + aire) et les 9 calques douteux MESURES un par un.
+    # ⛔ 2 erreurs de lecture attrapees PAR LA MESURE, avant de produire le fichier :
+    #    path-4 lu comme "la truffe" -> c'est la TOUFFE du front (orange, y=684) ;
+    #    la vraie truffe est path-13 (sombre #2A3A32, y=723-779, centre).
+    #    Meme famille que le bug path-8 de LoadUp, mais attrape AVANT le rendu.
+    # ⛔ Paires symetriques : verifier que x est de part et d'autre du centre (~776).
+    #    iris 511/958 · blancs 560/947 · pupilles 581/905 · branches 580/900.
+    # ⛔⛔ 3e ERREUR, celle-ci VUE A L'IMAGE : un groupe "lunettes" unique (monture +
+    # branches) donnait une GROSSE TACHE NOIRE entre les yeux — la monture, peinte
+    # avec les branches DEVANT les yeux, ecrasait iris et blancs. L'ordre reel du
+    # fichier est : monture (rang 2) -> yeux (4-10) -> branches (13-14). Il faut
+    # donc DEUX groupes, "monture" et "branches", encadrant "yeux".
+    # ⭐⭐⭐ LA REGLE QUI SORT DE CE CAS — UN GROUPE DOIT ETRE CONTIGU.
+    # L'ordre de peinture du renard est STRICTEMENT p1 -> p31. Ma 1re carte groupait
+    # par NATURE ("tous les elements de blouse ensemble" : p12+p17+p21+p22+p25...),
+    # ce qui faisait passer la blouse AVANT la truffe (p13), les branches (p14-15) et
+    # le sourire (p16). Resultat : grosse TACHE NOIRE entre les yeux, 0,37 % d'ecart.
+    # ⛔ Ma 1re correction (separer monture/branches) n'a rien change : 0,37 -> 0,36 %.
+    # J'avais re-DOSE au lieu de chercher la CAUSE — exactement ce que la doctrine
+    # interdit. La cause s'est vue en AFFICHANT les deux ordres cote a cote.
+    # => REGLE : ne grouper que des calques CONTIGUS dans l'ordre d'origine. Un nom
+    # parlant qui casse la sequence est pire qu'un nom moins joli qui la respecte —
+    # d'ou "col-et-boutons" et "plis-blouse" separes de "blouse".
+    "renard": {
+        "_ordre": ["fond", "tete", "monture", "yeux", "museau", "truffe",
+                   "branches", "sourire", "blouse", "queue", "pattes",
+                   "stethoscope", "col-et-boutons", "plis-blouse"],
+        "fond": {"noms": ["path-1"]},
+        "tete": {"noms": ["path-2"]},
+        "monture": {"noms": ["path-3", "path-4"]},
+        "yeux": {"noms": ["path-5", "path-6", "path-7",
+                          "path-8", "path-9", "path-10"]},
+        "museau": {"noms": ["path-11", "path-12"]},
+        "truffe": {"noms": ["path-13"]},
+        "branches": {"noms": ["path-14", "path-15"]},
+        "sourire": {"noms": ["path-16"]},
+        "blouse": {"noms": ["path-17"]},
+        "queue": {"noms": ["path-18", "path-19"]},
+        "pattes": {"noms": ["path-20"]},
+        "col-et-boutons": {"noms": ["path-21", "path-22", "path-23"]},
+        "stethoscope": {"noms": ["path-24", "path-25", "path-26", "path-27"]},
+        "plis-blouse": {"noms": ["path-28", "path-29", "path-30", "path-31"]},
+    },
 }
 
 
