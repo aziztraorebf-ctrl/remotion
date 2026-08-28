@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+  <!-- NON-REGRESSION : les coordonnees userSpaceOnUse d'un degrade vivent dans
+       le MEME repere que le "d" du path, donc AVANT la matrice accumulee.
+       Sans porter cette matrice sur le degrade, cx=400 sur un cadre 200x200
+       tombe hors champ et le degrade devient invisible (mesure : 3,70 % de
+       pixels divergents contre 0,21 % une fois la matrice appliquee). -->
+  <defs>
+    <radialGradient id="r1" gradientUnits="userSpaceOnUse" cx="400" cy="400" r="100">
+      <stop offset="0" stop-color="#ff0000"/>
+      <stop offset="1" stop-color="#0000ff"/>
+    </radialGradient>
+    <linearGradient id="l1" gradientUnits="userSpaceOnUse" x1="240" y1="0" x2="560" y2="0">
+      <stop offset="0" stop-color="#00ff00"/>
+      <stop offset="1" stop-color="#ffff00"/>
+    </linearGradient>
+  </defs>
+  <g transform="scale(0.25)">
+    <circle cx="400" cy="400" r="100" fill="url(#r1)"/>
+    <rect x="240" y="560" width="320" height="160" fill="url(#l1)"/>
+  </g>
+</svg>

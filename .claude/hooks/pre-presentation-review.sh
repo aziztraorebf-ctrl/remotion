@@ -90,6 +90,67 @@ OVERRIDE_MD="${MP4_ABS%.mp4}.review-override.md"
 OVERRIDE_REL="${CANDIDATE_MP4%.mp4}.review-override.md"
 REVIEW_CMD="python3 scripts/visual_review.py \"$CANDIDATE_MP4\" --model gemini --storyboard <storyboard.png> --output \"${CANDIDATE_MP4%.mp4}.review.json\""
 
+# --- 2c. MESURES DETERMINISTES (signalement seul, ne bloque JAMAIS) -------------
+# Ajoutees 2026-08-27. Deux tests calibres sur une reference pro (Foster, vendue sur
+# Fiverr) : ils MESURENT, ils ne jugent pas. Un plan peut legitimement echouer.
+#   test-pause.py  : l'info reste-t-elle lisible si on arrete la video ? (auto-portance)
+#   test-coupe.py  : les raccords sont-ils perceptibles ? (change blindness)
+# Ne bloquent pas -> pas d'override a ecrire, pas de gate a contourner.
+# Bornes : timeout 25s chacun, echec silencieux (ne doit JAMAIS casser un upload).
+# Formats JSON VERIFIES sur sortie reelle (2026-08-27), pas supposes :
+#   pause -> LISTE d'objets, cles self_supporting_pct / holes[start_s,duration_s]
+#   coupe -> OBJET, cles coupes[t,verdict,motif]
+MESURES_DIR="$PROJECT_DIR/scripts/tools"
+
+if [[ -f "$MESURES_DIR/test-pause.py" ]]; then
+  PAUSE_OUT=$(timeout 25 python3 "$MESURES_DIR/test-pause.py" "$MP4_ABS" --json 2>/dev/null)
+  if [[ -n "$PAUSE_OUT" ]]; then
+    printf '%s' "$PAUSE_OUT" | python3 -c '
+import json, sys
+try:
+    d = json.load(sys.stdin)
+except Exception:
+    sys.exit(0)
+if isinstance(d, list):
+    d = d[0] if d else {}
+pct = d.get("self_supporting_pct")
+trous = d.get("holes") or []
+if pct is None:
+    sys.exit(0)
+if pct < 85 or trous:
+    print("[mesure] PAUSE : %.0f%% de frames auto-portantes%s"
+          % (pct, ", %d trou(s)" % len(trous) if trous else ""))
+    for t in trous[:3]:
+        print("[mesure]   -> %.1fs pendant %.1fs : rien de lisible si on met en pause"
+              % (t.get("start_s", 0), t.get("duration_s", 0)))
+    print("[mesure]   (signal, pas un verdict — un fondu volontaire est un faux positif normal)")
+' 2>/dev/null
+  fi
+fi
+
+if [[ -f "$MESURES_DIR/test-coupe.py" ]]; then
+  COUPE_OUT=$(timeout 25 python3 "$MESURES_DIR/test-coupe.py" "$MP4_ABS" --json 2>/dev/null)
+  if [[ -n "$COUPE_OUT" ]]; then
+    printf '%s' "$COUPE_OUT" | python3 -c '
+import json, sys
+try:
+    d = json.load(sys.stdin)
+except Exception:
+    sys.exit(0)
+coupes = d.get("coupes") or []
+mauvaises = [c for c in coupes
+             if str(c.get("verdict", "")).upper() in ("INVISIBLE", "VIOLENTE")]
+if mauvaises:
+    print("[mesure] COUPE : %d raccord(s) a regarder sur %d" % (len(mauvaises), len(coupes)))
+    for c in mauvaises[:3]:
+        print("[mesure]   -> %.2fs %s : %s"
+              % (c.get("t", 0), str(c.get("verdict", "")).upper(),
+                 c.get("motif", "")))
+    print("[mesure]   (seuils calibres sur UNE seule reference — a reconfirmer)")
+' 2>/dev/null
+  fi
+fi
+
 block() {
   echo ""
   echo "================================================================"
