@@ -441,3 +441,56 @@ pour elargir sa clientele a cout marginal quasi nul. Lecon d'OFFRE, pas de techn
 ⛔ Precision : le **GIF n'est pas « fige »** (il bouge) — ce qu'il perd c'est la palette
 (256 couleurs) et le poids. Le vrai clivage est **vecteur vs pixel** : MP4/GIF/MOV sont du
 pixel, donc plus editables ni redimensionnables.
+
+---
+
+# QUESTION D'AZIZ : les personnages Lottie, a notre portee ? (2026-08-28)
+
+## Ce qu'est leur personnage : 13 PNG assembles, pas du vectoriel
+
+Vectoriel = une RECETTE (« cercle rayon 40, vert »), redessinee a la demande -> agrandir
+ne perd rien, recolorer = 1 valeur. Bitmap = une GRILLE DE PIXELS -> agrandir pixellise,
+recolorer = refaire l'image. Leur « HELLO! » : 13 calques `ty=2` (PNG base64), animes en
+**rotation + echelle** — c'est du **RIGGING** (on fait tourner des morceaux decoupes), pas
+de la deformation de forme.
+
+⛔⛔ **CORRECTION D'UNE AFFIRMATION TROP RAPIDE (la mienne)** : j'ai ecrit « bitmap-dans-Lottie
+est un usage courant » en me basant sur **UN SEUL fichier**. C'est une ANECDOTE, pas une
+mesure. ⭐ Ce qui reste vrai : la plupart des Lottie pro SONT vectoriels (c'est l'interet du
+format) ; le bitmap est un raccourci quand l'illustration est trop complexe a vectoriser.
+⭐ **CE QU'ON NE SAIT PAS** : la proportion reelle bitmap vs vectoriel sur les Lottie a
+personnages. **Mesurable** (compter les `ty=2` vs `ty=4` sur un echantillon de Lottie
+publics), pas mesure. Ne pas repondre a cette question de memoire.
+
+## Le flux standard du metier
+
+illustration (Illustrator/Figma) -> decoupee en calques (bras, tete, corps) -> **After
+Effects : le RIGGING** (relier les membres, poser les pivots) -> plugin Bodymovin -> .json.
+⭐ **Le travail n'est pas le dessin, c'est le rigging** — decider que l'avant-bras pivote au
+coude, que la bulle arrive apres le geste. C'est un metier : l'animation de personnage.
+
+## RECRAFT — verifie dans le MCP, pas de memoire
+
+- `vectorize_image` : image -> SVG (ce qu'on a fait sur LoadUp)
+- `generate_image` + `style: "vector_illustration"` : **genere DIRECTEMENT en vectoriel**
+  (sous-styles `cartoon`, `kawaii`, `flat_2`, `roundish_flat`...)
+
+⭐ Voie MEILLEURE que la leur : on peut generer un perso **vectoriel des le depart**, la ou
+LottieFiles a decoupe des PNG. ⛔ MAIS Recraft sort un SVG **d'un seul tenant**, pas un
+personnage decoupe en membres articules : il faudrait ensuite separer bras/tete/corps et
+poser les pivots. **C'est exactement le rigging — et c'est la qu'est le metier.**
+
+## VERDICT : faisable, DECONSEILLE comme offre, recommande en appoint
+
+| Usage | Verdict |
+|---|---|
+| Perso-HEROS, gags, expressions | ⛔ **NON** — metier different, zero differenciation |
+| Perso FIGURANT dans une scene explicative | ✅ OUI — `stick-figure-svg` / `personnage-vivant-svg` existent |
+| Client fournit son perso, on l'anime | ✅ OUI — c'est LoadUp, en plus complexe |
+
+⭐⭐ **RAISON DE FOND** : notre avantage est le **DETERMINISME** (une carte exacte, une donnee
+juste, un geste reproductible). **Un personnage qui salue n'a AUCUNE verite a respecter** —
+dix animateurs le font dix facons, toutes acceptables. On y perd ce qui nous distingue.
+⭐ Coherent avec le tri deja fait par Aziz dans `FICHE-BRIEF-CLIENT` : « personnages articules
+(rigging, poses, expressions) = ⛔ Nul, un metier different ». Decision prise sur des briefs
+REELS, pas sur une intuition — cette analyse la confirme, elle ne la revise pas.
