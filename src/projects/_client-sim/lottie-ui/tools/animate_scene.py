@@ -15,6 +15,14 @@ Trois primitives, choisies parce qu'elles couvrent nos scenes reelles :
                l'equivalent Lottie natif de nos interpolate sur strokeDashoffset
   - "fondu"  : apparition en opacite               -> ks.o
   - "pop"    : apparition avec un ressort discret  -> ks.s (echelle)
+  - "respire": oscillation lente et faible, EN BOUCLE -> ks.s
+               ("respire", debut, fin, ampleur_%, periode_frames)
+  - "balance": rotation alternee, ancree a la BASE  -> ks.r
+               ("balance", debut, fin, angle, periode, ancre_y 0..1)
+  - "cligne" : les yeux se ferment 2 frames, periodiquement -> ks.o
+               ("cligne", debut, fin, periode_frames)
+  ⭐ Ces 3 primitives font la BOUCLE DE VIE : sans elles une mascotte apparait
+  puis reste FIGEE le reste de la piece. Elles ne demandent AUCUN rigging.
   - "geste3" : monte haut -> SUSPEND -> retombe    -> ks.p (position) + ks.s
                Le geste en 3 temps de FICHE-GESTE-ANIME : la suspension cree
                une ATTENTE, la chute la resout. Regle a 4 reperes au lieu de 3 :
@@ -123,19 +131,23 @@ PARTITIONS = {
     # faire entrer separement ferait loucher la mascotte.
     "renard": {
         "_duree": 150,
+        # --- 1er temps : la presence s'installe (f0-70) ---
         "stethoscope": ("pop", 46, 70),
         "plis-blouse": ("fondu", 40, 58),
         "col-et-boutons": ("fondu", 34, 52),
         "blouse": ("fondu", 26, 46),
         "pattes": ("fondu", 20, 40),
-        "queue": ("fondu", 14, 34),
         "sourire": ("fondu", 30, 44),
         "branches": ("fondu", 12, 26),
         "truffe": ("fondu", 22, 34),
         "museau": ("fondu", 8, 24),
-        "yeux": ("fondu", 16, 30),
         "monture": ("fondu", 10, 26),
         "tete": ("fondu", 0, 18),
+        # --- 2e temps : LA BOUCLE DE VIE (f70-150) ---
+        # ⭐ Sans elle, il ne se passait RIEN pendant 80 frames : une mascotte
+        # figee n'est pas une mascotte, c'est une image qui est apparue.
+        "queue": ("balance", 34, 150, 4.5, 26, 0.15),   # bat lentement, ancree en HAUT
+        "yeux": ("cligne", 30, 150, 38),                 # 1 clignement / 1,3 s
         "fond": ("aucun", 0, 0),
     },
     "cascade": {"_duree": 120, "*": ("fondu", 0, 24)},
@@ -164,13 +176,28 @@ def centre_du_calque(couche):
     Le remede : ancre = position = centre de la forme. La forme ne bouge pas
     (p compense a), mais l'echelle et la rotation pivotent enfin sur elle.
     """
+    # ⛔⛔ CHERCHER LES 'sh' A N'IMPORTE QUELLE PROFONDEUR (corrige 2026-08-28).
+    # L'ancienne version ne regardait que shapes[].it[] : sur un fichier passe par
+    # `group_layers.py` (qui imbrique chaque calque dans un groupe), elle trouvait
+    # des 'gr' et retournait None -> `if centre:` faux -> ancre laissee a [0,0] ->
+    # la forme pivote/grandit depuis LE COIN DE L'ECRAN, SANS ERREUR.
+    # C'est le meme bug que "la flamme ne s'anime pas" (25/08), mais silencieux :
+    # il touchait deja `pop`, et desormais `geste3`, `respire` et `balance`.
     xs, ys = [], []
-    for groupe in couche.get("shapes", []):
-        for it in groupe.get("it", []):
-            if it.get("ty") == "sh":
-                for x, y in it["ks"]["k"]["v"]:
+
+    def _sommets(noeud):
+        if isinstance(noeud, dict):
+            if noeud.get("ty") == "sh":
+                for x, y in noeud["ks"]["k"].get("v", []):
                     xs.append(x)
                     ys.append(y)
+            for v in noeud.values():
+                _sommets(v)
+        elif isinstance(noeud, list):
+            for v in noeud:
+                _sommets(v)
+
+    _sommets(couche.get("shapes", []))
     if not xs:
         return None
     return [round((min(xs) + max(xs)) / 2, 2), round((min(ys) + max(ys)) / 2, 2)]
@@ -271,6 +298,83 @@ def animer(doc, partition):
                  (f_impact + 9, [100, 100])])
             couche["ks"]["o"] = keyframes(
                 [(0, [0]), (f0, [0]), (f0 + 10, [100])])
+
+        elif genre == "respire":
+            # ⭐ BOUCLE DE VIE — une mascotte doit CONTINUER a vivre apres son
+            # apparition. Sans ca, il ne se passe plus rien pendant 80 frames et
+            # la piece retombe a une image fixe animee une fois.
+            # Oscillation LENTE et FAIBLE en echelle, sur toute la duree, en boucle.
+            # ⛔ Recentrer ancre ET position, sinon la forme grandit depuis le coin.
+            _, debut, fin, ampleur, periode = regle
+            centre = centre_du_calque(couche)
+            if centre:
+                couche["ks"]["a"] = {"a": 0, "k": centre}
+                couche["ks"]["p"] = {"a": 0, "k": centre}
+            paires, t = [], debut
+            haut = True
+            while t <= fin:
+                paires.append((t, [100, 100 + (ampleur if haut else -ampleur)]))
+                haut = not haut
+                t += periode
+            if len(paires) >= 2:
+                couche["ks"]["s"] = keyframes(paires)
+
+        elif genre == "balance":
+            # Meme idee sur la ROTATION : la queue qui bat, l'oreille qui bouge.
+            # ⛔ L'ancre doit etre a la BASE de la forme (pas son centre) sinon
+            # l'element pivote sur son milieu et se detache visuellement.
+            _, debut, fin, angle, periode, ancre_y = regle
+            centre = centre_du_calque(couche)
+            if centre:
+                cx, cy = centre
+                # ancre deplacee vers la base (ancre_y = 0 centre, 1 = bas)
+                # ⛔ PIEGE PAYE 2x : chercher les 'sh' A N'IMPORTE QUELLE
+                # PROFONDEUR. `group_layers.py` imbrique les calques dans un
+                # groupe par calque -> une boucle sur shapes[].it[] ne trouve
+                # RIEN, l'ancre reste a [0,0] et la forme pivote autour du COIN
+                # DE L'ECRAN. Meme famille que le bug de sonde du test.
+                xs, ys = [], []
+
+                def _sommets(o):
+                    if isinstance(o, dict):
+                        if o.get("ty") == "sh":
+                            for x, y in o["ks"]["k"].get("v", []):
+                                xs.append(x); ys.append(y)
+                        for v in o.values():
+                            _sommets(v)
+                    elif isinstance(o, list):
+                        for v in o:
+                            _sommets(v)
+
+                _sommets(couche.get("shapes", []))
+                if ys:
+                    base = min(ys) + (max(ys) - min(ys)) * ancre_y
+                    couche["ks"]["a"] = {"a": 0, "k": [cx, round(base, 2)]}
+                    couche["ks"]["p"] = {"a": 0, "k": [cx, round(base, 2)]}
+            paires, t, sens = [], debut, 1
+            while t <= fin:
+                paires.append((t, [angle * sens]))
+                sens = -sens
+                t += periode
+            if len(paires) >= 2:
+                couche["ks"]["r"] = keyframes(paires)
+            # ⛔ Sans ce fondu, l'element est VISIBLE des la frame 0 (balance
+            # n'anime que la rotation) : la queue apparaissait avant la tete.
+            couche["ks"]["o"] = keyframes(
+                [(0, [0]), (max(0, debut - 20), [0]), (debut, [100])])
+
+        elif genre == "cligne":
+            # ⭐ LE GESTE LE MOINS CHER ET LE PLUS EFFICACE sur un personnage.
+            # On masque les yeux 2 frames, periodiquement. Rien d'autre.
+            # ⛔ Le clignement doit etre BREF (2 frames a 30 fps = 66 ms) : plus
+            # long, le perso a l'air endormi, pas vivant.
+            _, debut, fin, periode = regle
+            paires = [(0, [0]), (debut - 6, [0]), (debut, [100])]
+            t = debut + periode
+            while t <= fin:
+                paires += [(t - 1, [100]), (t, [0]), (t + 2, [0]), (t + 3, [100])]
+                t += periode
+            couche["ks"]["o"] = keyframes(paires)
 
         elif genre == "trace":
             # ⭐ trimPath ('tm') = l'equivalent Lottie natif du trait qui se
