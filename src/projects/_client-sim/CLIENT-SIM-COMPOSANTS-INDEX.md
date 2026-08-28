@@ -94,3 +94,18 @@ un historique, pas le convertisseur générique.
 jour où on parsera un SVG fourni par un client.
 
 Récit complet, gotchas et suites : `memory/client-sim-tests/lottie-ui-lcd/STATUS.md`.
+
+## WordStackRise — la promesse qui s'ACCUMULE (proto, 2026-08-27)
+
+**Intention → forme** : quand un moment doit faire ressentir qu'une promesse **s'accumule** sans
+que rien ne soit remplacé (Clarity → Certainty → Confidence) → chaque nouveau mot **naît sur la
+ligne de base** et POUSSE les précédents d'un cran vers le haut ; le plus ancien perd sa couleur
+d'accent et vire au gris. On ne voit jamais plus de deux accents à la fois.
+
+**Source** : `src/projects/_client-sim/foster/scenes/Plan10Cta.tsx` (bloc pile, ~47 lignes).
+**Statut : proto** — aucun import partagé (Plan10Cta n'est importé que par `FosterFull`, l'assemblage
+du même livrable). La validation d'Aziz porte sur le RENDU du plan, pas sur la généricité du bloc.
+**Pour extraire** : props `words[]` (avec leur instant), `step` (interligne, mesuré 86 px ici),
+`colors{current, past, old}`, `font`. La mécanique de poussée est indépendante du contenu.
+⚠️ Voisin le plus proche au catalogue : `PileDocuments` — forme DIFFÉRENTE (feuilles physiques en
+spring, chacune de travers). Ici c'est de la typo avec **dégradation chromatique** du plus ancien.

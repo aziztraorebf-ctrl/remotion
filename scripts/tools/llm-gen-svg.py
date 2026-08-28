@@ -127,7 +127,11 @@ def gen_kimi(out: Path):
     if not key:
         print("ERROR: OPENROUTER_API_KEY missing"); sys.exit(1)
     headers = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
-    payload = {"model": KIMI_K3_MODEL, "messages": [{"role": "user", "content": PROMPT}]}
+    # ⛔ Le remede etait ecrit TROIS FOIS dans ce fichier depuis le 2026-07-30 (« il faut borner
+    # reasoning.max_tokens ») et n'avait JAMAIS ete applique au payload — corrige le 2026-08-27.
+    # Sans borne, k3 consomme son budget en raisonnement et rend content=null.
+    payload = {"model": KIMI_K3_MODEL, "messages": [{"role": "user", "content": PROMPT}],
+               "max_tokens": 16000, "reasoning": {"max_tokens": 2000}}
     print(f"Generating SVG tokens with {KIMI_K3_MODEL} via OpenRouter...")
     r = requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=payload, timeout=900)
     r.raise_for_status()

@@ -102,6 +102,11 @@ def gen(scene: str, image: Path, out: Path):
                 {"type": "image_url", "image_url": {"url": data_url}},
             ],
         }],
+        # ⛔ Borne du raisonnement k3 — remede ecrit en commentaire depuis le 2026-07-30,
+        # applique au payload le 2026-08-27. Sans elle, k3 consomme son budget en
+        # raisonnement avant d'ecrire et rend content=null.
+        "max_tokens": 16000,
+        "reasoning": {"max_tokens": 2000},
     }
     print(f"[vision:{scene}] calling {KIMI_K3_MODEL} (image {len(b64)//1000}KB b64) via OpenRouter...")
     r = requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=payload, timeout=1200)

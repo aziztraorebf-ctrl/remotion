@@ -6,6 +6,12 @@
 > ⚠️ Si ce que tu lis ne correspond PAS au réel que tu as sous les yeux : **c'est la FICHE qui a tort**.
 > Corrige-la immédiatement. Chemins vérifiés sur disque le 2026-08-20.
 
+> ⛔⛔ **`puppeteer` n'est PAS une dépendance du projet** (vérifié 2026-08-27 : `npm ls puppeteer` → vide).
+> Tous les `capture-*.mjs` échouent en `ERR_MODULE_NOT_FOUND`. Seuls les NAVIGATEURS sont en cache.
+> Contournement sans rien installer : le binaire headless en CLI —
+> `~/.cache/puppeteer/chrome-headless-shell/*/chrome-headless-shell-mac-arm64/chrome-headless-shell --headless --force-device-scale-factor=2 --window-size=1920,1080 --screenshot=<out> <url>`
+> ⚠️ Ce contournement ne régénère PAS `*-layout.json` ni les découpes — vérifier leur MD5 après coup.
+
 ## ⛔ LA RÈGLE N°1 — NE PAS REDESSINER L'UI EN REACT
 
 **Une UI de client se CAPTURE, elle ne se recode pas.** Vécu Flowdesk (2026-08-06) : 4 versions,
@@ -106,7 +112,7 @@ Le même film a été produit en **registre sombre ET en light mode SaaS** sans 
 composant — seules la capture source et la palette varient. C'est ce qui permet de promettre à un
 client que **le pipeline s'adapte à SON design**. Compositions de référence :
 `NorthShieldPromoV4` (sombre) · `NorthShieldPromoLight` (clair).
-⚠️ `PageCam` a un fond papier `#faf7f2` par défaut — visible sur un blanc franc, 1 ligne à changer.
+⚠️ `PageCam` a un fond papier `#faf7f2` codé **EN DUR dans les 2 branches** (`PageCam.tsx:60` 2D et `:85` 3D — et c'est la 3D qui est active dès qu'un `rotX` est posé), **aucune prop de fond**. ⛔ Ne pas patcher PageCam : il est PARTAGÉ avec noteshield. Le fond se règle dans la page servie et se capture avec elle.
 
 ## ⛔ CE QUE CE PILIER NE FAIT PAS
 
@@ -180,3 +186,11 @@ en tete est un piege.
 ⛔ Corollaire deja dans cette fiche (piege n°1) mais re-paye ce jour : j'ai code
 `y = 295 - 212` (centre moins hauteur) alors que `y: 189` etait ECRIT dans le
 fichier — les cartes recouvraient le titre. **La valeur etait sous mes yeux.**
+
+## ⛔ 5e PIÈGE — un défaut d'asset peut DORMIR plusieurs plans avant d'être vu (2026-08-27)
+
+L'état `billing` de la page n'avait **jamais** contenu son tableau de lignes. Invisible au plan 8
+(caméra serrée sur les cartes du haut : le vide restait hors cadre), exposé au plan 9 qui cadre la
+plaque entière — après que le plan 8 ait été validé.
+⭐ **Après toute (re)capture, REGARDER la plaque ENTIÈRE**, pas seulement la zone que le plan courant
+cadre. Ici même la mesure ne suffisait pas : il fallait regarder hors du cadre.

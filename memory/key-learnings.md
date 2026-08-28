@@ -6,7 +6,7 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 
 ## 📑 INDEX
 
-- **🔧 MÉTHODE & PROCESS** — ⭐⭐⭐ la mesure est biaisée par la FAÇON de mesurer (couleur au cœur du glyphe · bon AXE · pendant la transition), ⛔⛔ 3 corrections sans effet = un PLAFOND, pas un dosage (balayer le paramètre), reorg workspace (liens en dur dans le code), grand ménage mémoire+disque (baseline), bug visuel = extraire frames + instrumenter, validation mini-renders comparatifs (pas des stills), ⛔ identifiant de modele/API en dur = dette (centraliser des le 2e usage), ⛔⛔ HTTP 200 ≠ livrable (changer un defaut = tester chaque chemin), modele en `-preview` = compte a rebours, repo tiers = lire ses prompts avant son code
+- **🔧 MÉTHODE & PROCESS** — ⛔⛔ instrumenter la détection ≠ appliquer le remède (corriger d'abord, documenter ensuite), ⭐⭐⭐ la mesure est biaisée par la FAÇON de mesurer (couleur au cœur du glyphe · bon AXE · pendant la transition), ⛔⛔ 3 corrections sans effet = un PLAFOND, pas un dosage (balayer le paramètre), reorg workspace (liens en dur dans le code), grand ménage mémoire+disque (baseline), bug visuel = extraire frames + instrumenter, validation mini-renders comparatifs (pas des stills), ⛔ identifiant de modele/API en dur = dette (centraliser des le 2e usage), ⛔⛔ HTTP 200 ≠ livrable (changer un defaut = tester chaque chemin), modele en `-preview` = compte a rebours, repo tiers = lire ses prompts avant son code
 - **🗺️ WAR-MAP — grammaire & narration** — HOOK partir de NOS templates (pas grammaire externe), GRAMMAIRE CAUSALE + AUDIO-FIRST (standard), scanner catalogue carte-vivante avant code, structure linéaire + fact-check avant audio lock, sprite invisible = CONTRASTE, vrai coupable B1 = CODE LEGACY parallèle
 - **🎬 DA-BRIEF & review externe** — DA-brief causalité phrase-par-phrase + chaînes réf + catalogue, DeepSeek V4 3e voix conceptuelle (aveugle visuel), Gemini diff visuel obligatoire après 1er render, **DA-brief VIDÉO (analyse d'écart vers refs, scène finie)**
 - **🎨 SVG GÉNÉRATIF ANIMÉ** (2026-06-21, ⭐ NOUVELLE VOIE) — Gemini génère une SCÈNE illustrée complexe en SVG propre (50-100 paths, ~20Ko, groupes #id sémantiques) → animable PAR PARTIES dans Remotion via useCurrentFrame (pas Lottie, pas AE). Net à toute taille, couleurs modifiables à la frame. GOTCHA : ne JAMAIS sortir un élément du cadre clippé (artefact de coupe) → "repart" = avance légère + fade out · **BIBLIOTHÈQUE SVG** (2026-06-25) — capitaliser chaque projet SVG en éléments (.svg) + techniques (.md) + index R&D (RD-INDEX.md avec renders catbox + verdicts). Un agent vierge peut réutiliser sans relire les TSX source. · **TEST NAVIGABILITÉ** : lancer un agent vierge avec 5 questions concrètes → les lacunes qu'il ne trouve pas = trous à corriger immédiatement (lien mort, prompt TODO, décision non tranchée) · **PERSONNAGE VIVANT** (2026-06-30) — perso d'encre animé par CODE (frame-driven, pas sprites) ; FOOT-PLANT / compensation bassin / objet-enfant-de-la-main ; LLM=banc d'idées pas rig-en-bloc → biblio `personnage-vivant-svg/`
@@ -60,6 +60,27 @@ Le réflexe n'est pas d'essayer une 4e valeur, c'est de **mesurer la réponse du
 ⚠️ **Mais pas partout** : Inter en 400 est 5 % TROP LARGE sur le texte clair, où la pile système
 est exacte. Basculer toute la scène aurait DÉPLACÉ le problème. → pile système pour le clair,
 Inter 700 pour le gras seulement. **Un fix global à un problème local en crée un autre.**
+
+### 2026-08-27 — ⛔⛔ INSTRUMENTER LA DÉTECTION N'EST PAS APPLIQUER LE REMÈDE
+
+**Vécu (repro Foster).** `motion-breakdown.py` rendait des réponses GPT tronquées
+(`finish_reason: length`, 3500 tokens facturés pour 0 caractère). Le symptôme était **DÉJÀ
+documenté dans la docstring de la fonction**, avec un avertissement ajouté la veille — mais
+`max_tokens` valait toujours 4000. On avait écrit le diagnostic, branché l'alerte, et **jamais
+corrigé la valeur**. Aziz a dû redemander le fix le lendemain.
+
+⭐ **Le signal à reconnaître** : quand je découvre un gotcha et que je le documente ou j'ajoute
+un log, me demander explicitement « et le paramètre, je l'ai changé ? ». Documenter est la
+partie facile et donne l'impression du travail fait — c'est précisément ce qui permet au bug
+de survivre à sa propre documentation.
+
+⛔ **Corollaire mémoire** : un avertissement écrit à côté d'une valeur fausse ne protège
+personne — il donne à la valeur fausse l'air d'un choix délibéré. **Corriger d'abord,
+documenter ensuite.**
+
+⚠️ Ce n'est pas un cas isolé : `CLAUDE.md` signale le même anti-pattern sur Kimi
+(« `da-brief.py` est resté sur k2.5 en CONTOURNANT un bug de k3 au lieu de le corriger »).
+Deux occurrences = un mode d'échec, pas un accident.
 
 ### 2026-08-27 — ⛔⛔ UNE ACTION PEUT ÉCHOUER EN TOTAL SILENCE (3 cas le même jour)
 

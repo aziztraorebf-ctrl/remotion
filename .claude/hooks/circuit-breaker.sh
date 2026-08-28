@@ -1,7 +1,17 @@
 #!/bin/bash
 # circuit-breaker.sh
 # Triggered BEFORE any Edit or Write tool use on scene files.
-# After 6 attempts: does NOT block — forces a creative-director re-evaluation instead.
+# Apres 6 EDITIONS d'un meme fichier de scene : ne bloque pas, force une re-evaluation.
+#
+# ⚠️ CE SEUIL NE COUVRE PAS LE CAS LE PLUS COUTEUX (constate le 2026-08-27, repro Foster) :
+# 3 corrections RENDUES ET MESUREES sur le meme defaut, chacune precedee d'une seule edition
+# -> le compteur d'editions ne monte qu'a 3, le breaker ne se declenche jamais, et pourtant
+# le protocole projet dit de deleguer des le 2e echec. Une passe rendre+mesurer coute
+# ~15x une edition. Le garde-fou de ce cas-la est `.claude/hooks/render-loop-guard.sh`,
+# qui compte les RENDUS de la meme composition, pas les editions.
+# ⛔ Le message affiche annoncait « 3 tentatives » alors que le seuil est 6 — corrige le
+# 2026-08-27. Un hook dont le message ment sur son propre seuil est aussi trompeur qu'une
+# fiche qui ment.
 # Claude must write a new Direction Brief in PIPELINE.md before the next edit is allowed.
 # Hook event: PreToolUse (matcher: Edit|Write)
 
@@ -63,7 +73,7 @@ UNBLOCK
 ---
 CIRCUIT BREAKER: AUTO-ESCALADE ACTIVE
 
-Scene: "$SCENE_KEY" — 3 tentatives sans resolution.
+Scene: "$SCENE_KEY" — $NEW_ATTEMPTS tentatives sans resolution (seuil 6).
 
 Tu dois changer d'approche avant de continuer. Etapes autonomes (sans attendre Aziz):
 

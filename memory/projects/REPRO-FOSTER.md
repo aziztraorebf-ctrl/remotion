@@ -29,7 +29,7 @@ a la main pendant la session. Methode gravee dans `memory/fiches/FICHE-AUDIO.md`
 ## ⚡ REPRISE : COMMENCER ICI (session du 2026-08-27)
 
 **Etat : LES 11 PLANS SONT PRODUITS — 42,75 s / 42,75 s = 100 %.**
-Plans 1-10 valides par Aziz. Plan 11 (`plan11-FINAL.mp4`) en attente de validation.
+Plans 1-10 valides par Aziz. Plan 11 valide (Aziz : « pas besoin de le voir isole »).
 Plan 10 valide avec une correction : « les mots d'accent sont beaucoup trop ternes ».
 
 ### ✅ SON + ASSEMBLAGE FAITS (27/08) — `foster-FINAL.mp4`, 1283 frames / 42,77 s
@@ -58,44 +58,6 @@ dense (1 frame / 0,5 s) = 80 uniques sur 86. ⚠️ Les 5 echantillons identique
 de 40,5 s ne sont PAS un gel : c'est le plan 11 (noir + grain fixe), verifie a la
 luminance (1,00). **Un controle automatique qui alerte se VERIFIE avant de conclure.**
 
-### ⏭️ IL RESTAIT : LE SON, PUIS L'ASSEMBLAGE — FAIT
-1. SFX + musique sur l'ensemble. ⛔ Rappel fiche UI-PRODUIT : **PAS de whoosh sur
-   les coupes d'UI** (vocabulaire de mouvement physique, sans rapport avec un
-   logiciel) — le FlashCut visuel suffit.
-2. Assemblage des 11 plans. ⚠️ Point de vigilance connu : verifier `nb_frames` sur
-   le flux VIDEO (pas `format=duration`) ET hasher un echantillonnage dense — un
-   concat casse peut figer l'image en gardant l'audio normal, indetectable sur des
-   frames isolees.
-Code : `src/projects/_client-sim/foster/scenes/Plan0{1..8}*.tsx`
-Branche : `feat/repro-foster`.
-
-⚠️ **La branche a change sous nos pieds en pleine session** (un chantier parallele
-a bascule le working tree sur `chore/memoire-eviction-contexte`). Verifier
-`git branch --show-current` AVANT de commiter.
-
-### ⚡ LA PROCHAINE SESSION — 3 PLANS, PUIS L'AUDIO
-Decision d'Aziz (27/08) : **s'arreter ici et finir dans une session fraiche**,
-plutot que d'attaquer la fin avec un contexte sature.
-
-| # | Bornes | Contenu | Notre brique | Difficulte |
-|---|---|---|---|---|
-| 9 | 27,07 -> 28,07 s | ✅ CODE — la plaque Billing vue EN ENTIER, pan horizontal pur | `Plan09PullBack` (PageCam) | faite |
-| 10 | 28,07 -> 40,46 s | Typo sur degrade vert-brun, montee vers le CTA « Foster With Clarity / Certainty / Confidence » | meme moteur que les plans 3 et 5 (typo) | **le plus long : 12,4 s** |
-| 11 | 40,46 -> 42,75 s | Fondu au noir, texture pointillee | trivial | faible |
-
-⭐ **MESURE UTILE POUR LE PLAN 10** : sa 1re frame (28,067 s) porte DEJA le mot
-« Not » — la typo du CTA commence donc par une phrase NEGATIVE, elle n'ouvre pas
-directement sur « Foster With ». Fond mesure a l'entree : vert tres sombre
-(16, 32, 27) de moyenne.
-
-**PUIS** : SFX + musique sur l'ensemble, et assemblage des 11 plans.
-⛔ Rappel de la fiche UI-PRODUIT : **PAS de whoosh sur les coupes d'UI** (retire
-apres un retour d'Aziz — c'est un vocabulaire de mouvement physique sans rapport
-avec un logiciel). Le FlashCut visuel suffit.
-⚠️ L'assemblage est un point de vigilance connu : verifier `nb_frames` sur le flux
-VIDEO et hasher un echantillonnage dense — un concat casse peut figer l'image en
-gardant l'audio normal, indetectable sur des frames isolees.
-
 ### ⭐ LE PROTOCOLE, TEL QU'IL DOIT ETRE APPLIQUE (corrige par Aziz le 27/08)
 1. `motion-breakdown.py` AVANT de coder — **3 voix** (Gemini video + GPT frames +
    **GROK frames**, ajoute le 27/08 : le plus riche des trois).
@@ -109,7 +71,7 @@ gardant l'audio normal, indetectable sur des frames isolees.
    demarrage (5 rendus perdus au plan 7 faute de l'avoir fait).
 6. ⭐⭐ **Reprendre le releve LIGNE PAR LIGNE avant de declarer fini.**
 
-### ✅ PLAN 11 — CODE ET MESURE (27/08), en attente de validation
+### ✅ PLAN 11 — VALIDE (27/08)
 `Plan11Fondu.tsx` · 69 frames · `plan11-FINAL.mp4`.
 
 ⛔⛔ **LE TABLEAU DISAIT « fondu au noir, texture pointillee » : LES DEUX MOITIES
@@ -935,14 +897,18 @@ marchait parfaitement).
 - **12 transitoires sonores en 8 s** : chaque apparition a son SFX. C'est ce qui rend
   « vrai ». ⛔ Pas de whoosh sur une UI.
 
-## ⛔ SECTION PÉRIMÉE (26/08) — conservée pour mémoire, NE PAS SUIVRE
-> « Trancher le niveau de réussite visé, puis attaquer dans l'ordre du découpage. »
-> C'était l'action du 26/08. **Le niveau est tranché depuis** (structure + gestes,
-> le pixel est un bonus) et 8 plans sur 11 sont livrés.
-> ⚠️ Deux « prochaines actions » qui se contredisent dans le même fichier, c'est
-> exactement le piège du fichier de navigation périmé contre lequel le projet met
-> en garde. **L'action courante est en TÊTE de ce fichier**, section
-> « LA PROCHAINE SESSION ».
+## ⚠️ LA CONTRADICTION INTERNE S'EST PRODUITE 2× DANS CE FICHIER — la leçon
+
+Ce fichier a porté, à deux reprises, **deux « prochaines actions » qui se contredisaient**.
+1. Le 26/08 : une action périmée (« trancher le niveau visé ») cohabitait avec l'action réelle.
+2. Le 27/08 au wrap : l'en-tête disait « CHANTIER TERMINÉ » pendant que le § REPRISE disait
+   encore « prochaine session : plans 9, 10, 11 » — **détecté par un agent d'audit, pas par moi**,
+   alors même que ce fichier était désigné « source de vérité unique du compteur ».
+
+⭐ **La leçon, transposable à tout fichier de suivi** : un fichier qui grandit par AJOUTS
+successifs accumule des états passés qui se lisent comme des instructions présentes. Le passage
+au statut « terminé » n'est pas un ajout en tête — c'est une **PURGE** de tout ce qui décrivait
+le chantier comme ouvert. Sinon le fichier censé prévenir la confusion la produit lui-même.
 
 
 ## PLAN 7 (18,45 -> 23,40 s) — LA DESCENTE VERS LA MAISON  ✅ FAIT

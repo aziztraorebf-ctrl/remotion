@@ -48,7 +48,7 @@ K3 est parfaitement utilisable une fois borne.
 | Fichier | Etat |
 |---|---|
 | `scripts/tools/svg-scene-narrative.py` | ✅ fix applique dans `gen_kimi()` + garde d'erreur |
-| `scripts/tools/llm-gen-svg.py` | ⚠️ commentaire corrige, **payload PAS encore fixe** |
+| `scripts/tools/llm-gen-svg.py` | ✅ **payload FIXE le 2026-08-27** (max_tokens 16000 + reasoning.max_tokens 2000) |
 | `scripts/tools/llm-gen-blueprint.py` | ⚠️ idem |
 | `scripts/tools/kimi-vision-fill-scene.py` | ⚠️ idem |
 | `scripts/tools/da-brief.py` | reste sur `kimi-k2.5` (avait fui le probleme au lieu de le resoudre) |
@@ -91,3 +91,18 @@ be specified"`. Pour pousser l'effort au max sans la borne standard : `"reasonin
 **seul**, sans `max_tokens` dans le meme objet (le `max_tokens` global top-level reste ok a cote).
 Verifie sur un test SVG reel (client-sim Flowdesk) : `effort:"high"` seul a produit un resultat nettement
 plus riche que la borne standard `max_tokens:2000` (10600 chars vs 578 chars sur le meme prompt).
+
+---
+
+## ⛔⛔ CE FICHIER EST LUI-MEME UN CAS D'ECOLE (constate au wrap du 2026-08-27)
+
+Le remede (`reasoning.max_tokens`) etait ecrit ici depuis le **2026-07-30**, et repete **TROIS FOIS
+en commentaire dans `llm-gen-svg.py`** — pendant **4 semaines**, le payload de ces 3 scripts n'a
+jamais ete corrige. Detecte par un agent d'audit en fin de session, pas en les utilisant.
+
+⭐ **La lecon** : documenter un remede n'est pas l'appliquer, et un commentaire repete 3 fois
+donne d'autant plus l'illusion que le sujet est traite. Le meme jour, `motion-breakdown.py`
+presentait exactement le meme schema (avertissement en docstring, valeur jamais changee).
+**Deux occurrences le meme jour = un mode d'echec, pas un accident.**
+-> Grave en transversal : `memory/key-learnings.md` § « INSTRUMENTER LA DETECTION N'EST PAS
+APPLIQUER LE REMEDE ».

@@ -191,3 +191,23 @@ d'upload est évaluée**. Donc :
 
 Payé 3 fois dans la même session avant que je fasse le lien. Ce n'est pas un bug du hook — c'est un
 PreToolUse, il ne peut voir que ce qui est déjà sur le disque.
+
+## sfx-cues.py — OU placer les SFX, mesure sur l'IMAGE (2026-08-27)
+
+`python3 scripts/tools/sfx-cues.py <video.mp4> [--crop W:H:X:Y] [--start S] [--end S] [--json out]`
+
+Detecte les evenements VISUELS d'une video et sort des candidats de placement SFX prets a
+coller (`{ at, src, vol }`). Trois familles, seuils **relatifs** a la video analysee :
+| type | ce que c'est |
+|---|---|
+| `COUPE` | rupture franche, **rare et isolee** (elle domine ses voisines x2,5) |
+| `APPARITION` | un element entre : l'encre augmente sans que tout change |
+| `POSE` | un mouvement continu **s'arrete** — le temps fort qu'on oublie de sonoriser |
+
+⭐ **Pourquoi l'image et pas l'audio** : sur un rendu Remotion avant mixage il n'y a AUCUN
+audio a analyser ; et le pic sonore du montage d'un TIERS ne dit pas ou l'image bouge dans le
+NOTRE (mesure repro Foster : 7 SFX sur 13 seulement tombaient juste).
+⭐ **Valide objectivement** : ses 7 `COUPE` retrouvent exactement les 7 bornes de plans de la
+reference Foster, mesurees a la main une par une pendant la session.
+⚠️ Donne des CANDIDATS, pas une verite — il dit **OU**, jamais **QUOI**.
+-> Methode complete : `memory/fiches/FICHE-AUDIO.md` § OU placer les SFX.

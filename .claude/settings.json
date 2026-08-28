@@ -142,6 +142,15 @@
             "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/forme-narrative-gate.sh"
           }
         ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/render-loop-guard.sh"
+          }
+        ]
       }
     ],
     "PostToolUse": [

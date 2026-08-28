@@ -1,30 +1,5 @@
 # NEXT-ACTION — Recommandations actives
 
-## ⭐⭐⭐ REPRO FOSTER — EN COURS · ⛔ compteur dans `projects/REPRO-FOSTER.md` § REPRISE (jamais recopié ici)
-> ✅ **Ordre TRANCHÉ DANS LES FAITS le 2026-08-27** : Foster d'abord (3 plans livrés dans la
-> journée), Lottie en attente. La question « enchaîner ou faire d'abord ? » posée le 26/08 est
-> close — ne plus la reposer à Aziz.
-
-**Décision d'Aziz 2026-08-26** : arrêter d'inventer des clients fictifs, **reproduire une
-vidéo réellement vendue sur Fiverr**. Si on reproduit plusieurs vidéos dans des registres
-différents, on sait qu'on est outillé pour la plupart des scénarios.
-
-→ **Plan complet, découpage plan par plan mesuré : `memory/projects/REPRO-FOSTER.md`**
-→ Source sécurisée : `public/_client-sim/_references/foster/foster-with-confidence.mp4`
-→ 11 plans, 13 transitions mesurées. ⛔ **Aucun compteur ici** — l'avancement vit dans
-  `REPRO-FOSTER.md` § REPRISE. (Un « 9 plans sur 11 couverts » figurait ici : c'était un
-  comptage de COUVERTURE stack du 26/08, lu à tort comme un avancement.)
-→ ✅ Les 2 trous d'assets sont COMBLÉS (clip maison H3 · portraits Gemini).
-→ ⏭️ Prochaine session : plans 9, 10, 11 · puis SFX/musique · puis assemblage.
-
-> Mis a jour : 2026-08-22 (purge : 26,5 Ko → ce fichier. Sections closes/mergées/dupliquées supprimées, git garde tout)
-> Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
-> ⛔ **Format : 3 lignes max par projet.** Un projet TERMINÉ se SUPPRIME de ce fichier, il ne
-> s'accumule pas — c'est faute d'appliquer cette règle qu'il a atteint 116 Ko en juillet, puis 26,5 Ko en août.
-> ⭐ **RÈGLE DE MAINTENANCE (issue de 2 échecs, 07-27 et 07-30) : ce bloc reste le PREMIER du fichier.**
-> Toute nouvelle section de session s'insère APRÈS lui, jamais avant — sinon l'avertissement descend
-> et se fait enterrer, et un état périmé est annoncé à Aziz malgré l'avertissement présent et lu.
-
 ## ⭐⭐⭐ DÉCISION DU 2026-08-24 — LA CHAÎNE EST UNE VITRINE, LE FREELANCE PORTE L'EFFORT
 
 Décision d'Aziz. La chaîne continue (Gazoduc), mais elle **prouve les capacités, elle ne les monétise
@@ -498,3 +473,18 @@ Claude met a jour ce fichier en FIN DE SESSION quand :
 ⛔ **Un projet TERMINÉ se SUPPRIME de ce fichier** — son état vit dans `memory/episodes/<ep>/STATUS.md`
 et sa publication dans le calendrier. Ne jamais garder de « trace historique » ici : git la conserve.
 Ce fichier a déjà dépassé 116 Ko (juillet) puis 26,5 Ko (août) faute d'appliquer cette règle en continu.
+
+## 🔧 BACKLOG — 3 fiches saturées, à SCINDER (relevé au wrap 2026-08-27)
+
+Le budget d'une fiche est de **55 lignes** (c'est du contexte injecté à chaque édition concernée).
+Trois fiches le dépassent au point qu'un simple retrait de ligne ne sert à rien — c'est une
+**scission** qu'il faut, et elle doit suivre un vrai changement de DÉCLENCHEUR :
+
+| Fiche | Lignes | Scission proposée |
+|---|---|---|
+| `FICHE-CLIP-GENERE.md` | 272 (5×) | sortir les § previs/générateurs (`mkprevis-*.py` + mesures d'amplitude) vers une fiche PREVIS. « Je dessine une trajectoire » ≠ « je lance une génération H3 ». |
+| `FICHE-UI-PRODUIT.md` | 196 (3,6×) | sortir les § MONTAGE + CURSEUR + SON vers `FICHE-ASSEMBLAGE`. « Je capture un écran » ≠ « je monte un film d'UI ». |
+| `FICHE-ASSEMBLAGE.md` | 132 (2,4×) | fusionner les 2 sections qui redisent le plafond Artifact 16 Mo à 25 lignes d'écart. |
+
+⚠️ Non fait en séance : scinder une fiche injectée automatiquement sans l'éprouver ensuite risque
+de la rendre muette au mauvais moment. À faire en début de session, pas en clôture.

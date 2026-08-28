@@ -3,6 +3,30 @@
 > Chemins vérifiés sur disque le 2026-08-17.
 
 ## AVANT DE RENDRE
+
+### ⛔⛔ MESURER UNE COULEUR — sur le RENDU, au CŒUR du glyphe (2026-08-27, repro Foster)
+- **Une couleur se valide sur le RENDU FINAL, jamais sur la valeur écrite dans le code.** La chaîne
+  Chromium + h264 `yuv420p` ÉCLAIRCIT, et pas uniformément : biais mesuré **+5 R, +13 G, +21 B**.
+  Le bleu remontant le plus, c'est la **saturation** qui s'effondre — donc « terne » malgré une
+  luminosité correcte. FIX : poser **cible MOINS biais**. Vérifié : sat 0,542 obtenue pour 0,540 visée.
+- ⭐ **Sur du TEXTE, relever la couleur au CŒUR du glyphe (percentile 99+).** Un seuil plus large
+  embarque les pixels de bord anti-aliasés contre le fond → biais **systématique** vers le fond
+  (mesuré sur le même mot : `rgb(165,133,73)` au p97 contre `rgb(204,165,93)` au p99,5).
+
+### ⛔⛔ POLICE : la pile système SATURE à `fontWeight: 600`
+Mesuré (« Confidence » @68px) : `400→340px · 500→352 · **600→363 · 700→363 · 800→363 · 900→363**`.
+Chromium n'a que les faces discrètes de Helvetica Neue — au-delà de 600 il n'a plus rien.
+⭐ Ce n'est pas un dosage à trouver, c'est **un plafond de fonte** : 3 corrections successives n'y
+ont rien changé. FIX : embarquer Inter (`@remotion/google-fonts/Inter`, axe complet, 700→376px).
+⚠️ Mais Inter **en 400 est 5 % TROP LARGE** sur le texte clair → **mélanger les deux polices**
+(système pour le clair, Inter 700 pour le gras), ne pas basculer toute la scène.
+
+### ⛔ ffmpeg local : 2 limites vérifiées (2026-08-27)
+- **Pas de filtre `drawtext`** (`ffmpeg -filters | grep drawtext` → 0). Toute planche annotée passe
+  par PIL sur les frames extraites, jamais par ffmpeg.
+- **`-t <durée>` arrondit à ±1 frame** — inutilisable pour une comparaison frame à frame.
+  → `-frames:v <N>`.
+
 - ⛔ **REMOTION `defaultProps` EST SÉRIALISÉ EN JSON.** Y passer une **référence de composant** la fait arriver `undefined` côté navigateur → **« Minified React error #130 »**, message qui ne nomme ni la prop ni le composant. FIX : wrappers concrets câblés en dur, un par variante (`export const KeyBenchA = () => <KeyBench model={KeyModelA} />`). Vaut pour toute prop non-JSON : fonction, classe, Map, Date. (session 3D, 2026-08-25)
 - ⭐⭐ **Export ALPHA (overlay livré à un client, incrustation CapCut/Premiere) — les 4 flags sont TOUS obligatoires** :
   `npx remotion render <Comp> out.mov --codec=prores --prores-profile=4444 --pixel-format=yuva444p10le --image-format=png`

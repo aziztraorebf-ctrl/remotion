@@ -58,7 +58,8 @@ animation dedans (le banc les fournit), déterministe. Donc animables tels quels
    390×844 en ×3. Cause vérifiée sur la page NorthShield : **0 media query + `width:1920px` en dur**.
    Variante : `src/projects/_client-sim/noteshield/live-page-mobile/` · capture : `scripts/tools/ui-capture/capture-mobile.mjs`.
 4. **`puppeteer` n'est PAS dans les dépendances du projet** (seul son Chrome est en cache). Capturer avec le
-   binaire `chrome-headless-shell` de Playwright en CLI (`--screenshot`, `--window-size`,
+   binaire `chrome-headless-shell` du cache **PUPPETEER** en CLI (⚠️ pas Playwright — vérifié
+   2026-08-27 ; 2 versions y coexistent, globber `~/.cache/puppeteer/chrome-headless-shell/*/chrome-headless-shell-mac-arm64/chrome-headless-shell`, ⛔ jamais en dur) (`--screenshot`, `--window-size`,
    `--force-device-scale-factor=3`) plutôt que d'installer une dépendance.
    ⚠️ Vérifier qu'aucun serveur ne squatte déjà le port : une capture a attrapé une AUTRE page (vécu).
 

@@ -81,7 +81,10 @@ def gen(subject: str, out: Path):
         print("ERROR: OPENROUTER_API_KEY missing"); sys.exit(1)
     prompt = PROMPT_TMPL.replace("{SUBJECT}", SUBJECTS[subject])
     headers = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
-    payload = {"model": KIMI_K3_MODEL, "messages": [{"role": "user", "content": prompt}]}
+    # ⛔ Borne du raisonnement k3 — remede ecrit en commentaire depuis le 2026-07-30,
+    # applique au payload le 2026-08-27. Sans elle, k3 rend content=null.
+    payload = {"model": KIMI_K3_MODEL, "messages": [{"role": "user", "content": prompt}],
+               "max_tokens": 16000, "reasoning": {"max_tokens": 2000}}
     print(f"[blueprint:{subject}] calling {KIMI_K3_MODEL} via OpenRouter...")
     r = requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=payload, timeout=900)
     r.raise_for_status()
