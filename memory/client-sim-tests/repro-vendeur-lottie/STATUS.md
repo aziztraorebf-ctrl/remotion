@@ -581,3 +581,81 @@ un decalage d'opacites manuel.
 donc tout ce qui bloque en Lottie disparait. ⚠️ Nuance : H3 est GENERATIF (non
 deterministe). La vraie frontiere n'est pas "video vs Lottie" mais **"ce qui doit etre
 EXACT vs ce qui doit etre EVOCATEUR"**.
+
+---
+
+# 🔧 L'OUTIL RENDU PLUS ROBUSTE (2026-08-28, 3 chantiers)
+
+## 1. DEGRADES — porter les `gradientTransform` PORTABLES (17,19 % -> 12,54 %)
+
+Lottie ne porte pas de matrice sur un degrade, mais un **SEGMENT** (`s` -> `e`).
+Or deplacer les 2 points reproduit **EXACTEMENT** une translation, une rotation, une
+echelle UNIFORME et toute composition de celles-ci : ce sont des **similitudes**.
+L'ancienne version jetait TOUTE `gradientTransform` — donc des cas parfaitement portables.
+⛔ Restent hors format : **cisaillement** et **echelle non uniforme** (radial elliptique).
+Nouveau `gtransform_portable()`, 8 cas testes. ⛔ Ordre des tests corrige : un skew fait
+AUSSI varier les normes et sortait « echelle non uniforme » — **verdict bon, MOTIF faux**,
+or c'est le motif qu'on lit pour decider quoi corriger.
+
+## 2. FILTRES — ⭐⭐ LA NOTE « limite du FORMAT » ETAIT FAUSSE (12,54 % -> 6,68 %)
+
+**MESURE** : `lottie-web` **REND** l'effet Gaussian Blur (`ty: 29`). Un carre passe de
+**0 a 5360 pixels** de bord adouci, **verifie A L'IMAGE**. Ce n'est donc pas le FORMAT qui
+bloquait — c'est que notre convertisseur ne l'emettait pas.
+Porte : un `<filter>` ne contenant **qu'un** `feGaussianBlur`. Refuses : les composites
+(`feOffset`+`feMerge` = ombre portee, `feColorMatrix`).
+⭐ **14 des 16 references `filter:url(#...)` pointent vers des ids INEXISTANTS** (supprimes
+a l'optimisation d'export). Un navigateur les ignore : il n'y a RIEN a porter. Les annoncer
+« non portes » faisait croire a une perte. **17 refus -> 1.**
+
+## 3. NOMMAGE — `proposer_carte.py`, le chainage enfin outille
+
+⛔ Il ne NOMME rien (il sort `bloc-1`...). `group_layers.py` a toujours raison : on ne devine
+pas l'intention. Il fait le travail **MECANIQUE** qui precede — decider **quelles formes vont
+ensemble** — sur 2 regles geometriques : contre-forme **ENFERMEE + CLAIRE**, et **CONTIGUITE**.
+
+| | calques | blocs | gain |
+|---|---|---|---|
+| LoadUp (logotype) | 15 | **9** | **40 %** |
+| Renard (mascotte) | 31 | 29 | 6 % |
+
+⭐ **L'outil DIT quand il ne sert a rien** (« RENDEMENT FAIBLE… le regroupement reste
+MANUEL ») au lieu de laisser croire qu'il a fait le travail.
+
+⛔⛔ **2 REGLES ESSAYEES PUIS RETIREES** (la trace vit dans le code) :
+1. **Fusion par chevauchement** — se trompait DANS LES DEUX SENS. Faux positif : la fleche
+   et le « p » se chevauchent de 25x95 px -> fusionnes a tort. Faux negatif : les 4 fragments
+   du ® ont des aires de 1017 a 67 -> non fusionnes.
+   ⭐ **Regle retenue : blocs SURS mais parfois trop fins.** Sur-decouper se repare en une
+   seconde ; melanger deux objets produit un rendu faux.
+2. **Relacher « CLAIRE »** pour couvrir la mascotte -> la tete a avale 15 calques
+   (31 -> 7 blocs, inutilisable). Plafond de taille ajoute : **AUCUN EFFET** (le plus gros
+   avale fait 31 %, sous le seuil de 45 %).
+   ⭐ **Ce n'etait pas un DOSAGE mais un PLAFOND DE LA REGLE** : sur une mascotte TOUT est
+   contenu dans la tete, l'enfermement ne discrimine rien. Aucun seuil ne repare ca.
+
+⛔⛔ **METHODE — j'ai re-dose 2 FOIS dans cette session** (frequence de clignement pendant
+que l'ancre restait a [0,0] · plafond de taille sans avoir mesure les aires). Le protocole dit
+de **diagnostiquer des le 2e echec**. Les deux fois, la cause s'est vue en **MESURANT**
+(appeler la fonction isolement · relever les 15 aires), jamais en reglant un seuil.
+
+## GARDE-FOU : `test_logo_client.py` passe a **4 volets**
+
+nommage · fidelite · geste · **proposition** (aucun bloc ne melange 2 objets, tous contigus).
+⭐ Le 4e volet **verifie capable d'echouer** : un bloc melangeant fleche + lettre-p est detecte.
+Non-regression : `test_rendu.py` 7/7 conforme.
+
+## ⛔⛔ 6 BUGS D'AIGUILLAGE — LA MEME FAMILLE, 6 FOIS
+
+L'element est CORRECT, c'est son AIGUILLAGE qui l'annule — **sans erreur, JSON valide** :
+1. la flamme figee (25/08) · 2. le tri `fl`/`st` qui jetait les `gf` (26/08) · 3. la sonde du
+test qui comptait a un niveau fixe (27/08) · 4. `centre_du_calque` -> ancre a [0,0] (28/08) ·
+5. le menage « degrade sans arret » qui supprimait les `<filter>` recenses (28/08) ·
+6. `len(entree) == 4` pris pour « c'est du texte » -> toute forme floutee plantait (28/08).
+⭐ **REGLE** : chercher les `sh`/les defs **EN PROFONDEUR**, jamais a un niveau fixe ; et ne
+jamais discriminer sur la **LONGUEUR** d'une structure — c'est le **CONTENU** qui discrimine.
+
+## ⏭️ PROCHAINE SESSION (decoupe validee par Aziz)
+
+1. **Les 4 logos restants** : L1 Hinch, L3/L4 Kanvas, L5 Tigerwild, L8 Fokus.
+2. **Le rig** — session SEPAREE : `memory/starters/STARTER-RIG-PERSONNAGE-EXISTANT.md`.
