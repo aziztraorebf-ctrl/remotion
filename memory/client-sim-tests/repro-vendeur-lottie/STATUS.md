@@ -255,3 +255,100 @@ identique a celui mesure sur LoadUp dans Remotion.
 - Verite terrain rendue (rsvg-convert depuis les SVG) : `<scratchpad>/creator-test/verite-{loadup,yoga}.png`
 - ⛔ `import_asset` LOTTIE exige une URL **PUBLIQUE** : `127.0.0.1` et `localhost` sont refuses
   (« Invalid URL »). Passer par `scripts/tools/upload-to-blob.py`.
+
+---
+
+# ✅✅ LOADUP EST COMPLET (2026-08-28) — les 2 manques sont fermes
+
+Decision d'Aziz : finir CE logo a 100 % avant d'en attaquer un autre. Prouver la
+chaine de bout en bout sur un cas vaut mieux que six cas a moitie faits.
+⭐ Ordre impose : **NOMMER d'abord, ANIMER ensuite** — nommer apres coup obligerait
+a re-verifier que le renommage n'a pas casse les cles.
+
+## 1. NOMMAGE — 15 calques anonymes -> 8 groupes lisibles
+
+`fond · lettre-l · lettre-o · lettre-a · lettre-d · lettre-p · fleche-up · marque-deposee`
+
+Carte etablie en **REGARDANT** la planche de `planche_calques.py` (15 vignettes,
+chaque calque rendu seul). Le chainage manquant etait bien la : l'outil produit la
+matiere, l'humain regarde, la carte alimente `group_layers.py`.
+
+⛔⛔ **LE BUG QUE LE CHIFFRE N'A PAS VU** — ma 1re carte a sorti le « o » en
+**DISQUE PLEIN**. Cause : `path-8` est **la contre-forme du o**, pas « la tige du d »
+comme je l'avais lu sur la planche ; rangee dans `lettre-d`, elle etait peinte au
+mauvais moment et bouchait le trou. `compare_render.py` annoncait **0,14 %** — un
+chiffre qui PASSE POUR BON. **C'est l'image qui l'a montre.** Apres correction : 0,01 %.
+
+⭐ **La regle est sortie de la MESURE des bbox, pas d'une intuition** : chaque lettre
+pleine est suivie de **sa contre-forme blanche aux memes coordonnees** (o 767/773 ·
+a 893/892 · d 1026/1020 · p 1289/1298). Au passage : `path-3` est **VERT**, c'est le
+« p » de Up, pas une lettre anthracite.
+
+⚠️ **`motifs` matche par SOUS-CHAINE, `noms` par egalite EXACTE.** Avec `motifs`,
+« path-1 » happe path-11..path-15. Mes ancres regex `^path-1$` n'auraient JAMAIS
+matche (aucun calque ne s'appelle litteralement ainsi) : le script aurait tourne
+**sans erreur** en produisant des groupes vides. Verifier COMMENT un motif est
+interprete avant de l'ecrire.
+
+## 2. ANIMATION — elle SURVIT au transport (la question restee ouverte)
+
+Nouvelle primitive **`geste3`** dans `animate_scene.py` : les 3 existantes
+(trace/fondu/pop) ne couvraient pas le geste en 3 temps. Elle pose position +
+ecrasement — monte haut -> SUSPEND -> retombe. Valeurs **reprises** de
+`LoadUpAnime.tsx`, jamais re-inventees.
+
+⛔ Gotcha respecte : un calque converti a ancre ET position a **[0,0]** (la geometrie
+porte ses coordonnees absolues). Sans recentrage, l'ecrasement partirait du coin de
+l'ecran — meme famille que « la flamme ne s'anime pas » (25/08).
+
+**RELU DEPUIS CREATOR apres import — identique a Remotion :**
+
+| | Remotion | Creator |
+|---|---|---|
+| Cles de position | 4 (f12/30/38/46) | **4, memes frames** |
+| Suspension | 8 frames a y=-95 | **8 frames a y=-95** |
+| Ratio chute/montee | 0,44 | **0,44** |
+| Calques animes | — | **7 animes, fond FIXE** |
+
+⭐ La **suspension** — le coeur du geste, celle sans quoi il ne raconte rien — a
+traverse la chaine intacte. Les 6 lettres sont des groupes SEPARES (editable) mais
+recoivent LE MEME timing : dans Remotion elles forment un seul `<g>` expres, les
+faire cascader volerait l'attention a la fleche (point focal unique).
+
+⚠️⚠️ **FAUX POSITIF CREATOR : « 7 of 8 layers are hidden ».** Il lit la scene a la
+**frame 0**, ou 7 calques sont volontairement a opacite 0 — c'est le DEBUT de
+l'animation. **Un outil qui juge une scene animee sur sa 1re image la declare vide.**
+Ne pas corriger ce qui n'est pas casse.
+
+## 3. GARDE-FOU — `test_logo_client.py`, 3 volets
+
+nommage (8 groupes, 15 calques, chaque contre-forme avec sa lettre) · fidelite
+(ecart <= 0,05 %) · geste (4 cles, suspension, asymetrie, fond fixe).
+
+⭐⭐ **VERIFIE CAPABLE D'ECHOUER** : en reintroduisant le bug du « o », 2 volets sur 3
+le rattrapent (nommage le NOMME, fidelite remonte a 0,14 %) ; tout repasse au vert
+apres restauration. Un test qui ne peut pas echouer ne protege rien.
+
+⛔ **PIEGE DE SONDE paye au passage** : `len(couche["shapes"])` renvoie **1** pour un
+groupe qui contient 2 chemins — `group_layers.py` imbrique tout dans un groupe par
+calque. Ma 1re version du test criait « contre-forme separee » sur un fichier
+PARFAIT. **C'etait la SONDE qui regardait au mauvais niveau.** Compter les `sh` en
+profondeur. -> recoupe le feedback « la mesure est biaisee par la FACON de mesurer ».
+
+## Livrables
+
+`public/_client-sim/logos/rc-loadup-nomme.json` (8 groupes, statique) ·
+`rc-loadup-ANIME.json` (13,2 Ko, 150 f @ 30 fps). Commit `8c658a39`.
+⭐ **Couleurs validees par Aziz a l'oeil dans Creator** : fleche verte, ® noir,
+aucun changement — la reserve « palette non relue depuis Creator » est LEVEE.
+
+## ⏭️ SUITE
+
+1. **Animer 1-2 des 6 logos restants** (`_references/logos-fiverr/` : L1 Hinch,
+   L3/L4 Kanvas, L5 Tigerwild, L7 renard veterinaire, L8 Fokus) en visant un registre
+   DIFFERENT — mascotte ou embleme — pour eprouver si le geste se generalise.
+   ⭐ Vraie question : **la carte de nommage se deduit-elle sur un dessin non-textuel ?**
+   Sur LoadUp les calques sont des LETTRES, cas facile. Une mascotte n'a pas ce secours.
+2. Le nommage reste **MANUEL** (je regarde la planche, j'ecris la carte). Le chainage
+   planche -> carte n'est toujours pas automatise — mais il est desormais PROUVE.
+3. Les 13 degrades a `gradientTransform` et les filtres : intacts, non traites.
