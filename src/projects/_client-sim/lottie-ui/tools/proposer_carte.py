@@ -85,6 +85,11 @@ def _clair(col, seuil=225):
     return col is not None and min(col) >= seuil
 
 
+# ⭐ Sous ce seuil, une forme est une MIETTE de texture, pas un element du
+# dessin. Mesure Tigerwild : mediane 327 px2, plus petite 18 px2 a 2 sommets.
+SEUIL_TEXTURE = 400
+
+
 def _aire(b):
     return (b[1] - b[0]) * (b[3] - b[2]) if b else 0
 
@@ -102,6 +107,7 @@ def proposer(doc):
         return []
 
     aire_totale = max((_aire(i["boite"]) for i in infos), default=1) or 1
+    par_nom = {i["nom"]: i for i in infos}
 
     blocs = []
     i = 0
@@ -151,7 +157,38 @@ def proposer(doc):
     # ⭐ REGLE RETENUE : proposer des blocs SURS mais parfois TROP FINS. Un
     # humain fusionne deux blocs en une seconde ; il ne devine pas qu'il faut en
     # SEPARER un. Sur-decouper est recuperable, sous-decouper ne l'est pas.
-    return [(f"bloc-{n+1}", m) for n, m in enumerate(blocs)]
+    # ⭐ REGROUPER LA TEXTURE (ajout 2026-08-28, mesure sur Tigerwild).
+    # Un logo au trait VIEILLI se fragmente : sur 505 calques, 285 (56 %) font
+    # moins de 400 px2 et 2 a 5 sommets — ce sont les ECLATS de la texture usee,
+    # pas des elements du dessin. Aucun nom sematique n'a de sens sur une miette.
+    # ⛔ On ne les groupe QUE par SUITES CONTIGUES : la contiguite ne se negocie
+    # pas (cf. la tache noire du renard). Mesure : 95 suites -> 505 devient 315.
+    fusionnes = []
+    for bloc in blocs:
+        petit = all(_aire(par_nom[n]["boite"]) < SEUIL_TEXTURE
+                    for n in bloc if par_nom.get(n))
+        if petit and fusionnes and fusionnes[-1][1]:
+            fusionnes[-1] = (fusionnes[-1][0] + bloc, True)
+        else:
+            fusionnes.append((bloc, petit))
+
+    out = []
+    n_tex = 0
+    for membres, petit in fusionnes:
+        if petit and len(membres) > 1:
+            n_tex += 1
+            out.append((f"texture-{n_tex}", membres))
+        else:
+            out.append((None, membres))
+    # numeroter les blocs non-texture
+    n = 0
+    final = []
+    for etiquette, membres in out:
+        if etiquette is None:
+            n += 1
+            etiquette = f"bloc-{n}"
+        final.append((etiquette, membres))
+    return final
 
 
 def main():
