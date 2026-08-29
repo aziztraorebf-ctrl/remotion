@@ -65,6 +65,30 @@ toute action sur cette annonce — un résumé ne le remplace pas (2 erreurs pay
 
 ---
 
+## ⭐⭐⭐ CHAINE PERSONNAGE ANIMÉ — COMPLÈTE ET PROUVÉE (2026-08-29)
+
+Dessin (Fable, d'après frames pro) → conversion → **pochoirs** → **précomposition** →
+**rig** → **animation**. Toutes les briques mesurées, le chien vit.
+→ `memory/starters/STARTER-RIG-PERSONNAGE-EXISTANT.md` (priorité 1 = corps entier)
+→ code `src/projects/_client-sim/repro-chien/` · rendu `out/_r-and-d/repro-chien/`
+
+⭐⭐ **L'ARGUMENT COMMERCIAL QU'AZIZ A IDENTIFIÉ, et qu'il faut vérifier** :
+*« On aurait pu accélérer les oreilles. S'il ne voulait pas que la langue bouge, ça
+aussi. C'est meilleur que d'avoir un outil avec des animations prédéfinies qu'on
+n'arriverait même pas à modifier. »*
+→ C'est le **déterminisme** appliqué au personnage : chaque geste est une ligne de
+paramètre, pas une timeline à rouvrir. ⛔⛔ **Non prouvé côté ACHETEUR** — c'est
+l'hypothèse centrale jamais validée (cf. `PILIERS-B2B.md`). Une modif triviale chez
+nous ne devient un argument que si un client la demande et la paie. À glisser dans
+une candidature, pas à écrire comme un acquis.
+
+⛔ **CE QU'ON NE SAIT PAS ENCORE** : les recouvrements de membres (un bras qui passe
+devant le torse — décision d'illustration, pas de rig) · les mains en calque séparé
+(notre point faible mesuré) · la licence du corpus kamotion (aucune documentée : ces
+fichiers sont une RÉFÉRENCE DE MESURE, pas une source de livrable).
+
+---
+
 ## ⭐⭐ POCHOIR (track matte) — PORTÉ, mais la PRÉCOMPOSITION bloque (2026-08-29)
 
 **Acquis, mesuré bout en bout** : `mask`/`clip-path` → paire Lottie `td:1`/`tt:1`.

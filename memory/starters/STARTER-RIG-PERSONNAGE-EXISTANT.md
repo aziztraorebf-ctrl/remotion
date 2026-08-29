@@ -7,105 +7,89 @@
 
 ---
 
-## ⭐ PRIORITE 1 — ANIMER LE CHIEN DE FABLE (et des formes similaires)
+## ✅ FAIT LE 2026-08-29 — LA CHAINE EST COMPLETE ET PROUVEE
 
-**Ce qui existe deja, pret a reprendre** : `src/projects/_client-sim/repro-chien/`
-(lire son `README.md` en premier, il porte l'etat exact et les pieges deja payes)
+**Le chien de Fable vit.** Dessin -> conversion -> 5 pochoirs -> rig -> animation.
+→ `src/projects/_client-sim/repro-chien/` (lire son README) · rendu :
+`out/_r-and-d/repro-chien/chien-anime-v2.json`
 
-- `assets/chien-tete.svg` — tete de chien mascotte, **dessinee par Fable 5** depuis les
-  FRAMES d'une piece pro. ⛔ Dessin ORIGINAL : 0 sommet en commun avec le fichier pro.
-  17 groupes nommes, 5 `clip-path` structurels.
-- `partition.ts` — les gestes **MESURES** sur la piece pro (oreilles dephasees, iris en
-  coups d'oeil de 0,02 s, langue +/-70 deg). ⛔ Ne pas re-inventer ces valeurs.
-- `ref/` — 3 frames de reference.
-
-### ⛔ LE BLOCAGE A LEVER D'ABORD : la PRECOMPOSITION
-
-Mesure du 29/08 : **1 pochoir sur 5 porte**. Les 4 refus disent tous la meme chose :
-
-    clip d'un groupe de N calques — Lottie ne decoupe qu'un calque par pochoir
-    (precomposition non implementee)
-
-**Pourquoi** : un oeil n'est pas une forme, c'est 4 calques (globe, iris, pupille, reflet).
-Le pochoir doit decouper l'ENSEMBLE, et Lottie ne decoupe qu'un calque a la fois.
-→ il faut apprendre a `svg2lottie_scene.py` a fabriquer une **precomposition** (`ty:0` +
-un asset `{id, layers}`).
-
-⭐ **Meme brique, deux verrous** : la piece 2 (onboarding, `12_BVaKTgmqgb.lottie`) a
-**45 precomps imbriques sur 3 niveaux**. La precomposition debloque les deux chantiers.
-
-⛔ Animer AVANT de lever ce blocage donnerait un iris qui deborde du globe — exactement le
-defaut visible quand on desactive les mattes.
-
-### Ensuite : les PIVOTS (mesures, pas a tatonner)
-
-Aucun groupe ne porte encore de `transform`. Boites deja mesurees (repere 1000x1000) :
-
-| Partie | Boite | Pivot |
+| Brique | Etat | Mesure |
 |---|---|---|
-| `ear-l` | x 155-375, y 248-588 | sa BASE (~265, 280), pas son centre |
-| `ear-r` | x 625-845, y 248-588 | sa BASE (~735, 280) |
-| `tongue` | x 452-548, y 722-808 | son ATTACHE (~500, 725) |
-| `iris-l` / `iris-r` | x 305-445, y 442-575 | leur CENTRE — ils translatent, ne pivotent pas |
+| Pochoir (`tt`/`td`) | ✅ | 0,00 % sur geometrie pro |
+| Precomposition | ✅ | 5 pochoirs sur 5 (c'etait 1/5) |
+| Rig (`parent` + pivots) | ✅ | chaine main→bras→torse, 0,01 % |
+| Animation | ✅ | 28 frames distinctes sur 29 |
 
-Regle : une oreille pivote depuis son attache au crane, une langue depuis sa racine, un iris
-se deplace sans tourner. Ca se deduit de l'anatomie, pas d'un reglage a tatonner.
+**Ce qui se declare dans le SVG** (convention maison, ignoree des navigateurs) :
 
-### « D'autres formes similaires » — ce que ca veut dire concretement
+    <g id="bras" data-parent="torse" data-pivot="haut">
+    <g id="main" data-parent="bras"  data-pivot="150,198">
 
-Le corpus contient **15 pieces a mattes** (`out/_r-and-d/corpus-kamotion/`). Les candidats
-proches du chien (mascotte, vectoriel, peu ou pas de raster) :
-`01_oG7VdeJLRy` (12 mattes) · `03_tcSIMHGGqP` (14) · `20_Full_Vibeup_Splash` (10) ·
-`10_Piggy_Bank_Tax_Day` (4) · `14_Piggy_Bank_Running` (5).
-⛔ Ecarter `19_kiosk` (25 images raster : on reproduirait des photos).
+⛔ `data-parent` vise le **NOM DE CALQUE** reel (`head-base`), pas l'id du groupe.
+⛔ `data-pivot` accepte haut/bas/centre/gauche/droite ou `x,y`.
 
-### ⭐ CE QUE LE CHIEN A APPRIS — ET LES 3 CORRECTIONS D'AZIZ (29/08)
-
-Fable a reussi un cas qu'on classait « organique donc voue a l'echec ». Son analyse,
-**verifiee par mesure** (24 primitives sur 50 formes, 3 paths a topologie libre, 5 paires
-symetriques) : une mascotte de face est **organique en apparence, objet en construction**.
-
-⛔⛔ **TROIS CORRECTIONS D'AZIZ — elles annulent une conclusion trop rapide du 29/08** :
-
-1. **La main n'a JAMAIS ete « dessinee avec reference ».** Un audit avait conclu ca en lisant
-   un commit ; c'est FAUX. Le geste reel : on a telecharge un **Lottie premium**, recupere la
-   **STRUCTURE** de la main, et greffe ca sur notre composition. C'est une greffe de squelette,
-   pas un dessin d'apres image.
-   ⛔ Et le resultat n'est pas anatomique : **l'index est un tube droit sans phalange ni
-   jointure, descendant jusque dans la paume ; les 3 doigts replies sont 3 arcs identiques.**
-   C'est une ICONE de curseur, pas une main. ⚠️ Le ratio doigt/paume (0,72, plausible) ne le
-   voyait PAS — le defaut est STRUCTUREL, pas proportionnel. Encore un cas de « la mesure est
-   biaisee par la facon de mesurer ».
-
-2. **Un dessin statique reussi ne dit RIEN de son animabilite.** Le visage du pecheur (Fable,
-   07-20) sortait tres bien en statique — **et s'animait bizarrement**. Juger un modele sur son
-   rendu fixe est insuffisant : le vrai test est le mouvement.
-
-3. **Le chien reste une FACE DE MASCOTTE, symetrique et simple** — Fable le dit lui-meme. Un
-   **personnage CORPS ENTIER** (ce qu'on voit couramment dans les Lottie) est probablement un
-   autre metier : rigging, ou illustration decoupee puis articulee. ⛔ Ne pas extrapoler du
-   chien vers le corps entier. **A TESTER dans cette session**, pas a supposer.
-
-### ⭐⭐ LA DIRECTION FIXEE PAR AZIZ : la reference FICHIER, pas la reference IMAGE
-
-> « Ce sera encore plus efficace, au lieu de juste une image, d'avoir **les fichiers eux-memes**,
-> meme gratuits, pour nos propres tests, pour savoir exactement **comment greffer les
-> structures**. »
-
-Une image de reference aide a DESSINER. Un **fichier** Lottie de reference apprend a CONSTRUIRE :
-ou sont les pivots (`ks.a`), comment les calques sont decoupes, comment le parentage est cable,
-comment le mouvement est reparti. C'est ce qui manque pour ANIMER — et ca inspire le dessin en
-prime.
-
-**Protocole a suivre desormais** pour tout personnage (chien ou autre) :
-1. Prendre un Lottie de reference (gratuit suffit pour un test interne).
-2. Le DEMONTER : `planche_calques.py` (chaque calque seul), pivots, parentage, decoupage.
-3. Comprendre la STRUCTURE avant de dessiner quoi que ce soit.
-4. Greffer / s'en inspirer pour notre propre construction.
-⛔ Licence : un fichier gratuit sert au TEST INTERNE. Pour un livrable client, verifier la
-licence (Lottie Simple = VIRALE, portfolio only).
+**Les 3 lecons payees** (ne pas les repayer) :
+1. Chaque calque porte sa PROPRE fenetre `ip`/`op`. Allonger la duree du DOCUMENT ne
+   suffit pas — les calques cessaient d'exister a la frame 60, l'animation se figeait,
+   et le fichier restait VALIDE. Trouve par un compteur d'images distinctes (3 sur 8).
+2. Un geste se lit dans les KEYFRAMES, pas seulement au rendu. Une oreille restee
+   dressee 2 s ressemble, a l'oeil, a un maintien voulu.
+3. Le mouvement naturel est ASYMETRIQUE : montee vive, retombee molle (1 pour 3).
+   Symetrique = essuie-glace.
 
 ---
+
+## ⭐⭐ PRIORITE 1 — LE PERSONNAGE CORPS ENTIER (prochaine session)
+
+> Decision d'Aziz le 29/08 : refaire le geste du chien, mais sur un **personnage
+> vectoriel corps entier**, en se fiant a des personnages PRO existants.
+
+### ⛔ D'ABORD : d'ou viennent les fichiers, et ce qu'on a le droit d'en faire
+
+⛔⛔ **Je n'ai AUCUN acces a une bibliotheque de rigs.** Les 22 pieces du corpus sont
+sur disque (`out/_r-and-d/corpus-kamotion/`, 3,2 Mo), telechargees le 28/08 depuis
+**kamotionstudio.site** — les fichiers que la page charge en clair. **Aucune licence
+n'est documentee.**
+
+→ **A TRANCHER AVANT DE PRODUIRE** : ces fichiers servent de **REFERENCE DE MESURE**
+(demonter, comprendre, mesurer). Les utiliser autrement, ou en tirer un livrable,
+demande de verifier la licence. ⭐ Le chien montre la voie propre : Fable a **redessine**
+depuis les FRAMES, 0 sommet en commun avec l'original. C'est un dessin original inspire
+d'une reference, pas une copie — et c'est ce modele qu'il faut reproduire.
+
+⭐ Si on veut une banque de rigs libres : `banques-lottie-et-greffe.md` (⛔ Lottie Simple
+License = VIRALE, portfolio only ; Creattie 48 $/an autorise le transfert client).
+
+### La cible : `15_Customs_Officer.json`
+
+Le meilleur banc d'essai, mesure : **19 calques, 17 parentes (89 %), 7 en rotation,
+zero precomp imbriquee** — la structure la plus lisible du corpus.
+Alternative : `16_Pumpkin_boy` (15 calques, 11 parentes) — plus simple, et son visage
+est REDESSINE (4 shapes animees) : utile pour voir comment on fait une expression.
+
+### Le plan, dans cet ordre
+
+1. **DEMONTER la cible** — `planche_calques.py` rend chaque calque SEUL. Repondre :
+   ou sont les coupures entre membres ? comment les recouvrements sont-ils dessines
+   (le haut du bras se poursuit SOUS le torse, sinon un trou apparait a la rotation) ?
+2. **FAIRE DESSINER par Fable**, depuis les FRAMES (jamais depuis le code), avec la
+   liste des membres imposee et les recouvrements exiges. ⛔ Lui donner l'interdit du
+   `<g>` dans un `<clipPath>` — il l'a respecte sur le chien.
+3. **DECLARER le rig** dans le SVG (data-parent / data-pivot), pivots aux articulations.
+4. **ANIMER** — 2 poses en ping-pong avec decalage de phase suffisent pour une marche
+   (mesure sur le Hiker : 7 cles par membre, periode 24 frames, dephasage de 41 %).
+5. **MESURER** : conversion + frames distinctes + sonde dense + REGARDER.
+
+### ⛔ Ce qu'on ne sait pas encore, et qu'il faudra mesurer
+
+- **Les recouvrements.** Sur une tete de face, aucun membre ne passe devant un autre.
+  Un corps, si — et c'est une decision d'ILLUSTRATION prise avant l'export. C'est le
+  vrai point d'incertitude, pas le rig.
+- **Les mains.** Le Hiker a `R-hand-w` et `L-hand-w` comme calques a part entiere.
+  ⛔ Notre point faible mesure. Une main FIGEE (le rig n'en demande qu'une version
+  sans variantes) est peut-etre a notre portee — a tester, pas a supposer.
+- **Le visage expressif.** Pumpkin boy redessine 4 shapes de 2 a 8 sommets. Tres en
+  dessous du seuil ou nos modeles echouent. Probablement faisable.
 
 ## ⭐ PRIORITE 1bis — LE PERSONNAGE CORPS ENTIER (question ouverte d'Aziz)
 
