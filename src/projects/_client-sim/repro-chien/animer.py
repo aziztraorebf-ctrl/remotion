@@ -92,6 +92,83 @@ def saccades(positions, instants, duree=DUREE):
     return {"a": 1, "k": deduplique}
 
 
+
+def souleve(angle, depart, periode, duree=DUREE, repos=0.0):
+    """
+    ⭐ LE SOULEVEMENT NATUREL (V2, demande d'Aziz) — l'oreille d'un chien qui
+    se dresse MONTE VITE et RETOMBE LENTEMENT. C'est un principe d'animation
+    classique, et c'est ce qui separe un geste vivant d'un va-et-vient de
+    metronome : mon oscillation symetrique de la V1 se lisait comme un essuie-
+    glace.
+
+    Quatre temps, chacun avec sa propre courbe :
+      montee   ~0,15 s, easing SORTANT vif      (le muscle qui tire)
+      sommet   court depassement puis retour    (l'inertie de l'oreille)
+      maintien bref                             (l'attention)
+      retombee ~0,50 s, easing ENTRANT mou      (la gravite, pas le muscle)
+
+    ⛔ Le rapport monte/descente est d'environ 1 pour 3. Symetrique, ca ne
+    ressemble a rien de vivant.
+    """
+    M = round(0.15 * FPS)          # montee vive
+    S = round(0.10 * FPS)          # depassement + retour
+    T = round(0.35 * FPS)          # maintien haut
+    R = round(0.50 * FPS)          # retombee molle
+    # ⛔ MESURE (1re version) : en calant la retombee sur `periode`, l'oreille
+    # restait dressee 2 SECONDES (frames 66 -> 186). Le geste se lisait comme
+    # une oreille bloquee en haut, pas comme un soulevement. La retombee a
+    # donc sa propre duree, et le repos occupe le reste du cycle.
+    cycle = M + S + T + R
+    if periode < cycle + FPS // 2:
+        periode = cycle + FPS // 2      # au moins 0,5 s de repos entre deux
+    out = []
+    t = depart
+    while t < duree:
+        out.append((t,               repos))
+        out.append((t + M,           repos + angle * 1.12))  # depassement
+        out.append((t + M + S,       repos + angle))          # sommet
+        out.append((t + M + S + T,   repos + angle))          # maintien
+        out.append((t + cycle,       repos))                  # retombee molle
+        t += periode
+    out = [(a, b) for a, b in out if a <= duree]
+    if len(out) < 2:
+        return None
+    # easing par cle : vif a la montee, mou a la retombee
+    k = []
+    for i, (t0, v) in enumerate(out):
+        cle = {"t": round(t0), "s": [v]}
+        if i < len(out) - 1:
+            monte = out[i + 1][1] > v
+            if monte:
+                cle["o"] = {"x": [0.15], "y": [0]}   # demarre franc
+                cle["i"] = {"x": [0.35], "y": [1]}
+            else:
+                cle["o"] = {"x": [0.55], "y": [0]}   # retombee molle
+                cle["i"] = {"x": [0.90], "y": [1]}
+        k.append(cle)
+    return {"a": 1, "k": k}
+
+
+def clignement(duree=DUREE, periode=None, ferme=4):
+    """
+    Fermeture breve et periodique -> ks.s en Y (l'oeil s'ecrase, il ne
+    disparait pas). ⛔ Un clignement dure ~0,1 s : plus long, le chien a l'air
+    endormi ; plus court, on ne le voit pas.
+    """
+    per = periode or round(2.4 * FPS)
+    k = []
+    t = round(0.8 * FPS)
+    while t < duree:
+        k.append({"t": t, "s": [100, 100], "o": {"x": [0.3], "y": [0]}, "i": {"x": [0.7], "y": [1]}})
+        k.append({"t": t + ferme, "s": [100, 8], "o": {"x": [0.3], "y": [0]}, "i": {"x": [0.7], "y": [1]}})
+        k.append({"t": t + ferme * 2, "s": [100, 100], "o": {"x": [0.3], "y": [0]}, "i": {"x": [0.7], "y": [1]}})
+        t += per
+    if len(k) < 2:
+        return None
+    k[-1].pop("o", None); k[-1].pop("i", None)
+    return {"a": 1, "k": k}
+
+
 def animer(doc):
     """Pose les gestes mesures sur les calques riggés."""
     pose = []
@@ -108,17 +185,23 @@ def animer(doc):
     # --- LES OREILLES : -9 a +15 deg, DEPHASEES -----------------------------
     # Mesure : oreille A demarre a 0,33 s, oreille B a 1,67 s. Les animer en
     # phase donnerait un mouvement de robot -- c'est le decalage qui vit.
-    for motif, phase in (("ear-l", 0.0), ("ear-r", 0.41)):
+    # ⭐ V2 : SOULEVEMENT au lieu du balancement. Les deux oreilles restent
+    # DEPHASEES (mesure d'origine : 0,33 s contre 1,67 s) — c'est le decalage
+    # qui empeche l'effet marionnette.
+    for motif, depart, signe in (("ear-l", round(0.5 * FPS), -1.0),
+                                 ("ear-r", round(1.9 * FPS), 1.0)):
         for c in couches(motif):
             if c.get("ks", {}).get("a", {}).get("k") in ([0, 0], None):
                 continue                      # piece non riggée : elle suivra
-            c["ks"]["r"] = oscille(12.0, BATTEMENT * 3, phase=phase, repos=3.0)
-            pose.append(f"{c['nm']}: balancement +/-12 deg")
+            c["ks"]["r"] = souleve(14.0 * signe, depart, round(2.6 * FPS))
+            pose.append(f"{c['nm']}: soulevement {14.0 * signe:+.0f} deg (montee vive, retombee molle)")
 
     # --- LA TETE : 0 -> 15 deg, le mouvement porteur ------------------------
-    for c in couches("head-base"):
-        c["ks"]["r"] = oscille(4.0, BATTEMENT * 4, repos=0.0)
-        pose.append(f"{c['nm']}: oscillation +/-4 deg")
+    # ⛔ V2 : LA TETE NE BOUGE PLUS. En V1 elle tournait de +/-4 deg, et comme
+    # tout le visage lui est parente, l'ensemble basculait en bloc — ca se
+    # lisait comme une tete en carton. Le fichier professionnel fait l'inverse :
+    # le crane bouge tres peu, ce sont les DETAILS qui vivent.
+    pose.append("head-base: IMMOBILE (V2) — seuls les details bougent")
 
     # --- LES SOURCILS : le droit 2x plus actif que le gauche -----------------
     # Mesure : 12 cles a droite contre 6 a gauche. C'est cette asymetrie qui
@@ -148,6 +231,17 @@ def animer(doc):
             [(cx, cy), (cx + 12, cy - 4), (cx, cy), (cx - 10, cy + 3)],
             [0.33, 0.98, 1.65, 2.32, 3.10, 3.90, 4.40])
         pose.append(f"{nm}: 7 coups d'oeil (sauts de 0,02 s)")
+
+    # --- LE CLIGNEMENT : ce qui rend un regard vivant ----------------------
+    for c in doc.get("layers", []):
+        if str(c.get("nm", "")).startswith("eye-") and c["nm"].endswith("-ball"):
+            b = c.get("ks", {}).get("a", {}).get("k")
+            if b in ([0, 0], None):
+                # l'oeil n'est pas riggé : on l'ancre a son centre pour que
+                # l'ecrasement se fasse au milieu et non depuis le coin
+                continue
+            c["ks"]["s"] = clignement()
+            pose.append(f"{c['nm']}: clignement toutes les 2,4 s")
 
     # --- LA LANGUE : la partie la plus mobile, +/-70 deg mesures ------------
     # On pose +/-14 deg : a 70 deg la langue sortirait du pochoir du museau,

@@ -63,15 +63,6 @@
     </clipPath>
   </defs>
 
-  <g id="ear-back-l">
-    <path id="ear-back-l-base" d="M 296 310 C 282 254 316 212 372 202 C 420 194 456 208 468 228 C 432 246 376 272 336 312 C 322 320 302 320 296 310 Z" fill="#8A4A21"/>
-    <path id="ear-back-l-flip" d="M 368 216 C 394 198 428 196 452 210 C 440 230 408 242 380 240 C 370 234 364 224 368 216 Z" fill="#F3C48A"/>
-  </g>
-  <g id="ear-back-r">
-    <path id="ear-back-r-base" d="M 704 310 C 718 254 684 212 628 202 C 580 194 544 208 532 228 C 568 246 624 272 664 312 C 678 320 698 320 704 310 Z" fill="#8A4A21"/>
-    <path id="ear-back-r-flip" d="M 632 216 C 606 198 572 196 548 210 C 560 230 592 242 620 240 C 630 234 636 224 632 216 Z" fill="#F3C48A"/>
-  </g>
-
   <g id="head" data-pivot="500,700">
     <path id="head-base" d="M 500 232 C 610 232 695 262 755 330 C 812 395 838 475 838 565 C 838 705 695 812 500 812 C 305 812 162 705 162 565 C 162 475 188 395 245 330 C 305 262 390 232 500 232 Z" fill="url(#grad-head)"/>
   </g>
@@ -112,7 +103,7 @@
     <ellipse id="nose-glint" cx="540" cy="582" rx="10" ry="7" fill="#A9714A" opacity="0.7"/>
   </g>
 
-  <g id="eye-l">
+  <g id="eye-l" data-pivot="375,512" data-parent="head-base">
     <circle id="eye-l-shadow" cx="375" cy="502" r="92" fill="#8F4716"/>
     <circle id="eye-l-rim" cx="375" cy="494" r="90" fill="#B06327"/>
     <circle id="eye-l-ball" cx="375" cy="495" r="80" fill="url(#grad-eyeball-l)"/>
@@ -124,7 +115,7 @@
     <circle id="iris-l-highlight-small" cx="398" cy="542" r="10" fill="#FFFFFF" opacity="0.9"/>
   </g>
 
-  <g id="eye-r">
+  <g id="eye-r" data-pivot="625,512" data-parent="head-base">
     <circle id="eye-r-shadow" cx="625" cy="502" r="92" fill="#8F4716"/>
     <circle id="eye-r-rim" cx="625" cy="494" r="90" fill="#B06327"/>
     <circle id="eye-r-ball" cx="625" cy="495" r="80" fill="url(#grad-eyeball-r)"/>
