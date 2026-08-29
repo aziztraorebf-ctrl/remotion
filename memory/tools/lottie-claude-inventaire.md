@@ -48,7 +48,45 @@ maison (§ ci-dessous).
 - **Filtres COMPOSITES** (`feOffset`+`feMerge` = ombre portée, `feColorMatrix`) : pas d'équivalent.
 - **`gradientTransform` avec cisaillement ou échelle NON uniforme** : rendrait un radial
   elliptique, que le format n'exprime pas.
-- **`<pattern>`** (motifs répétés), **masques** (le prochain gros chantier).
+- **`<pattern>`** (motifs répétés).
+- ~~masques~~ → ✅ **PORTÉS le 2026-08-29**, voir la section ci-dessous.
+
+### ⭐⭐ 2026-08-29 — LE POCHOIR, LA PRÉCOMPOSITION ET LE RIG (statut **proto**)
+
+> ⚠️ Statut **proto** assumé : mesurés (0,03 %) et couverts par **8 tests de non-régression**, mais
+> **un seul projet consommateur** (`repro-chien`). Le critère « prouvé » du projet demande ≥2 sites
+> d'usage — il n'est pas satisfait. Passer à « prouvé » au 2e usage réel.
+
+| Brique | Ce qu'elle fait | Mesure |
+|---|---|---|
+| **Pochoir** (`decoupe_referencee`) | `mask`/`clip-path` SVG → paire Lottie `td:1` (la découpe) / `tt:1` (le contenu) | **0,00 %** sur géométrie pro |
+| **Précomposition** | emballe un groupe de N calques en asset — ⛔ Lottie ne découpe **qu'UN calque** par pochoir | 1 pochoir sur 5 → **5 sur 5** |
+| **Rig** (`_rig_de`) | `data-parent` + `data-pivot` déclarés dans le SVG → `parent` + ancre Lottie | chaîne main→bras→torse, **0,01 %** |
+| **Garde-fou** (`Rapport`) | compte les clips **vus** vs **traités** ; tout écart **interdit** le verdict vert | 3e occurrence de la famille |
+
+**La convention de déclaration** (SVG n'a aucune notion de parentage ; ces attributs sont ignorés
+par les navigateurs) :
+
+    <g id="bras" data-parent="torse" data-pivot="haut">
+    <g id="main" data-parent="bras"  data-pivot="150,198">
+
+⛔ `data-parent` vise le **NOM DE CALQUE produit** (`head-base`), pas l'id du groupe.
+⛔ `data-pivot` = `haut`/`bas`/`centre`/`gauche`/`droite` (déduits de la boîte du GROUPE) ou `x,y`.
+⛔ Dans Lottie, `a` est le point qui vient se poser sur `p` : **déplacer l'ancre seule DÉCALE le
+dessin**. Les deux bougent ensemble.
+
+⭐ **Fixture de référence** : `src/projects/_client-sim/repro-chien/assets/chien-tete.svg`
+(17 calques nommés, 5 clip-path, 10 `data-pivot`, 4 `data-parent`). ⛔ **Pas une brique à réutiliser**
+— c'est l'exemple à COPIER quand on redemande un dessin riggable à un modèle.
+
+**2 primitives d'animation neuves** (`repro-chien/animer.py`) — le reste doublonne `animate_scene.py` :
+- `souleve()` — montée vive, retombée molle (**1 pour 3**), easing **par clé**. ⛔ Caler la retombée
+  sur la période laissait l'oreille dressée **2 secondes**.
+- `saccades()` — déplacements **instantanés** (0,02 s). Relevé sur une pièce pro : un regard change
+  de cible d'un coup, il ne glisse jamais.
+⚠️ `clignement()` et `oscille()` **doublonnent** `cligne` et `balance` de `animate_scene.py` — leur
+apport réel (écrasement en Y ; paramètre `phase`) est à porter comme **option sur l'existant**,
+pas à cataloguer à part.
 
 ### ⛔⛔ LES 3 RÈGLES QUI ONT COÛTÉ
 1. **Un rapport VERT ne prouve rien.** « transportable à l'identique » a menti **3 fois**
@@ -176,13 +214,15 @@ dépliables, **éléments déplaçables un par un**. 1382 octets compressé.
    courbe lève une `ValueError` ». **FAUX** : grammaire SVG complète (cubiques exactes à 1e-14,
    arcs sous 5e-04 px) + primitives. ⛔ Ce fichier ne porte plus aucun verdict propre — la table
    de décision est `memory/client-sim-tests/lottie-ui-lcd/CE-QUI-PASSE-EN-LOTTIE.md`.
-2. **Source `.aep` : ⚠️ À TESTER** — j'avais affirmé qu'AE n'importait pas le Lottie, **c'est FAUX**
-   (corrigé 08-24). Bodymovin et LottieFiles-for-AE font l'import ; reste à vérifier si NOS fichiers
-   passent proprement. → `memory/client-sim-tests/lottie-ui-lcd/STATUS.md` § 4 bis.
-   Nos sources = le SVG + le code.
+2. **Source `.aep` : ⛔ NON VÉRIFIABLE ICI** (requalifié le 2026-08-29) — j'avais affirmé qu'AE
+   n'importait pas le Lottie, **c'est FAUX** (corrigé 08-24) : Bodymovin et LottieFiles-for-AE font
+   l'import. Mais vérifier si NOS fichiers passent demande **After Effects, qui n'est pas installé**.
+   ⛔ Ce n'est donc PAS une action en attente, c'est un **blocage matériel** — elle était reconduite
+   à chaque wrap et polluait la liste des dettes. ⚠️ Ne pas l'annoncer à un client comme acquis.
+   Nos sources = le SVG + le code. → `memory/client-sim-tests/lottie-ui-lcd/STATUS.md` § 4 bis.
 3. **Aplatit `transform="translate(x,y)"`** dans les points (Lottie n'a pas d'équivalent de
    transform sur une forme).
-4. ⛔ **Parse le SVG en regex, sans parseur XML** : ne PAS l'exposer à un SVG client non fiable
+4. ⚠️ **SÉCURITÉ — note CORRIGÉE le 2026-08-29** : le fichier qui parse en **regex** est `src/projects/_client-sim/lottie-ui/tools/animate_start.py` (`re.finditer` l.73, `re.findall` l.97), **pas** `svg2lottie.py` — celui-ci est DÉJÀ durci (defusedxml + `_SafeParser` qui refuse toute déclaration d'entité, l.22-43). ⛔⛔ L'ancienne note désignait le fichier **déjà sûr** et laissait le vrai trou non signalé : une note de sécurité qui RASSURE À TORT est pire qu'une dette ouverte. → ne pas exposer `animate_start.py` (statut **proto**, 1 usage) à un SVG client non fiable. ⭐ L'outil courant de la chaîne, `svg2lottie_scene.py`, n'est pas concerné.
    sans reprendre le durcissement XXE de `svg2lottie.py` (parseur qui refuse toute déclaration
    d'entité — faille signalée par le hook sécurité le 2026-08-24).
 

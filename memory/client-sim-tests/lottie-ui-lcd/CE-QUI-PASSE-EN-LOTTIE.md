@@ -17,7 +17,9 @@
 **On sait livrer du Lottie standard depuis notre chaîne SVG, sans After Effects — à condition
 que la scène soit faite de FORMES et de COULEURS PLEINES.** Le texte, les dégradés et les
 pointillés passent désormais — **et le FLOU depuis le 2026-08-28**. Ne traversent toujours pas :
-les filtres **composites** (ombre portée, lueur), les masques et les images.
+les filtres **composites** (ombre portée, lueur) et les images. ⭐⭐ **Les MASQUES passent depuis le
+2026-08-29** (track matte `td`/`tt` + précomposition), et **les personnages articulés aussi** (rig par
+parentage) — voir les deux lignes du tableau.
 
 ---
 
@@ -99,13 +101,13 @@ Détail : [[feedback_prouver-une-capacite-nest-pas-produire-un-livrable]]
 | **Dégradés** (linéaires ET radiaux) | ✅ **oui** — ⭐ **porté le 2026-08-26** | `gf` natif avec l'opacité de chaque arrêt. Aéroport : **57,74 % → 11,58 %**. ⚠️ Le rayon radial reste une approximation (Lottie n'a qu'un rayon scalaire) — formule choisie **par mesure**, pas par la spec. ⭐ **`gradientTransform` porté le 2026-08-28** quand c'est une **SIMILITUDE** (translation · rotation · échelle uniforme et compositions) — Lottie porte un SEGMENT, déplacer ses 2 points suffit. ⛔ Hors format : **cisaillement** et **échelle non uniforme** (rendraient un radial elliptique) |
 | **Flou** (`feGaussianBlur` seul) | ✅ **oui** — ⭐⭐ **porté le 2026-08-28** | effet Lottie **`ty:29`**, rendu par lottie-web — mesuré À L'IMAGE (un carré passe de **0 à 5360 px** de bord adouci). ⛔ La note « les filtres sont une limite du FORMAT » était **FAUSSE** : le format savait, notre convertisseur n'émettait rien. Écart logo Inkscape **12,54 % → 6,68 %** |
 | **Ombre portée, lueur** (filtres **COMPOSITES** : `feOffset`+`feMerge`, `feColorMatrix`) | ⛔ **non** | pas d'équivalent Lottie — à refaire en formes empilées ou à retirer du brief. ⭐ **Coût visuel MESURÉ** (Khartoum, 8 filtres non portés) : l'écart total reste à **1,17 %** — ils coûtent **peu**. ⚠️ Vérifier d'abord si le `filter:url()` pointe vers un id qui EXISTE : sur 4 logos clients, **14 sur 16 étaient morts** (supprimés à l'export, un navigateur les ignore) |
-| **Masques, détourage** (`mask`, `clipPath`) | ⛔ **non** | à pré-appliquer à la géométrie en amont |
+| **Masques, détourage** (`mask`, `clipPath`) | ✅ **oui** — ⭐⭐ **porté le 2026-08-29** | traduit en **track matte** Lottie : le pochoir porte `td:1`, le calque découpé `tt:1`. Écart **0,00 %** sur géométrie professionnelle réelle. ⛔ **Corollaire non-évident** : Lottie ne découpe **qu'UN calque par pochoir** — un groupe de N calques (un œil = globe+iris+pupille+reflet) doit être emballé dans une **précomposition**, sinon 1 pochoir sur 5 passe seulement. ⭐ Enjeu mesuré : retirer les mattes change **50 %** de l'image d'une mascotte pro, **100 %** d'un kiosque — ce n'est pas cosmétique |
 | **Images / photos** (raster) | ⛔ **non** | Lottie sait embarquer en base64, mais le poids explose — déconseillé |
 | Symboles réutilisés (`use`, `symbol`) | ⛔ **non** | à aplatir avant conversion (faisable, coût en amont) |
 | Motifs de remplissage (`pattern`) | ⛔ **non** | sans équivalent — ⭐ **non peint** depuis le 2026-08-26 : la couche du dessous reste visible. ⛔ Avant, replié sur un gris inventé qui **effaçait le fond** (82 % de l'image fausse sur Khartoum, cf. plus haut) |
 | **Pointillés** (`stroke-dasharray`) | ✅ **oui** — ⭐ **porté le 2026-08-26** | mesuré à **0,07 %** (2 valeurs) et **0,10 %** (4 valeurs). ⚠️ Le motif peut être **déphasé** (Chromium et lottie-web ne démarrent pas au même point d'un cercle) : même nombre, même espacement, départ différent. ⛔ C'était **ignoré en silence** avant — enjeu narratif réel : un tracé « projet prévu » ressortait plein, donc « construit » |
 | Animation déjà dans le SVG (SMIL) | ⛔ **non** | normal : **l'animation vient de notre code**, c'est notre méthode |
-| **Personnages articulés** | ⛔ **non** | pas une limite du format — un métier différent (rigging) |
+| **Personnages articulés** | ⚠️ **la MÉCANIQUE est portée** (2026-08-29), le DESSIN reste le point dur | Le **rig par parentage** est prouvé chez nous : `parent` + pivots déclarés dans le SVG (`data-parent` / `data-pivot`), chaîne main→bras→torse à **0,01 %**. Mesure sur 5 personnages pro : **84 %** des calques ont un parent, **90 %** de l'animation est de la ROTATION sur des dessins **figés**, 7 clés par membre. ⛔ **Ce qui reste dur n'est PAS le rig, c'est le DÉCOUPAGE** : obtenir un corps séparé en 15-30 pièces qui se **recouvrent** proprement (le haut du bras doit se poursuivre SOUS le torse, sinon un trou apparaît à la rotation) — une décision d'illustration, pas de conversion. ⚠️ Prouvé sur une **face de mascotte**, pas encore sur un corps entier |
 
 ---
 

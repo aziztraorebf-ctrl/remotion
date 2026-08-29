@@ -86,7 +86,7 @@ testerait une etape qui n'existe pas dans le metier.
 groupes, clipPath, transformations imbriquees, metadonnees Illustrator) et reussir a
 l'animer puis le convertir en Lottie.
 
-⚠️ Risque connu : `scripts/tools/svg2lottie.py` parse le SVG **en regex, sans parseur XML**.
+⚠️ **SÉCURITÉ — note CORRIGÉE le 2026-08-29** : le fichier qui parse en **regex** est `src/projects/_client-sim/lottie-ui/tools/animate_start.py` (`re.finditer` l.73, `re.findall` l.97), **pas** `svg2lottie.py` — celui-ci est DÉJÀ durci (defusedxml + `_SafeParser` qui refuse toute déclaration d'entité, l.22-43). ⛔⛔ L'ancienne note désignait le fichier **déjà sûr** et laissait le vrai trou non signalé : une note de sécurité qui RASSURE À TORT est pire qu'une dette ouverte. → ne pas exposer `animate_start.py` (statut **proto**, 1 usage) à un SVG client non fiable. ⭐ L'outil courant de la chaîne, `svg2lottie_scene.py`, n'est pas concerné.
 Sur nos fichiers (propres, ecrits par nous) ca passe. Sur un SVG de production, c'est le
 point de rupture attendu. Voir aussi la dette securite XXE deja documentee.
 

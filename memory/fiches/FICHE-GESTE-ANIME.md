@@ -20,9 +20,8 @@ session-là**. ⛔ Dans une session neuve, tout était perdu.
 // ✅ PAYÉE — LoadUpAnime.tsx:29, rendu validé par Aziz le 2026-08-28
 const EASE_OUT = Easing.bezier(0.23, 1, 0.32, 1);   // entrées, le défaut
 ```
-⚠️ **LUES dans les skills, JAMAIS écrites ici** (zéro occurrence dans tout le repo — vérifier au
-1er usage, ne pas les citer comme éprouvées) : `bezier(0.77, 0, 0.175, 1)` (déplacement à l'écran)
-· `bezier(0.32, 0.72, 0, 1)` (panneaux, courbe iOS).
+⚠️ **NON ÉPROUVÉS — vérifier au 1er usage, ne jamais citer comme payés** : `bezier(0.77, 0, 0.175, 1)`
+· `bezier(0.32, 0.72, 0, 1)` · cascade 30-80 ms · entrée `scale(0.95)`+opacity 0 · primitive `respire`.
 
 ⛔ Les easings CSS natifs (`ease`, `ease-in-out`) sont trop faibles — ils n'ont pas de punch.
 
@@ -65,12 +64,9 @@ rendus et validés : **on ne les corrige pas rétroactivement.** La règle vaut 
    vérifier que le code faisait bien ce qui était demandé. Un geste en 3 temps se contrôle sur ses
    4 points d'ancrage (`[12, 30, 38, 46]` chez LoadUp), jamais en regardant le mp4.
 
-⚠️ **NON ÉPROUVÉ ICI, à vérifier au 1er usage** : la cascade (stagger) 30-80 ms entre éléments,
-et l'entrée à `scale(0.95)` + opacity 0 (« rien n'apparaît de rien » — ⛔ les valeurs d'UI des
-skills, modale 0.96 / menu 0.95, ne se transposent PAS telles quelles à une vidéo). LoadUp n'a NI cascade
-(`apparition(0)` appelé une seule fois, un seul groupe de lettres) NI scale à l'entrée — que des
-fondus. ⛔ Ces deux lignes étaient présentées comme « payées » dans la 1re version de cette fiche :
-c'était faux, et c'est exactement la faute que cette fiche prétend corriger.
+⛔ Les valeurs d'UI des skills (modale 0.96 / menu 0.95) ne se transposent PAS telles quelles à une
+vidéo — et elles étaient présentées comme « payées » dans la 1re version de cette fiche : c'était
+faux, et c'est exactement la faute que cette fiche existe pour empêcher.
 
 ## DURÉES — transposées, pas copiées
 
@@ -159,20 +155,30 @@ demande l'anatomie qu'en version FIGÉE, sans variantes.
 de sa boîte), une langue à sa racine, un iris ne pivote pas — il se déplace.
 ⛔⛔ Dans Lottie, `a` est le point qui vient se poser sur `p` : **déplacer l'ancre seule DÉCALE
 le dessin**. Les deux bougent ensemble.
+⛔ **Le rig se porte sur le GROUPE, pas sur ses pièces.** Un œil = 4 calques : poser le pivot sur
+chaque forme l'applique 4× et il ne s'exprime jamais — c'est la **précomposition** qui porte
+l'ancre et le parent.
 
 ## ⭐⭐ LE MOUVEMENT NATUREL EST ASYMÉTRIQUE (2026-08-29, mesuré au rendu)
 
 Une oreille qui se dresse **monte vite et retombe lentement**. Réglage validé à l'œil :
 
-    montée 9 frames · maintien 21 · retombée 30      → rapport 1 pour 3
+    montee 0,15 s · depassement 0,10 s (x1,12) · maintien 0,35 s · retombee 0,50 s
+    → rapport 1 pour 3   (a 60 fps : 9 · 6 · 21 · 30 — animer.py:113-116)
+    ⛔ Ce sont des SECONDES : les reconvertir a la cadence du projet (a 30 fps, moitie moins de frames).
 
 ⛔ Symétrique, ça fait **essuie-glace** — c'était le défaut de ma V1, corrigé sur remarque
 d'Aziz. Le muscle tire vite, la gravité ramène doucement.
 ⭐ Même principe pour un regard : l'iris **saute** (0,02 s entre deux cibles), il ne glisse
 jamais. Interpoler doucement tue l'effet — aucun œil ne glisse.
-⭐ Clignement : écrasement en Y sur ~0,13 s. Plus long = l'air endormi ; plus court = invisible.
+⭐⭐ **L'asymétrie ENTRE MEMBRES PAIRS compte autant que l'asymétrie dans le temps** : oreilles
+déphasées (0,33 s / 1,67 s dans l'original), sourcil droit **2× plus actif** que le gauche
+(12 clés contre 6). En phase = un robot ; deux sourcils synchrones = un visage inerte.
+⛔ **Un dosage mesuré sur une pièce pro ne se transpose pas tel quel — l'adapter et le DIRE** :
+iris posé à 12 px (mesuré 33), langue à 14° (mesuré 70), sinon ils sortent de leur pochoir.
+⭐ Clignement : ecrasement en Y sur **4 frames (0,067 s a 60 fps)**, toutes les 2,4 s — `animer.py:150`. Plus long = l'air endormi ; plus court = invisible.
 
-## ⛔⛔ LES 3 PIÈGES DE L'ANIMATION LOTTIE (payés le 2026-08-29)
+## ⛔⛔ LES 4 PIÈGES DE L'ANIMATION LOTTIE (payés le 2026-08-29)
 
 1. **Chaque calque porte sa PROPRE fenêtre `ip`/`op`.** Allonger la durée du DOCUMENT ne suffit
    pas : les calques cessaient d'exister à la frame 60, l'animation se figeait — et le fichier
@@ -183,7 +189,13 @@ jamais. Interpoler doucement tue l'effet — aucun œil ne glisse.
    le blocage se voit.
 3. **Faire tourner le parent fait tourner TOUT.** En animant la tête de ±4°, tout le visage
    basculait en bloc (« une tête en carton »). Le fichier pro fait l'inverse : le crâne bouge
-   très peu, ce sont les DÉTAILS qui vivent.
+   très peu, ce sont les DÉTAILS qui vivent. ⛔ Corollaire au DESSIN : un élément d'arrière-plan
+   doit être CONTENU par la silhouette qui le couvre — les `ear-back` du chien dépassaient du
+   crâne en rotation (2e paire d'oreilles apparente, supprimés).
+4. **Une durée de geste ne se cale JAMAIS sur la PÉRIODE du cycle.** En calant la retombée sur
+   `periode`, l'oreille restait dressée **2 secondes** (frames 66→186) : ça se lit comme un
+   blocage, pas comme un soulèvement. Chaque temps a sa PROPRE durée, le repos prend le reste.
+   `repro-chien/animer.py:117-122`.
 
 ## LES 2 TESTS À PASSER AVANT DE PRÉSENTER
 

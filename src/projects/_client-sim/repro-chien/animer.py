@@ -152,7 +152,7 @@ def souleve(angle, depart, periode, duree=DUREE, repos=0.0):
 def clignement(duree=DUREE, periode=None, ferme=4):
     """
     Fermeture breve et periodique -> ks.s en Y (l'oeil s'ecrase, il ne
-    disparait pas). ⛔ Un clignement dure ~0,1 s : plus long, le chien a l'air
+    disparait pas). ⛔ 4 frames = 0,067 s a 60 fps : plus long, le chien a l'air
     endormi ; plus court, on ne le voit pas.
     """
     per = periode or round(2.4 * FPS)

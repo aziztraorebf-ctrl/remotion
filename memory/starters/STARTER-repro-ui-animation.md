@@ -18,11 +18,14 @@
   `svg-dessinateur` avec mémoire persistante.
 
 **⏭️ REPRENDRE PAR** (dans cet ordre) :
-1. ⛔⛔ **Le MATTE (`tt`)** — ~90 occurrences sur 22 pièces pro, refusé par notre chaîne.
-   C'est le seul vrai bloqueur technique mesuré. Avant toute nouvelle reproduction.
-2. **Pièce 2 : l'onboarding** (`12_BVaKTgmqgb.lottie`, 2000×4369, 26 precomps, 40 textes vectorisés,
-   0 matte 0 dégradé). ⭐ Décision d'Aziz : viser les écrans **à TEXTE** — notre chaîne vectorise
-   déjà par défaut, c'est bien plus simple que la main.
+1. ✅ **Le MATTE : RÉSOLU le 2026-08-29** — porté (`td`/`tt`), plus la précomposition et le rig.
+   Chaîne complète prouvée de bout en bout sur un personnage animé.
+   → **la suite de ce chantier vit désormais dans `memory/starters/STARTER-RIG-PERSONNAGE-EXISTANT.md`**
+   (priorité : personnage CORPS ENTIER, cible `15_Customs_Officer`).
+2. **Pièce 2 : l'onboarding** (`12_BVaKTgmqgb.lottie`, 2000×4369). ⚠️ **Mesuré le 29/08 : elle
+   contient 0 matte, 0 trim path, 0 repeater** — elle ne teste donc PAS le travail du 29/08.
+   Ce qu'elle teste vraiment : **45 précomps imbriqués sur 3 niveaux** (notre convertisseur produit
+   une liste plate). ⭐ Décision d'Aziz : viser les écrans **à TEXTE**, notre chaîne les vectorise.
 3. Réglage fin de la pièce 1 (la main couvre encore un peu les vignettes).
 4. Décision en attente d'Aziz : **abonnement Creattie** (48 $/an — seul catalogue vérifié dont la
    licence autorise le transfert au client).
@@ -123,10 +126,12 @@ chez moi »*. S'ils réagissent, on le saura. S'ils n'en parlent jamais, on le s
 
 ## 🧹 DETTE À SOLDER (pas en fin de session)
 
-1. ⛔⛔ **MEMORY.md à ~21 Ko sur un plafond DUR de 25 Ko** (alerte 20 Ko franchie). La troncature est
-   **silencieuse** et emporte la FIN du fichier (catalogues, archive). **PREMIÈRE ACTION de la
-   prochaine session, avant tout ajout.** Compacter demande d'arbitrer quels pointeurs deviennent
-   invisibles → décision de contenu, pas de mise en forme.
+1. ✅ **MEMORY.md : SOLDÉ le 2026-08-29** — compacté à **19,7 Ko** (sous l'alerte de 20 Ko, plafond
+   dur 25 Ko). Un orphelin y a été trouvé et réparé au passage : la ligne « budget de contexte »
+   pointait vers une fiche **qui n'a jamais existé** (ni sur disque, ni dans git). ⭐ La leçon :
+   avant de compacter une ligne d'index, vérifier que le fichier pointé EXISTE — sinon on supprime
+   la seule copie. ⚠️ Le poids se déplace : c'est **NEXT-ACTION.md (29 Ko)** qui porte désormais
+   l'essentiel de la chaîne de démarrage (~48 k tokens).
 2. ✅ **Collision worktree : DÉJÀ RÉSOLUE** le 2026-08-27 (stub propre, 2 fragments rapatriés,
    `check-memoire-doublons.py` → 0 collision sur 15). ⛔ Ne PAS refaire ce travail.
    ⭐ Leçon à garder : **un stub de redirection peut MASQUER du contenu non rapatrié** — il se
@@ -137,9 +142,17 @@ chez moi »*. S'ils réagissent, on le saura. S'ils n'en parlent jamais, on le s
    `check-links.py` couvre désormais PILIERS-B2B + RECHERCHE-MARCHE-INDEX (570 chemins / 11 fichiers).
 4bis. 🧹 **265 Mo de purge PROPOSÉE mais NON exécutée** (wrap 08-27 — une autre session tournait sur
    le repo, purger aurait été risqué) :
-   - `out/_rnd/` (**252 Mo**, 19 entrées de juillet, 100 % > 30 j) — POC périmés, aucun référencé dans
-     NEXT-ACTION. ⚠️ **Doublon de rôle** : la doctrine ne nomme que `out/_r-and-d/` (1,2 Go, actif).
-     → purger `_rnd/`, ne pas fusionner.
+   - `out/_rnd/` (**253 Mo**) — ⛔⛔ **LA NOTE « aucun référencé » ÉTAIT FAUSSE** (corrigé au wrap
+     du 2026-08-29, vérifié par grep). **9 des 21 entrées SONT citées** dans la mémoire vivante —
+     dont `warmap-choc/` (**189 Mo à lui seul**, 3 références : `soudan-midform/STATUS.md:718,722`
+     et `soudan-midform-STORYBOARD-ACTE1.md:15`). Une purge en bloc aurait créé des liens morts.
+     → **Gain réel d'une purge SÛRE : ~39 Mo, pas 252.** Candidats sans aucune référence :
+     `geo-flow-connection/` (10 Mo) · `kosti-proto/` (3,8) · `frames-headlesstest/` (2,9) ·
+     `frames-geoflow/` (2,1) · les 6 mp4 à la racine (21 Mo).
+     ⚠️ **Doublon de rôle réel** : la doctrine ne nomme que `out/_r-and-d/`. Ne pas fusionner —
+     mais ne pas purger `_rnd/` en bloc non plus.
+     ⭐ **La leçon** : une note de purge qui affirme une ABSENCE de référence se VÉRIFIE par grep
+     avant d'agir. Un catalogue qui affirme un vide est faillible (4 occurrences dans ce projet).
    - `out/_wip/` (13 Mo) — **hors nomenclature** (le wip appartient à `out/episodes/<ep>/wip/`).
      ⚠️ Contient 4 mp4 de test **Acte 3 Gazoduc** → confirmer avec Aziz avant de purger (Acte 3 = priorité 1).
    - ⛔ **À CONSERVER** : `out/episodes/gazoduc-aagp-tsgp/wip/acte3-v3.review-override.md` (4 Ko) —
@@ -149,7 +162,7 @@ chez moi »*. S'ils réagissent, on le saura. S'ils n'en parlent jamais, on le s
    `GlobalPulse.tsx` (4× types mapbox-gl périmés `ProjectionSpecification`/`FogSpecification`),
    `GoldVein.tsx` (1× idem), `LoomWeaver.tsx` (1× `spring` utilisé comme type). Non bloquantes.
 5. ⛔ **3 dettes documentées jamais exécutées** (trouvées au wrap du 08-27) :
-   - ⚠️ **SÉCURITÉ** : `src/projects/_client-sim/lottie-ui/tools/svg2lottie.py` parse le SVG **en regex, sans parseur XML**.
+   - ⚠️ **SÉCURITÉ — note CORRIGÉE le 2026-08-29** : le fichier qui parse en **regex** est `src/projects/_client-sim/lottie-ui/tools/animate_start.py` (`re.finditer` l.73, `re.findall` l.97), **pas** `svg2lottie.py` — celui-ci est DÉJÀ durci (defusedxml + `_SafeParser` qui refuse toute déclaration d'entité, l.22-43). ⛔⛔ L'ancienne note désignait le fichier **déjà sûr** et laissait le vrai trou non signalé : une note de sécurité qui RASSURE À TORT est pire qu'une dette ouverte. → ne pas exposer `animate_start.py` (statut **proto**, 1 usage) à un SVG client non fiable. ⭐ L'outil courant de la chaîne, `svg2lottie_scene.py`, n'est pas concerné.
      `memory/tools/lottie-claude-inventaire.md:123` dit de **ne PAS l'exposer à un SVG client non
      fiable** sans durcissement XXE. **Deviendra bloquant le jour où un client envoie ses SVG.**
    - `memory/tools/openrouter-svg.md:207` : `max_output_tokens=32000` jamais remonté dans

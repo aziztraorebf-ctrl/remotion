@@ -53,7 +53,7 @@ def main():
     resp = client.models.generate_content(
         model=MODEL,
         contents=[f, types.Part.from_text(text=prompt)],
-        config=types.GenerateContentConfig(temperature=0.4, max_output_tokens=8000),
+        config=types.GenerateContentConfig(temperature=0.4, max_output_tokens=32000),
     )
     txt = resp.text or ""
     out = Path(args.output)

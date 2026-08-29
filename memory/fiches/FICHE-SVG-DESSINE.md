@@ -55,6 +55,15 @@ qui exigent un format tiers. Table de décision à jour (répondre à un brief e
 animation (25-26/08) ; le TEXTE reste le bloqueur (83 scènes/172). ⚠️ Le STATUS.md est le RÉCIT,
 pas la référence.
 
+⭐⭐ **DEUX RÈGLES AJOUTÉES LE 2026-08-29** (chaîne rig+animation prouvée) :
+- ⛔ **Les RECOUVREMENTS sont une décision de DESSIN, pas d'animation.** Une pièce destinée à
+  tourner doit se poursuivre **SOUS** son parent (le bras continue sous le torse), sinon la
+  rotation ouvre un trou. Contre-exemple payé : Fable a dessiné `ear-back-l/r` **visibles** alors
+  que le fichier pro les cache derrière le crâne — lu comme une 2e paire d'oreilles, supprimés.
+- ⭐ **Ce que le rig n'exige PAS : des variantes.** Aucune forme animée du corpus pro ne dépasse
+  **13 sommets** et **90 %** de l'animation est de la rotation — une anatomie **FIGÉE** suffit,
+  seul le visage se redessine. Ne pas commander de poses alternatives pour une pièce à rigger.
+
 ## BRIQUES EXISTANTES — vérifier AVANT de coder
 Ouvrir dans cet ordre, **lire chaque liste jusqu'au bout** (une brique en fin de liste a été ratée par 3 agents sur 3) :
 1. `src/projects/_shared/INTENTION-FORME-INDEX.md` — porte d'entrée, APRÈS avoir déduit l'intention (1 verbe).
