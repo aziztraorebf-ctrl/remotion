@@ -20,6 +20,20 @@ INFIRME l'hypothèse d'un défaut systématique (les formes divergent).
 
 ---
 
+## 🌿 ÉTAT GIT — 1 SEULE branche vivante (nettoyé au wrap du 2026-08-28)
+
+**23 branches supprimées** (22 déjà mergées dans master + 1 redondante dont le contenu y était déjà).
+Il ne reste que **`master`** et :
+
+- ⚠️ **`feat/zambia-demo-2concepts`** — **NON MERGÉE, 1 commit unique** : `gallery/index.html`,
+  `gallery/styles.css`, un poster PageCam (recherche en langage courant, intentions, favoris).
+  ⛔ **NE PAS supprimer sans décider** : ces fichiers **n'existent PAS sur master**. La galerie est
+  déployée sur GitHub Pages, donc son code de référence vit peut-être ailleurs — **vérifier où avant
+  de merger OU de supprimer**. Tant que ce n'est pas tranché, la branche reste.
+
+⭐ **Règle** : ne pas laisser s'accumuler des branches mergées — `git branch --merged master` liste ce
+qui se supprime sans aucune perte, `git branch --no-merged master` ce qui porte du travail unique.
+
 ## ⭐⭐⭐ CLIENTE UPWORK chill-meter — ELLE A RÉPONDU (4 échanges), PHASE FINALE DE DÉCISION (2026-08-27)
 
 ⭐ **La condition d'ouverture EST REMPLIE.** 4 échanges en 4 jours (23→27/08). Dernier message :
