@@ -84,9 +84,13 @@ reflet). Lottie ne découpe qu'un calque par pochoir.
 issues de fichiers pro. → **`memory/starters/STARTER-RIG-PERSONNAGE-EXISTANT.md`**
 (banc d'essai : `src/projects/_client-sim/repro-chien/`, lire son README en premier)
 
-⭐ **Effet de bord doctrinal** : Fable a réussi un cas classé « organique donc voué à
-l'échec ». Critère reformulé — (référence) × (primitives symétriques) × (tolérance du
-registre). Mascotte 3/3 → générer · main 1/3 → prendre · visage humain 2/3 → non tranché.
+⭐ **Effet de bord doctrinal — ⛔ CORRIGÉ PAR AZIZ, ne pas relire la 1re version** : Fable a
+réussi une **face de mascotte** (symétrique, faite de primitives). ⛔ Ça ne s'étend PAS à
+l'humain : la main-curseur n'était pas « dessinée avec référence » mais une **GREFFE de
+structure** depuis un Lottie premium, et son anatomie est fausse (index en tube sans phalange).
+⛔ Un dessin statique réussi ne dit RIEN de son animabilité (le visage du pêcheur s'animait
+mal). → direction retenue : la **référence FICHIER** (démonter un Lottie pour comprendre pivots
+et parentage), pas la référence image. Détail : `memory/starters/STARTER-RIG-PERSONNAGE-EXISTANT.md`.
 
 ---
 

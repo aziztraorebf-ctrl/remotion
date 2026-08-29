@@ -64,9 +64,15 @@ Ouvrir dans cet ordre, **lire chaque liste jusqu'au bout** (une brique en fin de
 5. Personnages : `src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` + `habillage.ts` + `identite/Roles.tsx` (4 rôles + 7 objets, clé en main). Aussi `personnage-vivant-svg/PERSONNAGE-VIVANT-INDEX.md`.
 6. Géo : `public/_shared/geo-data/countries-50m.json` (Natural Earth 50m).
 7. ⭐ **BANQUES EXTERNES** (`memory/tools/banques-lottie-et-greffe.md`) — une pièce de banque démontée
-   EST une brique. ⛔ **Anatomie humaine SANS image de référence : 5 modèles sur 5 échouent** (mesuré
-   à l'aveugle) → GREFFER, ne pas générer. AVEC référence, ça se dessine. ⛔⛔ Licence Lottie Simple
-   = VIRALE : portfolio only, jamais un livrable client.
+   EST une brique. ⛔ **Anatomie humaine : 5 modèles sur 5 échouent** (mesuré à l'aveugle) → GREFFER.
+   ⛔⛔ **CORRECTION du 2026-08-29 — ne pas relire l'ancienne version « AVEC référence ça se dessine »** :
+   la main-curseur n'a PAS été dessinée depuis une image, elle est une **GREFFE de structure** depuis un
+   Lottie premium (rappelé par Aziz). Et à la mesure du dessin lui-même : l'index est un tube droit sans
+   phalange ni jointure, les 3 doigts repliés sont 3 arcs identiques — **une icône de curseur, pas une
+   anatomie**. Le ratio doigt/paume (0,72, plausible) ne le voyait pas : le défaut est STRUCTUREL, pas
+   proportionnel. ⭐ Ce qui aide n'est pas l'image de référence mais le **FICHIER de référence** (voir
+   `memory/starters/STARTER-RIG-PERSONNAGE-EXISTANT.md`). ⛔⛔ Licence Lottie Simple = VIRALE :
+   portfolio only, jamais un livrable client.
 ⚠️ Un catalogue qui affirme une ABSENCE est faillible : vérifier par `ls` + `git ls-files` + `git log --all -- <nom>` (un registre « canonique » peut vivre sur une branche R&D jamais mergée — 4 occurrences). Un nom trouvé 2× (`find src -name '<Nom>*'`) = piège d'import.
 
 ## INTERDITS — erreurs déjà payées
