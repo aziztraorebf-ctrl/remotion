@@ -125,6 +125,72 @@ def test_calque_non_attribue_garde_sa_place_et_son_nom():
     print("  ok  calque isole : garde sa place dans l'ordre de peinture, et son nom")
 
 
+
+# --- Le pochoir (track matte tt/td), 2026-08-29 --------------------------------
+# ⛔ POURQUOI CES TESTS : un `clip-path` porte par un <g> -- la forme la plus
+# courante dans un SVG d'export -- disparaissait EN SILENCE. Le rapport
+# annoncait quand meme "transportable a l'identique", et l'ecart mesure ne le
+# voyait pas non plus (une forme clipee et sa version non clipee se recouvrent
+# largement). Trouve seulement par un test bout-en-bout sur de la geometrie
+# professionnelle reelle.
+
+def _convertir(svg_texte):
+    with tempfile.TemporaryDirectory() as d:
+        f = Path(d) / "t.svg"
+        f.write_text(svg_texte, encoding="utf-8")
+        doc, rapport = S.convertir(str(f))
+        return doc, rapport
+
+
+_CLIP = ('<defs><clipPath id="k"><circle cx="200" cy="200" r="90"/></clipPath></defs>')
+
+
+def test_pochoir_sur_une_forme_emet_la_paire():
+    doc, _ = _convertir(
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">{_CLIP}'
+        '<rect x="60" y="160" width="280" height="80" clip-path="url(#k)"/></svg>')
+    ls = doc["layers"]
+    assert len(ls) == 2, [l["nm"] for l in ls]
+    assert ls[0].get("td") == 1, "le pochoir doit porter td:1"
+    assert ls[1].get("tt") == 1, "le calque decoupe doit porter tt:1 (alpha)"
+
+
+def test_pochoir_sur_un_groupe_nest_pas_perdu_en_silence():
+    """Le bug du 2026-08-29 : la branche <g> retournait avant le traitement."""
+    doc, rapport = _convertir(
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">{_CLIP}'
+        '<g clip-path="url(#k)"><rect x="60" y="160" width="280" height="80"/></g></svg>')
+    ls = doc["layers"]
+    assert any(l.get("td") == 1 for l in ls), \
+        f"clip sur <g> PERDU : {[(l['nm'], l.get('td'), l.get('tt')) for l in ls]}"
+    assert rapport.clips_vus == rapport.pochoirs_emis, \
+        f"{rapport.clips_vus} clips vus / {rapport.pochoirs_emis} traites"
+
+
+def test_la_paire_precede_immediatement_son_masque():
+    """Lottie applique le matte au calque juste SOUS la decoupe."""
+    doc, _ = _convertir(
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">{_CLIP}'
+        '<rect x="10" y="10" width="20" height="20"/>'
+        '<rect x="60" y="160" width="280" height="80" clip-path="url(#k)"/></svg>')
+    ls = doc["layers"]
+    for i, l in enumerate(ls):
+        if l.get("tt"):
+            assert i > 0 and ls[i - 1].get("td") == 1, \
+                f"tt:1 en position {i} sans td:1 juste au-dessus"
+    assert [l["ind"] for l in ls] == list(range(len(ls))), \
+        "ind doit rester monotone apres insertion du pochoir"
+
+
+def test_clip_introuvable_est_declare_pas_silencieux():
+    doc, rapport = _convertir(
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">'
+        '<rect x="60" y="160" width="280" height="80" clip-path="url(#absent)"/></svg>')
+    assert rapport.clips_vus == 1, rapport.clips_vus
+    assert rapport.clips_vus == rapport.pochoirs_emis, "une ref cassee doit etre DECLAREE"
+    assert rapport.approx, "une reference introuvable est une approximation, pas un silence"
+
+
 def main():
     print("test_fidelite — non-regression des defauts Khartoum (2026-08-26)")
     echecs = 0

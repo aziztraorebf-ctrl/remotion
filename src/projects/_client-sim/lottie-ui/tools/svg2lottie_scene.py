@@ -99,6 +99,15 @@ class Rapport:
         self.porte = []
         self.approx = []
         self.refus = []
+        # ⛔ GARDE-FOU STRUCTUREL (2026-08-29). Un `clip-path` sur un <g>
+        # disparaissait EN SILENCE et le rapport disait "transportable a
+        # l'identique" : ni le rapport ni l'ecart mesure ne le voyaient (une
+        # forme clipee et sa version non clipee se recouvrent largement).
+        # On compte donc les clips VUS et les pochoirs EMIS : tout ecart
+        # interdit le verdict vert. C'est la 3e occurrence de cette famille
+        # (couleurs, <use>, clips) -- un compteur bat une relecture.
+        self.clips_vus = 0
+        self.pochoirs_emis = 0
 
     def ok(self, quoi):
         self.porte.append(quoi)
@@ -130,7 +139,13 @@ class Rapport:
             for quoi, pourquoi in _par_cause(self.approx):
                 print(f"      - {quoi} : {pourquoi}")
         print(f"  ✓  porte     : {len(self.porte)} element(s)")
-        if not self.approx and not self.refus:
+        perdus = self.clips_vus - self.pochoirs_emis
+        if perdus > 0:
+            print(f"  ⛔⛔ INCOHERENCE : {self.clips_vus} clip(s)/masque(s) vus, "
+                  f"{self.pochoirs_emis} pochoir(s) emis — {perdus} PERDU(S) "
+                  f"SANS ETRE DECLARE(S). Le rendu change sans que le rapport "
+                  f"le dise : c'est un BUG du convertisseur, pas du SVG.")
+        if not self.approx and not self.refus and perdus <= 0:
             print("  -> transportable a l'identique")
 
     def detail(self):
@@ -1013,6 +1028,7 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=(),
         if not str(v).strip().startswith("url("):
             continue
         ref_decoupe = (attr, str(v).strip()[4:-1].strip().lstrip("#").strip("'\""))
+        rapport.clips_vus += 1
 
     flou_a_poser = None
     for attr, raison in (("filter", NON_PORTES["filter"]),):
@@ -1090,9 +1106,63 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=(),
     if tag in ("svg", "g", "a"):
         gid = el.attrib.get("id")
         suite = chemin + (gid,) if gid else chemin
+        debut = len(sortie)
         for enfant in el:
             collecter(enfant, m, st, rapport, grads, sortie, profondeur + 1, suite,
                       css, ids, pile)
+        # ⛔⛔ BUG TROUVE PAR LE TEST BOUT-EN-BOUT (2026-08-29). Cette branche
+        # faisait `return` AVANT le traitement de `ref_decoupe` : un
+        # `clip-path` porte par un <g> -- la forme la plus courante dans un
+        # SVG d'export -- disparaissait EN SILENCE, et le rapport annoncait
+        # quand meme "transportable a l'identique". Faux vert : le clip perdu
+        # ne se voyait ni au rapport, ni a l'ecart mesure (formes clipee et
+        # non clipee se recouvrent largement).
+        #
+        # Un clip pose sur un groupe decoupe TOUT ce que le sous-arbre a
+        # produit. On enveloppe donc les calques issus du groupe dans UNE
+        # seule paire : le pochoir, puis les calques marques `tt` -- Lottie
+        # applique un matte au calque immediatement sous la decoupe, donc
+        # chaque calque du groupe porte son propre `tt` (l'assemblage
+        # reordonne la paire).
+        if ref_decoupe is not None and len(sortie) > debut:
+            attr, ref = ref_decoupe
+            cible = (ids or {}).get(ref)
+            if cible is None:
+                rapport.pochoirs_emis += 1  # declare : le rapport dit vrai
+                rapport.approxime(f"attribut {attr}= (#{ref})",
+                                  "reference INTROUVABLE — ignoree, comme le "
+                                  "fait un navigateur")
+            else:
+                formes_d = decoupe_referencee(cible, m, st, css)
+                if not formes_d:
+                    rapport.pochoirs_emis += 1  # declare
+                    rapport.refuse(
+                        f"attribut {attr}= (#{ref})",
+                        "pochoir sans geometrie simple : seules les primitives "
+                        "(path, rect, circle...) sont portees, pas <use>/<text>")
+                elif len(sortie) - debut > 1:
+                    # ⛔ HONNETETE : Lottie ne decoupe QU'UN calque par
+                    # pochoir. Un groupe qui produit N calques demanderait N
+                    # pochoirs (ou une precomposition) -- non implemente. On
+                    # REFUSE bruyamment plutot que de n'en decouper qu'un et
+                    # laisser croire que le groupe entier est masque.
+                    rapport.pochoirs_emis += 1  # declare
+                    rapport.refuse(
+                        f"attribut {attr}= (#{ref}) sur <{tag}>",
+                        f"clip d'un groupe de {len(sortie) - debut} calques — "
+                        "Lottie ne decoupe qu'un calque par pochoir "
+                        "(precomposition non implementee)")
+                else:
+                    nom_g = gid or f"{tag}-{debut + 1}"
+                    base = sortie[debut]
+                    sortie[debut] = base[:4] + ("masque",)
+                    sortie.insert(debut, (
+                        f"{nom_g}-pochoir", formes_d,
+                        [{"ty": "fl", "c": {"a": 0, "k": [1, 1, 1, 1]},
+                          "o": {"a": 0, "k": 100}, "nm": "pochoir"}],
+                        None, "decoupe"))
+                    rapport.pochoirs_emis += 1
+                rapport.ok(f"{attr}= #{ref}: pochoir porte (track matte alpha)")
         return
 
     if tag not in GEOM:
@@ -1185,6 +1255,7 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=(),
             # ignore une reference cassee. Il n'y a RIEN a porter, et le rendu
             # de reference ne masque pas non plus -- l'annoncer comme une perte
             # ferait croire a un manque qui n'existe pas.
+            rapport.pochoirs_emis += 1      # declare : le rapport dit vrai
             rapport.approxime(f"attribut {attr}= (#{ref})",
                               "reference INTROUVABLE — ignoree, comme le fait "
                               "un navigateur")
@@ -1196,8 +1267,10 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=(),
                                  "o": {"a": 0, "k": 100}, "nm": "pochoir"}],
                                None, "decoupe"))
                 pochoir_pose = True
+                rapport.pochoirs_emis += 1
                 rapport.ok(f"{attr}= #{ref}: pochoir porte (track matte alpha)")
             else:
+                rapport.pochoirs_emis += 1  # declare
                 rapport.refuse(
                     f"attribut {attr}= (#{ref})",
                     "pochoir sans geometrie simple : seules les primitives "
