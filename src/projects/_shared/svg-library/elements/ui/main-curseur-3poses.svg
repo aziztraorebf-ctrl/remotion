@@ -1,0 +1,47 @@
+<svg viewBox="0 0 560 260" xmlns="http://www.w3.org/2000/svg">
+  <!-- Main-curseur, 3 poses. Un seul chemin continu par silhouette (pouce integre au contour,
+       vallee pouce-index en U ouvert). Ombre = forme decalee a faible opacite (pas de filtre).
+       Style: blanc, contour #8b5cf6 ep.7, jointures rondes. -->
+
+  <g id="main-repos" transform="translate(15,8)">
+    <path id="repos-ombre" transform="translate(4,6)" opacity="0.12"
+      fill="#8b5cf6" stroke="#8b5cf6" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"
+      d="M 52,42 C 52,26 80,26 80,42 L 80,118 C 84,104 104,104 108,120 C 111,112 128,112 132,126 C 135,122 150,122 152,138 C 157,156 158,172 153,188 C 148,204 134,216 114,220 C 92,224 68,224 56,214 C 48,207 44,198 44,188 L 44,168 C 40,158 30,150 24,144 C 17,138 13,128 18,120 C 22,113 30,111 36,114 C 41,117 43,124 44,130 C 45,134 49,134 52,128 Z"/>
+    <path id="repos-silhouette"
+      fill="#ffffff" stroke="#8b5cf6" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"
+      d="M 52,42 C 52,26 80,26 80,42 L 80,118 C 84,104 104,104 108,120 C 111,112 128,112 132,126 C 135,122 150,122 152,138 C 157,156 158,172 153,188 C 148,204 134,216 114,220 C 92,224 68,224 56,214 C 48,207 44,198 44,188 L 44,168 C 40,158 30,150 24,144 C 17,138 13,128 18,120 C 22,113 30,111 36,114 C 41,117 43,124 44,130 C 45,134 49,134 52,128 Z"/>
+    <g id="repos-doigts-replies" fill="none" stroke="#8b5cf6" stroke-width="6" stroke-linecap="round">
+      <path id="repos-pli-majeur" d="M 80,122 C 79,131 80,140 84,147"/>
+      <path id="repos-pli-annulaire" d="M 108,124 C 107,132 109,140 113,146"/>
+      <path id="repos-pli-auriculaire" d="M 132,130 C 131,137 133,143 137,148"/>
+    </g>
+  </g>
+
+  <g id="main-appui" transform="translate(205,8)">
+    <path id="appui-ombre" transform="translate(4,6)" opacity="0.12"
+      fill="#8b5cf6" stroke="#8b5cf6" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"
+      d="M 51,56 C 49,40 83,40 81,56 L 80,118 C 84,104 104,104 108,120 C 111,112 128,112 132,126 C 135,122 150,122 152,138 C 157,156 158,172 153,188 C 148,204 134,216 114,220 C 92,224 68,224 56,214 C 48,207 44,198 44,188 L 44,168 C 40,158 30,150 24,144 C 17,138 13,128 18,120 C 22,113 30,111 36,114 C 41,117 43,124 44,130 C 45,134 49,134 52,128 Z"/>
+    <path id="appui-silhouette"
+      fill="#ffffff" stroke="#8b5cf6" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"
+      d="M 51,56 C 49,40 83,40 81,56 L 80,118 C 84,104 104,104 108,120 C 111,112 128,112 132,126 C 135,122 150,122 152,138 C 157,156 158,172 153,188 C 148,204 134,216 114,220 C 92,224 68,224 56,214 C 48,207 44,198 44,188 L 44,168 C 40,158 30,150 24,144 C 17,138 13,128 18,120 C 22,113 30,111 36,114 C 41,117 43,124 44,130 C 45,134 49,134 52,128 Z"/>
+    <g id="appui-doigts-replies" fill="none" stroke="#8b5cf6" stroke-width="6" stroke-linecap="round">
+      <path id="appui-pli-majeur" d="M 80,122 C 79,131 80,140 84,147"/>
+      <path id="appui-pli-annulaire" d="M 108,124 C 107,132 109,140 113,146"/>
+      <path id="appui-pli-auriculaire" d="M 132,130 C 131,137 133,143 137,148"/>
+    </g>
+  </g>
+
+  <g id="main-pointe" transform="translate(395,8)">
+    <path id="pointe-ombre" transform="translate(4,6)" opacity="0.12"
+      fill="#8b5cf6" stroke="#8b5cf6" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"
+      d="M 23.4,36 C 18,21.5 44.5,12 49.8,26.4 L 80,112 L 80,118 C 84,104 104,104 108,120 C 111,112 128,112 132,126 C 135,122 150,122 152,138 C 157,156 158,172 153,188 C 148,204 134,216 114,220 C 92,224 68,224 56,214 C 48,207 44,198 44,188 L 44,168 C 40,158 30,150 24,144 C 17,138 13,128 18,120 C 22,113 30,111 36,114 C 41,117 43,124 44,130 C 45,134 49,134 52,128 L 52,112 Z"/>
+    <path id="pointe-silhouette"
+      fill="#ffffff" stroke="#8b5cf6" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"
+      d="M 23.4,36 C 18,21.5 44.5,12 49.8,26.4 L 80,112 L 80,118 C 84,104 104,104 108,120 C 111,112 128,112 132,126 C 135,122 150,122 152,138 C 157,156 158,172 153,188 C 148,204 134,216 114,220 C 92,224 68,224 56,214 C 48,207 44,198 44,188 L 44,168 C 40,158 30,150 24,144 C 17,138 13,128 18,120 C 22,113 30,111 36,114 C 41,117 43,124 44,130 C 45,134 49,134 52,128 L 52,112 Z"/>
+    <g id="pointe-doigts-replies" fill="none" stroke="#8b5cf6" stroke-width="6" stroke-linecap="round">
+      <path id="pointe-pli-majeur" d="M 80,122 C 79,131 80,140 84,147"/>
+      <path id="pointe-pli-annulaire" d="M 108,124 C 107,132 109,140 113,146"/>
+      <path id="pointe-pli-auriculaire" d="M 132,130 C 131,137 133,143 137,148"/>
+    </g>
+  </g>
+</svg>
