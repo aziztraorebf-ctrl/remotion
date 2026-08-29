@@ -148,6 +148,11 @@ import {
   REDEEM_W,
   REDEEM_H,
 } from "./projects/_client-sim/repro-redeem/ReproRedeem";
+import {
+  MainGreffeeDemo,
+  MAIN_DEMO_FRAMES,
+  MAIN_DEMO_FPS,
+} from "./projects/_client-sim/repro-redeem/MainGreffeeDemo";
 import { HeroDataShowcase, HERO_DATA_SHOWCASE_FRAMES } from "./projects/_shared/demos/HeroDataShowcase";
 import { A3Cailloux, A3_CAILLOUX_FRAMES } from "./projects/souverain/maroc-batteries/A3Cailloux";
 import { A6Question, A6_QUESTION_FRAMES } from "./projects/souverain/maroc-batteries/A6Question";
@@ -778,6 +783,16 @@ export const RemotionRoot: React.FC = () => {
             fps={REDEEM_FPS}
             width={REDEEM_W}
             height={REDEEM_H}
+          />
+          {/* La main greffee en mouvement — silhouette de banque (Lottie Simple
+              License, VIRALE : portfolio seulement) + notre animation. */}
+          <Composition
+            id="MainGreffeeDemo"
+            component={MainGreffeeDemo}
+            durationInFrames={MAIN_DEMO_FRAMES}
+            fps={MAIN_DEMO_FPS}
+            width={600}
+            height={500}
           />
         </Folder>
 
