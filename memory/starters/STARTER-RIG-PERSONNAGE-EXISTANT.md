@@ -55,34 +55,65 @@ sur disque (`out/_r-and-d/corpus-kamotion/`, 3,2 Mo), telechargees le 28/08 depu
 **kamotionstudio.site** — les fichiers que la page charge en clair. **Aucune licence
 n'est documentee.**
 
-→ **A TRANCHER AVANT DE PRODUIRE** : ces fichiers servent de **REFERENCE DE MESURE**
-(demonter, comprendre, mesurer). Les utiliser autrement, ou en tirer un livrable,
-demande de verifier la licence. ⭐ Le chien montre la voie propre : Fable a **redessine**
-depuis les FRAMES, 0 sommet en commun avec l'original. C'est un dessin original inspire
-d'une reference, pas une copie — et c'est ce modele qu'il faut reproduire.
+→ ⭐⭐ **TRANCHE PAR AZIZ LE 2026-08-29 — la ligne est sur le LIVRABLE, pas sur le TEST.**
+Un banc d'essai reste dans le workspace : **utiliser la geometrie reelle du corpus y est
+legitime et souhaitable**. Ce qui demande une licence verifiee, c'est d'en TIRER UN
+LIVRABLE (piece client, portfolio, publication).
+
+⛔ **Ne pas rejouer l'erreur du 29/08** : j'avais transporte la contrainte « 0 sommet en
+commun » (qui protegeait le CHIEN, futur livrable potentiel) sur un banc d'essai interne,
+ou elle ne protege de rien et coute cher. Pire, elle **cassait le test** : imposer un dessin
+original reintroduit l'anatomie — notre point faible mesure (5 modeles sur 5) — au milieu
+d'un test qui porte sur le RIG. On aurait mesure un echec de dessin et conclu sur le pilotage.
+⭐ Avec la geometrie reelle, la silhouette devient une **constante connue et correcte**, et
+la seule variable restante est le pilotage. Si le bras tourne mal, c'est le rig. Sans ambiguite.
+
+⭐ **Seule hygiene exigee** : tout fichier de test qui embarque de la geometrie kamotion le
+DECLARE dans son en-tete, pour qu'il ne soit jamais promu en livrable par inadvertance.
+(cf. `prouver-une-capacite-nest-pas-produire-un-livrable`.)
 
 ⭐ Si on veut une banque de rigs libres : `banques-lottie-et-greffe.md` (⛔ Lottie Simple
 License = VIRALE, portfolio only ; Creattie 48 $/an autorise le transfert client).
 
 ### La cible : `15_Customs_Officer.json`
 
-Le meilleur banc d'essai, mesure : **19 calques, 17 parentes (89 %), 7 en rotation,
-zero precomp imbriquee** — la structure la plus lisible du corpus.
+Le meilleur banc d'essai, **re-mesure le 29/08 avec `demonter.py`** : **19 calques,
+17 parentes (89 %), 8 en rotation (⛔ pas 7), zero precomp imbriquee**.
+
+⭐ **Ce que la 1re mesure avait manque** :
+- **3 calques VIDES** (`ind` 7, 9, 11 : zero shape). Un rig pro separe **ce qui porte le
+  MOUVEMENT** de **ce qui porte le DESSIN**. Notre chien n'a pas cet etage.
+- **Un null `ty=3` (`ind=2`) = objet de controle global** : 13 des 19 calques y sont
+  parentes, et il porte `s=400 %` + `p=[1284,1000]`. ⭐ **C'est la reponse a « peut-on le
+  PLACER dans nos scenes » : oui, en touchant UN SEUL calque.**
+- **L'ordre de pile est FIXE**, aucune permutation pendant l'animation : les recouvrements
+  sont bien une decision d'ILLUSTRATION prise avant l'export (verifie, plus suppose).
+- Le corps (`ind=19`, 435x918) est **un seul calque non anime** : le torse est un socle.
 Alternative : `16_Pumpkin_boy` (15 calques, 11 parentes) — plus simple, et son visage
 est REDESSINE (4 shapes animees) : utile pour voir comment on fait une expression.
 
 ### Le plan, dans cet ordre
 
-1. **DEMONTER la cible** — `planche_calques.py` rend chaque calque SEUL. Repondre :
-   ou sont les coupures entre membres ? comment les recouvrements sont-ils dessines
-   (le haut du bras se poursuit SOUS le torse, sinon un trou apparait a la rotation) ?
-2. **FAIRE DESSINER par Fable**, depuis les FRAMES (jamais depuis le code), avec la
-   liste des membres imposee et les recouvrements exiges. ⛔ Lui donner l'interdit du
-   `<g>` dans un `<clipPath>` — il l'a respecte sur le chien.
-3. **DECLARER le rig** dans le SVG (data-parent / data-pivot), pivots aux articulations.
-4. **ANIMER** — 2 poses en ping-pong avec decalage de phase suffisent pour une marche
+> ⭐ **REORDONNE LE 29/08** : on commence par PILOTER le fichier pro lui-meme. C'est la
+> question du starter (asset ou outil ?), et elle ne depend d'aucun dessin prealable.
+
+1. ✅ **DEMONTER la cible** — FAIT le 29/08. ⛔ **PAS avec `planche_calques.py`** : il lit
+   les sommets `sh` BRUTS et ignore les `tr` des groupes `gr` qui les portent → resultat
+   FAUX mais plausible (16 calques sur 19, tous nommes `?`, tous les centres a ~0,0).
+   Outil correct : **`src/projects/_client-sim/perso-corps-entier/tools/demonter.py`**
+   (geometrie MONDE, parentage resolu, lit aussi les `.lottie` zip).
+2. ⭐ **PILOTER LE PRO DIRECTEMENT** — reparenter, deplacer les pivots, lui faire faire un
+   AUTRE geste que le sien. C'est le critere asset-vs-outil, mesurable tout de suite.
+3. **GREFFER** — sa structure + notre habillage : voir ce qui survit au transfert.
+4. **FAIRE DESSINER par Fable** — avec TROIS entrees, pas une : les frames (intention),
+   la fiche de structure mesuree (calques, pivots, parentage, recouvrements) **ET la
+   geometrie de reference sous les yeux**. C'est le mode « greffe » qui avait donne la
+   main credible. ⛔ Lui donner l'interdit du `<g>` dans un `<clipPath>`.
+5. **ANIMER** — 2 poses en ping-pong avec decalage de phase suffisent pour une marche
    (mesure sur le Hiker : 7 cles par membre, periode 24 frames, dephasage de 41 %).
-5. **MESURER** : conversion + frames distinctes + sonde dense + REGARDER.
+6. **MESURER** : conversion + frames distinctes + sonde dense + REGARDER.
+   ⛔ Un dessin statique reussi ne dit RIEN de son animabilite (visage du pecheur) : le
+   critere n'est pas « beau a la frame 0 » mais « tient en rotation autour de ses pivots ».
 
 ### ⛔ Ce qu'on ne sait pas encore, et qu'il faudra mesurer
 
@@ -182,15 +213,23 @@ completement ce qu'on peut en dire a un client.
 ## OUTILS DEJA PRETS (ne pas les reecrire)
 
 `src/projects/_client-sim/lottie-ui/tools/` :
-- `planche_calques.py` — rend chaque calque SEUL (⭐ indispensable pour comprendre un
-  fichier qu'on n'a pas ecrit ; annoter la planche avec couleur + centre + aire)
+- `planche_calques.py` — rend chaque calque SEUL. ⛔⛔ **INADAPTE aux pieces PRO** : il lit
+  les sommets `sh` bruts et ignore les `tr` des groupes `gr`. Reste bon sur NOS scenes
+  (un `gr` par calque, pas de `tr` de placement). Pour une piece tierce : `demonter.py`.
+- ⭐ **`perso-corps-entier/tools/demonter.py`** — geometrie MONDE (les `tr` de groupe
+  accumules + la chaine de parentage resolue), lit `.json` et `.lottie`. Valide contre la
+  verite terrain (lottie-web headless) : 6 calques temoins sur 7 au pixel.
 - `group_layers.py` — regroupe et nomme (⛔ **groupes CONTIGUS uniquement**)
 - `animate_scene.py` — primitives `fondu` `pop` `trace` `geste3` `respire` `balance` `cligne`
 - `compare_render.py` — ecart mesure entre 2 rendus
 - `test_logo_client.py` — modele de test a 3 volets
 
-⛔⛔ **PIEGE RECURRENT (3 occurrences)** : toujours chercher les `sh` **EN PROFONDEUR**,
-jamais a un niveau fixe. Un fichier regroupe a un cran d'imbrication en plus, et une sonde
+⛔⛔ **PIEGE RECURRENT (4 occurrences)** : toujours chercher les `sh` **EN PROFONDEUR**,
+jamais a un niveau fixe.
+⭐ **4e occurrence, 29/08 — la VARIANTE qui manquait** : trouver les `sh` en profondeur ne
+suffit pas, il faut **accumuler les `tr` des `gr` traverses en chemin**. Sur une piece pro
+chaque forme vit dans son propre `gr` avec un `tr` qui la PLACE : un calque de 73x93 en
+sommets bruts vaut **293x374** une fois les `tr` appliques. Un fichier regroupe a un cran d'imbrication en plus, et une sonde
 qui regarde au mauvais niveau **echoue SILENCIEUSEMENT** (ancre a [0,0], compte a 0).
 
 ## RAPPELS DE METHODE (payes 3 fois dans la session precedente)

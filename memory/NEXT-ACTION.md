@@ -82,10 +82,20 @@ l'hypothèse centrale jamais validée (cf. `PILIERS-B2B.md`). Une modif triviale
 nous ne devient un argument que si un client la demande et la paie. À glisser dans
 une candidature, pas à écrire comme un acquis.
 
-⛔ **CE QU'ON NE SAIT PAS ENCORE** : les recouvrements de membres (un bras qui passe
-devant le torse — décision d'illustration, pas de rig) · les mains en calque séparé
-(notre point faible mesuré) · la licence du corpus kamotion (aucune documentée : ces
-fichiers sont une RÉFÉRENCE DE MESURE, pas une source de livrable).
+⭐ **MESURÉ LE 29/08** (`perso-corps-entier/tools/demonter.py` sur `15_Customs_Officer`) :
+les **recouvrements** sont bien une décision d'ILLUSTRATION — l'ordre de pile est FIXE, aucune
+permutation pendant l'animation (vérifié, plus supposé). Un rig pro porte **3 calques VIDES**
+(porteurs de mouvement, sans dessin) et **un null `ty=3` de contrôle global** auquel 13 des 19
+calques sont parentés : **placer le personnage = toucher UN SEUL calque**.
+
+⛔ **CE QU'ON NE SAIT PAS ENCORE** : les mains en calque séparé (notre point faible mesuré) ·
+si un rig tiers se laisse RE-PILOTER (autre geste que le sien) — c'est l'étape en cours.
+
+⭐⭐ **Licence kamotion (tranché par Aziz le 29/08)** : aucune licence documentée, donc la
+contrainte porte sur le **LIVRABLE**, pas sur le **TEST**. Un banc d'essai qui reste dans le
+workspace peut utiliser la géométrie réelle ; en tirer une pièce client/portfolio demande de
+vérifier la licence. ⛔ Ne pas re-transporter « 0 sommet en commun » sur un test interne : ça
+casse la mesure (ça réintroduit l'anatomie dans un test qui porte sur le rig).
 
 ---
 

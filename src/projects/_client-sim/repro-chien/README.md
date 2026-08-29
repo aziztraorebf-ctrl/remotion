@@ -25,8 +25,13 @@ donc un vrai test du pochoir, pas une démonstration confortable.
 | Dessin statique, 17 calques nommés | ✅ fait, 5 clip-path structurels |
 | Partition d'animation (valeurs mesurées) | ✅ `partition.ts` |
 | Conversion Lottie | ✅ **5 pochoirs sur 5**, écart 0,03 % (précomposition, 29/08) |
-| Points de pivot | ⛔ à déclarer dans le SVG (`data-pivot`) |
-| Animation | ⛔ reste à câbler depuis `partition.ts` |
+| Points de pivot | ✅ déclarés (`data-pivot`), chaîne main→bras→torse, écart 0,01 % |
+| Animation | ✅ câblée — V2 rendue, 28 frames distinctes sur 29 |
+
+⛔ Ce tableau a été FAUX toute la fin du 29/08 : il décrivait l'état du matin (pivots et
+animation « à faire ») alors que les commits `d745542e` et `8b131a28` les avaient livrés.
+Un README qui décrit une intention passée se lit comme un état présent — vérifier le
+disque, pas la note.
 
 ### ✅ BLOCAGE LEVÉ le 29/08 : la précomposition
 

@@ -80,8 +80,15 @@ Ouvrir dans cet ordre, **lire chaque liste jusqu'au bout** (une brique en fin de
    phalange ni jointure, les 3 doigts repliés sont 3 arcs identiques — **une icône de curseur, pas une
    anatomie**. Le ratio doigt/paume (0,72, plausible) ne le voyait pas : le défaut est STRUCTUREL, pas
    proportionnel. ⭐ Ce qui aide n'est pas l'image de référence mais le **FICHIER de référence** (voir
-   `memory/starters/STARTER-RIG-PERSONNAGE-EXISTANT.md`). ⛔⛔ Licence Lottie Simple = VIRALE :
-   portfolio only, jamais un livrable client.
+   `memory/starters/STARTER-RIG-PERSONNAGE-EXISTANT.md`).
+   ⭐⭐ **PRÉCISION D'AZIZ (2026-08-29) — la contrainte de licence porte sur le LIVRABLE, pas sur le
+   TEST.** Sur un banc d'essai qui reste dans le workspace, **utiliser la géométrie réelle d'une pièce
+   tierce est légitime** : c'est le mode « greffe » qui a donné le meilleur résultat. Vécu le 29/08 :
+   j'ai transporté « 0 sommet en commun » sur un test interne, ce qui **cassait la mesure** — imposer un
+   dessin original y réintroduit l'anatomie (notre point faible) au milieu d'un test qui porte sur le RIG.
+   ⭐ Hygiène : le fichier de test DÉCLARE en en-tête d'où vient la géométrie, pour ne jamais être promu
+   en livrable par inadvertance. ⛔⛔ Licence Lottie Simple = VIRALE : portfolio only, jamais un livrable
+   client — et la licence kamotion n'est PAS documentée.
 ⚠️ Un catalogue qui affirme une ABSENCE est faillible : vérifier par `ls` + `git ls-files` + `git log --all -- <nom>` (un registre « canonique » peut vivre sur une branche R&D jamais mergée — 4 occurrences). Un nom trouvé 2× (`find src -name '<Nom>*'`) = piège d'import.
 
 ## INTERDITS — erreurs déjà payées

@@ -39,6 +39,15 @@ pas proportionnel**.
 ⭐ Le visage humain stylise reste **NON TRANCHE** — et un dessin statique reussi ne dit rien de
 son ANIMABILITE (le visage du pecheur, 07-20, sortait bien et s'animait mal).
 
+⭐⭐ **LA GREFFE N'EST PAS UN PIS-ALLER (precision d'Aziz, 29/08)** : ce fichier la presente comme
+le contournement d'une faiblesse. C'est aussi, en soi, **la bonne methode sur un banc d'essai** —
+la contrainte de licence porte sur le **LIVRABLE**, pas sur le **TEST**. Sur un test qui reste dans
+le workspace, partir de la geometrie reelle est legitime ET meilleur : la silhouette devient une
+constante correcte, donc la seule variable mesuree est celle qu'on veut tester (le rig, le pilotage).
+⛔ Imposer un dessin original sur un test de RIG y reinjecte l'anatomie — notre trou connu — et fait
+conclure sur le mauvais objet. ⭐ Hygiene : declarer en en-tete du fichier de test d'ou vient la
+geometrie, pour ne jamais le promouvoir en livrable par megarde.
+
 ⭐ **Le concours n'a pas ete inutile en echouant** : il etablit que le manque est REEL et pas un
 defaut de brief. 5 modeles, la meme consigne detaillee, 5 echecs de la meme famille = on sait
 qu'il ne faut pas re-tenter.
