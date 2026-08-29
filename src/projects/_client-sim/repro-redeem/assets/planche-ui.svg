@@ -89,7 +89,7 @@
   <g id="vignette-giftcard">
     <g id="vignette-giftcard-carte">
       <rect x="340" y="149" width="124" height="170" rx="16" fill="#4a3d6b" opacity="0.09"/>
-      <rect x="338" y="142" width="124" height="170" rx="16" fill="#ffffff" stroke="#e8e6f5" stroke-width="1.5"/>
+      <rect x="290" y="143" width="220" height="168" rx="18" fill="#ffffff" stroke="#d9d4f0" stroke-width="3"/>
     </g>
     <g id="vignette-giftcard-cadeau">
       <g id="cadeau-boite">
@@ -111,7 +111,7 @@
   <g id="vignette-cash">
     <g id="vignette-cash-carte">
       <rect x="340" y="401" width="124" height="170" rx="16" fill="#4a3d6b" opacity="0.09"/>
-      <rect x="338" y="394" width="124" height="170" rx="16" fill="#ffffff" stroke="#e8e6f5" stroke-width="1.5"/>
+      <rect x="290" y="395" width="220" height="168" rx="18" fill="#ffffff" stroke="#d9d4f0" stroke-width="3"/>
     </g>
     <g id="vignette-cash-billets">
       <g transform="rotate(-14 396 476)">

@@ -170,7 +170,11 @@ export const ReproRedeem: React.FC = () => {
   const mY = frame < 150 ? mainY1 : mainY2;
   // Centre x de la main dans la reference : ~395 (mesure f210), pas plus a droite.
   // Le bout du doigt est a ~55 unites du bord gauche a l'echelle 0.78.
-  const mX = frame < 150 ? 352 : 336;
+  // ⭐ La main de reference fait 287 px de large ; la notre a 0.70 en fait 110.
+  // Le probleme n'etait donc pas sa TAILLE mais le fait qu'elle COUVRAIT le
+  // contenu. Les cartes vont de x=324 a x=476 : on place la main a droite de
+  // cette bande, son doigt pointant vers le bord droit des pilules.
+  const mX = frame < 150 ? 372 : 418;
 
   // L'onde de contact : c'est ELLE qui dit « ca a touche », pas une articulation.
   const onde = (debut: number, retard: number) => {
@@ -275,7 +279,10 @@ export const ReproRedeem: React.FC = () => {
                   // mesure sur la reference incluait les etincelles autour, pas la
                   // carte. La CARTE de reference fait 169-171 de haut, la notre 170 :
                   // elle etait deja a la bonne taille.
-                  <Piece html={e.vignette} ancre={e.ancreV} y={dy} />
+                  // Le cadre fait desormais 220x168 (mesure sur la reference,
+                  // PLUS LARGE que haut) : le contenu d'origine y tient sans mise a
+                  // l'echelle, avec de la marge autour.
+                  <Piece html={e.vignette} ancre={e.ancreV} y={dy} echelle={1.0} />
                 )}
                 {/* La pilule est dessinee centree en (400,0) dans la planche :
                     on la deplace a la hauteur de son entree. */}
@@ -332,7 +339,7 @@ export const ReproRedeem: React.FC = () => {
           return (
             <circle
               key={i}
-              cx={mX + 55}
+              cx={mX + 48}
               cy={mY + 4}
               r={o.r}
               fill="none"
@@ -343,7 +350,7 @@ export const ReproRedeem: React.FC = () => {
           );
         })}
         {mainVisible > 0.001 && (
-          <g opacity={mainVisible} transform={`translate(${mX} ${mY}) scale(0.78)`}>
+          <g opacity={mainVisible} transform={`translate(${mX} ${mY}) scale(0.70)`}>
             <path d={MAIN_SILHOUETTE} fill="#c888f8" opacity={0.14} transform="translate(6 8)" />
             <path
               d={MAIN_SILHOUETTE}
