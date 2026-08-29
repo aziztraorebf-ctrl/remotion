@@ -65,48 +65,20 @@ toute action sur cette annonce — un résumé ne le remplace pas (2 erreurs pay
 
 ---
 
-## ⭐ LOTTIE — chaîne PROUVÉE · QC automatique ✅ et Khartoum ✅ FAITS · ⏭️ reste : montrer à un client
+## ⭐ LOTTIE — chaîne PROUVÉE (section ARCHIVÉE le 2026-08-29)
 
-**La maison-gaz est un livrable, pas une démo** : 1346×805, 9,6 s, 6 blocs nommés, **16 Ko**
-en `.lottie`, validée par Aziz dans Creator (blocs dépliables, animation qui joue).
-⭐ Le `.json` SEUL suffit au client — site web, Creator, After Effects. Le `.lottie` n'est qu'un zip.
+Les acquis techniques (flou `ty:29` porté · `gradientTransform` en similitude · pointillés/`nm`
+unique · texte 2 voies · aller-retour Creator fidèle, ⛔ les 293 $/an ne se justifient pas)
+vivent désormais dans l'atelier : **`memory/tools/lottie-claude-inventaire.md`**.
+Les 4 logos clients chiffrés : `memory/client-sim-tests/repro-vendeur-lottie/LOGOS-CLIENTS-REELS.md`.
+Table de décision client : `memory/client-sim-tests/lottie-ui-lcd/CE-QUI-PASSE-EN-LOTTIE.md`.
 
-| Acquis du 26/08 | Preuve |
-|---|---|
-| **TEXTE — 2 voies** | vectorisé **1,95 %** partout · natif 0,05 % **mais 5,74 % sans la police** (pire que rien) |
-| **POINTILLÉS** | 0,07 % — `nm` doit être unique, sinon le player **fige en silence** |
-| **Scène dense animée** | Gazoduc A4 : 108 éléments → 5 groupes |
-| **Courbe vivante + flux + fondu** | recalcul de forme porté · gaz qui coule · marche 27 → **4** |
+⛔⛔ **Le recadrage d'Aziz à garder** : prouver une capacité ≠ produire un livrable. Une carte
+géographique n'est PAS un livrable Lottie. ⚠️ **Rien n'a encore été montré à un client** —
+c'est ce que la session REPRO-UI traite : `memory/starters/STARTER-repro-ui-animation.md`.
 
-| **Acquis du 28/08** | Preuve |
-|---|---|
-| ⭐⭐ **FLOU porté** | `feGaussianBlur` seul → effet Lottie **`ty:29`**, rendu par lottie-web (carré **0 → 5360 px** de bord adouci, vérifié à l'image). ⛔ La note « limite du FORMAT » était **FAUSSE**. 17 refus → **1** (14 des 16 `filter:url()` pointaient vers des ids **inexistants**) |
-| ⭐ **`gradientTransform` portable** | porté pour toute **similitude** (translation · rotation · échelle uniforme) — Lottie porte un SEGMENT, déplacer ses 2 points suffit. 8 cas testés. ⛔ Hors format : cisaillement, échelle non uniforme |
-| ⭐ **`proposer_carte.py`** | outille l'étape **mécanique** du nommage. LoadUp 15 → 9 blocs (−40 %) · Tigerwild 505 → 312 (−38 %). ⛔ Il ne NOMME rien, et **il DIT quand il ne sert à rien** |
-| ✅ **Aller-retour Creator FIDÈLE** | import + réexport : le fichier s'ouvre, se déplie, s'anime. ⛔ **Les 293 $/an ne se justifient pas** (notre brut = 13 Ko contre leur « optimized » 44 Ko) |
-| **4 logos clients traités** | LoadUp (15) · Renard (31) · Tigerwild (505, **433 Ko — hors cible splash screen**, import Creator **timeout 70 s**, NON validé) · Hinch (169) |
-
-⏭️ **Reste sur les logos** : L3/L4 Kanvas (monogramme isométrique) · L8 Fokus (texte très fin).
-Le rig d'un perso **déjà découpé** = **session séparée** : `memory/starters/STARTER-RIG-PERSONNAGE-EXISTANT.md`.
-⚠️ Le point 1 ci-dessous (contrôle qualité automatique) est **✅ FAIT** : `verifier_fidelite.py`.
-
-▶️ **Prochaine session — starter prêt** : `memory/starters/STARTER-PROMPT-lottie-texte-et-animation.md`
-1. ⭐ **CONTRÔLE QUALITÉ AUTOMATIQUE** — comparer la **VIDÉO** d'origine au Lottie, image par
-   image. ⛔ 3 fois le 26/08 un fichier valide a rendu FAUX en disant « ça bouge » : on compare
-   une image FIXE à une image FIXE. C'est ce qui a laissé passer une courbe figée 2 jours.
-2. **KHARTOUM au banc d'essai** (`KhartoumEtatMajorSVG`, dans `warmap/`) — jetons + 9 textes
-   + 10 filtres + 18 anims. Elle cumule tous nos points durs. ⛔ **UNE seule scène** : « si
-   j'ouvre quatre chantiers, j'en finis zéro ».
-
-⛔⛔ **RECADRAGE D'AZIZ (26/08)** : une carte géographique complète n'est **PAS** un livrable
-Lottie — j'ai fini la carte du Gazoduc A4 en croyant produire une pièce vendable. **Prouver une
-capacité ≠ produire un livrable.** Ce qui vaut le test : des scènes qui **racontent avec des
-objets qui bougent** (jetons, chars, bannières), pas de la géographie.
-⚠️ **La réserve à reposer** : on outille beaucoup, **rien n'a encore été montré à un client**.
-⛔ Le piège récurrent (7 cas listés dans le starter) : fichier valide + rapport content + rendu
-faux. **Aucun trouvé par un rapport — tous à l'OEIL.**
-✅ **AUCUN script ne dépend de Creator** → tout l'outillage tourne sans Aziz.
-📄 Table de décision client : `memory/client-sim-tests/lottie-ui-lcd/CE-QUI-PASSE-EN-LOTTIE.md`
+⏭️ Reste ouvert : logos L3/L4 Kanvas · L8 Fokus · rig d'un perso déjà découpé
+(`memory/starters/STARTER-RIG-PERSONNAGE-EXISTANT.md`).
 
 ---
 
