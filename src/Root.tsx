@@ -141,6 +141,13 @@ import { AtlasFormat4PanneauOpaque } from "./projects/souverain/carousels/hybrid
 import { SEGMENTS as MAROC_SEGMENTS } from "./projects/souverain/maroc-batteries/timing";
 import { BlankComposition } from "./BlankComposition";
 import { LoadUpAnime, LOADUP_DUREE } from "./projects/_client-sim/logo-anim/LoadUpAnime";
+import {
+  ReproRedeem,
+  REDEEM_FRAMES,
+  REDEEM_FPS,
+  REDEEM_W,
+  REDEEM_H,
+} from "./projects/_client-sim/repro-redeem/ReproRedeem";
 import { HeroDataShowcase, HERO_DATA_SHOWCASE_FRAMES } from "./projects/_shared/demos/HeroDataShowcase";
 import { A3Cailloux, A3_CAILLOUX_FRAMES } from "./projects/souverain/maroc-batteries/A3Cailloux";
 import { A6Question, A6_QUESTION_FRAMES } from "./projects/souverain/maroc-batteries/A6Question";
@@ -756,6 +763,21 @@ export const RemotionRoot: React.FC = () => {
             fps={30}
             width={1920}
             height={1080}
+          />
+        </Folder>
+
+        {/* REPRO-REDEEM — reproduction d'une piece REELLEMENT VENDUE
+            (kamotionstudio.site, flux UI "Redeem All", 800x854, 60 fps, 5,85 s).
+            Methode REPRO-FOSTER : on ne choisit ni le sujet ni l'ambition.
+            Reference : out/_r-and-d/corpus-kamotion/ + src/.../repro-redeem/ref/ */}
+        <Folder name="client-sim-repro-ui">
+          <Composition
+            id="ReproRedeem"
+            component={ReproRedeem}
+            durationInFrames={REDEEM_FRAMES}
+            fps={REDEEM_FPS}
+            width={REDEEM_W}
+            height={REDEEM_H}
           />
         </Folder>
 
