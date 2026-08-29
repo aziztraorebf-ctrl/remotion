@@ -7,6 +7,10 @@
 
 ---
 
+> 🔗 **La page explicative du sujet** (pochoir · chien anime V1/V2 cote a cote · bilan
+> de session · 2 quiz) : https://claude.ai/code/artifact/f43ac206-8fd8-43ae-923a-e605660ef219
+> ⭐ Une page par SUJET, enrichie au fil des sessions — la redeployer, pas en creer une autre.
+
 ## ✅ FAIT LE 2026-08-29 — LA CHAINE EST COMPLETE ET PROUVEE
 
 **Le chien de Fable vit.** Dessin -> conversion -> 5 pochoirs -> rig -> animation.
