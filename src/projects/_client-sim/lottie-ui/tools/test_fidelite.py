@@ -191,6 +191,61 @@ def test_clip_introuvable_est_declare_pas_silencieux():
     assert rapport.approx, "une reference introuvable est une approximation, pas un silence"
 
 
+
+def test_precomp_un_clip_sur_un_groupe_de_N_calques():
+    """
+    ⛔ Le blocage mesure le 2026-08-29 sur une VRAIE piece : 1 pochoir sur 5
+    passait. Un oeil n'est pas une forme, c'est 4 calques (globe, iris,
+    pupille, reflet) -- et Lottie ne decoupe QU'UN calque par pochoir. Le
+    groupe doit donc etre emballe dans une precomposition, et c'est le calque
+    ty:0 qui porte le `tt`.
+    """
+    doc, rapport = _convertir(
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">{_CLIP}'
+        '<g clip-path="url(#k)">'
+        '  <circle cx="200" cy="200" r="70"/>'
+        '  <circle cx="200" cy="200" r="40"/>'
+        '  <circle cx="185" cy="185" r="12"/>'
+        '</g></svg>')
+    ls = doc["layers"]
+    assert doc["assets"], "un groupe de 3 calques doit produire une precomposition"
+    asset = doc["assets"][0]
+    assert len(asset["layers"]) == 3, [l["nm"] for l in asset["layers"]]
+    precomp = [l for l in ls if l.get("ty") == 0]
+    assert len(precomp) == 1, f"un seul calque ty:0 attendu, {len(precomp)}"
+    assert precomp[0].get("tt") == 1, "c'est la PRECOMP qui porte le matte"
+    assert precomp[0].get("refId") == asset["id"]
+    i = ls.index(precomp[0])
+    assert i > 0 and ls[i - 1].get("td") == 1, "le pochoir doit preceder la precomp"
+    assert rapport.clips_vus == rapport.pochoirs_emis
+    assert not [k for l in ls for k in l if k.startswith("_")], "residus de marquage"
+
+
+def test_pochoirs_multiples_gardent_chacun_leur_paire():
+    """
+    ⛔ Mesure : quand deux pochoirs devenaient voisins dans le tableau,
+    apparier « le calque suivant » faisait perdre sa paire a l'un des deux
+    (head-shading la perdait quand decal etait replace). L'appariement se fait
+    par NOM, jamais par position.
+    """
+    doc, _ = _convertir(
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">'
+        '<defs>'
+        '  <clipPath id="a"><circle cx="120" cy="200" r="60"/></clipPath>'
+        '  <clipPath id="b"><circle cx="280" cy="200" r="60"/></clipPath>'
+        '</defs>'
+        '<g clip-path="url(#a)"><rect x="60" y="160" width="120" height="80"/>'
+        '  <rect x="70" y="170" width="40" height="40"/></g>'
+        '<rect x="220" y="160" width="120" height="80" clip-path="url(#b)"/>'
+        '</svg>')
+    ls = doc["layers"]
+    assert sum(1 for l in ls if l.get("tt")) == 2, \
+        f"2 paires attendues : {[(l['nm'], l.get('td'), l.get('tt')) for l in ls]}"
+    for i, l in enumerate(ls):
+        if l.get("tt"):
+            assert i > 0 and ls[i - 1].get("td") == 1, f"paire cassee en {i}"
+
+
 def main():
     print("test_fidelite — non-regression des defauts Khartoum (2026-08-26)")
     echecs = 0

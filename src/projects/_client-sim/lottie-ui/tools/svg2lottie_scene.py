@@ -1140,27 +1140,40 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=(),
                         f"attribut {attr}= (#{ref})",
                         "pochoir sans geometrie simple : seules les primitives "
                         "(path, rect, circle...) sont portees, pas <use>/<text>")
-                elif len(sortie) - debut > 1:
-                    # ⛔ HONNETETE : Lottie ne decoupe QU'UN calque par
-                    # pochoir. Un groupe qui produit N calques demanderait N
-                    # pochoirs (ou une precomposition) -- non implemente. On
-                    # REFUSE bruyamment plutot que de n'en decouper qu'un et
-                    # laisser croire que le groupe entier est masque.
-                    rapport.pochoirs_emis += 1  # declare
-                    rapport.refuse(
-                        f"attribut {attr}= (#{ref}) sur <{tag}>",
-                        f"clip d'un groupe de {len(sortie) - debut} calques — "
-                        "Lottie ne decoupe qu'un calque par pochoir "
-                        "(precomposition non implementee)")
                 else:
                     nom_g = gid or f"{tag}-{debut + 1}"
-                    base = sortie[debut]
-                    sortie[debut] = base[:4] + ("masque",)
-                    sortie.insert(debut, (
+                    n = len(sortie) - debut
+                    if n > 1:
+                        # ⭐⭐ PRECOMPOSITION (2026-08-29). Lottie ne decoupe
+                        # QU'UN calque par pochoir : un groupe qui produit N
+                        # calques doit donc etre EMBALLE. On marque ici les N
+                        # entrees ; l'assemblage (convertir) les deplacera dans
+                        # un asset et posera un calque ty:0 qui portera le `tt`.
+                        #
+                        # ⛔ MESURE QUI A IMPOSE CETTE BRIQUE : sur le chien de
+                        # Fable, 1 pochoir sur 5 passait. Un oeil n'est pas une
+                        # forme, c'est 4 calques (globe, iris, pupille, reflet).
+                        # Le cas "un pochoir decoupe une forme UNIQUE" est
+                        # minoritaire dans du vrai dessin.
+                        for j in range(debut, debut + n):
+                            e = sortie[j]
+                            e = e + (None,) * (5 - len(e)) if len(e) < 5 else e
+                            sortie[j] = e[:4] + (("dans-precomp", nom_g),)
+                        rapport.ok(f"<{tag}> {nom_g}: {n} calques emballes "
+                                   f"en precomposition")
+                    else:
+                        base = sortie[debut]
+                        sortie[debut] = base[:4] + (("masque", nom_g),)
+                    # ⛔ Le pochoir se pose AVANT tout le groupe marque, jamais
+                    # au milieu : l'inserer a `debut` coupait la sequence en
+                    # deux et produisait DEUX precomps au lieu d'une (mesure :
+                    # iris-r sortait en 3 calques + 1). L'assemblage regroupe
+                    # des entrees CONTIGUES portant le meme nom.
+                    sortie.insert(debut + (n if n > 1 else 0), (
                         f"{nom_g}-pochoir", formes_d,
                         [{"ty": "fl", "c": {"a": 0, "k": [1, 1, 1, 1]},
                           "o": {"a": 0, "k": 100}, "nm": "pochoir"}],
-                        None, "decoupe"))
+                        None, ("decoupe", nom_g)))
                     rapport.pochoirs_emis += 1
                 rapport.ok(f"{attr}= #{ref}: pochoir porte (track matte alpha)")
         return
@@ -1265,7 +1278,7 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=(),
                 sortie.append((f"{nom}-pochoir", formes_d,
                                [{"ty": "fl", "c": {"a": 0, "k": [1, 1, 1, 1]},
                                  "o": {"a": 0, "k": 100}, "nm": "pochoir"}],
-                               None, "decoupe"))
+                               None, ("decoupe", nom)))
                 pochoir_pose = True
                 rapport.pochoirs_emis += 1
                 rapport.ok(f"{attr}= #{ref}: pochoir porte (track matte alpha)")
@@ -1281,7 +1294,7 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=(),
     # ⭐ 5e element = le role dans une paire de pochoir : "decoupe" pour le
     # calque qui decoupe, "masque" pour celui qui est decoupe, None sinon.
     sortie.append((nom, formes, shapes_de_style(st, rapport, nom), flou_a_poser,
-                   "masque" if pochoir_pose else None))
+                   ("masque", nom) if pochoir_pose else None))
 
 
 def collecter_texte(el, mat, herite, rapport, sortie, chemin, css=None):
@@ -1525,14 +1538,90 @@ def convertir(chemin, fps=30, frames=60):
         # masque ; comme on parcourt ici en `reversed`, le masque sort en
         # premier et le pochoir juste apres -- il faut donc les inverser pour
         # retablir "decoupe au-dessus".
-        if role == "masque":
+        # ⭐ Les roles portent le NOM de leur groupe : c'est ce qui permet
+        # d'apparier sans ambiguite APRES l'extraction des precomps. Se fier a
+        # la position (« le calque suivant ») cassait des que deux pochoirs se
+        # retrouvaient voisins — mesure : head-shading perdait sa paire quand
+        # decal etait replace.
+        etiquette = role[0] if isinstance(role, tuple) and role else role
+        cible_nom = role[1] if isinstance(role, tuple) and len(role) > 1 else None
+        if etiquette == "dans-precomp":
+            couche["_precomp"] = cible_nom
+        elif etiquette == "masque":
             couche["tt"] = 1          # 1 = alpha : 92 des 93 mattes du corpus
-        elif role == "decoupe":
+            couche["_paire"] = cible_nom
+        elif etiquette == "decoupe":
             couche["td"] = 1          # ce calque SERT de pochoir, il ne s'affiche pas
-            if layers:                # remonter la decoupe au-dessus de son masque
-                layers.insert(len(layers) - 1, couche)
-                continue
+            couche["_paire"] = cible_nom
         layers.append(couche)
+
+    # ⭐⭐ EXTRACTION DES PRECOMPOSITIONS (2026-08-29). Les calques marques par
+    # collecter() sortent du tableau principal et vont dans un asset
+    # {id, nm, fr, layers} ; a leur place on pose UN calque ty:0 qui le
+    # reference -- et c'est lui qui portera le `tt` du pochoir.
+    # Structure copiee d'un fichier PRO (corpus kamotion 02_Doggy : asset
+    # {id, nm, fr} + calque ty:0 avec refId/w/h), jamais inventee.
+    assets = []
+    if any("_precomp" in c for c in layers):
+        groupes = []          # [(nom, [couches])] dans l'ordre du tableau
+        for c in layers:
+            nomp = c.get("_precomp")
+            if nomp is None:
+                groupes.append((None, [c]))
+            elif groupes and groupes[-1][0] == nomp:
+                groupes[-1][1].append(c)
+            else:
+                groupes.append((nomp, [c]))
+        refait = []
+        for nomp, couches in groupes:
+            if nomp is None:
+                refait.extend(couches)
+                continue
+            aid = f"comp_{len(assets)}"
+            for k, sous in enumerate(couches):
+                sous.pop("_precomp", None)
+                sous["ind"] = k
+            assets.append({"id": aid, "nm": nomp, "fr": fps, "layers": couches})
+            refait.append({
+                "ddd": 0, "ty": 0, "nm": nomp, "refId": aid,
+                "sr": 1, "ao": 0, "w": round(w), "h": round(h),
+                "ip": 0, "op": frames, "st": 0, "bm": 0,
+                "ks": {"a": {"a": 0, "k": [0, 0]}, "p": {"a": 0, "k": [0, 0]},
+                       "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0},
+                       "o": {"a": 0, "k": 100}},
+                # ⭐ le calque ty:0 REPREND le nom de paire du groupe : c'est
+                # LUI que le pochoir doit decouper, pas ses calques internes.
+                "_paire": nomp,
+            })
+        layers = refait
+
+    # ⛔ APPARIEMENT PAR NOM, jamais par position. Chaque pochoir et sa cible
+    # portent `_paire` = le meme nom de groupe. Se fier au voisinage cassait
+    # des que deux pochoirs devenaient voisins (mesure : head-shading perdait
+    # sa paire quand decal etait replace). S'applique avec ou sans precomp.
+    pochoirs = [c for c in layers if c.get("td") == 1]
+    for poch in pochoirs:
+        nomp = poch.get("_paire")
+        if not nomp:
+            continue
+        cible = next((c for c in layers
+                      if c is not poch and c.get("_paire") == nomp
+                      and c.get("td") != 1), None)
+        if cible is None:
+            continue
+        cible["tt"] = 1
+        # ⛔ Le pochoir doit precede IMMEDIATEMENT sa cible (indice plus petit
+        # = plus haut a l'ecran). Deux cas se presentent, et la boucle
+        # d'assemblage les produit dans des ordres opposes : sur une forme
+        # unique, le pochoir sort APRES sa cible (il faut le remonter) ; sur un
+        # groupe extrait en precomp, il sort AVANT. On normalise ici, une fois
+        # pour toutes, au lieu de traiter chaque cas a part.
+        if layers.index(poch) == layers.index(cible) - 1:
+            continue                       # deja juste au-dessus
+        layers.remove(poch)                # retirer AVANT de relire l'indice,
+        layers.insert(layers.index(cible), poch)   # sinon l'insertion est neutre
+    for c in layers:
+        c.pop("_paire", None)
 
     # ⛔ RENUMEROTATION OBLIGATOIRE APRES INSERTION D'UN POCHOIR. `ind` etait
     # pose depuis le compteur de boucle ; remonter une decoupe d'un cran casse
@@ -1544,7 +1633,7 @@ def convertir(chemin, fps=30, frames=60):
 
     doc = {"nm": os.path.splitext(os.path.basename(chemin))[0], "v": "5.5.2",
            "fr": fps, "ip": 0, "op": frames, "w": round(w), "h": round(h),
-           "assets": [], "layers": layers}
+           "assets": assets, "layers": layers}
     # ⛔ Un calque ty:5 qui reference une fonte absente de ce tableau se rend
     # VIDE, sans erreur -- exactement la famille de piege qui a coute 4 fois
     # cette semaine (l'element est correct, son aiguillage l'annule).
