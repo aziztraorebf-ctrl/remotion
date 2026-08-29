@@ -24,11 +24,31 @@ donc un vrai test du pochoir, pas une démonstration confortable.
 |---|---|
 | Dessin statique, 17 calques nommés | ✅ fait, 5 clip-path structurels |
 | Partition d'animation (valeurs mesurées) | ✅ `partition.ts` |
-| Conversion Lottie | ⛔ **1 pochoir sur 5 porté** |
-| Points de pivot | ⛔ à poser |
-| Animation | ⛔ bloquée en aval |
+| Conversion Lottie | ✅ **5 pochoirs sur 5**, écart 0,03 % (précomposition, 29/08) |
+| Points de pivot | ⛔ à déclarer dans le SVG (`data-pivot`) |
+| Animation | ⛔ reste à câbler depuis `partition.ts` |
 
-### ⛔ LE BLOCAGE MESURÉ : la précomposition
+### ✅ BLOCAGE LEVÉ le 29/08 : la précomposition
+
+Un groupe découpé qui produit N calques est désormais **emballé dans une précomposition**
+(un asset `{id, nm, fr, layers}` + un calque `ty:0` qui le référence), et c'est ce calque
+unique qui porte le `tt`. Résultat sur le chien : **5 pochoirs sur 5**, 4 précomps
+(iris-r 4 calques, iris-l 4, tongue 3, head-shading 2), **écart 0,03 %**.
+
+### ⭐ LE RIG est disponible (29/08) — il se DÉCLARE dans le SVG
+
+SVG n'a aucune notion de parentage. Convention ajoutée, ignorée par les navigateurs :
+
+    <g id="bras" data-parent="torse" data-pivot="haut">        <!-- pivot = l'épaule -->
+    <g id="main" data-parent="bras"  data-pivot="150,198">     <!-- ou en coordonnées -->
+
+`data-pivot` accepte `haut` `bas` `centre` `gauche` `droite` (déduits de la boîte du groupe)
+ou un couple `x,y`. ⛔ L'ancre ET la position bougent ensemble : dans Lottie `a` est le point
+qui vient se poser sur `p`, donc déplacer `a` seul DÉCALERAIT le dessin.
+Vérifié : chaîne `main → bras → torse` résolue, écart 0,01 %, et faire tourner le bras
+entraîne bien la main sans la toucher.
+
+### 🗃️ HISTORIQUE — le blocage tel qu'il se présentait le matin
 
 4 pochoirs sur 5 sont refusés, tous pour la même raison :
 

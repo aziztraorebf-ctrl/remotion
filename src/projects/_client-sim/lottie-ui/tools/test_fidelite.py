@@ -246,6 +246,57 @@ def test_pochoirs_multiples_gardent_chacun_leur_paire():
             assert i > 0 and ls[i - 1].get("td") == 1, f"paire cassee en {i}"
 
 
+
+# --- Le RIG : parentage + pivots (2026-08-29) ---------------------------------
+# ⛔ POURQUOI : mesure sur un rig professionnel (Hiker du corpus, 32 calques) :
+# 84 % des calques ont un `parent`, 90 % de l'animation est de la ROTATION sur
+# des dessins figes, et l'ancre n'est deplacee QUE sur les calques qui tournent
+# (13/13 deplacees ; 18 des 19 autres restent a [0,0]). SVG n'ayant aucune
+# notion de parentage, il se DECLARE : data-parent + data-pivot.
+
+_RIG = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">'
+        '<g id="torse"><rect x="170" y="180" width="60" height="120"/></g>'
+        '<g id="bras" data-parent="torse" data-pivot="haut">'
+        '  <rect x="230" y="185" width="90" height="26"/></g>'
+        '<g id="main" data-parent="bras" data-pivot="150,198">'
+        '  <circle cx="330" cy="198" r="18"/></g></svg>')
+
+
+def test_rig_chaine_de_parentage_resolue():
+    doc, _ = _convertir(_RIG)
+    par = {l["nm"].rsplit("-", 1)[0]: l for l in doc["layers"]}
+    assert par["main"].get("parent") == par["bras"]["ind"], "main doit suivre bras"
+    assert par["bras"].get("parent") == par["torse"]["ind"], "bras doit suivre torse"
+    assert par["torse"].get("parent") is None, "la racine ne suit rien"
+
+
+def test_rig_pivot_pose_et_position_compensee():
+    """
+    ⛔ Dans Lottie, `a` est le point de la forme qui vient se poser sur `p`.
+    Deplacer `a` SEUL decale le dessin d'autant. Les deux doivent bouger
+    ensemble — sinon le rig deplace le personnage au lieu de l'articuler.
+    """
+    doc, _ = _convertir(_RIG)
+    par = {l["nm"].rsplit("-", 1)[0]: l for l in doc["layers"]}
+    bras = par["bras"]
+    a, p = bras["ks"]["a"]["k"], bras["ks"]["p"]["k"]
+    assert a == p, f"ancre et position doivent coincider : a={a} p={p}"
+    assert a != [0, 0], "un pivot declare doit etre pose"
+    # "haut" = le milieu du bord SUPERIEUR de la boite (l'epaule)
+    assert abs(a[0] - 275) < 1 and abs(a[1] - 185) < 1, a
+    # un calque SANS rig garde [0,0], comme dans un fichier pro
+    assert par["torse"]["ks"]["a"]["k"] == [0, 0]
+
+
+def test_rig_parent_introuvable_est_declare():
+    doc, rapport = _convertir(
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">'
+        '<g id="bras" data-parent="nexistepas"><rect x="10" y="10" width="50" height="20"/></g>'
+        '</svg>')
+    assert all(l.get("parent") is None for l in doc["layers"])
+    assert rapport.refus, "un parent introuvable doit etre REFUSE, pas ignore en silence"
+
+
 def main():
     print("test_fidelite — non-regression des defauts Khartoum (2026-08-26)")
     echecs = 0

@@ -984,6 +984,37 @@ def decoupe_referencee(cible, mat, herite, css=None):
     return formes
 
 
+def _rig_de(el, formes):
+    """
+    Lit les attributs de RIG d'un element SVG -> {"parent": str, "pivot": (x, y)}.
+
+    ⛔ Retourne None si rien n'est declare : un calque sans rig garde l'ancre a
+    [0,0], exactement comme le fait un fichier professionnel (mesure sur le
+    Hiker : 18 des 19 calques sans rotation sont a [0,0]). Poser une ancre
+    partout serait du bruit, et masquerait quels calques sont vraiment rigges.
+    """
+    parent = el.attrib.get("data-parent")
+    pivot_brut = el.attrib.get("data-pivot")
+    if not parent and not pivot_brut:
+        return None
+    pivot = None
+    if pivot_brut:
+        p = str(pivot_brut).strip().lower()
+        boite = boite_des_formes(formes) if formes else None
+        if p in ("haut", "bas", "centre", "gauche", "droite") and boite:
+            x0, y0, x1, y1 = boite
+            cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
+            pivot = {"haut": (cx, y0), "bas": (cx, y1), "centre": (cx, cy),
+                     "gauche": (x0, cy), "droite": (x1, cy)}[p]
+        else:
+            try:
+                xs = p.replace(";", ",").split(",")
+                pivot = (float(xs[0]), float(xs[1]))
+            except (ValueError, IndexError):
+                pivot = None
+    return {"parent": parent, "pivot": pivot}
+
+
 def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=(),
               css=None, ids=None, pile=()):
     """
@@ -1110,6 +1141,23 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=(),
         for enfant in el:
             collecter(enfant, m, st, rapport, grads, sortie, profondeur + 1, suite,
                       css, ids, pile)
+        # ⭐⭐ LE RIG SE DECLARE SUR LE GROUPE, pas sur la forme : un membre est
+        # un <g>, pas un <path>. On l'applique donc APRES la recursion, aux
+        # calques que le sous-arbre a produits. ⛔ Le pivot se calcule sur la
+        # geometrie REELLE du groupe entier (toutes ses formes reunies), pas
+        # sur la premiere forme venue -- sinon l'articulation d'un bras a
+        # 3 pieces tomberait sur le contour d'une seule d'entre elles.
+        if (el.attrib.get("data-parent") or el.attrib.get("data-pivot")) \
+                and len(sortie) > debut:
+            toutes = [f for e in sortie[debut:] if e[1] for f in e[1]]
+            rig_g = _rig_de(el, toutes)
+            if rig_g:
+                for j in range(debut, len(sortie)):
+                    e = sortie[j]
+                    e = e + (None,) * (6 - len(e)) if len(e) < 6 else e
+                    # le rig porte par le groupe ne SURCHARGE pas un rig
+                    # declare plus finement sur une forme interne
+                    sortie[j] = e[:5] + (e[5] or rig_g,)
         # ⛔⛔ BUG TROUVE PAR LE TEST BOUT-EN-BOUT (2026-08-29). Cette branche
         # faisait `return` AVANT le traitement de `ref_decoupe` : un
         # `clip-path` porte par un <g> -- la forme la plus courante dans un
@@ -1293,8 +1341,18 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=(),
     # a 3 ou 4 elements : l'assemblage lit donc l'index 3 avec un defaut.
     # ⭐ 5e element = le role dans une paire de pochoir : "decoupe" pour le
     # calque qui decoupe, "masque" pour celui qui est decoupe, None sinon.
+    # ⭐⭐ LE RIG (2026-08-29). SVG n'a AUCUNE notion de parentage : un squelette
+    # doit donc etre DECLARE dans le fichier. Convention retenue, lisible a
+    # l'oeil et ignoree par tout navigateur :
+    #   data-parent="nom-du-calque-parent"   -> accroche (main -> avant-bras)
+    #   data-pivot="x,y"                     -> ancre en coordonnees du viewBox
+    #   data-pivot="haut" | "bas" | "centre" -> ancre deduite de la boite
+    # Structure ciblee (mesuree sur le Hiker du corpus, 32 calques) : `parent`
+    # designe un `ind`, et l'ancre n'est posee QUE sur les calques qui tournent
+    # (13 sur 13 y sont deplacees, 18 des 19 autres restent a [0,0]).
+    rig = _rig_de(el, formes)
     sortie.append((nom, formes, shapes_de_style(st, rapport, nom), flou_a_poser,
-                   ("masque", nom) if pochoir_pose else None))
+                   ("masque", nom) if pochoir_pose else None, rig))
 
 
 def collecter_texte(el, mat, herite, rapport, sortie, chemin, css=None):
@@ -1492,6 +1550,7 @@ def convertir(chemin, fps=30, frames=60):
         nom, formes, styles_ = entree[0], entree[1], entree[2]
         flou = entree[3] if len(entree) > 3 else None
         role = entree[4] if len(entree) > 4 else None
+        rig = entree[5] if len(entree) > 5 else None
         # ⛔ UN GROUPE PAR STYLE, jamais fill+stroke dans le meme groupe.
         # MESURE (profil de pixels, bord de la cabosse a y=180) : avec les
         # deux dans un seul groupe, lottie-web peint le remplissage APRES le
@@ -1530,6 +1589,18 @@ def convertir(chemin, fps=30, frames=60):
                    "o": {"a": 0, "k": 100}},
             "shapes": groupes,
         }
+        # ⭐ RIG. ⛔ L'ancre ET la position doivent bouger ENSEMBLE : dans
+        # Lottie, `a` designe le point de la forme qui vient se poser sur `p`.
+        # Deplacer `a` seul DECALE le dessin de la meme quantite. On compense
+        # donc en posant `p` a la meme valeur -- le calque ne bouge pas d'un
+        # pixel, mais il tourne desormais autour de son articulation.
+        if rig:
+            if rig.get("pivot"):
+                px, py = rig["pivot"]
+                couche["ks"]["a"]["k"] = [round(px, 3), round(py, 3)]
+                couche["ks"]["p"]["k"] = [round(px, 3), round(py, 3)]
+            if rig.get("parent"):
+                couche["_parent_nom"] = rig["parent"]
         if flou:
             couche["ef"] = [effet_flou(flou)]
         # ⭐ LE POCHOIR. Dans le tableau Lottie, la decoupe doit preceder
@@ -1630,6 +1701,35 @@ def convertir(chemin, fps=30, frames=60):
     # et le calque td:1 precede IMMEDIATEMENT son tt:1.
     for position, couche in enumerate(layers):
         couche["ind"] = position
+
+    # ⭐⭐ RESOLUTION DU PARENTAGE — APRES la renumerotation, jamais avant.
+    # `parent` designe un `ind`, pas une position ; le resoudre plus tot
+    # pointerait vers des indices qui n'existent plus apres l'insertion des
+    # pochoirs. Verifie sur le Hiker du corpus : parent=14 designe bien le
+    # calque d'ind 14.
+    # ⛔ Les noms de calques sont suffixes (`bras` -> `bras-1`) parce qu'un
+    # groupe peut produire plusieurs formes. On indexe donc AUSSI la racine,
+    # sinon `data-parent="bras"` ne trouve jamais sa cible.
+    par_nom = {}
+    for c in layers:
+        nm = c.get("nm")
+        if nm is None:
+            continue
+        for cle in (nm, re.sub(r"-\d+$", "", nm)):
+            par_nom.setdefault(cle, c["ind"])
+    inconnus = []
+    for c in layers:
+        cible = c.pop("_parent_nom", None)
+        if cible is None:
+            continue
+        if cible in par_nom and par_nom[cible] != c["ind"]:
+            c["parent"] = par_nom[cible]
+        else:
+            inconnus.append((c.get("nm"), cible))
+    for nm, cible in inconnus:
+        rapport.refuse(f"data-parent de \"{nm}\"",
+                       f"parent \"{cible}\" introuvable (ou auto-reference) — "
+                       "le calque reste libre, il ne suivra rien")
 
     doc = {"nm": os.path.splitext(os.path.basename(chemin))[0], "v": "5.5.2",
            "fr": fps, "ip": 0, "op": frames, "w": round(w), "h": round(h),
