@@ -78,7 +78,10 @@ License = VIRALE, portfolio only ; Creattie 48 $/an autorise le transfert client
 ### La cible : `15_Customs_Officer.json`
 
 Le meilleur banc d'essai, **re-mesure le 29/08 avec `demonter.py`** : **19 calques,
-17 parentes (89 %), 8 en rotation (⛔ pas 7), zero precomp imbriquee**.
+17 parentes (89 %), 7 en rotation, 8 animes au total, zero precomp imbriquee**.
+⛔ J'ai d'abord « corrige » ce 7 en 8 — c'etait MOI qui avais tort : 7 calques TOURNENT,
+le 8e (`ind=13`) est anime en POSITION seule. Fondre « anime » et « en rotation » en un
+seul chiffre est le piege ; le starter d'origine etait juste.
 
 ⭐ **Ce que la 1re mesure avait manque** :
 - **3 calques VIDES** (`ind` 7, 9, 11 : zero shape). Un rig pro separe **ce qui porte le
