@@ -2,26 +2,26 @@
 //
 // REPRO-REDEEM — reproduction d'une piece REELLEMENT VENDUE.
 // Source : kamotionstudio.site, `Tx4vZDPzej0dHX7jFHDZM4xg.lottie` (800x854, 60 fps,
-// 351 frames = 5,85 s). Studio Lottie/UI SaaS, devis sur demande, cite comme
-// niveau-cible dans `memory/projects/RECHERCHE-MARCHE-INDEX.md`.
+// 351 frames = 5,85 s). Studio Lottie/UI SaaS, cite comme niveau-cible dans
+// `memory/projects/RECHERCHE-MARCHE-INDEX.md`.
 //
-// POURQUOI CELLE-CI : c'est le registre `ui-animation` (creneau etroit et cher,
-// 969 services contre 27 366 pour product-demo-video), et non la mascotte, qui
-// domine le corpus en volume mais que le marche paie moins (verdict 2 du dossier
-// marche : les personnages sont au MILIEU du U, l'UI en HAUT).
+// ⭐⭐ CE FICHIER NE DESSINE RIEN. Il PILOTE des formes dessinees ailleurs :
+//   - les objets -> `assets/planche-ui.svg` (agent svg-dessinateur)
+//   - la main    -> `assets/main-greffee.svg` (silhouette de banque restructuree)
+// Les deux arrivent par des modules GENERES (`planche.ts`, `silhouette.ts`), jamais
+// recopies a la main. C'est la regle n°0 — le modele dessine le statique, NOUS
+// animons — et l'erreur deja payee une fois dans ce dossier meme :
+// `memory/feedbacks/feedback_svg-dessine-a-la-main-au-lieu-de-deleguer-a-fable.md`
 //
-// METHODE REPRO-FOSTER : on ne choisit ni le sujet ni le niveau d'ambition. La
-// geometrie et le timing sont RELEVES sur la reference (frames dans `ref/`),
-// pas inventes. L'ecart se MESURE (`verifier_fidelite.py`), il ne se juge pas a l'oeil.
+// ⛔ LICENCE : la main vient d'une piece sous Lottie Simple License, qui est VIRALE.
+// Cette composition est un livrable de PORTFOLIO, pas une piece vendable en exclusivite
+// a un client. Detail : `memory/tools/banques-lottie-et-greffe.md`.
 //
 // LE RECIT, releve frame par frame sur la reference :
-//   f0-110    la piece "1000 Dose Coins" et le bouton Redeem sont poses
+//   f0-110    la piece « 1000 Dose Coins » et le bouton Redeem sont poses
 //   f110-170  la main descend, appuie sur Redeem ; la piece part en etincelles
 //   f110-283  le menu monte (Giftcards / Cash / More), la main choisit
-//   f277-351  tout s'efface, la coche se trace, "REDEEMED!" apparait
-//
-// ⚠️ Ce fichier redessine la scene a l'identique de ce qui est VU, il ne recopie
-// pas le JSON de la reference. C'est le point du test : savons-nous PRODUIRE ca ?
+//   f277-351  tout s'efface, la coche se trace, « REDEEMED! » apparait
 
 import React from "react";
 import {
@@ -33,7 +33,19 @@ import {
   Easing,
 } from "remotion";
 
-// Courbe d'entree canonique — valeur EXACTE relevee (FICHE-GESTE-ANIME), jamais approximee.
+import {
+  DEFS,
+  MEDAILLE,
+  BOUTON_REDEEM,
+  VIGNETTE_GIFTCARD,
+  VIGNETTE_CASH,
+  PILULE_MENU,
+  PILULE_MENU_SURVOL,
+  COCHE_VALIDATION,
+} from "./planche";
+import { MAIN_SILHOUETTE } from "./silhouette";
+
+// Courbe d'entree canonique (FICHE-GESTE-ANIME) — valeur EXACTE, jamais approximee.
 const EASE_OUT = Easing.bezier(0.23, 1, 0.32, 1);
 
 export const REDEEM_W = 800;
@@ -41,17 +53,34 @@ export const REDEEM_H = 854;
 export const REDEEM_FPS = 60;
 export const REDEEM_FRAMES = 351;
 
-// Palette relevee sur la reference (pipette sur les frames de `ref/`).
-const VIOLET = "#c888f8";    // releve f210, bouton menu
-const VIOLET_FONCE = "#8098f8"; // releve f210, bouton bas
-const ROSE = "#f9a8d4";
-const JAUNE = "#fbbf24";
-const JAUNE_FONCE = "#f59e0b";
-const BLEU = "#6898f8";      // releve f330, coeur de la coche
 const TEXTE = "#7c6df0";
-const VERT = "#86c67c";
+const JAUNE = "#fbbf24";
+const ROSE = "#f9a8d4";
 
-/** Etincelles — petits losanges qui naissent, grandissent et s'effacent. */
+/**
+ * Pose un groupe dessine dans le SVG source, sous une transformation animee.
+ * ⛔ Les formes viennent du SVG : ce composant ne fait que les placer.
+ * Les groupes sont dessines a leur position finale dans la planche, d'ou le
+ * recentrage sur `ancre` avant toute mise a l'echelle.
+ */
+const Piece: React.FC<{
+  html: string;
+  ancre: [number, number];
+  x?: number;
+  y?: number;
+  echelle?: number;
+  opacite?: number;
+}> = ({ html, ancre, x = 0, y = 0, echelle = 1, opacite = 1 }) => {
+  if (opacite <= 0.001 || echelle <= 0.001) return null;
+  const [ax, ay] = ancre;
+  return (
+    <g opacity={opacite} transform={`translate(${ax + x} ${ay + y}) scale(${echelle})`}>
+      <g transform={`translate(${-ax} ${-ay})`} dangerouslySetInnerHTML={{ __html: html }} />
+    </g>
+  );
+};
+
+/** Etincelles — losanges qui naissent vite et s'effacent lentement. */
 const Etincelles: React.FC<{
   frame: number;
   debut: number;
@@ -66,7 +95,7 @@ const Etincelles: React.FC<{
   return (
     <g>
       {Array.from({ length: n }).map((_, i) => {
-        // Position deterministe (pas de Math.random : le rendu doit etre reproductible).
+        // Deterministe : pas de Math.random, le rendu doit etre reproductible.
         const a = (i / n) * Math.PI * 2 + 0.4;
         const retard = (i % 3) * 4;
         const p = interpolate(t - retard, [0, duree - retard], [0, 1], {
@@ -76,9 +105,8 @@ const Etincelles: React.FC<{
         const d = rayon * (0.45 + p * 0.75);
         const x = cx + Math.cos(a) * d;
         const y = cy + Math.sin(a) * d * 0.9;
-        // Naissance rapide, disparition lente : timing asymetrique.
         const s = interpolate(p, [0, 0.25, 1], [0, 1, 0], { extrapolateRight: "clamp" });
-        const r = 5 + (i % 2) * 3;
+        const r = 6 + (i % 2) * 4;
         return (
           <g key={i} transform={`translate(${x} ${y}) scale(${s}) rotate(${i * 37})`}>
             <path
@@ -92,45 +120,18 @@ const Etincelles: React.FC<{
   );
 };
 
-/** Le curseur-main. Il descend, appuie (l'index se retracte), remonte. */
-const Main: React.FC<{ x: number; y: number; echelle: number; appui: number }> = ({
-  x,
-  y,
-  echelle,
-  appui,
-}) => (
-  <g transform={`translate(${x} ${y}) scale(${echelle})`}>
-    {/* index — se retracte de 6px a l'appui (le doigt "s'enfonce") */}
-    <path
-      d={`M 0 ${-46 + appui * 6} L 0 -10`}
-      stroke={VIOLET}
-      strokeWidth={13}
-      strokeLinecap="round"
-      fill="none"
-    />
-    {/* paume */}
-    <path
-      d="M -20 -12 Q -24 -14 -24 -4 L -24 26 Q -24 46 -4 46 L 16 46 Q 34 46 34 28 L 34 -2 Q 34 -10 28 -10 Q 22 -10 22 -2 L 22 8 L 22 -8 Q 22 -16 16 -16 Q 10 -16 10 -8 L 10 6 L 10 -12 Q 10 -20 4 -20 Q -2 -20 -2 -12 L -2 6 Z"
-      fill="#fff"
-      stroke={VIOLET}
-      strokeWidth={5}
-      strokeLinejoin="round"
-    />
-  </g>
-);
-
 export const ReproRedeem: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
   // ===== TEMPS 1 — la piece et le bouton (f0 -> f170) =====================
-  // La piece entre par un pop discret ; le bouton la suit APRES (regle 5 :
-  // decaler les secondaires, ne pas faire entrer deux choses ensemble).
+  // La piece entre, le bouton la suit APRES : on ne fait pas entrer deux choses
+  // ensemble (regle du point focal unique).
   const popPiece = spring({ frame: frame - 6, fps, config: { damping: 14, mass: 0.7 } });
   const popBouton = spring({ frame: frame - 22, fps, config: { damping: 16, mass: 0.6 } });
 
-  // La piece part a l'appui : elle ne GLISSE pas (un jeton n'a pas de moteur),
-  // elle se retracte sur place en s'effacant. Regle "objet inerte" du CLAUDE.md.
+  // La piece ne GLISSE pas (un jeton n'a pas de moteur) : elle se retracte sur place
+  // en s'effacant. Regle « objet inerte » du CLAUDE.md.
   const sortiePiece = interpolate(frame, [118, 150], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
@@ -139,53 +140,49 @@ export const ReproRedeem: React.FC = () => {
   const echellePiece = popPiece * (1 - sortiePiece * 0.55);
   const opPiece = Math.min(popPiece, 1 - sortiePiece);
 
-  const opBouton = Math.min(popBouton, 1 - interpolate(frame, [118, 140], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  }));
+  const opBouton = Math.min(
+    popBouton,
+    1 -
+      interpolate(frame, [118, 140], [0, 1], {
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+      })
+  );
 
-  // ===== LA MAIN — le point focal (regle 1) ===============================
-  // Elle descend lentement (on DECIDE), appuie vite (le systeme REPOND) :
-  // timing asymetrique, ratio ~0,45 comme sur LoadUp.
-  const mainY1 = interpolate(frame, [58, 104, 116], [980, 576, 544], {
+  // ===== LA MAIN — le point focal =========================================
+  // Timing ASYMETRIQUE : lente a la descente (on DECIDE), rapide au retrait (le
+  // systeme a repondu). ⭐ Le doigt NE PLIE PAS — mesure sur 3 references de
+  // banque : l'illusion du tap vient du DEPLACEMENT + de l'onde de contact.
+  const mainY1 = interpolate(frame, [58, 106, 118], [880, 452, 436], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: EASE_OUT,
   });
-  // L'appui : 8 frames d'enfoncement, puis relachement. Le doigt se retracte
-  // ET la main recule de 5px — sans ce recul, l'appui se lit comme un arret net.
-  const appui1 = interpolate(frame, [112, 120, 132], [0, 1, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  // 2e geste : elle remonte vers le menu et survole "Giftcards".
-  const mainY2 = interpolate(frame, [150, 196, 232, 262], [544, 700, 600, 588], {
+  const mainY2 = interpolate(frame, [150, 200, 240, 268], [436, 560, 322, 310], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: EASE_OUT,
   });
-  // Decalee a DROITE : la ref ne masque jamais le libelle qu'on choisit.
-  const mainX = interpolate(frame, [150, 200, 262], [452, 470, 462], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: EASE_OUT,
-  });
-  const appui2 = interpolate(frame, [236, 244, 256], [0, 1, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  const mainVisible = interpolate(frame, [52, 62, 268, 280], [0, 1, 1, 0], {
+  const mainVisible = interpolate(frame, [52, 64, 272, 288], [0, 1, 1, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
   const mY = frame < 150 ? mainY1 : mainY2;
-  const mX = frame < 150 ? 430 : mainX;
-  const appui = Math.max(appui1, appui2);
+  // Centre x de la main dans la reference : ~395 (mesure f210), pas plus a droite.
+  // Le bout du doigt est a ~55 unites du bord gauche a l'echelle 0.78.
+  const mX = frame < 150 ? 352 : 336;
 
-  // ===== TEMPS 2 — le menu (f110 -> f283) =================================
-  // Les 3 entrees montent en CASCADE (stagger ~7 frames = 116 ms).
-  // ⚠️ La cascade est notee "non eprouvee" dans la fiche : ici elle est
-  // JUSTIFIEE par la reference, ou les 3 boutons n'arrivent pas ensemble.
+  // L'onde de contact : c'est ELLE qui dit « ca a touche », pas une articulation.
+  const onde = (debut: number, retard: number) => {
+    const t = frame - debut - retard;
+    if (t < 0 || t > 30) return null;
+    const p = t / 30;
+    return { r: 12 + p * 46, o: (1 - p) * 0.45 };
+  };
+
+  // ===== TEMPS 2 — le menu (f110 -> f292) =================================
+  // Les 3 entrees montent en CASCADE (stagger ~7 frames = 116 ms) : dans la
+  // reference les boutons n'arrivent pas ensemble.
   const entreeMenu = (i: number) =>
     spring({ frame: frame - (112 + i * 7), fps, config: { damping: 18, mass: 0.65 } });
   const sortieMenu = interpolate(frame, [272, 292], [0, 1], {
@@ -194,174 +191,109 @@ export const ReproRedeem: React.FC = () => {
     easing: EASE_OUT,
   });
 
-  // ===== TEMPS 3 — la validation (f277 -> f351) ===========================
-  // La coche se TRACE (trimPath), elle n'apparait pas : c'est le geste qui
-  // dit "c'est valide". Le cercle tourne pendant qu'elle se dessine.
-  const trace = interpolate(frame, [292, 322], [0, 1], {
+  // Le survol de « Giftcards » quand la main arrive dessus.
+  const survol = interpolate(frame, [236, 248, 262], [0, 1, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
-    easing: EASE_OUT,
   });
-  const rotCercle = interpolate(frame, [284, 322], [-120, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: EASE_OUT,
-  });
+
+  // ===== TEMPS 3 — la validation (f284 -> f351) ===========================
   const popValide = spring({ frame: frame - 284, fps, config: { damping: 15, mass: 0.7 } });
-  // Le texte arrive APRES la coche (secondaire decale, regle 5).
   const opTexteFinal = interpolate(frame, [308, 328], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
   const yTexteFinal = interpolate(opTexteFinal, [0, 1], [12, 0]);
 
-  const LONG_COCHE = 132; // longueur mesuree du trace de la coche
+  // Les 3 entrees du menu : y = centre de la pilule, releve sur la reference (f270).
+  // La vignette est dessinee 122 px plus haut dans la planche : ecart mesure, constant.
+  const ENTREES: {
+    cle: string;
+    libelle: string;
+    y: number;
+    vignette: string | null;
+    ancreV: [number, number] | null;
+  }[] = [
+    {
+      cle: "giftcards",
+      libelle: "Giftcards",
+      y: 349,
+      vignette: VIGNETTE_GIFTCARD,
+      ancreV: [400, 227],
+    },
+    { cle: "cash", libelle: "Cash", y: 601, vignette: VIGNETTE_CASH, ancreV: [400, 479] },
+    { cle: "more", libelle: "More", y: 694, vignette: null, ancreV: null },
+  ];
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#ffffff" }}>
       <svg width={REDEEM_W} height={REDEEM_H} viewBox={`0 0 ${REDEEM_W} ${REDEEM_H}`}>
-        {/* ---- TEMPS 1 : la piece --------------------------------------- */}
-        {opPiece > 0.001 && (
-          <g
-            opacity={opPiece}
-            transform={`translate(400 226) scale(${echellePiece})`}
-          >
-            {/* medaille dentelee */}
-            <g>
-              {Array.from({ length: 20 }).map((_, i) => {
-                const a = (i / 20) * Math.PI * 2;
-                return (
-                  <circle
-                    key={i}
-                    cx={Math.cos(a) * 80}
-                    cy={Math.sin(a) * 80}
-                    r={15}
-                    fill={JAUNE}
-                  />
-                );
-              })}
-              <circle r={80} fill={JAUNE} />
-              <circle r={61} fill={JAUNE_FONCE} opacity={0.55} />
-              {/* etoile centrale */}
-              <path
-                d={Array.from({ length: 10 })
-                  .map((_, i) => {
-                    const a = (i / 10) * Math.PI * 2 - Math.PI / 2;
-                    const r = i % 2 === 0 ? 36 : 15;
-                    return `${i === 0 ? "M" : "L"} ${Math.cos(a) * r} ${Math.sin(a) * r}`;
-                  })
-                  .join(" ") + " Z"}
-                fill={ROSE}
-              />
-            </g>
-            <text
-              y={123}
-              textAnchor="middle"
-              fontFamily="Arial, sans-serif"
-              fontSize={30}
-              fontWeight={700}
-              fill={TEXTE}
-            >
-              1000
-            </text>
-            <text
-              y={160}
-              textAnchor="middle"
-              fontFamily="Arial, sans-serif"
-              fontSize={26}
-              fontWeight={700}
-              fill={TEXTE}
-            >
-              Dose Coins
-            </text>
-          </g>
-        )}
+        {/* Les degrades du SVG source, poses une seule fois. */}
+        <defs dangerouslySetInnerHTML={{ __html: DEFS }} />
 
-        {/* les etincelles de disparition de la piece */}
+        {/* ---- TEMPS 1 : la medaille et le bouton ------------------------ */}
+        <Piece html={MEDAILLE} ancre={[400, 226]} echelle={echellePiece} opacite={opPiece} />
+        <g opacity={opPiece}>
+          <text
+            x={400}
+            y={349}
+            textAnchor="middle"
+            fontFamily="Arial, Helvetica, sans-serif"
+            fontSize={30}
+            fontWeight={700}
+            fill={TEXTE}
+          >
+            1000
+          </text>
+          <text
+            x={400}
+            y={386}
+            textAnchor="middle"
+            fontFamily="Arial, Helvetica, sans-serif"
+            fontSize={26}
+            fontWeight={700}
+            fill={TEXTE}
+          >
+            Dose Coins
+          </text>
+        </g>
         <Etincelles frame={frame} debut={116} duree={40} cx={400} cy={226} rayon={108} n={9} />
 
-        {/* ---- TEMPS 1 : le bouton Redeem -------------------------------- */}
-        {opBouton > 0.001 && (
-          <g opacity={opBouton} transform={`translate(400 486) scale(${popBouton})`}>
-            {/* l'enfoncement du bouton repond a l'appui du doigt */}
-            <g transform={`scale(${1 - appui1 * 0.05})`}>
-              <rect
-                x={-132}
-                y={-39}
-                width={264}
-                height={78}
-                rx={39}
-                fill={appui1 > 0.5 ? JAUNE : ROSE}
-              />
-              <text
-                y={11}
-                textAnchor="middle"
-                fontFamily="Arial, sans-serif"
-                fontSize={32}
-                fontWeight={700}
-                fill="#fff"
-              >
-                Redeem
-              </text>
-            </g>
-          </g>
-        )}
+        <Piece html={BOUTON_REDEEM} ancre={[400, 486]} echelle={popBouton} opacite={opBouton} />
 
         {/* ---- TEMPS 2 : le menu ----------------------------------------- */}
         <g opacity={1 - sortieMenu}>
-          {[
-            // y = centre de la PILULE, releve sur f270. Ecart vignette->pilule
-            // mesure a 122 px, identique pour les deux entrees : c'est une
-            // gouttiere, pas un chevauchement.
-            { label: "Giftcards", y: 349, couleur: VIOLET, carte: true },
-            { label: "Cash", y: 601, couleur: VIOLET_FONCE, carte: false },
-            { label: "More", y: 694, couleur: VIOLET_FONCE, carte: false, simple: true },
-          ].map((it, i) => {
-            const e = entreeMenu(i);
-            if (e < 0.001) return null;
-            const dy = interpolate(e, [0, 1], [40, 0]);
-            // survol : "Giftcards" s'eclaircit quand la main est dessus
-            const survol = i === 0 ? appui2 : 0;
+          {ENTREES.map((e, i) => {
+            const ent = entreeMenu(i);
+            if (ent < 0.001) return null;
+            const dy = interpolate(ent, [0, 1], [40, 0]);
+            const actif = e.cle === "giftcards" && survol > 0.5;
             return (
-              <g key={it.label} opacity={e} transform={`translate(400 ${it.y + dy})`}>
-                {it.carte && (
-                  <g transform="translate(0 -46)">
-                    <rect x={-62} y={-85} width={124} height={170} rx={16} fill="#fff" stroke="#e8e6f5" strokeWidth={4} />
-                    {/* cadeau */}
-                    <rect x={-40} y={-12} width={80} height={52} rx={7} fill={VIOLET} />
-                    <rect x={-40} y={-12} width={80} height={15} rx={5} fill={ROSE} />
-                    <rect x={-7} y={-12} width={14} height={52} fill={ROSE} />
-                    <path d="M -7 -12 Q -30 -38 -7 -28 Q 16 -38 7 -12" fill="none" stroke={ROSE} strokeWidth={7} />
-                  </g>
+              <g key={e.cle} opacity={ent}>
+                {e.vignette && e.ancreV && (
+                  // ⛔ Le facteur 2 essaye ici etait une SUR-CORRECTION : le 244-268
+                  // mesure sur la reference incluait les etincelles autour, pas la
+                  // carte. La CARTE de reference fait 169-171 de haut, la notre 170 :
+                  // elle etait deja a la bonne taille.
+                  <Piece html={e.vignette} ancre={e.ancreV} y={dy} />
                 )}
-                {!it.carte && !it.simple && (
-                  <g transform="translate(0 -122)">
-                    <rect x={-62} y={-85} width={124} height={170} rx={16} fill="#fff" stroke="#e8e6f5" strokeWidth={4} />
-                    <rect x={-46} y={-26} width={92} height={52} rx={7} fill={VERT} />
-                    <circle r={14} fill="#fff" opacity={0.85} />
-                    <text y={7} textAnchor="middle" fontFamily="Arial, sans-serif" fontSize={19} fontWeight={700} fill={VERT}>
-                      $
-                    </text>
-                  </g>
-                )}
-                <rect
-                  x={-111}
-                  y={-25}
-                  width={222}
-                  height={50}
-                  rx={25}
-                  fill={it.couleur}
-                  opacity={1 - survol * 0.25}
+                {/* La pilule est dessinee centree en (400,0) dans la planche :
+                    on la deplace a la hauteur de son entree. */}
+                <Piece
+                  html={actif ? PILULE_MENU_SURVOL : PILULE_MENU}
+                  ancre={[400, 0]}
+                  y={e.y + dy}
                 />
                 <text
-                  y={9}
+                  x={400}
+                  y={e.y + dy + 9}
                   textAnchor="middle"
-                  fontFamily="Arial, sans-serif"
+                  fontFamily="Arial, Helvetica, sans-serif"
                   fontSize={24}
                   fontWeight={700}
-                  fill="#fff"
+                  fill="#ffffff"
                 >
-                  {it.label}
+                  {e.libelle}
                 </text>
               </g>
             );
@@ -369,37 +301,21 @@ export const ReproRedeem: React.FC = () => {
         </g>
 
         {/* ---- TEMPS 3 : la validation ----------------------------------- */}
-        {popValide > 0.001 && (
-          <g transform={`translate(400 314) scale(${popValide})`}>
-            <g transform={`rotate(${rotCercle})`}>
-              <circle
-                r={78}
-                fill="none"
-                stroke={BLEU}
-                strokeWidth={19}
-                strokeLinecap="round"
-                strokeDasharray={`${2 * Math.PI * 78 * 0.82} ${2 * Math.PI * 78}`}
-              />
-            </g>
-            <path
-              d="M -37 3 L -10 32 L 41 -29"
-              fill="none"
-              stroke={BLEU}
-              strokeWidth={19}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeDasharray={LONG_COCHE}
-              strokeDashoffset={LONG_COCHE * (1 - trace)}
-            />
-            <Etincelles frame={frame} debut={296} duree={46} cx={0} cy={0} rayon={126} n={6} />
-          </g>
+        <Piece
+          html={COCHE_VALIDATION}
+          ancre={[400, 314]}
+          echelle={popValide}
+          opacite={popValide}
+        />
+        {popValide > 0.01 && (
+          <Etincelles frame={frame} debut={296} duree={46} cx={400} cy={314} rayon={126} n={6} />
         )}
         {opTexteFinal > 0.001 && (
           <text
             x={400}
             y={472 + yTexteFinal}
             textAnchor="middle"
-            fontFamily="Arial, sans-serif"
+            fontFamily="Arial, Helvetica, sans-serif"
             fontSize={40}
             fontWeight={700}
             fill={TEXTE}
@@ -410,9 +326,33 @@ export const ReproRedeem: React.FC = () => {
         )}
 
         {/* ---- LA MAIN — dessinee en DERNIER : elle passe au-dessus ------- */}
+        {[0, 9].map((retard, i) => {
+          const o = onde(frame < 150 ? 116 : 244, retard);
+          if (!o) return null;
+          return (
+            <circle
+              key={i}
+              cx={mX + 55}
+              cy={mY + 4}
+              r={o.r}
+              fill="none"
+              stroke="#8b5cf6"
+              strokeWidth={5}
+              opacity={o.o}
+            />
+          );
+        })}
         {mainVisible > 0.001 && (
-          <g opacity={mainVisible}>
-            <Main x={mX} y={mY + appui * 5} echelle={1.55} appui={appui} />
+          <g opacity={mainVisible} transform={`translate(${mX} ${mY}) scale(0.78)`}>
+            <path d={MAIN_SILHOUETTE} fill="#c888f8" opacity={0.14} transform="translate(6 8)" />
+            <path
+              d={MAIN_SILHOUETTE}
+              fill="#ffffff"
+              stroke="#8b5cf6"
+              strokeWidth={8}
+              strokeLinejoin="round"
+              strokeLinecap="round"
+            />
           </g>
         )}
       </svg>
