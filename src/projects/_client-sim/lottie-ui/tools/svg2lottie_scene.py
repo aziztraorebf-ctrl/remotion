@@ -920,6 +920,55 @@ def index_ids(root):
     return {e.attrib["id"]: e for e in root.iter() if "id" in e.attrib}
 
 
+def decoupe_referencee(cible, mat, herite, css=None):
+    """
+    Geometrie d'un <mask>/<clipPath> -> formes Lottie, dans le repere final.
+
+    ⭐ LE POINT DELICAT (2026-08-29). Cote SVG le pochoir est REFERENCE : il
+    vit dans <defs>, hors de l'arbre, et n'a donc PAS subi les transforms des
+    <g> qui portent l'element masque. Cote Lottie il est POSITIONNEL : c'est
+    le calque juste au-dessus. Il faut donc lui appliquer a la main la matrice
+    accumulee `mat` de l'element masque, sinon le pochoir atterrit ailleurs
+    que ce qu'il decoupe -- meme famille de bug que les degrades
+    `userSpaceOnUse` (7 sur 8 hors cadre, 2026-08-28).
+
+    Retourne [] si la decoupe n'est pas faite de primitives simples : on
+    prefere un refus declare a un pochoir approximatif, parce qu'un masque
+    faux ne se voit pas comme une absence, il se voit comme un trou au
+    mauvais endroit.
+    """
+    formes = []
+    for el in cible.iter():
+        tag = el.tag.replace(NS, "")
+        if tag not in GEOM:
+            continue
+        st = styles(el, herite, css)
+        if st.get("display") == "none":
+            continue
+        if tag == "path":
+            d = el.attrib.get("d", "")
+        else:
+            d = shape_to_path(tag, el.attrib)
+        if not d:
+            continue
+        try:
+            fs = parse_path(d)
+        except PathError:
+            return []
+        # transform propre a la forme DANS le pochoir, puis la matrice de
+        # l'element masque (ordre : le repere local d'abord).
+        m = _mul(mat, parse_transform(el.attrib.get("transform", "")))
+        if not est_identite(m):
+            for f in fs:
+                k = f["ks"]["k"]
+                k["v"] = [appliquer(m, p) for p in k["v"]]
+                lin = (m[0], m[1], m[2], m[3], 0, 0)
+                k["i"] = [appliquer(lin, p) for p in k["i"]]
+                k["o"] = [appliquer(lin, p) for p in k["o"]]
+        formes.extend(fs)
+    return formes
+
+
 def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=(),
               css=None, ids=None, pile=()):
     """
@@ -952,10 +1001,21 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=(),
     # comme ATTRIBUTS (filter="url(#flou)") et pas seulement comme balises.
     # Ne detecter que les balises laissait un flou disparaitre EN SILENCE --
     # le rapport annoncait "porte" sur un element dont le rendu changeait.
+    # ⭐ Le pochoir (2026-08-29). `mask`/`clip-path` ne sont plus refuses en
+    # bloc : ils sont RESOLUS plus bas (une fois `nom` et la matrice `m`
+    # connus) en une paire de calques Lottie -- td:1 au-dessus = la decoupe,
+    # tt:1 en dessous = le contenu. On note ici la reference a resoudre.
+    ref_decoupe = None
+    for attr in ("clip-path", "mask"):
+        v = el.attrib.get(attr) or st.get(attr)
+        if not v or str(v).strip() in ("none", ""):
+            continue
+        if not str(v).strip().startswith("url("):
+            continue
+        ref_decoupe = (attr, str(v).strip()[4:-1].strip().lstrip("#").strip("'\""))
+
     flou_a_poser = None
-    for attr, raison in (("filter", NON_PORTES["filter"]),
-                         ("clip-path", NON_PORTES["clipPath"]),
-                         ("mask", NON_PORTES["mask"])):
+    for attr, raison in (("filter", NON_PORTES["filter"]),):
         v = el.attrib.get(attr) or st.get(attr)
         if not v or str(v).strip() in ("none", ""):
             continue
@@ -1112,9 +1172,43 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=(),
         # les sommets DEJA transformes, donc deja en coordonnees finales.
         st["_gradient_mat"] = m
 
+    # ⭐ LE POCHOIR (2026-08-29). Resolu ICI parce qu'il faut `nom` (pour
+    # nommer la decoupe) et `m` (la matrice accumulee : la decoupe vit dans
+    # <defs>, hors de l'arbre, donc elle n'a PAS subi les transforms des <g>
+    # parents de l'element masque -- il faut les lui appliquer a la main).
+    pochoir_pose = False
+    if ref_decoupe is not None:
+        attr, ref = ref_decoupe
+        cible = (ids or {}).get(ref)
+        if cible is None:
+            # Meme traitement que les filtres introuvables : un navigateur
+            # ignore une reference cassee. Il n'y a RIEN a porter, et le rendu
+            # de reference ne masque pas non plus -- l'annoncer comme une perte
+            # ferait croire a un manque qui n'existe pas.
+            rapport.approxime(f"attribut {attr}= (#{ref})",
+                              "reference INTROUVABLE — ignoree, comme le fait "
+                              "un navigateur")
+        else:
+            formes_d = decoupe_referencee(cible, m, herite, css)
+            if formes_d:
+                sortie.append((f"{nom}-pochoir", formes_d,
+                               [{"ty": "fl", "c": {"a": 0, "k": [1, 1, 1, 1]},
+                                 "o": {"a": 0, "k": 100}, "nm": "pochoir"}],
+                               None, "decoupe"))
+                pochoir_pose = True
+                rapport.ok(f"{attr}= #{ref}: pochoir porte (track matte alpha)")
+            else:
+                rapport.refuse(
+                    f"attribut {attr}= (#{ref})",
+                    "pochoir sans geometrie simple : seules les primitives "
+                    "(path, rect, circle...) sont portees, pas <use>/<text>")
+
     # ⭐ 4e element = le flou eventuel. Les autres appelants poussent des tuples
     # a 3 ou 4 elements : l'assemblage lit donc l'index 3 avec un defaut.
-    sortie.append((nom, formes, shapes_de_style(st, rapport, nom), flou_a_poser))
+    # ⭐ 5e element = le role dans une paire de pochoir : "decoupe" pour le
+    # calque qui decoupe, "masque" pour celui qui est decoupe, None sinon.
+    sortie.append((nom, formes, shapes_de_style(st, rapport, nom), flou_a_poser,
+                   "masque" if pochoir_pose else None))
 
 
 def collecter_texte(el, mat, herite, rapport, sortie, chemin, css=None):
@@ -1308,8 +1402,10 @@ def convertir(chemin, fps=30, frames=60):
             continue
 
         # 4e element optionnel : le flou a poser (cf. collecter()).
+        # 5e optionnel : le role dans une paire de pochoir ("decoupe"/"masque").
         nom, formes, styles_ = entree[0], entree[1], entree[2]
         flou = entree[3] if len(entree) > 3 else None
+        role = entree[4] if len(entree) > 4 else None
         # ⛔ UN GROUPE PAR STYLE, jamais fill+stroke dans le meme groupe.
         # MESURE (profil de pixels, bord de la cabosse a y=180) : avec les
         # deux dans un seul groupe, lottie-web peint le remplissage APRES le
@@ -1350,7 +1446,28 @@ def convertir(chemin, fps=30, frames=60):
         }
         if flou:
             couche["ef"] = [effet_flou(flou)]
+        # ⭐ LE POCHOIR. Dans le tableau Lottie, la decoupe doit preceder
+        # IMMEDIATEMENT le calque qu'elle decoupe (indice plus petit = plus
+        # haut dans la pile). `collecter` pousse le pochoir JUSTE AVANT son
+        # masque ; comme on parcourt ici en `reversed`, le masque sort en
+        # premier et le pochoir juste apres -- il faut donc les inverser pour
+        # retablir "decoupe au-dessus".
+        if role == "masque":
+            couche["tt"] = 1          # 1 = alpha : 92 des 93 mattes du corpus
+        elif role == "decoupe":
+            couche["td"] = 1          # ce calque SERT de pochoir, il ne s'affiche pas
+            if layers:                # remonter la decoupe au-dessus de son masque
+                layers.insert(len(layers) - 1, couche)
+                continue
         layers.append(couche)
+
+    # ⛔ RENUMEROTATION OBLIGATOIRE APRES INSERTION D'UN POCHOIR. `ind` etait
+    # pose depuis le compteur de boucle ; remonter une decoupe d'un cran casse
+    # cette correspondance. Verifie sur un fichier pro (corpus kamotion,
+    # 02_Doggy) : `ind` y croit strictement avec la position dans le tableau,
+    # et le calque td:1 precede IMMEDIATEMENT son tt:1.
+    for position, couche in enumerate(layers):
+        couche["ind"] = position
 
     doc = {"nm": os.path.splitext(os.path.basename(chemin))[0], "v": "5.5.2",
            "fr": fps, "ip": 0, "op": frames, "w": round(w), "h": round(h),
