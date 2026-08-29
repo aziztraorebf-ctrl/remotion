@@ -132,6 +132,59 @@ continuent et se posent après l'arrêt · **squash & stretch** déformer pour d
 **stagger** cascade. ⭐ Ce lexique décrit ce que fait UN OBJET ; les 21 mouvements de caméra
 décrivent ce que fait L'OBJECTIF — complémentaires, jamais concurrents.
 
+## ⭐⭐ LE RIG — animer par ROTATION, pas en redessinant (2026-08-29, mesuré)
+
+Démontage de 5 personnages pro (corpus kamotion). **C'est du rigging par parentage.** Le
+personnage est dessiné UNE fois, découpé en membres, chaque membre est un calque accroché au
+suivant, avec son pivot sur l'articulation. Mesure sur le Hiker (32 calques) :
+
+| | |
+|---|---|
+| calques avec un `parent` | **84 %** (chaînes jusqu'à 4 niveaux) |
+| part de l'animation en ROTATION | **90 %** — la géométrie ne change pas |
+| clés par membre, cycle de marche | **7** (deux poses en ping-pong) |
+| déphasage entre membres | **41 % du cycle** |
+
+⛔ Le seul redessin est le VISAGE (expression). Aucune forme animée du corpus ne dépasse
+**13 sommets** — personne ne redessine une silhouette. ⭐ Conséquence directe : le rig ne
+demande l'anatomie qu'en version FIGÉE, sans variantes.
+
+**Chez nous, le rig se DÉCLARE dans le SVG** (`svg2lottie_scene.py` le porte) :
+
+    <g id="bras" data-parent="torse" data-pivot="haut">
+    <g id="main" data-parent="bras"  data-pivot="150,198">
+
+⛔ `data-parent` vise le **NOM DE CALQUE** réel (`head-base`), pas l'id du groupe.
+⛔ Le pivot se déduit de l'ANATOMIE : une oreille pivote à son attache au crâne (pas au centre
+de sa boîte), une langue à sa racine, un iris ne pivote pas — il se déplace.
+⛔⛔ Dans Lottie, `a` est le point qui vient se poser sur `p` : **déplacer l'ancre seule DÉCALE
+le dessin**. Les deux bougent ensemble.
+
+## ⭐⭐ LE MOUVEMENT NATUREL EST ASYMÉTRIQUE (2026-08-29, mesuré au rendu)
+
+Une oreille qui se dresse **monte vite et retombe lentement**. Réglage validé à l'œil :
+
+    montée 9 frames · maintien 21 · retombée 30      → rapport 1 pour 3
+
+⛔ Symétrique, ça fait **essuie-glace** — c'était le défaut de ma V1, corrigé sur remarque
+d'Aziz. Le muscle tire vite, la gravité ramène doucement.
+⭐ Même principe pour un regard : l'iris **saute** (0,02 s entre deux cibles), il ne glisse
+jamais. Interpoler doucement tue l'effet — aucun œil ne glisse.
+⭐ Clignement : écrasement en Y sur ~0,13 s. Plus long = l'air endormi ; plus court = invisible.
+
+## ⛔⛔ LES 3 PIÈGES DE L'ANIMATION LOTTIE (payés le 2026-08-29)
+
+1. **Chaque calque porte sa PROPRE fenêtre `ip`/`op`.** Allonger la durée du DOCUMENT ne suffit
+   pas : les calques cessaient d'exister à la frame 60, l'animation se figeait — et le fichier
+   restait parfaitement VALIDE, avec un script annonçant « 12 gestes posés ». Trouvé par un
+   **compteur d'images distinctes** (3 sur 8), jamais par le rapport.
+2. **Un geste se lit dans les KEYFRAMES, pas seulement au rendu.** Une oreille restée dressée
+   2 secondes ressemble, à l'œil, à un maintien voulu. C'est en lisant les clés produites que
+   le blocage se voit.
+3. **Faire tourner le parent fait tourner TOUT.** En animant la tête de ±4°, tout le visage
+   basculait en bloc (« une tête en carton »). Le fichier pro fait l'inverse : le crâne bouge
+   très peu, ce sont les DÉTAILS qui vivent.
+
 ## LES 2 TESTS À PASSER AVANT DE PRÉSENTER
 
 - **Test de la pause** : arrêter sur n'importe quelle frame — l'info doit être là. Une scène qui

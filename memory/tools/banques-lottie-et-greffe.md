@@ -17,9 +17,27 @@ Preuve, meme journee, meme brief detaille (pieges nommes, consigne d'empilement)
 | **Objets** (medaille, cadeau, billets, bouton) | ✅ **tous reussissent**, 55 a 104 formes, conformes |
 | **Main humaine** | ⛔ **5 echecs sur 5**, tous de la MEME famille |
 
-⛔ Ne PAS generaliser « les modeles dessinent mal ». Le trou est **l'anatomie humaine**, ou l'oeil
-detecte la moindre erreur parce qu'il connait la forme par coeur. Voiture, feu de camp, batiment,
-objet : nos modeles savent faire.
+⛔ Ne PAS generaliser « les modeles dessinent mal ». Voiture, feu de camp, batiment, objet : nos
+modeles savent faire.
+
+⭐⭐ **NUANCE MESUREE LE 2026-08-29 — « organique » n'est pas le bon axe.** Fable a reussi une
+**tete de chien mascotte** avec image de reference : un cas qu'on aurait classe « organique donc
+voue a l'echec ». Son analyse, verifiee sur le fichier (24 primitives sur 50 formes, 3 paths a
+topologie libre, 5 paires symetriques) : **une mascotte de face est organique en APPARENCE, objet
+en CONSTRUCTION** (symetrie axiale, presque tout en primitives, une seule forme libre par cote).
+Une main est l'inverse : topologie libre partout, cinq formes imbriquees, aucune symetrie.
+→ Le predicteur utile n'est pas « organique vs objet » mais **la decomposabilite en primitives
+symetriques**. Elle dit surtout le COUT : le chien a converge en 3 iterations.
+
+⛔⛔ **CE QUI RESTE VRAI, et une histoire fausse a ne pas relayer** : l'anatomie humaine reste le
+trou. Un audit du 29/08 a conclu que « la main a ete DESSINEE avec reference le 28/08, donc
+l'humain passe » — **c'est FAUX** (corrige par Aziz). Le geste reel etait une **GREFFE de
+structure** depuis un Lottie premium, et le resultat n'est pas anatomique : index en tube droit
+sans phalange ni jointure, 3 doigts replies en arcs identiques. Une icone de curseur, pas une
+main. ⚠️ Le ratio doigt/paume (0,72, plausible) ne le voyait pas : **le defaut etait STRUCTUREL,
+pas proportionnel**.
+⭐ Le visage humain stylise reste **NON TRANCHE** — et un dessin statique reussi ne dit rien de
+son ANIMABILITE (le visage du pecheur, 07-20, sortait bien et s'animait mal).
 
 ⭐ **Le concours n'a pas ete inutile en echouant** : il etablit que le manque est REEL et pas un
 defaut de brief. 5 modeles, la meme consigne detaillee, 5 echecs de la meme famille = on sait
