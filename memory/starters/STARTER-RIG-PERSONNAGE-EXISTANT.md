@@ -1,9 +1,11 @@
 # STARTER — RIG DE PERSONNAGE : animer NOTRE dessin, et piloter celui des autres
 
 > Cadre par Aziz le 2026-08-28, ELARGI le 2026-08-29.
-> ⭐⭐ **PRIORITE FIXEE PAR AZIZ LE 29/08** : tester d'abord **l'ANIMATION DU CHIEN DE FABLE**,
-> et d'autres formes similaires issues de **fichiers de reference PRO**. Le pilotage d'un rig
-> tiers (la question d'origine, plus bas) reste ouvert mais passe en second.
+> ⭐⭐ **ÉTAT AU SOIR DU 2026-08-29 — les 3 questions de ce starter sont RÉPONDUES** :
+> l'animation du chien (chaîne complète), le personnage corps entier (rig piloté), et
+> « comment font-ils ? » (rigging par parentage, mesuré).
+> ⏭️ **La prochaine question est plus bas, § CE QUI RESTE OUVERT** : notre chien n'a pas
+> d'objet de contrôle, et ses plages articulaires ne sont pas mesurées.
 
 ---
 
@@ -43,10 +45,44 @@
 
 ---
 
-## ⭐⭐ PRIORITE 1 — LE PERSONNAGE CORPS ENTIER (prochaine session)
+## ✅ FAIT LE 2026-08-29 (session parallele) — LE PERSONNAGE CORPS ENTIER
 
-> Decision d'Aziz le 29/08 : refaire le geste du chien, mais sur un **personnage
-> vectoriel corps entier**, en se fiant a des personnages PRO existants.
+> ⭐⭐ **Cette priorite a ete EXECUTEE le soir meme**, dans une session parallele.
+> Code : `src/projects/_client-sim/perso-corps-entier/` (`demonter.py`, `piloter.py`,
+> README). Commits `b0ad8ceb` · `d233e716` · `606d82cf` · `d7614230`.
+
+**Ce qui est acquis** : un rig tiers (le douanier, 19 calques) se **pilote** — on lui a
+fait faire un geste absent de son fichier d'origine (epaule 23 deg d'origine -> 75 chez
+nous), et l'avant-bras suit sans etre touche : la chaine de parentage tient.
+
+⭐⭐ **LA LECON CENTRALE, mesuree** : **un membre a une PLAGE, pas une liberte.** Un
+personnage vectoriel est dessine **A PLAT** — la manche est un aplat pose pour un angle
+donne ; au-dela, elle sort de sous le torse et se retrouve en travers de l'avant-bras.
+
+| Articulation | Plage sure | Notre 1er essai |
+|---|---|---|
+| **Epaule** | **~25 deg** | 75 deg — **3x hors plage** |
+| **Coude** | **~60 deg** | 45 deg — dans la plage |
+
+⭐ Contre-intuitif : **l'epaule est 2x MOINS tolerante que le coude** — elle doit rester
+couverte par le torse, alors que le coude bouge dans le vide. `piloter.py` AVERTIT
+desormais quand on sort de l'amplitude : la mesure est dans l'OUTIL, pas dans une note.
+
+⛔ **Un diagnostic faux, corrige** : « la manchette est figee et ne suit plus le bras »
+etait FAUX — la manche est le **parent** du bras, elle ne peut pas s'en detacher. Le
+defaut etait une AMPLITUDE, pas un debranchement. → **verifier la chaine de parentage
+avant de conclure qu'une piece s'est decrochee.**
+
+### ⏭️ CE QUI RESTE OUVERT (la vraie prochaine question)
+
+1. **Notre chien n'a pas d'OBJET DE CONTROLE.** Les fichiers pro cachent un calque vide
+   auquel 13 des 19 calques sont accroches : deplacer, agrandir ou reposer le personnage
+   entier = **une seule valeur a changer**. C'est le 1er correctif a lui apporter.
+2. **Les plages articulaires de NOTRE chien ne sont pas mesurees.** On connait celles du
+   douanier ; les nOtres sont inconnues. Meme methode : balayer et REGARDER, on ne calcule
+   pas ce seuil.
+3. La regle vaut pour tout personnage a plat, **y compris ceux qu'on dessine nous-memes** —
+   a porter dans le brief de dessin, pas seulement dans l'outil d'animation.
 
 ### ⛔ D'ABORD : d'ou viennent les fichiers, et ce qu'on a le droit d'en faire
 
@@ -129,31 +165,40 @@ est REDESSINE (4 shapes animees) : utile pour voir comment on fait une expressio
 - **Le visage expressif.** Pumpkin boy redessine 4 shapes de 2 a 8 sommets. Tres en
   dessous du seuil ou nos modeles echouent. Probablement faisable.
 
-## ⭐ PRIORITE 1bis — LE PERSONNAGE CORPS ENTIER (question ouverte d'Aziz)
+## ✅ RÉPONDU — « comment font-ils ? » (question d'Aziz, tranchée le 29/08)
 
 > « Creer un personnage comme on voit souvent dans les Lottie, avec le corps entier.
 > D'apres ce que j'ai compris souvent c'est du rigging, ou ce sont des illustrations
-> animees par la suite. Je ne sais pas trop comment ils font. Je pense que c'est toute
-> une autre paire de manches. »
+> animees par la suite. Je ne sais pas trop comment ils font. »
 
-⛔ **NE PAS extrapoler depuis le chien** : une face de mascotte est symetrique, frontale, et
-faite de primitives. Un corps entier a des membres articules, des rotations autour de pivots
-anatomiques, des occultations (un bras passe devant le torse) — rien de tout ca dans le chien.
+**La reponse, mesuree sur 5 personnages pro du corpus** : c'est du **rigging par
+parentage**, pas de l'illustration redessinee. Le personnage est dessine UNE fois,
+decoupe en membres, chaque membre accroche au suivant avec son pivot sur l'articulation.
 
-**Ce que le corpus permet de repondre SANS rien construire** (`out/_r-and-d/corpus-kamotion/`) :
-il contient des personnages corps entier deja animes. Les DEMONTER repond a « comment ils font » :
-- `13_Hiker_Walking_Theme_Cycle.lottie` — un marcheur, cycle de marche + state machine
-- `16_Pumpkin_boy.lottie` · `15_Customs_Officer.json` — personnages debout
-- `18_Exercise.lottie` · `14_Piggy_Bank_Running.lottie` — corps en mouvement
+| | |
+|---|---|
+| calques avec un `parent` | **84 %** (chaines jusqu'a 4 niveaux) |
+| part de l'animation en ROTATION | **90 %** — la geometrie ne change pas |
+| cles par membre (cycle de marche) | **7**, deux poses en ping-pong |
+| dephasage entre membres | **41 % du cycle** — c'est lui qui casse l'effet marionnette |
 
-**Questions a leur poser** : les membres sont-ils des calques separes avec `parent` (= rigging
-par parentage) ou des formes redessinees image par image (= illustration animee) ? Ou sont les
-pivots ? Combien de cles par membre ? Y a-t-il des precomps par membre ?
-⭐ C'est de la LECTURE, pas de la production — reponse rapide et factuelle.
+⛔ Le seul redessin est le **VISAGE** (expression) : aucune forme animee du corpus ne
+depasse **13 sommets**. Personne ne redessine une silhouette.
+⭐ Consequence : **le rig ne demande l'anatomie qu'en version FIGEE**, sans variantes.
+⛔ Corpus vectoriel a **97 %** ; les 5 personnages corps entier sont a **100 %** vectoriels
+— la question « bitmap ou vectoriel ? », ouverte depuis juillet, est tranchee.
 
-## QUESTION 2 (ouverte) — PILOTER UN RIG EXISTANT
+⛔ **NE PAS extrapoler depuis le chien** : une face de mascotte est symetrique, frontale et
+faite de primitives. Un corps entier a des occultations (un bras passe devant le torse) —
+une decision d'ILLUSTRATION prise AVANT l'export, pas un reglage de rig.
 
-> Question d'origine du 28/08, toujours valide mais **en second** depuis le 29/08.
+## ✅ QUESTION 2 — RÉPONDUE le 2026-08-29 : un rig tiers est un OUTIL, pas un asset
+
+> ⭐⭐ **Le verdict** : on peut le PLACER, l'EFFACER, le RÉ-ANIMER — et lui faire faire un
+> geste absent de son fichier d'origine. C'est donc un **outil**, pas un asset figé.
+> ⛔ Avec une limite mesurée : **une articulation a une PLAGE** (épaule ~25°, coude ~60°).
+> Outils : `src/projects/_client-sim/perso-corps-entier/tools/{demonter,piloter}.py`.
+> Le contexte d'origine de la question est conservé ci-dessous.
 
 ### La formulation d'Aziz, ne pas la reduire
 
