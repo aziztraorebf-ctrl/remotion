@@ -61,12 +61,28 @@ GEOM = ("path", "circle", "ellipse", "rect", "line", "polygon", "polyline")
 
 # Elements dont l'absence CHANGE le rendu : on refuse bruyamment.
 # (valeur = raison affichee dans le rapport)
+#
+# ⛔ CETTE TABLE SE PERIME (revue 2026-08-29). Deux entrees annonçaient un refus
+# que le code ne pratiquait plus : `filter` ("pas d'equivalent generique") alors
+# que le flou seul est porte depuis le 2026-08-28, et `text` ("refuse") alors
+# qu'il est vectorise plus haut et n'atteint JAMAIS cette table. Un refus
+# perime n'est pas inoffensif : le rapport est notre argument commercial, et il
+# sous-vendait l'outil aupres du client. Quand le code apprend a porter quelque
+# chose, CORRIGER LA LIGNE ICI dans le meme commit.
 NON_PORTES = {
-    "filter": "filtres (flou, ombre portee) — Lottie n'a pas d'equivalent generique",
-    "mask": "masques de luminance — Lottie a des masques, mais d'un autre modele",
-    "clipPath": "detourage — portable seulement en le pre-appliquant a la geometrie",
+    # Le flou seul EST porte (effet ty 29) — cf. flou_du_filtre(). Ne reste
+    # refuse que le composite, et ce texte n'est affiche que dans ce cas-la.
+    "filter": "filtre COMPOSITE (ombre portee, colorMatrix...) — "
+              "seul un feGaussianBlur seul est portable",
+    # Lottie a bien un equivalent : le track matte (`tt` sur le calque decoupe,
+    # `td:1` sur le calque du dessus qui sert de pochoir). Mesure du 2026-08-29
+    # sur 22 pieces pro : 93 paires, 0 malformee, 92 en mode alpha (tt:1).
+    # Non porte AUJOURD'HUI faute d'implementation, pas faute de format.
+    "mask": "masque — Lottie a l'equivalent (track matte tt/td), "
+            "pas encore implemente chez nous",
+    "clipPath": "detourage — meme mecanisme que <mask> cote Lottie (tt/td), "
+                "sinon portable en le pre-appliquant a la geometrie",
     "image": "images raster — a embarquer en base64, alourdit beaucoup",
-    "text": "texte — Lottie exige une police declaree, pas de rendu direct",
     "pattern": "motifs de remplissage — sans equivalent",
     "marker": "marqueurs de fleche — sans equivalent",
     "foreignObject": "contenu HTML embarque — hors format",
