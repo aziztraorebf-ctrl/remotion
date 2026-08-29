@@ -1,9 +1,85 @@
-# STARTER — PILOTER UN RIG DE PERSONNAGE EXISTANT (session parallele)
+# STARTER — RIG DE PERSONNAGE : animer NOTRE dessin, et piloter celui des autres
 
-> Cadre par Aziz le 2026-08-28, en fin de session « chaine logo client ». A ouvrir dans
-> une session NEUVE — le sujet est assez large pour meriter son propre depart.
+> Cadre par Aziz le 2026-08-28, ELARGI le 2026-08-29.
+> ⭐⭐ **PRIORITE FIXEE PAR AZIZ LE 29/08** : tester d'abord **l'ANIMATION DU CHIEN DE FABLE**,
+> et d'autres formes similaires issues de **fichiers de reference PRO**. Le pilotage d'un rig
+> tiers (la question d'origine, plus bas) reste ouvert mais passe en second.
 
-## LA QUESTION EXACTE (formulation d'Aziz, ne pas la reduire)
+---
+
+## ⭐ PRIORITE 1 — ANIMER LE CHIEN DE FABLE (et des formes similaires)
+
+**Ce qui existe deja, pret a reprendre** : `src/projects/_client-sim/repro-chien/`
+(lire son `README.md` en premier, il porte l'etat exact et les pieges deja payes)
+
+- `assets/chien-tete.svg` — tete de chien mascotte, **dessinee par Fable 5** depuis les
+  FRAMES d'une piece pro. ⛔ Dessin ORIGINAL : 0 sommet en commun avec le fichier pro.
+  17 groupes nommes, 5 `clip-path` structurels.
+- `partition.ts` — les gestes **MESURES** sur la piece pro (oreilles dephasees, iris en
+  coups d'oeil de 0,02 s, langue +/-70 deg). ⛔ Ne pas re-inventer ces valeurs.
+- `ref/` — 3 frames de reference.
+
+### ⛔ LE BLOCAGE A LEVER D'ABORD : la PRECOMPOSITION
+
+Mesure du 29/08 : **1 pochoir sur 5 porte**. Les 4 refus disent tous la meme chose :
+
+    clip d'un groupe de N calques — Lottie ne decoupe qu'un calque par pochoir
+    (precomposition non implementee)
+
+**Pourquoi** : un oeil n'est pas une forme, c'est 4 calques (globe, iris, pupille, reflet).
+Le pochoir doit decouper l'ENSEMBLE, et Lottie ne decoupe qu'un calque a la fois.
+→ il faut apprendre a `svg2lottie_scene.py` a fabriquer une **precomposition** (`ty:0` +
+un asset `{id, layers}`).
+
+⭐ **Meme brique, deux verrous** : la piece 2 (onboarding, `12_BVaKTgmqgb.lottie`) a
+**45 precomps imbriques sur 3 niveaux**. La precomposition debloque les deux chantiers.
+
+⛔ Animer AVANT de lever ce blocage donnerait un iris qui deborde du globe — exactement le
+defaut visible quand on desactive les mattes.
+
+### Ensuite : les PIVOTS (mesures, pas a tatonner)
+
+Aucun groupe ne porte encore de `transform`. Boites deja mesurees (repere 1000x1000) :
+
+| Partie | Boite | Pivot |
+|---|---|---|
+| `ear-l` | x 155-375, y 248-588 | sa BASE (~265, 280), pas son centre |
+| `ear-r` | x 625-845, y 248-588 | sa BASE (~735, 280) |
+| `tongue` | x 452-548, y 722-808 | son ATTACHE (~500, 725) |
+| `iris-l` / `iris-r` | x 305-445, y 442-575 | leur CENTRE — ils translatent, ne pivotent pas |
+
+Regle : une oreille pivote depuis son attache au crane, une langue depuis sa racine, un iris
+se deplace sans tourner. Ca se deduit de l'anatomie, pas d'un reglage a tatonner.
+
+### « D'autres formes similaires » — ce que ca veut dire concretement
+
+Le corpus contient **15 pieces a mattes** (`out/_r-and-d/corpus-kamotion/`). Les candidats
+proches du chien (mascotte, vectoriel, peu ou pas de raster) :
+`01_oG7VdeJLRy` (12 mattes) · `03_tcSIMHGGqP` (14) · `20_Full_Vibeup_Splash` (10) ·
+`10_Piggy_Bank_Tax_Day` (4) · `14_Piggy_Bank_Running` (5).
+⛔ Ecarter `19_kiosk` (25 images raster : on reproduirait des photos).
+
+### ⭐ CE QUE LE CHIEN A DEJA APPRIS SUR LA GENERATION
+
+Fable a reussi un cas qu'on classait « organique donc voue a l'echec ». Son analyse,
+**verifiee par mesure** (24 primitives sur 50 formes, 3 paths a topologie libre, 5 paires
+symetriques) : une mascotte de face est **organique en apparence, objet en construction**.
+
+> Critere reformule : (reference visuelle) x (decomposable en primitives symetriques) x
+> (tolerance a l'erreur du registre) — mascotte animale 3/3 → GENERER · main 1/3 → PRENDRE
+> · visage humain stylise 2/3 → **NON TRANCHE, a tester**
+
+⛔ Fable previent lui-meme : ce succes est **animal-AVEC-reference**, il ne prouve rien pour
+l'humain. Et son « la truffe mesure 170 » etait une lecture A L'OEIL, pas une mesure —
+`scripts/tools/proportions-diff.py` existe, s'en servir AVANT de dessiner.
+
+---
+
+## QUESTION 2 (ouverte) — PILOTER UN RIG EXISTANT
+
+> Question d'origine du 28/08, toujours valide mais **en second** depuis le 29/08.
+
+### La formulation d'Aziz, ne pas la reduire
 
 > « On cree quelque chose — un decor, une forme — on veut y rajouter un personnage.
 > Est-ce que prendre un rig existant peut ensuite etre PILOTE par nous ? Peut-on lui

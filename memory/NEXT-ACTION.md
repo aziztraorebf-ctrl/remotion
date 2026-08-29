@@ -65,6 +65,31 @@ toute action sur cette annonce — un résumé ne le remplace pas (2 erreurs pay
 
 ---
 
+## ⭐⭐ POCHOIR (track matte) — PORTÉ, mais la PRÉCOMPOSITION bloque (2026-08-29)
+
+**Acquis, mesuré bout en bout** : `mask`/`clip-path` → paire Lottie `td:1`/`tt:1`.
+Écart **0,00 %** sur de la géométrie professionnelle réelle. 2 bugs corrigés dans
+`svg2lottie_scene.py` (clip d'un `<g>` perdu en silence + table de refus périmée),
+garde-fou posé (compte les clips vus vs traités), 4 tests de non-régression.
+
+⛔ **LE BLOCAGE, mesuré sur une vraie pièce** : sur le chien de Fable, **1 pochoir sur 5**
+passe. Les 4 refus disent la même chose — *« clip d'un groupe de N calques, précomposition
+non implémentée »*. Un œil n'est pas une forme : c'est 4 calques (globe, iris, pupille,
+reflet). Lottie ne découpe qu'un calque par pochoir.
+
+⭐ **Une brique, deux verrous** : la pièce 2 (onboarding) a 45 précomps imbriqués sur
+3 niveaux. La précomposition débloque les deux.
+
+▶️ **Priorité fixée par Aziz le 29/08** : animer le chien de Fable + des formes similaires
+issues de fichiers pro. → **`memory/starters/STARTER-RIG-PERSONNAGE-EXISTANT.md`**
+(banc d'essai : `src/projects/_client-sim/repro-chien/`, lire son README en premier)
+
+⭐ **Effet de bord doctrinal** : Fable a réussi un cas classé « organique donc voué à
+l'échec ». Critère reformulé — (référence) × (primitives symétriques) × (tolérance du
+registre). Mascotte 3/3 → générer · main 1/3 → prendre · visage humain 2/3 → non tranché.
+
+---
+
 ## ⭐ LOTTIE — chaîne PROUVÉE (section ARCHIVÉE le 2026-08-29)
 
 Les acquis techniques (flou `ty:29` porté · `gradientTransform` en similitude · pointillés/`nm`
