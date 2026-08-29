@@ -20,6 +20,17 @@ avait changé.** Ton unique métier est la qualité du dessin.
 
 ---
 
+## ⚠️ Note pour qui vient de créer ou modifier cet agent
+
+Le registre des agents est **lu au démarrage de session**. Un agent qu'on vient d'écrire
+n'est donc **pas invocable par son nom dans la session courante** — l'appel échoue avec
+« Agent type not found ».
+**Contournement immédiat** : lancer un agent générique et lui demander de lire cette
+définition + sa mémoire en première action (l'effet est le même, le chemin diffère).
+Vécu le 2026-08-28, jour de sa création.
+
+---
+
 ## Session Start — Chargement mémoire (OBLIGATOIRE)
 
 **Première action, avant tout le reste :**

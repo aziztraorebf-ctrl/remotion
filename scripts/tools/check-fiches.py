@@ -85,7 +85,41 @@ def main():
     print("✅ Toutes les fiches pointent vers des chemins existants.")
     print("   Rappel : ce script verifie l'EXISTENCE, pas que le contenu dit encore vrai.")
     print("   La verification du CONTENU se fait a l'usage (cf. en-tete de chaque fiche).")
+    check_budget_lignes()
     return 0
+
+
+# --- ajout 2026-08-29 : le rapport VERT ne prouvait que la couverture du script ---
+# Vecu au wrap : 13/13 fiches [OK] pendant que les 13 depassaient TOUTES leur budget
+# (2050 lignes pour 715). Une fiche est du contexte INJECTE a chaque edition : elle
+# gonfle exactement comme MEMORY.md a gonfle, et la regle ecrite seule n'a rien empeche
+# (cf. feedback regle-ecrite-insuffisante-sans-gate-outille). Le seuil est mecanique,
+# chiffre, zero faux positif — contrairement a la veracite du contenu qui ne s'automatise pas.
+BUDGET_LIGNES = 55
+
+
+def check_budget_lignes():
+    import pathlib
+
+    dossier = pathlib.Path(__file__).resolve().parents[2] / "memory" / "fiches"
+    if not dossier.is_dir():
+        return []
+    trop = []
+    total = 0
+    for f in sorted(dossier.glob("FICHE-*.md")):
+        n = len(f.read_text(encoding="utf-8").splitlines())
+        total += n
+        if n > BUDGET_LIGNES:
+            trop.append((f.name, n))
+    if not trop:
+        return []
+    print(f"\n⚠️  BUDGET DE LIGNES DEPASSE ({len(trop)} fiche(s), {total} lignes au total)")
+    print(f"   Chaque fiche est injectee dans le contexte a chaque edition — budget {BUDGET_LIGNES} lignes.")
+    for nom, n in sorted(trop, key=lambda x: -x[1]):
+        print(f"   {n:>4} l. ({n / BUDGET_LIGNES:.1f}x)  {nom}")
+    print("   -> retirer la ligne la plus faible en cout documente, ou DEPLACER un bloc")
+    print("      hors-sujet vers son foyer naturel en laissant un pointeur d'une ligne.")
+    return trop
 
 
 if __name__ == "__main__":

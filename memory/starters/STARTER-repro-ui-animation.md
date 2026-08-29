@@ -7,6 +7,31 @@
 
 ---
 
+## ⭐ ÉTAT AU 2026-08-29 — la session 1 a eu lieu, reprendre ICI
+
+**FAIT** (branche `feat/repro-lottie-ui-redeem`, 5 commits) :
+- ✅ **Corpus acquis** : 22 animations d'un studio qui vend, mesurées ET rendues
+  → `out/_r-and-d/corpus-kamotion/` · analyse : `memory/client-sim-tests/corpus-kamotion/CORPUS-REFERENCE-UI.md`
+- ✅ **Pièce 1 sur 3 reproduite** : flux « Redeem All » (hauteur 1,00 · encre 1,02 vs la référence)
+  → `out/_r-and-d/repro-redeem/repro-redeem-FINAL.mp4` · code `src/projects/_client-sim/repro-redeem/`
+- ✅ **Doctrine PRENDRE vs GÉNÉRER** (`memory/tools/banques-lottie-et-greffe.md`) + agent
+  `svg-dessinateur` avec mémoire persistante.
+
+**⏭️ REPRENDRE PAR** (dans cet ordre) :
+1. ⛔⛔ **Le MATTE (`tt`)** — ~90 occurrences sur 22 pièces pro, refusé par notre chaîne.
+   C'est le seul vrai bloqueur technique mesuré. Avant toute nouvelle reproduction.
+2. **Pièce 2 : l'onboarding** (`12_BVaKTgmqgb.lottie`, 2000×4369, 26 precomps, 40 textes vectorisés,
+   0 matte 0 dégradé). ⭐ Décision d'Aziz : viser les écrans **à TEXTE** — notre chaîne vectorise
+   déjà par défaut, c'est bien plus simple que la main.
+3. Réglage fin de la pièce 1 (la main couvre encore un peu les vignettes).
+4. Décision en attente d'Aziz : **abonnement Creattie** (48 $/an — seul catalogue vérifié dont la
+   licence autorise le transfert au client).
+
+⛔ **L'agent `svg-dessinateur` reste EN OBSERVATION** (décision d'Aziz) : hors du flux de production
+tant qu'il n'a pas fait ses preuves sur d'autres pièces.
+
+---
+
 ## ▶️ PROMPT DE DÉMARRAGE (copier tel quel)
 
 ```

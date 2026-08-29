@@ -299,6 +299,7 @@
 | `CountUp` | ui | Compteur animé — réutilisable dans n'importe quel composant |
 | `Badge` | ui | Badge couleur (ALERTE / OFFICIEL / CONFIRMÉ) — spring-up |
 | `KraftCardBackground` | inserts | Fond kraft/slate/ivoire — wrapper réutilisable pour cards |
+| ⭐ `Piece` *(proto)* | `_client-sim/repro-redeem/ReproRedeem.tsx` | **Pose un groupe SVG dessiné AILLEURS sous une transformation animée**, recentré sur une ancre — au lieu de le redessiner en JSX. 4 helpers d'injection SVG existent déjà dans le repo (`Grp` de WarmapCfaInsertSVG/OrDarfourHook…) mais **aucun ne porte l'ancre**, obligeant chaque scène à refaire le `translate(-ax -ay)` à la main. ⭐ C'est l'outillage de la règle n°0 (le modèle dessine, nous animons) |
 
 ---
 

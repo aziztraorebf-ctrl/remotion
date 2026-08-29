@@ -6,7 +6,7 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 
 ## 📑 INDEX
 
-- **🔧 MÉTHODE & PROCESS** — ⛔⛔ instrumenter la détection ≠ appliquer le remède (corriger d'abord, documenter ensuite), ⭐⭐⭐ la mesure est biaisée par la FAÇON de mesurer (couleur au cœur du glyphe · bon AXE · pendant la transition), ⛔⛔ 3 corrections sans effet = un PLAFOND, pas un dosage (balayer le paramètre), reorg workspace (liens en dur dans le code), grand ménage mémoire+disque (baseline), bug visuel = extraire frames + instrumenter, validation mini-renders comparatifs (pas des stills), ⛔ identifiant de modele/API en dur = dette (centraliser des le 2e usage), ⛔⛔ HTTP 200 ≠ livrable (changer un defaut = tester chaque chemin), modele en `-preview` = compte a rebours, repo tiers = lire ses prompts avant son code
+- **🔧 MÉTHODE & PROCESS** — ⭐⭐⭐ un AGENT NOMMÉ AVEC MÉMOIRE bat un agent générique (un registre qui revient ≥2× = créer l'agent, pas relancer un générique), ⛔ mesurer la bonne grandeur ET dans le bon SENS (une bbox EMBARQUE le halo · une orientation inversée ne se rattrape pas par l'échelle), ⛔⛔ instrumenter la détection ≠ appliquer le remède (corriger d'abord, documenter ensuite), ⭐⭐⭐ la mesure est biaisée par la FAÇON de mesurer (couleur au cœur du glyphe · bon AXE · pendant la transition), ⛔⛔ 3 corrections sans effet = un PLAFOND, pas un dosage (balayer le paramètre), reorg workspace (liens en dur dans le code), grand ménage mémoire+disque (baseline), bug visuel = extraire frames + instrumenter, validation mini-renders comparatifs (pas des stills), ⛔ identifiant de modele/API en dur = dette (centraliser des le 2e usage), ⛔⛔ HTTP 200 ≠ livrable (changer un defaut = tester chaque chemin), modele en `-preview` = compte a rebours, repo tiers = lire ses prompts avant son code
 - **🗺️ WAR-MAP — grammaire & narration** — HOOK partir de NOS templates (pas grammaire externe), GRAMMAIRE CAUSALE + AUDIO-FIRST (standard), scanner catalogue carte-vivante avant code, structure linéaire + fact-check avant audio lock, sprite invisible = CONTRASTE, vrai coupable B1 = CODE LEGACY parallèle
 - **🎬 DA-BRIEF & review externe** — DA-brief causalité phrase-par-phrase + chaînes réf + catalogue, DeepSeek V4 3e voix conceptuelle (aveugle visuel), Gemini diff visuel obligatoire après 1er render, **DA-brief VIDÉO (analyse d'écart vers refs, scène finie)**
 - **🎨 SVG GÉNÉRATIF ANIMÉ** (2026-06-21, ⭐ NOUVELLE VOIE) — Gemini génère une SCÈNE illustrée complexe en SVG propre (50-100 paths, ~20Ko, groupes #id sémantiques) → animable PAR PARTIES dans Remotion via useCurrentFrame (pas Lottie, pas AE). Net à toute taille, couleurs modifiables à la frame. GOTCHA : ne JAMAIS sortir un élément du cadre clippé (artefact de coupe) → "repart" = avance légère + fade out · **BIBLIOTHÈQUE SVG** (2026-06-25) — capitaliser chaque projet SVG en éléments (.svg) + techniques (.md) + index R&D (RD-INDEX.md avec renders catbox + verdicts). Un agent vierge peut réutiliser sans relire les TSX source. · **TEST NAVIGABILITÉ** : lancer un agent vierge avec 5 questions concrètes → les lacunes qu'il ne trouve pas = trous à corriger immédiatement (lien mort, prompt TODO, décision non tranchée) · **PERSONNAGE VIVANT** (2026-06-30) — perso d'encre animé par CODE (frame-driven, pas sprites) ; FOOT-PLANT / compensation bassin / objet-enfant-de-la-main ; LLM=banc d'idées pas rig-en-bloc → biblio `personnage-vivant-svg/`
@@ -19,6 +19,49 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 ---
 
 ## 🔧 MÉTHODE & PROCESS
+
+### 2026-08-29 — ⭐⭐⭐ UN AGENT NOMMÉ AVEC MÉMOIRE BAT UN AGENT GÉNÉRIQUE (correction d'Aziz)
+
+J'ai répondu « on ne peut pas entraîner un modèle » à une question qui ne portait pas sur le
+fine-tuning : Aziz parlait de **mémoire d'agent qui s'accumule** — le modèle de nos agents
+existants (`visual-producer`, `storyboarder`…), qui lisent leur mémoire au démarrage et la
+mettent à jour en fin de mission. **Réponse à côté de la question posée.**
+
+Le vrai trou n'était pas la capacité du modèle : **aucun agent DESSINATEUR n'existait**. Les
+agents lancés dans la session étaient génériques — sans mémoire, sans corpus, sans règles. Tout
+ce qu'on leur apprenait en les corrigeant **mourait avec eux**, d'où la répétition des mêmes
+erreurs d'une mission à l'autre.
+
+**Fix** : agent `svg-dessinateur` + 3 fichiers — `MEMORY` (ce qui est acquis) · `TECHNIQUES`
+(ce qui a payé, **avec son chiffre**) · `ECHECS` (le **symptôme visuel exact**, pas « c'était moyen »).
+⭐ **Boucle validée dès le 1er cycle** : l'agent a tranché une question laissée ouverte dans sa
+propre mémoire (avec image de référence, la main se dessine — là où 5 modèles avaient échoué à
+l'aveugle) et a mis à jour ses 3 fichiers lui-même, en y inscrivant 2 pièges **chiffrés**
+rencontrés en route (≥12 unités entre parois avant un stroke de 7 · ratio du poing ~1,2:1).
+
+⭐ **La règle généralisable** : quand un registre revient (≥2 missions), ne pas relancer un agent
+générique — **créer l'agent nommé avec sa mémoire**. Le coût est un fichier `.md` ; le gain est que
+le 2e cycle part du niveau où le 1er s'est arrêté. ⛔ Le chiffrage est ce qui sépare une mémoire
+utile d'une mémoire décorative.
+⚠️ Gotcha : le registre des agents est lu **au démarrage de session** — un agent qu'on vient
+d'écrire n'est pas invocable tout de suite (contourner en faisant lire sa définition à un agent
+générique).
+
+### 2026-08-29 — ⛔ MESURER LA BONNE GRANDEUR, ET DANS LE BON SENS (2 erreurs le même soir)
+
+Prolonge l'entrée « la mesure est biaisée par la FAÇON de mesurer » avec 2 familles neuves :
+
+**(a) Le chiffre porte le bon nom mais pas le bon périmètre.** Vignettes agrandies ×2 sur la foi
+d'un « 244-268 de large » relevé sur la référence — **ce chiffre incluait les étincelles AUTOUR
+de la carte, pas la carte**. La vraie carte faisait 170 de haut, exactement la nôtre : elle était
+déjà juste. ⭐ Avant de corriger d'après une bbox, vérifier ce qu'elle **EMBARQUE** (halo, ombre,
+effet), pas seulement ce qu'elle est censée mesurer.
+
+**(b) L'orientation n'est pas un détail de dosage.** Nos cadres sortaient en **152×196** (plus
+hauts que larges) là où la référence est en **220×168** (plus large que haute). Le sens était
+**INVERSÉ**, pas la taille — invisible tant qu'on ne mesure pas les DEUX côtés. ⭐ Mesurer un
+**ratio largeur/hauteur**, jamais une seule dimension ni une impression : aucun facteur d'échelle
+ne rattrape une orientation retournée.
 
 ### 2026-08-28 — ⛔⛔ QUAND LA MESURE INFIRME UNE OBSERVATION HUMAINE, C'EST LA MESURE QU'ON RE-VÉRIFIE
 

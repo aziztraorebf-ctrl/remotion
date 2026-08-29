@@ -11,8 +11,15 @@ pas**. ⚠️ Le freelance n'est pas prouvé non plus (1 candidature, 0 revenu) 
 officiels de LottieFiles. On sait livrer un composant au format du client, pas seulement une vidéo.
 → `memory/client-sim-tests/lottie-ui-lcd/STATUS.md`
 
-**Prochaine étape (bloquante)** : étendre le convertisseur aux **courbes de Bézier**, puis convertir
-une **scène narrative** complète et mesurer ce qui passe / ce qui ne passe pas.
+**Prochaine étape (bloquante)** — ⭐ **RÉÉCRITE le 2026-08-29, les 2 items d'origine sont périmés** :
+~~courbes de Bézier~~ ✅ **FAITES le 24/08** (`lottie-ui/tools/svgpath.py` : grammaire complète
+M/L/H/V/C/S/Q/T/A/Z + quad→cubic + arc→cubics, 36 tests). ~~scène narrative~~ ⛔ **mauvaise cible** :
+zéro carte géographique sur 22 pièces d'un studio qui vend — le registre qui se paie est le **FLUX
+D'INTERFACE**.
+⛔⛔ **LE VRAI BLOQUEUR, MESURÉ** : le **MATTE (`tt`)** — ~90 occurrences sur 22 pièces pro, refusé
+par notre chaîne, contre 0 trim path / 0 repeater / 0 expression. C'est LE portage prioritaire.
+→ `memory/client-sim-tests/corpus-kamotion/CORPUS-REFERENCE-UI.md` · starter :
+`memory/starters/STARTER-repro-ui-animation.md`
 
 ⛔ **Ne PAS refondre le gabarit d'ouverture des vidéos** : la mesure des 4 courbes de rétention
 INFIRME l'hypothèse d'un défaut systématique (les formes divergent).
@@ -58,7 +65,7 @@ toute action sur cette annonce — un résumé ne le remplace pas (2 erreurs pay
 
 ---
 
-## ⭐⭐ LOTTIE — chaîne PROUVÉE, pièce livrable acquise · ⏭️ en attente : contrôle qualité puis Khartoum
+## ⭐ LOTTIE — chaîne PROUVÉE · QC automatique ✅ et Khartoum ✅ FAITS · ⏭️ reste : montrer à un client
 
 **La maison-gaz est un livrable, pas une démo** : 1346×805, 9,6 s, 6 blocs nommés, **16 Ko**
 en `.lottie`, validée par Aziz dans Creator (blocs dépliables, animation qui joue).
@@ -243,7 +250,7 @@ Reste ouvert : prix réels, nom commercial, portfolio de démo. Détail :
 
 ---
 
-## ⭐ KORA & CARTES — 2 pistes de sujet, RIEN N'EST TRANCHÉ (2026-08-12/13)
+## 🔧 BACKLOG — KORA & CARTES : 2 pistes non tranchées, dormantes depuis 16 j (2026-08-12/13)
 
 **Les 2 décisions qui restent ouvertes** (le reste de cette section est de la preuve déjà gravée) :
 - **Quel sujet ?** Piste A « pourquoi l'Afrique évolue / pays qui montent » (relancer SUJET-PRIME
@@ -260,7 +267,7 @@ storyboard multi-modèles refondu le 18/08 → `memory/fiches/FICHE-STORYBOARD.m
 Détail des pistes : `memory/projects/EXPLORATION-DIVERSIFICATION-CHAINES.md`.
 
 
-## ⭐⭐ NOUVELLE CHAÎNE CANADA EN — test PIPELINE en cours (2026-08-14)
+## ⭐ CHAÎNE CANADA EN — test PIPELINE CONCLUANT (14/08) · 1 décision en attente : Mapbox réel vs 1re scène
 
 Marché EN validé (TubeLab, RPM jusqu'à 20$+). Script V3 FR validé jury 4 LLM. **3 styles H3 validés**
 (Hand Drawn, Poster Vector narratif + Poster Vector SaaS/logo/scène-2-personnages) + **format de prompt
@@ -280,7 +287,7 @@ storyboard multi-panneaux également testés. Détail complet : `tools/minimax-h
 
 ---
 
-## ⭐⭐⭐ GAZODUC — ACTE 3 EN COURS, 2 SEGMENTS SUR 3 FAITS (2026-08-18)
+## ⭐⭐⭐ GAZODUC — ACTE 3 : 1 segment FINAL (C) · A débloqué à VALIDER · B à porter (gel levé le 28/08)
 
 **Actes 1, 2, 4, 5 : FINAUX.** L'Acte 3 est le dernier en chantier, et il a été DÉBLOQUÉ le 18/08
 après des semaines de gel.

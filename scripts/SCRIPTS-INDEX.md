@@ -58,6 +58,7 @@
 
 | Quand tu veux... | Script | Usage / note |
 |---|---|---|
+| ⭐ **Savoir QUEL MODÈLE dessine le mieux** un registre (UI, organique, objet) | `svg-concours-ui.py` | Même brief → 5 modèles (Gemini 3.1 Pro · GPT-5.6 Sol · Kimi K3 · Grok 4.6 · GLM-5.2) → planches **ANONYMISÉES** (test à l'aveugle). `--lot main\|objets --provider all`. ⭐ Le brief impose la technique qui fait le relief : **~10 formes empilées par objet**, pas des dégradés — sans ça les modèles rendent PLAT. Verdict 2026-08-28 : objets 5/5 réussissent, **main 5/5 échouent sans image de référence** |
 | Idéation chorégraphie SVG (Kimi K2.5 — scène, transitions, registre) | `scripts/tools/kimi-svg-ideation.py` | `--brief "..." [--episode X]`. Kimi via Moonshot. |
 | Idéation vues SVG (Gemini + GPT en parallèle — 2 angles créatifs) | `scripts/tools/svg-ideation-vues.py` | `--brief "..." [--out dir/]`. |
 | Brief de faisabilité SVG AMONT (LLM propose sa meilleure approche + image-cible) | `scripts/tools/svg-faisabilite-brief.py` | `--brief "..." [--provider gemini\|gpt]`. Étape 0 pipeline. |

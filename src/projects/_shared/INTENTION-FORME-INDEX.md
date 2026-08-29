@@ -219,6 +219,7 @@ long du tracé, flèche, dégradé qui progresse) — c'est ce que fait `ProtoIn
 | Quelque chose est **en train de s'écrire** (pas « apparaît ») | tracé + pointe lumineuse qui court | `DrawnPath` (`getPointAtLength`) | idem |
 | La scène doit avoir un SOL (pas un fond noir) | reflet miroir flouté masqué | `GroundReflection` (opacity ~0.58, blur ~2 — LISIBLE) | idem |
 | Un objet qui se dissout / s'évapore dramatiquement | particules radiales ("Thanos") | `ParticleDissolve` + `ParticleField` | svg-library/elements/effects |
+| Un objet est **consommé / validé sur place** (récompense, action réussie) | gerbe de losanges qui naissent vite et s'effacent lentement, **l'objet ne glisse pas** | ⭐ `Etincelles` *(proto)* — `_client-sim/repro-redeem/ReproRedeem.tsx`. ⛔ Ne pas confondre avec `ParticleDissolve` : intention INVERSE (là un objet se DÉFAIT dramatiquement, ici une action RÉUSSIT — registre UI/récompense). Déterministe, zéro `Math.random` | `_client-sim/repro-redeem` |
 
 ### Faire RESSENTIR du TEXTE / mettre l'EMPHASE  ← ⭐ CATÉGORIE NOUVELLE (manquait)
 | Intention | Forme | Réponse(s) | Catalogue |

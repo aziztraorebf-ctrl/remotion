@@ -42,5 +42,26 @@ déterministe — là où on fait le plus spontanément confiance.
   deux verdicts opposés. Sans cette distinction, un décalage d'un pixel se lit comme un logo cassé.
   Mesure : éroder d'1 px — ce qui disparaît était du contour.
 
+## ⛔⛔ LE SYMÉTRIQUE, ET IL EST PLUS DANGEREUX (2026-08-29)
+
+Ci-dessus : le rapport ment, l'image dit vrai. **Le cas inverse existe, et il fait accuser
+quelqu'un d'autre.**
+
+**Le fait** : un agent rapporte 7 itérations de correction sur un dessin, précises et détaillées.
+Je rends le fichier : **l'image est identique à l'avant**. Réflexe immédiat — l'agent a menti.
+Vérification (`ls -la` + `git diff`) : **le fichier avait bien changé, à la seconde près.**
+C'était **MON outil de rendu** qui affichait l'ancienne version : il isolait les groupes en les
+masquant par CSS (`#id{display:none}`), et les `id` dupliqués du fichier faisaient que le masquage
+visait plusieurs groupes à la fois. L'outil de vérification était faux, pas le travail vérifié.
+
+**How to apply**
+- ⛔ Avant de conclure qu'un agent (ou un modèle, ou un collaborateur) n'a rien produit :
+  **vérifier que le fichier a changé** (`ls -la`, `git diff`, taille en octets). Une seule commande.
+- ⭐ Un outil de vérification est **du code comme un autre** : il a des bugs, et ses bugs se
+  déguisent en fautes de celui qu'on vérifie. Le rendu ne prouve rien s'il ne rend pas la bonne chose.
+- ⚠️ Signal : le rapport décrit des corrections **précises et vérifiables** (« pouce rattaché,
+  index raccourci de 16 px ») mais l'image est **strictement inchangée**. Un menteur reste vague ;
+  un rapport précis contredit par une image identique accuse plutôt l'instrument.
+
 **Vécu** : 2 des 3 défauts ont été vus par Aziz sur l'image AVANT que je les mesure.
 Commits `66ae75ee`, `bd85038e`, `980d145c`.

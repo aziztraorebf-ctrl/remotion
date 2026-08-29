@@ -20,6 +20,22 @@
 - `tavily_crawl` / `tavily_map` — crawl/cartographie de site (NON testés en réel ; pour le crawl lourd, Firecrawl reste plus éprouvé).
 - `tavily_research` — recherche multi-sources agentique. **Testé et validé 2026-07-04** (mode `pro`) : synthèse structurée avec sources citées sur un sujet complexe (usage réel app Grok Imagine), bien plus fiable que le skill `/last30days` sur un sujet où les vidéos YouTube trouvées n'ont pas de transcripts (voir section fallback ci-dessous).
 
+## ⛔ QUAND AUCUN OUTIL DE SCRAPING NE PASSE : le 403 Cloudflare (2026-08-28)
+
+Vécu sur `lottiefiles.com/hire` : **Firecrawl 403, Tavily inutile, `curl` 403** — un mur anti-robot
+qui ne se contourne pas par un meilleur scraper. Ce qui a marché : **Playwright** (`mcp__playwright`),
+parce qu'il pilote un vrai navigateur avec un vrai moteur JS.
+
+⭐ **Et il fait mieux que passer le mur** : sur une page qui charge ses contenus en JS, `browser_navigate`
+puis `browser_network_requests` **liste les fichiers réellement téléchargés par la page** — c'est ainsi
+que les 22 animations du corpus kamotion ont été trouvées, alors qu'aucune n'apparaissait dans le HTML.
+Un scraper qui lit le HTML brut ne les aurait jamais vues.
+
+**L'ordre à suivre** : Tavily (défaut) → Playwright si 403 / si la page est une galerie JS →
+Firecrawl seulement pour un crawl lourd de site entier.
+⚠️ Note honnête : ce jour-là j'ai attaqué par Firecrawl **par réflexe**, alors que cette fiche dit
+depuis le 2026-06-16 que Tavily est le défaut. Deux appels perdus en crédits épuisés.
+
 ## Fallback quand `/last30days` bloque (sujet sans transcripts YouTube)
 Observé 2026-07-04 : le skill `/last30days` peut échouer silencieusement (bouclage sans jamais atteindre la synthèse finale) quand les vidéos YouTube trouvées sur un sujet n'ont aucun sous-titre/transcript disponible — le moteur retente indéfiniment (yt-dlp → fallback HTTP → ScrapeCreators) sans jamais abandonner proprement. Confirmé 2x de suite sur le même sujet (~20 min puis ~16 min avant kill manuel), y compris après avoir retiré "youtube" des sources du plan JSON (le moteur y retourne quand même).
 - **Symptôme** : process qui progresse (CPU/lignes de log qui bougent) mais qui boucle sur les memes tentatives YouTube sans jamais sauvegarder de rapport final.

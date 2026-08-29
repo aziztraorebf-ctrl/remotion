@@ -63,6 +63,10 @@ Ouvrir dans cet ordre, **lire chaque liste jusqu'au bout** (une brique en fin de
 4. `src/projects/_shared/COMPOSANTS-INDEX.md` · `src/projects/warmap/WARMAP-COMPOSANTS-INDEX.md` — inserts, jetons, état-major.
 5. Personnages : `src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` + `habillage.ts` + `identite/Roles.tsx` (4 rôles + 7 objets, clé en main). Aussi `personnage-vivant-svg/PERSONNAGE-VIVANT-INDEX.md`.
 6. Géo : `public/_shared/geo-data/countries-50m.json` (Natural Earth 50m).
+7. ⭐ **BANQUES EXTERNES** (`memory/tools/banques-lottie-et-greffe.md`) — une pièce de banque démontée
+   EST une brique. ⛔ **Anatomie humaine SANS image de référence : 5 modèles sur 5 échouent** (mesuré
+   à l'aveugle) → GREFFER, ne pas générer. AVEC référence, ça se dessine. ⛔⛔ Licence Lottie Simple
+   = VIRALE : portfolio only, jamais un livrable client.
 ⚠️ Un catalogue qui affirme une ABSENCE est faillible : vérifier par `ls` + `git ls-files` + `git log --all -- <nom>` (un registre « canonique » peut vivre sur une branche R&D jamais mergée — 4 occurrences). Un nom trouvé 2× (`find src -name '<Nom>*'`) = piège d'import.
 
 ## INTERDITS — erreurs déjà payées
@@ -135,10 +139,19 @@ mesurer : **régression 11,58 % → 11,91 %**. Les 4 candidates ont dû être me
   boucle qui produit des `<polygon>`/`<circle>`/`<path>` décoratifs : est-ce que ça FIGURE quelque
   chose du monde réel (flocon, éclat, feuille, étincelle) ? Si oui → c'est du dessin, ça se
   délègue.** Une planche de N pièces réutilisables coûte ~0,15 $ et 3 min.
+  ⭐⭐ **À QUI : l'agent `svg-dessinateur`** (créé 2026-08-28, mémoire persistante dans
+  `.claude/agent-memory/svg-dessinateur/` — il lit ses ÉCHECS avant de tenter). **1 agent =
+  1 PLANCHE de N éléments**, jamais 1 appel par élément. ⛔ Signal de détection : **plus de
+  ~15 lignes de `<path>`/`<circle>`/`<rect>` écrites à la main dans un `.tsx`** = c'est du dessin.
+  ⛔ Symptôme visuel a posteriori : **l'aplat de couleur** là où une référence a des dégradés.
 - **Scène à personnage : choisir le RÉGIME d'abord** — DÉMONSTRATIF (1 corps qui EST l'argument) > AMBIANT (décor coûteux).
 - **Mécanisme : modéliser par calcul AVANT le JSX.** Poser le pivot, calculer la position à 0/50/100 %, vérifier que l'ancrage ne bouge pas. Préférer `scale(sx,1)` autour d'un bord fixe à `rotate()` (zéro débordement par construction). Le render CONFIRME, il ne DÉCOUVRE pas.
 - **Calcul et rendu prouvent des choses différentes** : le calcul prouve les INVARIANTS (bornes, fenêtres de temps, conservation, non-collision), le rendu prouve la CRÉDIBILITÉ (ancrage, occlusion, profondeur, lecture). Faire les deux.
 - **Juger un mouvement sur des frames CONSÉCUTIVES** (33 ms à 30 fps), jamais une frame isolée : la dérive est invisible sur une image fixe.
+- ⭐ **L'animation PILOTE le dessin, elle ne le re-décrit pas** : après avoir fait dessiner un SVG,
+  ne jamais recopier ses formes dans le `.tsx` — générer un module TS depuis le SVG (source de vérité
+  unique) et l'importer. Sinon les deux versions divergent en silence. Exemple outillé :
+  `_client-sim/repro-redeem/assets/extraire-groupes.py`.
 - **Réutiliser = importer le composant/les VALEURS exacts** (grep les amplitudes déjà validées), pas recopier le principe. Si le composant n'est pas exporté, l'exporter depuis la source plutôt que dupliquer.
 - **Avant de réutiliser une brique héritée : la RENDRE et la REGARDER**, et grep `VERDICT|REJET` dans le breakdown de l'épisode. Un décor jamais vu est une dette, pas un acquis.
 - ⭐⭐ **UN COSTUME DESSINÉ POUR UNE POSE STATIQUE PEUT RENDRE LA MARCHE ILLISIBLE** (prouvé 2026-08-18,

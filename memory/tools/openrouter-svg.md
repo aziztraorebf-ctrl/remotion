@@ -334,6 +334,20 @@ en patron dans le prompt est nettement superieur a donner seulement l'image PNG 
 l'image seule fait deriver la geometrie (proportions, structure de groupes) meme quand les couleurs sont
 explicites. Applicable a toute generation de pose/variante SVG via LLM, pas seulement ce personnage precis.
 
+> ⛔⛔ **NUANCE MESUREE LE 2026-08-28 — a lire AVANT de choisir Sol pour de l'organique.**
+> Concours a l'aveugle (5 modeles, meme brief detaille, planches anonymisees, cle scellee) :
+> **Sol a produit une des PIRES mains** (paume en grappe de bulles). Or il est presente
+> ci-dessous comme le champion de l'organique sur la foi du visage du pecheur.
+> ⭐ **« Bon sur les visages » ne se transpose PAS a « bon sur les mains ».** C'est la meme
+> famille que la regle deja gravee « un classement ne se transpose pas d'un registre a l'autre »
+> (GLM 1er en SVG, dernier en 3D) — sauf qu'ici elle vaut **DANS** un registre, entre deux
+> sous-registres de l'organique.
+> ⛔ Et le verdict complet : sur une main **SANS image de reference, les 5 modeles echouent**
+> (Gemini 3.1 Pro · Sol · Kimi K3 · Grok 4.6 · GLM-5.2). AVEC reference, ca se dessine.
+> ⚠️ La recommandation « comparatif direct cote-a-cote Sol vs Gemini sur un MEME brief organique »
+> ecrite plus bas dans ce fichier a donc **ETE FAITE** : `scripts/tools/svg-concours-ui.py`,
+> resultats dans `out/_r-and-d/concours-svg-ui/`. Detail : `memory/tools/banques-lottie-et-greffe.md`.
+
 ## ⭐⭐ GPT-5.6 Sol (`openai/gpt-5.6-sol` via OpenRouter) — teste 2026-07-10, jour +2 apres sortie (9 juillet)
 
 > Sortie publique du 9 juillet 2026 (limited preview 26 juin). Famille GPT-5.6 = 3 tiers durables (Sol

@@ -147,8 +147,18 @@ révision de LoadUp, j'ai relevé la position verticale du vert frame par frame 
 impression. → recoupe [[mesurer-composante-par-composante]] et [[re-mesurer-l-entree-avant-de-re-doser-un-placement]].
 
 ## ⛔ CE QUI NE S'APPLIQUE PAS À NOUS
+≈60 % du corpus UI d'origine (interruptibilité, `prefers-reduced-motion`, hover, scroll, GPU,
+choix de bibliothèque) : rien n'interrompt une vidéo rendue. Sous Remotion, `useCurrentFrame` +
+`interpolate`/`spring` — la question de l'outil ne se pose jamais.
 
-Interruptibilité, `prefers-reduced-motion`, hover/press, scroll, propriétés GPU, choix de
-bibliothèque : rien n'interrompt une vidéo rendue, personne ne survole, chaque frame est
-calculée hors temps réel. ≈ 60 % du corpus d'origine. Sous Remotion : `useCurrentFrame` +
-`interpolate`/`spring`, la question de l'outil ne se pose jamais.
+## ⭐ LE GESTE DE TAP — le doigt NE PLIE PAS (2026-08-28, mesuré sur 3 références)
+**Zéro morphing de forme** sur les 3 mains de banque qui fonctionnent. L'illusion du toucher vient
+de deux choses : le **DÉPLACEMENT** de la main (elle descend, elle remonte) et l'**ONDE DE CONTACT**
+(1-2 cercles qui naissent au point de touche et se propagent en s'effaçant). Certaines références
+font même l'appui avec **2 calques superposés dont on bascule l'opacité**.
+⛔ On animait à grands frais ce que personne n'anime. Démo : `_client-sim/repro-redeem/MainGreffeeDemo.tsx`.
+
+⛔⛔ **UNE CORRECTION DEMANDÉE PEUT PORTER UN DIAGNOSTIC FAUX — MESURER AVANT D'OBÉIR.**
+Aziz : « la main est trop grande ». Mesure : la main de RÉFÉRENCE fait **287 px**, la nôtre **110** —
+elle était déjà plus petite. Le vrai défaut : elle **COUVRAIT** le contenu. ⭐ Le bon geste était un
+**DÉPLACEMENT, pas un redimensionnement**. Le symptôme ressenti nomme la gêne, pas sa cause.

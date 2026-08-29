@@ -395,6 +395,15 @@ la source unique.
 
 ## ⭐⭐ LA REFERENCE « MAISON » DE LOTTIEFILES EST EN BITMAP — pas en vectoriel
 
+> ⛔⛔ **CONCLUSION CORRIGEE LE 2026-08-28 — lire AVANT la section ci-dessous.**
+> Mesure sur **22 pieces d'un studio qui VEND** : **96 % vectoriel** (618 calques `ty:4` contre
+> 28 `ty:2`), 18 pieces sur 22 a **100 % vectorielles**. Le bitmap-dans-Lottie **n'est PAS l'usage
+> du metier** — c'est ce que produit **l'exemple d'un OUTIL**. Consequence : notre sortie vectorielle
+> est le **STANDARD D'ENTREE**, pas un argument de vente. ⛔ Ne pas batir d'argumentaire dessus.
+> → `memory/client-sim-tests/corpus-kamotion/CORPUS-REFERENCE-UI.md`
+> ⭐ La reserve ecrite plus bas dans cette meme section (« ne PAS en conclure qu'on fait mieux
+> qu'eux ») etait la bonne intuition — la mesure la confirme et la durcit.
+
 Fichier de comparaison exporte par Aziz (scene d'exemple fournie par Creator, personnage
 « HELLO! », 115 Ko, 14 s). Mesure :
 

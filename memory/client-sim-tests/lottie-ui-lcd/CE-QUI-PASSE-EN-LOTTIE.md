@@ -143,6 +143,15 @@ invisible à l'oeil. Le vectorisé est **fidèle**.
 
 ⭐ **Le natif est un choix d'ÉDITABILITÉ, pas de qualité** — et un choix de RISQUE.
 
+⛔⛔ **LE MÉTIER A TRANCHÉ (mesure 2026-08-28)** — sur **848 calques** de 22 pièces d'un studio qui
+VEND : **0 texte natif (`ty:5`)**, **66 textes vectorisés**, **0 police déclarée**. Ce n'est plus un
+arbitrage ouvert : le vectorisé — **notre défaut** — est ce que le marché livre. ⛔ `--texte natif`
+est une option de confort, **pas un attendu client** : ne pas investir dessus. Le risque mesuré
+(5,74 % sans la police, PIRE que ne rien porter) n'est pas un risque à gérer, c'est une voie que le
+métier n'emprunte pas. → `memory/client-sim-tests/corpus-kamotion/CORPUS-REFERENCE-UI.md` § mesure 1
+⚠️ Il y a bien du TEXTE partout dans le corpus (40 blocs dans la seule pièce d'onboarding) — ce qui
+est à zéro, c'est le texte **natif**. Ne jamais raccourcir en « 0 texte » : c'est faux à l'œil.
+
 ### ⛔ Le fait qui pèse sur nos propres scènes
 Nos scènes écrivent en **Georgia (412 usages)**, Arial, Cinzel, Arial Black, IBM Plex Mono.
 **Aucune de ces familles n'est parmi les 17 que Creator embarque** (relevé par `list_fonts` :
@@ -326,11 +335,20 @@ méthode habituelle (le statique d'abord, nous animons), mais ce n'est PAS un bo
    Symptôme côté outil : `compare_render.py` part en `TimeoutError`.
 4. **Grouper l'aéroport** avant toute livraison : 498 calques nommés `path-248` sont illisibles
    pour un client, même si techniquement valides sur le web.
-5. ❓ **ANIMATION INTERACTIVE — à vérifier, pas un acquis.** Le MCP expose `add_state_machine`,
-   `add_input`, `add_pointer_interaction`, `add_transition` : Lottie semble savoir faire des
-   animations pilotées par l'utilisateur (clic, survol, état). **NON TESTÉ.** Enjeu réel : ça
-   séparerait « animation qui joue » de « composant interactif », et ouvrirait le pilier UI.
-6. **Masques et filtres** — refusés. Le flou gaussien sur les nuages de l'aéroport est le seul
+5. ✅ **ANIMATION INTERACTIVE — FERMÉ le 2026-08-28 : TROUVÉ EN PRODUCTION** (pas testé par nous).
+   `13_Hiker_Walking_Theme_Cycle.lottie` (corpus kamotion) contient dans UN fichier : 1 animation
+   (48 f, marker `Walk Loop`) + **5 thèmes de couleur** (`t/*.json`, règles `{id, type:Color, value}`)
+   + **1 state machine** (`s/StateMachine3.json` : 5 états, `SetTheme` à l'entrée, transitions sur
+   événement `cycleComplete`) + des **slots** (`dark_jeans`, `shirt`…) = les ancrages que les thèmes
+   repeignent. Générateur `@dotlottie/dotlottie-js@1.6.3`.
+   ⭐⭐ **Conséquence commerciale : un thème = REPEINDRE SANS RÉ-ANIMER.** Un client SaaS en mode
+   clair/sombre, ou 3 marques, achète UNE animation et la décline. C'est du FICHIER, pas du code —
+   donc ça survit chez lui. ⚠️ On a OBSERVÉ le mécanisme, on ne l'a pas PRODUIT : « lisible » ≠ « reproduit ».
+6. ⛔⛔ **LE MATTE (`tt`) EST LE TROU PRIORITAIRE** — requalifié le 2026-08-28. Mesuré **~90
+   occurrences sur 22 pièces** d'un studio qui vend, contre **0 trim path, 0 repeater, 0 expression**.
+   Ce n'est pas un refus résiduel : c'est **le premier manque de conversion mesuré sur du livrable
+   pro réel**, à combler avant tout autre portage. → `corpus-kamotion/CORPUS-REFERENCE-UI.md`
+7. **Masques et filtres** — refusés. Le flou gaussien sur les nuages de l'aéroport est le seul
    refus restant sur cette scène.
 7. **Le test After Effects** (essai 7 jours) — indépendant, cf. `STATUS.md` § 4 bis.
 
@@ -338,7 +356,7 @@ méthode habituelle (le statique d'abord, nous animons), mais ce n'est PAS un bo
 - **Il PEUT modifier l'animation** : ouvrir le fichier dans Creator ou After Effects, déplacer
   les keyframes, changer les couleurs. C'est l'intérêt du format, et c'est vérifié.
 - **Il ne la contrôle PAS à la lecture** : un Lottie standard joue comme il a été fabriqué.
-  (Sauf peut-être avec les state machines — cf. point 5, non testé.)
+  (Sauf avec les state machines — VU en production, cf. point 5.)
 
 ### ⚠️ Combien de calques peut-on livrer ?
 Pas de norme universelle — ça dépend de la cible :
