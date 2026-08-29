@@ -745,20 +745,26 @@ export const RemotionRoot: React.FC = () => {
             ⚠️ Ces compositions etaient jusqu'ici imbriquees dans le Folder
             « atlas-peste-1347 » (heritage d'une insertion successive) : mauvaise
             etiquette dans le Studio. Elles ont desormais leur propre dossier. */}
+        {/* Logos de VRAIS clients animes par notre chaine SVG -> Lottie -> Remotion.
+            Range ici au wrap du 2026-08-28 : LoadUpAnime etait imbriquee sous
+            « atlas-peste-1347 », un dossier d'episode sans rapport. */}
+        <Folder name="client-sim-logos">
+          <Composition
+            id="LoadUpAnime"
+            component={LoadUpAnime}
+            durationInFrames={LOADUP_DUREE}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+        </Folder>
+
         <Folder name="client-sim-foster">
       
       
       <Folder name="atlas-peste-1347">
         {/* FOSTER — L'ASSEMBLAGE : les 11 plans + musique + SFX.
             1283 frames = 42,77 s (reference 42,75 s). */}
-        <Composition
-          id="LoadUpAnime"
-          component={LoadUpAnime}
-          durationInFrames={LOADUP_DUREE}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
         <Composition
           id="FosterFull"
           component={FosterFull}

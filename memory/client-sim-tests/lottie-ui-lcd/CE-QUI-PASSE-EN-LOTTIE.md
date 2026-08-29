@@ -16,7 +16,8 @@
 
 **On sait livrer du Lottie standard depuis notre chaîne SVG, sans After Effects — à condition
 que la scène soit faite de FORMES et de COULEURS PLEINES.** Le texte, les dégradés et les
-pointillés passent désormais ; les filtres, masques et images ne traversent toujours pas.
+pointillés passent désormais — **et le FLOU depuis le 2026-08-28**. Ne traversent toujours pas :
+les filtres **composites** (ombre portée, lueur), les masques et les images.
 
 ---
 
@@ -95,8 +96,9 @@ Détail : [[feedback_prouver-une-capacite-nest-pas-produire-un-livrable]]
 | Transformations (position, échelle, rotation, inclinaison) | ✅ **oui** | aplaties dans la géométrie |
 | Calques séparés, manipulables un par un | ✅ **oui** | ⚠️ dépend du nommage, voir plus bas |
 | **Texte** | ✅ **oui** — ⭐ **porté le 2026-08-26**, DEUX voies | **vectorisé** (défaut) : glyphes en courbes, fidèle partout, non éditable · **natif** (`--texte natif`) : calque `ty:5` éditable par le client, mais le rendu dépend de la police **chez le lecteur**. Voir le tableau des risques plus bas |
-| **Dégradés** (linéaires ET radiaux) | ✅ **oui** — ⭐ **porté le 2026-08-26** | `gf` natif avec l'opacité de chaque arrêt. Aéroport : **57,74 % → 11,58 %**. ⚠️ Le rayon radial reste une approximation (Lottie n'a qu'un rayon scalaire) — formule choisie **par mesure**, pas par la spec |
-| **Flou, ombre portée, lueur** (`filter`) | ⛔ **non** | à refaire autrement (formes empilées) ou à retirer du brief. ⭐ **Coût visuel MESURÉ** (Khartoum, 8 filtres non portés) : l'écart total reste à **1,17 %** — les filtres coûtent **peu**, le fond coûtait tout |
+| **Dégradés** (linéaires ET radiaux) | ✅ **oui** — ⭐ **porté le 2026-08-26** | `gf` natif avec l'opacité de chaque arrêt. Aéroport : **57,74 % → 11,58 %**. ⚠️ Le rayon radial reste une approximation (Lottie n'a qu'un rayon scalaire) — formule choisie **par mesure**, pas par la spec. ⭐ **`gradientTransform` porté le 2026-08-28** quand c'est une **SIMILITUDE** (translation · rotation · échelle uniforme et compositions) — Lottie porte un SEGMENT, déplacer ses 2 points suffit. ⛔ Hors format : **cisaillement** et **échelle non uniforme** (rendraient un radial elliptique) |
+| **Flou** (`feGaussianBlur` seul) | ✅ **oui** — ⭐⭐ **porté le 2026-08-28** | effet Lottie **`ty:29`**, rendu par lottie-web — mesuré À L'IMAGE (un carré passe de **0 à 5360 px** de bord adouci). ⛔ La note « les filtres sont une limite du FORMAT » était **FAUSSE** : le format savait, notre convertisseur n'émettait rien. Écart logo Inkscape **12,54 % → 6,68 %** |
+| **Ombre portée, lueur** (filtres **COMPOSITES** : `feOffset`+`feMerge`, `feColorMatrix`) | ⛔ **non** | pas d'équivalent Lottie — à refaire en formes empilées ou à retirer du brief. ⭐ **Coût visuel MESURÉ** (Khartoum, 8 filtres non portés) : l'écart total reste à **1,17 %** — ils coûtent **peu**. ⚠️ Vérifier d'abord si le `filter:url()` pointe vers un id qui EXISTE : sur 4 logos clients, **14 sur 16 étaient morts** (supprimés à l'export, un navigateur les ignore) |
 | **Masques, détourage** (`mask`, `clipPath`) | ⛔ **non** | à pré-appliquer à la géométrie en amont |
 | **Images / photos** (raster) | ⛔ **non** | Lottie sait embarquer en base64, mais le poids explose — déconseillé |
 | Symboles réutilisés (`use`, `symbol`) | ⛔ **non** | à aplatir avant conversion (faisable, coût en amont) |

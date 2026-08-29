@@ -95,9 +95,13 @@ clés à la main — les 4 dernières sont nées de gestes que j'avais d'abord c
 | `pop` | apparition + ressort discret | `(debut, fin)` |
 | `trace` | le trait se dessine (trimPath) | `(debut, fin)` |
 | ⭐ `geste3` | **monte haut → SUSPEND → retombe** + écrasement | `(f0, f_haut, f_susp, f_impact, hauteur)` |
-| ⭐ `respire` | oscillation lente, EN BOUCLE | `(debut, fin, ampleur, periode)` |
-| ⭐ `balance` | rotation alternée, ancrée à la BASE | `(debut, fin, angle, periode, ancre_y)` |
+| ⚠️ `respire` | oscillation lente, EN BOUCLE — **ÉCRITE, JAMAIS UTILISÉE** | `(debut, fin, ampleur, periode)` |
+| ⭐ `balance` | rotation alternée, ancrée au POINT D'ATTACHE | `(debut, fin, angle, periode, ancre_y)` |
 | ⭐ `cligne` | les yeux se ferment 2 frames | `(debut, fin, periode)` |
+
+⛔ **`respire` n'est PAYÉE PAR RIEN** (vérifié au wrap : zéro partition l'utilise). Les 3 autres
+ont leur usage réel — `geste3` sur LoadUp, `balance` et `cligne` sur le renard, plus la validation
+d'Aziz à l'œil dans Creator. **Vérifier `respire` au 1er usage au lieu de la croire éprouvée.**
 
 ### ⭐ LA BOUCLE DE VIE — le défaut qu'on ne voit pas en regardant le début
 Sur le renard, tout était juste **jusqu'à f70**… puis **plus rien pendant 80 frames**.
@@ -115,8 +119,11 @@ L'ÉCRAN** — sans aucune erreur. `centre_du_calque()` le fait, mais elle **ren
 sur tout fichier passé par `group_layers.py` (elle cherchait les chemins à une profondeur
 fixe et trouvait des `gr`). ⭐ **Conséquence rétroactive** : l'écrasement de LoadUp validé
 le 28/08 était ancré à `[0,0]` — il « marchait » par chance. Corrigé.
-⛔ Pour une rotation, l'ancre va à la **BASE** de la forme, pas à son centre (une queue
-pivote où elle s'attache) — d'où le paramètre `ancre_y` de `balance`.
+⛔ Pour une rotation, l'ancre va au **POINT D'ATTACHE**, pas au centre — et **ce point n'est pas
+toujours en bas** : la queue du renard s'attache en **HAUT** (`ancre_y=0.15`, `animate_scene.py:149`).
+⚠️ **`ancre_y` : 0 = HAUT de la bbox, 1 = BAS** (l'axe Y Lottie descend). ⛔ La 1re version de cette
+fiche disait « ancrée à la BASE » et le docstring du code « 0 = centre » : **les deux étaient faux**,
+corrigés au wrap. Une fiche qui ment clôture la recherche — c'est ce qu'elle existe pour empêcher.
 
 ## LE VOCABULAIRE (les 4 termes qui ont servi)
 

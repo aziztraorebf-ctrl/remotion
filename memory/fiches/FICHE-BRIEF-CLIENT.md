@@ -160,6 +160,19 @@ concurrent qui dessine** — et c'est l'ouverture de proposition la plus forte (
 - ⭐ **Exiger l'ÉTAT NEUTRE quand la référence client montre l'état FINAL** : sa réf était givrée à 100 % ; sans châssis propre livré à part, les paliers 0/25/50 % étaient impossibles → tout à refaire.
 - **La référence fournie fait autorité sur la forme.** Ne pas dire « j'ai dessiné X » quand on a suivi SON image.
 
+## ⛔⛔ CE QU'IL FAUT DIRE AVANT DE COMMENCER (vectorisation d'un logo client)
+
+**SOURCE BASSE DÉFINITION → LE TRAIT S'ÉPAISSIT.** Un vectoriseur **interprète le flou comme de la
+MATIÈRE**. Mesuré sur Hinch (emblème de ~38 px) : il a survécu et est même **plus lisible** que la
+source, mais **+3,3 points de densité** — les épis dessinés en TRAITS FINS sont devenus des MASSES.
+⭐ **Prévenir que le trait s'épaissit, et DEMANDER un fichier plus grand** quand le client en a un.
+⛔ Je m'étais trompé sur QUOI serait perdu : pas les détails, leur **FINESSE**.
+
+⚠️ **Chaque logo demande un recadrage DIFFÉRENT** (non-blanc · teinte dominante · pixels clairs
+selon le fond) — coût **caché**, à compter dans le devis, ce n'est pas une étape automatique.
+⛔ **La TEXTURE coûte, pas le dessin** : un trait vieilli sort à 505 formes / **433 Ko**, hors cible
+pour un splash screen (~50-100 Ko) — et son import dans Creator dépasse 70 s.
+
 ## 3. RÉPONDRE — cadrage et pièges de formulaire
 - ⛔⛔ **Ne JAMAIS renvoyer au client sa propre référence comme preuve.** L'exemple qu'il cite est public et gratuit : le lui rejouer ne prouve rien et se lit comme de la paresse. **Animer SON élément à lui** prouve qu'on a lu son écran. (correction d'Aziz, 08-24)
 - ⛔ **Le formulaire Upwork n'a PAS de champ TITRE.** Un mot-code va en **1re ligne de la lettre** (le brief dit « subject line OR title »). Il y a 1 lettre + **N questions dans des cases SÉPARÉES** : une case vide se lit comme un trou. La répétition lettre/cases est normale.

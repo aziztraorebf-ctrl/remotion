@@ -17,8 +17,9 @@ Trois primitives, choisies parce qu'elles couvrent nos scenes reelles :
   - "pop"    : apparition avec un ressort discret  -> ks.s (echelle)
   - "respire": oscillation lente et faible, EN BOUCLE -> ks.s
                ("respire", debut, fin, ampleur_%, periode_frames)
-  - "balance": rotation alternee, ancree a la BASE  -> ks.r
-               ("balance", debut, fin, angle, periode, ancre_y 0..1)
+  - "balance": rotation alternee, ancree au POINT D'ATTACHE -> ks.r
+               ("balance", debut, fin, angle, periode, ancre_y)
+               ⛔ ancre_y : 0 = HAUT de la bbox, 1 = BAS (axe Y Lottie descendant).
   - "cligne" : les yeux se ferment 2 frames, periodiquement -> ks.o
                ("cligne", debut, fin, periode_frames)
   ⭐ Ces 3 primitives font la BOUCLE DE VIE : sans elles une mascotte apparait
@@ -327,7 +328,10 @@ def animer(doc, partition):
             centre = centre_du_calque(couche)
             if centre:
                 cx, cy = centre
-                # ancre deplacee vers la base (ancre_y = 0 centre, 1 = bas)
+                # ⛔ ancre_y : 0 = HAUT de la bbox, 1 = BAS (l'axe Y Lottie DESCEND,
+                # donc min(ys) est le haut). L'ancienne glose disait « 0 centre » :
+                # FAUX, corrige au wrap du 2026-08-28. Le seul usage paye (la queue
+                # du renard, ancre_y=0.15) ancre en HAUT — une queue s'attache en haut.
                 # ⛔ PIEGE PAYE 2x : chercher les 'sh' A N'IMPORTE QUELLE
                 # PROFONDEUR. `group_layers.py` imbrique les calques dans un
                 # groupe par calque -> une boucle sur shapes[].it[] ne trouve

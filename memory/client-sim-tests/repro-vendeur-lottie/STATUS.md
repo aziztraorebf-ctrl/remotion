@@ -73,14 +73,22 @@ l'atelier n'etait "sur aucune branche mergee" — il etait sur master avec 19 fi
 
 ## ⛔ CE QUI RESTE — par ordre de valeur
 
+> ⛔⛔ **BLOC PERIME AU 2026-08-28** — ce fichier est APPEND-ONLY : les sections datees du 28/08
+> plus bas contredisent ce qui suit (Creator TESTE, filtres PORTES, gradientTransform portables,
+> `proposer_carte.py` ecrit). **Lire la fin du fichier avant d'agir sur cette liste.**
+
 1. **⭐ L'OUTIL CREATOR** (jamais teste) : envoyer nos `.json` dans LottieFiles Creator et
    verifier qu'ils s'ouvrent, se deplient, s'animent. C'est la validation que le CLIENT fera.
    ⛔ Gotcha connu : port 3847 UNIQUE, la 2e session Claude echoue EN SILENCE.
    -> `memory/tools/lottie-creator-mcp.md`
 2. **Le nommage automatique** : `planche_calques.py` produit la matiere, le nommage reste
    manuel. Recraft sort 59 formes anonymes. Chainer avec `group_layers.py`.
-3. **Les 13 degrades a `gradientTransform`** : retombent sur la couleur moyenne.
-4. **Les filtres (ombre/flou)** : limite du FORMAT Lottie, pas de l'outil. A contourner.
+3. ~~**Les 13 degrades a `gradientTransform`** : retombent sur la couleur moyenne.~~
+   ✅ **RESOLU le 28/08** — portes quand c'est une SIMILITUDE. Restent hors format : cisaillement,
+   echelle non uniforme.
+4. ~~**Les filtres (ombre/flou)** : limite du FORMAT Lottie, pas de l'outil.~~
+   ⛔⛔ **CETTE AFFIRMATION ETAIT FAUSSE** — mesure le 28/08 : lottie-web REND le Gaussian Blur
+   (`ty:29`). Le flou est porte. Restent refuses : les filtres COMPOSITES seulement.
 5. **La fiche injectee "geste anime"** — voir ci-dessous, c'est le plus rentable.
 
 ## ⚠️⚠️ LECON DE FIN DE SESSION — POURQUOI L'ANIMATION ETAIT BONNE
@@ -351,7 +359,8 @@ aucun changement — la reserve « palette non relue depuis Creator » est LEVEE
    Sur LoadUp les calques sont des LETTRES, cas facile. Une mascotte n'a pas ce secours.
 2. Le nommage reste **MANUEL** (je regarde la planche, j'ecris la carte). Le chainage
    planche -> carte n'est toujours pas automatise — mais il est desormais PROUVE.
-3. Les 13 degrades a `gradientTransform` et les filtres : intacts, non traites.
+3. ~~Les 13 degrades a `gradientTransform` et les filtres : intacts, non traites.~~
+   ✅ **TRAITES le 28/08** (voir la section « L'OUTIL RENDU PLUS ROBUSTE » plus bas).
 
 ---
 

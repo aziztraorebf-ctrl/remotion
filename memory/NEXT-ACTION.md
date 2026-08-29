@@ -71,6 +71,18 @@ en `.lottie`, validée par Aziz dans Creator (blocs dépliables, animation qui j
 | **Scène dense animée** | Gazoduc A4 : 108 éléments → 5 groupes |
 | **Courbe vivante + flux + fondu** | recalcul de forme porté · gaz qui coule · marche 27 → **4** |
 
+| **Acquis du 28/08** | Preuve |
+|---|---|
+| ⭐⭐ **FLOU porté** | `feGaussianBlur` seul → effet Lottie **`ty:29`**, rendu par lottie-web (carré **0 → 5360 px** de bord adouci, vérifié à l'image). ⛔ La note « limite du FORMAT » était **FAUSSE**. 17 refus → **1** (14 des 16 `filter:url()` pointaient vers des ids **inexistants**) |
+| ⭐ **`gradientTransform` portable** | porté pour toute **similitude** (translation · rotation · échelle uniforme) — Lottie porte un SEGMENT, déplacer ses 2 points suffit. 8 cas testés. ⛔ Hors format : cisaillement, échelle non uniforme |
+| ⭐ **`proposer_carte.py`** | outille l'étape **mécanique** du nommage. LoadUp 15 → 9 blocs (−40 %) · Tigerwild 505 → 312 (−38 %). ⛔ Il ne NOMME rien, et **il DIT quand il ne sert à rien** |
+| ✅ **Aller-retour Creator FIDÈLE** | import + réexport : le fichier s'ouvre, se déplie, s'anime. ⛔ **Les 293 $/an ne se justifient pas** (notre brut = 13 Ko contre leur « optimized » 44 Ko) |
+| **4 logos clients traités** | LoadUp (15) · Renard (31) · Tigerwild (505, **433 Ko — hors cible splash screen**, import Creator **timeout 70 s**, NON validé) · Hinch (169) |
+
+⏭️ **Reste sur les logos** : L3/L4 Kanvas (monogramme isométrique) · L8 Fokus (texte très fin).
+Le rig d'un perso **déjà découpé** = **session séparée** : `memory/starters/STARTER-RIG-PERSONNAGE-EXISTANT.md`.
+⚠️ Le point 1 ci-dessous (contrôle qualité automatique) est **✅ FAIT** : `verifier_fidelite.py`.
+
 ▶️ **Prochaine session — starter prêt** : `memory/starters/STARTER-PROMPT-lottie-texte-et-animation.md`
 1. ⭐ **CONTRÔLE QUALITÉ AUTOMATIQUE** — comparer la **VIDÉO** d'origine au Lottie, image par
    image. ⛔ 3 fois le 26/08 un fichier valide a rendu FAUX en disant « ça bouge » : on compare

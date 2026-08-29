@@ -35,6 +35,56 @@ LE SIEN — Claude Code le relance aussitôt, il prend le port libre, et le navi
 reconnecte tout seul**. ⚠️ Tuer un processus d'une autre session est refusé par le garde-fou :
 demander l'accord d'Aziz d'abord (fait le 08-26).
 
+## ⛔⛔ LES 4 GOTCHAS D'USAGE (mesurés 2026-08-28, chaîne logo client)
+
+1. ⭐⭐ **L'import CRÉE une scène-composant et BASCULE l'active.** `read_scene` seul ne dit PAS
+   dans quelle scène on se trouve → **toujours `list_scenes` AVANT toute écriture**.
+   Corollaires : (a) ne jamais conclure à un écrasement du travail d'Aziz sans avoir listé les
+   scènes — **fausse alerte vécue** ; (b) la scène d'accueil ne porte qu'**UN calque de
+   RÉFÉRENCE** vers le composant : ⛔ ne PAS le lire comme un aplatissement, il faut
+   `switch_scene` vers le composant pour voir les 15 calques ; (c) « Layer not found » vient de
+   la même cause (on cherche dans la mauvaise scène).
+
+2. ⛔ **`import_asset` LOTTIE exige une URL PUBLIQUE.** `127.0.0.1` et `localhost` sont refusés
+   (« Invalid URL ») — ce n'est pas le fichier qui est en cause. Passer par
+   `scripts/tools/upload-to-blob.py`.
+   ⚠️ Et `import_asset` **SVG inline arrive APLATI en 1 seul calque** : ce n'est pas une voie de
+   livraison. Le Lottie, lui, arrive déplié. ⭐ L'intérêt de notre chaîne est donc confirmé **par
+   la négative** — la voie facile perd ce qu'on sait préserver.
+
+3. ⛔ **« N of M layers are hidden » sur une scène ANIMÉE = FAUX POSITIF.** Creator lit la
+   **frame 0**, où les calques sont volontairement à opacité 0 — c'est le DÉBUT de l'animation.
+   Un outil qui juge une scène animée sur sa 1re image la déclare vide. **Ne pas corriger ce qui
+   n'est pas cassé.**
+   Même famille : `visual_bounds` ne se rafraîchit pas après une clé de `scale` (bornes calculées
+   sur l'ancienne échelle, `center_layer` renvoie `target_reached: false` alors que la valeur EST
+   écrite). Artefact de lecture — ⛔ ne pas re-doser à l'aveugle dessus.
+
+4. ⚠️ **Un gros fichier ne passe pas.** 505 calques / 433 Ko → `import_asset` **timeout à 70 s**,
+   alors que le pont est vivant et le fichier servi intégralement. La limite est le traitement
+   côté Creator, pas le transport.
+
+## ⭐⭐ FAUT-IL PAYER L'ABONNEMENT ? — NON (mesuré 2026-08-28, 1 export dépensé sur 5)
+
+Fichier importé puis **réexporté en Lottie JSON**, puis comparé au nôtre :
+
+| | Notre fichier | Retour de Creator |
+|---|---|---|
+| Noms de calques | 8 | **8, identiques, même ordre** |
+| Clés du geste | 4, suspension 8 f | **4, suspension 8 f** |
+| Ratio chute/montée | 0,44 | **0,44** |
+| Poids | 13,2 Ko | 44,9 Ko |
+
+**RIEN n'est perdu, RIEN n'est gagné.** Les 44,9 Ko ne sont pas du contenu en plus : Creator
+réécrit le JSON en clair avec tous les défauts explicites. Seul ajout réel : `meta.g`.
+⛔ **NE PAS dépenser d'export pour livrer** — le fichier local est équivalent et 3,4× plus léger.
+⛔ **Les 293 $/an ne se justifient pas** : ils achètent l'« Optimized JSON » (44,48 Ko sur leur
+propre exemple) alors que notre BRUT fait 13,2 Ko.
+⚠️ Seul cas où l'export sert : récupérer une modif faite **DANS** Creator. Règle retenue :
+demander la modif à Claude (portée dans le code), le fichier local reste la source unique.
+⭐ **Aziz a eu raison d'insister pour tester** : je recommandais de ne pas dépenser l'export sur
+une SUPPOSITION que j'avais moi-même signalée comme non prouvée.
+
 ## Ce que ça apporte VRAIMENT (110 outils)
 - ⭐⭐ **`read_scene`** — dimensions, fps, durée, TOUS les calques, sélection, ordre de rendu,
   bornes visuelles, débordements, `occlusion` (calque caché derrière un autre). **Supprime les
@@ -61,6 +111,9 @@ demander l'accord d'Aziz d'abord (fait le 08-26).
 - **Effets qu'on ne savait pas faire** : `apply_bounce` (physique), `apply_squash`,
   `add_drop_shadow`, `add_blur`, `create_mask`, `set_matte`, `vectorize_image`.
 - **Organisation** : `group_layers`, `reorder_layer`, `align_layers`, `stagger_layers`.
+  ⭐ **`set_layer_time` + `timeline_offset` = la primitive de CASCADE NATIVE** — sa propre doc la
+  dit « moins chère et correcte » face à un décalage d'opacités fait à la main (ce qu'on fait
+  dans `animate_scene.py`). Doublon avec notre code maison, à évaluer au prochain usage.
 
 ## ⛔ Ce qu'il n'apporte PAS
 - **AUCUN outil d'export.** Vérifié : zéro. Récupérer le `.json` final reste **manuel** (Aziz

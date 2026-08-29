@@ -20,6 +20,39 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 
 ## 🔧 MÉTHODE & PROCESS
 
+### 2026-08-28 — ⛔⛔ QUAND LA MESURE INFIRME UNE OBSERVATION HUMAINE, C'EST LA MESURE QU'ON RE-VÉRIFIE
+
+Aziz voit à l'œil que la blouse du renard a « deux couleurs ». Je mesure : l'écart s'explique
+par un pli, **artefact de sonde, rien à signaler**. J'allais enterrer le sujet. Il insiste →
+je re-mesure en évitant le pli → **15 points d'écart chez nous contre 3 dans l'original**. Le
+défaut était réel (un trou dans la forme de la blouse, le fond blanc traverse).
+
+⭐ **La règle** : une mesure qui CONFIRME une observation humaine peut être prise telle quelle.
+Une mesure qui l'INFIRME doit être re-faite ailleurs avant de conclure — c'est le cas où
+l'instrument a le plus de chances de regarder au mauvais endroit, et où le résultat est le plus
+rassurant donc le moins questionné.
+⛔ Le sens inverse du biais habituel : ici la mesure ne m'a pas trompé sur une VALEUR, elle m'a
+donné une EXPLICATION plausible (« c'est un pli ») qui fermait la recherche.
+
+### 2026-08-28 — ⛔⛔ LE PROTOCOLE « 2 ÉCHECS → DIAGNOSTIQUER » VAUT AUSSI POUR MON PROPRE CODE
+
+Le protocole de délégation (CLAUDE.md § agent de diagnostic dédié) cite des blocages EXTERNES :
+script qui plante, API qui ne répond pas, rendu visuel rejeté. **Il ne dit pas explicitement
+« mon propre code que je viens d'écrire »** — et c'est exactement là que j'ai dérapé, 2 fois
+dans la même session :
+
+1. L'ancre d'un calque restait à `[0,0]`. J'ai corrigé le fondu, **puis** la fréquence des
+   clignements, **avant** de découvrir que `centre_du_calque()` renvoyait `None`. La cause s'est
+   vue en **appelant la fonction isolément**, pas en réglant un paramètre.
+2. Un plafond de taille sur `proposer_carte.py` n'a **rien changé** (0,37 → 0,36 %). Je ne l'avais
+   pas mesuré avant de l'écrire : le plus gros élément faisait 31 %, sous mon seuil de 45 %.
+   Ce n'était pas un dosage à trouver mais **un plafond de la règle**.
+
+⭐ **Le signal est le même que pour un blocage externe** : deux corrections sans effet mesurable
+= arrêter de doser, **isoler et mesurer**. Ne pas attendre la 3e.
+⭐ Recoupe « 3 corrections sans effet = un PLAFOND » ci-dessous — mais le déclencheur est à **2**,
+et il vaut pour le code qu'on vient d'écrire soi-même.
+
 ### 2026-08-27 — ⭐⭐⭐ CE QUE JE MESURE EST BIAISÉ PAR LA FAÇON DONT JE MESURE (3 cas, repro Foster)
 
 Trois fois dans la même reproduction, une mesure rigoureuse a donné un résultat **faux** — non

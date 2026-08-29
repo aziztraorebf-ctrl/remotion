@@ -67,6 +67,19 @@ Ouvrir dans cet ordre, **lire chaque liste jusqu'au bout** (une brique en fin de
 
 ## INTERDITS — erreurs déjà payées
 
+⛔⛔ **LA SIGNATURE EST MONTÉE À 6 EN 4 JOURS.** Les 2 nouvelles : le ménage « dégradé sans arrêt »
+supprimait aussi les `<filter>` recensés · `len(entree) == 4` servait de signal « c'est du texte »,
+donc toute forme floutée partait dans la mauvaise branche. ⭐ **Les 2 règles qui les couvrent
+TOUTES** : chercher les `sh`/les `defs` **EN PROFONDEUR**, jamais à un niveau fixe (un fichier
+regroupé a un cran d'imbrication en plus) · **ne jamais discriminer sur la LONGUEUR** d'une
+structure — c'est le **CONTENU** qui discrimine.
+
+⛔⛔ **UN GROUPE DOIT ÊTRE CONTIGU.** L'ordre de peinture EST une séquence : un groupe qui enjambe
+des calques devant rester entre ses membres casse le rendu. Grouper par NATURE (« tous les éléments
+de blouse ») a fait passer la blouse AVANT truffe/branches/sourire → **tache noire entre les yeux**
+du renard, 0,37 % d'écart. ⭐ **Un nom TERNE qui respecte la séquence bat un nom PARLANT qui la
+casse.** Gravé dans `proposer_carte.py` : il ne produit QUE des blocs contigus.
+
 ⛔⛔ **MÊME SIGNATURE 4 FOIS EN 2 JOURS : livrable valide + rapport « porté » + RIEN à l'écran.**
 (1) ordre de peinture — dans un calque Lottie le PREMIER groupe est peint EN DERNIER, le fill
 recouvrait le trait · (2) ancre restée à `[0,0]` = coin de l'écran, la forme se déploie depuis le

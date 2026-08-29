@@ -124,7 +124,7 @@ chez moi »*. S'ils réagissent, on le saura. S'ils n'en parlent jamais, on le s
    `GlobalPulse.tsx` (4× types mapbox-gl périmés `ProjectionSpecification`/`FogSpecification`),
    `GoldVein.tsx` (1× idem), `LoomWeaver.tsx` (1× `spring` utilisé comme type). Non bloquantes.
 5. ⛔ **3 dettes documentées jamais exécutées** (trouvées au wrap du 08-27) :
-   - ⚠️ **SÉCURITÉ** : `scripts/tools/svg2lottie.py` parse le SVG **en regex, sans parseur XML**.
+   - ⚠️ **SÉCURITÉ** : `src/projects/_client-sim/lottie-ui/tools/svg2lottie.py` parse le SVG **en regex, sans parseur XML**.
      `memory/tools/lottie-claude-inventaire.md:123` dit de **ne PAS l'exposer à un SVG client non
      fiable** sans durcissement XXE. **Deviendra bloquant le jour où un client envoie ses SVG.**
    - `memory/tools/openrouter-svg.md:207` : `max_output_tokens=32000` jamais remonté dans
