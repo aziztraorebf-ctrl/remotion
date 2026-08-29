@@ -1205,8 +1205,11 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=(),
                         # minoritaire dans du vrai dessin.
                         for j in range(debut, debut + n):
                             e = sortie[j]
-                            e = e + (None,) * (5 - len(e)) if len(e) < 5 else e
-                            sortie[j] = e[:4] + (("dans-precomp", nom_g),)
+                            # ⛔ conserver le 6e champ (le RIG) : un `e[:4] + (...)`
+                            # le tronquait, et les pivots declares sur un groupe
+                            # clipe disparaissaient en silence.
+                            e = e + (None,) * (6 - len(e)) if len(e) < 6 else e
+                            sortie[j] = e[:4] + (("dans-precomp", nom_g), e[5])
                         rapport.ok(f"<{tag}> {nom_g}: {n} calques emballes "
                                    f"en precomposition")
                     else:
@@ -1664,6 +1667,20 @@ def convertir(chemin, fps=30, frames=60):
                 # LUI que le pochoir doit decouper, pas ses calques internes.
                 "_paire": nomp,
             })
+            # ⭐⭐ LE RIG SUIT LE GROUPE, PAS SES PIECES. Un iris est 4 calques
+            # dans une precomp : c'est la PRECOMP qui doit porter l'ancre et le
+            # parent (elle bouge d'un bloc), pas chacune de ses pieces -- sinon
+            # le pivot est applique 4 fois et le rig ne s'exprime jamais.
+            for sous in couches:
+                a_sous = sous.get("ks", {}).get("a", {}).get("k")
+                if a_sous and a_sous != [0, 0]:
+                    refait[-1]["ks"]["a"]["k"] = list(a_sous)
+                    refait[-1]["ks"]["p"]["k"] = list(a_sous)
+                    sous["ks"]["a"]["k"] = [0, 0]
+                    sous["ks"]["p"]["k"] = [0, 0]
+                pn = sous.pop("_parent_nom", None)
+                if pn and "_parent_nom" not in refait[-1]:
+                    refait[-1]["_parent_nom"] = pn
         layers = refait
 
     # ⛔ APPARIEMENT PAR NOM, jamais par position. Chaque pochoir et sa cible

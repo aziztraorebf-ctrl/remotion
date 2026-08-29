@@ -72,7 +72,7 @@
     <path id="ear-back-r-flip" d="M 632 216 C 606 198 572 196 548 210 C 560 230 592 242 620 240 C 630 234 636 224 632 216 Z" fill="#F3C48A"/>
   </g>
 
-  <g id="head">
+  <g id="head" data-pivot="500,700">
     <path id="head-base" d="M 500 232 C 610 232 695 262 755 330 C 812 395 838 475 838 565 C 838 705 695 812 500 812 C 305 812 162 705 162 565 C 162 475 188 395 245 330 C 305 262 390 232 500 232 Z" fill="url(#grad-head)"/>
   </g>
 
@@ -99,7 +99,7 @@
     <path id="mouth-opening" d="M 458 718 C 476 730 524 730 542 718 C 538 752 518 766 500 766 C 482 766 462 752 458 718 Z" fill="#5B2A10"/>
   </g>
 
-  <g id="tongue" clip-path="url(#clip-snout)">
+  <g id="tongue" data-pivot="500,722" data-parent="mouth-opening" clip-path="url(#clip-snout)">
     <path id="tongue-base" d="M 458 722 C 472 734 528 734 542 722 C 556 772 542 812 500 822 C 458 812 444 772 458 722 Z" fill="url(#grad-tongue)"/>
     <path id="tongue-crease" d="M 496 748 C 499 746 501 746 504 748 C 505 776 504 794 500 806 C 496 794 495 776 496 748 Z" fill="#C43F58"/>
     <ellipse id="tongue-highlight" cx="482" cy="762" rx="11" ry="17" fill="#FF9FAD" opacity="0.7"/>
@@ -117,7 +117,7 @@
     <circle id="eye-l-rim" cx="375" cy="494" r="90" fill="#B06327"/>
     <circle id="eye-l-ball" cx="375" cy="495" r="80" fill="url(#grad-eyeball-l)"/>
   </g>
-  <g id="iris-l" clip-path="url(#clip-eye-l)">
+  <g id="iris-l" data-pivot="375,512" data-parent="eye-l-ball" clip-path="url(#clip-eye-l)">
     <circle id="iris-l-base" cx="375" cy="512" r="68" fill="url(#grad-iris-l)"/>
     <circle id="iris-l-pupil" cx="375" cy="518" r="54" fill="#2A1206"/>
     <circle id="iris-l-highlight-big" cx="352" cy="486" r="22" fill="#FFFFFF"/>
@@ -129,26 +129,26 @@
     <circle id="eye-r-rim" cx="625" cy="494" r="90" fill="#B06327"/>
     <circle id="eye-r-ball" cx="625" cy="495" r="80" fill="url(#grad-eyeball-r)"/>
   </g>
-  <g id="iris-r" clip-path="url(#clip-eye-r)">
+  <g id="iris-r" data-pivot="625,512" data-parent="eye-r-ball" clip-path="url(#clip-eye-r)">
     <circle id="iris-r-base" cx="625" cy="512" r="68" fill="url(#grad-iris-r)"/>
     <circle id="iris-r-pupil" cx="625" cy="518" r="54" fill="#2A1206"/>
     <circle id="iris-r-highlight-big" cx="602" cy="486" r="22" fill="#FFFFFF"/>
     <circle id="iris-r-highlight-small" cx="648" cy="542" r="10" fill="#FFFFFF" opacity="0.9"/>
   </g>
 
-  <g id="eyebrow-l">
+  <g id="eyebrow-l" data-pivot="430,392" data-parent="head-base">
     <path id="eyebrow-l-base" d="M 292 404 C 306 366 368 350 424 366 C 438 372 442 388 430 398 C 386 384 330 392 312 418 C 300 420 290 414 292 404 Z" fill="#77421A"/>
   </g>
-  <g id="eyebrow-r">
+  <g id="eyebrow-r" data-pivot="570,392" data-parent="head-base">
     <path id="eyebrow-r-base" d="M 708 404 C 694 366 632 350 576 366 C 562 372 558 388 570 398 C 614 384 670 392 688 418 C 700 420 710 414 708 404 Z" fill="#77421A"/>
   </g>
 
-  <g id="ear-l">
+  <g id="ear-l" data-pivot="360,268" data-parent="head-base">
     <path id="ear-l-base" d="M 375 248 C 305 258 230 310 185 382 C 152 436 148 505 170 550 C 187 584 226 594 258 572 C 300 542 328 478 340 408 C 350 348 360 290 375 248 Z" fill="url(#grad-ear-l)"/>
     <path id="ear-l-inner-edge" d="M 375 248 C 362 292 352 350 342 408 C 330 478 302 542 258 572 C 250 577 240 579 232 576 C 274 544 302 480 314 412 C 326 348 340 292 356 252 Z" fill="#A96229" opacity="0.85"/>
     <path id="ear-l-tip-shade" d="M 170 505 C 172 550 200 582 240 578 C 222 592 192 590 176 568 C 164 552 164 526 170 505 Z" fill="#4A2109" opacity="0.7"/>
   </g>
-  <g id="ear-r">
+  <g id="ear-r" data-pivot="640,268" data-parent="head-base">
     <path id="ear-r-base" d="M 625 248 C 695 258 770 310 815 382 C 848 436 852 505 830 550 C 813 584 774 594 742 572 C 700 542 672 478 660 408 C 650 348 640 290 625 248 Z" fill="url(#grad-ear-r)"/>
     <path id="ear-r-inner-edge" d="M 625 248 C 638 292 648 350 658 408 C 670 478 698 542 742 572 C 750 577 760 579 768 576 C 726 544 698 480 686 412 C 674 348 660 292 644 252 Z" fill="#A96229" opacity="0.85"/>
     <path id="ear-r-tip-shade" d="M 830 505 C 828 550 800 582 760 578 C 778 592 808 590 824 568 C 836 552 836 526 830 505 Z" fill="#4A2109" opacity="0.7"/>
