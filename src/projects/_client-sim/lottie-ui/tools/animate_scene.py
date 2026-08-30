@@ -331,6 +331,107 @@ def parcourir(couche, chemin, debut, fin, oriente=False, n=40):
     return True
 
 
+def onde(couche, debut, rayon_fin=13.0, duree=55, retard=0, opacite_max=85):
+    """Onde de choc : l'objet s'etend depuis un point et s'efface en s'etendant.
+
+    ⭐ La 2e primitive du registre NARRATIF (avec `parcourt`). Elle dit un
+    EVENEMENT ponctuel -- un impact, une validation, une notification, un point
+    qu'on veut faire remarquer. En flux d'interface : le halo qui part d'un
+    bouton au clic, la pastille qui pulse a l'arrivee d'un message.
+
+    Recopiee de l'INTENTION de KhartoumEtatMajorSVG (Impact) : le rayon croit
+    de 10 a 130 pendant que l'opacite monte vite puis retombe a zero. En Lottie
+    on ne peut pas animer le rayon d'un cercle deja converti en chemin -- on
+    anime donc l'ECHELLE, ce qui produit exactement le meme geste.
+
+    ⛔ L'echelle exige une ancre AU CENTRE de la forme, sinon l'onde s'etend
+    depuis le coin de l'ecran (le bug "la flamme ne s'anime pas", 25/08).
+    L'appelant doit avoir pose l'ancre -- `animer()` s'en charge.
+
+    ⚠️ L'opacite retombe a ZERO : une onde qui reste affichee n'est plus une
+    onde, c'est un cercle. Et elle se declenche APRES son retard, donc le
+    calque doit etre invisible avant (opacite 0 des la frame 0).
+    """
+    ks = couche.setdefault("ks", {})
+    d = debut + retard
+    fin = d + duree
+    depart = 100.0 / max(rayon_fin, 0.01)      # part petit, finit a 100 %
+
+    ks["s"] = keyframes([
+        (d, [depart, depart]),
+        (fin, [100.0, 100.0]),
+    ])
+    # monte vite (le flash), puis s'efface lentement en s'etendant
+    ks["o"] = keyframes([
+        (max(0, d - 1), [0]),
+        (d + max(1, int(duree * 0.18)), [opacite_max]),
+        (fin, [0]),
+    ])
+    return True
+
+
+def monte(couche, debut, fin, hauteur=58, periode=66, echelle_fin=1.5,
+          opacite_max=50):
+    """Volute qui monte, grandit et se dissipe -- EN BOUCLE.
+
+    Recopiee de SmokeColumn : des bouffees montent de 0 vers -58 en grandissant
+    (0,5 -> 1,5) pendant que l'opacite fait 0 -> 0,5 -> 0,32 -> 0, puis ca
+    recommence. C'est ce qui fait qu'une cible detruite continue de FUMER au
+    lieu de porter une image fixe de fumee.
+
+    ⛔ La turbulence (feTurbulence + feDisplacementMap) de la scene d'origine
+    ne passe PAS en Lottie (filtre composite) : les volutes seront lisses. Le
+    MOUVEMENT est fidele, la matiere non -- c'est une perte assumee et mesurable,
+    pas un echec silencieux.
+
+    ⚠️ Decaler plusieurs calques avec `retard` (via la partition) est ce qui
+    donne la colonne continue : une seule volute en boucle se lit comme un
+    clignotement.
+    """
+    ks = couche.setdefault("ks", {})
+
+    # ⛔ PARTIR DE LA POSITION REELLE, pas de [0,0]. `p` porte deja le centre de
+    # la forme (pose par l'appelant pour que l'echelle pivote dessus) : ecrire
+    # un delta [0,0] renvoie la volute AU COIN DE L'ECRAN, ou elle fume hors
+    # cadre -- invisible, sans la moindre erreur. C'est le bug "la flamme ne
+    # s'anime pas" (25/08) dans une variante de plus : la valeur est juste, son
+    # REFERENTIEL est faux.
+    base = ks.get("p", {}).get("k", [0, 0])
+    if isinstance(base, list) and len(base) >= 2 and not isinstance(base[0], dict):
+        bx, by = float(base[0]), float(base[1])
+    else:
+        bx, by = 0.0, 0.0
+
+    pos, ech, opa = [], [], []
+    t = float(debut)
+    while t < fin:
+        f0 = t
+        f1 = min(t + periode, float(fin))
+        span = f1 - f0
+        if span < 4:
+            break
+        # ⚠️ Deux keyframes au MEME instant (fin d'un cycle = debut du suivant)
+        # sont mal definies : le lecteur doit interpoler entre deux valeurs a
+        # t identique. On termine donc chaque cycle une frame avant le suivant.
+        f_fin = f1 - 1 if f1 < fin else f1
+        if f_fin <= f0:
+            break
+        pos += [(f0, [bx, by, 0]), (f_fin, [bx, by - hauteur, 0])]
+        ech += [(f0, [50.0, 50.0]),
+                (f_fin, [echelle_fin * 100, echelle_fin * 100])]
+        opa += [(f0, [0]),
+                (f0 + span * 0.15, [opacite_max]),
+                (f0 + span * 0.75, [round(opacite_max * 0.64)]),
+                (f_fin, [0])]
+        t = f1
+    if not pos:
+        return False
+    ks["p"] = keyframes([(round(a), b) for a, b in pos])
+    ks["s"] = keyframes([(round(a), b) for a, b in ech])
+    ks["o"] = keyframes([(round(a), b) for a, b in opa])
+    return True
+
+
 def trouver_partition(nom, partition):
     """Le 1er motif contenu dans le nom du calque gagne ; '*' est le defaut."""
     bas = nom.lower()
@@ -494,15 +595,39 @@ def animer(doc, partition):
                 t += periode
             couche["ks"]["o"] = keyframes(paires)
 
+        elif genre == "onde":
+            # ("onde", debut, fin, rayon_fin, [duree], [retard])
+            # L'echelle DOIT pivoter sur le centre de la forme, sinon l'onde
+            # s'etend depuis le coin de l'ecran (bug du 25/08).
+            centre = centre_du_calque(couche)
+            if centre:
+                couche["ks"]["a"] = {"a": 0, "k": centre}
+                couche["ks"]["p"] = {"a": 0, "k": centre}
+            rayon = regle[3] if len(regle) > 3 else 13.0
+            d_onde = regle[4] if len(regle) > 4 else max(8, fin - debut)
+            retard = regle[5] if len(regle) > 5 else 0
+            onde(couche, debut, rayon, d_onde, retard)
+
+        elif genre == "monte":
+            # ("monte", debut, fin, [hauteur], [periode], [retard])
+            centre = centre_du_calque(couche)
+            if centre:
+                couche["ks"]["a"] = {"a": 0, "k": centre}
+                couche["ks"]["p"] = {"a": 0, "k": centre}
+            haut = regle[3] if len(regle) > 3 else 58
+            per = regle[4] if len(regle) > 4 else 66
+            ret = regle[5] if len(regle) > 5 else 0
+            if not monte(couche, debut + ret, fin, haut, per):
+                animes -= 1
+                ignores += 1
+
         elif genre == "parcourt":
             # ("parcourt", debut, fin, "M... chemin SVG", [oriente])
             chemin = regle[3] if len(regle) > 3 else None
             oriente = bool(regle[4]) if len(regle) > 4 else False
-            if chemin and parcourir(couche, chemin, debut, fin, oriente):
-                n_animes += 1
-            else:
-                n_ignores += 1
-            continue
+            if not (chemin and parcourir(couche, chemin, debut, fin, oriente)):
+                animes -= 1
+                ignores += 1
 
         elif genre == "trace":
             # ⭐ trimPath ('tm') = l'equivalent Lottie natif du trait qui se

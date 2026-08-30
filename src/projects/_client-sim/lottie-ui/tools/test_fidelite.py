@@ -333,6 +333,58 @@ def test_parcours_vitesse_constante_et_deplacement_relatif():
     print("  ok  parcours : vitesse constante, deplacement relatif")
 
 
+def test_onde_et_monte_par_le_vrai_chemin():
+    """Les primitives narratives, testees PAR `animer()` et non en direct.
+
+    ⛔ La lecon qui a motive ce test : `parcourt` a ete livre avec une branche
+    de dispatch referencant des variables INEXISTANTES (`n_animes`, `ks`). Le
+    test d'alors appelait la fonction `parcourir()` directement -- il passait au
+    vert pendant que le chemin reel etait casse. La brique etait bonne, son
+    AIGUILLAGE etait faux : exactement la famille de defauts que cette chaine
+    passe son temps a rattraper. On teste donc `animer()`, la porte d'entree.
+    """
+    import animate_scene as A
+
+    def calque(nom, cx, cy, r=15):
+        v = [[cx-r, cy-r], [cx+r, cy-r], [cx+r, cy+r], [cx-r, cy+r]]
+        return {"ty": 4, "ind": 0, "nm": nom, "ip": 0, "op": 120,
+                "ks": {"a": {"a": 0, "k": [0, 0]}, "p": {"a": 0, "k": [0, 0]},
+                       "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0},
+                       "o": {"a": 0, "k": 100}},
+                "shapes": [{"ty": "gr", "nm": nom, "it": [
+                    {"ty": "sh", "ks": {"a": 0, "k": {"c": True, "v": v,
+                     "i": [[0, 0]]*4, "o": [[0, 0]]*4}}}]}]}
+
+    doc = {"fr": 30, "ip": 0, "op": 120, "w": 800, "h": 600,
+           "layers": [calque("jeton", 100, 500), calque("anneau", 400, 300),
+                      calque("volute", 650, 450)]}
+    animes, ignores = A.animer(doc, {
+        "_duree": 120,
+        "jeton": ("parcourt", 0, 110, "M100 500 Q 400 300 700 500"),
+        "anneau": ("onde", 10, 70, 8.0),
+        "volute": ("monte", 0, 120, 80, 60),
+    })
+    assert (animes, ignores) == (3, 0), f"dispatch casse : {animes} animes, {ignores} ignores"
+
+    jeton, anneau, volute = doc["layers"]
+    assert jeton["ks"]["p"].get("a") == 1, "parcourt n'a pas anime la position"
+    assert anneau["ks"]["s"].get("a") == 1, "onde n'a pas anime l'echelle"
+    assert anneau["ks"]["o"]["k"][-1]["s"] == [0], (
+        "l'onde doit s'effacer completement, sinon c'est un cercle")
+
+    # ⛔ La volute doit monter depuis SA position, pas depuis le coin de l'ecran.
+    kf = volute["ks"]["p"]["k"]
+    assert kf[0]["s"][0] == 650.0 and kf[0]["s"][1] == 450.0, (
+        f"la volute part du coin au lieu de sa place : {kf[0]['s']}")
+    assert kf[1]["s"][1] < kf[0]["s"][1], "la volute doit MONTER (y decroissant)"
+
+    # ⚠️ Jamais deux keyframes au meme instant : mal defini pour le lecteur.
+    for prop in ("p", "s", "o"):
+        ts = [k["t"] for k in volute["ks"][prop]["k"]]
+        assert len(ts) == len(set(ts)), f"keyframes en collision sur {prop} : {ts}"
+    print("  ok  onde + monte : dispatch reel, referentiel correct, pas de collision")
+
+
 def main():
     print("test_fidelite — non-regression des defauts Khartoum (2026-08-26)")
     echecs = 0
