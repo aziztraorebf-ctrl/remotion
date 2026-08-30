@@ -106,6 +106,26 @@ sur une branche de feature `gh workflow run` renvoie 404, le 1er déploiement EX
 (2) **médias lourds hors git, sur une release GitHub**, téléchargés au déploiement (`gallery/fetch-media.sh`),
 sinon l'historique gonfle à chaque re-découpage ; (3) **transcodage obligatoire** :
 `scale=1280:-2 -crf 28 -preset slow -an -movflags +faststart` = ~320 Ko/5 s au lieu de 80 Mo (facteur 14).
+- ⛔⛔ **ENVOI DIRECT D'UNE VIDÉO DANS LE CHAT → TRANSCODER D'ABORD** (vécu 2026-08-30, repro-docs) :
+  un rendu Remotion **2000×2000 @ 60 fps** sort en **H.264 niveau 5.1** — refusé par le décodeur
+  matériel de son téléphone. Symptôme : « erreur, impossible de lire », **y compris après
+  téléchargement**, et **y compris sur un fichier parfaitement sain** (`ffprobe` ne signale rien).
+  ⭐ Le fichier n'est PAS corrompu : c'est le PROFIL qui dépasse ce que lit le mobile.
+  **Commande à passer avant tout `SendUserFile` d'une vidéo :**
+  ```
+  ffmpeg -i <src> -vf "scale=1080:-2:flags=lanczos,format=yuv420p,scale=out_range=tv" \
+    -c:v libx264 -profile:v main -level:v 4.0 \
+    -pix_fmt yuv420p -color_range tv -colorspace bt709 -color_primaries bt709 -color_trc bt709 \
+    -crf 20 -preset slow -movflags +faststart -an <src>-mobile.mp4
+  ```
+  ⚠️ **`-pix_fmt yuv420p` seul NE SUFFIT PAS** : ffmpeg repropage le `yuvj420p` (full range) de la
+  source. Il faut **aussi** `format=yuv420p,scale=out_range=tv` dans le `-vf` ET `-color_range tv`.
+  Vérifier après coup : `ffprobe -show_entries stream=pix_fmt,level,color_range` → attendu
+  `yuv420p / 40 / tv`. Repère : **niveau ≤ 4.0 passe, 5.1 ne passe pas**. Une pièce du corpus en
+  800×854 (niveau 3.2) passait, la même en 2000×2000 non — ce n'est pas la taille du FICHIER
+  (930 Ko) qui bloque, c'est la définition + le fps.
+  ⭐ **Garder le master haute définition** (référence qualité + base de l'export Lottie) ; le fichier
+  mobile est une COPIE de confort, suffixée `-mobile`.
 - **Plein format seul d'abord**, jamais une vignette côte-à-côte rapetissée : un render jugé à 540 px a fait « corriger » un problème inexistant en plein écran. Le côte-à-côte sert à MESURER, le plein format à JUGER.
 - **Un agent qui rapporte « terminé » n'a pas forcément produit le fichier** : `ls -la` sur le chemin annoncé avant d'accepter le succès. Un agent peut aussi s'arrêter juste AVANT `git commit`.
 
