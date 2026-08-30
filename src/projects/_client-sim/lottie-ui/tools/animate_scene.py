@@ -56,6 +56,52 @@ PARTITIONS = {
     # Bornes recopiees du composant Remotion d'origine pour que la version
     # Lottie raconte la MEME chose que la video : maison 0-58, chauffage
     # 55-80, flamme 70-92, fil 88-118, courbe 118-280.
+    # ── GABARIT CARTE D'ETAT-MAJOR — la scene se CONSTRUIT ────────────────────
+    # ⭐ Bornes RECOPIEES de EtatMajorGptAnimee (les `prog(frame, a, b)` du
+    # composant), jamais inventees : fond 0-25, villes 20-45 (decalees de 5),
+    # zone ouest 40-62, zone est 48-70, fleche nord 60-95, fleche sud 95-130,
+    # boussole+legende 30-50, pointes a 88-96 et 123-131.
+    #
+    # ⭐⭐ POURQUOI CETTE SCENE ET PAS UNE AUTRE : elle est GENERIQUE. Ses
+    # elements s'appellent alpha, bravo, charlie, west, east -- aucune
+    # geographie reelle, aucun contexte politique. C'est un GABARIT : un
+    # acheteur y met son propre territoire. Et son format tombe pile dans le
+    # corpus qui se vend (1024 CARRE, 4,4 s) la ou nos scenes narratives font
+    # 25 s en 16:9.
+    "gabarit-carte": {
+        "_duree": 140,
+        # le medaillon et son cadre sont la des le debut : ils EN sont le support
+        "staff-map-medallion": ("aucun", 0, 0),
+        "rim": ("aucun", 0, 0),
+        # le fond se pose
+        "bg-grid": ("fondu", 0, 25),
+        "terrain": ("fondu", 0, 25),
+        # les 3 villes POPent, decalees de 5 frames comme dans le composant
+        "city-alpha": ("pop", 20, 45),
+        "city-bravo": ("pop", 25, 50),
+        "city-charlie": ("pop", 30, 55),
+        # ⭐ les zones se REMPLISSENT par balayage : c'est le pochoir qui grandit
+        "g-17-pochoir": ("balaye", 40, 62, "haut"),
+        "g-22-pochoir": ("balaye", 48, 70, "haut"),
+        "control-zone-west": ("fondu", 38, 44),
+        "control-zone-east": ("fondu", 46, 52),
+        # les fleches se TRACENT, l'une apres l'autre.
+        # ⛔ La POINTE ne se trace pas, elle APPARAIT quand le trait arrive --
+        # sinon on voit un triangle rouge flotter au bout d'une fleche qui
+        # n'existe pas encore (defaut vu a l'oeil sur le 1er rendu : les
+        # pointes etaient la des la frame 30). Le composant fait exactement
+        # cela : `headN = prog(frame, 88, 96)`, `headS = prog(frame, 123, 131)`.
+        # Les pointes sont les calques -3 (44x57) ; les autres sont les traits.
+        "maneuver-arrow-north-3": ("fondu", 88, 96),
+        "maneuver-arrow-south-3": ("fondu", 123, 131),
+        "maneuver-arrow-north": ("trace", 60, 95),
+        "maneuver-arrow-south": ("trace", 95, 130),
+        # l'appareillage de lecture accompagne, il ne raconte pas
+        "compass": ("fondu", 30, 50),
+        "legend": ("fondu", 30, 50),
+        "*": ("fondu", 0, 25),
+    },
+
     # ── KHARTOUM — l'assaut coordonne du 15 avril 2023 ────────────────────────
     # ⭐ Recopiee de la SEQUENCE du composant Remotion (KhartoumEtatMajorSVG) :
     # etablissement 0-40, puis TROIS phases de 200 frames, jamais simultanees
@@ -555,6 +601,60 @@ def monte(couche, debut, fin, hauteur=58, periode=66, echelle_fin=1.5,
     return True
 
 
+def balayage(couche, debut, fin, sens="haut", depart=0.0):
+    """Revele progressivement en faisant GRANDIR le pochoir qui decoupe.
+
+    ⭐ Le geste « la zone se remplit » : un rectangle de decoupe dont la hauteur
+    (ou la largeur) croit, devoilant ce qu'il masque. Recopie de
+    EtatMajorGptAnimee (`zoneWClipH = pZoneW * 260`), et tres courant en
+    interface : une jauge qui se remplit, une carte qui se devoile, une barre
+    de progression, un graphique qui monte.
+
+    ⛔ On anime l'ECHELLE du pochoir, pas la geometrie de son rectangle : Lottie
+    ne sait pas animer la hauteur d'une forme deja convertie en chemin. L'ancre
+    est posee sur le BORD depuis lequel la revelation part -- sinon le pochoir
+    grandit dans les deux sens et decouvre par le milieu.
+
+    `sens` : "haut" (revele du haut vers le bas), "bas", "gauche", "droite".
+    """
+    xs, ys = [], []
+
+    def _sommets(noeud):
+        if isinstance(noeud, dict):
+            if noeud.get("ty") == "sh":
+                for x, y in noeud["ks"]["k"].get("v", []):
+                    xs.append(x)
+                    ys.append(y)
+            for v in noeud.values():
+                _sommets(v)
+        elif isinstance(noeud, list):
+            for v in noeud:
+                _sommets(v)
+
+    _sommets(couche.get("shapes", []))
+    if not xs:
+        return False
+
+    x0, x1 = min(xs), max(xs)
+    y0, y1 = min(ys), max(ys)
+    # l'ancre est le bord FIXE : la revelation part de lui
+    ancre = {"haut": [(x0 + x1) / 2, y0],
+             "bas": [(x0 + x1) / 2, y1],
+             "gauche": [x0, (y0 + y1) / 2],
+             "droite": [x1, (y0 + y1) / 2]}.get(sens, [(x0 + x1) / 2, y0])
+
+    ks = couche.setdefault("ks", {})
+    ks["a"] = {"a": 0, "k": [round(ancre[0], 2), round(ancre[1], 2)]}
+    ks["p"] = {"a": 0, "k": [round(ancre[0], 2), round(ancre[1], 2)]}
+
+    d0 = max(0.5, depart * 100)
+    if sens in ("haut", "bas"):
+        ks["s"] = keyframes([(debut, [100.0, d0]), (fin, [100.0, 100.0])])
+    else:
+        ks["s"] = keyframes([(debut, [d0, 100.0]), (fin, [100.0, 100.0])])
+    return True
+
+
 def trouver_partition(nom, partition):
     """Le 1er motif contenu dans le nom du calque gagne ; '*' est le defaut."""
     bas = nom.lower()
@@ -567,16 +667,33 @@ def trouver_partition(nom, partition):
 
 
 def animer(doc, partition):
-    """Pose l'animation sur les calques. Retourne (n_animes, n_ignores)."""
+    """Pose l'animation sur les calques. Retourne (n_animes, n_ignores).
+
+    ⭐ Anime AUSSI le contenu des precompositions (2026-08-30). Des qu'une scene
+    porte un clip global -- un medaillon, un cadre rond, une vignette -- tout
+    son contenu part dans un asset `{id, layers}` et le tableau `doc["layers"]`
+    ne contient plus que 3-4 calques d'enveloppe. Ne parcourir que le haut
+    niveau revenait alors a n'animer RIEN, en silence : mesure sur
+    EtatMajorGabarit, 4 calques au sommet pour 69 dans la precomp, tous nommes
+    (city-alpha, control-zone-west, maneuver-arrow-north...).
+    """
     duree = partition.get("_duree", doc.get("op", 120))
     doc["op"] = duree
     animes, ignores = 0, 0
 
+    # les calques a traiter : ceux du haut niveau ET ceux des precompositions
+    cibles = list(doc["layers"])
+    for a in doc.get("assets", []):
+        if a.get("layers"):
+            for c in a["layers"]:
+                c["op"] = duree
+            cibles.extend(a["layers"])
+
     # Cascade echelonnee : on repartit les departs sur les 2/3 de la duree,
     # dans l'ordre de PEINTURE (dernier calque de la liste = dessine en 1er).
     echelonne = partition.get("_echelonne")
-    n_couches = len(doc["layers"])
-    for rang, couche in enumerate(doc["layers"]):
+    n_couches = len(cibles)
+    for rang, couche in enumerate(cibles):
         regle = trouver_partition(couche["nm"], partition)
         if echelonne and regle:
             genre, _, longueur = regle[0], regle[1], regle[2]
@@ -717,6 +834,14 @@ def animer(doc, partition):
                 paires += [(t - 1, [100]), (t, [0]), (t + 2, [0]), (t + 3, [100])]
                 t += periode
             couche["ks"]["o"] = keyframes(paires)
+
+        elif genre == "balaye":
+            # ("balaye", debut, fin, [sens], [depart])
+            sens = regle[3] if len(regle) > 3 else "haut"
+            dep = regle[4] if len(regle) > 4 else 0.0
+            if not balayage(couche, debut, fin, sens, dep):
+                animes -= 1
+                ignores += 1
 
         elif genre == "onde":
             # ("onde", debut, fin, rayon_fin, [duree], [retard])
