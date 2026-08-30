@@ -217,6 +217,120 @@ def keyframes(paires, easing=(0.33, 0.67)):
     return {"a": 1, "k": out}
 
 
+
+def points_du_chemin(d, n=40):
+    """Echantillonne un chemin SVG en n points (x, y) regulierement repartis.
+
+    On reutilise svgpath.parse_path (grammaire complete, 36 tests) plutot que
+    d'ecrire un enieme parseur : le chemin peut venir tel quel du composant
+    Remotion d'origine, arcs et courbes compris.
+
+    ⚠️ Repartition par LONGUEUR D'ARC approchee, pas par parametre : sur une
+    Bezier, t=0,5 n'est PAS le milieu du trajet. Echantillonner en t donnerait
+    un objet qui ralentit dans les courbes et accelere dans les lignes droites
+    sans que personne l'ait demande.
+    """
+    from svgpath import parse_path
+
+    formes = parse_path(d)
+    brut = []
+    for f in formes:
+        k = f["ks"]["k"]
+        v, it, ot = k["v"], k.get("i") or [], k.get("o") or []
+        for j in range(len(v) - 1 if not k.get("c") else len(v)):
+            p0 = v[j]
+            p3 = v[(j + 1) % len(v)]
+            # les tangentes Lottie sont RELATIVES a leur sommet
+            c1 = [p0[0] + (ot[j][0] if j < len(ot) else 0),
+                  p0[1] + (ot[j][1] if j < len(ot) else 0)]
+            k2 = (j + 1) % len(v)
+            c2 = [p3[0] + (it[k2][0] if k2 < len(it) else 0),
+                  p3[1] + (it[k2][1] if k2 < len(it) else 0)]
+            for m in range(24):
+                t = m / 24.0
+                u = 1 - t
+                brut.append([
+                    u*u*u*p0[0] + 3*u*u*t*c1[0] + 3*u*t*t*c2[0] + t*t*t*p3[0],
+                    u*u*u*p0[1] + 3*u*u*t*c1[1] + 3*u*t*t*c2[1] + t*t*t*p3[1],
+                ])
+            brut.append(list(p3))
+    if len(brut) < 2:
+        return brut or [[0, 0]]
+
+    # longueurs cumulees -> reechantillonnage a pas constant
+    cum = [0.0]
+    for i in range(1, len(brut)):
+        dx = brut[i][0] - brut[i-1][0]
+        dy = brut[i][1] - brut[i-1][1]
+        cum.append(cum[-1] + (dx*dx + dy*dy) ** 0.5)
+    total = cum[-1]
+    if total <= 0:
+        return [brut[0]] * n
+
+    sortie, j = [], 0
+    for i in range(n):
+        vise = total * i / (n - 1)
+        while j < len(cum) - 2 and cum[j + 1] < vise:
+            j += 1
+        seg = cum[j + 1] - cum[j]
+        r = 0.0 if seg <= 0 else (vise - cum[j]) / seg
+        sortie.append([
+            round(brut[j][0] + (brut[j+1][0] - brut[j][0]) * r, 2),
+            round(brut[j][1] + (brut[j+1][1] - brut[j][1]) * r, 2),
+        ])
+    return sortie
+
+
+def parcourir(couche, chemin, debut, fin, oriente=False, n=40):
+    """Fait AVANCER un calque le long d'un chemin, entre deux frames.
+
+    ⭐ La primitive qui manquait. Les 7 autres font APPARAITRE (fondu, pop,
+    trace) ou VIBRER SUR PLACE (respire, balance, cligne) : aucune ne DEPLACE.
+    Or c'est le coeur de beaucoup de scenes -- un jeton qui avance vers sa
+    cible, un curseur qui traverse une interface, une pastille qui suit un
+    parcours, un vehicule sur un trajet.
+
+    ⛔ ON ANIME UN DELTA, PAS UNE POSITION ABSOLUE. Un calque converti porte sa
+    geometrie en coordonnees absolues avec `p` a [0,0] (cf. centre_du_calque).
+    Poser directement les points du chemin dans `p` TELEPORTERAIT l'objet au
+    debut du trajet, en cumulant sa position propre et celle du chemin. On pose
+    donc le deplacement RELATIF au premier point.
+
+    ⚠️ `oriente` fait pivoter l'objet dans le sens de la marche (atan2), comme
+    le fait la scene Remotion d'origine pour ses colonnes. A n'utiliser que si
+    le dessin a un « avant » : une fleche, un vehicule. Sur un jeton rond, la
+    rotation ne se voit pas et alourdit le fichier pour rien.
+    """
+    pts = points_du_chemin(chemin, n)
+    if len(pts) < 2:
+        return False
+
+    ks = couche.setdefault("ks", {})
+    p0 = pts[0]
+    pas = (fin - debut) / float(len(pts) - 1)
+
+    # easing inOut : demarrage progressif depuis l'arret, puis vitesse de
+    # croisiere. C'est le mouvement valide dans la scene d'origine ; une
+    # variante saccadee y avait ete testee puis RETIREE.
+    paires = []
+    for i, pt in enumerate(pts):
+        t = round(debut + i * pas)
+        paires.append((t, [round(pt[0] - p0[0], 2), round(pt[1] - p0[1], 2), 0]))
+    ks["p"] = keyframes(paires)
+
+    if oriente:
+        angles = []
+        for i, pt in enumerate(pts):
+            j = min(i + 1, len(pts) - 1)
+            k = max(i - 1, 0)
+            import math
+            a = math.degrees(math.atan2(pts[j][1] - pts[k][1],
+                                        pts[j][0] - pts[k][0]))
+            angles.append((round(debut + i * pas), [round(a, 2)]))
+        ks["r"] = keyframes(angles)
+    return True
+
+
 def trouver_partition(nom, partition):
     """Le 1er motif contenu dans le nom du calque gagne ; '*' est le defaut."""
     bas = nom.lower()
@@ -379,6 +493,16 @@ def animer(doc, partition):
                 paires += [(t - 1, [100]), (t, [0]), (t + 2, [0]), (t + 3, [100])]
                 t += periode
             couche["ks"]["o"] = keyframes(paires)
+
+        elif genre == "parcourt":
+            # ("parcourt", debut, fin, "M... chemin SVG", [oriente])
+            chemin = regle[3] if len(regle) > 3 else None
+            oriente = bool(regle[4]) if len(regle) > 4 else False
+            if chemin and parcourir(couche, chemin, debut, fin, oriente):
+                n_animes += 1
+            else:
+                n_ignores += 1
+            continue
 
         elif genre == "trace":
             # ⭐ trimPath ('tm') = l'equivalent Lottie natif du trait qui se

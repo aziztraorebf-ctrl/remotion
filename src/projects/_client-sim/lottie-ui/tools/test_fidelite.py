@@ -297,6 +297,42 @@ def test_rig_parent_introuvable_est_declare():
     assert rapport.refus, "un parent introuvable doit etre REFUSE, pas ignore en silence"
 
 
+def test_parcours_vitesse_constante_et_deplacement_relatif():
+    """La primitive 'parcourt' : vitesse reguliere, et un DELTA (pas un saut).
+
+    Deux exigences, chacune payee ailleurs dans la chaine :
+
+    1. Echantillonnage par LONGUEUR D'ARC, pas par parametre. Sur une Bezier,
+       t=0,5 n'est pas le milieu du trajet : echantillonner en t donne un objet
+       qui ralentit dans les courbes et accelere dans les lignes droites, sans
+       que personne l'ait demande.
+    2. On anime un DELTA depuis le premier point, jamais la position absolue.
+       Un calque converti porte sa geometrie en coordonnees absolues avec `p`
+       a [0,0] : poser les points du chemin dans `p` TELEPORTERAIT l'objet au
+       depart du trajet, en cumulant sa position propre et celle du chemin.
+       Meme famille que "la flamme ne s'anime pas" (25/08) : une transformation
+       posee a cote de la forme au lieu d'etre calee dessus.
+    """
+    import animate_scene as A
+
+    pts = A.points_du_chemin("M100 500 Q 400 300 700 500", 9)
+    d = [((pts[i+1][0]-pts[i][0])**2 + (pts[i+1][1]-pts[i][1])**2) ** 0.5
+         for i in range(len(pts) - 1)]
+    moy = sum(d) / len(d)
+    ecart = (max(d) - min(d)) / moy
+    assert ecart < 0.05, f"vitesse irreguliere : ecart {100*ecart:.1f} % entre segments"
+
+    couche = {"nm": "jeton", "ks": {}}
+    assert A.parcourir(couche, "M100 500 Q 400 300 700 500", 0, 100)
+    kf = couche["ks"]["p"]["k"]
+    assert kf[0]["s"][:2] == [0.0, 0.0], (
+        f"le 1er point doit etre un delta NUL (sinon l'objet saute) : {kf[0]['s']}")
+    # le dernier delta vaut le vecteur depart->arrivee
+    assert abs(kf[-1]["s"][0] - 600) < 2, f"arrivee attendue a +600 en x : {kf[-1]['s']}"
+    assert abs(kf[-1]["s"][1] - 0) < 2, f"arrivee attendue a +0 en y : {kf[-1]['s']}"
+    print("  ok  parcours : vitesse constante, deplacement relatif")
+
+
 def main():
     print("test_fidelite — non-regression des defauts Khartoum (2026-08-26)")
     echecs = 0
