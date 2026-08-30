@@ -44,6 +44,7 @@ RED   = [0.541, 0.165, 0.125, 1]     # #8a2a20
 AMBRE = [0.749, 0.580, 0.259, 1]     # #bf9442
 JETON = [0.863, 0.663, 0.369, 1]     # #dca95e
 FUMEE = [0.420, 0.361, 0.259, 1]     # #6b5c42
+IVOIRE= [0.949, 0.922, 0.851, 1]     # #f2ebd9
 
 RSF = (1750, 940)
 CIBLES = {
@@ -53,7 +54,51 @@ CIBLES = {
 }
 neufs = []
 
+
+def bezier_ks(a, b, bow=0.12):
+    """La Bezier quadratique RSF -> cible, en sommets Lottie.
+
+    ⚠️ Lottie n'a que des courbes CUBIQUES : une quadratique se convertit
+    exactement (les 2 controles cubiques sont a 2/3 du controle quadratique).
+    Ce n'est pas une approximation, c'est une identite.
+    """
+    mx = (a[0] + b[0]) / 2 + (b[1] - a[1]) * bow
+    my = (a[1] + b[1]) / 2 - (b[0] - a[0]) * bow
+    c1 = [a[0] + 2 / 3 * (mx - a[0]), a[1] + 2 / 3 * (my - a[1])]
+    c2 = [b[0] + 2 / 3 * (mx - b[0]), b[1] + 2 / 3 * (my - b[1])]
+    return {"c": False, "v": [list(a), list(b)],
+            "i": [[0, 0], [round(c2[0] - b[0], 2), round(c2[1] - b[1], 2)]],
+            "o": [[round(c1[0] - a[0], 2), round(c1[1] - a[1], 2)], [0, 0]]}
+
+
+def pointe(cx, cy, angle_deg):
+    """La pointe qui se plante sur l'objectif : polygone du composant V5.
+
+    Points recopies tels quels (`0,0 -34,-13 -22,0 -34,13`), pivotes vers la
+    cible -- c'est une fleche, elle a un « avant ».
+    """
+    import math
+    a = math.radians(angle_deg)
+    ca, sa = math.cos(a), math.sin(a)
+    pts = [(0, 0), (-34, -13), (-22, 0), (-34, 13)]
+    v = [[round(cx + x * ca - y * sa, 2), round(cy + x * sa + y * ca, 2)]
+         for x, y in pts]
+    return {"c": True, "v": v, "i": [[0, 0]] * 4, "o": [[0, 0]] * 4}
+
+
 for nom, (cx, cy) in CIBLES.items():
+    # ⭐ LA TRACE DU CHEMIN PARCOURU — l'element qui manquait le plus.
+    # Sans elle on voit un objet qui se DEPLACE ; avec elle on voit une avancee
+    # qui MARQUE le territoire. Le composant d'origine la dessine en ivoire
+    # 2,4 px / opacite 0,85, revelee par strokeDashoffset synchronise sur la
+    # progression : `trace` (trimPath) en est l'equivalent Lottie natif.
+    neufs.append(calque_forme(f"trajet-{nom}", bezier_ks(RSF, (cx, cy)),
+                              contour=IVOIRE, largeur=2.4, duree=DUREE))
+    # la pointe qui se plante a l'arrivee, orientee vers la cible
+    import math
+    ang = math.degrees(math.atan2(cy - RSF[1], cx - RSF[0]))
+    neufs.append(calque_forme(f"pointe-{nom}", pointe(cx, cy, ang),
+                              remplissage=RED, duree=DUREE))
     # la colonne : un jeton losange qui part de la base
     # ⚠️ Taille calee sur la V5 du composant : sa note de version dit
     # explicitement "jetons RSF agrandis + recolores" apres la critique
@@ -78,6 +123,14 @@ for i, c in enumerate(doc['layers']):
 
 part = dict(PARTITIONS['khartoum'])
 # les volutes decalees dans le temps : c'est le decalage qui fait la colonne
+# la trace se dessine EXACTEMENT pendant que la colonne avance : meme bornes
+# que le `parcourt` correspondant, sinon le trait devance ou suit le jeton.
+for nom, (d0, d1) in (("aeroport", (40, 170)), ("palais", (240, 370)),
+                      ("tourtv", (440, 570))):
+    part[f"trajet-{nom}"] = ("trace", d0, d1)
+    # la pointe apparait a l'arrivee, pas avant
+    part[f"pointe-{nom}"] = ("fondu", d1 - 12, d1)
+
 for nom, t0 in (("aeroport", 178), ("palais", 378), ("tourtv", 578)):
     for i in range(3):
         part[f"fumee-{nom}-{i}"] = ("monte", t0, DUREE, 58, 66, i * 22)
