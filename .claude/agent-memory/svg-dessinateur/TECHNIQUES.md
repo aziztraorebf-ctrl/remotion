@@ -57,3 +57,55 @@ Dans un fichier à plusieurs poses/variantes, les mêmes sous-groupes reviennent
 Deux `id` identiques → le lecteur Lottie **fige sans aucune erreur console** (`DOMLoaded` n'arrive
 jamais). Toujours préfixer par la variante : `repos-index`, `appui-index`, `pointe-index`.
 Vérification : compter les `id` et les `id` uniques, ils doivent être égaux.
+
+## ⭐⭐ PERSONNAGE ARTICULE — les techniques qui MARCHENT (2026-08-29, 3 versions)
+
+> Prouve au rendu : bras 90 deg, **salut 120 deg**, assis 75/-80 deg, marche — aucun joint
+> ne s'ouvre. ⭐ Le salut a 120 deg est exactement le geste qui a echoue 4 fois sur une piece
+> PROFESSIONNELLE (le douanier). Un dessin bien construit bat un fichier pro mal decoupe.
+
+### Le RECOUVREMENT (la contrainte n1, invisible sur une image de reference)
+Chaque membre se prolonge **>= 15 % de sa longueur** SOUS la piece qui le couvre. Sans cette
+reserve cachee, un TROU apparait des que le membre tourne.
+⛔ Un modele qui dessine depuis une frame **ne peut pas la deviner** — elle est cachee.
+⚠️ 2 pieges de MESURE :
+- les **BORDS d'une manchette courbe** remontent plus haut que son centre : la couverture
+  reelle d'une main mesurait 7,5 % alors que l'oeil voyait une manche large ;
+- **UN SEUL pixel d'anticrenelage** sur un bord diagonal fait chuter la mesure a 3,5 %
+  (la metrique s'arrete a la 1re ligne imparfaite) → nudge d'1 px, pas un redessin.
+
+### La PASTILLE DE ROTULE
+Un cercle de la **couleur exacte du membre**, pose au coude/epaule/genou, DANS le calque du
+membre. Bouche le joint a tout angle **sans deformer aucune forme** — ne viole donc pas
+« zero forme redessinee ». ⛔ Elle est INVISIBLE par construction : si une jonction se voit,
+la cause est ailleurs (chez moi c'etaient mes **ellipses d'ombre decoratives** posees au joint).
+
+### Les PIVOTS x,y ANATOMIQUES
+⛔ `data-pivot="haut"` est FAUX : a cause de la reserve de recouvrement, le sommet de la boite
+est **10-20 px au-dessus** du vrai centre articulaire → les bras s'ecartent au lieu de tourner.
+Declarer des pivots `x,y` reels (epaule, coude, poignet, hanche, genou, cheville).
+
+### Les OMBRES
+- Une ombre d'articulation vit dans le calque **RECEVEUR**, pas celui qui projette (sinon
+  elle reste en arriere quand le joint bouge). La regle « calque du projeteur » ne vaut que
+  si les deux bougent ensemble (menton -> cou, tous deux dans `tete`).
+- **Bandes d'ombre CONTINUES a travers le joint** : alignees au repos, l'oeil lit une manche
+  d'un seul tenant ; la cassure en rotation se lit comme un pli.
+- Les pros font des ombres de **GRANDE SURFACE** (moitie de visage, interieur de jambe
+  entier), pas des bandes fines. Teinte legerement **decalee**, pas juste plus sombre.
+
+### Les RATIOS (mesures sur les pieces pro)
+- ⭐ Le ratio qui compte : **deux jambes reunies / largeur d'epaules = 0,97** chez le douanier.
+  Silhouette de reference = **COLONNE** (largeur quasi constante de 20 % a 80 % de la hauteur,
+  point le plus large aux **cuisses**). Une silhouette en **Y** (large en haut, fil en bas)
+  est le defaut typique.
+- ⛔ Le ratio **H/Wmax global est une MAUVAISE metrique** : il depend de la POSE (le douanier
+  lui-meme est a 4,2 au repos, pas 2,5). Ne pas s'en servir comme cible.
+- **Economie** : marcheuse **41 formes** · exercise 44 · douanier 106 (l'exception riche,
+  uniforme structure). Si une forme ne se voit pas a 600 px, elle ne merite pas d'exister.
+
+### Les ETATS DE VISAGE (ce qui separe un pantin d'un personnage vivant)
+2-3 bouches + 2 paupieres en calques nommes **caches** (`display="none"`), le code choisit.
+⭐ Paupiere fermee = peau **+ arc de cil**, sinon ca lit « pas d'yeux ».
+Bouche au repos = **trait fin de 2-3 px**. ⛔ Une masse sombre fermee = un dessin de machoire
+de marionnette (le defaut « pantin » que voit l'oeil en premier).

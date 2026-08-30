@@ -57,3 +57,35 @@ Symptôme : tous les objets en **aplats de couleur**, une forme par objet, là o
 des dégradés et ~10 formes empilées. Cause : les formes avaient été écrites au clavier en JSX
 au lieu d'être dessinées. **L'aplat généralisé est le symptôme visuel de cette erreur.**
 → `memory/feedbacks/feedback_svg-dessine-a-la-main-au-lieu-de-deleguer-a-fable.md`
+
+## ⭐ PERSONNAGE ARTICULE — mes erreurs des 3 versions (2026-08-29)
+
+### Ce que j'ai cru, et que le RENDU a dementi
+- **L'ombre de chevelure sur le front** : promise dans mon programme design, elle lisait
+  comme un **bandeau** malgre 2 affinages → supprimee (les refs pro n'en ont pas).
+  ⭐ **Une idee de programme se lache quand le rendu la contredit.** Ne pas s'y accrocher
+  parce qu'on l'a annoncee.
+- **La taille pincee** (mon point 3 de programme V2) : les refs font des torses **tonneau
+  quasi droits**. C'etait une coquetterie de designer contraire au registre. ⭐ La SENSATION
+  d'Aziz a detecte ce que mes mesures n'avaient pas cherche.
+- **« Les jonctions visibles viennent des rotules »** : FAUX. La rotule est de la couleur du
+  membre, elle ne peut pas se voir. C'etaient **mes ellipses d'ombre decoratives**.
+  ⭐ Meme symptome, autre cause — chercher la cause avant de refaire le mecanisme.
+
+### Le piege de DOSAGE que j'ai failli repeter
+La jonction cuisse/mollet a resiste a **2 dosages** avant que je zoome : la cause etait
+**structurelle** (mollet plus etroit que le bas de cuisse → le fond clair dessine la
+jonction). Fix : mollet **aussi large** que le bas de cuisse — bleu sur bleu, bord invisible.
+⛔ **Des le 2e dosage sans progres, chercher la cause, pas une 3e valeur.**
+
+### Ce qui m'a limite pendant 3 versions sans que je le nomme
+⛔ **Aucune reference humaine DE FACE.** Je transposais des largeurs depuis des vues 3/4 et
+de profil. Verifie apres coup : les 23 pieces du corpus n'en contiennent aucune.
+⭐ **Reflexe a garder : nommer TOT ce qui manque comme materiau**, au lieu de compenser en
+silence. Je l'ai demande a la V3 seulement — 2 versions trop tard.
+
+### Un chiffre atteint n'est pas un dessin reussi
+En V3 j'ai atteint TOUS mes ratios cibles et perdu 3 choses a l'oeil : bras qui se fondent
+dans le torse au repos, cou disparu, souliers devenus des sabots.
+⛔ **Toujours REGARDER le rendu final en entier apres avoir corrige une metrique** — la
+correction d'un chiffre peut casser ce qui allait.
