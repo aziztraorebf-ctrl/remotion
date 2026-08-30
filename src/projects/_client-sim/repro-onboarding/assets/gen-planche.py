@@ -127,9 +127,20 @@ w('</g>', 2)
 # --- 4. libelle de section
 w('')
 w('<g id="e1-section">', 2)
-# ⭐ un CHIFFRE raconte, un adjectif non : "3 TEAMMATES FOUND" dit ce que
+# ⛔⛔ 3 INCOHERENCES DE RECIT corrigees le 2026-08-30, trouvees par le DA-brief
+# (Grok + Kimi, verifiees dans le code avant application) :
+#   1. "3 TEAMMATES FOUND" alors que 6 lignes s'affichent -> passe a 6.
+#   2. titre "enable notifications" alors que l'etape 1 demande CONTACTS, et que
+#      le toggle Notifications est deja vert et ne bouge jamais -> "allow contacts".
+#   3. "Maya invited you" INVERSAIT la perspective : ecran 1, c'est MOI qui
+#      invite Maya ; ecran 2, elle m'invitait -> "Maya joined Loop", qui confirme
+#      MON action au lieu de la contredire.
+# ⭐ Les 3 venaient du BRIEF (dicte par Claude), pas du dessin. Un chiffre et une
+# liste ecrits dans la meme consigne sans etre confrontes l'un a l'autre.
+#
+# ⭐ un CHIFFRE raconte, un adjectif non : "6 TEAMMATES FOUND" dit ce que
 # l app vient de faire (elle a cherche, elle a trouve 3 personnes).
-lettrage("e1-section-lettres", "3 TEAMMATES FOUND", 13, M, 366, TXT2, face=5, suivi=2.2)
+lettrage("e1-section-lettres", "6 TEAMMATES FOUND", 13, M, 366, TXT2, face=5, suivi=2.2)
 w('</g>', 2)
 
 # --- 5. banniere
@@ -143,7 +154,7 @@ rect("e1-banniere-icone", M + 16, BY + 22, 40, 40, SEP, rx=12)
 rect("e1-banniere-icone-marque", M + 28, BY + 34, 16, 16, TXT2, rx=5, op="0.7")
 # ⭐ la banniere PORTE la promesse : ce que l app fait, et ce qu elle a trouve.
 lettrage("e1-banniere-ligne-1", "Sync your workspace", 15, M + 72, BY + 37, TXT1, face=2)
-lettrage("e1-banniere-ligne-2", "We found 3 people you work with", 12, M + 72, BY + 58, TXT2, face=7)
+lettrage("e1-banniere-ligne-2", "We found 6 people you work with", 12, M + 72, BY + 58, TXT2, face=7)
 # croix de fermeture (2 traits croises)
 cx, cy = M + 392, BY + 26
 path("e1-banniere-croix-a",
@@ -216,7 +227,7 @@ w('</g>', 2)
 w('')
 w('<g id="e2-titre">', 2)
 w('<!-- "enable notifications" — 30px -->', 3)
-lettrage("e2-titre-lettres", "enable notifications", 30, M, 128, TXT1, face=2)
+lettrage("e2-titre-lettres", "allow contacts", 30, M, 128, TXT1, face=2)
 w('</g>', 2)
 
 # --- 2. etape 1
@@ -270,9 +281,16 @@ for k, (rid, coul, droite, libelle, coul_txt) in enumerate(rangs):
     w('</g>', 3)
 w('</g>', 2)
 
-# --- 5. etape 2
+# ⭐⭐ e2-etape-2 et e2-apercu SORTENT de l'ecran (2026-08-30) : ils doivent
+# etre animes SEPAREMENT pour combler les 1,8 s mortes de la fin — l'etape 2
+# s'allume, PUIS la notification descend comme sa consequence. Tant qu'ils
+# etaient dans <g id="ecran-reglages">, ils apparaissaient avec le decor et
+# ne pouvaient rien jouer.
+w('</g>', 1)   # <- fin de ecran-reglages
+
+# --- 5. etape 2 (groupe de PREMIER NIVEAU)
 w('')
-w('<g id="e2-etape-2">', 2)
+w(f'<g id="e2-etape-2" transform="translate({E2X} 50)">', 1)
 EY = CY0 + RANG_H * 4 + 56
 circ("e2-etape-2-pastille", M + 14, EY, 14, ACC)
 # le "2"
@@ -281,12 +299,12 @@ path("e2-etape-2-chiffre",
      f"q0.6 -4.6 6.4 -4.6 q6.2 0 6.2 5 0 3.4 -4 6.2 l-4.4 3.2 h8.6 v3.2 h-13.6 v-2.8"
      f"q6.6 -4.6 8 -6.4 1.4 -1.8 1.4 -3.2 0 -2.2 -2.4 -2.2 -2.2 0 -2.6 2.4 z", BLANC)
 lettrage("e2-etape-2-texte", "Then reopen Loop", 14, M + 40, EY + 5, TXT1, face=5)
-w('</g>', 2)
+w('</g>', 1)
 
 # --- 6. apercu de notification (comble le bas, registre credible)
 w('')
 AY = EY + 56
-w('<g id="e2-apercu">', 2)
+w(f'<g id="e2-apercu" transform="translate({E2X} 50)">', 1)
 w('<!-- carte d apercu : la notification telle qu elle apparaitra -->', 3)
 rect("e2-apercu-fond", M, AY, 420, 132, CARTE, rx=18)
 rect("e2-apercu-lisere", M, AY, 420, 1.5, BLANC, rx=0.75, op="0.05")
@@ -295,7 +313,7 @@ rect("e2-apercu-icone", M + 24, AY + 26, 44, 44, ACC, rx=13)
 rect("e2-apercu-icone-marque", M + 38, AY + 40, 16, 16, BLANC, rx=5, op="0.9")
 # ⭐ l apercu montre le RESULTAT : une vraie notification, avec un des noms
 # de l ecran 1 — les deux ecrans se repondent.
-lettrage("e2-apercu-titre", "Maya invited you", 15, M + 84, AY + 43, TXT1, face=2)
+lettrage("e2-apercu-titre", "Maya joined Loop", 15, M + 84, AY + 43, TXT1, face=2)
 lw_now = largeur("now", 11, face=7)
 lettrage("e2-apercu-heure", "now", 11, M + 396 - lw_now, AY + 42, TXT2, face=7, op="0.8")
 lettrage("e2-apercu-corps-1", "Design sprint · 2 new tasks", 12, M + 84, AY + 64, TXT2, face=7)
@@ -306,12 +324,12 @@ lettrage("e2-apercu-corps-2", "Joined from your workspace", 12, M + 84, AY + 82,
 rect("e2-apercu-filet", M + 24, AY + 96, 372, 1, SEP)
 lettrage("e2-apercu-action-1", "Open", 12, M + 24, AY + 117, ACC, face=2)
 lettrage("e2-apercu-action-2", "Later", 12, M + 92, AY + 117, TXT2, face=7, op="0.75")
-w('</g>', 2)
+w('</g>', 1)
 
 # --- 6b. note d aide (comble l espace entre apercu et pied)
 w('')
 NY = AY + 132 + 40
-w('<g id="e2-note">', 2)
+w(f'<g id="e2-note" transform="translate({E2X} 50)">', 1)
 w('<!-- bandeau d aide discret : pastille i + 2 lignes -->', 3)
 rect("e2-note-fond", M, NY, 420, 72, SURELEVE, rx=14, op="0.55")
 rect("e2-note-lisere", M, NY, 420, 1.5, BLANC, rx=0.75, op="0.05")
@@ -324,12 +342,12 @@ lettrage("e2-note-ligne-1", "You can change this anytime in Settings", 12, M + 7
          TXT2, face=7, op="0.9")
 lettrage("e2-note-ligne-2", "Your teammates are not notified yet", 12, M + 72, NY + 50,
          TXT2, face=7, op="0.55")
-w('</g>', 2)
+w('</g>', 1)
 
 # --- 7. pied d ecran : indice de progression + bouton principal
 w('')
 PY = 946
-w('<g id="e2-pied">', 2)
+w(f'<g id="e2-pied" transform="translate({E2X} 50)">', 1)
 w('<!-- 3 pastilles de progression + bouton pleine largeur -->', 3)
 circ("e2-pied-point-1", 224, PY, 5, ACC)
 circ("e2-pied-point-2", 244, PY, 5, TXT2, op="0.45")
@@ -346,9 +364,9 @@ path("e2-pied-bouton-ombre-interne",
      "#000000", op="0.18")
 lw_cont = largeur("Continue", 18, face=2)
 lettrage("e2-pied-bouton-texte", "Continue", 18, 250 - lw_cont / 2, PY + 64, BLANC, face=2)
-w('</g>', 2)
+w('</g>', 1)
 
-w('</g>', 1)   # fin ecran-reglages
+   # fin ecran-reglages
 
 # =======================================================================
 # INTERRUPTEURS — 2 versions du MEME objet, 1er niveau, meme taille 58x32

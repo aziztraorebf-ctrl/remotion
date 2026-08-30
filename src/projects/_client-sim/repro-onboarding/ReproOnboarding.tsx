@@ -31,7 +31,14 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 
-import { entree, sortie, rebond, glissement } from "./cascade";
+import {
+  entree,
+  sortie,
+  rebond,
+  glissement,
+  glissementVivant,
+  pulsationCle,
+} from "./cascade";
 import {
   ECRAN_INVITE,
   ECRAN_REGLAGES,
@@ -41,6 +48,10 @@ import {
   E1_MEMBRE_4,
   E1_MEMBRE_5,
   E1_MEMBRE_6,
+  E2_ETAPE_2,
+  E2_APERCU,
+  E2_NOTE,
+  E2_PIED,
   E2_TOGGLE_OFF,
   E2_TOGGLE_ON,
   BOUTON_FLOTTANT,
@@ -79,6 +90,14 @@ const SORTIE_1 = 75; // l'ecran 1 commence a se replier
 const ENTREE_2 = 105; // l'ecran 2 prend la main, des la fin REELLE de la sortie
 const REBOND = 102; // le bouton d'action arrive
 const BASCULE = 152; // l'interrupteur passe au vert
+// ⭐⭐ LES 1,8 s MORTES DE LA FIN — mesure : 164 frames figees sur 275 (60 % de
+// la piece), dont 1,80 s d'affilee apres la bascule. Les 4 voix du DA-brief
+// l'ont relevee ; Kimi l'a chiffree (« from 3.05 to 4.56, NOTHING moves »).
+// ⛔ On ne comble PAS avec du decoratif (pulsation de bouton, reflet) : ca
+// meuble sans rien dire. On fait JOUER l'etape 2, que l'ecran annonce et ne
+// montrait jamais. Le temps mort devient la RESOLUTION du recit.
+const ETAPE_2 = 186; // la pastille « 2 » s'allume
+const NOTIF = 206; // la notification descend — la preuve que ca a marche
 
 /** Injecte une forme dessinee. ⛔ dangerouslySetInnerHTML obligatoire : ces
  *  chaines sont du MARKUP, en enfant JSX elles s'affichent en texte brut. */
@@ -157,7 +176,7 @@ export const ReproOnboarding: React.FC = () => {
                 opacite={opacite1(5 + i)}
                 transform={
                   `translate(${MEMBRE_X} ` +
-                  `${MEMBRE_Y0 + i * MEMBRE_PAS + glissement(frame, 5 + i)})`
+                  `${MEMBRE_Y0 + i * MEMBRE_PAS + glissementVivant(frame, 5 + i)})`
                 }
               />
             ))}
@@ -168,8 +187,19 @@ export const ReproOnboarding: React.FC = () => {
         {ecran2Visible && (
           <g transform={`translate(0 ${glissement(frame, 0, ENTREE_2)})`}>
             <Piece html={ECRAN_REGLAGES} opacite={opDecor2} />
-            {/* L'interrupteur : les 2 etats se croisent en fondu. */}
-            <g opacity={opDecor2}>
+            {/* L'interrupteur — L'ACTION CLE du recit : c'est lui que l'etape 1
+                designe. ⭐ Il recoit la seule pulsation marquee de la piece
+                (+18 %), pour que l'oeil aille LA et nulle part ailleurs. Les 4
+                voix du DA-brief ont toutes releve que rien ne hierarchisait
+                l'attention : tout bougeait avec la meme importance. */}
+            <g
+              opacity={opDecor2}
+              transform={
+                `translate(${TOGGLE_X + 29} ${TOGGLE_Y + 16}) ` +
+                `scale(${pulsationCle(frame, BASCULE)}) ` +
+                `translate(${-(TOGGLE_X + 29)} ${-(TOGGLE_Y + 16)})`
+              }
+            >
               <Piece
                 html={E2_TOGGLE_OFF}
                 opacite={1 - bascule}
@@ -181,6 +211,30 @@ export const ReproOnboarding: React.FC = () => {
                 transform={`translate(${TOGGLE_X} ${TOGGLE_Y})`}
               />
             </g>
+
+            {/* ⭐⭐ LA FIN JOUE, elle ne fige plus. Mesure avant correction :
+                164 frames figees sur 275 (60 %), dont 1,80 s d'affilee apres la
+                bascule. Les 4 voix du DA-brief l'ont relevee, Kimi l'a chiffree.
+                ⛔ On ne comble pas avec du decoratif : on fait JOUER l'etape 2,
+                que l'ecran annonce ("Then reopen Loop") et ne montrait jamais.
+                La notification arrive APRES, comme sa consequence — elle devient
+                la preuve que l'action a marche, au lieu d'un decor pose la. */}
+            <Piece
+              html={E2_ETAPE_2}
+              opacite={entree(frame - ETAPE_2, 0)}
+              transform={`translate(0 ${glissementVivant(frame, 0, ETAPE_2, 24)})`}
+            />
+            <Piece
+              html={E2_APERCU}
+              opacite={entree(frame - NOTIF, 0)}
+              transform={`translate(0 ${glissementVivant(frame, 0, NOTIF, 46)})`}
+            />
+            <Piece html={E2_NOTE} opacite={entree(frame - NOTIF, 2)} />
+            <Piece
+              html={E2_PIED}
+              opacite={opDecor2}
+              transform={`translate(0 0) scale(1)`}
+            />
           </g>
         )}
 

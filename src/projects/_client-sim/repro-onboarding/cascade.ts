@@ -121,3 +121,73 @@ export const glissement = (frame: number, rang = 0, debut = 0): number => {
   const p = t / GLISSEMENT_DUREE;
   return GLISSEMENT_PX * (1 - p) ** 4;
 };
+
+/**
+ * ⭐⭐⭐ ANTICIPATION + DEPASSEMENT — reclames par 4 voix sur 4 au DA-brief
+ * (Gemini, Kimi, GPT, Grok, 2026-08-30). C'est le point sur lequel ils
+ * convergent le plus nettement, et tous le designent comme LA marque qui
+ * separe l'amateur du professionnel.
+ *
+ * Le principe : un objet vivant ne part pas tout droit vers sa cible.
+ *   1. il RECULE legerement d'abord (anticipation) — l'elan se prepare
+ *   2. il DEPASSE sa cible (overshoot)
+ *   3. il revient se poser
+ * Sans ca, un mouvement a l'air « pousse » ; avec, il a l'air « lance ».
+ *
+ * ⛔ A DOSER : sur une interface, l'exces fait jouet. On reste sous 10 % de
+ * depassement pour les elements de contenu, on va un peu plus loin (18 %)
+ * uniquement sur L'ACTION CLE, celle que le recit designe.
+ */
+
+/**
+ * Progression 0->1 avec anticipation puis depassement.
+ * `recul` = amplitude du contre-mouvement (fraction, ex 0.06)
+ * `depassement` = amplitude du depassement (fraction, ex 0.10)
+ */
+export const elan = (
+  p: number,
+  recul = 0.06,
+  depassement = 0.1,
+): number => {
+  if (p <= 0) return 0;
+  if (p >= 1) return 1;
+  // 1er quart : le contre-mouvement (on part a l'envers)
+  if (p < 0.25) {
+    const q = p / 0.25;
+    return -recul * Math.sin(q * Math.PI);
+  }
+  // le reste : course vers la cible avec depassement puis retour
+  const q = (p - 0.25) / 0.75;
+  const base = 1 - (1 - q) ** 3;
+  return base + depassement * Math.sin(q * Math.PI) * (1 - q * 0.35);
+};
+
+/**
+ * Le meme elan, applique a un DEPLACEMENT en pixels (retourne le decalage
+ * restant, 0 = pose). Remplace `glissement()` sur les elements auxquels on
+ * veut donner de la vie.
+ */
+export const glissementVivant = (
+  frame: number,
+  rang = 0,
+  debut = 0,
+  amplitude = GLISSEMENT_PX,
+): number => {
+  const t = frame - debut - rang * PAS;
+  if (t <= 0) return amplitude;
+  if (t >= GLISSEMENT_DUREE) return 0;
+  return amplitude * (1 - elan(t / GLISSEMENT_DUREE));
+};
+
+/**
+ * L'ACTION CLE — l'echelle d'un element qui doit ATTIRER l'oeil au moment ou
+ * le recit le designe (chez nous : l'interrupteur « Contacts »).
+ * Depassement volontairement plus marque (18 %), c'est le seul endroit ou on
+ * s'autorise ce niveau.
+ */
+export const pulsationCle = (frame: number, debut: number, duree = 20): number => {
+  const t = frame - debut;
+  if (t <= 0 || t >= duree) return 1;
+  const p = t / duree;
+  return 1 + 0.18 * Math.sin(p * Math.PI) * (1 - p * 0.4);
+};
