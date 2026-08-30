@@ -62,6 +62,13 @@ def joli(nom):
         return f"{TRADUCTIONS.get(racine, racine)} — masque"
     if not base or re.fullmatch(r"(g|path|circle|rect|ellipse|polygon|line)", base):
         return None            # nom sans valeur : on ne le maquille pas
+    # ⭐ Un nom DEJA presentable est laisse INTACT (2026-08-30). Une scene dont
+    # les calques ont ete regroupes par `group_layers.py` porte deja des noms
+    # ecrits pour le client (« Step 2 - toggle ») : les passer a la moulinette
+    # transformait « Step 2 - toggle » en « Step 2   toggle » — un tiret perdu,
+    # une majuscule ecrasee. On ne « rend presentable » que ce qui ne l'est pas.
+    if base[:1].isupper() and " " in base:
+        return base
     return base.replace("-", " ").replace("_", " ").capitalize()
 
 

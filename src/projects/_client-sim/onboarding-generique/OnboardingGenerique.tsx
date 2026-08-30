@@ -48,19 +48,19 @@ import {
 import {
   ECRAN_INVITE,
   ECRAN_REGLAGES,
-  E1_MEMBRE_1,
-  E1_MEMBRE_2,
-  E1_MEMBRE_3,
-  E1_MEMBRE_4,
-  E1_MEMBRE_5,
-  E1_MEMBRE_6,
-  E2_ETAPE_2,
-  E2_APERCU,
-  E2_NOTE,
-  E2_PIED,
-  E2_CADRE,
-  E2_TOGGLE_OFF,
-  E2_TOGGLE_ON,
+  ETAPE1_MEMBRE_1,
+  ETAPE1_MEMBRE_2,
+  ETAPE1_MEMBRE_3,
+  ETAPE1_MEMBRE_4,
+  ETAPE1_MEMBRE_5,
+  ETAPE1_MEMBRE_6,
+  ETAPE2_ETAPE_2,
+  ETAPE2_APERCU,
+  ETAPE2_NOTE,
+  ETAPE2_PIED,
+  ETAPE2_CADRE,
+  ETAPE2_TOGGLE_OFF,
+  ETAPE2_TOGGLE_ON,
   BOUTON_FLOTTANT,
 } from "./planche";
 
@@ -72,12 +72,12 @@ const W = 500;
 const H = 1080;
 
 const MEMBRES = [
-  E1_MEMBRE_1,
-  E1_MEMBRE_2,
-  E1_MEMBRE_3,
-  E1_MEMBRE_4,
-  E1_MEMBRE_5,
-  E1_MEMBRE_6,
+  ETAPE1_MEMBRE_1,
+  ETAPE1_MEMBRE_2,
+  ETAPE1_MEMBRE_3,
+  ETAPE1_MEMBRE_4,
+  ETAPE1_MEMBRE_5,
+  ETAPE1_MEMBRE_6,
 ];
 const MEMBRE_X = 40;
 const MEMBRE_Y0 = 500;
@@ -193,7 +193,7 @@ export const OnboardingGenerique: React.FC = () => {
 
             {/* ⭐⭐ Le cadre arrive AVANT la bascule et reste : il designe. */}
             <Piece
-              html={E2_CADRE}
+              html={ETAPE2_CADRE}
               opacite={opCadre}
               transform={`translate(${CADRE_X} ${CADRE_Y})`}
             />
@@ -210,12 +210,12 @@ export const OnboardingGenerique: React.FC = () => {
               }
             >
               <Piece
-                html={E2_TOGGLE_OFF}
+                html={ETAPE2_TOGGLE_OFF}
                 opacite={1 - bascule}
                 transform={`translate(${TOGGLE_X} ${TOGGLE_Y})`}
               />
               <Piece
-                html={E2_TOGGLE_ON}
+                html={ETAPE2_TOGGLE_ON}
                 opacite={bascule}
                 transform={`translate(${TOGGLE_X} ${TOGGLE_Y})`}
               />
@@ -225,17 +225,17 @@ export const OnboardingGenerique: React.FC = () => {
                 notification descend comme sa CONSEQUENCE — la preuve que
                 l'action a marche, au lieu d'un decor pose la. */}
             <Piece
-              html={E2_ETAPE_2}
+              html={ETAPE2_ETAPE_2}
               opacite={entree(frame - ETAPE_2, 0)}
               transform={`translate(0 ${glissementVivant(frame, 0, ETAPE_2, 24)})`}
             />
             <Piece
-              html={E2_APERCU}
+              html={ETAPE2_APERCU}
               opacite={entree(frame - NOTIF, 0)}
               transform={`translate(0 ${glissementVivant(frame, 0, NOTIF, 46)})`}
             />
-            <Piece html={E2_NOTE} opacite={entree(frame - NOTIF, 2)} />
-            <Piece html={E2_PIED} opacite={opDecor2} />
+            <Piece html={ETAPE2_NOTE} opacite={entree(frame - NOTIF, 2)} />
+            <Piece html={ETAPE2_PIED} opacite={opDecor2} />
           </g>
         )}
 

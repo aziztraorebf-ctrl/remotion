@@ -52,6 +52,50 @@ CARTES = {
     #   63-70 rects de bord + grandes ellipses hors cadre = le VIGNETTAGE
     #         (⭐ c'est LUI qui produisait les "bandes verticales sombres"
     #          signalees par Aziz : revele dans le desordre par ma cascade)
+    # ── ONBOARDING GENERIQUE — groupe par INTENTION, pas par forme ──────────
+    # ⭐⭐ LE PRINCIPE (Aziz, 2026-08-30) : « le moins de friction possible pour
+    # l'editeur. Pas de dictionnaire, pas de recherche : on comprend d'un coup
+    # d'oeil. » Un acheteur cherche « the toggle » ou « the banner », JAMAIS
+    # « etape1-banniere-lisere ». Les groupes portent ce qu'on VEUT MODIFIER.
+    #
+    # ⭐⭐ NOMS EN ANGLAIS, SANS ACCENTS (decision d'Aziz, 2026-08-30) :
+    #   1. l'acheteur de ce marche est anglophone — il ouvre le fichier et doit
+    #      comprendre sans traduire ;
+    #   2. un nom de calque n'est pas du texte affiche : lui faire porter des
+    #      accents (E, e, a) ajoute un risque d'encodage chez le lecteur/editeur
+    #      tiers pour zero benefice.
+    # ⛔ Le CODE et les COMMENTAIRES restent en francais : c'est notre outillage,
+    # nous seuls les lisons. Le critere n'est pas la langue du projet, c'est
+    # QUI LIT le texte en question.
+    # ⛔ L'ordre est l'ordre de PEINTURE : le 1er groupe est peint dessous.
+    "onboarding": {
+        "_ordre": [
+            "Background", "Step 1 - header", "Step 1 - shortcuts",
+            "Step 1 - banner", "Step 1 - member list",
+            "Step 2 - header", "Step 2 - options list",
+            "Step 2 - selection frame", "Step 2 - toggle",
+            "Step 2 - notification", "Step 2 - footnote", "Step 2 - footer",
+            "Action button",
+        ],
+        "Background": {"motifs": ["board-bg", "step1-bg", "step2-bg"]},
+        # ⛔ "step1-subtitle" AVANT "step1-title" : le motif court capturerait
+        # sinon "step1-subtitle-text", qui partirait en orphelin (vecu 30/08).
+        "Step 1 - header": {"motifs": ["step1-status-bar", "step1-status",
+                                        "step1-subtitle", "step1-title",
+                                        "step1-section"]},
+        "Step 1 - shortcuts": {"motifs": ["step1-app"]},
+        "Step 1 - banner": {"motifs": ["step1-banner"]},
+        "Step 1 - member list": {"motifs": ["step1-member"]},
+        "Step 2 - header": {"motifs": ["step2-status-bar", "step2-status",
+                                        "step2-title", "step2-step-1"]},
+        "Step 2 - options list": {"motifs": ["step2-list", "step2-row"]},
+        "Step 2 - selection frame": {"motifs": ["step2-frame"]},
+        "Step 2 - toggle": {"motifs": ["step2-toggle"]},
+        "Step 2 - notification": {"motifs": ["step2-notification", "step2-step-2"]},
+        "Step 2 - footnote": {"motifs": ["step2-footnote"]},
+        "Step 2 - footer": {"motifs": ["step2-footer"]},
+        "Action button": {"motifs": ["action-button"]},
+    },
     "soudan": {
         "_ordre": ["ciel", "soleil", "ambiance", "nuages", "sol",
                    "ombre", "lingot", "vignettage"],

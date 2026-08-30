@@ -68,6 +68,67 @@ PARTITIONS = {
     # acheteur y met son propre territoire. Et son format tombe pile dans le
     # corpus qui se vend (1024 CARRE, 4,4 s) la ou nos scenes narratives font
     # 25 s en 16:9.
+    # ── ONBOARDING GENERIQUE — un flux d'INTERFACE en 2 ecrans ───────────────
+    # ⭐⭐ Bornes RECOPIEES de OnboardingGenerique.tsx (jamais inventees) :
+    #   SORTIE_1=75  ENTREE_2=105  REBOND=102  CADRE=138  BASCULE=152
+    #   ETAPE_2=186  NOTIF=206     duree 275 a 60 fps
+    # ⭐ Le RECIT : « rejoindre un produit se fait en quelques pas, et chacun se
+    # termine tout seul. » L'ecran 1 se deploie, se REPLIE (il laisse la place),
+    # l'ecran 2 arrive, le CADRE designe la ligne, PUIS elle bascule.
+    # ⛔ L'ordre fait le sens : designer d'abord, agir ensuite. Un interrupteur
+    # qui passe au vert sans cadre est arbitraire.
+    "onboarding": {
+        "_duree": 275,
+        "board-bg": ("aucun", 0, 0),
+        # --- ECRAN 1 ------------------------------------------------------
+        # ⭐⭐ GLISSEMENT : l'ecran MONTE de 120 px en decelerant pendant qu'il
+        # apparait. Valeurs RECOPIEES de cascade.ts (GLISSEMENT_PX=120,
+        # GLISSEMENT_DUREE=26), jamais dosees a l'oeil.
+        # ⛔ Sans lui, le Lottie n'avait que des opacites : ecart constant de
+        # ~12 % contre le rendu Remotion, visible comme un TEXTE EN DOUBLE
+        # decale sur la planche de fidelite. Le mouvement d'ensemble EST le geste.
+        # ("glisse", debut, fin, hauteur, apparait_fin, sortie_deb, sortie_fin)
+        "step1-bg": ("glisse", 0, 26, 120, 12, 75, 100),
+        "step1-status-bar": ("glisse", 0, 26, 120, 12, 75, 100),
+        "step1-status": ("glisse", 0, 26, 120, 12, 75, 100),
+        "step1-title": ("glisse", 0, 26, 120, 14, 78, 100),
+        "step1-sous-title": ("glisse", 2, 28, 120, 16, 80, 100),
+        "step1-app": ("glisse", 4, 30, 120, 20, 84, 100),
+        "step1-section": ("glisse", 6, 32, 120, 24, 88, 100),
+        "step1-banner": ("glisse", 8, 34, 120, 26, 90, 100),
+        # ⭐ La cascade des membres : chacun 2 frames apres le precedent.
+        # ⛔ La SORTIE est INVERSEE — le DERNIER part le PREMIER. C'est le geste
+        # paye cher du chantier corpus : l'ordre de sortie n'est pas l'entree a
+        # l'envers, et ce decalage EST le geste.
+        "step1-member-1": ("glisse", 10, 36, 120, 28, 90, 102),
+        "step1-member-2": ("glisse", 12, 38, 120, 30, 88, 100),
+        "step1-member-3": ("glisse", 14, 40, 120, 32, 86, 98),
+        "step1-member-4": ("glisse", 16, 42, 120, 34, 84, 96),
+        "step1-member-5": ("glisse", 18, 44, 120, 36, 82, 94),
+        "step1-member-6": ("glisse", 20, 46, 120, 38, 80, 92),
+        # --- LE BOUTON D'ACTION : POP (rebond), seul geste non-opacite
+        "action-button": ("pop", 102, 134),
+        # --- ECRAN 2 : prend la main des la fin REELLE de la sortie (f105)
+        "step2-bg": ("glisse", 105, 131, 120, 120),
+        "step2-status-bar": ("glisse", 105, 131, 120, 120),
+        "step2-status": ("glisse", 105, 131, 120, 120),
+        "step2-title": ("glisse", 107, 133, 120, 122),
+        "step2-step-1": ("glisse", 109, 135, 120, 124),
+        "step2-list": ("glisse", 111, 137, 120, 126),
+        "step2-row": ("glisse", 113, 139, 120, 128),
+        # ⭐⭐ LE CADRE designe la ligne AVANT que l'interrupteur bascule.
+        # L'ordre fait le sens : designer d'abord, agir ensuite.
+        "step2-frame": ("fondu", 138, 152),
+        # --- LA BASCULE : fondu croise entre les 2 etats DESSINES
+        "step2-toggle-off": ("parait_disparait", 115, 130, 152, 166),
+        "step2-toggle-on": ("fondu", 152, 166),
+        # --- LA FIN JOUE : l'etape 2 s'allume, la notification descend APRES,
+        # comme sa CONSEQUENCE (la preuve que l'action a marche).
+        "step2-step-2": ("glisse", 186, 210, 24, 200),
+        "step2-notification": ("glisse", 206, 232, 46, 222),
+        "step2-footnote": ("fondu", 210, 226),
+        "step2-footer": ("glisse", 111, 137, 120, 126),
+    },
     "gabarit-carte": {
         "_duree": 140,
         # le medaillon et son cadre sont la des le debut : ils EN sont le support
@@ -712,6 +773,57 @@ def animer(doc, partition):
 
         if genre == "fondu":
             couche["ks"]["o"] = keyframes([(0, [0]), (debut, [0]), (fin, [100])])
+
+        elif genre == "glisse":
+            # ⭐⭐ GLISSEMENT AMORTI — ajoute le 2026-08-30 pour l'onboarding.
+            # L'element MONTE de `hauteur` px en DECELERANT, puis se pose et ne
+            # bouge plus. C'est le geste qui donne la vie a un flux d'interface
+            # (mesure : sans lui, 70 % des frames sont figees).
+            # ⛔ A ne pas confondre avec "monte", qui OSCILLE en boucle : ici le
+            # mouvement se TERMINE. Un flux d'interface se pose, il ne flotte pas.
+            # Courbe (1-p)^4 : RECOPIEE de cascade.ts (`glissement`), ou
+            # l'exposant 4 a ete ajuste sur 9 points mesures (ecart moyen 2,6 px).
+            # ("glisse", debut, fin, hauteur, [aussi_opacite])
+            _g = regle
+            g_deb, g_fin = _g[1], _g[2]
+            g_haut = _g[3] if len(_g) > 3 else 120
+            centre = centre_du_calque(couche)
+            cx, cy = centre if centre else (0, 0)
+            if centre:
+                couche["ks"]["a"] = {"a": 0, "k": centre}
+            # 5 points echantillonnes sur (1-p)^4 : 0 / 25 / 50 / 75 / 100 %
+            pts = []
+            for i in range(6):
+                p_ = i / 5.0
+                f = g_deb + (g_fin - g_deb) * p_
+                dy = g_haut * (1 - p_) ** 4
+                pts.append((int(round(f)), [cx, cy + dy]))
+            couche["ks"]["p"] = keyframes(pts)
+            # ⭐ Le glissement porte AUSSI l'opacite : dans le composant, un
+            # element GLISSE ET APPARAIT en meme temps (puis s'efface). Un
+            # calque ne recevant qu'UNE regle, les deux vivent ici.
+            # ("glisse", debut, fin, hauteur, apparait_fin, [sortie_deb, sortie_fin])
+            if len(_g) > 4:
+                pts_o = [(0, [0]), (g_deb, [0]), (_g[4], [100])]
+                if len(_g) > 6:
+                    pts_o += [(_g[5], [100]), (_g[6], [0])]
+                couche["ks"]["o"] = keyframes(pts_o)
+
+        elif genre == "parait_disparait":
+            # ⭐⭐ APPARAIT PUIS S'EFFACE — ajoute le 2026-08-30 pour la piece
+            # d'onboarding : un flux d'interface enchaine des ECRANS, donc le
+            # premier doit LAISSER LA PLACE au second. Aucune primitive ne
+            # savait faire disparaitre : "fondu" monte l'opacite et s'arrete la.
+            # ⛔ Meme lecon que le flou / les masques / les images (cf.
+            # CE-QUI-PASSE-EN-LOTTIE.md) : le FORMAT savait faire depuis
+            # toujours, c'est NOTRE outil qui n'emettait rien. Ne pas ecrire
+            # « limite du format » sans avoir verifie la spec.
+            # ("parait_disparait", debut, fin, debut_sortie, fin_sortie)
+            _, d_in, f_in, d_out, f_out = regle
+            couche["ks"]["o"] = keyframes([
+                (0, [0]), (d_in, [0]), (f_in, [100]),
+                (d_out, [100]), (f_out, [0]),
+            ])
 
         elif genre == "pop":
             centre = centre_du_calque(couche)
