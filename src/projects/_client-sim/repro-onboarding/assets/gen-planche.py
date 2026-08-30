@@ -127,7 +127,9 @@ w('</g>', 2)
 # --- 4. libelle de section
 w('')
 w('<g id="e1-section">', 2)
-lettrage("e1-section-lettres", "SUGGESTED", 13, M, 366, TXT2, face=5, suivi=2.2)
+# ⭐ un CHIFFRE raconte, un adjectif non : "3 TEAMMATES FOUND" dit ce que
+# l app vient de faire (elle a cherche, elle a trouve 3 personnes).
+lettrage("e1-section-lettres", "3 TEAMMATES FOUND", 13, M, 366, TXT2, face=5, suivi=2.2)
 w('</g>', 2)
 
 # --- 5. banniere
@@ -139,8 +141,9 @@ rect("e1-banniere-fond", M, BY, 420, 84, SURELEVE, rx=14)
 rect("e1-banniere-lisere", M, BY, 420, 1.5, BLANC, rx=0.75, op="0.06")
 rect("e1-banniere-icone", M + 16, BY + 22, 40, 40, SEP, rx=12)
 rect("e1-banniere-icone-marque", M + 28, BY + 34, 16, 16, TXT2, rx=5, op="0.7")
-rect("e1-banniere-ligne-1", M + 72, BY + 28, 210, 11, TXT2, rx=5.5)
-rect("e1-banniere-ligne-2", M + 72, BY + 48, 140, 8, SEP, rx=4)
+# ⭐ la banniere PORTE la promesse : ce que l app fait, et ce qu elle a trouve.
+lettrage("e1-banniere-ligne-1", "Sync your workspace", 15, M + 72, BY + 37, TXT1, face=2)
+lettrage("e1-banniere-ligne-2", "We found 3 people you work with", 12, M + 72, BY + 58, TXT2, face=7)
 # croix de fermeture (2 traits croises)
 cx, cy = M + 392, BY + 26
 path("e1-banniere-croix-a",
@@ -156,17 +159,19 @@ w('</g>', 1)   # fin ecran-invite
 # =======================================================================
 MEMBRE_Y0 = 500          # 1re ligne dans le repere de l ecran 1
 MEMBRE_PAS = 88
+# ⭐ Chaque ligne porte un NOM et une MENTION differents : c est ce qui prouve
+# que l app a vraiment lu l espace de travail (des lignes identiques ne prouvent rien).
 membres = [
-    (1, ACC),
-    (2, ACC2),
-    (3, ALERTE),
-    (4, JAUNE),
-    (5, VIOLET),
-    (6, CYAN),
+    (1, ACC,    "Maya Okonkwo",   "in 4 shared projects"),
+    (2, ACC2,   "Tomas Lindqvist","in 3 shared projects"),
+    (3, ALERTE, "Aisha Rahman",   "in 2 shared projects"),
+    (4, JAUNE,  "Diego Ferreira", "works in design"),
+    (5, VIOLET, "Yuki Tanaka",    "works in files"),
+    (6, CYAN,   "Nour El-Amin",   "works in chat"),
 ]
 w('')
 w('<!-- === 6 lignes de membre : <g> SEPARES de 1er niveau (cascade animee un par un) === -->')
-for i, coul in membres:
+for i, coul, nom_membre, mention in membres:
     ty = 50 + MEMBRE_Y0 + (i - 1) * MEMBRE_PAS
     w(f'<g id="e1-membre-{i}" transform="translate({40 + M} {ty})">', 1)
     w('<!-- taille reelle : 420 x 68 -->', 2)
@@ -180,13 +185,15 @@ for i, coul in membres:
     path(f"e1-membre-{i}-avatar-buste",
          "M11 40a12 12 0 0 1 24 0a23 23 0 0 1 -24 0z", BLANC, op="0.85", ind=2)
     # nom + mention
-    rect(f"e1-membre-{i}-nom", 62, 12, 110, 11, TXT1, rx=5.5, ind=2)
-    rect(f"e1-membre-{i}-mention", 62, 32, 150, 8, TXT2, rx=4, ind=2)
+    lettrage(f"e1-membre-{i}-nom", nom_membre, 15, 62, 22, TXT1, face=2, ind=2)
+    lettrage(f"e1-membre-{i}-mention", mention, 12, 62, 40, TXT2, face=7, ind=2)
     # bouton pilule invite
     rect(f"e1-membre-{i}-bouton-ombre", 328, 21, 92, 34, "#000000", rx=17, op="0.30", ind=2)
     rect(f"e1-membre-{i}-bouton", 328, 17, 92, 34, ACC, rx=17, ind=2)
     rect(f"e1-membre-{i}-bouton-lustre", 334, 21, 80, 13, BLANC, rx=6.5, op="0.13", ind=2)
-    rect(f"e1-membre-{i}-bouton-texte", 352, 29, 44, 10, BLANC, rx=5, ind=2)
+    lw_inv = largeur("invite", 13, face=2)
+    lettrage(f"e1-membre-{i}-bouton-texte", "invite", 13, 374 - lw_inv / 2, 38.6,
+             BLANC, face=2, ind=2)
     w('</g>', 1)
 
 # =======================================================================
@@ -220,29 +227,35 @@ circ("e2-etape-1-pastille", M + 14, 176, 14, ACC)
 # le "1" : hampe + empattement, formes simples
 rect("e2-etape-1-chiffre-hampe", M + 13, 168, 3.4, 16, BLANC, rx=1.7)
 path("e2-etape-1-chiffre-tete", f"M{M+8.4:.1f} 172.4l1.2 -2.6 4.8 -2.4v3.2l-4.4 2.2z", BLANC)
-rect("e2-etape-1-texte", M + 40, 171, 190, 10, TXT2, rx=5)
+# ⭐ l etape dit QUOI FAIRE, pas "etape 1" : une notice se lit, elle ne se devine pas.
+lettrage("e2-etape-1-texte", "Turn on Contacts access", 14, M + 40, 181, TXT1, face=5)
 w('</g>', 2)
 
 # --- 3. carte de reglages
 w('')
 CY0 = 218              # haut de la carte
 RANG_H = 76
+# ⭐ De vrais libelles de reglages systeme : "Contacts" est LA rangee que l etape 1
+# designe, elle porte l interrupteur qu il faut basculer.
 rangs = [
-    ("e2-rang-1", ACC,   "chevron"),
-    ("e2-rang-2", TXT2,  "toggle"),
-    ("e2-rang-3", JAUNE, "chevron"),
-    ("e2-rang-4", ACC2,  "toggle"),
+    ("e2-rang-1", VIOLET, "chevron", "Location",      TXT2),
+    # ⭐ Contacts est la rangee que l etape 1 designe : icone ACCENT + libelle clair.
+    # En version precedente son icone etait GRISE — la rangee a toucher etait la plus
+    # terne des quatre, exactement l inverse de ce que la notice demande.
+    ("e2-rang-2", ACC,    "toggle",  "Contacts",      TXT1),
+    ("e2-rang-3", JAUNE,  "chevron", "Photos",        TXT2),
+    ("e2-rang-4", ACC2,  "toggle",  "Notifications", TXT2),
 ]
 w('<g id="e2-liste">', 2)
 w('<!-- carte + 4 rangees separees par des filets -->', 3)
 rect("e2-liste-fond", M, CY0, 420, RANG_H * 4, CARTE, rx=16)
 rect("e2-liste-lisere", M, CY0, 420, 1.5, BLANC, rx=0.75, op="0.05")
-for k, (rid, coul, droite) in enumerate(rangs):
+for k, (rid, coul, droite, libelle, coul_txt) in enumerate(rangs):
     y = CY0 + k * RANG_H
     w(f'<g id="{rid}">', 3)
     rect(f"{rid}-icone", M + 20, y + 23, 30, 30, coul, rx=9, ind=4)
     rect(f"{rid}-icone-marque", M + 29, y + 32, 12, 12, BLANC, rx=4, op="0.85", ind=4)
-    rect(f"{rid}-libelle", M + 66, y + 33, 150 + (k % 3) * 22, 10, TXT2, rx=5, ind=4)
+    lettrage(f"{rid}-libelle", libelle, 14, M + 66, y + 43, coul_txt, face=5, ind=4)
     if droite == "chevron":
         # chevron ">" en 2 barres
         px, py = M + 388, y + 38
@@ -267,7 +280,7 @@ path("e2-etape-2-chiffre",
      f"M{M+7.6:.1f} {EY-4.6:.1f}"
      f"q0.6 -4.6 6.4 -4.6 q6.2 0 6.2 5 0 3.4 -4 6.2 l-4.4 3.2 h8.6 v3.2 h-13.6 v-2.8"
      f"q6.6 -4.6 8 -6.4 1.4 -1.8 1.4 -3.2 0 -2.2 -2.4 -2.2 -2.2 0 -2.6 2.4 z", BLANC)
-rect("e2-etape-2-texte", M + 40, EY - 5, 210, 10, TXT2, rx=5)
+lettrage("e2-etape-2-texte", "Then reopen Loop", 14, M + 40, EY + 5, TXT1, face=5)
 w('</g>', 2)
 
 # --- 6. apercu de notification (comble le bas, registre credible)
@@ -280,13 +293,19 @@ rect("e2-apercu-lisere", M, AY, 420, 1.5, BLANC, rx=0.75, op="0.05")
 rect("e2-apercu-bord-accent", M, AY + 24, 3, 84, ACC, rx=1.5)
 rect("e2-apercu-icone", M + 24, AY + 26, 44, 44, ACC, rx=13)
 rect("e2-apercu-icone-marque", M + 38, AY + 40, 16, 16, BLANC, rx=5, op="0.9")
-rect("e2-apercu-titre", M + 84, AY + 32, 168, 11, TXT1, rx=5.5)
-rect("e2-apercu-heure", M + 350, AY + 33, 46, 9, TXT2, rx=4.5, op="0.8")
-rect("e2-apercu-corps-1", M + 84, AY + 56, 300, 8, TXT2, rx=4)
-rect("e2-apercu-corps-2", M + 84, AY + 72, 214, 8, SEP, rx=4)
+# ⭐ l apercu montre le RESULTAT : une vraie notification, avec un des noms
+# de l ecran 1 — les deux ecrans se repondent.
+lettrage("e2-apercu-titre", "Maya invited you", 15, M + 84, AY + 43, TXT1, face=2)
+lw_now = largeur("now", 11, face=7)
+lettrage("e2-apercu-heure", "now", 11, M + 396 - lw_now, AY + 42, TXT2, face=7, op="0.8")
+lettrage("e2-apercu-corps-1", "Design sprint · 2 new tasks", 12, M + 84, AY + 64, TXT2, face=7)
+# ⛔ teinte SEP (#262d38) essayee ici : le texte DISPARAIT sur le fond de carte.
+# Un texte secondaire descend jusqu a TXT2 attenue, jamais jusqu a la couleur des filets.
+lettrage("e2-apercu-corps-2", "Joined from your workspace", 12, M + 84, AY + 82,
+         TXT2, face=7, op="0.6")
 rect("e2-apercu-filet", M + 24, AY + 96, 372, 1, SEP)
-rect("e2-apercu-action-1", M + 24, AY + 108, 96, 10, ACC, rx=5)
-rect("e2-apercu-action-2", M + 140, AY + 108, 74, 10, TXT2, rx=5, op="0.7")
+lettrage("e2-apercu-action-1", "Open", 12, M + 24, AY + 117, ACC, face=2)
+lettrage("e2-apercu-action-2", "Later", 12, M + 92, AY + 117, TXT2, face=7, op="0.75")
 w('</g>', 2)
 
 # --- 6b. note d aide (comble l espace entre apercu et pied)
@@ -299,8 +318,12 @@ rect("e2-note-lisere", M, NY, 420, 1.5, BLANC, rx=0.75, op="0.05")
 circ("e2-note-pastille", M + 40, NY + 36, 15, TXT2, op="0.30")
 rect("e2-note-i-point", M + 38.4, NY + 27, 3.2, 3.2, TXT2, rx=1.6)
 rect("e2-note-i-hampe", M + 38.4, NY + 33, 3.2, 12, TXT2, rx=1.6)
-rect("e2-note-ligne-1", M + 72, NY + 24, 250, 9, TXT2, rx=4.5, op="0.85")
-rect("e2-note-ligne-2", M + 72, NY + 43, 176, 8, SEP, rx=4)
+# La phrase du brief tient sur UNE ligne (216px pour 420 de large) : la couper en
+# deux laissait une 2e ligne orpheline. Ligne 2 = le rappel de l ecran precedent.
+lettrage("e2-note-ligne-1", "You can change this anytime in Settings", 12, M + 72, NY + 32,
+         TXT2, face=7, op="0.9")
+lettrage("e2-note-ligne-2", "Your teammates are not notified yet", 12, M + 72, NY + 50,
+         TXT2, face=7, op="0.55")
 w('</g>', 2)
 
 # --- 7. pied d ecran : indice de progression + bouton principal
@@ -321,7 +344,8 @@ path("e2-pied-bouton-ombre-interne",
      "M%d %d a18 18 0 0 0 18 18 h384 a18 18 0 0 0 18 -18"
      "h-2.5a15.5 15.5 0 0 1 -15.5 15.5h-384a15.5 15.5 0 0 1 -15.5 -15.5z" % (M, PY + 70),
      "#000000", op="0.18")
-rect("e2-pied-bouton-texte", M + 148, PY + 53, 124, 12, BLANC, rx=6)
+lw_cont = largeur("Continue", 18, face=2)
+lettrage("e2-pied-bouton-texte", "Continue", 18, 250 - lw_cont / 2, PY + 64, BLANC, face=2)
 w('</g>', 2)
 
 w('</g>', 1)   # fin ecran-reglages

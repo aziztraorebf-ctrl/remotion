@@ -31,7 +31,7 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 
-import { entree, sortie, rebond } from "./cascade";
+import { entree, sortie, rebond, glissement } from "./cascade";
 import {
   ECRAN_INVITE,
   ECRAN_REGLAGES,
@@ -137,16 +137,28 @@ export const ReproOnboarding: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: "#0e1116" }}>
       <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`}>
-        {/* ---------- ECRAN 1 : inviter l'equipe ---------- */}
+        {/* ---------- ECRAN 1 : inviter l'equipe ----------
+            ⭐ Porte par le GLISSEMENT : l'ecran monte de 134 px en decelerant
+            pendant que ses elements apparaissent (mesure sur l'original, cf.
+            `cascade.ts`). C'est ce mouvement d'ensemble qui manquait a la V1 —
+            2,2x moins d'activite que la reference, 70 % de frames figees. */}
         {ecran1Visible && (
           <>
-            <Piece html={ECRAN_INVITE} opacite={opDecor1} />
+            {/* Le decor (rang 0) : il arrive en premier et se pose en premier. */}
+            <Piece
+              html={ECRAN_INVITE}
+              opacite={opDecor1}
+              transform={`translate(0 ${glissement(frame, 0)})`}
+            />
             {MEMBRES.map((m, i) => (
               <Piece
                 key={i}
                 html={m}
                 opacite={opacite1(5 + i)}
-                transform={`translate(${MEMBRE_X} ${MEMBRE_Y0 + i * MEMBRE_PAS})`}
+                transform={
+                  `translate(${MEMBRE_X} ` +
+                  `${MEMBRE_Y0 + i * MEMBRE_PAS + glissement(frame, 5 + i)})`
+                }
               />
             ))}
           </>
@@ -154,7 +166,7 @@ export const ReproOnboarding: React.FC = () => {
 
         {/* ---------- ECRAN 2 : autoriser les notifications ---------- */}
         {ecran2Visible && (
-          <>
+          <g transform={`translate(0 ${glissement(frame, 0, ENTREE_2)})`}>
             <Piece html={ECRAN_REGLAGES} opacite={opDecor2} />
             {/* L'interrupteur : les 2 etats se croisent en fondu. */}
             <g opacity={opDecor2}>
@@ -169,7 +181,7 @@ export const ReproOnboarding: React.FC = () => {
                 transform={`translate(${TOGGLE_X} ${TOGGLE_Y})`}
               />
             </g>
-          </>
+          </g>
         )}
 
         {/* ---------- LE BOUTON D'ACTION — au-dessus de tout ---------- */}

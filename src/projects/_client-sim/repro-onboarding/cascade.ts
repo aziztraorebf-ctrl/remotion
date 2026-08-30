@@ -76,3 +76,48 @@ export const rebond = (frame: number, debut: number): number => {
   if (t <= 32) return 1.1 - ((t - 18) / 14) * 0.1;
   return 1;
 };
+
+/**
+ * ⭐⭐⭐ LE GLISSEMENT — PAR ELEMENT, pas par ecran. C'EST LE GESTE MANQUANT.
+ *
+ * ⛔ 2 ERREURS SUCCESSIVES avant d'arriver ici, les deux instructives :
+ *
+ * 1. V1 : aucun glissement. Mon scan du .lottie disait « 37/38 en opacite
+ *    seule » — exact, et pourtant trompeur : le mouvement ne vient d'AUCUNE
+ *    propriete de calque. Mesurer le FICHIER ne remplace pas mesurer l'IMAGE.
+ *
+ * 2. V3 : glissement de l'ECRAN ENTIER, d'un bloc. Mieux, mais l'activite
+ *    mesuree restait a 4,33 % contre 11 % pour l'original sur l'entree.
+ *    La mesure a montre pourquoi : notre animation etait FINIE a f30, celle de
+ *    l'original culminait a f20-24 et continuait jusqu'a f40+.
+ *
+ * ⭐ LA VERITE, mesuree element par element sur le rendu de l'original :
+ *      le TITRE (haut)      glisse de f4  a f28  (214 -> 80,  soit 134 px)
+ *      la 1re PASTILLE (bas) glisse de f16 a f42  (668 -> 556, soit 112 px)
+ *    Chaque element a SON glissement, decale exactement comme sa cascade
+ *    d'opacite. Ce n'est pas un ecran qui monte : c'est chaque element qui
+ *    monte EN ARRIVANT. D'ou une activite qui dure et qui culmine au milieu,
+ *    au lieu de piquer au debut puis retomber.
+ *
+ * ⭐⭐ LA REGLE GENERALE, qui vaut au-dela de cette piece : un mouvement
+ * d'ensemble applique en bloc et le meme mouvement applique par element
+ * DECALE ne se ressemblent pas — le second a l'air vivant, le premier a l'air
+ * d'un panneau qu'on pousse. Le decalage EST le geste.
+ */
+export const GLISSEMENT_PX = 120; // amplitude, mesuree (134 en haut, 112 en bas)
+export const GLISSEMENT_DUREE = 26; // frames, mesurees (f4->f28, f16->f42)
+
+/**
+ * Decalage vertical d'un element de rang `rang` (0 = pose).
+ * ⭐ Le rang decale le DEPART, exactement comme dans `entree()` : c'est ce qui
+ * fait que le bas de l'ecran bouge encore quand le haut est deja pose.
+ */
+export const glissement = (frame: number, rang = 0, debut = 0): number => {
+  const t = frame - debut - rang * PAS;
+  if (t <= 0) return GLISSEMENT_PX;
+  if (t >= GLISSEMENT_DUREE) return 0;
+  // Exposant 4 : ajuste sur les 9 points mesures du titre (ecart moyen 2,6 px,
+  // max 7,7 ; exposant 3 -> 8,6 de moyenne, exposant 5 -> 3,5).
+  const p = t / GLISSEMENT_DUREE;
+  return GLISSEMENT_PX * (1 - p) ** 4;
+};
