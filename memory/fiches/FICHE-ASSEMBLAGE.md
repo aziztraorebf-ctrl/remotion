@@ -34,7 +34,14 @@ ont rien changé. FIX : embarquer Inter (`@remotion/google-fonts/Inter`, axe com
   Sans `--image-format=png`, TypeError. **Vérifier après coup, jamais sur parole** :
   `ffprobe -v error -select_streams v:0 -show_entries stream=pix_fmt` doit rendre `yuva444p12le`
   (le `10le` demandé sort en `12le`, c'est normal — ce qui compte est le **`a`**). Mesuré : 135 frames 1080p = 53 s.
-  (chill-meter Upwork, 2026-08-22 · détail : `memory/key-learnings.md` porte déjà le piège depuis 2026-06-08)
+  ⛔⛔ **Ce test vaut pour ProRes/MOV UNIQUEMENT.** (chill-meter Upwork, 2026-08-22)
+- ⛔⛔ **WebM/VP9 : `pix_fmt` NE TESTE PAS l'alpha** — il rend `yuv420p` alors que l'alpha est INTACT
+  (mesuré sur 2 fichiers du repo). L'alpha vit dans un BlockAdditional Matroska. Et `ffmpeg -i out.webm … .png`
+  l'**aplatit en noir** sans `-c:v libvpx-vp9` EN ENTRÉE (0 % de pixels transparents sans le flag, 86,4 % avec).
+  Deux vérifications, le MÊME angle mort ffmpeg, deux fausses confirmations → **3 « fix » sur une commande
+  jamais cassée** (2026-08-29). Test : `ffprobe -v error -select_streams v:0 -show_entries stream_tags=alpha_mode
+  -of default=nw=1:nk=1 f.webm` → doit rendre `1`. Encodage (aucun flag exotique nécessaire) :
+  `ffmpeg -i src.mov -c:v libvpx-vp9 -pix_fmt yuva420p -crf 40 -b:v 0 -vf "scale=640:-2" -an -row-mt 1 out.webm`
 - ⛔⛔ **UN RENDU ALPHA S'AFFICHE COMME UN RECTANGLE NOIR** dans les visualiseurs d'images — c'est NORMAL,
   pas un bug. Vécu 2026-08-22 : défaut inexistant signalé à Aziz, code modifié pour rien, agent de diagnostic
   mobilisé. **Avant de conclure à un défaut sur une frame transparente : MESURER**
@@ -59,6 +66,7 @@ ont rien changé. FIX : embarquer Inter (`@remotion/google-fonts/Inter`, axe com
   génératif **ne boucle pas**. (`scripts/tools/measure-insert-clip.py` calcule déjà ce ratio.)
 - **Chaque clip vidéo importé se mesure INDIVIDUELLEMENT** (`ffprobe -v error -show_entries format=duration …`), jamais par analogie avec un voisin du même dossier (5.875 s vs 5.167 s constatés). Une durée surestimée dans un `<Loop>` gèle l'image sans aucune erreur.
 
+- Fondu enchaîné (`xfade`) : offset **CUMULATIF** + `scale=1920:1080,setsar=1,fps=30` sur chaque entrée (sources hétérogènes) → `memory/client-sim-tests/upwork-chill-meter/PORTFOLIO-MANIFESTE.md` (payé 2026-08-23).
 ## ⛔ VÉRIFIER UN CONCAT — le gel invisible
 Coût documenté : Soudan mid-form v4 (2026-07-22), **image figée ~4 minutes** (2:55→7:00) avec audio normal. « Vérifié » par frames isolées : toutes plausibles. Aziz l'a vu en regardant.
 - ⛔ **Le concat DEMUXER (`-f concat -i list.txt`) est interdit pour tout assemblage présenté**, surtout si une source est elle-même issue d'un concat (DTS non-monotones en cascade). Utiliser le **filtre** : `concat=n=N:v=1:a=1` (ou `a=0` si audio géré séparément — consigne écrite pour l'Acte 4 Gazoduc), avec ré-encodage complet.
@@ -103,16 +111,6 @@ sinon l'historique gonfle à chaque re-découpage ; (3) **transcodage obligatoir
 
 ## SI ÇA RATE 2×
 Au **2e échec du même symptôme** (render qui plante, concat qui casse, gel qui revient) : STOP, pas de 3e variante. Déléguer à un agent frais (Opus, `run_in_background`) — **reverse-engineering du repo D'ABORD** (git log/blame, `memory/`, doctrines : le fix existe souvent déjà), `systematic-debugging` ensuite. L'agent RAPPORTE, n'applique pas. Coût documenté : ~40 min perdues sur un blocage API dont le fix était déjà dans le repo.
-
-## MONTER UN EXTRAIT PAR FONDUS (`xfade`) — paye le 2026-08-23
-
-⛔ **L'offset est CUMULATIF** : `xfade=transition=fade:duration=D:offset=O` ou `O` = duree cumulee
-des clips precedents **moins** la somme des fondus deja consommes. Un offset naif = fondu au mauvais
-endroit, ou filtre qui refuse.
-⛔ **Chaque entree passe par `scale=1920:1080,setsar=1,fps=30`** avant le filtre. Sur des sources
-heterogenes (notre cas : extraits Mapbox + D3 + motion melanges), `xfade` echoue sinon.
-ℹ️ La fiche couvrait le `concat` (raccord franc), pas le fondu. Zero occurrence de `xfade` dans
-`scripts/` et `memory/` avant ce jour.
 
 ## ARTIFACT = LE DÉFAUT, BORNÉ À 16 Mo/PAGE (mesures 2026-08-23, conclusion révisée le 08-27)
 

@@ -3,8 +3,9 @@
 ## ⭐⭐⭐ DÉCISION DU 2026-08-24 — LA CHAÎNE EST UNE VITRINE, LE FREELANCE PORTE L'EFFORT
 
 Décision d'Aziz. La chaîne continue (Gazoduc), mais elle **prouve les capacités, elle ne les monétise
-pas**. ⚠️ Le freelance n'est pas prouvé non plus (1 candidature, 0 revenu) — ce qui est décidé, c'est
-**où va l'effort marginal**. Doctrine + fer de lance retenu (pilier 2, objets animés par code) :
+pas**. ⭐ **MàJ 29/08 : 1er contrat GAGNÉ** (Upwork, 350 $, ni signé ni payé) — le freelance a franchi
+le premier seuil, pas celui de la livraison. ⛔ Ça ne valide PAS le « déterminisme », qui reste une
+hypothèse. Doctrine + fer de lance retenu (pilier 2, objets animés par code) :
 `memory/doctrines/PILIERS-B2B.md` (en tête).
 
 **Acquis technique de la session** : pipeline **SVG → Lottie** prouvé, validé dans les 2 outils
@@ -41,27 +42,26 @@ Il ne reste que **`master`** et :
 ⭐ **Règle** : ne pas laisser s'accumuler des branches mergées — `git branch --merged master` liste ce
 qui se supprime sans aucune perte, `git branch --no-merged master` ce qui porte du travail unique.
 
-## ⭐⭐⭐ CLIENTE UPWORK chill-meter — ELLE A RÉPONDU (4 échanges), PHASE FINALE DE DÉCISION (2026-08-27)
+## ⭐⭐⭐ CONTRAT UPWORK chill-meter — GAGNÉ le 2026-08-29, offre à REVOIR avant signature
 
-⭐ **La condition d'ouverture EST REMPLIE.** 4 échanges en 4 jours (23→27/08). Dernier message :
-*« I'm reviewing everything carefully now and will let you know soon. »*
+**Premier contrat freelance.** Elle a dit oui le 29/08 ; offre v1 reçue (350 $ → **297,50 $ net**,
+expire le 5 sept.), **révision demandée le jour même** sur 3 points : la ligne « After Effects project
+file » à retirer (elle contredit le dossier React/Remotion convenu) · dates de jalon vides · 2 révisions
+par jalon absentes des termes.
+⛔ **Rien n'est signé** — sur Upwork le client seul édite l'offre ; le contrat démarre à NOTRE acceptation.
 
-**Tout ce qu'elle a demandé est validé** : exports ProRes 4444 plein cadre pré-positionnés · 6 fichiers
-séparés par état · dossier source + README · disponibilité future à tarif convenu · **2 révisions par
-jalon** · délais 3/5/4 j · le look glacé (elle a reconnu que sa référence est le palier 50-75 %, pas le
-0 %). **Identité vérifiée le 26/08** (elle l'avait relevé).
-⭐ **Rien en suspens de notre côté.** Relance légitime après **3-4 jours ouvrés** sans nouvelle, pas avant.
+⏭️ **PROCHAINE ACTION : quand l'offre v2 arrive, la relire EN ENTIER** — une modification d'offre est une
+réémission complète, pas un patch des 3 points.
 
-**SI CONTRAT** — dans cet ordre : (1) **prototyper le SON** (seul point promis jamais démontré ;
-~5 essais par son, calage sur des ÉVÉNEMENTS MÉCANIQUES dont la frame est connue) · (2) **écrire le
-README** (promis, n'existe pas) · (3) jalon 1 = envoyer l'image du compteur, elle existe déjà.
+✅ **Le SON n'est plus un risque** : 15 SFX ElevenLabs, **15/15 exploitables au 1er essai** (29/08).
+L'estimation « ~5 essais par son » était fausse.
 ⛔ **Ne PAS lui dire que les 6 états sont déjà rendus** — atout de négociation.
 ⛔ 350 $ = le prix DU BRIEF, pas une enchère.
-⛔ **Décision d'Aziz maintenue : ne RIEN produire de plus avant d'avoir le contrat.**
-⭐ Le **brief client PDF est sur disque** (`BRIEF-CLIENT-ORIGINAL.pdf`, gitignoré) : le RELIRE avant
-toute action sur cette annonce — un résumé ne le remplace pas (2 erreurs payées le 23/08).
-→ Candidature complète (lettre + 5 réponses + jalons + « pas de boost ») :
-`memory/client-sim-tests/upwork-chill-meter/STATUS.md` § CANDIDATURE.
+⛔ Le **brief client PDF** (`BRIEF-CLIENT-ORIGINAL.pdf`, gitignoré) se RELIT avant toute action — un
+résumé ne le remplace pas (2 erreurs payées le 23/08).
+
+→ **Source de vérité unique** (3 jalons, familles de sons, ordre de livraison, artifact de pilotage) :
+`memory/client-sim-tests/upwork-chill-meter/STATUS.md` — ne rien recopier d'autre ici.
 
 ---
 
@@ -137,8 +137,9 @@ Les 4 logos clients chiffrés : `memory/client-sim-tests/repro-vendeur-lottie/LO
 Table de décision client : `memory/client-sim-tests/lottie-ui-lcd/CE-QUI-PASSE-EN-LOTTIE.md`.
 
 ⛔⛔ **Le recadrage d'Aziz à garder** : prouver une capacité ≠ produire un livrable. Une carte
-géographique n'est PAS un livrable Lottie. ⚠️ **Rien n'a encore été montré à un client** —
-c'est ce que la session REPRO-UI traite : `memory/starters/STARTER-repro-ui-animation.md`.
+géographique n'est PAS un livrable Lottie. ⭐ **Mise à jour 29/08** : une pièce a été montrée à une
+vraie cliente et a emporté un contrat — mais c'était un overlay Remotion/ProRes, **pas du Lottie**.
+Le Lottie n'a toujours pas eu son propre client : `memory/starters/STARTER-repro-ui-animation.md`.
 
 ⏭️ Reste ouvert : logos L3/L4 Kanvas · L8 Fokus · rig d'un perso déjà découpé
 (`memory/starters/STARTER-RIG-PERSONNAGE-EXISTANT.md`).
@@ -153,8 +154,14 @@ c'est ce que la session REPRO-UI traite : `memory/starters/STARTER-repro-ui-anim
 **1. ⭐⭐⭐ Outiller le protocole des 2 échecs (le point le plus rentable)**
 La règle existe (`CLAUDE.md` global § « Protocole agent de diagnostic dédié ») : à la **2e**
 tentative infructueuse sur le même blocage → déléguer à un agent, NON-NÉGOCIABLE. Elle documente
-2 preuves de valeur : 40 min perdues sur des appels API (18/07), et **4 itérations complètes** de
-dosage caméra sur le globe D3 avant de déléguer (02/08) — l'agent a trouvé la vraie cause en 1 passe.
+3 preuves de valeur : 40 min perdues sur des appels API (18/07) ; **4 itérations complètes** de
+dosage caméra sur le globe D3 avant de déléguer (02/08) — l'agent a trouvé la vraie cause en 1 passe ;
+et **3 tentatives de « fix » sur une conversion WebM/VP9 JAMAIS cassée** (29/08) — délégué à la 3e,
+pas à la 2e. ⭐ Ce 3e cas ajoute une nuance : les 2 vérifications qui « confirmaient » le bug
+partageaient le MÊME angle mort (toutes deux passaient par ffmpeg), d'où deux fausses confirmations
+qui semblaient indépendantes. **Un compteur de tentatives ne suffirait pas** — il faut aussi que le
+déclencheur demande « mes vérifications sont-elles vraiment indépendantes ? ». Détail :
+`feedback_transparence-lue-comme-bug.md` § extension 2026-08-29.
 ⛔ **Mais rien ne compte les tentatives.** C'est une règle écrite sans gate, soit exactement le
 pattern `regle-ecrite-insuffisante-sans-gate-outille` — celui qui a fait échouer 3 fois la règle
 d'éviction de NEXT-ACTION avant qu'on l'outille le 27/08.

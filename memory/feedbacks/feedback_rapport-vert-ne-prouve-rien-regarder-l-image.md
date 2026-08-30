@@ -65,3 +65,13 @@ visait plusieurs groupes à la fois. L'outil de vérification était faux, pas l
 
 **Vécu** : 2 des 3 défauts ont été vus par Aziz sur l'image AVANT que je les mesure.
 Commits `66ae75ee`, `bd85038e`, `980d145c`.
+
+## ⭐ 3e forme — LE GATE VERT NE COUVRE QUE CE QU'IL MESURE (2026-08-28)
+
+Le seul lien inaccessible de `MEMORY.md` pointait vers CE fichier — celui qui dit qu'un rapport vert
+ne prouve rien. `check-memoire-doublons.py` etait VERT (15 collisions, 15 resolues) : il verifie les
+**collisions de basename**, PAS les liens relatifs qui traversent les 2 arborescences memoire. Le
+fragment etait donc **present mais INVISIBLE**, et le gate ne pouvait structurellement pas le voir.
+
+⭐ **La question a poser a tout gate vert** : « qu'est-ce qu'il mesure, exactement ? » — pas
+« a-t-il passe ? ». Un gate ne prouve jamais l'absence d'un defaut qu'il ne regarde pas.

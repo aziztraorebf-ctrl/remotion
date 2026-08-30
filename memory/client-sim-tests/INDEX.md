@@ -58,7 +58,10 @@ fiche**, pas seulement dans le récit du test.
 - ⭐⭐⭐ **Upwork « Max Chill Factor Meter » / AbiGirl Reacts (OVERLAY ANIMÉ — 2e brief CLIENT RÉEL) — 2026-08-22.**
   Genre encore différent : ni carte ni SaaS, un **habillage de marque à fond transparent** livré pour
   le montage de la cliente (compteur rétro-futuriste givré, 0→100, 6 états, 350 $).
-  **Prototype COMPLET de bout en bout. RIEN ENVOYÉ, aucun engagement pris.**
+  ⭐⭐⭐ **PREMIER CONTRAT FREELANCE REEL — GAGNE le 2026-08-29** (350 $ / 297,50 $ net). Ce dossier
+  n'est plus une simulation : ce qu'il porte engage. Gagne **sans aucun avis, profil de moins d'une
+  semaine, sans boost**, contre des candidats ayant mise plus de connects.
+  ⛔ Rien n'est signe ni livre — le contrat, la livraison et l'encaissement restent a prouver.
   Parcours : 3 annonces triées → 4 modèles au MÊME brief SVG (Kimi/GPT/Fable/**Grok**) → mix
   assemblé par script → animation Remotion → **export ProRes 4444 alpha vérifié** → démo montée
   sur le plateau réel de la cliente.

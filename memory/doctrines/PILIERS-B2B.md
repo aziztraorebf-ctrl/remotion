@@ -9,8 +9,14 @@
 > monétise pas. Les trois mesures qui ont amené là : production ≠ rémunération sur YouTube
 > (des chaînes à caméra fixe font 190 k vues sur nos sujets), Shorts 3015 vues vs longues 231 sur
 > la même période, et le même actif payé 2 ordres de grandeur plus cher en direct qu'en plateforme.
-> ⚠️ **Le freelance n'est pas prouvé non plus** (1 candidature, 0 revenu) — ce qui est décidé, c'est
-> où va l'effort marginal, pas ce qui marchera.
+> ⭐ **MàJ 2026-08-29 — 1er CONTRAT GAGNÉ** (Upwork chill-meter, 350 $) : sur 2 candidatures, 1 gagnée,
+> **sans aucun avis, profil de moins d'une semaine, sans boost**. ⚠️ Ni signé ni payé — « 0 revenu »
+> reste littéralement vrai. Le freelance a franchi le PREMIER seuil (candidature → décision), pas le
+> second (livraison → paiement → récurrence).
+> ⛔⛔ **Et ça ne valide PAS le déterminisme** (cf. § hypothèse centrale plus bas) : elle a acheté la
+> progression clean→frosted, les exports transparents et la flexibilité de re-render. Cette dernière
+> EST le déterminisme sans le mot — mais elle n'a pas encore payé pour l'exercer. L'hypothèse tient
+> toujours son statut d'hypothèse.
 >
 > ⭐⭐ **FER DE LANCE retenu le 2026-08-24 : le pilier 2 (objets/scènes graphiques animés par code).**
 > Les 4 autres restent servis, mais c'est celui qu'on met en avant — le plus mature, le plus

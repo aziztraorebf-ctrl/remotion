@@ -16,6 +16,14 @@ régénère seul. Limite dure 5000 char/appel.
 **4. Réglages verrouillés** : source **Harmonie** `obmcfXCePmPgsNsLIWIj` (V3, stab 0.30) → STS **GéoAfrique**
 `z3gESu49naEZW8Af2Upm` (`eleven_multilingual_sts_v2`, **stability 0.45** — 0.30 bave, 0.5+ avale des syllabes).
 Musique : `fal-ai/minimax-music/v2.6`, `{prompt, is_instrumental:true}`, PAS de `reference_audio_url`.
+**5. GÉNÉRER un SFX** — ⛔ d'abord `public/_shared/sfx/SFX-INDEX.md` (**160 SFX déjà produits**, catalogue
+par catégorie) : ne générer que ce qui manque. API `POST /v1/sound-generation`, prompts en ANGLAIS,
+`prompt_influence` **0.4-0.6**, `duration_seconds` 0.5-30. Modèle : `scripts/generate-sfx-elevenlabs.py`.
+⭐ **Un SFX sort exploitable du 1er coup, y compris sur de la matière neuve** (givre, glace, métal qui gèle) :
+mesuré **15/15 au 1er essai**, < 2 min (2026-08-29). ⛔ Ne PAS budgéter « ~5 essais par son » — cette prudence
+a failli faire écarter le son d'un livrable client.
+⛔ **Garder les prompts dans un script versionné**, pas seulement les .mp3 : sans la recette, une régénération
+repart de zéro et l'argument « on change le son sans retoucher l'image » ne tient plus.
 
 ## INTERDITS — erreurs déjà payées
 ⛔ `{frame === X && <Audio/>}` — SFX inaudible en render, 3 beats livrés muets. → `<Sequence from={F} durationInFrames={20-30}>`.
@@ -39,7 +47,7 @@ Musique : `fal-ai/minimax-music/v2.6`, `{prompt, is_instrumental:true}`, PAS de 
    ✅ **Corrigé 2026-08-17** : le script DÉTECTE désormais l'alignement corrompu (bug v1 intermittent) et sort en erreur au lieu d'afficher un faux `OK ... loss=0.12`. ⛔⛔ **`/v2/forced-alignment` N'EXISTE PAS** (404 vérifié) — le remède écrit en mémoire depuis mai était faux, ne jamais le re-tenter : basculer sur v2 transformerait un résultat dégradé en panne dure. Contournements RÉELS : relancer (bug intermittent) · ré-encoder en libmp3lame · découper la VO.
 6. **Timing** : `durationInFrames` dérivé de l'audio mesuré, JAMAIS hardcodé. Pauses ajoutées après coup → `F_new = F + 30*Σ(sil_s − gap_naturel)` (pas la formule brute : désync jusqu'à +5.5 s).
 7. **Garde-fou** : re-aligner, vérifier que tous les mots sont présents. Prouve l'absence de perte de TEXTE — jamais la qualité SONORE.
-8. **Mix** : SFX plancher **0.50** (jusqu'à 0.60 sur gros moment) · **musique = 0.13 au départ** (valeur harmonisée par Aziz le 2026-08-17 sur le code réel — les anciennes 0.07 / 0.12-0.15 / 0.10-0.14 sont périmées ; on part de 0.13 et on monte ou descend à l'oreille) · SFX ponctuels uniquement, jamais de nappe continue. Musique tardive : si `(durée_piste − startFrom) < durée_beat` → 2e `<Audio startFrom={0}>` en relais.
+8. **Mix** : SFX plancher **0.50** (jusqu'à 0.60 sur gros moment) · **musique = 0.13 au départ** (harmonisé 2026-08-17 ; monter/descendre à l'oreille) · SFX ponctuels uniquement, jamais de nappe continue. Musique tardive : si `(durée_piste − startFrom) < durée_beat` → 2e `<Audio startFrom={0}>` en relais.
 
 ## ⭐⭐ OÙ placer les SFX — sur l'IMAGE, jamais sur un pic sonore
 

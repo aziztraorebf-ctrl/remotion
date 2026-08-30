@@ -1,9 +1,69 @@
 # Upwork — "Max Chill Factor Meter" (AbiGirl Reacts) — STATUS
 
-> Prototype de bout en bout sur un VRAI brief client Upwork (350 $, overlay YouTube animé).
-> Session du 2026-08-22. Rien n'a été envoyé à la cliente, aucun engagement pris.
+> ⭐⭐⭐ **PLUS UN TEST — C'EST UN VRAI CONTRAT.** Parti d'un prototype sur un vrai brief Upwork
+> (350 $, overlay YouTube animé) le 2026-08-22 ; **la cliente a accepté le 2026-08-29**.
+> ⛔ Ce fichier n'est plus un dossier de simulation : les décisions qu'il porte engagent.
 
-## ⭐⭐⭐ ETAT AU 2026-08-27 : ELLE A RÉPONDU 4 FOIS — PHASE FINALE DE DÉCISION
+## ⭐⭐⭐ ETAT AU 2026-08-29 : CONTRAT GAGNÉ — offre reçue, RÉVISION DEMANDÉE, rien signé
+
+**Elle a dit oui** (29/08, 11h28 PDT) : *« I'd like to move forward with you »*. Elle nomme 3 points
+décisifs — progression clean→frosted, exports plein cadre transparents, flexibilité de re-render.
+⭐ Premier contrat Upwork, gagné **sans aucun avis, profil de moins d'une semaine, sans boost**.
+
+**Offre v1 reçue le 29/08** (expire le 5 sept.) : 350 $ → **297,50 $ net** (15 % Upwork). Elle a
+repris notre libellé quasi mot pour mot, jalons 105/140/105 conformes. **Message de révision envoyé
+le 29/08**, 3 points :
+1. ⛔ **Ligne « After Effects project file » toujours dans la description** alors que nos ajouts
+   parlent du dossier React/Remotion. Les deux cohabitent → à supprimer (c'était LE point délicat
+   de la négo, accepté par écrit dans le fil mais absent du contrat).
+2. **Dates de jalon vides** → proposé 2 j / 3 j / 3 j ouvrés, avec les jalons 2 et 3 qui courent
+   **depuis SON approbation** du précédent, pas depuis la date du contrat.
+3. **2 révisions par jalon** validées dans le fil, absentes de l'offre → à écrire, avec la
+   définition (1 tour = 1 lot de retours groupés).
+
+⛔ **Rien n'est signé.** Sur Upwork le client seul édite l'offre ; le freelance accepte ou refuse.
+Le contrat démarre à NOTRE acceptation. ⚠️ **Quand la v2 arrive : la relire EN ENTIER**, pas
+seulement les 3 points — une modif d'offre est une réémission complète.
+⚠️ Plateforme : **retraits bloqués tant que les infos fiscales ne sont pas fournies** (n'empêche ni
+d'accepter ni de travailler).
+
+### ⛔ La structure réelle : 3 jalons, PAS 6 approbations
+Le jalon 2 groupe entrance + idle + 25 % + 50 % en **une seule** validation. Le jalon 3 groupe
+75 % + 100 % + exports + source + README. Il n'y a pas d'approbation par état.
+
+### ⭐⭐ SON — testé le 29/08, la faisabilité est levée
+**15 SFX générés (ElevenLabs), 15/15 exploitables au 1er essai**, < 2 min, coût négligeable.
+⛔ L'estimation « ~5 essais par son » était une prudence mal calibrée — il n'y a pas d'obstacle.
+⭐ **La RECETTE est versionnee** : `scripts/tools/sfx-familles-chill-meter.py` (les 15 prompts + durees +
+`prompt_influence`) — sans elle, une regeneration repart de zero et l'argument « on change le son sans
+retoucher l'image » ne tient plus.
+Fichiers : `out/_r-and-d/chill-meter-upwork/sfx-test/` (entrance, fill25, frost50, fill75, boom100
+× A-organic / B-impact / C-retrotech). ⚠️ **Préliminaires** — si le design bouge au jalon 1, ils se
+régénèrent.
+
+⭐⭐ **Le dispositif retenu (idée d'Aziz)** : 3 FAMILLES NOMMÉES + définies, pas N fichiers.
+**Organique** (matière réelle) · **Impact** (sound design, grave, onde) · **Retro-tech** (l'appareil).
+⛔ « Cinématique » écarté : un compliment déguisé n'est pas une direction.
+Showcase **groupé par état** (les 3 familles dos à dos sur le même moment) → elle choisit palier par
+palier. Prototype fait : `showcase/SHOWCASE-sons-v1.mp4` (75 s, 16 segments, carton nommé →
+animation → noir). ⛔ **Test jetable, pas envoyable** : compteur trop petit sur fond vide (c'est un
+overlay plein cadre — le composer sur `abigirl-decor.png` pour un vrai envoi).
+Méthode transposable → `memory/feedbacks/feedback_familles-nommees-pour-faire-trancher-un-client.md`
+
+📄 **Page de pilotage (artifact)** : https://claude.ai/code/artifact/0a83eeba-6b05-4cef-b409-6efcaf482177
+
+### SI LE CONTRAT DÉMARRE, dans cet ordre
+1. Jalon 1 = l'image du compteur, **elle existe déjà** (rendu vérifié 27/08). ⛔ Ne PAS livrer en
+   3 h : garder au moins une nuit, sinon ça se lit comme « c'était en stock » et ça dévalue le prix.
+2. Le README (promis, n'existe toujours pas).
+3. Test CapCut refait avec l'audio intégré.
+⛔ **Ne PAS lui dire que les 6 états sont déjà rendus** — atout de négociation.
+
+---
+
+<details><summary>Historique : l'attente de sa décision (23-27/08)</summary>
+
+## ETAT AU 2026-08-27 : ELLE A RÉPONDU 4 FOIS — PHASE FINALE DE DÉCISION
 
 **Chronologie réelle** : 23/08 candidature envoyée · 24/08 elle demande le clip + les livrables ·
 25/08 elle pose 4 confirmations + le look glacé · 26/08 « before I make my final decision » + elle
@@ -47,6 +107,8 @@ Branche : `feat/proto-chill-meter-upwork` (3 commits, mergeable ou à garder en 
 
 ✅ **Les 6 MOV sont A JOUR (regeneres le 2026-08-23 16h20, posterieurs au fix `d9737af7`).**
 Alpha verifie deux fois — cf. § PROCHAINE SESSION point 2 pour la commande et les mesures.
+
+</details>
 
 </details>
 

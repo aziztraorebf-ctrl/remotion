@@ -107,8 +107,11 @@ animer, finir, mesurer, produire une planche de contrôle.
    écran noir franc (`--amorce 0`) ou silhouette lisible (actuel).
    ⚠️ **Mesuré : entre les deux, rien d'utilisable** — à 12 % on voit des fragments épars qui
    se lisent comme un bug. C'est 0 ou ~40, pas de milieu.
-2. **Outiller encore, ou vendre ?** ⚠️ **La vraie réserve à reposer** : on outille beaucoup et
-   **rien n'a encore été montré à un client**. Le risque n'est pas technique, il est là.
+2. **Outiller encore, ou vendre ?** ⭐ **RÉPONDU EN PARTIE le 2026-08-29** : une pièce a été montrée
+   à une vraie cliente et a **emporté un contrat** (chill-meter Upwork, 350 $). ⚠️ Mais elle n'est ni
+   signée ni payée, et la pièce montrée n'était PAS du Lottie (overlay Remotion → ProRes). La réserve
+   se déplace donc : le risque n'est plus la démonstration, c'est **la LIVRAISON** — et le Lottie
+   n'a toujours pas eu son propre client. → `memory/client-sim-tests/upwork-chill-meter/STATUS.md`
 
 ## Livrables sur disque et en ligne
 
