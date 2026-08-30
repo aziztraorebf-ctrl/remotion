@@ -4,6 +4,24 @@
 > deux objectifs sont **FAITS**). Branche du chantier : `feat/lottie-texte`.
 > ⚠️ Aziz sera **absent et sans accès à Creator** au début de la prochaine session.
 
+## ⛔⛔ CHANTIER CLOS LE 2026-08-30 — NE PAS REPRENDRE ICI
+
+> **Les deux chantiers de ce starter sont FAITS.** Fichier conservé pour sa TRACE (les 7 pièges
+> de la semaine, le tableau des acquis), pas comme feuille de route.
+>
+> | chantier annoncé | état | preuve |
+> |---|---|---|
+> | 1. Contrôle qualité automatique | ✅ | `lottie-ui/tools/verifier_fidelite.py` — FIDÉLITÉ (pire frame) + AMPLITUDE |
+> | 2. Khartoum au banc d'essai | ✅ | `out/_r-and-d/lottie-khartoum/khartoum-assaut.lottie` — 25 s, 16:9, 67 Ko |
+>
+> ⚠️ La branche `feat/lottie-texte` citée plus bas **n'existe plus** : tout est sur `master`.
+> ⛔ Les 3 scènes non ouvertes (Front Ouvert, Gazoduc Signature, Aéroport) ne sont **plus** la
+> cible. Front Ouvert testait les masques — **portés le 29/08**, son point dur n'existe plus.
+> Le registre qui se paie est le flux d'interface, pas nos scènes cartographiques.
+>
+> ⭐ **La suite vit dans `memory/starters/STARTER-portfolio-anime.md`.**
+> ⭐ **La 1re pièce de portfolio est produite** : `out/PORTFOLIO/carte-etat-major/`
+> (4,7 s · carré · 7,7 Ko · générique). Barrière d'entrée du portfolio : `out/PORTFOLIO/README.md`.
 ## À copier-coller en début de session
 
 ```

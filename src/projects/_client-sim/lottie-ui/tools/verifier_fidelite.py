@@ -586,6 +586,21 @@ def main():
             return 2
         return mode_serie(a.refs, a.serie, a.out, a.seuil, a.sans_alignement)
 
+    # ⛔ Avec --refs, le .json est le PREMIER argument positionnel : argparse
+    # le range dans `composition`. Sans ce rattrapage l'outil plantait sur un
+    # TypeError illisible au lieu de dire ce qui manque -- un outil de controle
+    # qui crashe est un outil qu'on contourne.
+    if a.json is None and a.composition and str(a.composition).endswith(".json"):
+        a.json, a.composition = a.composition, None
+    if a.json is None:
+        print("ECHEC : donner le .json a verifier.", file=sys.stderr)
+        print("  animation depuis une composition : "
+              "verifier_fidelite.py <CompositionId> <anime.json>", file=sys.stderr)
+        print("  animation avec des SVG deja extraits : "
+              "verifier_fidelite.py <anime.json> --refs \"scene-f*.svg\"",
+              file=sys.stderr)
+        return 2
+
     doc = json.loads(pathlib.Path(a.json).read_text(encoding="utf-8"))
     duree = int(doc.get("op", 60))
 

@@ -1,7 +1,8 @@
 # LOTTIE — ce qui passe, ce qui casse (répondre à un brief en 30 secondes)
 
-> Établi le **2026-08-25**, enrichi le **2026-08-26** (dégradés portés · animation prouvée ·
-> MCP Creator), par MESURE sur 8 fichiers réels (4 objets de `svg-library`,
+> Établi le **2026-08-25**, enrichi les **08-26** (dégradés · animation), **08-28** (flou),
+> **08-29** (masques), **08-30** (images raster · précompositions · 4 primitives d'animation),
+> par MESURE sur des fichiers réels (4 objets de `svg-library`,
 > 2 scènes complètes de registres opposés), rendu comparé pixel par pixel au SVG d'origine
 > dans Chromium via `lottie-web`.
 > Outils : `src/projects/_client-sim/lottie-ui/tools/` — `svg2lottie_scene.py --rapport`
@@ -73,7 +74,7 @@ python3 verifier_fidelite.py --refs "scene-f*.svg" --serie "scene-f*.json"
 ⚠️ Il gère le **recadrage** (compare la zone dessinée commune) et le **retiming** — sans quoi il
 produit de faux refus sur toute pièce finie par `finir_piece.py`.
 ⛔ **Réserve connue (non résolue)** : `--chercher-temps` rapporte un décalage faux sur
-`maison-courbe-vivante.json` (+207, cale sur la fin figée de la scène). En cours de diagnostic —
+`maison-courbe-vivante.json` (+207, cale sur la fin figée de la scène). **Non diagnostiqué depuis le 26/08** —
 **ne pas se fier au décalage automatique sans regarder la planche**.
 
 ---
@@ -112,6 +113,7 @@ Détail : [[feedback_prouver-une-capacite-nest-pas-produire-un-livrable]]
 | Symboles réutilisés (`use`, `symbol`) | ⛔ **non** | à aplatir avant conversion (faisable, coût en amont) |
 | Motifs de remplissage (`pattern`) | ⛔ **non** | sans équivalent — ⭐ **non peint** depuis le 2026-08-26 : la couche du dessous reste visible. ⛔ Avant, replié sur un gris inventé qui **effaçait le fond** (82 % de l'image fausse sur Khartoum, cf. plus haut) |
 | **Pointillés** (`stroke-dasharray`) | ✅ **oui** — ⭐ **porté le 2026-08-26** | mesuré à **0,07 %** (2 valeurs) et **0,10 %** (4 valeurs). ⚠️ Le motif peut être **déphasé** (Chromium et lottie-web ne démarrent pas au même point d'un cercle) : même nombre, même espacement, départ différent. ⛔ C'était **ignoré en silence** avant — enjeu narratif réel : un tracé « projet prévu » ressortait plein, donc « construit » |
+| **Gestes d'animation disponibles** | ✅ **catalogue** | `animate_scene.py` : `fondu` · `pop` · `trace` (le trait se dessine) · `respire`/`balance`/`cligne` (boucle de vie) · `geste3` · ⭐ **`parcourt`** (déplacer le long d'un chemin : curseur, pastille, véhicule) · ⭐ **`onde`** (halo qui part d'un point : clic, notification) · ⭐ **`monte`** (volute en boucle) · ⭐ **`balaye`** (révéler en agrandissant le pochoir : jauge, barre de progression, carte qui se dévoile). ⭐ Depuis le 30/08 `animer()` traite AUSSI le contenu des **précompositions** — sans quoi une scène à clip global n'était pas animée du tout, en silence |
 | Animation déjà dans le SVG (SMIL) | ⛔ **non** | normal : **l'animation vient de notre code**, c'est notre méthode |
 | **Personnages articulés** | ⚠️ **la MÉCANIQUE est portée** (2026-08-29), le DESSIN reste le point dur | Le **rig par parentage** est prouvé chez nous : `parent` + pivots déclarés dans le SVG (`data-parent` / `data-pivot`), chaîne main→bras→torse à **0,01 %**. Mesure sur 5 personnages pro : **84 %** des calques ont un parent, **90 %** de l'animation est de la ROTATION sur des dessins **figés**, 7 clés par membre. ⛔ **Ce qui reste dur n'est PAS le rig, c'est le DÉCOUPAGE** : obtenir un corps séparé en 15-30 pièces qui se **recouvrent** proprement (le haut du bras doit se poursuivre SOUS le torse, sinon un trou apparaît à la rotation) — une décision d'illustration, pas de conversion. ⚠️ Prouvé sur une **face de mascotte**, pas encore sur un corps entier |
 
@@ -352,12 +354,14 @@ méthode habituelle (le statique d'abord, nous animons), mais ce n'est PAS un bo
    ⭐⭐ **Conséquence commerciale : un thème = REPEINDRE SANS RÉ-ANIMER.** Un client SaaS en mode
    clair/sombre, ou 3 marques, achète UNE animation et la décline. C'est du FICHIER, pas du code —
    donc ça survit chez lui. ⚠️ On a OBSERVÉ le mécanisme, on ne l'a pas PRODUIT : « lisible » ≠ « reproduit ».
-6. ⛔⛔ **LE MATTE (`tt`) EST LE TROU PRIORITAIRE** — requalifié le 2026-08-28. Mesuré **~90
-   occurrences sur 22 pièces** d'un studio qui vend, contre **0 trim path, 0 repeater, 0 expression**.
-   Ce n'est pas un refus résiduel : c'est **le premier manque de conversion mesuré sur du livrable
-   pro réel**, à combler avant tout autre portage. → `corpus-kamotion/CORPUS-REFERENCE-UI.md`
-7. **Masques et filtres** — refusés. Le flou gaussien sur les nuages de l'aéroport est le seul
-   refus restant sur cette scène.
+6. ✅ **LE MATTE — FERMÉ le 2026-08-29.** C'était le trou prioritaire (mesuré ~90 occurrences
+   sur 22 pièces pro, contre 0 trim path / 0 repeater / 0 expression). Porté en track matte
+   `td`/`tt` + précomposition, **0,00 %** d'écart. Voir la ligne « Masques, détourage » de la
+   table. ⭐⭐ **Corollaire trouvé le 30/08** : un pochoir **IMBRIQUÉ** dans une précomposition
+   perdait son rôle (les rôles de calque étaient exclusifs) et se peignait en forme visible —
+   13,66 % → 0,25 %. Corrigé + test.
+7. ✅ **Masques** — portés (cf. ci-dessus). Restent refusés : les filtres **composites** (ombre
+   portée, lueur), les `<pattern>` et les `<use>`. Le flou gaussien seul passe depuis le 28/08.
 7. **Le test After Effects** (essai 7 jours) — indépendant, cf. `STATUS.md` § 4 bis.
 
 ### ⚠️ Ce que le client contrôle, et ce qu'il ne contrôle pas

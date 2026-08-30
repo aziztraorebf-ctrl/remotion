@@ -4,6 +4,25 @@
 > ⭐ **Plan défini par Aziz.** Copier-coller le bloc PROMPT en début de session.
 
 ---
+## ⭐⭐ LE DOSSIER PORTFOLIO EXISTE — `out/PORTFOLIO/` (créé le 2026-08-30)
+
+**Décision d'Aziz** : les pièces prêtes à envoyer vivent là, **un sous-dossier par pièce**.
+La 1re y est déjà : `out/PORTFOLIO/carte-etat-major/` — 4,7 s · carré 1024 · **7,7 Ko** ·
+éléments génériques (alpha/bravo/charlie/west/east), donc un **composant que le client
+remplit**, pas une scène datée.
+
+⭐ **La structure en sous-dossiers permet à plusieurs sessions de travailler en parallèle** :
+chacune ajoute le sien, personne ne touche à ceux des autres.
+
+⛔ **La barrière d'entrée est écrite dans `out/PORTFOLIO/README.md`** — 4 conditions, toutes
+vérifiables : rendu fidèle mesuré · calques **lisibles par un client** · format qui s'achète
+(court, carré) · **réutilisable**. Les lire avant d'y déposer une pièce.
+
+⚠️ **Outil de finition** : `lottie-ui/tools/livrer_piece.py` renomme les calques pour un client
+et **signale ce qui reste illisible** (au lieu de le maquiller). Vérifié le 30/08 : sans lui, le
+gabarit s'appelait `EtatMajorGabarit-f139` avec un premier écran affichant `rim-1`, `g-2-pochoir`,
+`circle-1` — un acheteur aurait été perdu. Fidélité et lisibilité sont deux qualités SÉPARÉES :
+la mesure ne voit que la première.
 
 ## ⭐ CE QUI EST ACQUIS (ne pas refaire)
 

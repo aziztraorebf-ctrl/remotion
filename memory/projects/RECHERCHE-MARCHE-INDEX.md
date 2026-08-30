@@ -27,7 +27,7 @@
 
 ---
 
-## ⭐ LES 8 VERDICTS (résumé — le détail et les preuves sont dans les fichiers de fond)
+## ⭐ LES 9 VERDICTS (résumé — le détail et les preuves sont dans les fichiers de fond)
 
 | # | Verdict | Force |
 |---|---|---|
@@ -39,6 +39,45 @@
 | 6 | **La stack couvre ~85 % du marché SaaS** — nos faiblesses = ce que ce marché n'achète pas | ⭐⭐ |
 | 7 | **Ce qui manque : le SCRIPT et le SOUND DESIGN**, pas la capacité d'animer | ⭐⭐ |
 | 8 | **Rive ne paie pas plus** que Lottie (15-100 $, fourchettes superposées) | ⭐⭐ |
+| 9 | ⛔ **Médias / think tanks / ONG : le marché existe mais ne commande PAS de Lottie** — voir plus bas | ⭐⭐ |
+
+---
+
+## ⛔ VERDICT 9 — le marché institutionnel existe, le format ne suit pas (2026-08-30)
+
+**Question posée** : peut-on vendre de la dataviz narrative animée (scène géopolitique en
+composant web léger) à des médias, think tanks, ONG, organisations internationales ?
+
+**Le budget est RÉEL et documenté.** Graphicacy (studio DC) affiche nommément Banque mondiale,
+Gates Foundation, Pew, Urban Institute, World Resources Institute ; Pitch Interactive affiche
+l'ONU et la Southern Poverty Law Center ; Beyond Words Studio a produit pour la Banque mondiale.
+Appels d'offres vérifiés : UNDP-R47-00326 (data visualization, sept. 2026), UNICEF
+RFP-MLI-2024-9189225 (animation, individus acceptés).
+
+⛔⛔ **MAIS AUCUNE preuve qu'un de ces acheteurs commande du LOTTIE.** Ce qu'ils achètent est du
+**web sur mesure (D3 / React / Scrollama)** ou de la vidéo. Trois obstacles mesurés :
+- **Datawrapper et Flourish mangent le milieu de gamme** — utilisés par l'ONU et le NYT ; l'ONG
+  fait elle-même son graphique pour quelques centaines d'euros par an.
+- **Lottie a un problème d'ACCESSIBILITÉ** : ni son rendu SVG ni Canvas ne transmet de sens à un
+  lecteur d'écran, et l'auto-play viole WCAG — or ces organisations y sont contraintes.
+- **Le canal est fermé au solo** : l'appel d'offres UNDP exige une entreprise enregistrée, un
+  profil fournisseur et des attestations de conformité.
+
+⭐ **Ce verdict CONFIRME le verdict 4 par un chemin totalement différent** : deux veilles
+indépendantes concluent que « data visualization » est un canal mort côté acheteur pour un solo.
+
+**Décision d'Aziz (30/08) : ne PAS déplacer l'effort.** Horizon 12-18 mois, une fois qu'il y a
+des marques citables — ce que cet index identifie déjà comme le seul levier au-dessus de 2 500 $.
+✅ Seule action retenue, parce que gratuite et qu'elle garde l'option ouverte : ouvrir un compte
+**UNGM Individual Consultant** (https://www.ungm.org/Account/Registration/Individual — accès à
+32 agences ONU, 20 min).
+⚠️ Piste NON PROUVÉE à traiter comme un test, pas comme un fait : se présenter à Graphicacy /
+Kiln comme **sous-traitant** (ils ont les clients et les accréditations). 2 mails, silence sous
+3 semaines = verdict.
+
+⛔ **Ce qu'on n'a PAS trouvé** (information utile, pas un échec) : aucun montant de contrat
+réellement attribué, aucun exemple de Lottie commandé par ce type d'acheteur, aucune preuve que
+ces studios sous-traitent.
 
 ---
 
