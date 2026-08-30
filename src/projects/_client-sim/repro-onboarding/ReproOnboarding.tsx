@@ -57,6 +57,11 @@ import {
   BOUTON_FLOTTANT,
 } from "./planche";
 
+// ⭐ THEME — le fond suit la planche generee. Pour livrer la version claire :
+//   THEME=clair python3 assets/gen-planche.py && python3 assets/extraire-groupes.py
+// puis basculer cette constante. C'est le SEUL point du CODE a toucher : tout
+// le reste (13 couleurs, 11 ombres, 4 opacites de texte) vit dans le generateur.
+const FOND_ECRAN = "#0e1116"; // clair : "#f7f8fa"
 const W = 500;
 const H = 1080;
 
@@ -154,7 +159,7 @@ export const ReproOnboarding: React.FC = () => {
   });
 
   return (
-    <AbsoluteFill style={{ backgroundColor: "#0e1116" }}>
+    <AbsoluteFill style={{ backgroundColor: FOND_ECRAN }}>
       <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`}>
         {/* ---------- ECRAN 1 : inviter l'equipe ----------
             ⭐ Porte par le GLISSEMENT : l'ecran monte de 134 px en decelerant

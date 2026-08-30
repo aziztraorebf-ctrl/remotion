@@ -8,19 +8,59 @@ from texte_paths import texte_path
 
 SORTIE = pathlib.Path("/Users/clawdbot/Workspace/remotion/src/projects/_client-sim/repro-onboarding/assets/planche-onboarding.svg")
 
-# ---- palette
-FOND      = "#0e1116"
-CARTE     = "#171c24"
-SURELEVE  = "#1f2630"
-TXT1      = "#f2f5f8"
-TXT2      = "#8b96a5"
-SEP       = "#262d38"
-ACC       = "#5b8cff"
-ACC2      = "#3ddc97"
-ALERTE    = "#ff6b8a"
-JAUNE     = "#f5c451"
-VIOLET    = "#a78bfa"
-CYAN      = "#38bdf8"
+# ---- palette — DEUX THEMES (bascule : THEME=clair python3 gen-planche.py)
+#
+# ⭐ Test demande par Aziz (2026-08-30) : « si un client veut une version claire,
+# a quel point c'est facile ? » Mesure : les couleurs de CONTENU etaient deja
+# centralisees, donc triviales a basculer — MAIS les OMBRES etaient en dur
+# (#000000 a 30-40 %, 11 occurrences). Sur fond clair une ombre noire a 40 %
+# devient une tache grise sale. C'est le vrai piege d'un theme clair, et il ne
+# se voit PAS dans la palette : il se voit au rendu.
+import os as _os
+
+THEME = _os.environ.get("THEME", "sombre")
+CLAIR = THEME == "clair"
+
+
+def op_txt(v):
+    """Opacite d'un texte ATTENUE.
+    ⛔ Ce qui reste lisible en atenue sur fond sombre devient ILLISIBLE sur fond
+    clair : mesure WCAG du gris secondaire a 60 % sur blanc = contraste 2,46,
+    tres en dessous du seuil de 4,5. En theme clair on remonte le plancher.
+    (Le noir sur blanc perd plus vite que le blanc sur noir — l'oeil ne traite
+    pas les deux polarites de la meme facon.)"""
+    v = float(v)
+    return f"{max(v, 0.78):.2f}" if CLAIR else f"{v:.2f}"
+
+
+def op_ombre(v):
+    """Opacite d'ombre : attenuee en theme clair (une ombre noire y salit)."""
+    return f"{float(v) * (0.35 if CLAIR else 1.0):.3f}"
+
+
+if CLAIR:
+    OMBRE, FOND_PLANCHE = "#4a5a75", "#e6e9ef"
+    REFLET_OFF, REFLET_ON = "#8fa0b5", "#0e8f66"
+else:
+    OMBRE, FOND_PLANCHE = "#000000", "#05070a"
+    REFLET_OFF, REFLET_ON = "#c3ccd8", "#cfe3da"
+
+FOND      = "#f7f8fa" if CLAIR else "#0e1116"
+CARTE     = "#ffffff" if CLAIR else "#171c24"
+SURELEVE  = "#eef1f5" if CLAIR else "#1f2630"
+TXT1      = "#0f1621" if CLAIR else "#f2f5f8"
+# ⭐ #3e4a58 et non #5d6b7d : MESURE WCAG. Le gris secondaire doit tenir le
+# seuil de 4,5 MEME attenue a 78 % — a #5d6b7d il tombait a 3,46, illisible.
+# A #3e4a58 : 9,03 en plein, 4,95 attenue. Le theme clair exige un secondaire
+# nettement plus fonce que son equivalent sombre, ce n'est pas symetrique.
+TXT2      = "#3e4a58" if CLAIR else "#8b96a5"
+SEP       = "#dfe4ec" if CLAIR else "#262d38"
+ACC       = "#2f6bff" if CLAIR else "#5b8cff"
+ACC2      = "#12b981" if CLAIR else "#3ddc97"
+ALERTE    = "#f43f6e" if CLAIR else "#ff6b8a"
+JAUNE     = "#e0a020" if CLAIR else "#f5c451"
+VIOLET    = "#7c5cf5" if CLAIR else "#a78bfa"
+CYAN      = "#0d9fe0" if CLAIR else "#38bdf8"
 BLANC     = "#ffffff"
 
 L = []          # lignes de sortie
@@ -57,7 +97,7 @@ w('<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%d" viewBox="0 0 %
   % (PLANCHE_W, PLANCHE_H, PLANCHE_W, PLANCHE_H))
 w('<!-- Loop — planche onboarding. DESSIN STATIQUE : aucune animation ici, elle est codee en aval. -->')
 w('<!-- Chaque <g> de 1er niveau a son repere local a (0,0) ; le transform ne sert qu au placement sur la planche. -->')
-w('<rect id="planche-fond" x="0" y="0" width="%d" height="%d" fill="#05070a"/>' % (PLANCHE_W, PLANCHE_H), 1)
+w('<rect id="planche-fond" x="0" y="0" width="%d" height="%d" fill="%s"/>' % (PLANCHE_W, PLANCHE_H, FOND_PLANCHE), 1)
 
 # =======================================================================
 # ECRAN 1 — invite
@@ -105,7 +145,7 @@ apps = [
 ]
 for i, (nom, coul, x) in enumerate(apps, start=1):
     w(f'<g id="e1-app-{i}">', 3)
-    rect(f"e1-app-{i}-ombre", x + 3, 200 + 6, 80, 80, "#000000", rx=22, op="0.35", ind=4)
+    rect(f"e1-app-{i}-ombre", x + 3, 200 + 6, 80, 80, OMBRE, rx=22, op=op_ombre("0.35"), ind=4)
     rect(f"e1-app-{i}-pastille", x, 200, 80, 80, coul, rx=20, ind=4)
     path(f"e1-app-{i}-lustre",
          f"M{x:g} 220"
@@ -187,7 +227,7 @@ for i, coul, nom_membre, mention in membres:
     w(f'<g id="e1-membre-{i}" transform="translate({40 + M} {ty})">', 1)
     w('<!-- taille reelle : 420 x 68 -->', 2)
     # avatar
-    circ(f"e1-membre-{i}-avatar-ombre", 23, 25, 23, "#000000", op="0.30", ind=2)
+    circ(f"e1-membre-{i}-avatar-ombre", 23, 25, 23, OMBRE, op=op_ombre("0.30"), ind=2)
     circ(f"e1-membre-{i}-avatar", 23, 23, 23, coul, ind=2)
     path(f"e1-membre-{i}-avatar-lustre",
          "M0 23a23 23 0 0 1 46 0a23 23 0 0 0 -46 0z", BLANC, op="0.14", ind=2)
@@ -199,7 +239,7 @@ for i, coul, nom_membre, mention in membres:
     lettrage(f"e1-membre-{i}-nom", nom_membre, 15, 62, 22, TXT1, face=2, ind=2)
     lettrage(f"e1-membre-{i}-mention", mention, 12, 62, 40, TXT2, face=7, ind=2)
     # bouton pilule invite
-    rect(f"e1-membre-{i}-bouton-ombre", 328, 21, 92, 34, "#000000", rx=17, op="0.30", ind=2)
+    rect(f"e1-membre-{i}-bouton-ombre", 328, 21, 92, 34, OMBRE, rx=17, op=op_ombre("0.30"), ind=2)
     rect(f"e1-membre-{i}-bouton", 328, 17, 92, 34, ACC, rx=17, ind=2)
     rect(f"e1-membre-{i}-bouton-lustre", 334, 21, 80, 13, BLANC, rx=6.5, op="0.13", ind=2)
     lw_inv = largeur("invite", 13, face=2)
@@ -315,15 +355,15 @@ rect("e2-apercu-icone-marque", M + 38, AY + 40, 16, 16, BLANC, rx=5, op="0.9")
 # de l ecran 1 — les deux ecrans se repondent.
 lettrage("e2-apercu-titre", "Maya joined Loop", 15, M + 84, AY + 43, TXT1, face=2)
 lw_now = largeur("now", 11, face=7)
-lettrage("e2-apercu-heure", "now", 11, M + 396 - lw_now, AY + 42, TXT2, face=7, op="0.8")
+lettrage("e2-apercu-heure", "now", 11, M + 396 - lw_now, AY + 42, TXT2, face=7, op=op_txt("0.8"))
 lettrage("e2-apercu-corps-1", "Design sprint · 2 new tasks", 12, M + 84, AY + 64, TXT2, face=7)
 # ⛔ teinte SEP (#262d38) essayee ici : le texte DISPARAIT sur le fond de carte.
 # Un texte secondaire descend jusqu a TXT2 attenue, jamais jusqu a la couleur des filets.
 lettrage("e2-apercu-corps-2", "Joined from your workspace", 12, M + 84, AY + 82,
-         TXT2, face=7, op="0.6")
+         TXT2, face=7, op=op_txt("0.6"))
 rect("e2-apercu-filet", M + 24, AY + 96, 372, 1, SEP)
 lettrage("e2-apercu-action-1", "Open", 12, M + 24, AY + 117, ACC, face=2)
-lettrage("e2-apercu-action-2", "Later", 12, M + 92, AY + 117, TXT2, face=7, op="0.75")
+lettrage("e2-apercu-action-2", "Later", 12, M + 92, AY + 117, TXT2, face=7, op=op_txt("0.75"))
 w('</g>', 1)
 
 # --- 6b. note d aide (comble l espace entre apercu et pied)
@@ -341,7 +381,7 @@ rect("e2-note-i-hampe", M + 38.4, NY + 33, 3.2, 12, TXT2, rx=1.6)
 lettrage("e2-note-ligne-1", "You can change this anytime in Settings", 12, M + 72, NY + 32,
          TXT2, face=7, op="0.9")
 lettrage("e2-note-ligne-2", "Your teammates are not notified yet", 12, M + 72, NY + 50,
-         TXT2, face=7, op="0.55")
+         TXT2, face=7, op=op_txt("0.55"))
 w('</g>', 1)
 
 # --- 7. pied d ecran : indice de progression + bouton principal
@@ -352,7 +392,7 @@ w('<!-- 3 pastilles de progression + bouton pleine largeur -->', 3)
 circ("e2-pied-point-1", 224, PY, 5, ACC)
 circ("e2-pied-point-2", 244, PY, 5, TXT2, op="0.45")
 circ("e2-pied-point-3", 264, PY, 5, TXT2, op="0.45")
-rect("e2-pied-bouton-ombre", M, PY + 34, 420, 60, "#000000", rx=18, op="0.35")
+rect("e2-pied-bouton-ombre", M, PY + 34, 420, 60, OMBRE, rx=18, op=op_ombre("0.35"))
 rect("e2-pied-bouton", M, PY + 28, 420, 60, ACC, rx=18)
 path("e2-pied-bouton-lustre",
      "M%d %d a18 18 0 0 1 18 -18 h384 a18 18 0 0 1 18 18"
@@ -361,7 +401,7 @@ path("e2-pied-bouton-lustre",
 path("e2-pied-bouton-ombre-interne",
      "M%d %d a18 18 0 0 0 18 18 h384 a18 18 0 0 0 18 -18"
      "h-2.5a15.5 15.5 0 0 1 -15.5 15.5h-384a15.5 15.5 0 0 1 -15.5 -15.5z" % (M, PY + 70),
-     "#000000", op="0.18")
+     OMBRE, op=op_ombre("0.18"))
 lw_cont = largeur("Continue", 18, face=2)
 lettrage("e2-pied-bouton-texte", "Continue", 18, 250 - lw_cont / 2, PY + 64, BLANC, face=2)
 w('</g>', 1)
@@ -385,11 +425,11 @@ rect("e2-toggle-off-piste", 0, 0, 58, 32, SEP, rx=16, ind=2)
 path("e2-toggle-off-creux",
      "M0 16a16 16 0 0 1 16 -16h26a16 16 0 0 1 0 32h-26a16 16 0 0 1 -16 -16z"
      "M2 16a14 14 0 0 0 14 14h26a14 14 0 0 0 0 -28h-26a14 14 0 0 0 -14 14z",
-     "#000000", op="0.30", rule="evenodd", ind=2)
-circ("e2-toggle-off-pastille-ombre", 16, 17.6, 12, "#000000", op="0.38", ind=2)
+     OMBRE, op=op_ombre("0.30"), rule="evenodd", ind=2)
+circ("e2-toggle-off-pastille-ombre", 16, 17.6, 12, OMBRE, op=op_ombre("0.38"), ind=2)
 circ("e2-toggle-off-pastille", 16, 16, 12, BLANC, ind=2)
 path("e2-toggle-off-pastille-bas",
-     "M4 16a12 12 0 0 0 24 0a12 12 0 0 1 -24 0z", "#c3ccd8", op="0.60", ind=2)
+     "M4 16a12 12 0 0 0 24 0a12 12 0 0 1 -24 0z", REFLET_OFF, op="0.60", ind=2)
 w('</g>', 1)
 
 w('')
@@ -402,11 +442,11 @@ path("e2-toggle-on-lustre",
 path("e2-toggle-on-cerne",
      "M0 16a16 16 0 0 1 16 -16h26a16 16 0 0 1 0 32h-26a16 16 0 0 1 -16 -16z"
      "M2 16a14 14 0 0 0 14 14h26a14 14 0 0 0 0 -28h-26a14 14 0 0 0 -14 14z",
-     "#000000", op="0.16", rule="evenodd", ind=2)
-circ("e2-toggle-on-pastille-ombre", 42, 17.6, 12, "#000000", op="0.38", ind=2)
+     OMBRE, op=op_ombre("0.16"), rule="evenodd", ind=2)
+circ("e2-toggle-on-pastille-ombre", 42, 17.6, 12, OMBRE, op=op_ombre("0.38"), ind=2)
 circ("e2-toggle-on-pastille", 42, 16, 12, BLANC, ind=2)
 path("e2-toggle-on-pastille-bas",
-     "M30 16a12 12 0 0 0 24 0a12 12 0 0 1 -24 0z", "#cfe3da", op="0.60", ind=2)
+     "M30 16a12 12 0 0 0 24 0a12 12 0 0 1 -24 0z", REFLET_ON, op="0.60", ind=2)
 w('</g>', 1)
 
 # =======================================================================
@@ -418,7 +458,7 @@ w('')
 w(f'<g id="bouton-flottant" transform="translate({BF_X} {BF_Y})">', 1)
 w('<!-- taille reelle : 72 x 72 -->', 2)
 circ("bouton-flottant-halo", 36, 36, 36, ACC, op="0.18", ind=2)
-circ("bouton-flottant-ombre", 36, 40, 33, "#000000", op="0.40", ind=2)
+circ("bouton-flottant-ombre", 36, 40, 33, OMBRE, op=op_ombre("0.40"), ind=2)
 circ("bouton-flottant-corps", 36, 36, 33, ACC, ind=2)
 path("bouton-flottant-lustre",
      "M3 36a33 33 0 0 1 66 0a33 33 0 0 0 -66 0z", BLANC, op="0.16", ind=2)
