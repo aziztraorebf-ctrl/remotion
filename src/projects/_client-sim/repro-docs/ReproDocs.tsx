@@ -62,26 +62,34 @@ const K_CURSEUR = 7.3;
 const K_DOSSIER_X = 6.76;
 const K_DOSSIER_Y = 5.99;
 
-// Les easings du fichier source sont des beziers douces classiques ; on prend
-// une ease-in-out unique, la reference n'utilise pas de courbe exotique.
-const EASE = Easing.bezier(0.33, 0, 0.15, 1);
+// ⭐⭐ LES EASINGS SONT RELEVES UN PAR UN, ils ne sont PAS interchangeables.
+// La 1re version imposait une bezier unique (0.33,0,0.15,1) « puisque la
+// reference n'utilise pas de courbe exotique » : la bascule arrivait EN AVANCE
+// (hauteur mesuree 0,74 contre la reference a f70). Chaque calque a la sienne :
+const EASE_NULL = Easing.bezier(0.167, 0.167, 0.667, 1); // Null 1 : p ET r
+const EASE_ENTREE = Easing.bezier(0.029, 0, 0.148, 1); // 1er segment docs+photo
+const EASE_POSE = Easing.bezier(0.167, 0, 0, 1); // 2e segment : la pose
+const EASE_CURSEUR = Easing.bezier(0.333, 0, 0.36, 1); // Arrow .p
+const EASE_CADRE = Easing.bezier(0.333, 0, 0, 1); // Null 2 : le recadrage
 
-/** interpolate 2D, avec les memes bornes clampees partout. */
+/** interpolate 2D, avec les memes bornes clampees partout.
+ *  ⛔ L'easing est un PARAMETRE : il change d'un calque a l'autre (cf. ci-dessus). */
 const pos = (
   frame: number,
   frames: number[],
   xs: number[],
   ys: number[],
+  easing: (t: number) => number,
 ): [number, number] => [
   interpolate(frame, frames, xs, {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
-    easing: EASE,
+    easing,
   }),
   interpolate(frame, frames, ys, {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
-    easing: EASE,
+    easing,
   }),
 ];
 
@@ -113,16 +121,16 @@ export const ReproDocs: React.FC = () => {
   // ===== NULL 2 — le porteur de toute la scene ============================
   // p : (1016,1706) -> (1024,1004) sur f75-125. C'est le recadrage final : la
   // scene se joue en bas, puis remonte au centre une fois le dossier ferme.
-  const [n2x, n2y] = pos(frame, [75, 125], [1016, 1024], [1706, 1004]);
+  const [n2x, n2y] = pos(frame, [75, 125], [1016, 1024], [1706, 1004], EASE_CADRE);
 
   // ===== NULL 1 — le porteur de la PILE (docs + photo) =====================
   // p : (-278,-802) -> (332,142) et r : 0 -> -90 deg, tous deux sur f55-85.
   // ⭐ C'est LE geste de la piece : la pile ne tombe pas, elle BASCULE.
-  const [n1x, n1y] = pos(frame, [55, 85], [-278, 332], [-802, 142]);
+  const [n1x, n1y] = pos(frame, [55, 85], [-278, 332], [-802, 142], EASE_NULL);
   const n1rot = interpolate(frame, [55, 85], [0, -90], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
-    easing: EASE,
+    easing: EASE_NULL,
   });
 
   // ===== LE CURSEUR ========================================================
@@ -139,6 +147,7 @@ export const ReproDocs: React.FC = () => {
     [0, 10, 20, 30, 60, 75, 85],
     [1275, 1043, 757, 689, 822, 1188, 1264],
     [1419, 1194, 917, 851, 1039, 1467, 1516],
+    EASE_CURSEUR,
   );
   const curOp = interpolate(frame, [75, 85], [1, 0], {
     extrapolateLeft: "clamp",
@@ -152,6 +161,7 @@ export const ReproDocs: React.FC = () => {
     [30, 60, 85],
     [6.007, -51.993, 28.007],
     [77.389, 35.389, -170.611],
+    EASE_ENTREE,
   );
 
   // ===== LES 3 DOCUMENTS ===================================================
@@ -198,7 +208,7 @@ export const ReproDocs: React.FC = () => {
             transform={`translate(${n1x} ${n1y}) rotate(${n1rot})`}
           >
             {DOCS.map((d, i) => {
-              const [x, y] = pos(frame, d.frames, d.xs, d.ys);
+              const [x, y] = pos(frame, d.frames, d.xs, d.ys, EASE_ENTREE);
               return (
                 <Piece
                   key={i}
