@@ -1,5 +1,15 @@
 # STARTER — PERSONNAGE VECTORIEL ARTICULE (V4)
 
+> ⏸️ **EN PAUSE — decision d'Aziz, 2026-08-29 fin de session.** Le personnage HUMAIN n'est
+> PLUS l'effort principal : « je ne veux pas passer 2, 3, 4 sessions dessus ». Tout est
+> sauvegarde ici pour reprendre si un client le demande.
+> ⭐ **La prochaine session porte sur les SCENES du corpus** (flux d'interface — le registre
+> qui se paie), pas sur un personnage. Si l'envie de personnage revient : **le registre du
+> CHIEN** (mascotte, primitives symetriques, frontal, reference pro a viser) — les 3 cases
+> que le chien cochait et qu'un humain corps entier ne coche pas.
+> ⭐ Et si un personnage HUMAIN est necessaire : **prendre un modele pro existant et
+> l'animer** — on a prouve qu'on sait le faire (le douanier obeit). Il en existe des milliers.
+
 > Ouvert le 2026-08-29 en fin de session. **Reprendre ICI**, pas dans
 > `STARTER-RIG-PERSONNAGE-EXISTANT.md` (qui raconte le detour par les rigs tiers, clos).
 
