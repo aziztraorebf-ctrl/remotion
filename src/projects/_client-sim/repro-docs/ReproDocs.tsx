@@ -34,11 +34,11 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame, Easing } from "remotion";
 
+import { rabatD } from "./rabat";
 import {
   DOC,
   PHOTO,
   FOLDER_BACK,
-  FOLDER_FLAP,
   CURSOR,
   LOGO,
 } from "./planche";
@@ -71,6 +71,7 @@ const EASE_ENTREE = Easing.bezier(0.029, 0, 0.148, 1); // 1er segment docs+photo
 const EASE_POSE = Easing.bezier(0.167, 0, 0, 1); // 2e segment : la pose
 const EASE_CURSEUR = Easing.bezier(0.333, 0, 0.36, 1); // Arrow .p
 const EASE_CADRE = Easing.bezier(0.333, 0, 0, 1); // Null 2 : le recadrage
+const EASE_RABAT = Easing.bezier(0.167, 0.167, 0.157, 1); // ouverture/fermeture du rabat
 
 /** interpolate 2D, avec les memes bornes clampees partout.
  *  ⛔ L'easing est un PARAMETRE : il change d'un calque a l'autre (cf. ci-dessus). */
@@ -225,10 +226,24 @@ export const ReproDocs: React.FC = () => {
 
           {/* Le rabat AVANT : dessine APRES la pile, il la recouvre — c'est ce
               qui donne l'impression que les documents entrent DANS le dossier. */}
-          <Piece
-            html={FOLDER_FLAP}
-            transform={`translate(-302 -275) scale(${K_DOSSIER_X} ${K_DOSSIER_Y})`}
-          />
+          {/* ⭐ LE RABAT S'OUVRE ET SE REFERME — animation de FORME, pas un
+              transform (cf. `rabat.ts`). Ferme a f0, ouvert de f30 a f75 pendant
+              que les feuilles tombent, referme a f105.
+              Le calque est enfant du dos du dossier dans la source : il herite
+              donc de la meme echelle. Son repere est centre (sommets negatifs),
+              d'ou le recentrage sur la moitie du dossier. */}
+          <g
+            transform={`translate(-302 -275) scale(${K_DOSSIER_X} ${K_DOSSIER_Y}) translate(59.2 51.7)`}
+          >
+            <path
+              d={rabatD(frame, (t) => EASE_RABAT(t))}
+              fill="#ffcf00"
+              stroke="#0d3847"
+              strokeWidth={2}
+              strokeLinejoin="round"
+              strokeLinecap="round"
+            />
+          </g>
 
           {/* Le logo client, une fois le dossier referme. */}
           {logoOp > 0.001 && (
