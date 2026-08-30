@@ -385,6 +385,38 @@ def test_onde_et_monte_par_le_vrai_chemin():
     print("  ok  onde + monte : dispatch reel, referentiel correct, pas de collision")
 
 
+def test_onde_opacite_suit_l_expansion():
+    """L'onde doit etre VISIBLE : son pic d'opacite tombe quand elle est large.
+
+    ⛔ Lottie met le CONTOUR a l'echelle en meme temps que la forme. A 8 %
+    d'echelle, un trait de 4 px n'en fait plus que 0,3 : invisible. Si
+    l'opacite culmine pendant que l'anneau est encore minuscule, l'onde ne se
+    voit JAMAIS -- opaque quand elle est trop petite, transparente quand elle
+    est enfin grande. Mesure sur Khartoum : pic a 18 % de la duree = anneau de
+    rayon ~33 px sur une carte 1920, masque par le batiment. Les keyframes
+    etaient toutes "correctes" prises une par une ; c'est leur COORDINATION
+    qui etait fausse.
+    """
+    import animate_scene as A
+
+    couche = {"nm": "onde", "ks": {}}
+    A.onde(couche, 100, rayon_fin=13.0, duree=55)
+    ech = couche["ks"]["s"]["k"]
+    opa = couche["ks"]["o"]["k"]
+
+    t_pic = max(opa, key=lambda k: k["s"][0])["t"]
+    t0, t1 = ech[0]["t"], ech[-1]["t"]
+    s0, s1 = ech[0]["s"][0], ech[-1]["s"][0]
+    # echelle atteinte au moment du pic (interpolation lineaire suffit ici)
+    part = (t_pic - t0) / float(t1 - t0)
+    taille = s0 + (s1 - s0) * part
+    assert taille > 40, (
+        f"au pic d'opacite l'onde n'est qu'a {taille:.0f} % de sa taille : "
+        f"elle sera invisible")
+    assert opa[-1]["s"] == [0], "l'onde doit s'eteindre completement"
+    print("  ok  onde : le pic d'opacite tombe quand l'anneau est large")
+
+
 def main():
     print("test_fidelite — non-regression des defauts Khartoum (2026-08-26)")
     echecs = 0

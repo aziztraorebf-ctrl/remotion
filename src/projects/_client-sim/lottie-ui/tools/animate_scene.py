@@ -56,6 +56,59 @@ PARTITIONS = {
     # Bornes recopiees du composant Remotion d'origine pour que la version
     # Lottie raconte la MEME chose que la video : maison 0-58, chauffage
     # 55-80, flamme 70-92, fil 88-118, courbe 118-280.
+    # ── KHARTOUM — l'assaut coordonne du 15 avril 2023 ────────────────────────
+    # ⭐ Recopiee de la SEQUENCE du composant Remotion (KhartoumEtatMajorSVG) :
+    # etablissement 0-40, puis TROIS phases de 200 frames, jamais simultanees
+    # (doctrine DECISION-jetons-vs-vehicules) : aeroport 40-240, palais 240-440,
+    # tour TV 440-640, resolution 640-750. L'impact tombe 130 frames apres le
+    # depart de chaque colonne (CONTACT_OFFSET).
+    #
+    # ⛔ Les trajets ne sont pas dessines a vue : ce sont les Beziers EXACTES du
+    # composant, recalculees depuis RSF_ORIGIN (1750,940), les 3 positions de
+    # cible et le bombement 0,12 de `bezierMid`. Une trajectoire inventee
+    # traverserait le Nil n'importe ou -- le franchissement est un point
+    # verifie de la scene d'origine.
+    #
+    # ⚠️ A poser sur la frame 0 (l'etablissement) : une frame plus tardive
+    # contient deja les sceaux de capture, donc l'histoire serait racontee
+    # deux fois.
+    "khartoum": {
+        "_duree": 750,
+        # le decor est la des le debut : il ne s'anime pas, il EST le terrain
+        "terrain": ("aucun", 0, 0),
+        "river": ("aucun", 0, 0),
+        "frame": ("aucun", 0, 0),
+        "background": ("aucun", 0, 0),
+        "registration-marks": ("fondu", 0, 40),
+        # les 3 objectifs se revelent pendant l'etablissement
+        "target-airport": ("fondu", 8, 34),
+        "target-palace": ("fondu", 14, 40),
+        "target-tower": ("fondu", 20, 46),
+        "pictogram": ("fondu", 8, 34),
+        "def-avion": ("fondu", 8, 34),
+        # la base RSF, d'ou tout part
+        "staging-rsf": ("fondu", 24, 50),
+        # ⭐ LES TROIS ASSAUTS — une colonne par phase, jamais deux ensemble.
+        # (Les jetons sont dessines A LA BASE : le trajet va donc de l'origine
+        # vers la cible, dans ce sens.)
+        "colonne-aeroport": ("parcourt", 40, 170,
+                             "M1750 940 Q 1501 936 1280 820"),
+        "colonne-palais": ("parcourt", 240, 370,
+                           "M1750 940 Q 1339 838 1020 560"),
+        "colonne-tourtv": ("parcourt", 440, 570,
+                           "M1750 940 Q 1093 780 580 340"),
+        # les impacts, a l'arrivee de chaque colonne
+        "impact-aeroport": ("onde", 170, 240, 12.0, 55),
+        "impact-palais": ("onde", 370, 440, 12.0, 55),
+        "impact-tourtv": ("onde", 570, 640, 12.0, 55),
+        # la fumee persiste sur chaque cible detruite, jusqu'a la fin
+        "fumee-aeroport": ("monte", 178, 750, 58, 66),
+        "fumee-palais": ("monte", 378, 750, 58, 66),
+        "fumee-tourtv": ("monte", 578, 750, 58, 66),
+        # les libelles et le cartouche accompagnent, ils ne racontent pas
+        "*": ("fondu", 0, 30),
+    },
+
     "maison": {
         "_duree": 300,
         "rect": ("aucun", 0, 0),        # le fond reste pose des la 1re frame
@@ -218,6 +271,51 @@ def keyframes(paires, easing=(0.33, 0.67)):
 
 
 
+def cercle(cx, cy, r, n=16):
+    """Sommets d'un cercle, en Bezier (4 quadrants suffiraient, 16 est plus lisse)."""
+    import math
+    v, i_, o_ = [], [], []
+    k = 4.0 / 3.0 * math.tan(math.pi / (2 * n))
+    for j in range(n):
+        a = 2 * math.pi * j / n
+        x, y = cx + r * math.cos(a), cy + r * math.sin(a)
+        tx, ty = -r * math.sin(a) * k, r * math.cos(a) * k
+        v.append([round(x, 2), round(y, 2)])
+        o_.append([round(tx, 2), round(ty, 2)])
+        i_.append([round(-tx, 2), round(-ty, 2)])
+    return {"c": True, "v": v, "i": i_, "o": o_}
+
+
+def calque_forme(nom, chemin_ks, remplissage=None, contour=None, largeur=3,
+                 duree=60):
+    """Fabrique un calque de forme autonome, pret a etre anime.
+
+    ⛔ POURQUOI ON FABRIQUE DES CALQUES. Une conversion frame-unique ne contient
+    que ce qui EXISTE a cette frame : les colonnes en transit, les ondes
+    d'impact et les fumees d'une scene narrative n'y sont pas -- ils naissent
+    plus tard. Sans eux, animer la scene revient a faire apparaitre un decor,
+    pas a raconter l'assaut.
+    ⚠️ Ces acteurs ne sont PAS inventes : leurs rayons, couleurs et positions
+    sont recopies du composant Remotion d'origine.
+    """
+    it = [{"ty": "sh", "nm": nom + "-forme", "ks": {"a": 0, "k": chemin_ks}}]
+    if remplissage:
+        it.append({"ty": "fl", "nm": "fill", "r": 1,
+                   "o": {"a": 0, "k": 100}, "c": {"a": 0, "k": remplissage}})
+    if contour:
+        it.append({"ty": "st", "nm": "stroke", "lc": 2, "lj": 2,
+                   "o": {"a": 0, "k": 100}, "w": {"a": 0, "k": largeur},
+                   "c": {"a": 0, "k": contour}})
+    it.append({"ty": "tr", "a": {"a": 0, "k": [0, 0]}, "p": {"a": 0, "k": [0, 0]},
+               "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0},
+               "o": {"a": 0, "k": 100}})
+    return {"ddd": 0, "ty": 4, "ind": 0, "nm": nom, "st": 0, "ip": 0, "op": duree,
+            "ks": {"a": {"a": 0, "k": [0, 0]}, "p": {"a": 0, "k": [0, 0]},
+                   "s": {"a": 0, "k": [100, 100]}, "r": {"a": 0, "k": 0},
+                   "o": {"a": 0, "k": 100}},
+            "shapes": [{"ty": "gr", "nm": nom, "it": it}]}
+
+
 def points_du_chemin(d, n=40):
     """Echantillonne un chemin SVG en n points (x, y) regulierement repartis.
 
@@ -361,10 +459,20 @@ def onde(couche, debut, rayon_fin=13.0, duree=55, retard=0, opacite_max=85):
         (d, [depart, depart]),
         (fin, [100.0, 100.0]),
     ])
-    # monte vite (le flash), puis s'efface lentement en s'etendant
+    # ⛔ L'OPACITE DOIT SUIVRE L'EXPANSION, PAS LA DEVANCER. Lottie met le
+    # CONTOUR a l'echelle en meme temps que la forme : a 8 % d'echelle, un trait
+    # de 4 px n'en fait plus que 0,3 -- invisible. Si l'opacite culmine pendant
+    # que l'anneau est encore minuscule, l'onde ne se voit JAMAIS : elle est
+    # opaque quand elle est trop petite, et grande quand elle est deja
+    # transparente. Mesure sur Khartoum : pic d'opacite a 18 % de la duree =
+    # anneau de rayon ~33 px sur une carte 1920, masque par le batiment.
+    # -> le pic est repousse a ~45 % de l'expansion, la ou l'anneau est deja
+    #    large, et l'extinction devient la moitie finale de la course.
+    pic = d + max(2, int(duree * 0.45))
     ks["o"] = keyframes([
         (max(0, d - 1), [0]),
-        (d + max(1, int(duree * 0.18)), [opacite_max]),
+        (d + max(1, int(duree * 0.12)), [round(opacite_max * 0.55)]),
+        (pic, [opacite_max]),
         (fin, [0]),
     ])
     return True
