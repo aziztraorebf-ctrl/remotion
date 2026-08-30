@@ -14,6 +14,15 @@
 
 ---
 
+## 💼 Clients & contrats (Upwork)
+
+> ⭐ **Une page par CLIENT**, enrichie au fil du contrat — pas une page par livraison.
+> C'est ici qu'on cherche quand Aziz dit « la page pour <client> » ou « le lien du contrat ».
+
+| Client / contrat | Lien | Contenu |
+|---|---|---|
+| **Abigail — AbiGirl Reacts** ⭐<br>Max Chill Factor Meter | https://claude.ai/code/artifact/652c7c39-1529-45a7-8d0b-929098180b9b | Contrat signé le 30/08 (350 $, 3 jalons). Les planches du jalon en cours **enregistrables depuis la page** (bouton par image), la vérification contre le brief, le calendrier des jalons et le message de livraison prêt à copier. À tenir à jour à chaque jalon. |
+
 ## 🎬 Pages de production (Artifact)
 
 | Sujet | Lien | Contenu |

@@ -6,8 +6,11 @@
 
 ## ⭐⭐⭐ ETAT AU 2026-08-30 : CONTRAT ACTIF — jalon 1 prêt, envoi prévu le 31/08
 
-📄 **Page de pilotage jalon 1** : https://claude.ai/code/artifact/652c7c39-1529-45a7-8d0b-929098180b9b
-(les 2 planches + le message de livraison prêt à copier)
+📄 **Page de pilotage** : https://claude.ai/code/artifact/652c7c39-1529-45a7-8d0b-929098180b9b
+Les 2 planches (**enregistrables depuis la page** — capacité `downloads`, PNG pleine résolution),
+la vérification contre le brief, le calendrier des jalons, le message de livraison prêt à copier.
+⭐ **1 page par CLIENT, enrichie à chaque jalon** — même URL redéployée, jamais une page par envoi.
+Référencée dans `memory/INDEX-LIENS.md` § Clients & contrats : c'est là qu'on la retrouve.
 
 ### L'offre v2 : les 3 demandes de révision ont TOUTES été obtenues
 Relue en entier (une réémission d'offre est un document neuf, pas un diff) :
@@ -41,6 +44,16 @@ livrer le jalon 2 gratuitement ET griller l'atout de négociation.
 ⭐ **Leçon transposable** : sur un livrable calqué sur la référence FOURNIE par le client, un
 « manque » supposé se vérifie d'abord CONTRE SA RÉFÉRENCE, jamais contre une lecture littérale
 d'une phrase isolée du brief. → `feedbacks/feedback_ecart-brief-verifier-contre-la-reference-client.md`
+
+### ⛔⛔ AVANT CHAQUE LIVRAISON DE JALON — le reflexe des 2 fausses alertes
+Ces 3 questions se posent AVANT d'envoyer, et avant toute "correction" de derniere minute :
+1. **L'element que je crois manquant est-il dans SA reference ?** Si non, il n'est pas attendu.
+2. **La phrase du brief que j'invoque, dans quelle SECTION est-elle ?** Une exigence rangee sous
+   "animation" ne decrit pas un element de design statique.
+3. **Existe-t-il une contrainte OPPOSEE dans le meme brief ?** (ex : "sitting on the bottom edge"
+   contre "must not block the music video"). Mesurer les deux avant de bouger quoi que ce soit.
+Un doute qui survit aux 3 = **une question posee a la cliente**, jamais une modif unilaterale du
+design qu'elle s'apprete a approuver. → `feedbacks/feedback_ecart-brief-verifier-contre-la-reference-client.md`
 
 ### Ce qui est fait au 30/08
 - ✅ **README écrit** (`src/projects/_rnd/chill-meter/README.md`, commit `1794f8bb`, branche
