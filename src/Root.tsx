@@ -149,6 +149,7 @@ import {
   REDEEM_H,
 } from "./projects/_client-sim/repro-redeem/ReproRedeem";
 import { ReproDocs } from "./projects/_client-sim/repro-docs/ReproDocs";
+import { ReproOnboarding } from "./projects/_client-sim/repro-onboarding/ReproOnboarding";
 import {
   MainGreffeeDemo,
   MAIN_DEMO_FRAMES,
@@ -778,6 +779,19 @@ export const RemotionRoot: React.FC = () => {
             Methode REPRO-FOSTER : on ne choisit ni le sujet ni l'ambition.
             Reference : out/_r-and-d/corpus-kamotion/ + src/.../repro-redeem/ref/ */}
         <Folder name="client-sim-repro-ui">
+          {/* REPRO-ONBOARDING — 3e piece, en mode MECANIQUE SEULE.
+              La source (`12_BVaKTgmqgb.lottie`) a 176 calques FIXES sur 214 et
+              n'anime QUE des opacites : aucun geste a apprendre. On rejoue ses
+              3 regles de timing (cascade d'entree, cascade de sortie INVERSEE,
+              rebond d'arrivee) sur NOS ecrans — produit fictif, zero marque. */}
+          <Composition
+            id="ReproOnboarding"
+            component={ReproOnboarding}
+            durationInFrames={275}
+            fps={60}
+            width={500}
+            height={1080}
+          />
           {/* REPRO-DOCS — 2e piece du meme studio (`08_Docs.lottie`, 2000x2000,
               60 fps, 2,52 s). Flux UI : un curseur selectionne des documents, la
               pile BASCULE dans un dossier (une seule animation de null parent),
