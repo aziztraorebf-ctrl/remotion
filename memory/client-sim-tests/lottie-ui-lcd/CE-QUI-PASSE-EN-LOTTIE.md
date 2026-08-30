@@ -14,12 +14,18 @@
 
 ## La réponse en une ligne
 
-**On sait livrer du Lottie standard depuis notre chaîne SVG, sans After Effects — à condition
-que la scène soit faite de FORMES et de COULEURS PLEINES.** Le texte, les dégradés et les
-pointillés passent désormais — **et le FLOU depuis le 2026-08-28**. Ne traversent toujours pas :
-les filtres **composites** (ombre portée, lueur) et les images. ⭐⭐ **Les MASQUES passent depuis le
-2026-08-29** (track matte `td`/`tt` + précomposition), et **les personnages articulés aussi** (rig par
-parentage) — voir les deux lignes du tableau.
+**On sait livrer du Lottie standard depuis notre chaîne SVG, sans After Effects.** Le texte, les
+dégradés et les pointillés passent, **le FLOU depuis le 2026-08-28**, les **MASQUES depuis le
+2026-08-29** (track matte `td`/`tt` + précomposition), les **personnages articulés** (rig par
+parentage), et les **IMAGES raster depuis le 2026-08-30** (asset natif + redimensionnement à la
+taille d'affichage). Ne traversent toujours pas : les filtres **composites** (ombre portée, lueur),
+les `<pattern>` et les `<use>`.
+
+⭐⭐⭐ **LA LEÇON QUI SE RÉPÈTE — « limite du format » a été FAUX trois fois de suite.** Flou
+(28/08), masques (29/08), images (30/08) : à chaque fois la table annonçait une impossibilité, et à
+chaque fois **le format savait faire — c'est notre convertisseur qui n'émettait rien**. Avant
+d'écrire « impossible » dans cette page, vérifier la spec Lottie, pas notre code. Un commit du 29/08
+s'appelle d'ailleurs « table de refus périmée — l'outil se sous-vendait ».
 
 ---
 
@@ -102,7 +108,7 @@ Détail : [[feedback_prouver-une-capacite-nest-pas-produire-un-livrable]]
 | **Flou** (`feGaussianBlur` seul) | ✅ **oui** — ⭐⭐ **porté le 2026-08-28** | effet Lottie **`ty:29`**, rendu par lottie-web — mesuré À L'IMAGE (un carré passe de **0 à 5360 px** de bord adouci). ⛔ La note « les filtres sont une limite du FORMAT » était **FAUSSE** : le format savait, notre convertisseur n'émettait rien. Écart logo Inkscape **12,54 % → 6,68 %** |
 | **Ombre portée, lueur** (filtres **COMPOSITES** : `feOffset`+`feMerge`, `feColorMatrix`) | ⛔ **non** | pas d'équivalent Lottie — à refaire en formes empilées ou à retirer du brief. ⭐ **Coût visuel MESURÉ** (Khartoum, 8 filtres non portés) : l'écart total reste à **1,17 %** — ils coûtent **peu**. ⚠️ Vérifier d'abord si le `filter:url()` pointe vers un id qui EXISTE : sur 4 logos clients, **14 sur 16 étaient morts** (supprimés à l'export, un navigateur les ignore) |
 | **Masques, détourage** (`mask`, `clipPath`) | ✅ **oui** — ⭐⭐ **porté le 2026-08-29** | traduit en **track matte** Lottie : le pochoir porte `td:1`, le calque découpé `tt:1`. Écart **0,00 %** sur géométrie professionnelle réelle. ⛔ **Corollaire non-évident** : Lottie ne découpe **qu'UN calque par pochoir** — un groupe de N calques (un œil = globe+iris+pupille+reflet) doit être emballé dans une **précomposition**, sinon 1 pochoir sur 5 passe seulement. ⭐ Enjeu mesuré : retirer les mattes change **50 %** de l'image d'une mascotte pro, **100 %** d'un kiosque — ce n'est pas cosmétique |
-| **Images / photos** (raster) | ⛔ **non** | Lottie sait embarquer en base64, mais le poids explose — déconseillé |
+| **Images / photos** (raster) | ✅ **oui** — ⭐⭐ **porté le 2026-08-30** | Asset image Lottie natif (`{id, w, h, p: "data:image/png;base64…", e:1}`) + calque `ty:2`. Écart mesuré **0,06 %**. ⭐⭐ **LE POIDS EST UN PROBLÈME DE TAILLE SOURCE, PAS DE PRINCIPE** : le convertisseur redimensionne à la taille d'**affichage** (×2 de confort écran dense) et rapporte le poids obtenu. Mesure sur `portrait-rsf.png` : 1024×1024 pour un affichage 32×32 → **1504 Ko tel quel contre 3 Ko à la bonne taille, facteur 500**. ⚠️ Au-delà de 100 Ko le rapport le signale : c'est alors un choix à arbitrer, pas un refus |
 | Symboles réutilisés (`use`, `symbol`) | ⛔ **non** | à aplatir avant conversion (faisable, coût en amont) |
 | Motifs de remplissage (`pattern`) | ⛔ **non** | sans équivalent — ⭐ **non peint** depuis le 2026-08-26 : la couche du dessous reste visible. ⛔ Avant, replié sur un gris inventé qui **effaçait le fond** (82 % de l'image fausse sur Khartoum, cf. plus haut) |
 | **Pointillés** (`stroke-dasharray`) | ✅ **oui** — ⭐ **porté le 2026-08-26** | mesuré à **0,07 %** (2 valeurs) et **0,10 %** (4 valeurs). ⚠️ Le motif peut être **déphasé** (Chromium et lottie-web ne démarrent pas au même point d'un cercle) : même nombre, même espacement, départ différent. ⛔ C'était **ignoré en silence** avant — enjeu narratif réel : un tracé « projet prévu » ressortait plein, donc « construit » |

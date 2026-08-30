@@ -417,6 +417,58 @@ def test_onde_opacite_suit_l_expansion():
     print("  ok  onde : le pic d'opacite tombe quand l'anneau est large")
 
 
+def test_image_raster_portee_et_redimensionnee():
+    """Les <image> sont portees en asset Lottie, a leur taille d'AFFICHAGE.
+
+    ⭐ Ce n'etait PAS une limite du format : Lottie a un type d'asset image
+    officiel. La table disait « alourdit beaucoup » -- vrai pour une image
+    embarquee A SA TAILLE SOURCE, faux une fois redimensionnee. Mesure sur
+    portrait-rsf.png : 1024x1024 pour un affichage 32x32, soit 1504 Ko en
+    base64 tel quel contre 3 Ko a la bonne taille. Facteur 500.
+    Meme diagnostic que le flou le 28/08 : le format savait, on n'emettait rien.
+    """
+    import base64
+    import io
+    import json
+    import pathlib
+    import subprocess
+    import tempfile
+    from PIL import Image
+
+    outil = ICI / "svg2lottie_scene.py"
+    src = ICI.parents[4] / "public/_shared/sprites/warmap/portrait-rsf.png"
+    if not src.is_file():
+        print("  --  image de test absente, test ignore")
+        return
+
+    im = Image.open(src).convert("RGBA").resize((128, 128), Image.LANCZOS)
+    b = io.BytesIO()
+    im.save(b, "PNG", optimize=True)
+    uri = "data:image/png;base64," + base64.b64encode(b.getvalue()).decode()
+    svg = ('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" '
+           'viewBox="0 0 400 300"><rect width="400" height="300" fill="#eee"/>'
+           f'<image id="p" x="150" y="80" width="64" height="64" href="{uri}"/></svg>')
+
+    with tempfile.TemporaryDirectory() as tmp:
+        f_svg = pathlib.Path(tmp) / "t.svg"
+        f_json = pathlib.Path(tmp) / "t.json"
+        f_svg.write_text(svg)
+        subprocess.run(["python3", str(outil), str(f_svg), "-o", str(f_json)],
+                       capture_output=True)
+        doc = json.loads(f_json.read_text())
+
+    imgs = [a for a in doc.get("assets", []) if str(a.get("p", "")).startswith("data:image")]
+    assert imgs, "aucun asset image produit"
+    calques = [l for l in doc["layers"] if l.get("ty") == 2]
+    assert calques, "aucun calque image (ty:2)"
+    assert calques[0]["refId"] == imgs[0]["id"], "le calque ne reference pas l'asset"
+
+    # ⛔ redimensionnee a la taille d'AFFICHAGE (x2 de confort), jamais la source
+    assert imgs[0]["w"] <= 64 * 2, (
+        f"image non redimensionnee : {imgs[0]['w']} px pour un affichage 64 px")
+    print("  ok  image raster : portee en asset, redimensionnee a l'affichage")
+
+
 def main():
     print("test_fidelite — non-regression des defauts Khartoum (2026-08-26)")
     echecs = 0

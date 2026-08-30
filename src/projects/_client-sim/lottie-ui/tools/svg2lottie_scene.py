@@ -82,7 +82,6 @@ NON_PORTES = {
             "pas encore implemente chez nous",
     "clipPath": "detourage — meme mecanisme que <mask> cote Lottie (tt/td), "
                 "sinon portable en le pre-appliquant a la geometrie",
-    "image": "images raster — a embarquer en base64, alourdit beaucoup",
     "pattern": "motifs de remplissage — sans equivalent",
     "marker": "marqueurs de fleche — sans equivalent",
     "foreignObject": "contenu HTML embarque — hors format",
@@ -1015,6 +1014,118 @@ def _rig_de(el, formes):
     return {"parent": parent, "pivot": pivot}
 
 
+def image_en_asset(el, mat, racine_svg, rapport, nom, assets, echelle_max=2.0):
+    """Porte un <image> SVG en asset image Lottie (base64).
+
+    ⭐ CE N'EST PAS UNE LIMITE DU FORMAT. Lottie a un type d'asset image
+    officiel ({id, w, h, p: "data:image/png;base64,...", e: 1}) et un calque
+    ty:2 qui le pose. La note « les images alourdissent beaucoup » decrivait
+    notre chaine, pas la spec -- meme diagnostic que le flou le 2026-08-28, ou
+    « limite du FORMAT » etait faux : le format savait, on n'emettait rien.
+
+    ⛔ LE POIDS EST UN PROBLEME DE TAILLE SOURCE, PAS DE PRINCIPE. Mesure sur
+    portrait-rsf.png (KhartoumEtatMajorSVG) : le fichier fait 1024x1024 alors
+    qu'il s'affiche en 32x32 -- 32 fois trop grand. Embarque tel quel il pese
+    1504 Ko en base64 ; redimensionne a sa taille d'affichage reelle, 3 Ko.
+    Un facteur 500. On redimensionne donc TOUJOURS a la taille d'affichage
+    (x echelle_max pour garder du confort sur ecran dense), et on RAPPORTE le
+    poids obtenu -- le client doit pouvoir arbitrer sur un chiffre.
+    """
+    import base64
+    import io
+    import pathlib
+
+    href = (el.attrib.get(XLINK + "href") or el.attrib.get("href") or "").strip()
+    if not href:
+        rapport.refuse(f"{nom}: <image>", "sans href")
+        return None
+
+    # dimensions d'affichage, apres transformation
+    try:
+        w = float(el.attrib.get("width", 0))
+        h = float(el.attrib.get("height", 0))
+        x = float(el.attrib.get("x", 0))
+        y = float(el.attrib.get("y", 0))
+    except ValueError:
+        rapport.refuse(f"{nom}: <image>", "dimensions illisibles")
+        return None
+    if w <= 0 or h <= 0:
+        rapport.refuse(f"{nom}: <image>", "largeur ou hauteur nulle")
+        return None
+
+    # l'echelle portee par la matrice compte dans la taille reellement vue
+    ech_m = max(abs(mat[0]), abs(mat[3])) or 1.0
+
+    donnees = None
+    if href.startswith("data:"):
+        try:
+            donnees = base64.b64decode(href.split(",", 1)[1])
+        except Exception:
+            rapport.refuse(f"{nom}: <image>", "data: URI illisible")
+            return None
+    else:
+        # chemin de fichier : relatif au SVG, ou a public/ pour staticFile()
+        cand = []
+        net = href.split("?")[0].lstrip("/")
+        if racine_svg:
+            cand.append(pathlib.Path(racine_svg).parent / net)
+        ici = pathlib.Path(__file__).resolve()
+        for parent in ici.parents:
+            if (parent / "public").is_dir():
+                cand.append(parent / "public" / net)
+                cand.append(parent / net)
+                break
+        trouve = next((c for c in cand if c.is_file()), None)
+        if not trouve:
+            rapport.refuse(f"{nom}: <image>",
+                           f"fichier introuvable ({href[:60]})")
+            return None
+        donnees = trouve.read_bytes()
+
+    try:
+        from PIL import Image
+        im = Image.open(io.BytesIO(donnees))
+        im.load()
+    except Exception as e:
+        rapport.refuse(f"{nom}: <image>", f"image illisible ({e})")
+        return None
+
+    # ⭐ redimensionnement a la taille reellement AFFICHEE
+    cible_w = max(1, int(round(w * ech_m * echelle_max)))
+    cible_h = max(1, int(round(h * ech_m * echelle_max)))
+    avant = len(donnees)
+    if im.width > cible_w or im.height > cible_h:
+        im = im.convert("RGBA").resize((cible_w, cible_h), Image.LANCZOS)
+        tampon = io.BytesIO()
+        im.save(tampon, "PNG", optimize=True)
+        donnees = tampon.getvalue()
+
+    b64 = base64.b64encode(donnees).decode("ascii")
+    aid = f"img_{len(assets)}"
+    assets.append({"id": aid, "w": im.width, "h": im.height,
+                   "u": "", "p": "data:image/png;base64," + b64, "e": 1})
+
+    ko = len(b64) / 1024
+    detail = f"{im.width}x{im.height}, {ko:.0f} Ko en base64"
+    if avant > len(donnees):
+        detail += f" (source {avant/1024:.0f} Ko redimensionnee)"
+    rapport.ok(f"<image> {nom} : {detail}")
+    if ko > 100:
+        rapport.approxime(f"{nom}: <image> lourde",
+                          f"{ko:.0f} Ko embarques — verifier que la taille "
+                          f"d'affichage justifie ce poids")
+
+    # calque image : ty:2, ancre au coin haut-gauche comme le <image> SVG
+    return {"ddd": 0, "ty": 2, "nm": nom, "refId": aid, "st": 0,
+            "ks": {"a": {"a": 0, "k": [0, 0, 0]},
+                   "p": {"a": 0, "k": [round(x * mat[0] + mat[4], 2),
+                                       round(y * mat[3] + mat[5], 2), 0]},
+                   "s": {"a": 0, "k": [round(100.0 * w * ech_m / im.width, 3),
+                                       round(100.0 * h * ech_m / im.height, 3),
+                                       100]},
+                   "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}}
+
+
 def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=(),
               css=None, ids=None, pile=()):
     """
@@ -1037,6 +1148,14 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=(),
         return
     if tag in ("defs", "linearGradient", "radialGradient", "stop", "title",
                "desc", "metadata", "style"):
+        return
+
+    # ⭐ Les <image> sont portees, mais AILLEURS : `collecter()` produit des
+    # formes, une image devient un CALQUE (ty:2) adosse a un asset -- c'est
+    # `convertir()` qui les traite. Sans ce saut, le meme element etait porte
+    # d'un cote et signale « inconnu, ignore » de l'autre : fichier correct,
+    # rapport qui ment. Deux chemins pour un element, le piege habituel.
+    if tag == "image":
         return
 
     st = styles(el, herite, css)
@@ -1523,6 +1642,24 @@ def convertir(chemin, fps=30, frames=60):
     collecter(root, base, {}, rapport, grads, elements,
               css=feuille_css(root), ids=index_ids(root))
 
+    # ⭐ LES IMAGES sont collectees a part : `collecter()` produit des FORMES,
+    # or une image devient un CALQUE (ty:2) adosse a un asset. On les traite
+    # donc ici, apres le parcours des formes.
+    # ⛔ Ce n'est pas une limite du format (cf. image_en_asset) : Lottie a un
+    # type d'asset image officiel. La note « alourdit beaucoup » decrivait
+    # notre chaine et une image embarquee A SA TAILLE SOURCE -- redimensionnee
+    # a la taille d'affichage, le portrait de Khartoum passe de 1504 Ko a 3 Ko.
+    images = []
+    def _images(el, m):
+        for enfant in el:
+            tag = enfant.tag.replace(NS, "")
+            m2 = _mul(m, parse_transform(enfant.attrib.get("transform", "")))
+            if tag == "image":
+                images.append((enfant, m2))
+            elif tag in ("g", "a", "svg"):
+                _images(enfant, m2)
+    _images(root, base)
+
     layers = []
     # Lottie dessine le calque d'indice 0 AU-DESSUS : on inverse pour garder
     # l'ordre de peinture du SVG (premier element = dessous).
@@ -1636,6 +1773,19 @@ def convertir(chemin, fps=30, frames=60):
     # Structure copiee d'un fichier PRO (corpus kamotion 02_Doggy : asset
     # {id, nm, fr} + calque ty:0 avec refId/w/h), jamais inventee.
     assets = []
+
+    # ⭐ Les calques image se posent AU-DESSUS des formes : dans nos scenes, une
+    # image raster est un portrait, un logo, une texture -- toujours un element
+    # de premier plan, jamais un fond. (Si un jour c'est un fond, il faudra
+    # tenir son rang dans l'ordre du document ; aucun cas reel a ce jour.)
+    for el_img, mat_img in images:
+        nom_img = el_img.attrib.get("id") or f"image-{len(assets) + 1}"
+        calque = image_en_asset(el_img, mat_img, chemin, rapport, nom_img, assets)
+        if calque:
+            calque["ip"] = 0
+            calque["op"] = frames
+            layers.insert(0, calque)
+
     if any("_precomp" in c for c in layers):
         groupes = []          # [(nom, [couches])] dans l'ordre du tableau
         for c in layers:
