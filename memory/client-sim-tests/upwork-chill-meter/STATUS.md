@@ -45,6 +45,36 @@ livrer le jalon 2 gratuitement ET griller l'atout de négociation.
 « manque » supposé se vérifie d'abord CONTRE SA RÉFÉRENCE, jamais contre une lecture littérale
 d'une phrase isolée du brief. → `feedbacks/feedback_ecart-brief-verifier-contre-la-reference-client.md`
 
+### ⭐ SA REPONSE DU 30/08 (apres acceptation) — aucun changement requis
+Elle restate sa direction et liste ce qu'elle veut approuver au jalon 1 : « overall meter design,
+shape, branding, readability, **placement direction**, and clean "before frost" look ».
+✅ **Tout est deja couvert** par les 2 planches. Rien de neuf, rien de contradictoire.
+- ⭐ « placement direction » **valide apres coup la decision d'envoyer 2 images** (la planche en
+  contexte, decidee avant qu'elle le demande) — sans elle, ce critere serait invalidable.
+- ⭐ 3e fois qu'elle re-cadre le « pas encore givre » (25/08, 27/08, 30/08) = c'est SON risque percu.
+  Garder le paragraphe du message qui explique POURQUOI le chassis est nu.
+- ⛔ Elle ecrit « use the PDF/reference images as the guide » → la reference FAIT AUTORITE.
+  Confirme qu'on a eu raison de ne rien inventer (cf. les 2 fausses alertes ci-dessous).
+- ⛔ Message ajuste : « a frame from one of your videos » (transparence sur l'origine du fond) +
+  « size and placement » (reprend son critere). **Retiree** la phrase « This matches what you said
+  about your reference image » — elle vient de le redire, la lui repeter serait de la reformulation.
+
+### ⭐⭐ PLANCHE COMPARATIVE reference vs notre compteur — MESUREE, usage INTERNE
+`out/_r-and-d/chill-meter-upwork/jalon1/03-comparaison-reference.png` (extraite du PDF p.6).
+- ✅ **Structure fidele a 100 %** : memes bandeaux, meme graduation 0-25-50-75-100, meme barre
+  segmentee, meme ligne « 0 = NO CHILL | 100 = MAX CHILL », memes 5 boutons dans le meme ordre,
+  meme bouton POWER vertical a droite. Rien n'a ete ajoute ni retire.
+- ⭐ **Sa reference fait 1448 x 1086 px = exactement `DEVICE_W` / `DEVICE_H`** du code. Le device a
+  ete construit a l'echelle de sa reference.
+- **Ecart 1 (voulu)** : sa ref est givree a fond, la notre est le meme appareil degele. C'est LE
+  livrable du jalon 1, pas un defaut.
+- **Ecart 2 (parti pris)** : sa ref est photorealiste (metal use, texture, profondeur), la notre est
+  graphique et nette — ce qui la garde lisible en petit sur une video YouTube. ⚠️ Si elle demande
+  plus de matiere, c'est une **vraie revision d'artwork vectoriel**, pas un reglage de parametre.
+- ⛔⛔ **NE PAS lui envoyer cette planche.** Mettre sa reference givree a cote de notre chassis
+  propre **souligne un manque** au lieu d'expliquer une progression, et ouvre un debat sur la
+  matiere qu'elle n'a pas ouvert. Elle connait sa propre reference.
+
 ### ⛔⛔ AVANT CHAQUE LIVRAISON DE JALON — le reflexe des 2 fausses alertes
 Ces 3 questions se posent AVANT d'envoyer, et avant toute "correction" de derniere minute :
 1. **L'element que je crois manquant est-il dans SA reference ?** Si non, il n'est pas attendu.
