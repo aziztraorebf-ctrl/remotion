@@ -1348,7 +1348,24 @@ def collecter(el, mat, herite, rapport, grads, sortie, profondeur=0, chemin=(),
                             # le tronquait, et les pivots declares sur un groupe
                             # clipe disparaissaient en silence.
                             e = e + (None,) * (6 - len(e)) if len(e) < 6 else e
-                            sortie[j] = e[:4] + (("dans-precomp", nom_g), e[5])
+                            # ⛔⛔ NE PAS ECRASER UN ROLE DE POCHOIR EXISTANT.
+                            # Deux clips IMBRIQUES : l'exterieur emballe la
+                            # scene, les interieurs se retrouvent dedans. En
+                            # remplacant leur role par "dans-precomp", ils
+                            # perdaient leur `td` et se peignaient comme des
+                            # FORMES VISIBLES -- rectangles blancs opaques
+                            # par-dessus la carte (13,66 % d'ecart sur
+                            # EtatMajorGabarit) pendant que le rapport disait
+                            # « transportable a l'identique ».
+                            # Les deux roles se CUMULENT : dans la precomp ET
+                            # pochoir. On empile donc au lieu de remplacer.
+                            ancien = e[4]
+                            if (isinstance(ancien, tuple) and ancien
+                                    and ancien[0] in ("decoupe", "masque")):
+                                nouveau = (ancien[0], ancien[1], nom_g)
+                            else:
+                                nouveau = ("dans-precomp", nom_g)
+                            sortie[j] = e[:4] + (nouveau, e[5])
                         rapport.ok(f"<{tag}> {nom_g}: {n} calques emballes "
                                    f"en precomposition")
                     else:
@@ -1776,14 +1793,32 @@ def convertir(chemin, fps=30, frames=60):
         # decal etait replace.
         etiquette = role[0] if isinstance(role, tuple) and role else role
         cible_nom = role[1] if isinstance(role, tuple) and len(role) > 1 else None
+        # ⛔⛔ LES ROLES SE CUMULENT, ils ne s'excluent pas (corrige 2026-08-30).
+        # Un pochoir peut etre A LA FOIS « dans une precomp » et « decoupe » :
+        # c'est le cas des que deux clips sont IMBRIQUES -- le clip exterieur
+        # emballe la scene, les clips interieurs se retrouvent dedans. Avec un
+        # if/elif, le role du groupe ECRASAIT celui du pochoir : il perdait son
+        # `td` et se peignait comme une forme visible.
+        # Mesure sur EtatMajorGabarit : le medaillon clipe toute la carte, donc
+        # les 2 clips de balayage des zones sortaient en RECTANGLES BLANCS
+        # opaques (13,66 % d'ecart) pendant que le rapport annoncait
+        # « transportable a l'identique ». Le rendu etait faux, le rapport
+        # content -- la famille de defauts habituelle.
+        # ⭐ Un role a 3 elements = pochoir IMBRIQUE dans une precomp : il porte
+        # son role de decoupe/masque ET le nom de la precomp qui le contient.
+        precomp_hote = role[2] if isinstance(role, tuple) and len(role) > 2 else None
         if etiquette == "dans-precomp":
             couche["_precomp"] = cible_nom
         elif etiquette == "masque":
             couche["tt"] = 1          # 1 = alpha : 92 des 93 mattes du corpus
             couche["_paire"] = cible_nom
+            if precomp_hote:
+                couche["_precomp"] = precomp_hote
         elif etiquette == "decoupe":
             couche["td"] = 1          # ce calque SERT de pochoir, il ne s'affiche pas
             couche["_paire"] = cible_nom
+            if precomp_hote:
+                couche["_precomp"] = precomp_hote
         layers.append(couche)
 
     # ⭐⭐ EXTRACTION DES PRECOMPOSITIONS (2026-08-29). Les calques marques par
@@ -1857,6 +1892,39 @@ def convertir(chemin, fps=30, frames=60):
     # portent `_paire` = le meme nom de groupe. Se fier au voisinage cassait
     # des que deux pochoirs devenaient voisins (mesure : head-shading perdait
     # sa paire quand decal etait replace). S'applique avec ou sans precomp.
+    # ⛔⛔ APPARIER AUSSI DANS LES PRECOMPOSITIONS (corrige 2026-08-30).
+    # Cette boucle ne parcourait que `layers`, le haut niveau. Un pochoir parti
+    # dans une precomp (assets[].layers) n'etait donc JAMAIS apparie : il
+    # perdait son `td` et se peignait comme une FORME VISIBLE. Mesure sur
+    # EtatMajorGabarit : le clip exterieur du medaillon enveloppe toute la
+    # scene, donc les deux clips de balayage des zones se retrouvaient a
+    # l'interieur -- ils sortaient en RECTANGLES BLANCS opaques par-dessus la
+    # carte (13,66 % d'ecart) pendant que le rapport annoncait « transportable
+    # a l'identique ». Un pochoir imbrique est un cas que le portage du 29/08
+    # n'avait pas rencontre.
+    def apparier(liste):
+        for poch in [c for c in liste if c.get("td") == 1]:
+            nomp = poch.get("_paire")
+            if not nomp:
+                continue
+            cible = next((c for c in liste
+                          if c is not poch and c.get("_paire") == nomp
+                          and c.get("td") != 1), None)
+            if cible is None:
+                continue
+            cible["tt"] = 1
+            if liste.index(poch) == liste.index(cible) - 1:
+                continue
+            liste.remove(poch)
+            liste.insert(liste.index(cible), poch)
+        for i, c in enumerate(liste):
+            c["ind"] = i
+            c.pop("_paire", None)
+
+    for a in assets:
+        if a.get("layers"):
+            apparier(a["layers"])
+
     pochoirs = [c for c in layers if c.get("td") == 1]
     for poch in pochoirs:
         nomp = poch.get("_paire")

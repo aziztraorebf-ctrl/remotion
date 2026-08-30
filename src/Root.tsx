@@ -469,6 +469,7 @@ import { MaskReveal } from "./projects/_shared/hooks-lib/MaskReveal";
 import { HookAESActe1Proto } from "./projects/warmap/HookAESActe1Proto";
 import { SoudanActe1Ouverture, SOUDAN_A1_DURATION, SOUDAN_A1_FPS } from "./projects/warmap/SoudanActe1Ouverture";
 import { KhartoumEtatMajorSVG, KHARTOUM_EM_FRAMES, KHARTOUM_EM_FPS, KHARTOUM_EM_LABELS_EN } from "./projects/warmap/KhartoumEtatMajorSVG";
+import { EtatMajorGptAnimee } from "./projects/_rnd/svg-scenes/_archive/EtatMajorGptAnimee";
 import { KhartoumFxDemo, KHARTOUM_FX_FRAMES, KHARTOUM_FX_FPS } from "./projects/warmap/_rnd/KhartoumFxDemo";
 import { ProtoSilhouetteRiseFx, PROTO_SILHOUETTE_FRAMES, PROTO_SILHOUETTE_FPS } from "./projects/warmap/_rnd/ProtoSilhouetteRiseFx";
 import { VoxReproMaster, VOX_REPRO_FRAMES, VOX_REPRO_FPS } from "./projects/_rnd/vox-repro/VoxReproMaster";
@@ -3099,6 +3100,10 @@ export const RemotionRoot: React.FC = () => {
         {/* MINI-RENDER VALIDATION — Soudan Acte 1 ouverture (carte + jeton Hemeti + forces RSF + contour, audio fact-check) */}
         <Composition id="SoudanActe1Ouverture" component={SoudanActe1Ouverture} durationInFrames={SOUDAN_A1_DURATION} fps={SOUDAN_A1_FPS} width={1920} height={1080} />
         <Composition id="KhartoumEtatMajorSVG" component={KhartoumEtatMajorSVG} durationInFrames={KHARTOUM_EM_FRAMES} fps={KHARTOUM_EM_FPS} width={1920} height={1080} />
+        {/* Gabarit carte d'etat-major GENERIQUE (alpha/bravo/charlie, west/east) — 1024 carre,
+            140f = 4,7s. Remonte depuis _archive le 2026-08-30 pour le banc d'essai Lottie :
+            format et duree tombent pile dans le corpus qui se vend (mediane 3,9 s, carre). */}
+        <Composition id="EtatMajorGabarit" component={EtatMajorGptAnimee} durationInFrames={140} fps={30} width={1024} height={1024} />
         {/* PORTFOLIO EN — meme scene, libelles anglais (la FR ci-dessus reste intacte) */}
         <Composition id="KhartoumEtatMajorSVG-EN" component={KhartoumEtatMajorSVG} durationInFrames={KHARTOUM_EM_FRAMES} fps={KHARTOUM_EM_FPS} width={1920} height={1080} defaultProps={{ labels: KHARTOUM_EM_LABELS_EN }} />
         <Composition id="KhartoumFxDemo" component={KhartoumFxDemo} durationInFrames={KHARTOUM_FX_FRAMES} fps={KHARTOUM_FX_FPS} width={1920} height={1080} />

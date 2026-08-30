@@ -11,6 +11,7 @@ l'histoire de la semaine : fichier valide, rapport content, rendu faux.
     python3 test_fidelite.py
 """
 
+import pathlib
 import subprocess
 import sys
 import tempfile
@@ -430,7 +431,6 @@ def test_image_raster_portee_et_redimensionnee():
     import base64
     import io
     import json
-    import pathlib
     import subprocess
     import tempfile
     from PIL import Image
@@ -501,6 +501,53 @@ def test_parcours_respecte_la_position_deja_posee():
     assert abs(kf[-1]["s"][0] - (1720 + 600)) < 2, (
         f"arrivee attendue a 2320, obtenu {kf[-1]['s'][0]}")
     print("  ok  parcours : la position deja posee est conservee")
+
+
+def test_pochoirs_imbriques_gardent_leur_role():
+    """Un pochoir DANS une precomposition reste un pochoir.
+
+    ⛔ Les roles etaient EXCLUSIFS (if/elif) : marquer un calque « dans-precomp »
+    ECRASAIT son role de « decoupe ». Or les deux se cumulent des que deux clips
+    sont IMBRIQUES -- l'exterieur emballe la scene, les interieurs se retrouvent
+    dedans. Le pochoir perdait son `td` et se peignait comme une FORME VISIBLE.
+    Mesure sur EtatMajorGabarit : le medaillon clipe toute la carte, donc les 2
+    clips de balayage des zones sortaient en RECTANGLES BLANCS opaques par-dessus
+    le dessin -- 13,66 % d'ecart pendant que le rapport annoncait « transportable
+    a l'identique ». Corrige : 13,66 % -> 0,25 %.
+    """
+    import json
+    import subprocess
+    import tempfile
+
+    outil = ICI / "svg2lottie_scene.py"
+    svg = ('<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" '
+           'viewBox="0 0 200 200">'
+           '<defs>'
+           '<clipPath id="dehors"><circle cx="100" cy="100" r="90"/></clipPath>'
+           '<clipPath id="dedans"><rect x="20" y="20" width="80" height="60"/></clipPath>'
+           '</defs>'
+           '<g clip-path="url(#dehors)">'
+           '  <rect width="200" height="200" fill="#ddd"/>'
+           '  <g clip-path="url(#dedans)"><rect x="0" y="0" width="200" height="200" fill="#c33"/></g>'
+           '</g></svg>')
+
+    with tempfile.TemporaryDirectory() as tmp:
+        f_svg = pathlib.Path(tmp) / "t.svg"
+        f_json = pathlib.Path(tmp) / "t.json"
+        f_svg.write_text(svg)
+        subprocess.run(["python3", str(outil), str(f_svg), "-o", str(f_json)],
+                       capture_output=True)
+        doc = json.loads(f_json.read_text())
+
+    # le pochoir interieur vit dans la precomp : il doit y garder td=1
+    interieurs = []
+    for a in doc.get("assets", []):
+        interieurs += [l for l in a.get("layers", []) if "pochoir" in str(l.get("nm"))]
+    assert interieurs, "aucun pochoir dans la precomposition"
+    assert all(l.get("td") == 1 for l in interieurs), (
+        f"un pochoir imbrique a perdu son td : "
+        f"{[(l.get('nm'), l.get('td')) for l in interieurs]}")
+    print("  ok  pochoir imbrique : garde son role de decoupe dans la precomp")
 
 
 def main():
