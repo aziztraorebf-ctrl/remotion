@@ -1,5 +1,12 @@
 # CORPUS DE REFERENCE — 22 animations d'un studio qui en vit (mesure 2026-08-28)
 
+> ⛔⛔ **CHANTIER CLOS LE 2026-08-30** — les **3 flux d'interface** du corpus (`22`, `12`, `08`) sont
+> reproduits et mesures. **Ne pas y retourner.** La suite est de CREER nos propres pieces :
+> → `memory/starters/STARTER-portfolio-anime.md`
+> ⭐ Ce bandeau existe parce que le piege s'est deja produit : cette fiche est le fichier le plus
+> naturel a ouvrir, elle porte l'ANALYSE du materiau — et j'ai propose de refaire une piece deja
+> livree parce que l'ETAT DE PRODUCTION vivait dans le starter, pas ici.
+
 > Reponse a « QUOI mettre au portfolio ». Source : **kamotionstudio.site** (studio Lottie/UI SaaS,
 > devis sur demande, cite comme niveau-cible dans `RECHERCHE-MARCHE-INDEX.md`).
 > ⛔ **LottieFiles /hire est inaccessible** (403 Cloudflare, firecrawl ET playwright headless) —
@@ -40,8 +47,12 @@ Sur les 22 pieces : `trim paths` **0** · `repeater` **0** · `gradient` **~40**
 · `mask` **3** · `expressions` **0**.
 ⭐ Tout se joue sur **position / echelle / rotation / opacite + parentage + precomps**. C'est
 exactement notre `animate_scene.py`. ⛔ Le seul vrai manque cote conversion reste le **matte**
-(`tt`), tres present ici — et refuse par notre chaine.
-**→ C'est LE trou a combler en priorite, avant tout autre portage.**
+(`tt`), tres present ici.
+⛔ **PERIME — le matte a ete PORTE le 2026-08-29** (commits `a42af19b` + `b4a53d3e` : `mask`/
+`clip-path` -> paire `td:1`/`tt:1`, 5 pochoirs sur 5 via precomposition, ecart 0,03 %).
+Cette phrase disait « LE trou a combler en priorite » ; elle est conservee pour la trace de
+l'analyse, mais **le trou est comble**. 3e occurrence dans ce projet du pattern « texte perime
+garde qui se relit comme actif » — corrige au wrap du 30/08.
 
 ### 4. Le format reel : **court, carre, 60 fps**
 Duree **mediane 3,9 s** (min 0,75 · max 16,9). **19 pieces sur 22 en 60 fps.**
@@ -112,7 +123,8 @@ s'empilent, tombent dans un dossier, le dossier devient le logo client. Mesure :
 C'est donc la **4e** piece d'interface du corpus, pas 3.
 ⛔ Et **`11` n'est PAS un flux** (rangee « dashboard graphiques ») : c'est un dashboard isometrique
 3D en **boucle de 16,9 s**, rien ne s'enchaine. Corpus reel : **4 flux UI** = 22 (faite), 12, 08, et
-non 11.
+non 11. ⛔ **Le compte est 3, pas 4** (corrige au wrap du 30/08) : la `08` ENTRE et la `11` SORT,
+le total ne bouge pas. Les 3 flux UI du corpus sont **22, 12, 08** — tous les trois traites.
 
 1. ~~**`22` Redeem All**~~ ✅ **FAITE** (800×854, 5,85 s) — flux UI complet : un curseur clique un bouton, des
    pieces tombent, un choix apparait (Giftcard / Cash), validation « REDEEMED! ». **6 precomps

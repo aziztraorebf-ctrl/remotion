@@ -109,3 +109,51 @@ Declarer des pivots `x,y` reels (epaule, coude, poignet, hanche, genou, cheville
 ⭐ Paupiere fermee = peau **+ arc de cil**, sinon ca lit « pas d'yeux ».
 Bouche au repos = **trait fin de 2-3 px**. ⛔ Une masse sombre fermee = un dessin de machoire
 de marionnette (le defaut « pantin » que voit l'oeil en premier).
+
+## ⭐⭐ TEXTE SANS `<text>` : fontTools convertit une police systeme en paths (2026-08-30)
+Le brief interdisait `<text>` (contrainte Lottie) mais exigeait de vrais titres lisibles.
+⛔ Ne PAS ecrire une fonderie de lettres maison (j'ai commence, c'est long et ca lit mal).
+Solution en 20 lignes, `fontTools` est deja installe :
+
+    from fontTools.ttLib import TTCollection
+    from fontTools.pens.svgPathPen import SVGPathPen
+    from fontTools.pens.transformPen import TransformPen
+    from fontTools.misc.transform import Transform
+    f = TTCollection("/System/Library/Fonts/Avenir Next.ttc").fonts[5]   # 5 = Medium
+    gs, cmap, hmtx = f.getGlyphSet(), f.getBestCmap(), f["hmtx"]
+    k = taille / f["head"].unitsPerEm
+    pen = SVGPathPen(gs); gs[cmap[ord(ch)]].draw(TransformPen(pen, Transform(k,0,0,-k, x, y)))
+    # y NEGATIF sur l'axe vertical : la police monte en +y, le SVG en -y. x avance de hmtx[g][0]*k.
+
+- Avenir Next.ttc, index utiles : 7 Regular · 5 Medium · 2 DemiBold · 0 Bold (upem 1000).
+- Le `suivi` (letter-spacing des libellés en capitales) s'ajoute a l'avance : + suivi par glyphe.
+- Resultat : UN seul `<path>` rempli par ligne de texte, recolorable, zero balise interdite.
+- Outil ecrit : `/tmp/texte_paths.py` (a rapatrier si reutilise).
+
+## ⭐⭐ RELIEF SUR UNE GRANDE SURFACE : LISERÉ ANCRE, JAMAIS UNE ZONE CLAIRE (2026-08-30)
+Sur une pastille de 80px un "lustre" (zone claire en haut) marche. Sur un BOUTON DE 420px
+DE LARGE, la meme forme lit comme une LIGNE HORIZONTALE qui coupe le bouton en deux —
+toute courbe quadratique devient quasi droite a cette echelle. C'est STRUCTUREL, pas un dosage.
+- Fix qui marche : un liseré CLAIR FIN (2,5px) epousant le bord haut + une bande d'OMBRE fine
+  epousant le bord bas. Se construit en un seul path : contour exterieur puis retour par le
+  contour interieur decale (arcs de rayon r-2.5), sans evenodd.
+- Meme regle pour les pastilles : un lustre ANCRE aux coins arrondis (qui suit le `rx`) au lieu
+  d'un `<rect rx>` flottant a l'interieur — le rect flottant fait une ligne parasite en bas.
+
+## ⭐ ANNEAU INTERNE PROPRE SUR UNE PILULE (interrupteur) (2026-08-30)
+Pour cerner l'interieur d'un ovale sans `<mask>` : UN path a 2 sous-chemins + `fill-rule="evenodd"`,
+le 2e etant le meme ovale reduit de 2px, PARCOURU EN SENS INVERSE.
+⛔ Un liseré PARTIEL (qui ne fait que le haut) se termine par une ENCOCHE visible a ses deux
+bouts — le cerne doit faire le TOUR COMPLET, ou ne pas exister.
+
+## ⭐ FLECHE = UN SEUL CHEMIN CONTINU (2026-08-30, confirme la regle n°3 de doctrine)
+Hampe en `<rect>` + pointe en triangle separe = decrochement visible au raccord (l'epaulement
+haut de la pointe ne tombe pas sur le bord de la hampe). Redessinee en UN path continu
+(hampe -> montee en biais -> pointe -> redescente -> retour hampe, coins `a3.4 3.4`) : jointure
+inexistante, donc invisible. Le raccord qui resiste ne devait pas exister.
+
+## Verifier une planche multi-pieces : BBOX PAR RENDU ISOLE (2026-08-30)
+Rendre chaque `<g>` de 1er niveau SEUL dans un doc de meme viewBox, puis `Image.getbbox()`.
+Donne la taille REELLE de chaque piece en une passe et prouve la conformite au brief
+(ici : ecrans 500x1080 exacts, les 2 toggles a 58x32 identiques, 6 membres a 420x55 identiques).
+Bien plus sur que de relire ses propres coordonnees.

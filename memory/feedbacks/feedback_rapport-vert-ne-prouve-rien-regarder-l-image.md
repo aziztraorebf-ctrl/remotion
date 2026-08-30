@@ -75,3 +75,32 @@ fragment etait donc **present mais INVISIBLE**, et le gate ne pouvait structurel
 
 ⭐ **La question a poser a tout gate vert** : « qu'est-ce qu'il mesure, exactement ? » — pas
 « a-t-il passe ? ». Un gate ne prouve jamais l'absence d'un defaut qu'il ne regarde pas.
+
+
+---
+
+## ⭐⭐ EXTENSION 2026-08-30 — un rapport JUSTE peut être trompeur (pas seulement un rapport vert)
+
+La fiche ci-dessus dit qu'un rapport vert mesure sa propre COUVERTURE, pas la fidélité. Ce cas va
+plus loin : **le chiffre était exact, et quand même trompeur.**
+
+Mon scan du `.lottie` de l'onboarding disait « **37 calques animés sur 38 le sont en opacité seule** ».
+Vérifié, re-vérifié sans limite de profondeur : **exact**. J'en ai conclu que la pièce ne contenait
+aucun geste — et j'ai raté son mouvement central.
+
+Le glissement d'ensemble **n'appartient à aucun calque** : il naît du décalage temporel entre eux.
+Mesuré sur le RENDU (le titre glisse f4→f28, la pastille du bas f16→f42), invisible dans le fichier.
+
+### La règle
+⭐ **La structure d'un fichier décrit ce que chaque calque fait ISOLÉMENT. Elle est aveugle à ce que
+leur COMPOSITION produit à l'écran.** Un mouvement d'ensemble, une cascade, un rythme, une
+lisibilité : rien de tout ça n'est lisible dans un scan par calque.
+
+⛔ **SIGNAL D'ALARME** : quand un scan structurel produit un chiffre écrasant (« 37/38 en opacité
+seule », « 0 trim path », « 90 % en rotation »), c'est le moment de **rendre et de REGARDER**, pas
+de conclure.
+
+⭐ **Corollaire de geste** : un mouvement appliqué EN BLOC et le même appliqué PAR ÉLÉMENT DÉCALÉ ne
+se ressemblent pas — le premier a l'air d'un panneau qu'on pousse. **Le décalage EST le geste.**
+Deux animations aux keyframes identiques par calque donnent deux pièces différentes selon leur
+déphasage.

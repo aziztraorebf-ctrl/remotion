@@ -20,8 +20,7 @@ session-là**. ⛔ Dans une session neuve, tout était perdu.
 // ✅ PAYÉE — LoadUpAnime.tsx:29, rendu validé par Aziz le 2026-08-28
 const EASE_OUT = Easing.bezier(0.23, 1, 0.32, 1);   // entrées, le défaut
 ```
-⚠️ **NON ÉPROUVÉS — vérifier au 1er usage, ne jamais citer comme payés** : `bezier(0.77, 0, 0.175, 1)`
-· `bezier(0.32, 0.72, 0, 1)` · cascade 30-80 ms · entrée `scale(0.95)`+opacity 0 · primitive `respire`.
+⚠️ **NON ÉPROUVÉS, vérifier au 1er usage** : bezier(0.77,0,0.175,1) · bezier(0.32,0.72,0,1) · cascade 30-80 ms · scale(0.95)+opacity 0 · primitive `respire` (zéro partition l'utilise, revérifié 2026-08-30).
 
 ⛔ Les easings CSS natifs (`ease`, `ease-in-out`) sont trop faibles — ils n'ont pas de punch.
 
@@ -229,7 +228,30 @@ de deux choses : le **DÉPLACEMENT** de la main (elle descend, elle remonte) et 
 font même l'appui avec **2 calques superposés dont on bascule l'opacité**.
 ⛔ On animait à grands frais ce que personne n'anime. Démo : `_client-sim/repro-redeem/MainGreffeeDemo.tsx`.
 
+⭐⭐ **LE DÉCALAGE EST LE GESTE** (2026-08-30). Un mouvement appliqué EN BLOC et le même appliqué
+PAR ÉLÉMENT DÉCALÉ ne se ressemblent pas : le bloc a l'air d'un **panneau qu'on pousse**, le décalé
+d'une scène qui se compose. Ce n'est pas un raffinement de fin de passe.
+⛔⛔ **Mesurer le FICHIER ne remplace pas mesurer l'IMAGE** : le scan du `.lottie` annonçait
+« 37/38 calques en opacité seule » — **exact**, et pourtant un glissement d'ensemble existait,
+produit par l'ENCHAÎNEMENT des apparitions. Un défaut d'ÉMERGENCE ne vit dans aucune propriété.
+
+⭐⭐⭐ **ANTICIPATION + DÉPASSEMENT — réclamés par 4 voix sur 4** au DA-brief (2026-08-30), leur
+point de convergence le plus net. Un objet vivant RECULE d'abord, DÉPASSE sa cible, puis revient.
+⛔ **À DOSER** : sur une interface l'excès fait jouet — **≤ 10 %** sur le contenu, **18 %**
+uniquement sur L'ACTION CLÉ que le récit désigne. Code : `repro-onboarding/cascade.ts` (`elan`).
+
+⛔ **Les `s` (scale) d'un calque ne donnent PAS sa taille à l'écran** dès qu'il passe par une
+PRÉCOMP à ancre décalée : les transforms se composent. Mesurer chaque calque **ISOLÉ** (rendu seul,
+bbox du non-blanc). Écarts réels : doc **×3,87** · photo **×6,83** · curseur **×7,30**.
+
 ⛔⛔ **UNE CORRECTION DEMANDÉE PEUT PORTER UN DIAGNOSTIC FAUX — MESURER AVANT D'OBÉIR.**
-Aziz : « la main est trop grande ». Mesure : la main de RÉFÉRENCE fait **287 px**, la nôtre **110** —
-elle était déjà plus petite. Le vrai défaut : elle **COUVRAIT** le contenu. ⭐ Le bon geste était un
-**DÉPLACEMENT, pas un redimensionnement**. Le symptôme ressenti nomme la gêne, pas sa cause.
+Aziz : « la main est trop grande ». ⛔ **Chiffre CORRIGÉ le 2026-08-30** — cette fiche annonçait
+**287 px**, c'était FAUX (287 = bbox × 134 %, un scale absent du fichier). Mesure refaite dans le
+`.lottie` : bbox **214 px**, scale **62 % au repos / 70 % au pic** → **133 à 150 px** à l'écran,
+contre **110** chez nous. La référence n'est donc que ~1,2× plus grosse, pas 2,6×.
+⭐ **L'écart de chiffre inversait la leçon** : à 287 px la taille redevient une piste crédible ;
+à 133 elle est INNOCENTÉE, et c'est ce qui désigne la vraie cause.
+⭐⭐ **La vraie cause était l'ANCRE** (la référence tient sa main par le BOUT DU DOIGT, nous par le
+coin du dessin) — pas la taille, pas la position latérale : les deux ont été essayées sans effet.
+→ `memory/feedbacks/feedback_recouvrement-est-un-probleme-d-ancre-pas-de-dosage.md`
+⛔ Le symptôme ressenti nomme la gêne, jamais sa cause.

@@ -89,3 +89,25 @@ En V3 j'ai atteint TOUS mes ratios cibles et perdu 3 choses a l'oeil : bras qui 
 dans le torse au repos, cou disparu, souliers devenus des sabots.
 ⛔ **Toujours REGARDER le rendu final en entier apres avoir corrige une metrique** — la
 correction d'un chiffre peut casser ce qui allait.
+
+## 2026-08-30 — planche-onboarding "Loop" (defauts intermediaires, tous corriges au rendu)
+- ⛔⛔ **UN `<rect>` CLAIR FLOTTANT DANS UNE FORME = LIGNE PARASITE.** Lustre pose en rect arrondi
+  a l'interieur des pastilles d'app : son bord bas se lit comme un TRAIT, pas comme un volume
+  (meme symptome que "2 bandes claires flottantes" de la planche-docs). Fix : lustre ANCRE au
+  bord, epousant les coins arrondis.
+- ⛔⛔ **A GRANDE LARGEUR, TOUT LUSTRE DEVIENT UNE LIGNE.** Sur un bouton de 420px, une calotte
+  claire `q-210 16 -420 0` lit comme une barre horizontale coupant le bouton. 2 dosages tentes
+  (opacite, courbure) AVANT de comprendre que la cause etait structurelle. → a cette echelle,
+  liseré fin ancre au bord uniquement, jamais une zone.
+- ⛔ **CERNE evenodd MAL FERME = MOITIE DU BOUTON ASSOMBRIE.** Mon 2e sous-chemin ecrivait les
+  arcs et le `v-24` dans le mauvais ordre : le "trou" ne coincidait pas avec le contour et
+  remplissait la moitie basse. Symptome identique a la ligne parasite du lustre — j'ai donc
+  d'abord accuse la mauvaise forme. → Quand un defaut persiste apres correction de la cause
+  supposee, RETIRER les formes une par une pour identifier la coupable.
+- ⛔ **LISERÉ PARTIEL SUR UNE PILULE = ENCOCHE AUX BOUTS.** Le cerne haut de l'interrupteur OFF
+  se terminait par un crochet visible a droite. Un cerne fait le tour complet ou n'existe pas.
+- ⛔ **ECRAN DESEQUILIBRE** : l'ecran 2 n'avait de contenu que sur son tiers haut, 400px vides
+  en bas. Un ecran mobile se juge en ENTIER, pas element par element. Fix : ajout d'un apercu
+  de notification + une note d'aide + un pied (progression + bouton) — des pieces credibles du
+  registre, pas du remplissage decoratif.
+- ⛔ Fleche hampe-rect + pointe-triangle : decrochement au raccord (voir TECHNIQUES).

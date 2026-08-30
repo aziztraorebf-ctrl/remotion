@@ -106,3 +106,18 @@ presentait exactement le meme schema (avertissement en docstring, valeur jamais 
 **Deux occurrences le meme jour = un mode d'echec, pas un accident.**
 -> Grave en transversal : `memory/key-learnings.md` § « INSTRUMENTER LA DETECTION N'EST PAS
 APPLIQUER LE REMEDE ».
+
+
+---
+
+## ⭐ MISE A JOUR 2026-08-30 (verifiee, pas supposee)
+
+- ✅ `llm-gen-blueprint.py:87` et `kimi-vision-fill-scene.py:109` portent bien le fix
+  (`reasoning.max_tokens: 2000`) — le tableau ci-dessus les donnait encore en attente.
+  **Une fiche qui signale a tort un trou fait re-parcourir un chantier deja fait.**
+- ⛔ `da-brief.py` reste le SEUL script en contournement (encore sur k2.5).
+- ⚠️ **Piege reproduit puis corrige le meme jour** : `da-brief-anim.py`, ecrit cette session,
+  citait cette fiche en commentaire **et repliait quand meme sur `reasoning_content`** — sans
+  poser la borne. Corrige : borne posee, repli SUPPRIME (un `content` vide doit lever une
+  vraie erreur, pas etre masque par la reflexion brute).
+  ⭐ **Citer une fiche n'est pas l'appliquer.** Le commentaire donnait l'illusion du contrôle.

@@ -21,8 +21,9 @@ D'INTERFACE**.
 « LE bloqueur » alors qu'il a été livré le 29/08 (commits `a42af19b` + `b4a53d3e` : `mask`/`clip-path`
 → paire `td:1`/`tt:1`, **5 pochoirs sur 5** via précomposition, écart 0,03 %). Vérifié : 14 occurrences
 de `tt` dans `lottie-ui/tools/svg2lottie_scene.py`.
-→ `memory/client-sim-tests/corpus-kamotion/CORPUS-REFERENCE-UI.md` · starter :
-`memory/starters/STARTER-repro-ui-animation.md`
+→ `memory/client-sim-tests/corpus-kamotion/CORPUS-REFERENCE-UI.md`
+⛔ **Chantier CLOS le 2026-08-30** (3 pièces livrées, corpus épuisé) — `STARTER-repro-ui-animation.md`
+est conservé pour sa trace mais **ne décrit plus la suite** : voir `STARTER-portfolio-anime.md`.
 
 ⭐⭐⭐ **PRIORITÉ 1 (décision d'Aziz, 2026-08-30 fin de session) — PORTFOLIO ANIMÉ**
 Le corpus est **ÉPUISÉ** : les 4 pièces d'interface sont reproduites et mesurées. On ne copie
@@ -44,6 +45,30 @@ un modèle pro existant et l'animer** (prouvé : le douanier obéit ; il en exis
 ⛔ **Ne PAS refondre le gabarit d'ouverture des vidéos** : la mesure des 4 courbes de rétention
 INFIRME l'hypothèse d'un défaut systématique (les formes divergent).
 → `memory/doctrines/DIAGNOSTIC-FLOP-VIDEO.md` § LES 5 FORMES DE COURBE
+
+---
+
+## ⛔ DETTE MESURÉE LE 2026-08-30 — `kimi-k2.5` PÉRIMÉ dans 16 fichiers de code + 2 index
+
+CLAUDE.md impose **`kimi-k3` UNIQUEMENT** (décision d'Aziz du 2026-08-20) et l'import depuis
+`scripts/tools/api_models.py`. Relevé par grep sur le code ACTIF (archives exclues) : **16 fichiers**
+portent encore `kimi-k2.5` **en dur**, plus **`REVIEW-TOOLS-INDEX.md` et `SCRIPTS-INDEX.md`** qui le
+citent — donc la doctrine se propage à l'envers, tout nouveau script recopiant l'identifiant périmé.
+
+⛔ **Un modèle périmé ne renvoie pas forcément une erreur** : il peut répondre en se dégradant
+silencieusement (`key-learnings` 2026-08-20 : « un modèle qui RÉPOND n'est pas un modèle SUPPORTÉ »).
+
+⭐ **Le patron existe déjà** : `scripts/tools/da-brief-anim.py` (créé le 30/08) importe ses 4
+identifiants d'`api_models.py`, zéro en dur, **et applique le vrai fix du `reasoning_content` de k3**
+que `da-brief.py` contourne encore. Recopier ce fichier, ne pas réinventer.
+
+⚠️ **Réserve avant de migrer les 2 scripts VIDÉO NATIVE** (`da-brief-video-3voix.py:40`,
+`da-brief-compare-2videos.py:31`) : vérifier que k3 accepte la vidéo native via l'API Moonshot
+directe avant de basculer — c'est le seul chemin vidéo, une régression y serait coûteuse.
+
+**Chantier mécanique, ~30 min, à faire en début de session** (pas en clôture : 16 fichiers à relire
+un par un, la migration Gemini du 20/08 a montré qu'un remplacement de masse se relit fichier par
+fichier).
 
 ---
 

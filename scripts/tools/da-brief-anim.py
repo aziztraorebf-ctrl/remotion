@@ -298,7 +298,13 @@ def call_kimi(prompt, videos, res):
     payload = {
         "model": KIMI,
         "messages": [{"role": "user", "content": content}],
-        "max_tokens": 4000,
+        "max_tokens": 16000,
+        # ⛔⛔ BORNE OBLIGATOIRE sur k3 — `max_tokens` seul NE PROTEGE PAS : il
+        # plafonne l'ENSEMBLE (reasoning + contenu) et le reasoning le mange
+        # integralement, donc `content: null` et parfois un appel qui HANG.
+        # Le champ a borner est `reasoning.max_tokens`.
+        # → memory/tools/kimi-k3-reasoning-borne.md
+        "reasoning": {"max_tokens": 2000},
     }
     req = urllib.request.Request(
         "https://api.moonshot.ai/v1/chat/completions",
@@ -310,14 +316,20 @@ def call_kimi(prompt, videos, res):
         with urllib.request.urlopen(req, timeout=600) as r:
             d = json.loads(r.read())
         msg = d["choices"][0]["message"]
-        # ⚠️ k3 peut ne remplir que `reasoning_content` (cf.
-        # memory/tools/kimi-k3-reasoning-borne.md) : on lit les 3 champs.
-        res["kimi"] = (
-            msg.get("content")
-            or msg.get("reasoning_content")
-            or msg.get("reasoning")
-            or "[vide]"
-        )
+        # ⛔ NE PAS replier sur `reasoning` / `reasoning_content` : la fiche
+        # nomme ce repli « le piege qui a camoufle le bug » — il ecrit la
+        # reflexion brute dans la sortie ET ANNONCE UN SUCCES, alors que le
+        # modele n'a rien redige. Avec la borne posee ci-dessus, `content` est
+        # rempli ; s'il ne l'est pas, c'est une VRAIE erreur qui doit se voir.
+        contenu = msg.get("content")
+        if not contenu:
+            res["kimi"] = (
+                "[ERREUR kimi] `content` vide malgre la borne reasoning. "
+                "NE PAS replier sur reasoning_content — verifier le payload "
+                "(cf. memory/tools/kimi-k3-reasoning-borne.md)."
+            )
+            return
+        res["kimi"] = contenu
     except Exception as e:  # noqa: BLE001
         res["kimi"] = f"[ERREUR kimi] {e}"
 

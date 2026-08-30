@@ -106,13 +106,35 @@ d'Aziz, 2026-08-20). Choisir le segment sur **mesure du profil d'énergie**
 (`ffmpeg -ss T -t 20 -i X -af volumedetect`), pas au hasard : pour `bgm-tech-house`, 156→182 s est la
 seule portion qui monte sur 26 s d'affilée, ce qui épouse l'arc. Volume musique **0,13**, SFX **0,50**.
 
-## CE QUI EST AGNOSTIQUE (prouvé 2026-08-20)
+## CE QUI EST AGNOSTIQUE — et ses 2 EXCEPTIONS (2026-08-20, ⛔ nuancé le 08-30)
 
-Le même film a été produit en **registre sombre ET en light mode SaaS** sans changer un seul
-composant — seules la capture source et la palette varient. C'est ce qui permet de promettre à un
-client que **le pipeline s'adapte à SON design**. Compositions de référence :
-`NorthShieldPromoV4` (sombre) · `NorthShieldPromoLight` (clair).
+Le même film a été produit en **registre sombre ET en light mode SaaS** : la bascule est réelle et
+tient dans une session. ⛔ **Mais « sans changer un seul composant » était FAUX** — 2 choses ne
+basculent jamais toutes seules, mesurées le 2026-08-30 sur `repro-onboarding` :
+1. **Les OMBRES en dur.** 11 `#000000` à 30-40 %, invisibles sur fond sombre, qui deviennent des
+   taches grises sur fond clair. Elles ne sont pas dans la palette : elles ne se voient qu'au rendu.
+2. **Le CONTRASTE du texte secondaire.** Mesure WCAG : le gris atténué à 60 % sur blanc tombe à
+   **2,46** (seuil lisible 4,5) = illisible. Remonter l'opacité ne suffit pas (3,46) — il faut
+   **assombrir la couleur** (`#3e4a58`, pas `#5d6b7d` → 9,03 en plein, 4,95 atténué).
+⭐ **Un thème clair n'est PAS le négatif d'un sombre** : l'œil ne traite pas les deux polarités de
+la même façon, le secondaire doit y être nettement plus foncé.
+⭐ **Ce qui bascule proprement, c'est ce qui est un TOKEN.** Une ombre et un gris de texte n'en sont
+pas tant qu'on ne les a pas déclarés comme tels.
+✅ **AVANT de promettre l'agnosticisme à un client** : `grep` les couleurs en dur + mesurer le
+contraste WCAG du secondaire. La promesse tient, elle a juste 2 exceptions à traiter d'abord.
+Compositions de référence : `NorthShieldPromoV4` (sombre) · `NorthShieldPromoLight` (clair) ·
+`ReproOnboarding` (thème paramétré : `THEME=clair python3 assets/gen-planche.py`).
 ⚠️ `PageCam` a un fond papier `#faf7f2` codé **EN DUR dans les 2 branches** (`PageCam.tsx:60` 2D et `:85` 3D — et c'est la 3D qui est active dès qu'un `rotX` est posé), **aucune prop de fond**. ⛔ Ne pas patcher PageCam : il est PARTAGÉ avec noteshield. Le fond se règle dans la page servie et se capture avec elle.
+
+## ⛔ LE PIÈGE QUI REND UN RENDU ENTIÈREMENT VIDE (payé 2026-08-30)
+
+Une chaîne de markup SVG passée en **enfant JSX** (`{MON_SVG}`) s'affiche en **texte brut** — donc,
+sur fond clair, **rien du tout**. Il faut `dangerouslySetInnerHTML={{ __html: ... }}`.
+⛔ Symptôme : TypeScript compile, Remotion rend toutes les frames, le `.mp4` existe — et il est
+**intégralement vide (0 pixel non-blanc mesuré)**. Aucune erreur nulle part.
+⚠️ Les 4 fiches qui parlent déjà de `dangerouslySetInnerHTML` traitent du kebab-case vs camelCase :
+**aucune ne couvrait son ABSENCE pure**, qui est le cas coûteux.
+✅ Réflexe : après un rendu, compter les pixels non-blancs avant de conclure quoi que ce soit.
 
 ## ⛔ CE QUE CE PILIER NE FAIT PAS
 

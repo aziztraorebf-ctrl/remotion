@@ -1,5 +1,5 @@
 // GENERE — ne pas editer a la main.
-// Source de verite : `assets/planche-onboarding.svg`, dessine par l'agent svg-dessinateur.
+// Source de verite : `assets/planche-docs.svg`, dessine par l'agent svg-dessinateur.
 // Regenerer : `python3 assets/extraire-groupes.py`
 //
 // ⛔ Le TSX ne redessine JAMAIS ces formes : il les PILOTE. C'est la regle n°0

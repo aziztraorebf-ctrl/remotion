@@ -7,7 +7,27 @@
 
 ---
 
-## ⭐ ÉTAT AU 2026-08-29 — la session 1 a eu lieu, reprendre ICI
+## ⛔⛔ CHANTIER CLOS LE 2026-08-30 — NE PAS REPRENDRE ICI
+
+> **Les 3 pièces sont livrées et le corpus est ÉPUISÉ** (4 pièces d'interface sur 4 traitées).
+> Ce fichier est conservé pour sa TRACE (méthode, mesures, décisions), pas comme feuille de route.
+>
+> ⭐ **La suite vit dans `memory/starters/STARTER-portfolio-anime.md`** — on ne reproduit plus,
+> on crée nos propres pièces sur ce que le marché valide.
+>
+> **Ce que ce chantier a livré** :
+> | pièce | écart mesuré vs l'original | livrable |
+> |---|---|---|
+> | `22` Redeem All | hauteur 1,00 · encre 1,02 (+ fix d'ancre de la main le 30/08) | `out/_r-and-d/repro-redeem/repro-redeem-FINAL.mp4` |
+> | `08` Docs | médiane largeur 1,02 · hauteur 0,98 · encre 1,00 | `out/_r-and-d/repro-docs/repro-docs-FINAL.mp4` |
+> | `12` Onboarding | mode « mécanique seule » sur NOS écrans + thème clair | `onboarding-FINAL.mp4` · `onboarding-CLAIR.mp4` |
+>
+> ⛔ La section ci-dessous décrit l'état du **29/08** : elle donne la pièce 2 comme à faire et le
+> corpus comme non épuisé. **Périmée** — gardée pour l'historique de la méthode.
+
+---
+
+## ~~⭐ ÉTAT AU 2026-08-29 — la session 1 a eu lieu, reprendre ICI~~ (PÉRIMÉ)
 
 **FAIT** (branche `feat/repro-lottie-ui-redeem`, 5 commits) :
 - ✅ **Corpus acquis** : 22 animations d'un studio qui vend, mesurées ET rendues

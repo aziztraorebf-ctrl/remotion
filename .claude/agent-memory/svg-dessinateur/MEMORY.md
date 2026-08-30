@@ -73,3 +73,16 @@ enfant, d'autres vetements). Souliers = forme hiker + teinte accent. Etats de vi
 - **86 %** de calques nommés chez le studio de référence. **Nous visons 100 %.**
 - Durée médiane d'une pièce : **3,9 s** · format carré · 60 fps · **17 Ko**.
 - **0** texte natif sur 848 calques : le métier livre du texte **vectorisé**.
+
+## 2026-08-30 — Planche onboarding "Loop" (repro-onboarding, UI SaaS sombre)
+- Livrable : `src/projects/_client-sim/repro-onboarding/assets/planche-onboarding.svg`
+  (viewBox 1320x1180, 11 groupes de 1er niveau, 207 ids uniques, 175 formes, ZERO degrade,
+  zero element interdit, zero balise <text>).
+- Pieces (bbox MESUREES par rendu isole, toutes conformes au brief) :
+  ecran-invite 500x1080 · ecran-reglages 500x1080 · e1-membre-1..6 420x55 (identiques) ·
+  e2-toggle-off 58x32 · e2-toggle-on 58x32 (meme boite) · bouton-flottant 72x72.
+- Le dossier contenait DEJA `assets/extraire-groupes.py` qui genere `planche.ts` depuis le SVG :
+  il extrait l'INTERIEUR de chaque <g id> de 1er niveau. Consequence de DESSIN : le `transform`
+  de placement sur la planche doit vivre SUR la balise <g> racine (il disparait a l'extraction),
+  jamais a l'interieur. Verifie : le script retrouve bien les 11 groupes.
+- 5 iterations rendu->regard. Aucun des defauts corriges n'etait visible sans le rendu.
