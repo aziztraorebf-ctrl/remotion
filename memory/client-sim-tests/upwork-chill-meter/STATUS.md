@@ -1,31 +1,77 @@
 # Upwork — "Max Chill Factor Meter" (AbiGirl Reacts) — STATUS
 
-> ⭐⭐⭐ **PLUS UN TEST — C'EST UN VRAI CONTRAT.** Parti d'un prototype sur un vrai brief Upwork
-> (350 $, overlay YouTube animé) le 2026-08-22 ; **la cliente a accepté le 2026-08-29**.
-> ⛔ Ce fichier n'est plus un dossier de simulation : les décisions qu'il porte engagent.
+> ⭐⭐⭐ **CONTRAT SIGNÉ LE 2026-08-30.** Parti d'un prototype sur un vrai brief Upwork le 2026-08-22,
+> accepté par la cliente le 29/08, **offre v2 acceptée par Aziz le 30/08**. 350 $ → 297,50 $ net.
+> ⛔ Les décisions de ce fichier engagent contractuellement.
 
-## ⭐⭐⭐ ETAT AU 2026-08-29 : CONTRAT GAGNÉ — offre reçue, RÉVISION DEMANDÉE, rien signé
+## ⭐⭐⭐ ETAT AU 2026-08-30 : CONTRAT ACTIF — jalon 1 prêt, envoi prévu le 31/08
 
-**Elle a dit oui** (29/08, 11h28 PDT) : *« I'd like to move forward with you »*. Elle nomme 3 points
-décisifs — progression clean→frosted, exports plein cadre transparents, flexibilité de re-render.
-⭐ Premier contrat Upwork, gagné **sans aucun avis, profil de moins d'une semaine, sans boost**.
+📄 **Page de pilotage jalon 1** : https://claude.ai/code/artifact/652c7c39-1529-45a7-8d0b-929098180b9b
+(les 2 planches + le message de livraison prêt à copier)
 
-**Offre v1 reçue le 29/08** (expire le 5 sept.) : 350 $ → **297,50 $ net** (15 % Upwork). Elle a
-repris notre libellé quasi mot pour mot, jalons 105/140/105 conformes. **Message de révision envoyé
-le 29/08**, 3 points :
-1. ⛔ **Ligne « After Effects project file » toujours dans la description** alors que nos ajouts
-   parlent du dossier React/Remotion. Les deux cohabitent → à supprimer (c'était LE point délicat
-   de la négo, accepté par écrit dans le fil mais absent du contrat).
-2. **Dates de jalon vides** → proposé 2 j / 3 j / 3 j ouvrés, avec les jalons 2 et 3 qui courent
-   **depuis SON approbation** du précédent, pas depuis la date du contrat.
-3. **2 révisions par jalon** validées dans le fil, absentes de l'offre → à écrire, avec la
-   définition (1 tour = 1 lot de retours groupés).
+### L'offre v2 : les 3 demandes de révision ont TOUTES été obtenues
+Relue en entier (une réémission d'offre est un document neuf, pas un diff) :
+1. ✅ **La ligne « After Effects project file » a disparu.** Remplacée par « the zipped
+   React/Remotion source project folder with a README, as discussed ». C'était LE point délicat.
+2. ✅ **Les 3 dates sont remplies** : 3 / 7 / 11 septembre, avec « Due after Milestone N approval »
+   écrit noir sur blanc → les jalons 2-3 courent depuis SON approbation, pas depuis le contrat.
+3. ✅ **« Includes 2 revision rounds »** figure sur les trois jalons.
+Montants conformes : 105 / 140 / 105.
 
-⛔ **Rien n'est signé.** Sur Upwork le client seul édite l'offre ; le freelance accepte ou refuse.
-Le contrat démarre à NOTRE acceptation. ⚠️ **Quand la v2 arrive : la relire EN ENTIER**, pas
-seulement les 3 points — une modif d'offre est une réémission complète.
-⚠️ Plateforme : **retraits bloqués tant que les infos fiscales ne sont pas fournies** (n'empêche ni
-d'accepter ni de travailler).
+⚠️ **Admin bloquant pour le PAIEMENT (pas pour le travail)** : les retraits sont gelés tant que les
+infos fiscales ne sont pas fournies sur le profil. À régler avant le 3 sept.
+
+### ⛔⛔ JALON 1 = UN SEUL ÉTAT, PAS SIX (erreur évitée le 30/08)
+Libellé contractuel : « **Static meter design approval.** Clean premium base meter, not heavily
+frosted. » → on envoie **le châssis propre à 0 %**, statique. Envoyer les 6 états statiques =
+livrer le jalon 2 gratuitement ET griller l'atout de négociation.
+⛔ **Ne PAS lui dire que les 6 états sont déjà rendus.**
+
+### ⭐⭐ DEUX FAUSSES ALERTES QUE J'AI LEVÉES — arbitrées par Aziz, il avait raison 2×
+1. ⛔ **NE PAS remonter le compteur du bord bas.** J'ai proposé d'ajouter une marge basse (mesuré :
+   0 px, l'objet est tangent à y=1080). **Faux problème** : le haut du compteur est à y=684 et la
+   fenêtre du clip descend à ~700 — le remonter empiéterait sur le clip, que le brief interdit
+   explicitement (« It should not block the music video »). Et le brief DEMANDE « sitting on the
+   floor / bottom edge ». Le placement actuel est le seul qui satisfait les deux règles.
+2. ⛔ **NE PAS ajouter d'afficheur numérique du score.** J'ai lu « The 0-100 number readout should be
+   clear and readable » (p.8) comme un élément manquant. **Faux** : cette phrase est dans la section
+   *Meter Fill Animation* et signifie que la GRADUATION reste lisible pendant le remplissage. Son
+   image de référence n'a aucun afficheur numérique, et le brief impose de suivre cette image.
+   Inventer un élément absent de sa référence = hors brief. Si elle en veut un, ce sera en révision.
+⭐ **Leçon transposable** : sur un livrable calqué sur la référence FOURNIE par le client, un
+« manque » supposé se vérifie d'abord CONTRE SA RÉFÉRENCE, jamais contre une lecture littérale
+d'une phrase isolée du brief. → `feedbacks/feedback_ecart-brief-verifier-contre-la-reference-client.md`
+
+### Ce qui est fait au 30/08
+- ✅ **README écrit** (`src/projects/_rnd/chill-meter/README.md`, commit `1794f8bb`, branche
+  `feat/chill-meter-jalon1`) — c'était le SEUL livrable contractuel entièrement manquant. Couvre :
+  usage CapCut, install, commande de re-render avec les 3 flags obligatoires, carte des fichiers,
+  tableau des ajustements courants.
+- ✅ **2 planches du jalon 1** : `out/_r-and-d/chill-meter-upwork/jalon1/01-meter-design.png`
+  (châssis isolé, agrandi ×1,6) et `02-meter-in-context.png` (composé sur son plateau).
+- ✅ **Message de livraison rédigé** (dans la page de pilotage) — sobre, zéro tiret cadratin, zéro
+  reformulation, ne présume pas sa décision.
+- ⛔ **Envoi VOLONTAIREMENT différé au 31/08** : livrer le 30 au soir, quelques heures après
+  signature, se lit comme « c'était en stock » et dévalue les 350 $.
+
+### Vérifié sur le rendu réel (pas sur une note)
+Frame 45 de `ChillMeter-Idle.mov`, composée sur `abigirl-decor.png` : châssis propre non givré,
+tous les éléments imposés présents (0-100, barre, AbiGirl Reacts, MAX CHILL DETECTION, bouton vert
+seul élément vert, palette bleu/blanc), bbox = (96, 684) → (846, 1080), **86,4 % de pixels
+totalement transparents**.
+
+### La suite
+- **Jalon 2** (7 sept.) : entrance, idle, 0-25 %, givre 50 %. Les rendus existent déjà — restent le
+  SON et les ajustements de dosage.
+- **Jalon 3** (11 sept.) : 75 %, 100 %, exports finaux + dossier source zippé + README (fait).
+- **Le SON** : 15 SFX générés le 29/08 (15/15 exploitables au 1er essai), 3 familles nommées
+  (Organique · Impact · Retro-tech), recette versionnée dans
+  `scripts/tools/sfx-familles-chill-meter.py`. ⛔ Le showcase v1 est un test jetable (compteur trop
+  petit sur fond vide) — le recomposer sur `abigirl-decor.png` avant tout envoi.
+
+---
+
+<details><summary>Historique : l'offre v1 et la demande de révision (29/08)</summary>
 
 ### ⛔ La structure réelle : 3 jalons, PAS 6 approbations
 Le jalon 2 groupe entrance + idle + 25 % + 50 % en **une seule** validation. Le jalon 3 groupe
@@ -60,6 +106,9 @@ Méthode transposable → `memory/feedbacks/feedback_familles-nommees-pour-faire
 ⛔ **Ne PAS lui dire que les 6 états sont déjà rendus** — atout de négociation.
 
 ---
+
+
+</details>
 
 <details><summary>Historique : l'attente de sa décision (23-27/08)</summary>
 
