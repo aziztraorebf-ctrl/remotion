@@ -268,8 +268,12 @@ membres = [
 w('')
 w('<!-- === 6 lignes de membre : <g> SEPARES de 1er niveau (cascade animee un par un) === -->')
 for i, coul, nom_membre, mention in membres:
-    ty = 50 + MEMBRE_Y0 + (i - 1) * MEMBRE_PAS
-    w(f'<g id="step1-member-{i}" transform="translate({40 + M} {ty})">', 1)
+    # ⛔ Ces 2 lignes codaient en dur l'origine du mode PLANCHE (50 et 40+M) :
+    # en EMPILE=1 la liste sortait decalee de (+40,+50) — boutons « invite »
+    # coupes au bord droit, 6e ligne hors cadre. Invisible au chiffre global,
+    # trouve en comparant les transforms au composant Remotion.
+    ty = E1_OY + MEMBRE_Y0 + (i - 1) * MEMBRE_PAS
+    w(f'<g id="step1-member-{i}" transform="translate({E1_OX + M} {ty})">', 1)
     w('<!-- taille reelle : 420 x 68 -->', 2)
     # avatar
     circ(f"step1-member-{i}-avatar-shadow", 23, 25, 23, OMBRE, op=op_ombre("0.30"), ind=2)
@@ -533,8 +537,11 @@ w('</g>', 1)
 # =======================================================================
 # PIECE DETACHEE — bouton flottant
 # =======================================================================
-BF_X = 1200
-BF_Y = 950
+# ⛔ (1200, 950) etait absolu : hors de la toile 500x1080 en EMPILE=1 (bouton
+# INVISIBLE), et deja hors des DEUX ecrans en mode planche (l'ecran 2 occupe
+# x 620..1120). Ce n'est donc pas une regression, c'est une correction.
+BF_X = E2X + 396
+BF_Y = E2Y + 828
 w('')
 w(f'<g id="action-button" transform="translate({BF_X} {BF_Y})">', 1)
 w('<!-- taille reelle : 72 x 72 -->', 2)

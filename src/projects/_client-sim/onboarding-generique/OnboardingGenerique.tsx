@@ -46,22 +46,22 @@ import {
   pulsationCle,
 } from "./cascade";
 import {
-  ECRAN_INVITE,
-  ECRAN_REGLAGES,
-  ETAPE1_MEMBRE_1,
-  ETAPE1_MEMBRE_2,
-  ETAPE1_MEMBRE_3,
-  ETAPE1_MEMBRE_4,
-  ETAPE1_MEMBRE_5,
-  ETAPE1_MEMBRE_6,
-  ETAPE2_ETAPE_2,
-  ETAPE2_APERCU,
-  ETAPE2_NOTE,
-  ETAPE2_PIED,
-  ETAPE2_CADRE,
-  ETAPE2_TOGGLE_OFF,
-  ETAPE2_TOGGLE_ON,
-  BOUTON_FLOTTANT,
+  SCREEN_ONE,
+  SCREEN_TWO,
+  STEP1_MEMBER_1,
+  STEP1_MEMBER_2,
+  STEP1_MEMBER_3,
+  STEP1_MEMBER_4,
+  STEP1_MEMBER_5,
+  STEP1_MEMBER_6,
+  STEP2_STEP_2,
+  STEP2_NOTIFICATION,
+  STEP2_FOOTNOTE,
+  STEP2_FOOTER,
+  STEP2_FRAME,
+  STEP2_TOGGLE_OFF,
+  STEP2_TOGGLE_ON,
+  ACTION_BUTTON,
 } from "./planche";
 
 // ⭐ THEME — le fond suit la planche generee. Pour livrer la version claire :
@@ -72,12 +72,12 @@ const W = 500;
 const H = 1080;
 
 const MEMBRES = [
-  ETAPE1_MEMBRE_1,
-  ETAPE1_MEMBRE_2,
-  ETAPE1_MEMBRE_3,
-  ETAPE1_MEMBRE_4,
-  ETAPE1_MEMBRE_5,
-  ETAPE1_MEMBRE_6,
+  STEP1_MEMBER_1,
+  STEP1_MEMBER_2,
+  STEP1_MEMBER_3,
+  STEP1_MEMBER_4,
+  STEP1_MEMBER_5,
+  STEP1_MEMBER_6,
 ];
 const MEMBRE_X = 40;
 const MEMBRE_Y0 = 500;
@@ -168,7 +168,7 @@ export const OnboardingGenerique: React.FC = () => {
         {ecran1Visible && (
           <>
             <Piece
-              html={ECRAN_INVITE}
+              html={SCREEN_ONE}
               opacite={opDecor1}
               transform={`translate(0 ${glissement(frame, 0)})`}
             />
@@ -189,11 +189,11 @@ export const OnboardingGenerique: React.FC = () => {
         {/* ---------- ECRAN 2 : les reglages ---------- */}
         {ecran2Visible && (
           <g transform={`translate(0 ${glissement(frame, 0, ENTREE_2)})`}>
-            <Piece html={ECRAN_REGLAGES} opacite={opDecor2} />
+            <Piece html={SCREEN_TWO} opacite={opDecor2} />
 
             {/* ⭐⭐ Le cadre arrive AVANT la bascule et reste : il designe. */}
             <Piece
-              html={ETAPE2_CADRE}
+              html={STEP2_FRAME}
               opacite={opCadre}
               transform={`translate(${CADRE_X} ${CADRE_Y})`}
             />
@@ -210,12 +210,12 @@ export const OnboardingGenerique: React.FC = () => {
               }
             >
               <Piece
-                html={ETAPE2_TOGGLE_OFF}
+                html={STEP2_TOGGLE_OFF}
                 opacite={1 - bascule}
                 transform={`translate(${TOGGLE_X} ${TOGGLE_Y})`}
               />
               <Piece
-                html={ETAPE2_TOGGLE_ON}
+                html={STEP2_TOGGLE_ON}
                 opacite={bascule}
                 transform={`translate(${TOGGLE_X} ${TOGGLE_Y})`}
               />
@@ -225,24 +225,24 @@ export const OnboardingGenerique: React.FC = () => {
                 notification descend comme sa CONSEQUENCE — la preuve que
                 l'action a marche, au lieu d'un decor pose la. */}
             <Piece
-              html={ETAPE2_ETAPE_2}
+              html={STEP2_STEP_2}
               opacite={entree(frame - ETAPE_2, 0)}
               transform={`translate(0 ${glissementVivant(frame, 0, ETAPE_2, 24)})`}
             />
             <Piece
-              html={ETAPE2_APERCU}
+              html={STEP2_NOTIFICATION}
               opacite={entree(frame - NOTIF, 0)}
               transform={`translate(0 ${glissementVivant(frame, 0, NOTIF, 46)})`}
             />
-            <Piece html={ETAPE2_NOTE} opacite={entree(frame - NOTIF, 2)} />
-            <Piece html={ETAPE2_PIED} opacite={opDecor2} />
+            <Piece html={STEP2_FOOTNOTE} opacite={entree(frame - NOTIF, 2)} />
+            <Piece html={STEP2_FOOTER} opacite={opDecor2} />
           </g>
         )}
 
         {/* ---------- LE BOUTON D'ACTION — au-dessus de tout ---------- */}
         {echelleBouton > 0.001 && (
           <Piece
-            html={BOUTON_FLOTTANT}
+            html={ACTION_BUTTON}
             transform={
               `translate(${BOUTON_X + BOUTON_TAILLE / 2} ${BOUTON_Y + BOUTON_TAILLE / 2}) ` +
               `scale(${echelleBouton}) ` +

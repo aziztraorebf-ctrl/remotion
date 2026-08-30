@@ -92,7 +92,7 @@ PARTITIONS = {
         "step1-status-bar": ("glisse", 0, 26, 120, 12, 75, 100),
         "step1-status": ("glisse", 0, 26, 120, 12, 75, 100),
         "step1-title": ("glisse", 0, 26, 120, 14, 78, 100),
-        "step1-sous-title": ("glisse", 2, 28, 120, 16, 80, 100),
+        "step1-subtitle": ("glisse", 2, 28, 120, 16, 80, 100),
         "step1-app": ("glisse", 4, 30, 120, 20, 84, 100),
         "step1-section": ("glisse", 6, 32, 120, 24, 88, 100),
         "step1-banner": ("glisse", 8, 34, 120, 26, 90, 100),
@@ -109,13 +109,13 @@ PARTITIONS = {
         # --- LE BOUTON D'ACTION : POP (rebond), seul geste non-opacite
         "action-button": ("pop", 102, 134),
         # --- ECRAN 2 : prend la main des la fin REELLE de la sortie (f105)
-        "step2-bg": ("glisse", 105, 131, 120, 120),
-        "step2-status-bar": ("glisse", 105, 131, 120, 120),
-        "step2-status": ("glisse", 105, 131, 120, 120),
-        "step2-title": ("glisse", 107, 133, 120, 122),
-        "step2-step-1": ("glisse", 109, 135, 120, 124),
-        "step2-list": ("glisse", 111, 137, 120, 126),
-        "step2-row": ("glisse", 113, 139, 120, 128),
+        "step2-bg": ("glisse", 105, 131, 120, 115),
+        "step2-status-bar": ("glisse", 105, 131, 120, 115),
+        "step2-status": ("glisse", 105, 131, 120, 115),
+        "step2-title": ("glisse", 105, 131, 120, 117),
+        "step2-step-1": ("glisse", 105, 131, 120, 119),
+        "step2-list": ("glisse", 105, 131, 120, 121),
+        "step2-row": ("glisse", 105, 131, 120, 123),
         # ⭐⭐ LE CADRE designe la ligne AVANT que l'interrupteur bascule.
         # L'ordre fait le sens : designer d'abord, agir ensuite.
         "step2-frame": ("fondu", 138, 152),
@@ -127,7 +127,7 @@ PARTITIONS = {
         "step2-step-2": ("glisse", 186, 210, 24, 200),
         "step2-notification": ("glisse", 206, 232, 46, 222),
         "step2-footnote": ("fondu", 210, 226),
-        "step2-footer": ("glisse", 111, 137, 120, 126),
+        "step2-footer": ("glisse", 105, 131, 120, 121),
     },
     "gabarit-carte": {
         "_duree": 140,
