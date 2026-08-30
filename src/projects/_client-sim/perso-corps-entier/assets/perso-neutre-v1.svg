@@ -1,0 +1,107 @@
+<!--
+  perso-neutre.svg - personnage generique neutre, corps entier, de face
+  Dessin ORIGINAL (aucun sommet emprunte). Registre repris de la reference de style
+  out/_r-and-d/perso-corps-entier/ref/douanier-style.png : aplats francs, zero degrade,
+  zero texture, lignes de plis fines, tete ronde, proportions stylisees (tete ~1/7).
+  Structure riggable : 11 calques a plat sous "controle", data-parent + data-pivot,
+  recouvrements caches >=15% sous chaque piece parente. Statique : le mouvement
+  sera ajoute par code (rotations aux pivots uniquement).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 900">
+  <g id="controle">
+
+    <!-- ============ MAINS (tout en arriere : glissent sous les manches) ============ -->
+    <g id="main-g" data-parent="bras-g-bas" data-pivot="haut">
+      <path id="main-g-paume" fill="#E9A97E" d="M 109,436 C 118,436 124,444 124,456 C 124,474 119,489 108,490 C 97,491 91,482 91,469 C 91,454 97,436 109,436 Z"/>
+      <path id="main-g-pouce" fill="#E9A97E" d="M 120,452 C 126,454 129,461 127,469 C 126,475 121,477 117,474 L 117,458 Z"/>
+      <path id="main-g-doigt-ligne-1" fill="#D08D62" d="M 102,466 L 105,466 L 105,486 L 102,486 Z"/>
+      <path id="main-g-doigt-ligne-2" fill="#D08D62" d="M 111,468 L 114,468 L 114,487 L 111,487 Z"/>
+    </g>
+    <g id="main-d" data-parent="bras-d-bas" data-pivot="haut">
+      <path id="main-d-paume" fill="#E9A97E" d="M 291,436 C 282,436 276,444 276,456 C 276,474 281,489 292,490 C 303,491 309,482 309,469 C 309,454 303,436 291,436 Z"/>
+      <path id="main-d-pouce" fill="#E9A97E" d="M 280,452 C 274,454 271,461 273,469 C 274,475 279,477 283,474 L 283,458 Z"/>
+      <path id="main-d-doigt-ligne-1" fill="#D08D62" d="M 298,466 L 295,466 L 295,486 L 298,486 Z"/>
+      <path id="main-d-doigt-ligne-2" fill="#D08D62" d="M 289,468 L 286,468 L 286,487 L 289,487 Z"/>
+    </g>
+
+    <!-- ============ AVANT-BRAS (manches longues, sommet cache sous le bras haut) ============ -->
+    <g id="bras-g-bas" data-parent="bras-g-haut" data-pivot="haut">
+      <path id="bras-g-bas-manche" fill="#2F7D6B" d="M 115,330 C 124,330 130,337 129,348 C 128,380 126,412 124,436 C 123,448 117,455 108,454 C 99,453 93,445 94,433 C 97,404 99,372 101,346 C 102,336 106,330 115,330 Z"/>
+      <path id="bras-g-bas-ombre" fill="#266657" d="M 128,360 C 127,386 126,410 124,432 L 119,433 C 121,410 122,386 123,360 Z"/>
+      <path id="bras-g-bas-ourlet" fill="#266657" d="M 94,432 C 103,438 115,439 124,435 L 124,447 C 115,452 102,451 94,444 Z"/>
+    </g>
+    <g id="bras-d-bas" data-parent="bras-d-haut" data-pivot="haut">
+      <path id="bras-d-bas-manche" fill="#2F7D6B" d="M 285,330 C 276,330 270,337 271,348 C 272,380 274,412 276,436 C 277,448 283,455 292,454 C 301,453 307,445 306,433 C 303,404 301,372 299,346 C 298,336 294,330 285,330 Z"/>
+      <path id="bras-d-bas-ombre" fill="#266657" d="M 272,360 C 273,386 274,410 276,432 L 281,433 C 279,410 278,386 277,360 Z"/>
+      <path id="bras-d-bas-ourlet" fill="#266657" d="M 306,432 C 297,438 285,439 276,435 L 276,447 C 285,452 298,451 306,444 Z"/>
+    </g>
+
+    <!-- ============ BRAS HAUTS (manches, sommet cache sous l'epaule du torse) ============ -->
+    <g id="bras-g-haut" data-parent="torse" data-pivot="haut">
+      <path id="bras-g-haut-manche" fill="#2F7D6B" d="M 124,226 C 135,226 143,234 143,246 C 142,278 139,308 137,342 C 136,355 127,363 116,362 C 105,361 98,352 99,339 C 101,306 103,272 105,244 C 106,232 113,226 124,226 Z"/>
+      <path id="bras-g-haut-ombre" fill="#266657" d="M 139,258 C 138,286 137,312 135,336 L 129,338 C 131,312 132,286 133,258 Z"/>
+      <path id="bras-g-haut-pli-coude" fill="#1C4E42" d="M 103,322 C 112,327 124,328 133,324 L 133,329 C 124,333 111,332 103,327 Z"/>
+    </g>
+    <g id="bras-d-haut" data-parent="torse" data-pivot="haut">
+      <path id="bras-d-haut-manche" fill="#2F7D6B" d="M 276,226 C 265,226 257,234 257,246 C 258,278 261,308 263,342 C 264,355 273,363 284,362 C 295,361 302,352 301,339 C 299,306 297,272 295,244 C 294,232 287,226 276,226 Z"/>
+      <path id="bras-d-haut-ombre" fill="#266657" d="M 261,258 C 262,286 263,312 265,336 L 271,338 C 269,312 268,286 267,258 Z"/>
+      <path id="bras-d-haut-pli-coude" fill="#1C4E42" d="M 297,322 C 288,327 276,328 267,324 L 267,329 C 276,333 289,332 297,327 Z"/>
+    </g>
+
+    <!-- ============ JAMBES (le bassin remonte sous le bas du haut) ============ -->
+    <g id="jambe-g" data-parent="torse" data-pivot="haut">
+      <path id="jambe-g-pantalon" fill="#3D4763" d="M 152,392 C 168,390 186,390 199,392 L 199,478 C 199,530 198,580 196,630 C 194,690 192,745 191,796 L 159,796 C 158,745 154,690 152,630 C 150,580 147,520 147,470 C 146,440 148,412 152,392 Z"/>
+      <path id="jambe-g-ombre-interieure" fill="#2F3850" d="M 196,478 C 197,534 196,592 194,650 C 192,708 191,752 190,796 L 184,796 C 185,752 186,708 188,650 C 190,592 191,534 190,480 Z"/>
+      <path id="jambe-g-pli-genou" fill="#2F3850" d="M 157,622 C 168,627 184,627 194,623 L 194,628 C 184,632 167,632 157,627 Z"/>
+      <path id="jambe-g-ourlet" fill="#2F3850" d="M 158,780 L 192,780 L 191,798 L 159,798 Z"/>
+      <path id="jambe-g-chaussure" fill="#7A4E33" d="M 156,792 C 151,806 148,822 150,838 C 151,850 158,858 172,858 C 186,858 194,852 195,840 C 196,826 194,808 192,794 C 181,798 167,798 156,792 Z"/>
+      <path id="jambe-g-semelle" fill="#4E3020" d="M 149,845 L 196,845 C 198,849 198,856 195,859 C 188,863 158,863 153,859 C 149,856 148,850 149,845 Z"/>
+      <path id="jambe-g-lacet-1" fill="#5E3B26" d="M 159,812 C 167,816 178,816 186,812 L 186,816 C 178,820 167,820 159,816 Z"/>
+      <path id="jambe-g-lacet-2" fill="#5E3B26" d="M 158,824 C 167,828 179,828 187,824 L 187,828 C 179,832 167,832 158,828 Z"/>
+    </g>
+    <g id="jambe-d" data-parent="torse" data-pivot="haut">
+      <path id="jambe-d-pantalon" fill="#3D4763" d="M 248,392 C 232,390 214,390 201,392 L 201,478 C 201,530 202,580 204,630 C 206,690 208,745 209,796 L 241,796 C 242,745 246,690 248,630 C 250,580 253,520 253,470 C 254,440 252,412 248,392 Z"/>
+      <path id="jambe-d-ombre-interieure" fill="#2F3850" d="M 204,478 C 203,534 204,592 206,650 C 208,708 209,752 210,796 L 216,796 C 215,752 214,708 212,650 C 210,592 209,534 210,480 Z"/>
+      <path id="jambe-d-pli-genou" fill="#2F3850" d="M 243,622 C 232,627 216,627 206,623 L 206,628 C 216,632 233,632 243,627 Z"/>
+      <path id="jambe-d-ourlet" fill="#2F3850" d="M 242,780 L 208,780 L 209,798 L 241,798 Z"/>
+      <path id="jambe-d-chaussure" fill="#7A4E33" d="M 244,792 C 249,806 252,822 250,838 C 249,850 242,858 228,858 C 214,858 206,852 205,840 C 204,826 206,808 208,794 C 219,798 233,798 244,792 Z"/>
+      <path id="jambe-d-semelle" fill="#4E3020" d="M 251,845 L 204,845 C 202,849 202,856 205,859 C 212,863 242,863 247,859 C 251,856 252,850 251,845 Z"/>
+      <path id="jambe-d-lacet-1" fill="#5E3B26" d="M 241,812 C 233,816 222,816 214,812 L 214,816 C 222,820 233,820 241,816 Z"/>
+      <path id="jambe-d-lacet-2" fill="#5E3B26" d="M 242,824 C 233,828 221,828 213,824 L 213,828 C 221,832 233,832 242,828 Z"/>
+    </g>
+
+    <!-- ============ TETE (le cou plonge sous le col du torse) ============ -->
+    <g id="tete" data-parent="torse" data-pivot="bas">
+      <rect id="tete-cou" fill="#E9A97E" x="184" y="168" width="32" height="74" rx="13"/>
+      <ellipse id="tete-cou-ombre" fill="#D08D62" cx="200" cy="194" rx="15" ry="8"/>
+      <ellipse id="tete-oreille-g" fill="#E9A97E" cx="146" cy="142" rx="10" ry="14"/>
+      <ellipse id="tete-oreille-d" fill="#E9A97E" cx="254" cy="142" rx="10" ry="14"/>
+      <ellipse id="tete-visage" fill="#E9A97E" cx="200" cy="132" rx="53" ry="57"/>
+      <ellipse id="tete-oreille-g-creux" fill="#D08D62" cx="143" cy="142" rx="3.5" ry="6"/>
+      <ellipse id="tete-oreille-d-creux" fill="#D08D62" cx="257" cy="142" rx="3.5" ry="6"/>
+      <path id="tete-cheveux" fill="#2E2622" d="M 146,128 C 146,86 168,62 200,62 C 232,62 254,86 254,128 C 254,118 250,110 243,106 C 232,94 216,90 200,90 C 184,90 168,94 157,106 C 150,110 146,118 146,128 Z"/>
+      <path id="tete-patte-g" fill="#2E2622" d="M 146,124 L 157,110 L 156,146 C 151,143 147,135 146,124 Z"/>
+      <path id="tete-patte-d" fill="#2E2622" d="M 254,124 L 243,110 L 244,146 C 249,143 253,135 254,124 Z"/>
+      <path id="tete-sourcil-g" fill="#2E2622" d="M 167,116 C 172,111 182,110 189,113 L 188,119 C 182,116 173,117 169,121 Z"/>
+      <path id="tete-sourcil-d" fill="#2E2622" d="M 233,116 C 228,111 218,110 211,113 L 212,119 C 218,116 227,117 231,121 Z"/>
+      <ellipse id="tete-oeil-g-blanc" fill="#FFFFFF" cx="179" cy="138" rx="8.5" ry="6.5"/>
+      <ellipse id="tete-oeil-d-blanc" fill="#FFFFFF" cx="221" cy="138" rx="8.5" ry="6.5"/>
+      <circle id="tete-iris-g" fill="#3A2B20" cx="180" cy="139" r="4.8"/>
+      <circle id="tete-iris-d" fill="#3A2B20" cx="220" cy="139" r="4.8"/>
+      <path id="tete-nez" fill="#D08D62" d="M 197,144 C 196,152 193,158 192,162 C 191,166 195,169 200,169 C 205,169 209,166 208,162 C 207,158 204,152 203,144 C 201,146 199,146 197,144 Z"/>
+      <path id="tete-bouche" fill="#8C4D38" d="M 185,178 C 190,184 210,184 215,178 C 212,188 188,188 185,178 Z"/>
+    </g>
+
+    <!-- ============ TORSE (devant tout : couvre cou, sommets des bras, bassin) ============ -->
+    <g id="torse" data-parent="controle" data-pivot="bas">
+      <path id="torse-corps" fill="#2F7D6B" d="M 200,210 C 182,210 158,213 140,217 C 122,221 106,229 99,240 C 96,248 96,260 101,270 C 108,281 116,286 128,290 C 132,302 135,316 136,332 C 136,368 134,404 133,432 C 132,448 134,460 136,470 L 264,470 C 266,460 268,448 267,432 C 266,404 264,368 264,332 C 265,316 268,302 272,290 C 284,286 292,281 299,270 C 304,260 304,248 301,240 C 294,229 278,221 260,217 C 242,213 218,210 200,210 Z"/>
+      <path id="torse-col" fill="#266657" d="M 178,212 C 184,220 192,224 200,224 C 208,224 216,220 222,212 C 216,209 208,208 200,208 C 192,208 184,209 178,212 Z"/>
+      <path id="torse-ombre-flanc" fill="#266657" d="M 138,310 C 136,340 135,380 136,420 C 137,442 138,458 140,468 L 154,468 C 151,456 149,440 148,418 C 147,380 148,342 150,312 Z"/>
+      <path id="torse-ourlet" fill="#266657" d="M 135,456 L 265,456 L 264,470 L 136,470 Z"/>
+      <path id="torse-emmanchure-g" fill="#1C4E42" d="M 134,240 C 128,258 126,278 128,298 L 133,297 C 131,278 133,259 139,242 Z"/>
+      <path id="torse-emmanchure-d" fill="#1C4E42" d="M 266,240 C 272,258 274,278 272,298 L 267,297 C 269,278 267,259 261,242 Z"/>
+      <path id="torse-pli-poitrine" fill="#1C4E42" d="M 170,296 C 190,304 210,304 230,296 L 230,301 C 210,309 190,309 170,301 Z"/>
+    </g>
+
+  </g>
+</svg>

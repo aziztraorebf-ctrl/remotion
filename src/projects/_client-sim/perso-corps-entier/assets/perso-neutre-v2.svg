@@ -1,0 +1,160 @@
+<!--
+  perso-neutre-v2.svg - personnage generique neutre, corps entier, de face - V2 MARCHEUR
+  Dessin ORIGINAL (aucun sommet emprunte). Registre : aplats francs, zero degrade,
+  ombres en aplat a 2 niveaux, teintes d'ombre decalees. References regardees :
+  douanier-style.png (registre), hiker-marcheur-a/b.png (marcheur, mains, chaussures),
+  exercise.png (grandes ombres, chaussette, sneaker).
+  15 calques a plat sous "controle", pivots x,y ANATOMIQUES, pastilles de rotule
+  (coude, genou, epaule, hanche, poignet, cheville=chaussette) dans le calque ENFANT.
+  Ombres portees aux articulations : dans le calque RECEVEUR (suivent la rotation).
+  Calibre pour un affichage 600-1080 px de haut, fond clair.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 900">
+  <g id="controle">
+
+    <!-- ==================== PIEDS (sneaker + chaussette sombre) ==================== -->
+    <g id="pied-g" data-parent="jambe-g-bas" data-pivot="171,800">
+      <path id="pied-g-chaussette" fill="#2E3440" d="M 161,760 C 167,763 177,763 182,760 L 185,806 L 158,806 Z"/>
+      <circle id="pied-g-rotule-cheville" fill="#2E3440" cx="171" cy="800" r="13"/>
+      <path id="pied-g-chaussure" fill="#C96A4A" d="M 153,798 C 148,812 146,826 147,839 C 148,851 157,858 171,858 C 185,858 194,852 195,840 C 197,826 195,812 190,798 C 184,802 176,804 171,804 C 166,804 158,802 153,798 Z"/>
+      <path id="pied-g-chaussure-ombre" fill="#A54F35" d="M 190,798 C 194,812 196,826 195,840 C 194,848 190,853 184,855 C 190,850 192,844 192,838 C 192,826 190,812 186,800 Z"/>
+      <path id="pied-g-lacet-1" fill="#7A3A24" d="M 158,812 C 167,816 177,816 185,812 L 185,817 C 177,821 167,821 158,817 Z"/>
+      <path id="pied-g-lacet-2" fill="#7A3A24" d="M 157,822 C 167,826 177,826 186,822 L 186,827 C 177,831 167,831 157,827 Z"/>
+      <path id="pied-g-semelle" fill="#E8E1D4" d="M 147,845 L 196,845 C 199,849 199,857 195,861 C 186,866 158,866 149,861 C 145,857 145,849 147,845 Z"/>
+      <path id="pied-g-semelle-ligne" fill="#C9BFAB" d="M 150,851 L 193,851 L 193,854 L 150,854 Z"/>
+    </g>
+    <g id="pied-d" data-parent="jambe-d-bas" data-pivot="229,800">
+      <path id="pied-d-chaussette" fill="#2E3440" d="M 239,760 C 233,763 223,763 218,760 L 215,806 L 242,806 Z"/>
+      <circle id="pied-d-rotule-cheville" fill="#2E3440" cx="229" cy="800" r="13"/>
+      <path id="pied-d-chaussure" fill="#C96A4A" d="M 247,798 C 252,812 254,826 253,839 C 252,851 243,858 229,858 C 215,858 206,852 205,840 C 203,826 205,812 210,798 C 216,802 224,804 229,804 C 234,804 242,802 247,798 Z"/>
+      <path id="pied-d-chaussure-ombre" fill="#A54F35" d="M 247,798 C 251,812 253,826 252,840 C 251,848 247,853 241,855 C 247,850 249,844 249,838 C 249,826 247,812 243,800 Z"/>
+      <path id="pied-d-lacet-1" fill="#7A3A24" d="M 242,812 C 233,816 223,816 215,812 L 215,817 C 223,821 233,821 242,817 Z"/>
+      <path id="pied-d-lacet-2" fill="#7A3A24" d="M 243,822 C 233,826 223,826 214,822 L 214,827 C 223,831 233,831 243,827 Z"/>
+      <path id="pied-d-semelle" fill="#E8E1D4" d="M 253,845 L 204,845 C 201,849 201,857 205,861 C 214,866 242,866 251,861 C 255,857 255,849 253,845 Z"/>
+      <path id="pied-d-semelle-ligne" fill="#C9BFAB" d="M 250,851 L 207,851 L 207,854 L 250,854 Z"/>
+    </g>
+
+    <!-- ==================== MOLLETS ==================== -->
+    <g id="jambe-g-bas" data-parent="jambe-g-haut" data-pivot="174,630">
+      <circle id="jambe-g-bas-rotule-genou" fill="#46527A" cx="174" cy="630" r="17"/>
+      <path id="jambe-g-bas-mollet" fill="#46527A" d="M 175,600 C 185,600 192,606 192,616 C 191,660 189,706 187,744 C 186,766 185,778 184,788 C 178,792 164,792 159,788 C 158,778 157,766 157,744 C 156,706 156,660 157,616 C 157,606 165,600 175,600 Z"/>
+      <ellipse id="jambe-g-bas-ombre-genou" fill="#374163" cx="174" cy="644" rx="18" ry="8"/>
+      <path id="jambe-g-bas-ombre" fill="#374163" d="M 189,660 C 188,700 186,740 184,780 L 177,781 C 179,740 181,700 182,660 Z"/>
+      <path id="jambe-g-bas-ourlet" fill="#374163" d="M 158,766 C 166,770 176,770 184,766 L 184,771 C 176,775 166,775 158,771 Z"/>
+      <path id="jambe-g-bas-revers-ombre" fill="#2B3450" d="M 158,779 C 166,784 176,784 184,779 L 184,788 C 176,793 166,793 158,788 Z"/>
+    </g>
+    <g id="jambe-d-bas" data-parent="jambe-d-haut" data-pivot="226,630">
+      <circle id="jambe-d-bas-rotule-genou" fill="#46527A" cx="226" cy="630" r="17"/>
+      <path id="jambe-d-bas-mollet" fill="#46527A" d="M 225,600 C 215,600 208,606 208,616 C 209,660 211,706 213,744 C 214,766 215,778 216,788 C 222,792 236,792 241,788 C 242,778 243,766 243,744 C 244,706 244,660 243,616 C 243,606 235,600 225,600 Z"/>
+      <ellipse id="jambe-d-bas-ombre-genou" fill="#374163" cx="226" cy="644" rx="18" ry="8"/>
+      <path id="jambe-d-bas-ombre" fill="#374163" d="M 241,660 C 242,700 241,740 239,780 L 232,781 C 234,740 235,700 235,660 Z"/>
+      <path id="jambe-d-bas-ourlet" fill="#374163" d="M 242,766 C 234,770 224,770 216,766 L 216,771 C 224,775 234,775 242,771 Z"/>
+      <path id="jambe-d-bas-revers-ombre" fill="#2B3450" d="M 242,779 C 234,784 224,784 216,779 L 216,788 C 224,793 234,793 242,788 Z"/>
+    </g>
+
+    <!-- ==================== CUISSES ==================== -->
+    <g id="jambe-g-haut" data-parent="torse" data-pivot="172,452">
+      <circle id="jambe-g-haut-rotule-hanche" fill="#46527A" cx="172" cy="452" r="20"/>
+      <path id="jambe-g-haut-cuisse" fill="#46527A" d="M 148,412 C 148,404 158,400 172,400 C 188,400 199,405 199,414 C 199,470 198,530 197,585 C 196,615 196,630 195,637 C 189,643 161,643 155,637 C 154,630 153,615 152,585 C 149,530 147,470 148,412 Z"/>
+      <path id="jambe-g-haut-ombre-taille" fill="#2B3450" d="M 148,440 L 199,440 L 199,452 C 182,456 163,456 148,452 Z"/>
+      <path id="jambe-g-haut-ombre" fill="#374163" d="M 196,470 C 197,520 196,570 194,610 L 186,612 C 189,570 190,520 189,470 Z"/>
+    </g>
+    <g id="jambe-d-haut" data-parent="torse" data-pivot="228,452">
+      <circle id="jambe-d-haut-rotule-hanche" fill="#46527A" cx="228" cy="452" r="20"/>
+      <path id="jambe-d-haut-cuisse" fill="#46527A" d="M 252,412 C 252,404 242,400 228,400 C 212,400 201,405 201,414 C 201,470 202,530 203,585 C 204,615 204,630 205,637 C 211,643 239,643 245,637 C 246,630 247,615 248,585 C 251,530 253,470 252,412 Z"/>
+      <path id="jambe-d-haut-ombre-taille" fill="#2B3450" d="M 201,440 L 252,440 L 252,452 C 237,456 218,456 201,452 Z"/>
+      <path id="jambe-d-haut-ombre" fill="#374163" d="M 250,470 C 251,520 250,570 248,610 L 240,612 C 243,570 244,520 243,470 Z"/>
+    </g>
+
+    <!-- ==================== MAINS ==================== -->
+    <g id="main-g" data-parent="bras-g-bas" data-pivot="107,466">
+      <circle id="main-g-rotule-poignet" fill="#E8A87A" cx="107" cy="466" r="11"/>
+      <path id="main-g-paume" fill="#E8A87A" d="M 107,456 C 115,456 121,462 121,472 C 121,488 120,502 118,513 C 117,519 113,522 110,521 C 107,520 106,518 106,514 C 105,519 102,522 99,521 C 96,520 94,517 94,513 C 93,516 91,519 88,517 C 86,515 85,511 86,506 C 87,494 88,478 91,466 C 93,459 99,456 107,456 Z"/>
+      <path id="main-g-pouce" fill="#E8A87A" d="M 118,468 C 123,471 125,478 124,486 C 123,491 119,493 116,491 L 115,476 Z"/>
+      <ellipse id="main-g-ombre-poignet" fill="#C98757" cx="106" cy="468" rx="13" ry="5"/>
+      <path id="main-g-separation-1" fill="#C98757" d="M 101,505 L 103,505 L 102,520 L 100,520 Z"/>
+      <path id="main-g-separation-2" fill="#C98757" d="M 109,506 L 111,506 L 110,519 L 108,519 Z"/>
+      <path id="main-g-sep-pouce" fill="#C98757" d="M 116,472 C 117,478 117,484 116,490 L 114,490 C 115,484 115,478 114,472 Z"/>
+      <path id="main-g-ombre" fill="#C98757" d="M 119,478 C 119,492 118,504 116,512 L 112,513 C 114,504 115,490 115,478 Z"/>
+    </g>
+    <g id="main-d" data-parent="bras-d-bas" data-pivot="293,466">
+      <circle id="main-d-rotule-poignet" fill="#E8A87A" cx="293" cy="466" r="11"/>
+      <path id="main-d-paume" fill="#E8A87A" d="M 293,456 C 285,456 279,462 279,472 C 279,488 280,502 282,513 C 283,519 287,522 290,521 C 293,520 294,518 294,514 C 295,519 298,522 301,521 C 304,520 306,517 306,513 C 307,516 309,519 312,517 C 314,515 315,511 314,506 C 313,494 312,478 309,466 C 307,459 301,456 293,456 Z"/>
+      <path id="main-d-pouce" fill="#E8A87A" d="M 282,468 C 277,471 275,478 276,486 C 277,491 281,493 284,491 L 285,476 Z"/>
+      <ellipse id="main-d-ombre-poignet" fill="#C98757" cx="294" cy="468" rx="13" ry="5"/>
+      <path id="main-d-separation-1" fill="#C98757" d="M 299,505 L 297,505 L 298,520 L 300,520 Z"/>
+      <path id="main-d-separation-2" fill="#C98757" d="M 291,506 L 289,506 L 290,519 L 292,519 Z"/>
+      <path id="main-d-sep-pouce" fill="#C98757" d="M 284,472 C 283,478 283,484 284,490 L 286,490 C 285,484 285,478 286,472 Z"/>
+      <path id="main-d-ombre" fill="#C98757" d="M 311,480 C 311,494 310,506 308,513 L 304,514 C 306,505 307,492 307,480 Z"/>
+    </g>
+
+    <!-- ==================== AVANT-BRAS (manches longues) ==================== -->
+    <g id="bras-g-bas" data-parent="bras-g-haut" data-pivot="113,363">
+      <circle id="bras-g-bas-rotule-coude" fill="#2F8C74" cx="113" cy="363" r="14"/>
+      <path id="bras-g-bas-manche" fill="#2F8C74" d="M 115,344 C 124,344 130,351 129,362 C 128,394 127,424 125,448 C 124,459 117,465 108,464 C 99,463 93,455 94,444 C 97,415 99,384 100,358 C 101,348 106,344 115,344 Z"/>
+      <ellipse id="bras-g-bas-ombre-coude" fill="#1F6D5C" cx="113" cy="374" rx="16" ry="8"/>
+      <path id="bras-g-bas-ombre" fill="#1F6D5C" d="M 128,388 C 127,410 126,428 124,444 L 117,445 C 119,428 120,408 121,388 Z"/>
+      <path id="bras-g-bas-poignet" fill="#1F6D5C" d="M 92,438 C 101,447 116,448 126,442 L 125,468 C 114,476 99,475 90,465 Z"/>
+    </g>
+    <g id="bras-d-bas" data-parent="bras-d-haut" data-pivot="287,363">
+      <circle id="bras-d-bas-rotule-coude" fill="#2F8C74" cx="287" cy="363" r="14"/>
+      <path id="bras-d-bas-manche" fill="#2F8C74" d="M 285,344 C 276,344 270,351 271,362 C 272,394 273,424 275,448 C 276,459 283,465 292,464 C 301,463 307,455 306,444 C 303,415 301,384 300,358 C 299,348 294,344 285,344 Z"/>
+      <ellipse id="bras-d-bas-ombre-coude" fill="#1F6D5C" cx="287" cy="374" rx="16" ry="8"/>
+      <path id="bras-d-bas-ombre" fill="#1F6D5C" d="M 304,388 C 303,412 302,432 300,444 L 294,445 C 296,428 297,410 298,388 Z"/>
+      <path id="bras-d-bas-poignet" fill="#1F6D5C" d="M 308,438 C 299,447 284,448 274,442 L 275,468 C 286,476 301,475 310,465 Z"/>
+    </g>
+
+    <!-- ==================== BRAS HAUTS (manches) ==================== -->
+    <g id="bras-g-haut" data-parent="torse" data-pivot="121,250">
+      <circle id="bras-g-haut-rotule-epaule" fill="#2F8C74" cx="121" cy="250" r="18"/>
+      <path id="bras-g-haut-manche" fill="#2F8C74" d="M 121,231 C 132,231 140,239 140,251 C 139,286 136,320 133,352 C 132,366 123,374 112,373 C 101,372 94,363 95,350 C 98,316 100,282 102,249 C 103,237 110,231 121,231 Z"/>
+      <path id="bras-g-haut-ombre" fill="#1F6D5C" d="M 137,262 C 136,292 134,322 132,350 L 124,352 C 126,322 128,292 130,262 Z"/>
+    </g>
+    <g id="bras-d-haut" data-parent="torse" data-pivot="279,250">
+      <circle id="bras-d-haut-rotule-epaule" fill="#2F8C74" cx="279" cy="250" r="18"/>
+      <path id="bras-d-haut-manche" fill="#2F8C74" d="M 279,231 C 268,231 260,239 260,251 C 261,286 264,320 267,352 C 268,366 277,374 288,373 C 299,372 306,363 305,350 C 302,316 300,282 298,249 C 297,237 290,231 279,231 Z"/>
+      <path id="bras-d-haut-ombre" fill="#1F6D5C" d="M 302,262 C 303,292 304,322 303,350 L 295,352 C 297,322 298,292 298,262 Z"/>
+    </g>
+
+    <!-- ==================== TETE ==================== -->
+    <g id="tete" data-parent="torse" data-pivot="200,228">
+      <rect id="tete-cou" fill="#E8A87A" x="184" y="168" width="32" height="82" rx="13"/>
+      <path id="tete-ombre-menton" fill="#C98757" d="M 186,190 C 192,198 208,198 214,190 L 215,216 C 205,220 195,220 185,216 Z"/>
+      <ellipse id="tete-oreille-g" fill="#E8A87A" cx="147" cy="140" rx="10" ry="14"/>
+      <ellipse id="tete-oreille-d" fill="#E8A87A" cx="253" cy="140" rx="10" ry="14"/>
+      <ellipse id="tete-visage" fill="#E8A87A" cx="200" cy="130" rx="52" ry="56"/>
+      <ellipse id="tete-oreille-g-creux" fill="#C98757" cx="144" cy="141" rx="3.5" ry="6"/>
+      <ellipse id="tete-oreille-d-creux" fill="#C98757" cx="256" cy="141" rx="3.5" ry="6"/>
+      <path id="tete-cheveux" fill="#3B2E23" d="M 148,126 C 146,84 170,60 200,60 C 230,60 254,84 252,126 C 252,114 247,103 240,99 C 228,92 214,90 200,90 C 186,90 172,92 160,99 C 153,103 148,114 148,126 Z"/>
+      <path id="tete-cheveux-ombre" fill="#281F17" d="M 222,64 C 234,68 244,78 249,92 C 250,97 251,103 251,110 C 247,95 238,80 226,70 C 225,68 223,66 222,64 Z"/>
+      <path id="tete-patte-g" fill="#3B2E23" d="M 148,112 C 150,106 154,102 158,100 L 157,124 C 152,121 149,117 148,112 Z"/>
+      <path id="tete-patte-d" fill="#3B2E23" d="M 252,112 C 250,106 246,102 242,100 L 243,124 C 248,121 251,117 252,112 Z"/>
+      <path id="tete-sourcil-g" fill="#3B2E23" d="M 166,114 C 172,109 183,108 190,112 L 189,119 C 182,115 172,116 168,120 Z"/>
+      <path id="tete-sourcil-d" fill="#3B2E23" d="M 234,114 C 228,109 217,108 210,112 L 211,119 C 218,115 228,116 232,120 Z"/>
+      <ellipse id="tete-oeil-g-blanc" fill="#FFFFFF" cx="179" cy="137" rx="8.5" ry="7"/>
+      <ellipse id="tete-oeil-d-blanc" fill="#FFFFFF" cx="221" cy="137" rx="8.5" ry="7"/>
+      <circle id="tete-iris-g" fill="#35271D" cx="180" cy="138" r="5"/>
+      <circle id="tete-iris-d" fill="#35271D" cx="220" cy="138" r="5"/>
+      <ellipse id="tete-joue-g" fill="#E29A6C" cx="166" cy="160" rx="8" ry="4.5"/>
+      <ellipse id="tete-joue-d" fill="#E29A6C" cx="234" cy="160" rx="8" ry="4.5"/>
+      <path id="tete-nez" fill="#C98757" d="M 202,144 C 203,153 205,160 207,165 C 207,168 205,170 202,170 C 200,170 198,169 197,167 C 200,167 203,166 203,162 C 202,156 201,149 201,144 Z"/>
+      <path id="tete-bouche" fill="#8C4D38" d="M 186,180 C 191,186 209,186 214,180 C 211,190 189,190 186,180 Z"/>
+      <ellipse id="tete-levre-ombre" fill="#C98757" cx="200" cy="192" rx="7" ry="2.5"/>
+    </g>
+
+    <!-- ==================== TORSE (devant tout) ==================== -->
+    <g id="torse" data-parent="controle" data-pivot="200,450">
+      <path id="torse-corps" fill="#2F8C74" d="M 200,206 C 191,206 183,208 176,212 C 156,214 134,218 118,226 C 104,233 96,244 98,258 C 99,270 106,282 118,292 C 124,297 130,300 134,302 C 137,326 138,350 138,372 C 138,394 135,414 133,428 C 132,434 132,438 133,442 L 267,442 C 268,438 268,434 267,428 C 265,414 262,394 262,372 C 262,350 263,326 266,302 C 270,300 276,297 282,292 C 294,282 301,270 302,258 C 304,244 296,233 282,226 C 266,218 244,214 224,212 C 217,208 209,206 200,206 Z"/>
+      <path id="torse-ombre-flanc" fill="#1F6D5C" d="M 248,300 C 245,330 243,365 244,400 C 245,420 247,434 249,442 L 267,442 C 266,434 265,420 264,400 C 262,365 263,330 266,302 C 260,301 253,301 248,300 Z"/>
+      <path id="torse-ombre-aisselle" fill="#16554A" d="M 250,300 C 247,314 246,330 246,346 L 252,344 C 252,330 253,315 256,301 Z"/>
+      <path id="torse-col" fill="#16554A" d="M 176,210 C 182,220 190,225 200,225 C 210,225 218,220 224,210 C 217,206 209,204 200,204 C 191,204 183,206 176,210 Z"/>
+      <path id="torse-ombre-col" fill="#1F6D5C" d="M 180,224 C 188,232 212,232 220,224 C 214,236 186,236 180,224 Z"/>
+      <path id="torse-emmanchure-g" fill="#16554A" d="M 130,238 C 124,258 122,278 124,296 L 129,295 C 127,278 129,259 135,240 Z"/>
+      <path id="torse-emmanchure-d" fill="#16554A" d="M 270,238 C 276,258 278,278 276,296 L 271,295 C 273,278 271,259 265,240 Z"/>
+      <path id="torse-pli-aisselle-g" fill="#16554A" d="M 136,306 C 142,310 149,312 155,312 L 155,317 C 148,317 141,315 135,311 Z"/>
+      <path id="torse-pli-aisselle-d" fill="#16554A" d="M 264,306 C 258,310 251,312 245,312 L 245,317 C 252,317 259,315 265,311 Z"/>
+      <path id="torse-ourlet" fill="#1F6D5C" d="M 134,430 L 266,430 C 266,434 267,438 267,442 L 133,442 C 133,438 134,434 134,430 Z"/>
+    </g>
+
+  </g>
+</svg>

@@ -22,9 +22,26 @@ def charger(path):
     """.lottie = archive zip (manifest + animations/*.json) ; .json = direct."""
     if zipfile.is_zipfile(path):
         with zipfile.ZipFile(path) as z:
-            noms = [n for n in z.namelist() if n.startswith('animations/') and n.endswith('.json')]
+            # ⛔ le dossier varie selon l'exporteur : 'animations/' (LottieFiles) ou
+            # 'a/' (dotLottie compact). Ne PAS coder un chemin en dur -- lire le manifest.
+            noms = []
+            if 'manifest.json' in z.namelist():
+                try:
+                    man = json.loads(z.read('manifest.json').decode('utf-8'))
+                    for a in man.get('animations', []):
+                        ident = a.get('id')
+                        if ident:
+                            noms += [n for n in z.namelist()
+                                     if n.endswith('.json') and ident in n
+                                     and not n.endswith('manifest.json')]
+                except Exception:
+                    pass
             if not noms:
-                sys.exit('archive .lottie sans animations/*.json : %s' % path)
+                noms = [n for n in z.namelist()
+                        if n.endswith('.json') and not n.endswith('manifest.json')
+                        and not n.startswith(('t/', 's/', 'themes/', 'states/'))]
+            if not noms:
+                sys.exit('archive .lottie sans animation JSON : %s' % path)
             return json.loads(z.read(noms[0]).decode('utf-8'))
     return json.load(open(path, encoding='utf-8'))
 
