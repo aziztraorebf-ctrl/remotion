@@ -125,7 +125,7 @@ Tag pilier : [S]=Souverain · [WM]=War-Map · [A]=Atlas · [C]=Carte vivante Map
 | Isoler un pays + zone (spotlight) | pays bright, reste assombri + hachures | [C] `MapboxIsolateZone` | CATALOGUE l.38 |
 | Des flux/connexions/corridors entre lieux | arcs / route animée + sprite | [C] ⛔ **DEUX composants portent le nom `GeoFlowConnection`, contrats OPPOSÉS** : `_shared/mapbox/GeoFlowConnection` = sprite **orienté** (`sprite="plane"\|"cargo"\|"dot"\|"none"`, cargo top-view, exige **pitch≈0**), dormant · `warmap/_shared/GeoFlowConnection` = marqueur **NON orienté** (point lumineux, `markerProgress` découplé du tracé), **publié Soudan**. Vérifier le chemin d'import. Aussi : `GlobalPulse`, `FlowArrowsMap` | CATALOGUE l.143 |
 | **Montrer qu'un flux PASSE À CÔTÉ de / ÉVITE quelque chose (contournement, mise à l'écart)** | **comète UNIQUE non bouclée**, lente et suivable des yeux, sur un trajet **composite** (jalons concaténés à la volée : tracé existant + point de destination) — pendant que la route évitée **se vide de ses impulsions** | ⚠️ **≠ `Impulsions`** (pluie de particules en boucle = « ça circule ») : ici UNE seule tête qu'on suit, sinon l'œil ne lit pas le trajet. ⛔ Ne PAS rendre un contournement par un changement de couleur — *contourner est un MOUVEMENT* (cf contre-preuve [[CONTINUITE-SCENE-INTENTION-DABORD]]). **proto**, 1 usage : `souverain/gazoduc-aagp-tsgp/GazoducActe4Objectifs.tsx` (jalons + rendu inline, pas encore extrait). Validé Aziz, FINAL 2026-08-15 | ce fichier |
-| **Un OBJET (navire/avion/véhicule) se déplace le long d'un chemin** | sprite positionné + **orienté par la tangente** du tracé | ⚠️ **4 implémentations indépendantes** (audit 2026-08-15, chemins + imports vérifiés sur disque) : ⭐ **[2] `atlas/_shared/geoUtils.ts` = LE CANON** (`positionAlongRoute`/`bearingAlongRoute`/`rotationFromBearing`/`caravanePositions`, lon-lat turf, 337 l.) — seule à passer les 3 filtres : module `.ts` pur avec **projection injectée** (`proj`, donc réutilisable hors Atlas), ✅ **livrée en épisode** (`atlas/peste-1347/Beat5MaliVivant.tsx`), importée par **14 fichiers dont les 4 templates travel-map**. C'est elle que `GoldRoute8Dir` (sprite 8 directions + walk-cycle, le modèle le plus abouti) importe réellement · [1] `travel-map/pathUtils.ts` (55 l., Catmull-Rom en % écran, zéro dép.) = **fallback léger** pour un chemin décoratif sans géo réelle — plus SIMPLE, pas plus abouti, 2 consommateurs seulement · [3] `_shared/mapbox/GeoFlowConnection` (558 l.) ⛔ non isolable (primitive + carte + caméra + city markers mêlés, exige pitch≈0) · [4] `MilitaryMarchLine` (344 l.) ⛔ **à déprécier** (`getPointAtLength` local dupliqué, `MAP_WIDTH=1080` 9:16 figé, objet = emoji, viole R-OBJ-2). **Manque réel** = l'adaptateur entre espaces (% écran ↔ lon-lat ↔ coords d3 pré-projetées type `aagpFullPath` du Gazoduc Acte 2) + l'ancrage taille au zoom (R-OBJ-1). ⛔ **Ne PAS coder une 5e version** : unifier au 1er vrai usage (Acte 4/5), jamais dans le vide | ce fichier |
+| **Un OBJET (navire/avion/véhicule) se déplace le long d'un chemin** | sprite positionné + **orienté par la tangente** du tracé | ⚠️ **4 implémentations indépendantes** (audit 2026-08-15, chemins + imports vérifiés sur disque) : ⭐ **[2] `atlas/_shared/geoUtils.ts` = LE CANON** (`positionAlongRoute`/`bearingAlongRoute`/`rotationFromBearing`/`caravanePositions`, lon-lat turf, 337 l.) — seule à passer les 3 filtres : module `.ts` pur avec **projection injectée** (`proj`, donc réutilisable hors Atlas), ✅ **livrée en épisode** (`atlas/peste-1347/Beat5MaliVivant.tsx`), importée par **14 fichiers dont les 4 templates travel-map**. C'est elle que `GoldRoute8Dir` (sprite 8 directions + walk-cycle, le modèle le plus abouti) importe réellement · [1] `travel-map/pathUtils.ts` (55 l., Catmull-Rom en % écran, zéro dép.) = **fallback léger** pour un chemin décoratif sans géo réelle — plus SIMPLE, pas plus abouti, 2 consommateurs seulement · [3] `_shared/mapbox/GeoFlowConnection` (558 l.) ⛔ non isolable (primitive + carte + caméra + city markers mêlés, exige pitch≈0) · [4] `MilitaryMarchLine` (344 l.) ⛔ **à déprécier** (`getPointAtLength` local dupliqué, `MAP_WIDTH=1080` 9:16 figé, objet = emoji, viole R-OBJ-2). **Manque réel** = l'adaptateur entre espaces (% écran ↔ lon-lat ↔ coords d3 pré-projetées type `aagpFullPath` du Gazoduc Acte 2) + l'ancrage taille au zoom (R-OBJ-1). ⛔ **Ne PAS coder une 5e version** : unifier au 1er vrai usage (Acte 4/5), jamais dans le vide. ⚠️ **`parcourt` de `lottie-ui/tools/animate_scene.py` (30/08) n'est PAS une 5e version** — les 4 ci-dessus produisent du RENDU Remotion (sprite positionné frame par frame) ; celle-là produit des **keyframes Lottie** pour un livrable client. Autre sortie, autre usage, pas de doublon | ce fichier |
 | Données ancrées à un point sur la carte | popup geo | [C] `GlassmorphismGeoPopup` | CATALOGUE-CARTE-VIVANTE |
 | Couper vers un insert puis revenir à la carte | cutaway plein écran (4 modes) | [C] `MapCutaway` (texte/stat/image/flag, typewriter) | CATALOGUE l.28 |
 | **Montrer CE QUI TRANSITE dans un tracé** (gaz, pétrole, minerai) — la carte ne montre qu'une ligne | insert « coupe » ancré sur le tracé + impulsions qui circulent | [P] ⭐ **`ProtoInsertMatiereConduite`** (clip H3 en boucle dans un cadre + sens de lecture SVG) — proto validé, à extraire en composant au 1er vrai usage | INSERT-MATIERE ci-dessous |
@@ -437,6 +437,34 @@ en entier.
 H3 fait naviguer le bateau (mesuré : −15 px de dérive sur GTA v1). Fix validé : nommer un **repère fixe
 de la scène** dans le prompt — *« its distance to the breakwater stays EXACTLY THE SAME in every frame,
 bow and stern at the same horizontal pixel positions, it is tied up, not underway »* → dérive 0 px.
+
+---
+
+## ⭐⭐ GESTES D'ANIMATION LOTTIE (livrable client — PAS du rendu Remotion)
+
+> ⛔ **Ne pas confondre avec la table ci-dessus.** Celle-ci décrit ce qu'on RENDE en vidéo ;
+> ici ce qu'on LIVRE au client sous forme de composant Lottie. Un même geste peut exister des
+> deux côtés avec deux implémentations légitimes — c'est le cas de « suivre un chemin ».
+> Outil : `src/projects/_client-sim/lottie-ui/tools/animate_scene.py` — on écrit une PARTITION
+> (dict `{motif_de_nom: (geste, début, fin)}`), l'outil l'exécute.
+
+| Intention | Geste | Où ça sert chez un client |
+|---|---|---|
+| Un objet **avance** vers un but | `parcourt` (échantillonné par longueur d'arc, vitesse constante) | curseur qui traverse une interface · pastille sur un parcours · véhicule sur un trajet |
+| Un point **se signale** | `onde` (anneau qui s'étend et s'efface) | halo qui part d'un bouton au clic · notification qui pulse |
+| Une matière **s'élève** | `monte` (volutes en boucle, décalées) | vapeur · particules · état de chargement |
+| Une zone **se remplit** | `balaye` (le pochoir grandit et révèle) | jauge · barre de progression · carte qui se dévoile |
+| Un trait **se dessine** | `trace` (trimPath natif) | parcours qui se révèle · lien qui se tisse |
+| Apparition · vie · geste en 3 temps | `fondu` · `pop` · `respire`/`balance`/`cligne` · `geste3` | boucle de vie d'une mascotte, sans rigging |
+
+⭐ **`animer()` traite AUSSI le contenu des précompositions** (30/08) — sans quoi une scène
+portant un clip global (médaillon, cadre rond, vignette) n'était pas animée **du tout**, en
+silence : son contenu vit dans un asset, pas dans `doc["layers"]`.
+⛔ **La partition reste humaine** : l'outil exécute, il ne devine pas l'intention narrative.
+Bornes à RECOPIER du composant Remotion d'origine, jamais à inventer.
+
+→ Table de décision client (ce qui passe/casse) : `memory/client-sim-tests/lottie-ui-lcd/CE-QUI-PASSE-EN-LOTTIE.md`
+→ Pièces livrables : `out/PORTFOLIO/README.md`
 
 ---
 
