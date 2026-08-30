@@ -153,28 +153,59 @@ export const ReproRedeem: React.FC = () => {
   // Timing ASYMETRIQUE : lente a la descente (on DECIDE), rapide au retrait (le
   // systeme a repondu). ⭐ Le doigt NE PLIE PAS — mesure sur 3 references de
   // banque : l'illusion du tap vient du DEPLACEMENT + de l'onde de contact.
-  const mainY1 = interpolate(frame, [58, 106, 118], [880, 452, 436], {
+  // ⭐⭐ LE DOIGT NE VISE PAS LE CENTRE DE LA CIBLE — mesure sur la reference.
+  // Position MONDE relevee dans le .lottie (precomp 4, parent `Null 1` a 400,476) :
+  //   Giftcard Button = (450, 422)  mais le doigt s'arrete a (400, 344)
+  //   Cash Button     = (450, 629)  mais le doigt s'arrete a (400, 601)
+  // => le doigt se pose SYSTEMATIQUEMENT en HAUT-A-GAUCHE de la cible (-50 px en x,
+  // -78 / -28 px en y), la ou il n'y a PAS de texte. C'est CA qui garde le libelle
+  // lisible, et non une main plus petite ou repoussee sur le cote.
+  // ⛔ Viser le centre (ce que faisait la 1re passe du fix) remet le doigt sur le mot.
+  const DECALAGE_X = -46; // le doigt mord le bord gauche de la pilule
+  const Y_REDEEM = 486 - 20;
+  const Y_GIFTCARDS = 349 - 26;
+  const mainY1 = interpolate(frame, [58, 106, 118], [930, Y_REDEEM + 16, Y_REDEEM], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: EASE_OUT,
   });
-  const mainY2 = interpolate(frame, [150, 200, 240, 268], [436, 560, 322, 310], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: EASE_OUT,
-  });
+  const mainY2 = interpolate(
+    frame,
+    [150, 200, 240, 268],
+    [Y_REDEEM, Y_REDEEM + 124, Y_GIFTCARDS + 12, Y_GIFTCARDS],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+      easing: EASE_OUT,
+    },
+  );
   const mainVisible = interpolate(frame, [52, 64, 272, 288], [0, 1, 1, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
   const mY = frame < 150 ? mainY1 : mainY2;
-  // Centre x de la main dans la reference : ~395 (mesure f210), pas plus a droite.
-  // Le bout du doigt est a ~55 unites du bord gauche a l'echelle 0.78.
-  // ⭐ La main de reference fait 287 px de large ; la notre a 0.70 en fait 110.
-  // Le probleme n'etait donc pas sa TAILLE mais le fait qu'elle COUVRAIT le
-  // contenu. Les cartes vont de x=324 a x=476 : on place la main a droite de
-  // cette bande, son doigt pointant vers le bord droit des pilules.
-  const mX = frame < 150 ? 372 : 418;
+  // ⭐⭐ CORRIGE le 2026-08-30 — mesure sur la reference, pas dosage.
+  // L'ancien commentaire ici disait « le probleme n'etait pas sa TAILLE mais le
+  // fait qu'elle COUVRAIT le contenu », et deplacait la main a droite (372/418).
+  // C'etait FAUX, et la main couvrait toujours Redeem et Giftcards.
+  //
+  // Mesure du .lottie de reference (precomps 4 et 5, calque `Hand`) :
+  //   - position     p = (400,2 , 344) puis (383,2 , 484,9)  => CENTREE sur x=400,
+  //     c'est-a-dire exactement l'axe des boutons, PAS decalee sur le cote.
+  //   - echelle      s = 62 %  sur une bbox de 214 px => 133 px de large.
+  //     La main de reference est donc PLUS GROSSE que la notre (110 px), et elle
+  //     ne gene pas malgre ca : la taille n'a jamais ete le probleme.
+  //   - ancre        a = (-112,8 , -187,6) sur une bbox x[-111..104] y[-171..173]
+  //     => l'ancre est au BOUT DU DOIGT (-1 % en largeur, -5 % en hauteur).
+  //
+  // ⭐ LA CAUSE REELLE : c'est l'ANCRE. En reference, `p` place le bout du doigt,
+  // et le corps de la main s'etale vers le bas-droite, hors du contenu. Chez nous
+  // `translate(mX,mY)` placait le COIN HAUT-GAUCHE du path, dont le doigt est a
+  // (67,0) — soit 67 px plus a droite, corps rabattu SUR les boutons.
+  // FIX : on vise le centre du bouton (x=400) et on soustrait l'offset du doigt.
+  const MAIN_ECHELLE = 0.7;
+  const DOIGT = [67.28, 0] as const; // bout du doigt dans le path source
+  const mX = 400 + DECALAGE_X;
 
   // L'onde de contact : c'est ELLE qui dit « ca a touche », pas une articulation.
   const onde = (debut: number, retard: number) => {
@@ -339,8 +370,8 @@ export const ReproRedeem: React.FC = () => {
           return (
             <circle
               key={i}
-              cx={mX + 48}
-              cy={mY + 4}
+              cx={mX}
+              cy={mY}
               r={o.r}
               fill="none"
               stroke="#8b5cf6"
@@ -349,8 +380,18 @@ export const ReproRedeem: React.FC = () => {
             />
           );
         })}
+        {/* Ancrage sur le BOUT DU DOIGT (cf. bloc « LA MAIN » plus haut) : on se
+            place au point de contact, on applique la rotation de 10 deg relevee
+            sur la reference, puis on recule le path de l'offset du doigt pour que
+            ce soit LUI qui tombe sur (mX,mY) — et non le coin haut-gauche. */}
         {mainVisible > 0.001 && (
-          <g opacity={mainVisible} transform={`translate(${mX} ${mY}) scale(0.70)`}>
+          <g
+            opacity={mainVisible}
+            transform={
+              `translate(${mX} ${mY}) rotate(10) scale(${MAIN_ECHELLE}) ` +
+              `translate(${-DOIGT[0]} ${-DOIGT[1]})`
+            }
+          >
             <path d={MAIN_SILHOUETTE} fill="#c888f8" opacity={0.14} transform="translate(6 8)" />
             <path
               d={MAIN_SILHOUETTE}

@@ -92,9 +92,29 @@ maintenant.
 
 ---
 
-## ⛔ LES 2 PIECES A REPRODUIRE (choix argumente)
+## ⛔ LES PIECES A REPRODUIRE — ETAT REEL (mis a jour 2026-08-30)
 
-1. **`22` Redeem All** (800×854, 5,85 s) — flux UI complet : un curseur clique un bouton, des
+> ⭐⭐ **`22` Redeem All est FAITE** (session du 28-29/08, hauteur 1,00 · encre 1,02 vs la
+> reference). Code `src/projects/_client-sim/repro-redeem/` · rendu
+> `out/_r-and-d/repro-redeem/repro-redeem-FINAL.mp4`. Reste un **reglage fin** : la main couvre
+> encore le bouton `Redeem` et le libelle `Giftcards` (verifie visuellement le 30/08).
+> ⛔ Cette section listait les 2 pieces comme « a reproduire » sans dire que la 1re etait livree —
+> ce qui a fait proposer du deja-fait en ouverture de la session du 30/08. **Une fiche de corpus
+> doit porter l'etat de production, pas seulement l'analyse de la source.**
+> Etat de chantier a jour : `memory/starters/STARTER-repro-ui-animation.md`.
+
+**RESTE A FAIRE : `08 Docs` et `12 onboarding`.**
+
+⭐ **`08 Docs` est mal classee ci-dessus** (rangee « icone / objet UI ») : rendue et regardee le
+30/08, c'est un **FLUX d'interface complet** en 2,52 s — un curseur selectionne des documents, ils
+s'empilent, tombent dans un dossier, le dossier devient le logo client. Mesure : 11 calques,
+**100 % nommes**, **0 matte**, 3 proprietes animees (`o`,`p`,`r`), 2 `Null` de parentage.
+C'est donc la **4e** piece d'interface du corpus, pas 3.
+⛔ Et **`11` n'est PAS un flux** (rangee « dashboard graphiques ») : c'est un dashboard isometrique
+3D en **boucle de 16,9 s**, rien ne s'enchaine. Corpus reel : **4 flux UI** = 22 (faite), 12, 08, et
+non 11.
+
+1. ~~**`22` Redeem All**~~ ✅ **FAITE** (800×854, 5,85 s) — flux UI complet : un curseur clique un bouton, des
    pieces tombent, un choix apparait (Giftcard / Cash), validation « REDEEMED! ». **6 precomps
    nommes par fonction**, animation 100 % position/echelle/opacite + **1 matte**.
    → dans nos cordes, registre qui vaut, et le matte est justement notre trou.
