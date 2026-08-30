@@ -581,6 +581,7 @@ import { PlageFableAnimee16x9, PLAGE_FABLE_FRAMES } from "./projects/_rnd/fable-
 import { PecheurDuree16x9, PECHEUR_DUREE_FRAMES } from "./projects/_rnd/stick-figures/PecheurDuree16x9";
 import { PecheurSurpecheStick16x9, PECHEUR_STICK_FRAMES } from "./projects/_rnd/stick-figures/PecheurSurpecheStick16x9";
 import { MarcheMesure16x9, MARCHE_MESURE_FRAMES } from "./projects/_rnd/stick-figures/MarcheMesure16x9";
+import { PartitionTest16x9 } from "./projects/_rnd/stick-figures/PartitionTest16x9";
 import { GareRoutiereDecor16x9, GARE_DECOR_FRAMES } from "./projects/_rnd/stick-figures/GareRoutiereDecor16x9";
 import { GareDepart16x9, GARE_DEPART_FRAMES } from "./projects/_rnd/stick-figures/GareDepart16x9";
 import { MarcheNuitVivant16x9, MARCHE_NUIT_VIVANT_FRAMES } from "./projects/_rnd/stick-figures/MarcheNuitVivant16x9";
@@ -5560,6 +5561,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition id="Stick-PecheurDuree" component={PecheurDuree16x9} durationInFrames={PECHEUR_DUREE_FRAMES} fps={30} width={1920} height={1080} />
       <Composition id="Stick-PecheurSurpeche" component={PecheurSurpecheStick16x9} durationInFrames={PECHEUR_STICK_FRAMES} fps={30} width={1920} height={1080} />
       <Composition id="Stick-MarcheMesure" component={MarcheMesure16x9} durationInFrames={MARCHE_MESURE_FRAMES} fps={30} width={1920} height={1080} />
+      <Composition id="Stick-PartitionTest" component={PartitionTest16x9} durationInFrames={90} fps={30} width={1920} height={1080} />
       <Composition id="Stick-GareRoutiereDecor" component={GareRoutiereDecor16x9} durationInFrames={GARE_DECOR_FRAMES} fps={30} width={1920} height={1080} />
       <Composition id="Stick-GareDepart" component={GareDepart16x9} durationInFrames={GARE_DEPART_FRAMES} fps={30} width={1920} height={1080} />
       <Composition id="Stick-MarcheNuitVivant" component={MarcheNuitVivant16x9} durationInFrames={MARCHE_NUIT_VIVANT_FRAMES} fps={30} width={1920} height={1080} />
