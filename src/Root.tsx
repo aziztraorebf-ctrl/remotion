@@ -150,6 +150,7 @@ import {
 } from "./projects/_client-sim/repro-redeem/ReproRedeem";
 import { ReproDocs } from "./projects/_client-sim/repro-docs/ReproDocs";
 import { ReproOnboarding } from "./projects/_client-sim/repro-onboarding/ReproOnboarding";
+import { OnboardingGenerique } from "./projects/_client-sim/onboarding-generique/OnboardingGenerique";
 import {
   MainGreffeeDemo,
   MAIN_DEMO_FRAMES,
@@ -788,6 +789,20 @@ export const RemotionRoot: React.FC = () => {
           <Composition
             id="ReproOnboarding"
             component={ReproOnboarding}
+            durationInFrames={275}
+            fps={60}
+            width={500}
+            height={1080}
+          />
+          {/* ONBOARDING GENERIQUE — 1re piece de PORTFOLIO tiree du chantier.
+              Le contenu est devenu des EMPLACEMENTS que le client remplit ; le
+              nombre d'icones, l'option designee et le theme se declinent depuis
+              le generateur, sans toucher au code. ⭐ Le CADRE designe la ligne
+              a activer AVANT qu'elle bascule (idee d'Aziz) : sans lui, le
+              toggle qui passe au vert est arbitraire. */}
+          <Composition
+            id="OnboardingGenerique"
+            component={OnboardingGenerique}
             durationInFrames={275}
             fps={60}
             width={500}
