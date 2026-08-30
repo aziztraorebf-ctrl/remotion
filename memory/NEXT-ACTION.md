@@ -24,7 +24,15 @@ de `tt` dans `lottie-ui/tools/svg2lottie_scene.py`.
 → `memory/client-sim-tests/corpus-kamotion/CORPUS-REFERENCE-UI.md` · starter :
 `memory/starters/STARTER-repro-ui-animation.md`
 
-⭐⭐ **PRIORITÉ 1 DE LA PROCHAINE SESSION (décision d'Aziz, 2026-08-29 fin de session)** :
+⭐⭐⭐ **PRIORITÉ 1 (décision d'Aziz, 2026-08-30 fin de session) — PORTFOLIO ANIMÉ**
+Le corpus est **ÉPUISÉ** : les 4 pièces d'interface sont reproduites et mesurées. On ne copie
+plus, on crée **nos** pièces, sur ce que le marché valide. Plan en 6 étapes (MCP Fiverr →
+rétro-ingénierie → SVG → code → `da-brief-anim.py` → itération), acquis et règles payées :
+→ **`memory/starters/STARTER-portfolio-anime.md`** ⭐⭐
+
+⛔ Section ci-dessous **CLOSE** (gardée pour trace) :
+
+~~⭐⭐ **PRIORITÉ 1 DE LA PROCHAINE SESSION (décision d'Aziz, 2026-08-29 fin de session)** :~~
 **LES SCÈNES du corpus, pas les personnages.** On a 23 pièces dont seuls les personnages ont été
 exploités — le corpus est surtout du **FLUX D'INTERFACE**, le registre qui se paie. Choisir
 lesquelles animer.
