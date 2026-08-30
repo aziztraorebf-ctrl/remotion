@@ -147,10 +147,16 @@ demande l'anatomie qu'en version FIGÉE, sans variantes.
 
 **Chez nous, le rig se DÉCLARE dans le SVG** (`svg2lottie_scene.py` le porte) :
 
-    <g id="bras" data-parent="torse" data-pivot="haut">
-    <g id="main" data-parent="bras"  data-pivot="150,198">
+    <g id="bras" data-parent="torse" data-pivot="121,250">   <!-- l'EPAULE, en x,y -->
+    <g id="main" data-parent="bras"  data-pivot="107,466">   <!-- le POIGNET -->
 
 ⛔ `data-parent` vise le **NOM DE CALQUE** réel (`head-base`), pas l'id du groupe.
+⛔⛔ **`data-pivot="haut"` est FAUX pour un MEMBRE articulé** (mesuré 2026-08-29) : à cause de la
+réserve de recouvrement, le sommet de la boîte est **10-20 px AU-DESSUS** du vrai centre
+articulaire → les bras **s'écartent au lieu de tourner**. Déclarer des `x,y` anatomiques
+(épaule, coude, poignet, hanche, genou, cheville). Notre référence n'a plus **aucun** `"haut"` :
+`grep` sur `perso-corps-entier/assets/perso-neutre-v3.svg` = **14 pivots `x,y`, 0 `"haut"`**.
+✅ Les mots-clés haut/bas/centre restent valides pour un élément **NON articulé** (oreille, langue).
 ⛔ Le pivot se déduit de l'ANATOMIE : une oreille pivote à son attache au crâne (pas au centre
 de sa boîte), une langue à sa racine, un iris ne pivote pas — il se déplace.
 ⛔⛔ Dans Lottie, `a` est le point qui vient se poser sur `p` : **déplacer l'ancre seule DÉCALE

@@ -17,10 +17,21 @@ officiels de LottieFiles. On sait livrer un composant au format du client, pas s
 M/L/H/V/C/S/Q/T/A/Z + quad→cubic + arc→cubics, 36 tests). ~~scène narrative~~ ⛔ **mauvaise cible** :
 zéro carte géographique sur 22 pièces d'un studio qui vend — le registre qui se paie est le **FLUX
 D'INTERFACE**.
-⛔⛔ **LE VRAI BLOQUEUR, MESURÉ** : le **MATTE (`tt`)** — ~90 occurrences sur 22 pièces pro, refusé
-par notre chaîne, contre 0 trim path / 0 repeater / 0 expression. C'est LE portage prioritaire.
+✅ **LE MATTE (`tt`) EST PORTÉ** — ⭐ corrigé le 2026-08-30, cette ligne le donnait encore comme
+« LE bloqueur » alors qu'il a été livré le 29/08 (commits `a42af19b` + `b4a53d3e` : `mask`/`clip-path`
+→ paire `td:1`/`tt:1`, **5 pochoirs sur 5** via précomposition, écart 0,03 %). Vérifié : 14 occurrences
+de `tt` dans `lottie-ui/tools/svg2lottie_scene.py`.
 → `memory/client-sim-tests/corpus-kamotion/CORPUS-REFERENCE-UI.md` · starter :
 `memory/starters/STARTER-repro-ui-animation.md`
+
+⭐⭐ **PRIORITÉ 1 DE LA PROCHAINE SESSION (décision d'Aziz, 2026-08-29 fin de session)** :
+**LES SCÈNES du corpus, pas les personnages.** On a 23 pièces dont seuls les personnages ont été
+exploités — le corpus est surtout du **FLUX D'INTERFACE**, le registre qui se paie. Choisir
+lesquelles animer.
+⏸️ **Le personnage HUMAIN passe EN PAUSE** (tout est sauvegardé : `STARTER-PERSO-VECTORIEL-V4.md`).
+Si un personnage est nécessaire : soit le **registre du CHIEN** (mascotte, primitives symétriques,
+frontal, référence pro à viser — les 3 cases qu'un humain corps entier ne coche pas), soit **prendre
+un modèle pro existant et l'animer** (prouvé : le douanier obéit ; il en existe des milliers).
 
 ⛔ **Ne PAS refondre le gabarit d'ouverture des vidéos** : la mesure des 4 courbes de rétention
 INFIRME l'hypothèse d'un défaut systématique (les formes divergent).
@@ -99,17 +110,18 @@ casse la mesure (ça réintroduit l'anatomie dans un test qui porte sur le rig).
 
 ---
 
-## ⭐⭐ POCHOIR (track matte) — PORTÉ, mais la PRÉCOMPOSITION bloque (2026-08-29)
+## ✅ POCHOIR + PRÉCOMPOSITION — RÉSOLUS le 2026-08-29 (section soldée)
 
 **Acquis, mesuré bout en bout** : `mask`/`clip-path` → paire Lottie `td:1`/`tt:1`.
 Écart **0,00 %** sur de la géométrie professionnelle réelle. 2 bugs corrigés dans
 `svg2lottie_scene.py` (clip d'un `<g>` perdu en silence + table de refus périmée),
 garde-fou posé (compte les clips vus vs traités), 4 tests de non-régression.
 
-⛔ **LE BLOCAGE, mesuré sur une vraie pièce** : sur le chien de Fable, **1 pochoir sur 5**
-passe. Les 4 refus disent la même chose — *« clip d'un groupe de N calques, précomposition
-non implémentée »*. Un œil n'est pas une forme : c'est 4 calques (globe, iris, pupille,
-reflet). Lottie ne découpe qu'un calque par pochoir.
+✅ **RÉSOLU LE SOIR MÊME** — ⭐ corrigé le 2026-08-30 : ce bloc disait « 1 pochoir sur 5 » alors
+que la précomposition a été livrée le 29/08 (commit `b4a53d3e`) : **5 pochoirs sur 5**, écart
+0,03 %. Un groupe découpé qui produit N calques est emballé dans une précomposition (`ty:0`
+référençant un asset), et c'est ce calque unique qui porte le `tt`.
+⛔ Un texte périmé gardé « pour mémoire » se relit comme actif — 3e occurrence du pattern.
 
 ⭐ **Une brique, deux verrous** : la pièce 2 (onboarding) a 45 précomps imbriqués sur
 3 niveaux. La précomposition débloque les deux.

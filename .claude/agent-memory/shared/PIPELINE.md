@@ -14,6 +14,31 @@
 
 ---
 
+## 🧍 PERSONNAGE VECTORIEL ARTICULÉ — session 2026-08-29 ⏸️ EN PAUSE
+
+> ⭐ **Starter de reprise : `memory/starters/STARTER-PERSO-VECTORIEL-V4.md`.**
+> ⏸️ Décision d'Aziz en fin de session : le personnage HUMAIN n'est PLUS l'effort principal.
+> **La prochaine session porte sur les SCÈNES du corpus** (flux d'interface), pas un personnage.
+
+**Acquis, mesurés** :
+- Un rig Lottie tiers **se pilote** (placer / effacer son geste / lui en imposer un autre) →
+  `src/projects/_client-sim/perso-corps-entier/tools/piloter.py`
+- ⛔ **Mais on QUITTE cette voie** : sur 23 pièces du corpus, **2 seulement sont pilotables** ;
+  nulls de 0 à 3, formes animées de 0 à 11 → **aucun standard entre personnages pro**, donc
+  aucune compétence cumulable de ce côté.
+- **Notre personnage V3** (Fable 5) : 15 calques, pivots x,y anatomiques, états de visage,
+  **tient jusqu'à 120°** — le geste qui avait échoué 4× sur une pièce pro.
+  → `src/projects/_client-sim/perso-corps-entier/assets/perso-neutre-v3.svg`
+  ⛔ V3 n'est PAS strictement meilleure que V2 (3 régressions : bras fondus dans le torse au
+  repos, cou disparu, souliers en sabots).
+- ⭐ **Le geste devient une TABLE DE NOMBRES** → `src/projects/_shared/stick-figure-svg/partitions/`
+  (~70 lignes de code → 5-7 clés ; un geste se **règle** en changeant un nombre).
+
+**Cause racine nommée** : aucune référence humaine **DE FACE** dans les 23 pièces (vérifié en
+les RENDANT). → V4 : Aziz apporte des SVG libres de droits vus de face.
+
+---
+
 ## 📤 PUBLICATION — état de diffusion
 
 > ⭐ La chaîne a commencé à publier après 25 jours de blocage. **État de DIFFUSION** (distinct de
@@ -85,8 +110,10 @@ PERSONNAGES** · **Fable 5 = modèle SVG par défaut** (2 tests aveugles gagnés
 Doctrine : `memory/doctrines/SCENE-DEMONSTRATIVE-PERSONNAGE.md`.
 ⚠️ Bug `BRAS_LAG` non corrigé au socle — décision d'Aziz en attente (corriger obligerait à
 revalider 6 planches).
-⚠️ Registre stick figure (6 scènes narratives sources) reste sur worktree `remotion-cfa`,
-`rnd/stick-figures-gestes`, **non mergé** — `jamais git add -A` (node_modules non ignoré).
+✅ **CORRIGÉ 2026-08-30** : ce worktree `remotion-cfa` et la branche `rnd/stick-figures-gestes`
+**n'existent plus** (vérifié : `git worktree list` ne montre que le repo principal, `git branch -a`
+ne trouve pas la branche). La note ci-dessous était périmée depuis le nettoyage des 23 branches
+du 28/08. ⛔ Ne pas la relire comme un chantier ouvert.
 ✅ 2026-08-03 : nouveau travail (héritage de pose 2e cas + portage P_SOL) fait et **commité dans le
 repo principal** (`14990278`, branche courante, PAS ce worktree) — distinct des 6 scènes sources,
 voir `src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` brique n°7 + `NEXT-ACTION.md`.

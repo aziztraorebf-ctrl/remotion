@@ -142,6 +142,21 @@ Les **POINTILLÉS** aussi. ⛔ Restent refusés : filtres, masques, images, `use
 ⛔⛔ **Une carte géographique complète n'est PAS un livrable Lottie** (Aziz, 26/08) : le registre
 qui vaut = dashboards/UI, logos, icônes, schémas, objets qui racontent. Prochaine session : `memory/starters/STARTER-PROMPT-lottie-texte-et-animation.md`
 
+### 🧍 PERSONNAGE ANIMÉ / RIG (dessin → rig → geste)
+| Je veux… | Fichier |
+|---|---|
+| **reprendre le personnage vectoriel maison** (V3 faite, ⏸️ EN PAUSE) | `memory/starters/STARTER-PERSO-VECTORIEL-V4.md` ⭐⭐ — 6 contraintes, 3 régressions V3, ratios à ne pas re-chercher |
+| **piloter un rig Lottie TIERS** | `memory/starters/STARTER-RIG-PERSONNAGE-EXISTANT.md` ⭐⭐ — ⛔ **2 pièces PILOTABLES sur 23** : aucun standard entre persos pro, la compétence NE se cumule PAS |
+| démonter un `.json`/`.lottie` (géométrie MONDE, parentage résolu) | `src/projects/_client-sim/perso-corps-entier/tools/demonter.py` ⛔ **PAS `planche_calques.py`** (lit les `sh` bruts, ignore les `tr` des `gr` → faux mais plausible) |
+| faire tourner une articulation / vérifier une amplitude | `…/perso-corps-entier/tools/piloter.py` ⭐ AVERTIT hors plage — **épaule ~25°, coude ~60°** (l'épaule est 2× MOINS tolérante : elle doit rester couverte par le torse) |
+| rejouer un rig en FK et rendre les poses (**GATE avant de valider un perso**) | `…/perso-corps-entier/tools/test-rotation.py` |
+| **écrire un geste** (table de nombres, pas du code) | `src/projects/_shared/stick-figure-svg/partitions/` — 5 à 7 clés ; ⛔ ~70 lignes de code raisonné = le signal qu'on re-code un geste |
+
+⛔⛔ **Ne pas INVENTER un mouvement quand un mouvement pro dort sur le disque** (le Hiker : marche
+complète, 13 calques animés) → `memory/feedbacks/feedback_ne-pas-inventer-un-mouvement-quand-un-mouvement-pro-est-sur-le-disque.md`
+⭐ **Le recouvrement ≥ 15 % de la longueur du membre est INVISIBLE sur une image de référence** —
+un modèle qui dessine depuis une frame ne peut pas le deviner. C'est LA chose à graver dans un brief.
+
 ### War-Map
 
 | Sujet | Fichier |

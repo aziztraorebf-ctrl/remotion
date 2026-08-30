@@ -37,6 +37,36 @@
 >
 > ---
 >
+> ## ⭐⭐ BRIQUE 8 — UN GESTE EST UNE **TABLE DE NOMBRES**, plus du code (2026-08-29)
+>
+> **`partitions/poses.ts` + `partitions/gestes.ts`** — `poseA(partition, frame) -> Pose`.
+> Une `Partition = {nom, duree, cles[], base?}` ; SALUER / POINTER / ACQUIESCER en **5 à 7 clés**.
+> Interpolation **asymétrique** (montée vive `1-(1-u)^2.2` / retombée molle `u^1.6`), clamp par
+> `PLAGES`, pose `base` (`DEBOUT`) pour ne pas recopier les articulations inertes sur chaque ligne.
+> ⭐ **Généralisation de la brique 4** (« poses-clés > accumulation de ressorts ») : le même
+> « lever le bras » fait **~70 lignes** de code raisonné dans `gestes/GestesExpressifs16x9.tsx`
+> contre **5 lignes de nombres** ici — et se **RÈGLE en changeant un nombre** (preuve : ACQUIESCER
+> trop discret, corrigé 0,55 → 1,15, zéro ligne de logique touchée).
+> Démo : `_rnd/stick-figures/PartitionTest16x9.tsx` (compo `Stick-PartitionTest`), rendue et regardée.
+>
+> ⚠️ **DEUX PIÈGES DE NOMMAGE — lire avant d'importer** :
+> ⛔ **Deux `poses.ts` coexistent dans `_shared/`**, avec deux `type Pose` INCOMPATIBLES :
+>   · `stick-figure-svg/partitions/poses.ts` (celui-ci) **LIT** une pose dans une table de clés ;
+>   · `personnage-vivant-svg/rig/poses.ts` **CALCULE** une pose depuis des paramètres continus
+>     (`walkPhase`, `bend`, `armReach`). Vérifier lequel on importe.
+> ⛔ Le mot **« partition »** désigne aussi la partition **Lottie-Python** lue par
+>   `lottie-ui/tools/animate_scene.py`. Deux formats distincts, même mot.
+>
+> ⛔ **2 pièges mesurés** (typecheck VERT les deux fois, trouvés en REGARDANT) : `headTuck` n'est
+> PAS en degrés (`headLen = 12 - tuck*7`, échelle ~±1) · sans `leg*Deg` et `phase=0` les 2 jambes
+> se **superposent** (plancher de swing ~16°) → toujours poser `base: DEBOUT`.
+>
+> ⛔⛔ **Le format sert à REJOUER, pas à héberger des valeurs devinées.** Une table mesurée sur une
+> pièce pro s'importe ; une sinusoïde inventée à la main ne vaut pas un mouvement validé.
+> → `memory/feedbacks/feedback_ne-pas-inventer-un-mouvement-quand-un-mouvement-pro-est-sur-le-disque.md`
+>
+> **Statut : proto** (1 seul consommateur). Passe « prouvé » au 2e geste consommé en production.
+
 > **Registre VALIDÉ Aziz le 2026-07-26** (vague 1 « gestes »). Verdict : « c'est mieux que ce que
 > j'aurais pensé dès le départ, **surtout quand c'est des plans éloignés** » · « le concept est
 > vraiment bien prouvé ».

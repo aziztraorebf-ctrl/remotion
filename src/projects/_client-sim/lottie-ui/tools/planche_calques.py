@@ -18,6 +18,19 @@ produit la matiere a voir : chaque calque rendu SEUL, en planche etiquetee.
 L'humain (ou un modele de vision) regarde et attribue les noms ; la carte
 obtenue alimente `group_layers.py`.
 
+⛔⛔ INADAPTE AUX PIECES PROFESSIONNELLES TIERCES (mesure 2026-08-29).
+Ce script lit les sommets `sh` BRUTS et ignore les `tr` des groupes `gr` qui les
+portent. Sur NOS scenes c'est correct (un `gr` par calque, pas de `tr` de placement).
+Sur une piece pro, CHAQUE forme vit dans son propre `gr` avec un `tr` qui la PLACE :
+le resultat est alors FAUX MAIS PLAUSIBLE — sur 15_Customs_Officer il rendait
+16 calques sur 19, tous nommes "?", et TOUS les centres a ~0,0 (annulation
+arithmetique, pas une erreur visible). Un calque de 73x93 en sommets bruts vaut en
+realite 293x374 une fois les `tr` appliques.
+=> Pour une piece qu'on n'a pas ecrite, utiliser :
+   src/projects/_client-sim/perso-corps-entier/tools/demonter.py
+   (geometrie MONDE : `tr` de groupe accumules + chaine de parentage resolue ;
+    valide contre lottie-web, 6 calques temoins sur 7 au pixel).
+
 Valide le 2026-08-28 sur le logo Inkscape : sur 8 calques rendus isolement,
 les 8 ont ete identifies a l'oeil sans ambiguite (silhouette, contour, reflet
 diagonal, montagne dentelee, eclaboussures, reflets fins).
