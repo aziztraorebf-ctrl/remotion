@@ -39,19 +39,19 @@ INFIRME l'hypothèse d'un défaut systématique (les formes divergent).
 
 ---
 
-## 🌿 ÉTAT GIT — 1 SEULE branche vivante (nettoyé au wrap du 2026-08-28)
+## 🌿 ÉTAT GIT — **1 SEULE branche vivante** (à jour 2026-08-30)
 
-**23 branches supprimées** (22 déjà mergées dans master + 1 redondante dont le contenu y était déjà).
-Il ne reste que **`master`** et :
+⭐ **`master` porte TOUT** : les 3 sessions (28-30/08) ont été mergées en fast-forward le 30/08
+(34 commits, 0 conflit), puis `feat/perso-corps-entier` et `feat/repro-lottie-ui-redeem` ont été
+**supprimées** — la seconde était entièrement absorbée (0 commit unique). ⛔ Ne pas les recréer.
 
-- ⚠️ **`feat/zambia-demo-2concepts`** — **NON MERGÉE, 1 commit unique** : `gallery/index.html`,
+Il reste `master` et **une seule** branche non mergée :
+
+- ⚠️ **`feat/zambia-demo-2concepts`** — **1 commit unique** (`7b024e66`, 21/08) : `gallery/index.html`,
   `gallery/styles.css`, un poster PageCam (recherche en langage courant, intentions, favoris).
   ⛔ **NE PAS supprimer sans décider** : ces fichiers **n'existent PAS sur master**. La galerie est
   déployée sur GitHub Pages, donc son code de référence vit peut-être ailleurs — **vérifier où avant
   de merger OU de supprimer**. Tant que ce n'est pas tranché, la branche reste.
-
-⭐ **Règle** : ne pas laisser s'accumuler des branches mergées — `git branch --merged master` liste ce
-qui se supprime sans aucune perte, `git branch --no-merged master` ce qui porte du travail unique.
 
 ## ⭐⭐⭐ CONTRAT UPWORK chill-meter — GAGNÉ le 2026-08-29, offre à REVOIR avant signature
 
