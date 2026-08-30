@@ -20,7 +20,7 @@ session-là**. ⛔ Dans une session neuve, tout était perdu.
 // ✅ PAYÉE — LoadUpAnime.tsx:29, rendu validé par Aziz le 2026-08-28
 const EASE_OUT = Easing.bezier(0.23, 1, 0.32, 1);   // entrées, le défaut
 ```
-⚠️ **NON ÉPROUVÉS, vérifier au 1er usage** : bezier(0.77,0,0.175,1) · bezier(0.32,0.72,0,1) · cascade 30-80 ms · scale(0.95)+opacity 0 · primitive `respire` (zéro partition l'utilise, revérifié 2026-08-30).
+⚠️ **NON ÉPROUVÉS, vérifier au 1er usage** : bezier(0.77,0,0.175,1) · bezier(0.32,0.72,0,1) · cascade 30-80 ms · scale(0.95)+opacity 0.
 
 ⛔ Les easings CSS natifs (`ease`, `ease-in-out`) sont trop faibles — ils n'ont pas de punch.
 
@@ -94,9 +94,6 @@ clés à la main — les 4 dernières sont nées de gestes que j'avais d'abord c
 | ⭐ `balance` | rotation alternée, ancrée au POINT D'ATTACHE | `(debut, fin, angle, periode, ancre_y)` |
 | ⭐ `cligne` | les yeux se ferment 2 frames | `(debut, fin, periode)` |
 
-⛔ **`respire` n'est PAYÉE PAR RIEN** (vérifié au wrap : zéro partition l'utilise). Les 3 autres
-ont leur usage réel — `geste3` sur LoadUp, `balance` et `cligne` sur le renard, plus la validation
-d'Aziz à l'œil dans Creator. **Vérifier `respire` au 1er usage au lieu de la croire éprouvée.**
 
 ### ⭐ LA BOUCLE DE VIE — le défaut qu'on ne voit pas en regardant le début
 Sur le renard, tout était juste **jusqu'à f70**… puis **plus rien pendant 80 frames**.
@@ -115,7 +112,7 @@ sur tout fichier passé par `group_layers.py` (elle cherchait les chemins à une
 fixe et trouvait des `gr`). ⭐ **Conséquence rétroactive** : l'écrasement de LoadUp validé
 le 28/08 était ancré à `[0,0]` — il « marchait » par chance. Corrigé.
 ⛔ Pour une rotation, l'ancre va au **POINT D'ATTACHE**, pas au centre — et **ce point n'est pas
-toujours en bas** : la queue du renard s'attache en **HAUT** (`ancre_y=0.15`, `animate_scene.py:149`).
+toujours en bas** : la queue du renard s'attache en **HAUT** (`ancre_y=0.15`, `animate_scene.py`, clé `"queue"`).
 ⚠️ **`ancre_y` : 0 = HAUT de la bbox, 1 = BAS** (l'axe Y Lottie descend). ⛔ La 1re version de cette
 fiche disait « ancrée à la BASE » et le docstring du code « 0 = centre » : **les deux étaient faux**,
 corrigés au wrap. Une fiche qui ment clôture la recherche — c'est ce qu'elle existe pour empêcher.
@@ -183,7 +180,28 @@ déphasées (0,33 s / 1,67 s dans l'original), sourcil droit **2× plus actif** 
 iris posé à 12 px (mesuré 33), langue à 14° (mesuré 70), sinon ils sortent de leur pochoir.
 ⭐ Clignement : ecrasement en Y sur **4 frames (0,067 s a 60 fps)**, toutes les 2,4 s — `animer.py:150`. Plus long = l'air endormi ; plus court = invisible.
 
-## ⛔⛔ LES 4 PIÈGES DE L'ANIMATION LOTTIE (payés le 2026-08-29)
+## ⛔⛔ LES PIÈGES DE L'ANIMATION LOTTIE
+
+⛔⛔ **LE RÉFÉRENTIEL, PAS LA VALEUR — 3 fois le même jour (30/08).** (1) `monte` écrivait un
+delta `[0,0]` alors que `p` portait déjà le centre → la volute fumait depuis le COIN DE L'ÉCRAN ;
+(2) `parcourt` écrasait la position des calques IMAGE (deux référentiels coexistent : un calque
+de formes a `p=[0,0]`, un calque image porte sa vraie position) → photo au coin, médaillon
+arrivant VIDE ; (3) `livrer_piece.py` fusionnait des calques portant CHACUN leur transform →
+encre 70,3 % → 2,6 %, pièce VIDE. **À chaque fois la valeur était juste, son référentiel faux.**
+⭐ Avant d'écrire une position ou une échelle sur un calque converti : lire ce que `ks.p` / `ks.a`
+portent DÉJÀ — la géométrie garde ses coordonnées absolues.
+
+⛔⛔ **UN TEST QUI VISE LA FONCTION ET PAS LE DISPATCH PASSE AU VERT SUR DU CODE MORT.**
+`parcourt` a été livré avec une branche d'aiguillage référençant des variables INEXISTANTES ; le
+test appelait `parcourir()` en direct, il passait pendant que le chemin réel était cassé.
+**Viser `animer()`, la porte d'entrée** — jamais la fonction interne.
+
+⛔ **UNE PLANCHE DE CONTRÔLE DIRIGE L'ŒIL, ELLE NE LE REMPLACE PAS.** Les pointes de flèche du
+gabarit étaient visibles **60 frames trop tôt** — encre correcte, frames distinctes, aucune mesure
+ne l'a signalé. ⭐ Règle qui en sort : **une pointe ne se TRACE pas, elle APPARAÎT** quand le trait
+arrive (`("fondu", 88, 96)` calé sur la fin du `("trace", 60, 95)`).
+
+## LES PIÈGES PLUS ANCIENS (payés le 2026-08-29)
 
 1. **Chaque calque porte sa PROPRE fenêtre `ip`/`op`.** Allonger la durée du DOCUMENT ne suffit
    pas : les calques cessaient d'exister à la frame 60, l'animation se figeait — et le fichier

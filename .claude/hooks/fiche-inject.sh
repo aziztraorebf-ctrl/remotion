@@ -109,6 +109,19 @@ if [ -n "$BASH_CMD" ]; then
   if printf '%s' "$BASH_CMD" | grep -qE 'capture-northshield|capture-template|puppeteer|http\.server 88|live-layout\.json'; then
     add_fiche "FICHE-UI-PRODUIT.md" "FICHE UI PRODUIT" "bash-ui-produit"
   fi
+  # LOTTIE : le travail se fait 100 % en .py sous lottie-ui/tools/, donc en Bash.
+  # ⛔⛔ LE PIEGE QUE CE MOTIF REPARE (verifie au wrap du 2026-08-30, par TEST) :
+  # FICHE-GESTE-ANIME a ete elargie le 28/08 pour couvrir les partitions Lottie
+  # -- les motifs "geste3"/"respire"/"balance"/"cligne" ont ete ajoutes a la
+  # variable ANIM. Mais ANIM vit APRES le filtre `.tsx` (l.186) : un fichier .py
+  # ne l'atteint JAMAIS. Le fix a ete pose dans la seule branche inaccessible au
+  # domaine qu'il visait -- il n'a jamais fonctionne un seul jour.
+  # ⭐ 5e occurrence du meme piege (« test pose apres le filtre .tsx »), que ce
+  # hook documente deja 4 fois (.svg 08-17, index.html, timing.ts, brief-client
+  # 08-23). Le motif doit vivre dans la branche BASH, avant tout filtre.
+  if printf '%s' "$BASH_CMD" | grep -qE 'animate_scene|svg2lottie|livrer_piece|verifier_fidelite|group_layers|finir_piece|lottie-ui/tools'; then
+    add_fiche "FICHE-GESTE-ANIME.md" "FICHE GESTE ANIME" "bash-lottie"
+  fi
   # SCENE CREEE EN BASH : on rebascule sur la branche fichier avec le corps de la commande
   # (le heredoc) comme CONTENT. Sans ca, une scene ecrite en Bash n'a jamais ses fiches.
   if [ -n "$BASH_TSX_TARGET" ]; then

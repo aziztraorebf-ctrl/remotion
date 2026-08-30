@@ -129,8 +129,17 @@ une SUPPOSITION que j'avais moi-même signalée comme non prouvée.
 un vrai `gf`, l'aéroport est passé de 57,74 % à 11,58 %). Même méthode appliquée au **texte** le
 26/08, également fermé.
 
-⏭️ **Prochaine cible : les MASQUES** — le dernier gros refus, et le mur de la scène « Front Ouvert »
-(6 masques) retenue au banc d'essai. Lire dans Creator la structure produite par `create_mask` /
-`set_matte`, puis la porter. ⭐ Un contournement existe déjà pour un cas : un masque à dégradé
-horizontal se reproduit par **empilement de copies** (`vivifier.py::fondu_de_bord`) — vérifier
-si le principe se généralise avant de porter le masque natif.
+✅ **LES MASQUES SONT ATTEINTS depuis le 2026-08-29** — et **sans passer par Creator** : portage
+direct en track matte (`td:1` sur le pochoir, `tt:1` sur le calque découpé), écart **0,00 %** sur
+géométrie professionnelle réelle. Le détour par `create_mask`/`set_matte` n'a jamais eu lieu et
+n'a plus lieu d'être.
+⭐ **Corollaire trouvé le 30/08** : un pochoir **IMBRIQUÉ** dans une précomposition perdait son
+rôle (les rôles de calque étaient exclusifs) et se peignait en forme visible — 13,66 % → 0,25 %.
+⛔ **Cette note a traîné 1 jour de trop, et c'était le 6e endroit** où « le matte est le trou
+prioritaire » survivait après sa résolution (5 autres purgés les 29 et 30/08). ⭐ Une note qui se
+termine par « prochaine cible : X » est une **DETTE** : quand X est fait, c'est elle qu'il faut
+aller fermer — sinon elle envoie une session future refaire un travail déjà livré.
+
+⏭️ **La vraie cible restante** : les filtres **COMPOSITES** (ombre portée, lueur — `feOffset`+
+`feMerge`, `feColorMatrix`). Avec `pattern` et `use`/`symbol`, c'est tout ce qui ne traverse plus.
+⚠️ Coût mesuré faible : 8 filtres composites non portés sur Khartoum = ~1 % d'écart total.

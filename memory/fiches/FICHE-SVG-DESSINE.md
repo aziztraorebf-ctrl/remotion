@@ -52,8 +52,14 @@ un SVG convertible en **Lottie standard** — calques nommés, dépliables et **
 dans LottieFiles Creator. Le contrat n'est pas une commodité interne : c'est ce qui ouvre les briefs
 qui exigent un format tiers. Table de décision à jour (répondre à un brief en 30 s) :
 `memory/client-sim-tests/lottie-ui-lcd/CE-QUI-PASSE-EN-LOTTIE.md`. ⭐ Chaîne prouvée dessin ET
-animation (25-26/08) ; le TEXTE reste le bloqueur (83 scènes/172). ⚠️ Le STATUS.md est le RÉCIT,
-pas la référence.
+animation. ⛔⛔ **« LIMITE DU FORMAT » A ÉTÉ FAUX 4 FOIS** : texte (26/08), flou (28/08), masques
+(29/08), images raster (30/08). À chaque fois Lottie savait faire — `ty:29`, track matte `tt`/`td`,
+asset image `{id,w,h,p:"data:…",e:1}` — et c'est NOTRE convertisseur qui n'émettait rien.
+⭐ **Avant d'écrire « impossible » : vérifier la SPEC Lottie, pas notre code.** Corollaire mesuré :
+le refus « les images alourdissent » était un problème de TAILLE SOURCE, pas de principe —
+1024×1024 pour un affichage 32×32 = 1504 Ko brut contre **3 Ko** à la bonne taille, facteur 500.
+Restent hors format : filtres **composites** (ombre, lueur), `pattern`, `use`/`symbol`.
+⚠️ Le STATUS.md est le RÉCIT, pas la référence.
 
 ⭐⭐ **DEUX RÈGLES AJOUTÉES LE 2026-08-29** (chaîne rig+animation prouvée) :
 - ⛔ **Les RECOUVREMENTS sont une décision de DESSIN, pas d'animation.** Une pièce destinée à
