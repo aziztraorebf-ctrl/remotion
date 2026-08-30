@@ -5693,6 +5693,26 @@ export const RemotionRoot: React.FC = () => {
           height={1080}
           defaultProps={{ state: "fill100" as const }}
         />
+        {/* Comparaison de finition metal — jalon 1. Meme dessin, seules les rampes
+            des degrades metal changent. Rendu en 1 frame pour la planche. */}
+        <Composition
+          id="ChillMeter-Metal-Brushed"
+          component={ChillMeterOverlay}
+          durationInFrames={1}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "idle" as const, metal: "brushed" as const }}
+        />
+        <Composition
+          id="ChillMeter-Metal-Machined"
+          component={ChillMeterOverlay}
+          durationInFrames={1}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "idle" as const, metal: "machined" as const }}
+        />
         <Composition
           id="ChillMeter-Showcase"
           component={ChillMeterShowcase}

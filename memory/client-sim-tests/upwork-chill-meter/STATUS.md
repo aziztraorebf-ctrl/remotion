@@ -75,6 +75,37 @@ shape, branding, readability, **placement direction**, and clean "before frost" 
   propre **souligne un manque** au lieu d'expliquer une progression, et ouvre un debat sur la
   matiere qu'elle n'a pas ouvert. Elle connait sa propre reference.
 
+### ⭐⭐ FINITION METAL — 3 dosages, la GRILLE FINIE plutot qu'une seule proposition
+**Constat d'Aziz (30/08) en regardant la planche comparative** : notre chassis fait plus « graphique
+plat » que metal, la ou sa reference est photorealiste. Verifie dans le code : les rampes metal
+culminaient a **#1b212c** (quasi noir) — le brief demande « **silver / frosted metal** » et
+« subtle metal casing ». Le probleme n'etait donc PAS le dessin mais le **dosage des valeurs**.
+
+⛔⛔ **Enjeu qui depasse l'esthetique** : le brief exige que le givre « look **physically attached
+to the metal surface**, not like a flat graphic placed on top » (p.5). Sur un chassis en aplats,
+le givre des jalons 2-3 ressemblera toujours a un calque pose. **Regler la matiere au jalon 1 est
+structurel pour la suite** — apres, ca devient une revision qui remet en cause du travail anime.
+
+**Ce qui a ete fait (methode retenue par Aziz : passe de matiere sur l'EXISTANT, pas de generation
+neuve)** — la structure est fidele a 100 % a sa reference et aux bonnes dimensions, une generation
+neuve l'aurait remise en jeu pour gagner de la matiere, et les 4 planches d'aout ont chacune leurs
+defauts connus (GPT chevauche les textes, Kimi fade, Grok bonne typo).
+- Prop `metal?: "flat" | "brushed" | "machined"` sur `ChillMeterDevice` + `ChillMeterOverlay`.
+- ⭐ **Le dessin n'est PAS touche** : `applyRamp()` remplace uniquement les `stop-color` des degrades
+  metal deja NOMMES dans le SVG (`fable_g_metal_body`, `_plaque`, `_pipe`, `kimi_metalMain`,
+  `_metalBevel`, vis/rivets). Structure, neon, ecran, givre, textes : identiques dans les 3 cas.
+- Compositions `ChillMeter-Metal-Brushed` / `-Machined` (1 frame) pour la planche de comparaison.
+
+⭐⭐⭐ **DECISION DE METHODE (Aziz, contre ma reserve initiale — il avait raison)** : presenter
+**2-3 directions NOMMEES** ne se lit PAS comme de l'indecision, c'est la **GRILLE FINIE** deja
+prouvee sur le son de ce meme contrat (`familles-nommees-pour-faire-trancher-un-client`) :
+« un choix propose ne consomme pas de revision ». La distinction qui compte :
+- ⛔ **Indecision** = « voici 2 versions, laquelle tu preferes ? » → on lui refile notre arbitrage.
+- ✅ **Grille finie** = 2 traitements nommes + definis + **MA RECOMMANDATION explicite**, sur UN
+  seul axe encore ouvert. On a tranche, elle garde le dernier mot.
+Ici l'axe matiere est le **dernier ouvert** : structure validee par sa propre reference, placement
+mesure, « pas givre » acte 3 fois. Le fermer par un choix = zero tour de revision consomme.
+
 ### ⛔⛔ AVANT CHAQUE LIVRAISON DE JALON — le reflexe des 2 fausses alertes
 Ces 3 questions se posent AVANT d'envoyer, et avant toute "correction" de derniere minute :
 1. **L'element que je crois manquant est-il dans SA reference ?** Si non, il n'est pas attendu.

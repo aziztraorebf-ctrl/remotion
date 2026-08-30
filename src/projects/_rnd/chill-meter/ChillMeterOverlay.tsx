@@ -9,7 +9,7 @@
 
 import React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, interpolate, spring, Easing } from "remotion";
-import { ChillMeterDevice, DEVICE_W, DEVICE_H } from "./ChillMeterDevice";
+import { ChillMeterDevice, DEVICE_W, DEVICE_H, type MetalFinish } from "./ChillMeterDevice";
 import { GivreDefs, CRISTAUX, ECLATS, FLEURS } from "./GivrePlanche";
 
 export type MeterState =
@@ -283,7 +283,10 @@ const FullChillEffect: React.FC<{ progress: number; frame: number; fps: number }
   );
 };
 
-export const ChillMeterOverlay: React.FC<{ state: MeterState }> = ({ state }) => {
+export const ChillMeterOverlay: React.FC<{ state: MeterState; metal?: MetalFinish }> = ({
+  state,
+  metal = "flat",
+}) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -392,6 +395,7 @@ export const ChillMeterOverlay: React.FC<{ state: MeterState }> = ({ state }) =>
           powerOn={powerOn}
           frame={frame}
           fps={fps}
+          metal={metal}
         />
       </div>
 

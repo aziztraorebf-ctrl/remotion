@@ -21,7 +21,17 @@ export type ChillMeterProps = {
   powerOn: number;
   frame: number;
   fps: number;
+  /** Finition du metal du chassis. Ne touche QUE les rampes des degrades metal
+   *  (corps, plaques, tubes, vis, rivets) : le dessin, la structure, le neon,
+   *  l'ecran et le givre sont identiques dans les trois cas.
+   *  - "flat"     : l'existant, metal sombre peu contraste
+   *  - "brushed"  : acier brosse, plus clair, reflets doux
+   *  - "machined" : metal usine, speculaires nets sur les aretes, contraste fort
+   */
+  metal?: MetalFinish;
 };
+
+export type MetalFinish = "flat" | "brushed" | "machined";
 
 // Note : le SVG source livre `frost_layer` et `icicles` en opacity="0" (contrat "pret a animer" :
 // tout element a reveler arrive masque). L'attribut est retire a l'injection car c'est l'enveloppe
@@ -778,7 +788,57 @@ const Raw: React.FC<{ html: string; opacity?: number; transform?: string; style?
   <g opacity={opacity} transform={transform} style={style} dangerouslySetInnerHTML={{ __html: html }} />
 );
 
-export const ChillMeterDevice: React.FC<ChillMeterProps> = ({ chill, frost, powerOn, frame, fps }) => {
+// --- Finition du metal ------------------------------------------------------
+// Le brief demande « silver / frosted metal » et « subtle metal casing ». Les rampes
+// d'origine culminent vers #1b212c : a l'ecran, le chassis se lit comme un gris plat
+// plutot que comme du metal. On ne redessine rien — on remplace les ARRETS de couleur
+// des degrades metal, qui sont deja nommes dans le SVG.
+//
+// Les ids vises sont ceux du dessin : les 3 planches sources (Fable, Kimi, GPT) ont
+// chacune leurs propres degrades metal, d'ou les 3 prefixes.
+const METAL_RAMPS: Record<Exclude<MetalFinish, "flat">, Record<string, string[]>> = {
+  brushed: {
+    fable_g_metal_body: ["#7c8798", "#5c6879", "#3b4655", "#2a333f", "#4d5867"],
+    fable_g_metal_plaque: ["#78849a", "#38424f", "#4a5666"],
+    fable_g_pipe: ["#2a323d", "#7d8a9c", "#b3bfcd", "#67738a", "#232a35"],
+    fable_g_pipe_h: ["#2a323d", "#7d8a9c", "#b3bfcd", "#67738a", "#232a35"],
+    kimi_metalMain: ["#7b8794", "#616d79", "#454f5a", "#333c46", "#2a323b"],
+    kimi_metalBevel: ["#9aa6b2", "#606b78", "#333b45"],
+  },
+  machined: {
+    fable_g_metal_body: ["#a4b0c0", "#7a8797", "#3a4552", "#232b36", "#5f6b7c"],
+    fable_g_metal_plaque: ["#9aa7bb", "#333d4b", "#59657a"],
+    fable_g_pipe: ["#1e242d", "#94a2b5", "#dce4ee", "#6f7c92", "#1a202a"],
+    fable_g_pipe_h: ["#1e242d", "#94a2b5", "#dce4ee", "#6f7c92", "#1a202a"],
+    kimi_metalMain: ["#9daab8", "#75828f", "#4b5560", "#333c47", "#272f38"],
+    kimi_metalBevel: ["#c2ccd8", "#6d7987", "#39424d"],
+  },
+};
+
+/** Remplace les stop-color d'un degrade nomme, dans l'ordre, sans toucher aux offsets. */
+const applyRamp = (svg: string, id: string, colors: string[]): string => {
+  const open = svg.indexOf(`id="${id}"`);
+  if (open < 0) return svg;
+  const start = svg.lastIndexOf("<", open);
+  const tag = svg.slice(start + 1, svg.indexOf(" ", start));
+  const close = svg.indexOf(`</${tag}>`, open);
+  if (close < 0) return svg;
+  let i = 0;
+  const block = svg
+    .slice(start, close)
+    .replace(/stop-color="#[0-9a-fA-F]+"/g, (m) =>
+      i < colors.length ? `stop-color="${colors[i++]}"` : m,
+    );
+  return svg.slice(0, start) + block + svg.slice(close);
+};
+
+const metalDefs = (finish: MetalFinish): string => {
+  if (finish === "flat") return DEFS;
+  const ramps = METAL_RAMPS[finish];
+  return Object.keys(ramps).reduce((svg, id) => applyRamp(svg, id, ramps[id]), DEFS);
+};
+
+export const ChillMeterDevice: React.FC<ChillMeterProps> = ({ chill, frost, powerOn, frame, fps, metal = "flat" }) => {
   const t = frame / fps;
   const breathe = 0.5 + 0.5 * Math.sin((t * Math.PI * 2) / 2.6);
   const buttonPulse = 0.5 + 0.5 * Math.sin((t * Math.PI * 2) / 1.9);
@@ -794,7 +854,7 @@ export const ChillMeterDevice: React.FC<ChillMeterProps> = ({ chill, frost, powe
       xmlns="http://www.w3.org/2000/svg"
       style={{ overflow: "visible" }}
     >
-      <defs dangerouslySetInnerHTML={{ __html: DEFS }} />
+      <defs dangerouslySetInnerHTML={{ __html: metalDefs(metal) }} />
 
       {/* --- chassis : toujours visible, il EST l'objet --- */}
       <Raw html={G.chassis} />
