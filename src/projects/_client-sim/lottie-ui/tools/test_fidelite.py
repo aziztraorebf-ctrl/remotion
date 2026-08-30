@@ -469,6 +469,40 @@ def test_image_raster_portee_et_redimensionnee():
     print("  ok  image raster : portee en asset, redimensionnee a l'affichage")
 
 
+def test_parcours_respecte_la_position_deja_posee():
+    """`parcourt` part de la position DEJA POSEE, pas de zero.
+
+    ⛔ Deux referentiels coexistent dans un meme fichier :
+      - un calque de FORMES converti a `p` = [0,0], sa geometrie portant deja
+        les coordonnees absolues ;
+      - un calque IMAGE (ty:2) porte sa position reelle dans `p`.
+    Ecraser `p` par un delta partant de zero envoie donc l'image AU COIN DE
+    L'ECRAN. Mesure du 2026-08-30 : les medaillons de Khartoum se deplacaient
+    correctement mais leur PHOTO partait de [0,0] -- invisible hors cadre, et
+    le disque ivoire arrivait VIDE sur la cible. Meme famille que le bug de
+    `monte` : la valeur est juste, son REFERENTIEL est faux.
+    """
+    import animate_scene as A
+
+    CHEMIN = "M100 500 Q 400 300 700 500"
+
+    # calque de formes : p a [0,0] -> le delta part de zero
+    forme = {"nm": "jeton", "ks": {"p": {"a": 0, "k": [0, 0]}}}
+    A.parcourir(forme, CHEMIN, 0, 100)
+    assert forme["ks"]["p"]["k"][0]["s"][:2] == [0.0, 0.0], "forme : delta attendu"
+
+    # calque image : p porte sa position -> elle doit etre CONSERVEE
+    image = {"nm": "photo", "ty": 2, "ks": {"p": {"a": 0, "k": [1720, 910, 0]}}}
+    A.parcourir(image, CHEMIN, 0, 100)
+    kf = image["ks"]["p"]["k"]
+    assert kf[0]["s"][:2] == [1720.0, 910.0], (
+        f"l'image doit partir de SA position, obtenu {kf[0]['s'][:2]}")
+    # et arriver a sa position + le vecteur du trajet (600 en x)
+    assert abs(kf[-1]["s"][0] - (1720 + 600)) < 2, (
+        f"arrivee attendue a 2320, obtenu {kf[-1]['s'][0]}")
+    print("  ok  parcours : la position deja posee est conservee")
+
+
 def main():
     print("test_fidelite — non-regression des defauts Khartoum (2026-08-26)")
     echecs = 0

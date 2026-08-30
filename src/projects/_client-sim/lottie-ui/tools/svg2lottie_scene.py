@@ -1101,9 +1101,29 @@ def image_en_asset(el, mat, racine_svg, rapport, nom, assets, echelle_max=2.0):
         donnees = tampon.getvalue()
 
     b64 = base64.b64encode(donnees).decode("ascii")
+    uri = "data:image/png;base64," + b64
+
+    # ⭐ DEDUPLICATION : un asset Lottie est fait pour etre PARTAGE par plusieurs
+    # calques. Mesure sur KhartoumEtatMajorSVG : la formation compte 4 membres
+    # portant LE MEME portrait -- sans partage, la meme image est embarquee 4
+    # fois (60 Ko au lieu de 15). C'est ce genre de gaspillage qui rendrait vrai,
+    # pour de mauvaises raisons, l'idee que « les images alourdissent ».
+    deja = next((a for a in assets if a.get("p") == uri), None)
+    if deja:
+        aid = deja["id"]
+        rapport.ok(f"<image> {nom} : reutilise l'asset {aid} (0 Ko de plus)")
+        return {"ddd": 0, "ty": 2, "nm": nom, "refId": aid, "st": 0,
+                "ks": {"a": {"a": 0, "k": [0, 0, 0]},
+                       "p": {"a": 0, "k": [round(x * mat[0] + mat[4], 2),
+                                           round(y * mat[3] + mat[5], 2), 0]},
+                       "s": {"a": 0, "k": [round(100.0 * w * ech_m / deja["w"], 3),
+                                           round(100.0 * h * ech_m / deja["h"], 3),
+                                           100]},
+                       "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}}
+
     aid = f"img_{len(assets)}"
     assets.append({"id": aid, "w": im.width, "h": im.height,
-                   "u": "", "p": "data:image/png;base64," + b64, "e": 1})
+                   "u": "", "p": uri, "e": 1})
 
     ko = len(b64) / 1024
     detail = f"{im.width}x{im.height}, {ko:.0f} Ko en base64"

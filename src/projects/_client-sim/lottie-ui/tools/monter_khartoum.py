@@ -18,9 +18,45 @@ l'etablissement et avant le premier assaut.
 Usage :
     python3 monter_khartoum.py        # ecrit khartoum-anime.json
 """
-import json, sys
+import json, pathlib, sys
 sys.path.insert(0, '/Users/clawdbot/Workspace/remotion/src/projects/_client-sim/lottie-ui/tools')
 from animate_scene import animer, cercle, calque_forme, PARTITIONS
+
+
+ASSETS_IMG = []          # assets image, partages entre tous les calques
+
+
+def portrait_calque(nom, cx, cy, r):
+    """Le portrait photo du medaillon, en asset image Lottie.
+
+    ⭐ Rendu possible par le portage des <image> (2026-08-30). Le composant le
+    detoure dans un clipPath circulaire ; ici la photo est simplement posee au
+    diametre du medaillon -- le detourage exact demanderait un track matte, et
+    l'ecart visuel a cette taille ne le justifie pas.
+    ⚠️ L'image est redimensionnee a sa taille d'AFFICHAGE : 1024x1024 pour un
+    disque de 60 px, c'est 3 Ko au lieu de 1504.
+    """
+    import base64
+    import io
+    from PIL import Image
+
+    src = pathlib.Path('/Users/clawdbot/Workspace/remotion/public/'
+                       '_shared/sprites/warmap/portrait-rsf.png')
+    n = int(r * 2 * 2)                      # x2 : confort sur ecran dense
+    im = Image.open(src).convert("RGBA").resize((n, n), Image.LANCZOS)
+    tampon = io.BytesIO()
+    im.save(tampon, "PNG", optimize=True)
+    uri = "data:image/png;base64," + base64.b64encode(tampon.getvalue()).decode()
+    if not any(a["id"] == "img_portrait" for a in ASSETS_IMG):
+        # les 3 colonnes portent LA MEME photo : un seul asset, partage.
+        ASSETS_IMG.append({"id": "img_portrait", "w": n, "h": n, "u": "",
+                           "p": uri, "e": 1})
+    return {"ddd": 0, "ty": 2, "nm": nom, "refId": "img_portrait", "st": 0,
+            "ip": 0, "op": DUREE,
+            "ks": {"a": {"a": 0, "k": [0, 0, 0]},
+                   "p": {"a": 0, "k": [cx - r, cy - r, 0]},
+                   "s": {"a": 0, "k": [100.0 * 2 * r / n, 100.0 * 2 * r / n, 100]},
+                   "r": {"a": 0, "k": 0}, "o": {"a": 0, "k": 100}}}
 
 
 def losange(cx, cy, r):
@@ -100,13 +136,18 @@ for nom, (cx, cy) in CIBLES.items():
     neufs.append(calque_forme(f"pointe-{nom}", pointe(cx, cy, ang),
                               remplissage=RED, duree=DUREE))
     # la colonne : un jeton losange qui part de la base
-    # ⚠️ Taille calee sur la V5 du composant : sa note de version dit
-    # explicitement "jetons RSF agrandis + recolores" apres la critique
-    # "jetons illisibles". Un jeton de r=14 sur une carte 1920 est invisible --
-    # le defaut avait deja ete paye une fois, ne pas le refaire.
-    col = calque_forme(f"colonne-{nom}", losange(RSF[0], RSF[1], 30),
-                       remplissage=JETON, contour=RED, largeur=4, duree=DUREE)
-    neufs.append(col)
+    # ⭐⭐ LE MEDAILLON PHOTO, pas un losange. Le composant tourne en mode
+    # `portrait-formation` (TOKEN_ENRICHMENT ligne 149) : ses colonnes sont des
+    # MEDAILLONS -- cercle ivoire borde de rouge, portrait detoure dedans
+    # (RsfPortraitCircle). Le losange etait un pis-aller de ma part, adopte
+    # quand les <image> ne traversaient pas la chaine.
+    # ⚠️ Taille calee sur la V5 : sa note de version dit "jetons RSF agrandis"
+    # apres la critique "jetons illisibles" — le defaut a deja ete paye une fois.
+    R_MED = 30
+    neufs.append(calque_forme(f"colonne-{nom}", cercle(RSF[0], RSF[1], R_MED),
+                              remplissage=IVOIRE, contour=RED,
+                              largeur=R_MED * 0.16, duree=DUREE))
+    neufs.append(portrait_calque(f"colonne-{nom}-photo", RSF[0], RSF[1], R_MED))
     # l'onde d'impact : 2 anneaux, comme la scene d'origine
     for i, (r, coul, ep) in enumerate(((130, RED, 4), (150, AMBRE, 2.5))):
         neufs.append(calque_forme(f"impact-{nom}-{i}", cercle(cx, cy, r),
@@ -117,6 +158,7 @@ for nom, (cx, cy) in CIBLES.items():
                                   cercle(cx, cy - 10, 26),
                                   remplissage=FUMEE, duree=DUREE))
 
+doc.setdefault('assets', []).extend(ASSETS_IMG)
 doc['layers'] = neufs[::-1] + doc['layers']
 for i, c in enumerate(doc['layers']):
     c['ind'] = i

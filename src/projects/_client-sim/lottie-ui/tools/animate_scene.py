@@ -407,13 +407,28 @@ def parcourir(couche, chemin, debut, fin, oriente=False, n=40):
     p0 = pts[0]
     pas = (fin - debut) / float(len(pts) - 1)
 
+    # ⛔ PARTIR DE LA POSITION DEJA POSEE, pas de zero. Un calque IMAGE (ty:2)
+    # porte sa position reelle dans `p` (le coin haut-gauche de l'image) ; un
+    # calque de formes converti a `p` a [0,0] parce que sa geometrie porte deja
+    # les coordonnees absolues. Ecraser `p` par un delta partant de zero envoie
+    # donc l'image AU COIN DE L'ECRAN -- mesure du 2026-08-30 : les medaillons
+    # se deplacaient correctement mais leur PHOTO partait de [0,0], invisible
+    # hors cadre, et le disque ivoire arrivait vide. Meme famille que le bug de
+    # `monte` : la valeur est juste, son REFERENTIEL est faux.
+    base = ks.get("p", {}).get("k")
+    if isinstance(base, list) and len(base) >= 2 and not isinstance(base[0], dict):
+        bx, by = float(base[0]), float(base[1])
+    else:
+        bx, by = 0.0, 0.0
+
     # easing inOut : demarrage progressif depuis l'arret, puis vitesse de
     # croisiere. C'est le mouvement valide dans la scene d'origine ; une
     # variante saccadee y avait ete testee puis RETIREE.
     paires = []
     for i, pt in enumerate(pts):
         t = round(debut + i * pas)
-        paires.append((t, [round(pt[0] - p0[0], 2), round(pt[1] - p0[1], 2), 0]))
+        paires.append((t, [round(bx + pt[0] - p0[0], 2),
+                           round(by + pt[1] - p0[1], 2), 0]))
     ks["p"] = keyframes(paires)
 
     if oriente:

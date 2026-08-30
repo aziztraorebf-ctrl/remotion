@@ -121,6 +121,15 @@ async function obtenirBundle(entree) {
     // Tailwind est active dans remotion.config.ts ; le bundler programmatique
     // ne lit PAS ce fichier, on rebranche donc la config a la main.
     webpackOverride: (config) => enableTailwind(config),
+    // ⛔⛔ MEME CAUSE, DEUXIEME VICTIME : `publicDir` non plus n'est pas lu
+    // depuis remotion.config.ts. Sans cette ligne, tout asset servi par
+    // staticFile() renvoie un 404 et DISPARAIT du SVG extrait -- en silence,
+    // le rendu se contente d'omettre l'element. Mesure (2026-08-30,
+    // KhartoumEtatMajorSVG) : le mode actif est `portrait-formation`, donc
+    // 4 medaillons PHOTO par colonne ; les SVG extraits en contenaient ZERO
+    // et personne ne l'a vu pendant deux sessions. Le 404 etait pourtant
+    // affiche dans la sortie de l'extracteur -- signale, jamais interprete.
+    publicDir: path.join(RACINE, "public"),
     onProgress: (p) => {
       if (p % 25 === 0) process.stderr.write(`  bundle ${p}%\n`);
     },
