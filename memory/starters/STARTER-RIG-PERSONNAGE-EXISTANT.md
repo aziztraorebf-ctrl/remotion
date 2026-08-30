@@ -73,8 +73,92 @@ etait FAUX — la manche est le **parent** du bras, elle ne peut pas s'en detach
 defaut etait une AMPLITUDE, pas un debranchement. → **verifier la chaine de parentage
 avant de conclure qu'une piece s'est decrochee.**
 
+### ⛔⛔ LE VERDICT DU SOIR — 4 ESSAIS, 4 PIECES IMPREVUES : ON ARRETE LE DOUANIER
+
+Apres le pilotage reussi, 4 tentatives pour faire LEVER le bras, toutes echouees, chacune
+exhibant une piece differente :
+
+| Essai | Corrige | Ce qui est apparu |
+|---|---|---|
+| 1 | l'angle ramene dans la plage | le morceau de manche change de place |
+| 2 | le redessin image par image (`ks.a=1` figes) | presque aucun effet |
+| 3 | la manche retiree (filtre par couleur) | ⛔ l'EPAULE deshabillee aussi (2 pieces bleues) |
+| 4 | — | un aplat de peau FIGE (`tr.p=[0,0]`) colle sur la main |
+
+⭐ **Aziz a lu l'essai 3 par un indice** : l'inscription `ZOLL` du torse, masquee par le bras
+leve, etait devenue lisible → j'avais retire une piece innocente.
+
+⛔⛔ **Un echec est un bug ; QUATRE echecs qui exhibent chacun une piece differente sont un
+DIAGNOSTIC** : ce fichier est un assemblage optimise pour UNE pose. Il viole notre propre
+regle deja payee — `vetement-solidaire-du-corps-jamais-independant`. **On ne se battait pas
+contre un defaut, mais contre une methode de fabrication.**
+
+### ⭐⭐⭐ LA MESURE QUI TRANCHE LA VOIE : il n'existe AUCUN standard entre personnages pro
+
+Sur **23 pieces du corpus** (`demonter.py` + comptage rot-animees vs formes-animees) :
+
+| | valeur |
+|---|---|
+| Reellement **PILOTABLES** (bcp de rotations, <=2 formes redessinees) | **2 sur 23** (Hiker, kiosk) |
+| nulls de controle | de **0 a 3** (le Hiker n'en a AUCUN) |
+| precomps | de 0 a 6 · formes animees : de **0 a 11** |
+
+⛔ **Consequence** : ce qu'on apprend sur un personnage NE SE TRANSPORTE PAS au suivant.
+La brique « placer d'un seul parametre » n'existe meme pas chez le Hiker. **Il n'y a donc
+pas de competence cumulable du cote des rigs tiers** → la voie « reutiliser des personnages
+pro » est un puits sans fond (+ licence non documentee + on ne choisit pas le personnage).
+
+### ⭐⭐ CE QUI SE TRANSPORTE, LUI : le FORMAT du geste (partitions)
+
+Un geste pro = **une table de nombres**. Nos gestes = **du code** (~70 lignes raisonnees
+pour « lever le bras » dans `GestesExpressifs16x9.tsx`) — d'ou « tout reprogrammer a chaque
+fois » (plainte d'Aziz, fondee).
+→ **`src/projects/_shared/stick-figure-svg/partitions/`** (`poses.ts` + `gestes.ts`) :
+SALUER / POINTER / ACQUIESCER en **5 a 7 cles**, rendus et REGARDES. Commit `3ea9e5fa`.
+⭐ **Preuve du gain** : ACQUIESCER trop discret → corrige en changeant **UN NOMBRE**
+(0,55 → 1,15), zero ligne de logique touchee.
+⛔ 2 pieges (typecheck VERT les 2 fois, trouves en REGARDANT) : `headTuck` n'est pas en
+degres (`headLen = 12 - tuck*7`, echelle ~±1) · sans `leg*Deg` et `phase=0` les 2 jambes se
+superposent (plancher de swing ~16 deg) → pose `base` (`DEBOUT`) sous toutes les cles.
+
+### ⭐⭐⭐ LE CONCOURS DE DESSIN (4 modeles, meme brief, meme image-ref)
+
+⛔ **Le marche parle VECTORIEL** (decision d'Aziz) : les stick figures restent en reserve,
+le livrable client est un personnage vectoriel.
+
+**Le brief STRUCTUREL chiffre est ce qui fait la difference** — 11 calques nommes imposes,
+**recouvrement >= 15 % de la longueur du membre** (mesure sur la piece pro : 6,1 px pour un
+bras de 38,9 px), pivot au sommet, vetement solidaire, zero forme redessinee.
+⭐ Cette contrainte de recouvrement **est INVISIBLE sur une image de reference** — un modele
+qui dessine depuis une frame ne peut pas la deviner. C'est LA chose a graver dans un brief.
+
+| Modele | Verdict a l'oeil |
+|---|---|
+| ⭐ **Fable 5** (agent, 3 iterations rendu→regard) | **le seul VRAI personnage** — recouvrement 35 %, tient en rotation a 25/60/90 deg |
+| GPT-5.6 Sol | corps coherent, **visage rate** (nez triangulaire sur la bouche), pieds enormes |
+| Gemini 3.1 Pro | torse rectangulaire sans epaules, jambes en barres |
+| Grok 4.6 | **le pire** : pas de cou, moignons sans mains, **2 pieds fusionnes en un socle** |
+
+⛔ **Grok gagnait la 3D et la typographie** → recoupe `capacite-modele-supposee-verifier-le-
+catalogue` : **le classement depend du REGISTRE, jamais du modele seul**.
+⚠️ Reserve honnete : Fable a eu **3 iterations rendu→regard**, les 3 autres **1 appel a
+l'aveugle**. L'ecart est autant methode que modele. Cout total du concours : ~0,13 $.
+
 ### ⏭️ CE QUI RESTE OUVERT (la vraie prochaine question)
 
+0. ⏳ **EN COURS au moment de l'ecriture — la V2 de Fable** : personnage vectoriel neutre,
+   **15 calques** (la marche est decidee : `jambe-*-haut`/`-bas`/`pied`), fond clair,
+   references du corpus fournies (`out/_r-and-d/perso-corps-entier/ref/` : douanier +
+   **Hiker en 2 poses de marche** + Exercise). Fable a lui-meme demande ces references
+   (« avec image-ref je reussis, sans j'echoue ») et **REFUSE les degrades** (ils
+   casseraient l'aplat franc) — il veut des ombres a 2 niveaux.
+   ⭐ **Ses 2 apports techniques, acceptes** : la **PASTILLE DE ROTULE** (cercle couleur
+   manche au coude/epaule, dans le calque du membre — bouche le joint a tout angle SANS
+   deformer aucune forme) et les **pivots `x,y` anatomiques** au lieu de `data-pivot="haut"`
+   (le sommet de la boite est 10-20 px au-dessus du vrai centre articulaire A CAUSE de la
+   reserve de recouvrement — d'ou des bras qui s'ecartent au lieu de tourner).
+   ⛔ Il avertit : **redecouper pour la marche APRES la V2 aurait coute une refonte** —
+   toujours trancher la marche AVANT le design.
 1. **Notre chien n'a pas d'OBJET DE CONTROLE.** Les fichiers pro cachent un calque vide
    auquel 13 des 19 calques sont accroches : deplacer, agrandir ou reposer le personnage
    entier = **une seule valeur a changer**. C'est le 1er correctif a lui apporter.
