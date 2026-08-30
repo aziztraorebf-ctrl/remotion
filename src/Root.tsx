@@ -148,6 +148,7 @@ import {
   REDEEM_W,
   REDEEM_H,
 } from "./projects/_client-sim/repro-redeem/ReproRedeem";
+import { ReproDocs } from "./projects/_client-sim/repro-docs/ReproDocs";
 import {
   MainGreffeeDemo,
   MAIN_DEMO_FRAMES,
@@ -777,6 +778,19 @@ export const RemotionRoot: React.FC = () => {
             Methode REPRO-FOSTER : on ne choisit ni le sujet ni l'ambition.
             Reference : out/_r-and-d/corpus-kamotion/ + src/.../repro-redeem/ref/ */}
         <Folder name="client-sim-repro-ui">
+          {/* REPRO-DOCS — 2e piece du meme studio (`08_Docs.lottie`, 2000x2000,
+              60 fps, 2,52 s). Flux UI : un curseur selectionne des documents, la
+              pile BASCULE dans un dossier (une seule animation de null parent),
+              le dossier devient le logo client.
+              ⭐ Partition integralement RELEVEE dans le .lottie, pas dosee. */}
+          <Composition
+            id="ReproDocs"
+            component={ReproDocs}
+            durationInFrames={151}
+            fps={60}
+            width={2000}
+            height={2000}
+          />
           <Composition
             id="ReproRedeem"
             component={ReproRedeem}
