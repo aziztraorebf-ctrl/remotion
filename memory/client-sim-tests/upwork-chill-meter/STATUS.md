@@ -86,6 +86,24 @@ to the metal surface**, not like a flat graphic placed on top » (p.5). Sur un c
 le givre des jalons 2-3 ressemblera toujours a un calque pose. **Regler la matiere au jalon 1 est
 structurel pour la suite** — apres, ca devient une revision qui remet en cause du travail anime.
 
+⛔⛔ **BUG PAYE — la 1re implementation visait des GRADIENTS MORTS** (30/08, 2 rendus perdus).
+Symptome : les 3 finitions sortaient **identiques AU BIT PRES** (0 octet different sur 8,3 Mo),
+sans erreur ni avertissement. Cause : le fichier definit **39 gradients dont 26 ne sont references
+par AUCUN `url(#id)`** — vestiges du mix des 3 planches sources (le chassis retenu est celui de
+GPT ; les gradients metal de Fable et Kimi n'ont jamais ete branches). `applyRamp` etait correcte,
+elle s'appliquait a du code mort.
+✅ **Fix** : rampes pointees sur les 5 gradients REELLEMENT dessines — `gpt_metalOuter` (7 stops),
+`gpt_metalInset` (5), `gpt_titlePlate` (5), `gpt_screwFace` (4, les 8 vis), `kimi_btnGrad` (3, les
+5 boutons du bas). Mesure apres fix : chassis **22,5 -> 25,3 (brushed) -> 26,7 (machined)** en
+moyenne RGB, 1,8 % des octets modifies.
+✅ **Garde-fou** : `DRAWN_GRADIENTS` est calcule depuis `G` (les groupes du dessin) et `metalDefs`
+**LEVE une erreur** si un id vise n'y figure pas. Un gradient mort = echec **parfaitement
+silencieux** : le piege se serait repete au prochain reglage.
+⭐ **Verifier avant de viser un id** : `grep -o 'url(#<id>)' ChillMeterDevice.tsx | wc -l`
+⭐ **Lecon de methode** : j'ai d'abord annonce « l'effet est trop faible » en REGARDANT l'image,
+alors qu'il etait **NUL**. C'est la mesure (diff octet a octet) qui l'a etabli. Un rendu se MESURE
+avant d'etre commente — cf. `animation-vs-image-fixe-mesurer-frames-uniques`.
+
 **Ce qui a ete fait (methode retenue par Aziz : passe de matiere sur l'EXISTANT, pas de generation
 neuve)** — la structure est fidele a 100 % a sa reference et aux bonnes dimensions, une generation
 neuve l'aurait remise en jeu pour gagner de la matiere, et les 4 planches d'aout ont chacune leurs
