@@ -150,7 +150,7 @@ const CalendrierMural: React.FC = () => {
           letterSpacing: "0.18em",
         }}
       >
-        MARS
+        MARCH
       </div>
       <div
         style={{
