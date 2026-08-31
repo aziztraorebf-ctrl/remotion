@@ -105,6 +105,16 @@
         ]
       },
       {
+        "matcher": "mcp__upwork__upwork__send_message|mcp__upwork__upwork__manage_proposals",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/outbound-message-guard.sh",
+            "timeout": 10
+          }
+        ]
+      },
+      {
         "matcher": "Edit|Write",
         "hooks": [
           {
