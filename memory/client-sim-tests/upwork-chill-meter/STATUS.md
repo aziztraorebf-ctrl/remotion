@@ -4,6 +4,17 @@
 > accepté par la cliente le 29/08, **offre v2 acceptée par Aziz le 30/08**. 350 $ → 297,50 $ net.
 > ⛔ Les décisions de ce fichier engagent contractuellement.
 
+## ⭐⭐⭐ ETAT AU 2026-08-31 : JALON 1 PRET A ENVOYER — chassis machined final
+
+**Cadrage retenu (Aziz)** : Machined est une AMELIORATION pure de l'existant (rien perdu, plus de
+matiere) — pas un choix a arbitrer a egalite avec Flat. On envoie donc **Machined comme LE design**,
+et on mentionne en 1 ligne dans le message qu'une version plus sobre existe si elle prefere.
+⛔ Flat n'est PAS envoye en option cote-a-cote — ca aurait fait hesiter sur un axe deja tranche.
+
+**Fichiers finaux** : `out/_r-and-d/chill-meter-upwork/jalon1-final/`
+- `01-meter-design-final.png` — chassis seul, agrandi
+- `02-meter-in-context-final.png` — compose sur le plateau (yt-dlp abigirl-decor.png)
+
 ## ⭐⭐⭐ ETAT AU 2026-08-30 : CONTRAT ACTIF — jalon 1 prêt, envoi prévu le 31/08
 
 📄 **Page de pilotage** : https://claude.ai/code/artifact/652c7c39-1529-45a7-8d0b-929098180b9b
