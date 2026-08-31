@@ -185,6 +185,22 @@ fi
 # 2e posee APRES le filtre .tsx -> les .md rejetes. Detecte par le TEST, pas la relecture.
 if printf '%s' "$FILE_PATH" | grep -qiE 'client-sim|upwork|freelance-linkedin|BRIEF-CLIENT'; then
   add_fiche "FICHE-BRIEF-CLIENT.md" "FICHE BRIEF CLIENT" "$FILE_PATH"
+  # upwork-mcp.md vit dans memory/tools/, pas memory/fiches/ (c'est une doc d'outil, pas
+  # une fiche de production) -> add_fiche ne s'applique pas (cherche dans FICHES_DIR).
+  # Injection directe du fichier si le chemin touche a Upwork specifiquement.
+  if printf '%s' "$FILE_PATH" | grep -qiE 'upwork'; then
+    UPWORK_MCP_DOC="${CLAUDE_PROJECT_DIR:-/Users/clawdbot/Workspace/remotion}/memory/tools/upwork-mcp.md"
+    if [ -f "$UPWORK_MCP_DOC" ]; then
+      UPWORK_KEY=$(fkey "upwork-mcp::${FILE_PATH}")
+      if [ ! -f "$SENTINEL_DIR/$UPWORK_KEY" ]; then
+        touch "$SENTINEL_DIR/$UPWORK_KEY"
+        PARTS="${PARTS}
+
+=== FICHE MCP UPWORK (rappel auto, 1x par cible par session) ===
+$(cat "$UPWORK_MCP_DOC")"
+      fi
+    fi
+  fi
   # ⛔ Sortie anticipee UNIQUEMENT pour les .md (un brief/STATUS ne declenche aucune autre
   # fiche). Un .tsx de _client-sim/ DOIT continuer vers les tests suivants : sinon
   # FICHE-SVG-DESSINE et FICHE-ARSENAL-SCENE seraient court-circuitees exactement la ou
