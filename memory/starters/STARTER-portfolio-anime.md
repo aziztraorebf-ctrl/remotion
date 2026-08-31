@@ -1,157 +1,166 @@
 # STARTER — PORTFOLIO ANIMÉ : du marché réel à nos propres pièces
 
-> Créé le **2026-08-30** en clôture de la session « scènes du corpus ».
-> ⭐ **Plan défini par Aziz.** Copier-coller le bloc PROMPT en début de session.
+> Mis à jour le **2026-08-31** en clôture de la session « Onboarding Flow ».
+> Session précédente (30/08) créée par Aziz. Plan de cette session-là **EXÉCUTÉ**.
+> ⭐ **Prochaine étape définie par Aziz.** Copier-coller le bloc PROMPT en début de session.
 
 ---
-## ⭐⭐ LE DOSSIER PORTFOLIO EXISTE — `out/PORTFOLIO/` (créé le 2026-08-30)
+
+## ⭐⭐ LE DOSSIER PORTFOLIO — `out/PORTFOLIO/` — 2 PIÈCES
 
 **Décision d'Aziz** : les pièces prêtes à envoyer vivent là, **un sous-dossier par pièce**.
-La 1re y est déjà : `out/PORTFOLIO/carte-etat-major/` — 4,7 s · carré 1024 · **7,7 Ko** ·
-éléments génériques (alpha/bravo/charlie/west/east), donc un **composant que le client
-remplit**, pas une scène datée.
+
+| pièce | format | poids | statut |
+|---|---|---|---|
+| `carte-etat-major/` | 1024 carré, 4,7 s | **7,7 Ko** | ✅ générique (alpha/bravo/charlie) |
+| `onboarding-flow/` | 500×1080, 4,58 s, 60 fps | **116 Ko** ⚠️ | ✅ **ACCEPTÉ** — fidélité 0,30 %, 13 groupes anglais |
 
 ⭐ **La structure en sous-dossiers permet à plusieurs sessions de travailler en parallèle** :
-chacune ajoute le sien, personne ne touche à ceux des autres.
+chacune ajoute le sien, personne ne touche à ceux des autres. Vécu le 30/08 : une session
+chill-meter travaillait en parallèle sur la même branche `master` — aucun conflit, mais
+**`/wrap` complet skippé par prudence** (agent CLEANUP aurait pu toucher ses fichiers non
+commités). À relancer en session solo.
 
-⛔ **La barrière d'entrée est écrite dans `out/PORTFOLIO/README.md`** — 4 conditions, toutes
-vérifiables : rendu fidèle mesuré · calques **lisibles par un client** · format qui s'achète
-(court, carré) · **réutilisable**. Les lire avant d'y déposer une pièce.
+⛔ **La barrière d'entrée est dans `out/PORTFOLIO/README.md`** — 4 conditions : rendu fidèle
+mesuré · calques **lisibles par un client** · format qui s'achète · **réutilisable**.
 
-⚠️ **Outil de finition** : `lottie-ui/tools/livrer_piece.py` renomme les calques pour un client
-et **signale ce qui reste illisible** (au lieu de le maquiller). Vérifié le 30/08 : sans lui, le
-gabarit s'appelait `EtatMajorGabarit-f139` avec un premier écran affichant `rim-1`, `g-2-pochoir`,
-`circle-1` — un acheteur aurait été perdu. Fidélité et lisibilité sont deux qualités SÉPARÉES :
-la mesure ne voit que la première.
-
-## ⭐ CE QUI EST ACQUIS (ne pas refaire)
-
-**3 pièces terminées**, écarts mesurés vs les originaux d'un studio qui vend :
-
-| pièce | ce qu'elle a appris | livrable |
-|---|---|---|
-| `repro-redeem` | l'ancrage **au bout du doigt** (un curseur se tient par sa pointe) | `out/_r-and-d/repro-redeem/repro-redeem-FINAL.mp4` |
-| `repro-docs` | la **poignée invisible** (N objets parentés, on n'anime que le parent) + le **morphing de forme** | `out/_r-and-d/repro-docs/repro-docs-FINAL.mp4` |
-| `repro-onboarding` | la **cascade inversée** (l'ordre de sortie ≠ l'entrée à l'envers) + **anticipation/dépassement** | `onboarding-FINAL.mp4` · **`onboarding-CLAIR.mp4`** |
-
-**Le corpus est ÉPUISÉ** : les 4 pièces d'interface sont traitées. ⛔ Ne pas y retourner.
-
-**Outils créés** :
-- ⭐⭐ `scripts/tools/da-brief-anim.py` — DA-brief ANIMATION **4 voix** (Gemini + Kimi
-  en vidéo native, GPT + Grok en frames), **avec ou SANS référence**. Le mode
-  **sans référence est le principal**. Blocs : récit → motion → test du prix
-  (200 $ ou 2000 $ ?) → 3 corrections → **ancrage** (nommer une référence réelle,
-  interdiction du vocabulaire « premium » creux) → **l'idée qu'on n'a pas eue**.
-- Thème clair/sombre paramétré dans `repro-onboarding/assets/gen-planche.py`
-  (`THEME=clair python3 gen-planche.py`).
-
-**Ce que le thème clair a prouvé** (test d'Aziz) : une demande client « je veux
-du clair » se traite **dans la même session**, sans redessiner ni ré-animer.
-C'est l'argument déterministe rendu concret.
+⚠️ **`onboarding-flow` dépasse le repère marché** (116 Ko vs < 50 Ko pour les pièces qui se
+vendent). Cause identifiée : ~40 textes en glyphes vectoriels + 6 lignes de membres. Une
+variante allégée (moins de membres, moins de texte) descendrait nettement — **à faire avant
+toute publication ou vente**.
 
 ---
 
-## ▶️ LE PLAN DE LA PROCHAINE SESSION (défini par Aziz)
+## ⭐⭐⭐ CE QUI EST ACQUIS (ne pas refaire)
 
-### 1. MCP Fiverr — ce que les VRAIS clients demandent
-But : sortir des suppositions. Voir ce qui a été **commandé**, ce que les
-acheteurs ont **dit** dans leurs avis. Même sans les vidéos, la description et
-les avis suffisent à savoir ce que le marché valide.
+**Le corpus de repro est ÉPUISÉ** (4/4 pièces d'interface traitées, verdict confirmé). On ne
+reproduit plus : on **crée**, sur ce que le marché valide.
 
-⚠️ **Réserves de l'audit (2026-08-30)** — le dépôt `KyuRish/fiverr-mcp-server` :
-- ✅ **AUCUNE authentification** requise (vérifié dans le code : zéro cookie,
-  token ou session). Le compte Fiverr d'Aziz n'est jamais exposé.
-- ✅ Code propre : aucune télémétrie, seul hôte sortant = fiverr.com, throttle
-  correct (2 s, plancher dur à 1 s).
-- ⛔ **Abandonné** : 3 commits, tous du 2026-02-23, 9 étoiles. Un scraper figé
-  6 mois se dégrade en silence.
-- ⛔ **Contourne activement Cloudflare** (`curl-cffi impersonate`, rotation
-  d'empreintes sur 403) → clause CGU (vii), plus sévère que le scraping seul.
-- ⚠️ Risque résiduel = **blocage IP**, pas bannissement de compte.
+**Chaîne complète SVG → Lottie livrable, prouvée de bout en bout** (session du 30/08) :
+```
+gen-planche.py (dessin, source de vérité, PARAMÉTRABLE : ICONES, OPTION_ACTIVE, THEME, EMPILE)
+  -> svg2lottie_scene.py   conversion + rapport ce qui passe/casse
+  -> animate_scene.py      partition -> animation (primitives : glisse, parait_disparait, pop, fondu...)
+  -> group_layers.py       177 calques -> 13 groupes lisibles PAR INTENTION
+  -> livrer_piece.py       nom de la pièce, respecte les noms déjà propres
+  -> verifier_fidelite.py  la preuve, contre la composition Remotion — ⛔ TOUJOURS avec
+                           `--sans-alignement` (voir règle n°1 ci-dessous)
+```
+Outils : `src/projects/_client-sim/lottie-ui/tools/`. Pièce de référence :
+`src/projects/_client-sim/onboarding-generique/`.
 
-⭐ **Protocole retenu** : essai **depuis un agent isolé**, lecture seule,
-`RATE_LIMIT_DELAY=5`, quelques dizaines de requêtes, **une seule fois**,
-installation depuis les sources figées (pas `uvx`). Si ça ne marche pas
-(probable), on le sait en 10 min → plan B : lecture manuelle de
-`fiverr.com/search/gigs?query=...&sort_by=best_selling` + `last30days` sur
-r/Fiverr et r/motiondesign.
-
-### 2. Rétro-ingénierie → QUOI mettre au portfolio
-À partir de ce que le marché a validé, décider les pièces à produire.
-⛔ Plus de reproduction : ce sont **nos** pièces désormais.
-
-### 3. Workflow SVG → planches
-Réutiliser le workflow SVG existant (agent `svg-dessinateur`, qui a maintenant
-sa **RÈGLE N°0** : réclamer le récit avant de dessiner).
-⚠️ **FORMAT À TRANCHER, pas par défaut** : le corpus est carré 60 fps, mais nos
-2 pièces d'interface réussies sont **verticales** (500×1080). Le carré est le
-format des pièces COURTES (logo, icône) ; les flux d'interface sont verticaux.
-Décider au brief selon le registre visé.
-
-### 4. Code → animation
-Comme d'habitude : le SVG est la source, le TSX pilote, jamais l'inverse.
-
-### 5. `da-brief-anim.py` en mode SANS référence
-⭐ C'est là que la valeur est apparue cette session : il ne trouve pas que des
-gestes d'animation, il trouve les **trous de logique narrative**. Sur
-`repro-onboarding` il a sorti 3 incohérences de texte que ni Aziz ni Claude
-n'avaient vues (chiffre qui contredit la liste, titre qui annonce autre chose
-que l'étape, notification qui inverse la perspective) — **toutes vérifiées
-vraies dans le code**.
-
-### 6. Itérer
+**2 primitives ajoutées à `animate_scene.py`** (le format savait faire, l'outil n'émettait rien
+— 4e occurrence de cette leçon, cf. `CE-QUI-PASSE-EN-LOTTIE.md`) :
+- `parait_disparait` — un élément apparaît PUIS s'efface (aucune primitive ne savait disparaître)
+- `glisse` — glissement AMORTI qui se termine (≠ `monte`, qui oscille en boucle)
 
 ---
 
-## ⛔ LES RÈGLES PAYÉES CETTE SESSION (non négociables)
+## ▶️ CE QUI RESTE OUVERT (prochaine session)
 
-1. ⭐⭐⭐ **Le RÉCIT avant la technique.** Écrire en UNE phrase ce que le
-   spectateur doit avoir compris, AVANT de dessiner. Si on ne sait pas l'écrire,
-   la pièce n'est pas prête. → `feedbacks/feedback_animation-sans-recit-est-une-demo-vide.md`
-2. ⭐⭐⭐ **Un recouvrement est un problème d'ANCRE, pas de dosage.** Si réduire
-   la taille ET décaler ne suffisent pas, les 2 variables sont innocentes.
-   → `feedbacks/feedback_recouvrement-est-un-probleme-d-ancre-pas-de-dosage.md`
-3. ⭐⭐ **Mesurer le FICHIER ne remplace pas mesurer l'IMAGE.** Le scan du
-   `.lottie` disait « 37/38 en opacité seule » — exact, et pourtant trompeur :
-   le glissement d'ensemble n'appartenait à aucun calque.
-4. ⭐⭐ **Un mouvement en bloc ≠ le même mouvement par élément décalé.** Le
-   décalage EST le geste.
-5. ⭐⭐ **Un thème clair n'est PAS le négatif du sombre.** Le gris secondaire doit
-   y être nettement plus foncé (mesure WCAG : 2,46 → illisible ; il fallait
-   #3e4a58 et non #5d6b7d). Et les OMBRES noires en dur sont le piège invisible.
-6. ⭐⭐ **Transcoder avant d'envoyer une vidéo dans le chat** (H.264 niveau ≤ 4.0,
-   `yuv420p` range TV). Un 2000×2000 @ 60 fps est refusé par le mobile.
-   → `memory/fiches/FICHE-ASSEMBLAGE.md`
-7. ⛔ **Vérifier la taille d'un fichier après toute réécriture par regex** — un
-   `re.sub` mal formé a vidé `gen-planche.py` (20 Ko → 14 octets), récupéré par
-   git grâce au commit précédent.
+### 1. Alléger `onboarding-flow` sous 50 Ko
+Moins de membres dans la liste, ou texte moins dense. Mesurer avant/après.
+
+### 2. Générer les variantes déclinées
+Le générateur les permet déjà (`ICONES=2|3|4`, `OPTION_ACTIVE=1..4`, `THEME=clair|sombre`) —
+il reste à les produire, les mesurer, et les déposer.
+
+### 3. Décider les 3-4 prochaines pièces
+Piste posée mais **NON validée par mesure directe** — voir réserve ⛔ ci-dessous : « New Feature
+Announcement », « Integration Connected », « Dashboard qui se remplit ». Croiser avec le verdict
+Dribbble (nommer par EMPLACEMENT PRODUIT, jamais par technique) avant de trancher.
+
+### 4. Publication (LottieFiles / IconScout) — feu vert juridique, décision de calendrier ouverte
+Vérifié le 30/08 : publier en gratuit **ne cède PAS l'exclusivité** (LottieFiles = licence
+*non-exclusive* ; IconScout = *"you hold the ownership"*). Le risque n'est pas juridique mais
+commercial (perte d'exclusivité commerciale sur une pièce publiée). Objectif d'Aziz : **gratuit
+d'abord, crédibilité/trafic — pas revenu**. Le premium n'est envisagé QUE si le gratuit valide,
+et ⛔ vérifier l'exclusivité côté premium LottieFiles avant d'y songer (pas côté gratuit).
+
+### 5. Navigation authentifiée — reportée, PAS résolue
+Aziz a un compte Fiverr connecté (mobile ce jour-là, pas d'écran dispo). Aucun outil actuel
+(agents Playwright anonymes, superpowers-chrome profil isolé) n'hérite de sa session. Piste
+retenue pour la prochaine fois : **Browser MCP** (piloté par le navigateur d'Aziz, sa session) —
+ou `superpowers-chrome show_browser` + connexion manuelle une fois (le profil persiste ensuite).
+⛔ Ne PAS relancer d'agents anonymes sur Fiverr : mur PerimeterX systématique, mesuré 2x.
+
+---
+
+## ⛔⛔ RÈGLES PAYÉES CETTE SESSION (30/08 → 31/08, non négociables)
+
+1. ⭐⭐⭐ **UN RAPPORT ROUGE NE PROUVE RIEN NON PLUS.** `verifier_fidelite.py` REFUSAIT une
+   pièce à 12,81 % d'écart. Cause : son `aligner_cadrage()` déduit le fond de
+   `getpixel((0,0))` — un calque qui glisse laisse une bande transparente rendue BLANCHE,
+   qui empoisonne la bbox et RESCALE toutes les frames de référence. Même fichier, même
+   commande, `--sans-alignement` seul : 12,91 % → 4,36 %, puis pièce corrigée → **0,30 %,
+   ACCEPTÉ**. Le pendant exact de « un rapport vert ne prouve rien » — côté rouge cette fois.
+   ⛔ Sur toute pièce dont un calque glisse : mesurer AVEC ET SANS alignement avant de
+   conclure au défaut.
+2. ⭐⭐⭐ **LE NOM DE LA PIÈCE VAUT 5-10× LA TECHNIQUE.** Mesuré sur Dribbble Services (ouvert,
+   contrairement à Fiverr/LottieFiles/Upwork, tous en 403 ce jour-là) : « lottie animation »
+   = 10 $, « SaaS Hero Animation | Lottie » = 350 $, « Product Motion Pack » = 1150 $. Titrer
+   par l'EMPLACEMENT PRODUIT (hero, onboarding, dashboard), jamais par la technique.
+   → verdict n°10, `memory/projects/RECHERCHE-MARCHE-INDEX.md` § DRIBBBLE.
+3. ⭐⭐ **« QUI LIT ? » EST LE CRITÈRE DE LANGUE, PAS « QUEL PROJET ».** Calques Lottie et guide
+   d'édition → anglais (l'acheteur les lit), SANS accents (risque d'encodage chez un lecteur
+   tiers pour zéro bénéfice). Code et commentaires → français (nous seuls les lisons). Un nom
+   de calque n'est pas du texte affiché.
+4. ⭐⭐ **UN CHIFFRE LU DANS UN EXTRAIT INDEXÉ N'EST PAS UNE MESURE.** Un agent a rapporté des
+   comptages IconScout par catégorie (« new-feature = 9 pièces ») tirés de titres de pages
+   indexées, les pages elles-mêmes étant en 403. Aziz est allé vérifier directement : chiffres
+   FAUX, aucune catégorie n'était quasi vide. Quand la page est inaccessible, le mot juste est
+   NON MESURÉ — jamais « mesuré indirectement ». → `DEMANDE-REELLE-LOTTIE-2026-08-30.md`
+   (corrigé en tête de fichier).
+5. ⭐ **UN Lottie N'A PAS DE MOTEUR DE MISE EN PAGE.** Rien ne se recentre chez le client. Pour
+   « le client peut supprimer une icône » : livrer des VARIANTES PRÉGÉNÉRÉES (nous calculons
+   la mise en page à la génération), pas un vrai responsive — qui n'existe pas dans ce format.
+6. ⭐ **UN CADRE QUI DÉSIGNE VAUT MIEUX QU'UNE ACTION ARBITRAIRE.** Idée d'Aziz : avant qu'un
+   interrupteur bascule, un contour lumineux doit désigner LA ligne concernée. Sans lui,
+   l'action se lit comme arbitraire. A aussi révélé un bug caché (interrupteur câblé en dur
+   sur une autre rangée que celle désignée par le cadre) — invisible tant que rien ne les
+   comparait visuellement.
+7. ⛔ **CAPTCHA = ARRÊT NET, PAS UN OBSTACLE À CONTOURNER.** La ligne n'est pas « pas
+   d'automatisation » (Playwright/navigateurs pilotés = légitimes, utilisés sans réserve cette
+   session) — c'est spécifiquement : ne jamais résoudre soi-même une épreuve qui demande de
+   prouver qu'on est humain. Devant un CAPTCHA : constater, arrêter, remettre à un humain (ici,
+   Aziz). Ne pas généraliser cette règle en « site fermé » dans une note — c'est un fait sur
+   l'outil du moment, pas sur le monde (Aziz passe sans difficulté depuis son navigateur).
+8. ⛔ **UN CHEMIN DE SORTIE EN DUR DANS UN GÉNÉRATEUR PARTAGÉ = RISQUE D'ÉCRASEMENT SILENCIEUX.**
+   `gen-planche.py` avait `SORTIE = pathlib.Path("/chemin/absolu/vers/repro-onboarding/...")`
+   — en le lançant depuis une pièce voisine, il a écrasé la planche de l'autre (restaurée par
+   git, elle était commitée). Toujours un chemin relatif au script (`Path(__file__).parent`).
+9. ⛔ **2 ÉCHECS IDENTIQUES SUR LE MÊME OUTIL → DÉLÉGUER, PAS RE-TENTER.** Appliqué 2x cette
+   session (cache de bundle Remotion périmé, puis écart de fidélité) — les deux fois un agent
+   dédié a trouvé la cause structurelle en une passe là où re-tenter n'aurait fait que répéter
+   le symptôme.
 
 ---
 
 ## ▶️ PROMPT DE DÉMARRAGE (copier tel quel)
 
 ```
-Session : PORTFOLIO ANIMÉ — du marché réel à nos propres pièces.
+Session : PORTFOLIO ANIMÉ — suite.
 
 Lire d'abord :
-  memory/starters/STARTER-portfolio-anime.md   (ce fichier : plan + acquis)
-  memory/projects/RECHERCHE-MARCHE-INDEX.md    (8 verdicts marché)
-  memory/client-sim-tests/corpus-kamotion/CORPUS-REFERENCE-UI.md
+  memory/starters/STARTER-portfolio-anime.md        (ce fichier : acquis + plan)
+  memory/projects/RECHERCHE-MARCHE-INDEX.md          (verdicts marché, dont § DRIBBBLE n°10)
+  out/PORTFOLIO/onboarding-flow/FICHE.md             (la pièce de référence, mesures)
 
-Le corpus est ÉPUISÉ (4 pièces d'interface sur 4 traitées). On ne reproduit
-plus : on crée nos propres pièces, sur ce que le marché valide.
+2 pièces au portfolio : carte-etat-major (7,7 Ko) et onboarding-flow (116 Ko, ACCEPTÉ mais
+trop lourd). La chaîne SVG->Lottie livrable est prouvée de bout en bout.
 
-Étape 1 — MCP Fiverr, essai encadré depuis un AGENT ISOLÉ (voir les réserves
-de l'audit dans le starter : pas d'auth requise, mais dépôt abandonné et
-contournement Cloudflare). Lecture seule, RATE_LIMIT_DELAY=5, quelques dizaines
-de requêtes, une seule fois. But : ce que les clients ont COMMANDÉ et ce qu'ils
-en ont DIT. Si ça casse → plan B (lecture manuelle + last30days sur Reddit).
+Prochaine étape à choisir avec Aziz : (1) alléger onboarding-flow sous 50 Ko, (2) générer les
+variantes déclinées, (3) décider les 3-4 prochaines pièces à produire, (4) navigation
+authentifiée (Browser MCP ou connexion manuelle superpowers-chrome) pour enfin lire les avis
+Fiverr et les compteurs LottieFiles/IconScout réels.
 
 ⛔ RAPPELS NON NÉGOCIABLES :
- - Le RÉCIT avant la technique. Une phrase de ce que le spectateur doit
-   comprendre, AVANT de dessiner. Sinon la pièce n'est pas prête.
- - Déclarer `// MOTEUR: <registre>` dans tout nouveau .tsx (gate actif).
- - Juger la netteté UNIQUEMENT sur un render scale=1.
- - Transcoder toute vidéo avant de l'envoyer à Aziz (niveau ≤ 4.0).
- - Un défaut qui résiste à 2 dosages est un problème de REPÈRE, pas d'amplitude.
+ - Sur toute pièce dont un calque glisse : mesurer verifier_fidelite.py AVEC ET SANS
+   --sans-alignement avant de conclure à un défaut (règle n°1).
+ - Titrer une pièce par son EMPLACEMENT PRODUIT, jamais par sa technique (règle n°2).
+ - Calques Lottie + guide client en anglais sans accents ; code + commentaires en français
+   (règle n°3, critère = qui lit).
+ - Un chiffre venant d'une page inaccessible (403) est NON MESURÉ, jamais "indirect" (règle n°4).
+ - Devant un CAPTCHA : arrêt net, on ne le résout jamais soi-même (règle n°7).
+ - 2 échecs identiques sur le même outil → déléguer à un agent, ne pas re-tenter (règle n°9).
 ```
