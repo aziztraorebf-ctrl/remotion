@@ -5421,6 +5421,16 @@ export const RemotionRoot: React.FC = () => {
         width={1920}
         height={1080}
       />
+      {/* R&D ponctuel — portfolio candidature vokabl, extrait panneau 3 muet (narration FR retiree) */}
+      <Composition
+        id="RND-Flowdesk-V4-NoNarration"
+        component={FlowdeskAbstraitV4}
+        durationInFrames={FLOWDESK_V4_FRAMES}
+        fps={FLOWDESK_V4_FPS}
+        width={1920}
+        height={1080}
+        defaultProps={{ muteNarration: true }}
+      />
 
       {/* Client-sim Flowdesk — Volet 2B, registre personne/emotion (silhouette MiniMax H3). */}
       <Composition

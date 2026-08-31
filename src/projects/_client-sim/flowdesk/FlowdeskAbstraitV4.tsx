@@ -581,7 +581,7 @@ const MEC_INFLOW_PATHS = [
 // plus lisible a n'importe quelle taille de police.
 const MEC_ROUTE_PATHS = [
   { d: "M 1160 400 C 1316 318 1481 252 1670 165", dest: { x: 1670, y: 165 }, label: "IT" },
-  { d: "M 1170 470 C 1343 429 1507 412 1680 385", dest: { x: 1680, y: 385 }, label: "RH" },
+  { d: "M 1170 470 C 1343 429 1507 412 1680 385", dest: { x: 1680, y: 385 }, label: "HR" },
   { d: "M 1180 540 C 1361 540 1525 540 1690 540", dest: { x: 1690, y: 540 }, label: "FINANCE" },
   { d: "M 1170 610 C 1343 651 1507 668 1680 695", dest: { x: 1680, y: 695 }, label: "SUPPORT" },
   { d: "M 1160 680 C 1316 762 1481 828 1670 915", dest: { x: 1670, y: 915 }, label: "DIRECTION" },
@@ -1172,7 +1172,7 @@ const OffsetFrame: React.FC<{ offset: number; children: React.ReactNode }> = ({ 
 // panneaux V4 durent exactement CHAOS_START/BASCULE_START/MECANISME_START/
 // RESOLUTION_START/TOTAL_FRAMES identiques a V3, seul le CONTENU visuel change).
 // ---------------------------------------------------------------------------
-export const FlowdeskAbstraitV4: React.FC = () => {
+export const FlowdeskAbstraitV4: React.FC<{ muteNarration?: boolean }> = ({ muteNarration = false }) => {
   const chaosDur = BASCULE_START - CHAOS_START;
   const basculeDur = MECANISME_START - BASCULE_START;
   const mecanismeDur = RESOLUTION_START - MECANISME_START;
@@ -1214,7 +1214,7 @@ export const FlowdeskAbstraitV4: React.FC = () => {
         </TransitionLayer>
       </Sequence>
 
-      <Audio src={staticFile("_client-sim/flowdesk/audio/narration-flowdesk.mp3")} />
+      {!muteNarration && <Audio src={staticFile("_client-sim/flowdesk/audio/narration-flowdesk.mp3")} />}
       <Audio
         src={staticFile("_client-sim/flowdesk/audio/music-flowdesk-45s.mp3")}
         volume={(f) =>
