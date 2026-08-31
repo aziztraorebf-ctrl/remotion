@@ -80,19 +80,33 @@ fichier).
 
 ---
 
-## 🌿 ÉTAT GIT — **1 SEULE branche vivante** (à jour 2026-08-30)
+## 🌿 ÉTAT GIT — **4 branches vivantes** (corrigé 2026-08-31, la note du 30/08 était périmée dès l'ouverture d'une nouvelle branche le 31)
 
-⭐ **`master` porte TOUT** : les 3 sessions (28-30/08) ont été mergées en fast-forward le 30/08
-(34 commits, 0 conflit), puis `feat/perso-corps-entier` et `feat/repro-lottie-ui-redeem` ont été
-**supprimées** — la seconde était entièrement absorbée (0 commit unique). ⛔ Ne pas les recréer.
+⛔ **Dérive détectée par le wrap du 31/08** : cette section affirmait "1 SEULE branche vivante"
+alors que 3 branches non mergées existent réellement. Toujours vérifier `git branch --list` avant
+de faire confiance à cette section — elle se périme au premier `git checkout -b`.
 
-Il reste `master` et **une seule** branche non mergée :
+État réel (`git branch --merged master` ne retourne QUE `master`, donc les 3 suivantes portent du
+contenu unique) :
 
+- **`feat/chill-meter-jalon1`** — branche COURANTE de la session du 31/08. Porte tout le travail
+  du contrat chill-meter (métal, README, jalons) + celui du 31/08 (récupération CFA, MCP Upwork,
+  hook outbound-message-guard). Contient aussi tous les commits de `feat/portfolio-onboarding-
+  generique` (ancêtre commun) — donc la fusionner absorbe l'autre.
+- **`feat/portfolio-onboarding-generique`** — 5 commits, tous déjà présents dans
+  `feat/chill-meter-jalon1` (vérifié par `git log ... ^master`). Candidate probable à suppression
+  une fois `feat/chill-meter-jalon1` mergée dans master — pas de contenu unique détecté.
 - ⚠️ **`feat/zambia-demo-2concepts`** — **1 commit unique** (`7b024e66`, 21/08) : `gallery/index.html`,
   `gallery/styles.css`, un poster PageCam (recherche en langage courant, intentions, favoris).
   ⛔ **NE PAS supprimer sans décider** : ces fichiers **n'existent PAS sur master**. La galerie est
   déployée sur GitHub Pages, donc son code de référence vit peut-être ailleurs — **vérifier où avant
   de merger OU de supprimer**. Tant que ce n'est pas tranché, la branche reste.
+
+⛔⛔ **Avant tout futur ménage de branches** : lire
+`memory/projects/INCIDENT-BRANCHE-SUPPRIMEE-TRAVAIL-PERDU.md` — une branche supprimée le 28/08
+portait 2 fichiers jamais commités, récupérés par chance seulement. Toujours vérifier
+`git status`/modifications non commitées sur une branche AVANT de la supprimer, pas seulement ses
+commits.
 
 ## ⭐⭐⭐ CONTRAT UPWORK chill-meter — SIGNÉ le 2026-08-30, jalon 1 PRÊT À ENVOYER
 
@@ -123,14 +137,15 @@ après signalement (halo de fond opaque · catbox/litterbox HS, repli sur Blob).
 
 ---
 
-## ⭐⭐⭐ CHAINE PERSONNAGE ANIMÉ — COMPLÈTE ET PROUVÉE (2026-08-29)
+## ✅ CHAINE PERSONNAGE ANIMÉ — COMPLÈTE ET PROUVÉE, technique gravée (2026-08-29)
 
 Dessin (Fable, d'après frames pro) → conversion → **pochoirs** → **précomposition** →
-**rig** → **animation**. Toutes les briques mesurées, le chien vit.
+**rig** → **animation**. Toutes les briques mesurées, le chien vit. La chaîne TECHNIQUE
+est acquise — reste seulement le volet commercial ci-dessous, actif :
 → `memory/starters/STARTER-RIG-PERSONNAGE-EXISTANT.md` (priorité 1 = corps entier)
 → code `src/projects/_client-sim/repro-chien/` · rendu `out/_r-and-d/repro-chien/`
 
-⭐⭐ **L'ARGUMENT COMMERCIAL QU'AZIZ A IDENTIFIÉ, et qu'il faut vérifier** :
+⭐⭐ **BACKLOG ACTIF — L'ARGUMENT COMMERCIAL QU'AZIZ A IDENTIFIÉ, et qu'il faut vérifier** :
 *« On aurait pu accélérer les oreilles. S'il ne voulait pas que la langue bouge, ça
 aussi. C'est meilleur que d'avoir un outil avec des animations prédéfinies qu'on
 n'arriverait même pas à modifier. »*
@@ -187,7 +202,7 @@ et parentage), pas la référence image. Détail : `memory/starters/STARTER-RIG-
 
 ---
 
-## ⭐ LOTTIE — chaîne PROUVÉE (section ARCHIVÉE le 2026-08-29)
+## ✅ LOTTIE — chaîne PROUVÉE (section ARCHIVÉE le 2026-08-29)
 
 Les acquis techniques (flou `ty:29` porté · `gradientTransform` en similitude · pointillés/`nm`
 unique · texte 2 voies · aller-retour Creator fidèle, ⛔ les 293 $/an ne se justifient pas)

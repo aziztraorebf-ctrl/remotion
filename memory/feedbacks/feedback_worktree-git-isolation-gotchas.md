@@ -273,3 +273,23 @@ correspondant existe-t-il sur master ?
 recours — coûteuse mais fiable, et toujours préférable à travailler sur un résumé. C'est
 « la source primaire, jamais un résumé » (`FICHE-BRIEF-CLIENT.md` § 2) appliqué à nos propres livrables.
 Même famille que `feedback_upload-nest-pas-une-archive-garder-le-render-local` — ici c'est le pendant TEXTE.
+
+---
+
+## ⛔⛔ `git fsck --unreachable` récupère un fichier orphelin — mais ce n'est PAS un filet de sécurité (2026-08-31)
+
+Une branche (`feat/cfa-nuit1994-svg-mix`) supprimée lors d'un ménage (28/08) portait 2 fichiers
+**jamais commités** (`CfaNuit1994Anime16x9.tsx`, `cfaNuit1994Groups.ts`) — invisibles dans tout
+`git log`, aucun commit d'aucune branche ne les contenait. Récupérés le 31/08 via
+`git fsck --unreachable | grep blob`, puis `git cat-file -p <sha> > fichier` pour chaque blob
+identifié par son contenu (grep dans le texte de chaque blob candidat). Détail complet de
+l'incident : `memory/projects/INCIDENT-BRANCHE-SUPPRIMEE-TRAVAIL-PERDU.md`.
+
+**Pourquoi ce n'est PAS une garantie** : `git fsck --unreachable` ne retrouve un blob que tant
+qu'aucun `git gc` n'est passé dessus. `git gc --auto` se déclenche automatiquement selon des
+seuils internes (nombre d'objets lâches) — il aurait pu passer n'importe quand entre le 28/08 et
+le 31/08. La récupération a marché par chance de timing, pas par méthode fiable.
+
+**La vraie règle reste celle du haut de ce fichier** : committer ou stasher AVANT tout changement
+de branche. `git fsck` est un dernier recours à tenter si l'accident est déjà arrivé, jamais une
+excuse pour ne pas committer.
