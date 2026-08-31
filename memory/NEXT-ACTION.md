@@ -1,5 +1,13 @@
 # NEXT-ACTION — Recommandations actives
 
+## ⛔⛔ À TRAITER — incident git : travail perdu puis récupéré par chance (2026-08-31)
+
+Le ménage de branches du 28/08 a supprimé `feat/cfa-nuit1994-svg-mix` alors qu'elle portait
+2 fichiers jamais commités (récupérés via `git fsck --unreachable`, chance pure — un `git gc`
+les aurait perdus pour de bon). Diagnostic + 3 pistes de correctif à trancher avec Aziz :
+`memory/projects/INCIDENT-BRANCHE-SUPPRIMEE-TRAVAIL-PERDU.md`. Ne pas refaire de ménage de
+branches sans avoir lu ce fichier.
+
 ## ⭐⭐⭐ DÉCISION DU 2026-08-24 — LA CHAÎNE EST UNE VITRINE, LE FREELANCE PORTE L'EFFORT
 
 Décision d'Aziz. La chaîne continue (Gazoduc), mais elle **prouve les capacités, elle ne les monétise
