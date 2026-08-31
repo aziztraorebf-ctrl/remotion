@@ -54,6 +54,43 @@
 >    (plus riche/texture) meme quand on lui demande d'imiter. Sans image-ref (texte seul), Sol produit
 >    TOUJOURS son registre par defaut, jamais le style plat/lineaire d'un episode existant.
 
+
+## ⭐⭐ GLM 5.3 — la VISION est sur `-flash`, PAS sur le modele principal (2026-08-30)
+
+⛔ **`z-ai/glm-5.3` est TEXT-ONLY** (`in=['text']`, verifie sur l'API OpenRouter le 30/08).
+✅ **`z-ai/glm-5.3-flash` a la VISION** (`in=['text','image','video']`) — **et coute 20x moins cher** :
+**0,07 $ / 0,25 $** contre 1,40 $ / 4,40 $ pour le 5.3 principal.
+→ La note « GLM = text-only, pas d'image-ref » de la section 5.2 est **PERIMEE pour 5.3-flash**.
+
+⛔⛔ **GLM 5.3 Flash a le MEME piege que Kimi K3 : borner `reasoning.max_tokens`.**
+Mesure du 30/08 sur le concours metal Chill Meter : sans borne, il a consomme **24 492 tokens de
+raisonnement sur 32 000**, `finish_reason="length"`, **content VIDE**, 0,016 $ depenses pour rien.
+Avec `reasoning: {max_tokens: 3000}` : SVG complet de 22 737 car., 20 gradients, **0,0025 $**.
+→ Le remede documente dans `kimi-k3-reasoning-borne.md` vaut AUSSI pour GLM 5.3 Flash.
+Implementation de reference : `scripts/tools/chill-meter-metal-concours.py`.
+
+## ⭐⭐ CONCOURS METAL (chassis SVG photorealiste) — 5 modeles, meme brief + image-ref (2026-08-30)
+
+Brief : dessiner le CHASSIS METAL seul (sans texte/ecran/givre) en 2 variantes (brushed/machined),
+avec l'image de reference du client en vision. Ids de groupes DICTES (`shell`, `inner_panel`,
+`screws`…) pour rendre les planches interchangeables (mix-and-match mecanique).
+
+| Modele | Cout | Gradients | Lecture (previsualisation navigateur, PAS rendu final) |
+|---|---|---|---|
+| **Grok 4.6** | 0,25 $ | **52** | Metal le plus travaille (2x plus de gradients), garde la forme de la ref |
+| **GPT-5.5** | 0,50 $ | 22 | Le plus proche de la SILHOUETTE de la reference |
+| **Kimi K3** | ~0,3 $ | 18 | Argent le plus lumineux, mais s'eloigne le plus de la forme |
+| **Gemini 3.1 Pro** | 0,32 $ | 18 | Sombre et plat — le moins convaincant en metal |
+| **GLM 5.3 Flash** | **0,0025 $** | 20 | Tient tres bien pour **100x moins cher que GPT** |
+
+⭐⭐⭐ **La leçon principale** : redoser a la main les `stop-color` des gradients existants ne donne
+JAMAIS du metal — j'ai fait cette passe avant, elle produit un aplat a peine eclairci (+4 RGB).
+Les modeles produisent biseaux, epaisseur de matiere, vis en relief. **C'est exactement le cas
+d'usage de `svg-dessine-a-la-main-au-lieu-de-deleguer-a-fable`** : l'APLAT est le symptome.
+
+⚠️ **cairosvg est INUTILISABLE sur cette machine** (libcairo absent). Rasteriser via Chromium
+headless (Playwright Python, present) : `scripts/tools/chill-meter-concours-render.py`.
+
 ## Role de GLM-5.2 (ce qu'on a decide)
 
 - **GPT-5.5 + Gemini 3.1 Pro restent les modeles PRINCIPAUX** des scenes (Gemini = organique/illustration, GPT = geometrie/schema). On ne change rien a ce pipeline.
