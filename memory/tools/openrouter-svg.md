@@ -83,6 +83,18 @@ avec l'image de reference du client en vision. Ids de groupes DICTES (`shell`, `
 | **Gemini 3.1 Pro** | 0,32 $ | 18 | Sombre et plat — le moins convaincant en metal |
 | **GLM 5.3 Flash** | **0,0025 $** | 20 | Tient tres bien pour **100x moins cher que GPT** |
 
+⛔⛔⭐⭐⭐ **LE PIEGE DU CONCOURS : les 5 modeles ont gagne le METAL et PERDU LA COULEUR.**
+Mesure de la saturation du chassis seul (ecran + bouton vert exclus, HLS) :
+`reference client 0,461` · `notre version AVANT concours 0,321` · **les 10 planches : 0,07 a 0,26**.
+Le brief client imposait pourtant « Blue and icy white color palette », « primary identity should be
+blue and ice-themed ». **La cause est le BRIEF, pas les modeles** : j'avais ecrit « cool greys and
+steel blues, silver/frosted metal » — j'ai decrit du METAL, pas de la COULEUR. Ils ont execute.
+⭐ **La regle** : quand on delegue un dessin pour corriger UN defaut (ici la matiere), **nommer
+explicitement ce qui doit NE PAS CHANGER** — sinon le modele optimise l'axe demande et sacrifie le
+reste sans le signaler. Une contrainte de couleur se donne **CHIFFREE et avec une image de reference
+de COULEUR distincte** de la reference de forme, jamais par un adjectif (« steel blue » est vague).
+→ `memory/feedbacks/feedback_deleguer-un-defaut-nommer-ce-qui-ne-doit-pas-changer.md`
+
 ⭐⭐⭐ **La leçon principale** : redoser a la main les `stop-color` des gradients existants ne donne
 JAMAIS du metal — j'ai fait cette passe avant, elle produit un aplat a peine eclairci (+4 RGB).
 Les modeles produisent biseaux, epaisseur de matiere, vis en relief. **C'est exactement le cas
