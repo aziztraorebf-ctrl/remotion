@@ -797,21 +797,24 @@ const Raw: React.FC<{ html: string; opacity?: number; transform?: string; style?
 // Les ids vises sont ceux du dessin : les 3 planches sources (Fable, Kimi, GPT) ont
 // chacune leurs propres degrades metal, d'ou les 3 prefixes.
 const METAL_RAMPS: Record<Exclude<MetalFinish, "flat">, Record<string, string[]>> = {
+  // ⛔⛔ Ces ids DOIVENT etre references par un url(#...) dans les groupes du dessin.
+  // Le fichier contient 26 gradients MORTS (vestiges du mix des 3 planches sources) :
+  // les viser ne produit AUCUN effet, sans erreur ni avertissement. Verifier avant
+  // d'en ajouter un :  grep -o 'url(#<id>)' ChillMeterDevice.tsx | wc -l
+  // Le nombre de couleurs doit egaler le nombre de <stop> du gradient (7/5/5/4/3 ici).
   brushed: {
-    fable_g_metal_body: ["#7c8798", "#5c6879", "#3b4655", "#2a333f", "#4d5867"],
-    fable_g_metal_plaque: ["#78849a", "#38424f", "#4a5666"],
-    fable_g_pipe: ["#2a323d", "#7d8a9c", "#b3bfcd", "#67738a", "#232a35"],
-    fable_g_pipe_h: ["#2a323d", "#7d8a9c", "#b3bfcd", "#67738a", "#232a35"],
-    kimi_metalMain: ["#7b8794", "#616d79", "#454f5a", "#333c46", "#2a323b"],
-    kimi_metalBevel: ["#9aa6b2", "#606b78", "#333b45"],
+    gpt_metalOuter: ["#93a6ba", "#48607a", "#22394d", "#38536b", "#1b3044", "#647e97", "#2b4055"],
+    gpt_metalInset: ["#7189a0", "#26394b", "#42586e", "#1a2d3e", "#5f7890"],
+    gpt_titlePlate: ["#44607a", "#1a2e43", "#2c4460", "#16283a", "#6f8ba2"],
+    gpt_screwFace: ["#b3c4d4", "#5b7288", "#2a3d4e", "#111d29"],
+    kimi_btnGrad: ["#4a5866", "#2b3641", "#1a222b"],
   },
   machined: {
-    fable_g_metal_body: ["#a4b0c0", "#7a8797", "#3a4552", "#232b36", "#5f6b7c"],
-    fable_g_metal_plaque: ["#9aa7bb", "#333d4b", "#59657a"],
-    fable_g_pipe: ["#1e242d", "#94a2b5", "#dce4ee", "#6f7c92", "#1a202a"],
-    fable_g_pipe_h: ["#1e242d", "#94a2b5", "#dce4ee", "#6f7c92", "#1a202a"],
-    kimi_metalMain: ["#9daab8", "#75828f", "#4b5560", "#333c47", "#272f38"],
-    kimi_metalBevel: ["#c2ccd8", "#6d7987", "#39424d"],
+    gpt_metalOuter: ["#c2d0dd", "#5d7690", "#2b455c", "#4a6480", "#22384d", "#8299b0", "#33495f"],
+    gpt_metalInset: ["#8ba3ba", "#2d4257", "#51687e", "#1f3446", "#7089a2"],
+    gpt_titlePlate: ["#57748f", "#20364c", "#3a5470", "#1a2d40", "#88a3ba"],
+    gpt_screwFace: ["#d6e2ec", "#6d8499", "#31465a", "#14212e"],
+    kimi_btnGrad: ["#5c6b7b", "#33404d", "#1f2832"],
   },
 };
 
@@ -832,10 +835,36 @@ const applyRamp = (svg: string, id: string, colors: string[]): string => {
   return svg.slice(0, start) + block + svg.slice(close);
 };
 
+/** Les gradients reellement references par un url(#id) dans les groupes du dessin.
+ *  Calcule depuis G, donc toujours a jour : si un groupe cesse d'utiliser un gradient,
+ *  toute tentative de le redoser echoue au lieu de ne rien faire silencieusement. */
+const DRAWN_GRADIENTS: Set<string> = new Set(
+  Object.values(G)
+    .join("")
+    .match(/url\(#([A-Za-z0-9_-]+)\)/g)
+    ?.map((u) => u.slice(5, -1)) ?? [],
+);
+
 const metalDefs = (finish: MetalFinish): string => {
   if (finish === "flat") return DEFS;
   const ramps = METAL_RAMPS[finish];
-  return Object.keys(ramps).reduce((svg, id) => applyRamp(svg, id, ramps[id]), DEFS);
+  return Object.keys(ramps).reduce((svg, id) => {
+    // Garde-fou en 2 temps. Un gradient MORT — defini dans DEFS mais jamais reference
+    // par un url(#id) dans le dessin — se laisse modifier sans rien changer a l'image :
+    // le rendu sort sans erreur, identique au bit pres, et le bug est invisible.
+    // C'est exactement ce qui est arrive le 30/08 (6 ids morts vises, 0 pixel change).
+    if (!DRAWN_GRADIENTS.has(id)) {
+      throw new Error(
+        `metalDefs: le gradient "${id}" n'est reference par aucun url(#${id}) du dessin. ` +
+          `Le modifier n'aurait aucun effet visible.`,
+      );
+    }
+    const out = applyRamp(svg, id, ramps[id]);
+    if (out === svg) {
+      throw new Error(`metalDefs: le gradient "${id}" est introuvable dans DEFS.`);
+    }
+    return out;
+  }, DEFS);
 };
 
 export const ChillMeterDevice: React.FC<ChillMeterProps> = ({ chill, frost, powerOn, frame, fps, metal = "flat" }) => {

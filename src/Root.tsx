@@ -5696,6 +5696,15 @@ export const RemotionRoot: React.FC = () => {
         {/* Comparaison de finition metal — jalon 1. Meme dessin, seules les rampes
             des degrades metal changent. Rendu en 1 frame pour la planche. */}
         <Composition
+          id="ChillMeter-Metal-Flat"
+          component={ChillMeterOverlay}
+          durationInFrames={1}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "idle" as const, metal: "flat" as const }}
+        />
+        <Composition
           id="ChillMeter-Metal-Brushed"
           component={ChillMeterOverlay}
           durationInFrames={1}
