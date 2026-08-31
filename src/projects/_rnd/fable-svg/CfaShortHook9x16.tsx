@@ -221,7 +221,7 @@ export const CfaShortHook9x16: React.FC<{ muteNarration?: boolean }> = ({ muteNa
 
       {/* ---- MUSIQUE DE L'EPISODE (memes reglages EQ/volume que l'original) ---- */}
       <Audio
-        src={staticFile("_rnd/cfa-nuit1994/musique-episode.mp3")}
+        src={staticFile("souverain/senegal-petrole-gaz/audio/music-A-ambient-souverain.mp3")}
         volume={(f) => interpolate(f, [0, 45], [0, 0.26], {
           extrapolateLeft: "clamp", extrapolateRight: "clamp",
         })}

@@ -1,3 +1,5 @@
+import { CfaShortHook9x16, CFA_SHORT_HOOK_FRAMES, CFA_SHORT_HOOK_FPS } from "./projects/_rnd/fable-svg/CfaShortHook9x16";
+import { CfaNuit1994Anime16x9, CFA_NUIT_1994_FRAMES, CFA_NUIT_1994_FPS } from "./projects/_rnd/fable-svg/CfaNuit1994Anime16x9";
 import { ChillMeterShowcase, SHOWCASE_FRAMES } from "./projects/_rnd/chill-meter/ChillMeterShowcase";
 import { ChillMeterOverlay } from "./projects/_rnd/chill-meter/ChillMeterOverlay";
 import { Composition, Folder, staticFile as staticFileRoot, useCurrentFrame } from "remotion";
@@ -5731,6 +5733,28 @@ export const RemotionRoot: React.FC = () => {
           height={1080}
         />
       </Folder>
+
+      {/* R&D ponctuel — clip de portfolio candidature vokabl (muet narration, garde musique/SFX) */}
+      <Composition
+        id="RND-CfaShortHook-NoNarration"
+        component={CfaShortHook9x16}
+        durationInFrames={CFA_SHORT_HOOK_FRAMES}
+        fps={CFA_SHORT_HOOK_FPS}
+        width={1080}
+        height={1920}
+        defaultProps={{ muteNarration: true }}
+      />
+      {/* Recupere depuis un blob git orphelin (branche feat/cfa-nuit1994-svg-mix, jamais mergee,
+          supprimee au menage du 28/08) — original 16:9 du meme hook. Meme usage : portfolio vokabl. */}
+      <Composition
+        id="RND-CfaNuit1994-NoNarration"
+        component={CfaNuit1994Anime16x9}
+        durationInFrames={CFA_NUIT_1994_FRAMES}
+        fps={CFA_NUIT_1994_FPS}
+        width={1920}
+        height={1080}
+        defaultProps={{ muteNarration: true }}
+      />
 
     </>
   );
