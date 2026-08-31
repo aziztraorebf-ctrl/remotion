@@ -21,7 +21,9 @@
 
 | Client / contrat | Lien | Contenu |
 |---|---|---|
-| **Abigail — AbiGirl Reacts** ⭐<br>Max Chill Factor Meter | https://claude.ai/code/artifact/652c7c39-1529-45a7-8d0b-929098180b9b | Contrat signé le 30/08 (350 $, 3 jalons). Les planches du jalon en cours **enregistrables depuis la page** (bouton par image), la vérification contre le brief, le calendrier des jalons et le message de livraison prêt à copier. À tenir à jour à chaque jalon. |
+| **Abigail — AbiGirl Reacts** ⭐<br>Max Chill Factor Meter | https://claude.ai/code/artifact/652c7c39-1529-45a7-8d0b-929098180b9b | Contrat signé le 30/08 (350 $, 3 jalons). Historique complet, vérification contre le brief, calendrier des jalons, message de livraison prêt à copier. ⛔ **Le bouton d'enregistrement de la page ne fonctionne pas de façon fiable** — les 2 fichiers à envoyer sont sur Blob (liens ci-dessous, ouvrir + appui long pour enregistrer). |
+| ↳ Jalon 1 — chassis seul | https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/01-meter-design-final-PeKpctxBRUhpKlfvEy29HKKFbPioUU.png | PNG, 491 Ko, vérifié |
+| ↳ Jalon 1 — en contexte | https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/02-meter-in-context-final-nMDmZxSyGbZWIrteuNKA9CY22XS34k.png | PNG, 2 Mo, vérifié |
 
 ## 🎬 Pages de production (Artifact)
 

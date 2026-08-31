@@ -5,6 +5,20 @@
 > ⛔ Les décisions de ce fichier engagent contractuellement.
 
 ## ⭐⭐⭐ ETAT AU 2026-08-31 : JALON 1 PRET A ENVOYER — chassis machined final
+⛔⛔ **2 bugs corriges le 31/08, apres signalement d'Aziz** :
+1. **Halo noir sur la planche "en contexte"** — Fable v2 avait ajoute
+   `<rect x="0" y="0" width="1448" height="1086" fill="#0b1120"/>` en tete du groupe `shell`
+   (invisible sur SON rendu, deja sur fond sombre — visible seulement compose sur un vrai decor).
+   Retire (commit correctif). Verifie : 12,4 % du cadre opaque (le chassis reel) contre 100 % avant.
+   ⭐ **Lecon** : verifier la transparence d'un asset genere en le composant sur un fond CLAIR ou
+   sur le decor reel, jamais sur un fond deja sombre qui masque le defaut.
+2. **Bouton d'enregistrement Artifact non fiable pour Aziz** — capacite `downloads` presente dans
+   le code mais l'experience n'a pas marche cote utilisateur. **catbox ET litterbox HS ce soir**
+   (catbox : HTTP 200 mais `content-length: 0`, faux succes deja documente ; litterbox : 500).
+   → **Bascule sur Vercel Blob**, verifie par `content-length` reel (491 Ko / 2 Mo). Liens dans
+   `memory/INDEX-LIENS.md`.
+
+
 
 **Cadrage retenu (Aziz)** : Machined est une AMELIORATION pure de l'existant (rien perdu, plus de
 matiere) — pas un choix a arbitrer a egalite avec Flat. On envoie donc **Machined comme LE design**,
