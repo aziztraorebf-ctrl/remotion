@@ -95,6 +95,19 @@ reste sans le signaler. Une contrainte de couleur se donne **CHIFFREE et avec un
 de COULEUR distincte** de la reference de forme, jamais par un adjectif (« steel blue » est vague).
 → `memory/feedbacks/feedback_deleguer-un-defaut-nommer-ce-qui-ne-doit-pas-changer.md`
 
+⭐⭐⭐ **FABLE A GAGNE LE CONCOURS — le seul a tenir les 2 axes** (2026-08-31, brief CORRIGE).
+Rebrief avec **3 images de reference, une par AXE** (forme = ref cliente · **couleur = notre propre
+compteur** · matiere = la meilleure planche du concours) + **cible de saturation CHIFFREE (0,32)**
++ le script de mesure DANS le brief, avec fourchette d'acceptation et consigne d'iterer.
+Resultat **verifie par moi** : `brushed 0,320` · `machined 0,325` — pile la cible, contre 0,07-0,26
+pour les 5 externes. Metal avec vrai relief (biseaux, vis en croix, tubes, epaisseur). **Gratuit.**
+⭐ **Ce qui a fait la difference (son rapport)** : il a RELEVE la teinte dans l'image de reference
+couleur **AVANT de tracer**, puis construit ses 9 niveaux de palette a cette teinte — **y compris
+les tons moyens, exactement la ou les 5 autres ont vire au gris**. 2 iterations, en se mesurant.
+⭐⭐ **Faire MESURER l'agent avant qu'il rende la main** : un agent qui mesure CORRIGE, un agent qui
+regarde se contente de valider. C'est ce qui a transforme le resultat.
+Livrable : `out/_r-and-d/chill-meter-upwork/concours-metal/metal-fable.svg` (43 degrades).
+
 ⭐⭐⭐ **La leçon principale** : redoser a la main les `stop-color` des gradients existants ne donne
 JAMAIS du metal — j'ai fait cette passe avant, elle produit un aplat a peine eclairci (+4 RGB).
 Les modeles produisent biseaux, epaisseur de matiere, vis en relief. **C'est exactement le cas
