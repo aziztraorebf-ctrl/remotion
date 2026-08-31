@@ -124,6 +124,27 @@ prouvee sur le son de ce meme contrat (`familles-nommees-pour-faire-trancher-un-
 Ici l'axe matiere est le **dernier ouvert** : structure validee par sa propre reference, placement
 mesure, « pas givre » acte 3 fois. Le fermer par un choix = zero tour de revision consomme.
 
+### ✅ CHASSIS METAL FINALISE — Fable v2 machined integre au composant (31/08)
+Chantier metal boucle en 3 passes, chacune corrigeant un defaut REVELE par Aziz sur la precedente :
+1. Redosage manuel des gradients → ECHEC (gradients morts, 0 effet). Cf feedback dedie.
+2. Concours 5 modeles → metal excellent, **icy blue PERDU** (sat 0,07-0,26 vs cible 0,32).
+   Cf feedback deleguer-un-defaut-nommer-ce-qui-ne-doit-pas-changer.
+3. Fable rebriefe avec cible couleur chiffree → couleur juste (0,320/0,325), MAIS **nouvelle
+   silhouette** (rect generiques au lieu de nos 32 <path> de production). Cf feedback
+   ameliorer-vs-remplacer-preciser-dans-le-brief.
+4. Fable v2 : geometrie EXACTE fournie (32 paths extraits du code), interdiction de la modifier.
+   **32/32 verifie independamment**, couleur intacte (0,318/0,324), contraste mesure
+   (machined 153 vs brushed 122 → **machined retenu**).
+
+✅ **INTEGRE dans `ChillMeterDevice.tsx`** (commit `8ba98e96`) : les groupes chassis/panneau_power/
+boutons_bas/plaque_titre remplaces par Fable v2 machined, position d'empilement inchangee.
+✅ **Verifie sur rendu Remotion complet** (pas prevue) : Idle (chassis nu) et Fill100 (givre +
+glacons par-dessus) — les deux OK, aucune regression.
+
+⭐⭐⭐ Chaine complete = preuve du protocole "montrer avant de juger" : chaque etape semblait
+correcte isolement (rendu flatteur), et c'est Aziz qui a repere l'ecart a chaque fois en COMPARANT
+au visuel precedent — jamais sur la base d'un rapport texte seul.
+
 ### ⛔⛔ AVANT CHAQUE LIVRAISON DE JALON — le reflexe des 2 fausses alertes
 Ces 3 questions se posent AVANT d'envoyer, et avant toute "correction" de derniere minute :
 1. **L'element que je crois manquant est-il dans SA reference ?** Si non, il n'est pas attendu.
