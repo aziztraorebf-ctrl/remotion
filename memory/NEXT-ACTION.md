@@ -86,25 +86,31 @@ Il reste `master` et **une seule** branche non mergée :
   déployée sur GitHub Pages, donc son code de référence vit peut-être ailleurs — **vérifier où avant
   de merger OU de supprimer**. Tant que ce n'est pas tranché, la branche reste.
 
-## ⭐⭐⭐ CONTRAT UPWORK chill-meter — GAGNÉ le 2026-08-29, offre à REVOIR avant signature
+## ⭐⭐⭐ CONTRAT UPWORK chill-meter — SIGNÉ le 2026-08-30, jalon 1 PRÊT À ENVOYER
 
-**Premier contrat freelance.** Elle a dit oui le 29/08 ; offre v1 reçue (350 $ → **297,50 $ net**,
-expire le 5 sept.), **révision demandée le jour même** sur 3 points : la ligne « After Effects project
-file » à retirer (elle contredit le dossier React/Remotion convenu) · dates de jalon vides · 2 révisions
-par jalon absentes des termes.
-⛔ **Rien n'est signé** — sur Upwork le client seul édite l'offre ; le contrat démarre à NOTRE acceptation.
+**Premier contrat freelance, actif.** Offre v2 acceptée le 30/08 (350 $ → 297,50 $ net, 3 jalons,
+3/7/11 sept.) — les 3 points de révision (dossier source + README, dates, 2 tours de révision par
+jalon) sont tous dans le contrat signé.
 
-⏭️ **PROCHAINE ACTION : quand l'offre v2 arrive, la relire EN ENTIER** — une modification d'offre est une
-réémission complète, pas un patch des 3 points.
+⏭️ **PROCHAINE ACTION : envoyer le jalon 1 ce soir/demain matin (31/08)** — les 2 images finales et
+le message sont prêts, liens vérifiés dans le STATUS.
+⚠️ **Retraits Upwork bloqués tant que les infos fiscales ne sont pas fournies** — à régler avant le
+3 sept, n'empêche ni de travailler ni d'accepter le paiement sur la plateforme.
 
-✅ **Le SON n'est plus un risque** : 15 SFX ElevenLabs, **15/15 exploitables au 1er essai** (29/08).
-L'estimation « ~5 essais par son » était fausse.
+✅ **Chantier métal du châssis bouclé le 31/08** (4 passes, chacune corrigeant un défaut qu'Aziz a
+repéré sur la précédente — jamais moi) : gradients morts → concours 5 modèles (métal gagné, icy
+blue perdu) → Fable rebriefé sur la couleur (couleur juste, mais nouvelle silhouette) → Fable
+rebriefé sur la géométrie EXACTE (32/32 tracés vérifiés identiques). Finition **Machined** retenue
+(contraste mesuré 153 vs 122 pour Brushed), intégrée au composant de production, 2 bugs corrigés
+après signalement (halo de fond opaque · catbox/litterbox HS, repli sur Blob).
+⭐ 2 leçons de brief extraites, transposables à toute délégation visuelle future :
+`feedback_deleguer-un-defaut-nommer-ce-qui-ne-doit-pas-changer.md` ·
+`feedback_ameliorer-vs-remplacer-preciser-dans-le-brief.md`
+
 ⛔ **Ne PAS lui dire que les 6 états sont déjà rendus** — atout de négociation.
-⛔ 350 $ = le prix DU BRIEF, pas une enchère.
-⛔ Le **brief client PDF** (`BRIEF-CLIENT-ORIGINAL.pdf`, gitignoré) se RELIT avant toute action — un
-résumé ne le remplace pas (2 erreurs payées le 23/08).
+⛔ Le **brief client PDF** (`BRIEF-CLIENT-ORIGINAL.pdf`, gitignoré) se RELIT avant toute action.
 
-→ **Source de vérité unique** (3 jalons, familles de sons, ordre de livraison, artifact de pilotage) :
+→ **Source de vérité unique** (historique complet, tous les chiffres mesurés, liens de secours) :
 `memory/client-sim-tests/upwork-chill-meter/STATUS.md` — ne rien recopier d'autre ici.
 
 ---
