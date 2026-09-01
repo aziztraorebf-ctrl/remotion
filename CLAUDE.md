@@ -85,6 +85,28 @@ Ne JAMAIS dire « je ne peux pas / je n'ai pas accès » sans avoir consulté la
   → `feedback_nom-chaine-kora-et-cartes-pas-geoafrique.md`
 - ⛔ **Tester avant de douter** · **relire la leçon** avant de re-tenter une variante de dosage.
 
+## 🔎 EPISODIC-MEMORY — consulter avant de deviner sur l'historique (NON-NEGOTIABLE)
+
+> Plugin actif (`episodic-memory@superpowers-marketplace`), 13000+ conversations indexées.
+> Outil de RECHERCHE PONCTUELLE, jamais chargé automatiquement en contexte — voir
+> `memory/feedbacks/feedback_episodic-memory-usage-ponctuel-pas-automatique.md`.
+
+**Déclencheur** : dès qu'Aziz (ou un chantier en cours) référence une décision, un choix, une
+discussion passée — formulé de N'IMPORTE QUELLE façon (« on avait dit », « tu te souviens »,
+« pourquoi on a fait X », « la dernière fois », un fait supposé déjà tranché) — ET que cette
+info n'est PAS trouvée en 1 grep/lecture dans `memory/doctrines/`, `feedbacks/`, `MEMORY.md`,
+`NEXT-ACTION.md`, `ROUTAGE.md`.
+
+**Réflexe attendu, dans cet ordre** :
+1. Chercher d'abord dans les fichiers structurés (rapide, souvent suffisant).
+2. Si absent → invoquer `search-conversations` (agent `episodic-memory:search-conversations`
+   ou le MCP direct) AVANT de répondre « je ne sais pas » ou de deviner/reconstruire à partir
+   du contexte général. Deviner sur de l'historique projet = confabulation, interdit par les
+   règles de confiance du CLAUDE.md utilisateur global.
+3. Ne PAS l'utiliser en dehors de ce cas — jamais en ouverture de session, jamais « par
+   habitude » sur une question qui n'a rien d'historique (ça recréerait la dérive de contexte
+   que le chantier mémoire du 2026-08-31/09-01 vient de résoudre).
+
 ---
 
 ## ⛔ RÈGLES DE TRAVAIL NON-NEGOTIABLES (résumé dense — détail en pointeur)
