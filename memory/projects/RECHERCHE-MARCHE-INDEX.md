@@ -40,6 +40,7 @@
 | 7 | **Ce qui manque : le SCRIPT et le SOUND DESIGN**, pas la capacité d'animer | ⭐⭐ |
 | 8 | **Rive ne paie pas plus** que Lottie (15-100 $, fourchettes superposées) | ⭐⭐ |
 | 9 | ⛔ **Médias / think tanks / ONG : le marché existe mais ne commande PAS de Lottie** — voir plus bas | ⭐⭐ |
+| 10 | ⭐⭐⭐ **Le NOM de la pièce vaut 5-10x la technique** — et **Dribbble Services** est le segment où ça se paie (Fiverr 10-100 $ vs Dribbble 300-2 500 $ pour le MÊME livrable) — voir § DRIBBBLE | ⭐⭐⭐ |
 
 ---
 
@@ -129,7 +130,16 @@ Ne pas l'opposer a cette mesure : l'amorcage peut etre long ET le marche actif.
 ✅ **Lu sur page officielle** : mur des Briefs (score ≥7) · verrou Ads (Level 1+) · -21,9 % acheteurs
 (Q2 2026) · Fiverr Pro ouvert aux nouveaux · **LottieFiles Hire (195 animateurs, 10 animations +
 19,99 $/mois)**.
-⚠️ **De seconde main, a re-verifier avant d'agir** : tunnel Toptal 3 % · liste pays Malt · exigences
+✅ **Vérifié 2026-09-01 (2 sources, dont vidéo Toptal détaillée en transcript+frames)** : tunnel
+Toptal — 26 % passent le screening (anglais/pro) → 7,4 % passent le test technique (finance ou
+équivalent selon filière) → 3,6 % atteignent la ronde finale → 3 % acceptés au total. Filière
+dev/design distincte : live coding/design élimine 70 % des restants, taux 70-180 $/h en UX/UI
+senior, plateforme explicitement "not for junior/mid-level, best for senior 8+ years". **Verdict :
+hors de portée court terme pour ce profil** (0-1 review Upwork) — confirme indirectement que
+motion/UI design senior est un segment à valeur reconnue par le marché, réutilisable pour
+`PILIERS-B2B.md`. Condition de réouverture : historique Upwork solide + plusieurs contrats
+motion/UI livrés.
+⚠️ **De seconde main, a re-verifier avant d'agir** : liste pays Malt · exigences
 Superside · fermeture Working Not Working · comptages Hacker News · adresse freelance Ordinary Folk.
 
 ## ⚖️ UPWORK vs FIVERR — l'arbitrage (tranché 2026-08-28, après 5 annonces analysees)
@@ -269,3 +279,67 @@ BLOQUE chez nous **avant** de vendre.
 
 **En parallèle, quand l'occasion se présente** : poser la question du déterminisme à des acheteurs
 réels (point 1 des inconnues). Une candidature Upwork est une occasion gratuite de le faire.
+
+
+---
+
+## ⭐⭐⭐ DRIBBBLE SERVICES — LE NOM DE LA PIÈCE VAUT 5-10x LA TECHNIQUE (2026-08-30)
+
+> Découvert en cherchant Fiverr (fermé : **403 sur 100 % des chemins**, comme LottieFiles et Upwork).
+> **Dribbble Services est OUVERT en lecture normale** — prix, titres exacts, livrables, délais.
+> ⭐ C'est le segment où un studio se VEND ; Fiverr est celui où un gig se BRADE.
+> Source : `memory/client-sim-tests/RAPPORT-MARCHE-ANIMATION-2026-08-30.md` (~90 offres relevées).
+
+### L'écart, même métier, intitulé quasi identique
+
+| requête | Fiverr | Dribbble Services |
+|---|---|---|
+| « lottie animation » | **10 → 100 $** (14 gigs) | **10 → 2 500 $** (17 services) |
+| « ui animation » | 5 → 595 $ | **60 → 12 000 $** (28 services) |
+
+### ⭐⭐⭐ CE QUI PORTE LE PRIX : L'EMPLACEMENT PRODUIT, PAS LA TECHNIQUE
+
+Pages **effectivement chargées** le 2026-08-30 (pas des titres indexés) :
+
+| prix | titre exact | ce qu'il nomme |
+|---|---|---|
+| 10 $ | « Lottie Json Gif Animation » | la TECHNIQUE (= le plancher) |
+| 149 $ | « **Highly Optimized** Lottie Animation » | une QUALITÉ mesurable |
+| **350 $** | « **SaaS Hero Animation \| Lottie** » | un EMPLACEMENT produit |
+| **500 $** | « **Lottie Hero Section Animation** » | un EMPLACEMENT produit |
+| **1 150 $** | « **Product Motion Pack** » | un ENSEMBLE livrable |
+| 2 500 $ | « Lottie / Json Animations For App And Web » | un périmètre large |
+
+⛔ **Anti-pattern** : titrer par la technique (« lottie animation », « json animation ») = se ranger
+au plancher à 10 $. ✅ **Titrer par l'emplacement** (hero section, onboarding, dashboard, product pack).
+
+### ⭐⭐ LE VOCABULAIRE QUI PORTE LE PRIX — déjà celui du marché, à AFFICHER (pas à inventer)
+
+**lightweight** (65 $ vs 10 $ pour le même intitulé) · **Highly Optimized** (149 $) ·
+**developer-friendly files with export support** (400 $) · **dev-ready** ·
+**never weighs your product down** (Kamotion).
+⭐ C'est **exactement notre moat déterministe**, déjà formulé par le marché.
+
+**Objets nommés par les acheteurs** : icons, loaders, buttons · onboarding flows · **hero section** ·
+dashboard · preloader. **Formats exigés** : `.lottie .json .HTML .gif .mov .mp4 SVG AI PNG`, fond transparent.
+
+### ⛔ CE QUE CETTE DONNÉE NE DIT PAS (ne pas surinterpréter)
+
+- **Zéro volume de ventes** — le tri `best_selling` n'a jamais chargé. On sait ce qui est **OFFERT**,
+  jamais ce qui est **ACHETÉ**. Un prix affiché n'est pas un prix pratiqué.
+- **Aucun corpus d'avis** — 2 citations non vérifiables (pages 403). Impossible de distinguer un
+  thème RÉPÉTÉ d'un thème ISOLÉ. Délai / révisions / format livré : **non mesurés**.
+- **Barèmes horaires** (biztoolkit, sidestackers : 35-200 $/h) **non sourcés** — ni enquête ni
+  échantillon déclarés, vérifié sur les 2 pages. Seul tarif horaire réellement vu : **150 $+/h**
+  (Alex Tkachev, Dribbble), cas unique.
+- ⚠️ **Le `.aep` n'est PAS absent du marché** (le rapport a failli l'écrire) : il existe en Gig Extra
+  payant et dans 1 annonce Upwork sur 7, sur le segment le moins payé — cf. verdict n°1.
+
+### Ce que le volet Reddit a ajouté (maigre — 2 clusters utiles sur 8, tous single-source)
+
+- ⭐ **Le frein d'achat est le couple délai + prix de sous-traitance, pas la qualité** : un designer
+  produit dit éviter Rive/Lottie « cause I typically need to hire out for those roles and then comes
+  timeline/pricing restrictions » ([@SD_Ashira](https://x.com/SD_Ashira/status/2091094075571056755)).
+  ⭐ Notre déterminisme répond exactement à ce frein.
+- Les Lottie **prêtes à l'emploi gratuites** (Lottieflow) sont poussées comme substitut pour
+  icônes/menus/boutons/loaders → **confirme le verdict n°3** : ⛔ pas de démos logo/icône/loader.

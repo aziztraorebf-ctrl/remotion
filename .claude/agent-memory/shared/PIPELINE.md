@@ -14,6 +14,16 @@
 
 ---
 
+## 💰 CONTRAT UPWORK chill-meter (AbiGirl Reacts) — jalon 1 envoyé, en attente réponse cliente
+
+**Premier contrat freelance signé (30/08), actif.** 350 $ → 297,50 $ net, 3 jalons (3/7/11 sept).
+Jalon 1 (design statique du châssis, finition métal machinée) envoyé et confirmé reçu le 01/09.
+⏭️ **En attente de la réponse d'Abigail.** Si validé : jalon 2 (entrance/idle/0-25%/50%, sons déjà
+générés). Prospection Upwork en pause 1-2 jours (4 fronts déjà ouverts : ce contrat + 3 candidatures).
+→ Source de vérité : `memory/client-sim-tests/upwork-chill-meter/STATUS.md`.
+
+---
+
 ## 🧍 PERSONNAGE VECTORIEL ARTICULÉ — session 2026-08-29 ⏸️ EN PAUSE
 
 > ⭐ **Starter de reprise : `memory/starters/STARTER-PERSO-VECTORIEL-V4.md`.**

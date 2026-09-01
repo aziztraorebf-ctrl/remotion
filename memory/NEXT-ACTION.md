@@ -8,6 +8,29 @@ les aurait perdus pour de bon). Diagnostic + 3 pistes de correctif à trancher a
 `memory/projects/INCIDENT-BRANCHE-SUPPRIMEE-TRAVAIL-PERDU.md`. Ne pas refaire de ménage de
 branches sans avoir lu ce fichier.
 
+## ⭐⭐⭐ SPARK ICON (Upwork, PAS ENCORE CANDIDATÉ) — reprendre sur le rendu Remotion cassé
+
+Prototype de faisabilité pour "SVG Motion Designer Needed to Animate a Custom Spark Icon"
+(client Calgary, hourly, EXPERT). SVG mesuré au pixel contre le vrai `Spark.png` — validé à
+l'œil par Aziz. Contrôle SVG+GSAP (start/stop/loop/settle) prouvé fonctionnel en navigateur réel
+(Artifact web) — un bug de timeline GSAP (`repeat:-1` imbriqué faisant exploser la durée
+calculée à 1e10s) a été trouvé et corrigé en cours de route.
+
+⛔⛔ **Ne PAS redouter la faisabilité du projet** — le socle (SVG + GSAP) marche. Ce qui reste
+cassé est un problème d'OUTIL DE DÉMO (le rendu Remotion pour produire un clip vidéo de
+candidature), pas de faisabilité.
+
+⏭️ **PROCHAINE ACTION** : corriger `SparkAnimationPrototype.tsx` (remplacer l'injection manuelle
+du SVG par `dangerouslySetInnerHTML` + `useLayoutEffect(() => {...}, [frame])` — piste identifiée,
+pas encore testée), produire le clip candidature (étapes 1→5 du doc client, fond blanc neutre),
+rédiger et envoyer la candidature. Proposer fixed-price + milestones (contrat affiché en hourly =
+Work Diary Upwork incompatible avec notre méthode d'agents en fond).
+
+→ **Source de vérité unique** (détail technique complet, mesures, plan de reprise) :
+`memory/client-sim-tests/upwork-spark-icon/STATUS.md` — ne rien recopier d'autre ici.
+
+---
+
 ## ⭐⭐⭐ DÉCISION DU 2026-08-24 — LA CHAÎNE EST UNE VITRINE, LE FREELANCE PORTE L'EFFORT
 
 Décision d'Aziz. La chaîne continue (Gazoduc), mais elle **prouve les capacités, elle ne les monétise
@@ -108,14 +131,18 @@ portait 2 fichiers jamais commités, récupérés par chance seulement. Toujours
 `git status`/modifications non commitées sur une branche AVANT de la supprimer, pas seulement ses
 commits.
 
-## ⭐⭐⭐ CONTRAT UPWORK chill-meter — SIGNÉ le 2026-08-30, jalon 1 PRÊT À ENVOYER
+## ⭐⭐⭐ CONTRAT UPWORK chill-meter — SIGNÉ le 2026-08-30, jalon 1 ENVOYÉ le 2026-09-01
 
 **Premier contrat freelance, actif.** Offre v2 acceptée le 30/08 (350 $ → 297,50 $ net, 3 jalons,
 3/7/11 sept.) — les 3 points de révision (dossier source + README, dates, 2 tours de révision par
 jalon) sont tous dans le contrat signé.
 
-⏭️ **PROCHAINE ACTION : envoyer le jalon 1 ce soir/demain matin (31/08)** — les 2 images finales et
-le message sont prêts, liens vérifiés dans le STATUS.
+⏭️ **PROCHAINE ACTION : en attente de la réponse d'Abigail sur le jalon 1** (envoyé et confirmé
+reçu le 01/09 — message + 2 images, attachments vérifiés `scanStatus: CLEAN` dans le fil). Si elle
+valide : jalon 2 (7 sept, entrance/idle/0-25%/50%, sons déjà générés).
+⏸️ **Prospection Upwork mise en PAUSE par Aziz (01/09), 1-2 jours** — déjà 4 fronts ouverts
+(Abigail + 3 candidatures en attente : vokabl, Appstore promo video, +1). Ne pas relancer de
+candidature sans confirmation d'Aziz.
 ⚠️ **Retraits Upwork bloqués tant que les infos fiscales ne sont pas fournies** — à régler avant le
 3 sept, n'empêche ni de travailler ni d'accepter le paiement sur la plateforme.
 
@@ -134,89 +161,6 @@ après signalement (halo de fond opaque · catbox/litterbox HS, repli sur Blob).
 
 → **Source de vérité unique** (historique complet, tous les chiffres mesurés, liens de secours) :
 `memory/client-sim-tests/upwork-chill-meter/STATUS.md` — ne rien recopier d'autre ici.
-
----
-
-## ✅ CHAINE PERSONNAGE ANIMÉ — COMPLÈTE ET PROUVÉE, technique gravée (2026-08-29)
-
-Dessin (Fable, d'après frames pro) → conversion → **pochoirs** → **précomposition** →
-**rig** → **animation**. Toutes les briques mesurées, le chien vit. La chaîne TECHNIQUE
-est acquise — reste seulement le volet commercial ci-dessous, actif :
-→ `memory/starters/STARTER-RIG-PERSONNAGE-EXISTANT.md` (priorité 1 = corps entier)
-→ code `src/projects/_client-sim/repro-chien/` · rendu `out/_r-and-d/repro-chien/`
-
-⭐⭐ **BACKLOG ACTIF — L'ARGUMENT COMMERCIAL QU'AZIZ A IDENTIFIÉ, et qu'il faut vérifier** :
-*« On aurait pu accélérer les oreilles. S'il ne voulait pas que la langue bouge, ça
-aussi. C'est meilleur que d'avoir un outil avec des animations prédéfinies qu'on
-n'arriverait même pas à modifier. »*
-→ C'est le **déterminisme** appliqué au personnage : chaque geste est une ligne de
-paramètre, pas une timeline à rouvrir. ⛔⛔ **Non prouvé côté ACHETEUR** — c'est
-l'hypothèse centrale jamais validée (cf. `PILIERS-B2B.md`). Une modif triviale chez
-nous ne devient un argument que si un client la demande et la paie. À glisser dans
-une candidature, pas à écrire comme un acquis.
-
-⭐ **MESURÉ LE 29/08** (`perso-corps-entier/tools/demonter.py` sur `15_Customs_Officer`) :
-les **recouvrements** sont bien une décision d'ILLUSTRATION — l'ordre de pile est FIXE, aucune
-permutation pendant l'animation (vérifié, plus supposé). Un rig pro porte **3 calques VIDES**
-(porteurs de mouvement, sans dessin) et **un null `ty=3` de contrôle global** auquel 13 des 19
-calques sont parentés : **placer le personnage = toucher UN SEUL calque**.
-
-⛔ **CE QU'ON NE SAIT PAS ENCORE** : les mains en calque séparé (notre point faible mesuré) ·
-si un rig tiers se laisse RE-PILOTER (autre geste que le sien) — c'est l'étape en cours.
-
-⭐⭐ **Licence kamotion (tranché par Aziz le 29/08)** : aucune licence documentée, donc la
-contrainte porte sur le **LIVRABLE**, pas sur le **TEST**. Un banc d'essai qui reste dans le
-workspace peut utiliser la géométrie réelle ; en tirer une pièce client/portfolio demande de
-vérifier la licence. ⛔ Ne pas re-transporter « 0 sommet en commun » sur un test interne : ça
-casse la mesure (ça réintroduit l'anatomie dans un test qui porte sur le rig).
-
----
-
-## ✅ POCHOIR + PRÉCOMPOSITION — RÉSOLUS le 2026-08-29 (section soldée)
-
-**Acquis, mesuré bout en bout** : `mask`/`clip-path` → paire Lottie `td:1`/`tt:1`.
-Écart **0,00 %** sur de la géométrie professionnelle réelle. 2 bugs corrigés dans
-`svg2lottie_scene.py` (clip d'un `<g>` perdu en silence + table de refus périmée),
-garde-fou posé (compte les clips vus vs traités), 4 tests de non-régression.
-
-✅ **RÉSOLU LE SOIR MÊME** — ⭐ corrigé le 2026-08-30 : ce bloc disait « 1 pochoir sur 5 » alors
-que la précomposition a été livrée le 29/08 (commit `b4a53d3e`) : **5 pochoirs sur 5**, écart
-0,03 %. Un groupe découpé qui produit N calques est emballé dans une précomposition (`ty:0`
-référençant un asset), et c'est ce calque unique qui porte le `tt`.
-⛔ Un texte périmé gardé « pour mémoire » se relit comme actif — 3e occurrence du pattern.
-
-⭐ **Une brique, deux verrous** : la pièce 2 (onboarding) a 45 précomps imbriqués sur
-3 niveaux. La précomposition débloque les deux.
-
-▶️ **Priorité fixée par Aziz le 29/08** : animer le chien de Fable + des formes similaires
-issues de fichiers pro. → **`memory/starters/STARTER-RIG-PERSONNAGE-EXISTANT.md`**
-(banc d'essai : `src/projects/_client-sim/repro-chien/`, lire son README en premier)
-
-⭐ **Effet de bord doctrinal — ⛔ CORRIGÉ PAR AZIZ, ne pas relire la 1re version** : Fable a
-réussi une **face de mascotte** (symétrique, faite de primitives). ⛔ Ça ne s'étend PAS à
-l'humain : la main-curseur n'était pas « dessinée avec référence » mais une **GREFFE de
-structure** depuis un Lottie premium, et son anatomie est fausse (index en tube sans phalange).
-⛔ Un dessin statique réussi ne dit RIEN de son animabilité (le visage du pêcheur s'animait
-mal). → direction retenue : la **référence FICHIER** (démonter un Lottie pour comprendre pivots
-et parentage), pas la référence image. Détail : `memory/starters/STARTER-RIG-PERSONNAGE-EXISTANT.md`.
-
----
-
-## ✅ LOTTIE — chaîne PROUVÉE (section ARCHIVÉE le 2026-08-29)
-
-Les acquis techniques (flou `ty:29` porté · `gradientTransform` en similitude · pointillés/`nm`
-unique · texte 2 voies · aller-retour Creator fidèle, ⛔ les 293 $/an ne se justifient pas)
-vivent désormais dans l'atelier : **`memory/tools/lottie-claude-inventaire.md`**.
-Les 4 logos clients chiffrés : `memory/client-sim-tests/repro-vendeur-lottie/LOGOS-CLIENTS-REELS.md`.
-Table de décision client : `memory/client-sim-tests/lottie-ui-lcd/CE-QUI-PASSE-EN-LOTTIE.md`.
-
-⛔⛔ **Le recadrage d'Aziz à garder** : prouver une capacité ≠ produire un livrable. Une carte
-géographique n'est PAS un livrable Lottie. ⭐ **Mise à jour 29/08** : une pièce a été montrée à une
-vraie cliente et a emporté un contrat — mais c'était un overlay Remotion/ProRes, **pas du Lottie**.
-Le Lottie n'a toujours pas eu son propre client : `memory/starters/STARTER-repro-ui-animation.md`.
-
-⏭️ Reste ouvert : logos L3/L4 Kanvas · L8 Fokus · rig d'un perso déjà découpé
-(`memory/starters/STARTER-RIG-PERSONNAGE-EXISTANT.md`).
 
 ---
 

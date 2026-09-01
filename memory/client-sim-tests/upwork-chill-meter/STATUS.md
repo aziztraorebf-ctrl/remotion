@@ -4,7 +4,23 @@
 > accepté par la cliente le 29/08, **offre v2 acceptée par Aziz le 30/08**. 350 $ → 297,50 $ net.
 > ⛔ Les décisions de ce fichier engagent contractuellement.
 
-## ⭐⭐⭐ ETAT AU 2026-08-31 : JALON 1 PRET A ENVOYER — chassis machined final
+## ⭐⭐⭐ ETAT AU 2026-09-01 : JALON 1 ENVOYE ET CONFIRME RECU
+
+Envoye via MCP Upwork (`send_message`) : message + 2 pieces jointes (`01-meter-design-final.png`,
+`02-meter-in-context-final.png`). Confirmation de reception verifiee dans le fil (`list_messages`) —
+les 2 attachments apparaissent avec `scanStatus: CLEAN` et le bon nom de fichier, pas juste un
+`SUCCESS` API (contrairement aux 2 bugs `attachments` deja documentes sur les PROPOSITIONS —
+`memory/tools/upwork-mcp.md` — ici c'est un `send_message`, contexte different, ca a fonctionne).
+
+Message final : sans jargon interne ("metal look" plutot que "machined finish"), sans re-expliquer
+le "avant givre" deja confirme 3x par Abigail dans le fil (25/08, 27/08, 30/08), sans signature nom
+en fin de message (consigne Aziz — "ce n'est pas comme ca que les gens parlent normalement").
+Regles ecrites dans `memory/feedbacks/feedback_message-client-ne-pas-sonner-genere.md` § 3bis/3ter.
+
+⏭️ **En attente de la reponse d'Abigail.** Prochaine echeance si elle valide : jalon 2 (7 sept,
+entrance/idle/0-25%/50%, sons deja generes cf plus bas dans ce fichier).
+
+<details><summary>Historique — ETAT AU 2026-08-31 : JALON 1 PRET A ENVOYER — chassis machined final</summary>
 ⛔⛔ **2 bugs corriges le 31/08, apres signalement d'Aziz** :
 1. **Halo noir sur la planche "en contexte"** — Fable v2 avait ajoute
    `<rect x="0" y="0" width="1448" height="1086" fill="#0b1120"/>` en tete du groupe `shell`
@@ -28,6 +44,8 @@ et on mentionne en 1 ligne dans le message qu'une version plus sobre existe si e
 **Fichiers finaux** : `out/_r-and-d/chill-meter-upwork/jalon1-final/`
 - `01-meter-design-final.png` — chassis seul, agrandi
 - `02-meter-in-context-final.png` — compose sur le plateau (yt-dlp abigirl-decor.png)
+
+</details>
 
 ## ⭐⭐⭐ ETAT AU 2026-08-30 : CONTRAT ACTIF — jalon 1 prêt, envoi prévu le 31/08
 

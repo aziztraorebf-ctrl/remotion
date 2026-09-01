@@ -24,6 +24,36 @@ fiche**, pas seulement dans le récit du test.
 
 ## Tests réalisés
 
+- **Upwork « Appstore promo video »** — 2026-09-01, candidature envoyée (15 $, app kids education,
+  20-30s à partir d'un screen recording de l'app). Portfolio 6 pièces joint MANUELLEMENT par Aziz
+  (bug MCP `attachments` sur `manage_proposals create`, 2e occurrence confirmée — cf.
+  `memory/tools/upwork-mcp.md`). En attente de réponse. Si contrat gagné : idée de production
+  discutée — réutiliser le socle `PhoneModel`/`DeviceHeroShot` (`src/projects/_shared/_demos/devices/`,
+  prouvé sur le projet Foster) pour composer l'enregistrement d'app sur un mockup téléphone 3D avec
+  transitions plein écran, plutôt qu'un simple crop de screen recording.
+
+- ⭐⭐⭐ **Upwork « Spark Icon Animation » (icône animé, app d'écriture mobile — 4e brief CLIENT
+  RÉEL, PAS ENCORE CANDIDATÉ) — 2026-08-31.** Genre différent : ni overlay ni carte, une **icône
+  UI micro-interaction** contrôlable par l'app cliente (start/stop/loop/settle programmatique).
+  ⭐⭐⭐ **SVG mesuré au pixel contre le vrai `Spark.png`** (validé à l'œil par Aziz, "littéralement
+  son logo") — 1er essai Opus SANS le PNG réel était à côté, prouve une fois de plus qu'un
+  dessin SANS référence visuelle ne suffit jamais, même pour un objet simple.
+  ⭐⭐ **Contrôle SVG+GSAP réel prouvé en navigateur** (pas juste en théorie) — bug GSAP trouvé et
+  corrigé en cours de route : un `repeat:-1` imbriqué dans un tween À L'INTÉRIEUR d'une timeline
+  elle-même en `repeat(-1)` fait exploser sa durée calculée (1e10 s), gelant toute progression
+  visible. Fix : séparer les boucles infinies en tweens "ambiants" hors de la timeline principale.
+  ⛔ **Contrat HOURLY incompatible avec notre méthode** — le Work Diary d'Upwork (screenshots +
+  activité clavier/souris consultés par le client chaque semaine) suppose un effort humain
+  continu visible, incompatible avec des agents qui tournent en fond. Proposer fixed-price avec
+  milestones dans la candidature ; si refusé, ne pas insister.
+  ⛔⛔ **Le rendu Remotion du clip de démo reste CASSÉ** en fin de session — le SVG+GSAP marche
+  réellement (prouvé en Artifact web), mais la composition Remotion dédiée à produire un clip
+  vidéo de candidature ne joue pas l'animation (mutations DOM manuelles jamais appliquées,
+  cause précise non trouvée). **Ne pas confondre un problème d'outil de démo avec un doute sur
+  la faisabilité du projet** — c'était la tentation du soir, à éviter.
+  Détail complet + plan de reprise : [STATUS](upwork-spark-icon/STATUS.md).
+  Code : `src/projects/_rnd/spark-upwork/` · SVG source : `out/_r-and-d/spark-upwork/`.
+
 - ⭐⭐⭐ **LOTTIE UI / menu LCD embarqué (3e brief CLIENT RÉEL — NON candidaté) — 2026-08-24.**
   Genre encore différent : ni carte, ni SaaS, ni overlay — un **composant d'interface** livré en
   `.json` Lottie pour un appareil photo embarqué (4 écrans, budget 100 $, Turquie).

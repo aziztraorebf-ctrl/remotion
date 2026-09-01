@@ -22,26 +22,63 @@ Tous les tools de lecture/écriture exigent `org_uid` à CHAQUE appel (pas seule
    connects réel après envoi (105) prouvait qu'AUCUN boost n'avait été débité (118 − 13
    candidature = 105 pile ; un boost de 4 aurait donné 101). Vérifié aussi dans
    `usage_history` : une seule ligne "Job application −13", aucune ligne de boost.
-2. **`attachments` silencieusement non rattachés.** 6 `file_uid` (obtenus via
+2. **`attachments` silencieusement non rattachés (proposals) — CONFIRMÉ 2× (2026-08-31 et
+   2026-09-01, 2 candidatures différentes).** 6 `file_uid` (obtenus via
    `start_attachment_upload` + `get_upload_status`, tous `status: done`) passés au param
    `attachments` de `manage_proposals create`. Le draft ET le preview les affichaient
    correctement. Après `confirm_draft` (`SUCCESS`), la proposition réelle — vérifiée à la fois
    dans l'app Upwork ET via `list_freelancer_proposals get` — n'avait AUCUNE pièce jointe.
+   ⛔⛔ **Ce n'est plus un doute, c'est un pattern reproductible** : 2e occurrence identique sur
+   le même endpoint (`manage_proposals create`), avec 2 candidatures indépendantes (vokabl
+   08-31, Appstore promo video 09-01). Aziz a dû joindre les fichiers manuellement dans l'app
+   les 2 fois. **Ne plus tenter `attachments` sur `manage_proposals create` en espérant que
+   ça passe** — annoncer d'emblée à Aziz qu'il devra les joindre lui-même dans l'app après
+   l'envoi, plutôt que de le découvrir après coup à chaque fois.
+3. **Pièces jointes mal affichées côté client (messages), 2026-09-01.** Livraison Milestone 1
+   chill-meter (`room_bc1dd916da7ec932f9e0d1ca6719dc96`). `send_message` avec
+   `file_attachments` (2 PNG, `file_id`/`image_id` obtenus via upload inline) a renvoyé succès,
+   ET `list_messages` en relecture montrait bien les 2 attachments avec `scanStatus: CLEAN` —
+   **donc ce n'est PAS le même bug que #2** (côté API/MCP tout est correct, vérifié 2 fois).
+   Pourtant Aziz (côté client, dans l'app) a constaté que les images ne s'affichaient pas
+   correctement, et a dû les re-uploader manuellement en éditant le message. **Écart entre ce
+   que l'API confirme et ce que l'app affiche réellement au destinataire** — donc même un
+   `list_messages` qui semble tout confirmer ne suffit pas.
 
 **Cause racine non identifiée** — pas assez de recul pour trancher entre bug serveur MCP,
-mauvais relais d'un sous-champ à l'exécution finale, ou race condition. Les DEUX champs
+mauvais relais d'un sous-champ à l'exécution finale, race condition, ou (cas #3) un problème
+de rendu/propagation côté app Upwork après un envoi via API tierce. Pour #1 et #2, les champs
 étaient corrects dans le draft ET dans le preview juste avant confirmation — l'écart se
-produit spécifiquement à l'étape `confirm_draft`.
+produit spécifiquement à l'étape `confirm_draft`. Pour #3, même la relecture post-envoi via
+MCP ne suffisait pas à détecter le problème — seul un contrôle visuel dans l'app l'a révélé.
 
-**Protocole à suivre tant que ce n'est pas re-testé et confirmé fiable** :
-- Après tout `confirm_draft` qui touche `boost_connects` ou `attachments`, **toujours
-  demander à Aziz de vérifier lui-même dans l'app Upwork** (mobile ou web) — jamais
-  annoncer "envoyé avec succès" sur la seule foi de la réponse MCP pour ces 2 champs.
-- Si un écart est trouvé : Aziz corrige manuellement dans l'app (`Edit proposal`) — plus
-  fiable que retenter côté MCP tant que la cause n'est pas comprise.
-- Le CONTENU de la lettre et le MONTANT (`charged_amount`), eux, sont arrivés corrects et
-  fidèles au draft dans ce test — le problème semble spécifique à `attachments` et
-  `boost_connects`, pas généralisé à tout le payload.
+**Protocole à suivre** :
+- ⛔⛔ **Pour `manage_proposals create` avec `attachments` : ne plus attendre une vérification
+  après coup — prévenir Aziz AVANT l'envoi que les pièces jointes échoueront probablement
+  et qu'il devra les rejoindre lui-même dans l'app** (2 échecs sur 2 essais, cf ci-dessus).
+  Pour `send_message` (messages) et `boost_connects`, le bug est moins établi (1 occurrence
+  chacun) — **toujours demander à Aziz de vérifier lui-même dans l'app Upwork** (mobile ou
+  web) après `confirm_draft`, jamais annoncer "envoyé avec succès" sur la seule foi de la
+  réponse MCP pour ces champs.
+- ⭐ **Limite de lecture notée en passant (2026-09-01)** : `list_freelancer_proposals get`
+  ne renvoie même PAS de champ `attachments` dans sa réponse, que les fichiers soient
+  attachés ou non — impossible de confirmer/infirmer un attachement de proposition par ce
+  seul appel. Contrairement à `get_messages list_messages`, qui LUI affiche bien les
+  attachments d'un message avec `scanStatus`. Ne pas conclure "pas d'attachments" ou
+  "attachments OK" sur la base de `list_freelancer_proposals get` seul — il ne le dit pas.
+- ⛔⛔ **Ce contrôle vaut AUSSI pour `send_message` avec pièces jointes** (pas seulement
+  `manage_proposals`) — le cas #3 montre qu'un `list_messages` qui confirme tout côté API
+  n'exclut pas un problème d'affichage réel côté app. Ne jamais annoncer une pièce jointe
+  "bien envoyée" sur la seule foi d'une relecture MCP quand des images sont en jeu.
+- Si un écart est trouvé : Aziz corrige manuellement dans l'app (`Edit proposal` /
+  ré-upload manuel du message) — plus fiable que retenter côté MCP tant que la cause n'est
+  pas comprise.
+- Le CONTENU de la lettre/du message et le MONTANT (`charged_amount`), eux, sont arrivés
+  corrects et fidèles au draft dans tous ces tests — le problème semble concentré sur le
+  sous-système fichiers/images (upload, attachment, rendu), pas généralisé à tout le payload.
+- ⭐ **Piste à explorer si le bug se reproduit** : comparer le serveur MCP officiel Upwork à
+  un accès direct à l'API REST Upwork (si un token/app existe côté Aziz) pour voir si le
+  problème est spécifique à la couche MCP ou présent aussi en API directe — non testé à ce
+  jour, aucune conclusion à tirer avant un vrai comparatif.
 
 ## Mécanique confirmée fiable
 
@@ -72,6 +109,29 @@ produit spécifiquement à l'étape `confirm_draft`.
   confirmation nécessaire est celle donnée à Claude dans la conversation, avant l'appel
   `confirm_draft`. Une fois confirmé, la proposition est réellement envoyée, point final
   (sous réserve des 2 bugs ci-dessus sur des sous-champs spécifiques).
+
+## ⭐⭐ Biais structurel de visibilité — pourquoi un profil neuf voit surtout des petits budgets
+
+Vérifié par recherche web le 2026-09-01 (question d'Aziz : "les bonnes offres sont-elles cachées
+aux profils sans historique ?"). Le mécanisme réel n'est PAS qu'un client peut cacher une offre à
+un freelance précis — mais l'effet perçu est réel, via 3 canaux différents :
+1. **Classement des propositions** : sur une offre à beaucoup de propositions, Upwork classe ce
+   que le CLIENT voit en premier selon la proximité du profil au brief — un profil neuf sans
+   historique atterrit mécaniquement plus bas dans sa liste, même candidaté à temps.
+2. **Featured Jobs** : poussées par email en priorité aux freelances Top Rated / Rising Talent —
+   canal fermé tant qu'on n'a pas ce badge, donc ces offres nous sont invisibles EN AMONT.
+3. **Filtres client** (`Job Success 90%+`, `Rising Talent`) : un client peut filtrer les candidats
+   qu'il regarde par ces critères — équivalent pratique à nous rendre invisibles pour lui, même
+   avec une proposition envoyée.
+⭐ **Conséquence pratique** : les offres qu'on voit en tête de nos recherches manuelles (peu de
+propositions, client récent) sont statistiquement sur-représentées en petit budget/profil client
+neuf — pas parce que la recherche est mal faite, mais parce que les bons freelances établis ne
+les voient pas en priorité (pas de Featured Jobs) et ont peu de motivation à y répondre. Ne pas en
+déduire que la méthode de recherche a un problème — c'est un biais structurel de plateforme, pas
+une erreur de tri. La doctrine Q1-stack-first (`memory/fiches/FICHE-BRIEF-CLIENT.md`) reste le bon
+filtre sur ce qu'on VOIT ; ce biais explique juste la COMPOSITION de ce qu'on voit.
+Sources : support.upwork.com (Featured Jobs, Rising Talent), upwork.com/resources (proposal
+visibility), vollna.com/blog (algorithme Upwork 2026).
 
 ## Politique anti-spam Upwork (pas un rate-limit technique du MCP)
 
