@@ -104,3 +104,30 @@ de conclure.
 se ressemblent pas — le premier a l'air d'un panneau qu'on pousse. **Le décalage EST le geste.**
 Deux animations aux keyframes identiques par calque donnent deux pièces différentes selon leur
 déphasage.
+
+---
+
+## ⭐⭐ EXTENSION 2026-09-01 — un rendu qui BOUGE ne prouve pas qu'il est CORRECT
+
+Nouvelle variante du même piège, cette fois sur un rendu vidéo plutôt qu'un rapport ou un scan de
+fichier : **le mouvement lui-même peut être le symptôme du bug**, pas la preuve qu'il n'existe pas.
+
+**Le fait (candidature Spark Icon, prototype Remotion)** : un premier clip semblait déjà "vivant"
+(rotation du groupe + gouttes qui apparaissent). Le vrai bug (`scale(1 X)` sans virgule, syntaxe
+XML invalide en CSS, rejetée silencieusement par le CSSOM) empêchait les rayons individuels de
+partir de zéro — ils restaient figés à leur taille native du path dès la frame 0. Le clip BOUGEAIT
+(rotation + gouttes fonctionnaient, elles utilisaient une syntaxe valide) mais ne faisait PAS ce
+que le brief exigeait (une naissance progressive depuis rien). Un mouvement partiel a été pris pour
+un mouvement complet.
+
+### La règle
+
+⭐ **"Ça bouge" n'est pas un critère de correction — seul "ça bouge COMME PRÉVU" l'est.** Avant de
+juger un rendu animé fonctionnel, comparer explicitement CE QUI bouge (quels éléments, dans quel
+état à quelle frame) contre le comportement attendu écrit noir sur blanc (le brief, le storyboard),
+pas contre une impression générale de vivacité.
+
+⛔ **SIGNAL D'ALARME** : un rendu où certains éléments bougent et d'autres restent figés — le
+réflexe est de conclure "ça marche globalement", alors que c'est le signal exact d'une mutation qui
+échoue sur UN sous-ensemble précis (souvent lié à une différence de syntaxe/valeur entre les
+éléments qui bougent et ceux qui ne bougent pas, comme ici scale à 2 arguments vs 1 argument).

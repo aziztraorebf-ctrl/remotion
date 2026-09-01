@@ -88,6 +88,33 @@ NOM DE PROP DE CODE, un NOM DE PASSE/ITERATION interne (ex: "v2", "brushed", "ja
 "passe 3") — et le remplacer par une description du resultat que le client peut voir/juger sans
 connaitre notre vocabulaire de production.
 
+## 3quater. ⛔ TOUJOURS SINGULIER, JAMAIS "WE"/"OUR"
+
+Aziz travaille en 1-1 direct avec chaque client, jamais en posture d'agence. Un message qui dit
+"we"/"our team"/"our prototype" implique une equipe qui n'existe pas.
+
+⛔ "our prototype answers the question" → sonne comme une agence
+✅ "I vectorized your Spark.png and built a working prototype" → un seul auteur, honnete
+
+**Why** : vecu sur la candidature Spark Icon (2026-09-01) — un premier brouillon ecrit "our
+prototype", rejete explicitement par Aziz. Le singulier n'est pas un detail de style, c'est la
+verite du mode de travail (freelance solo, pas agence).
+
+## 3quinquies. ⛔ NE JAMAIS OFFRIR UNE FLEXIBILITE QU'ON NE TIENDRAIT PAS
+
+Symetrique de la regle 3 (ne pas presumer une decision) : ne pas non plus laisser entendre qu'on
+accepterait un format qui ne correspond structurellement pas a notre methode, juste pour paraitre
+souple.
+
+⛔ "If hourly is a hard requirement on your end, that's fine too, just let me know" — sonne
+accommodant mais promet un oui qu'on ne donnerait pas (le Work Diary Upwork, screenshots +
+activite clavier/souris, est incompatible avec des agents qui tournent en fond)
+✅ Expliquer pourquoi fixed-price convient mieux, et s'arreter la — sans promettre de repli
+
+**Why (Aziz, 2026-09-01, candidature Spark Icon)** : la phrase a ete retiree sur sa demande —
+priorite a l'honnetete du texte sur le ton commercial, meme si ca ferme une porte plus tot dans
+l'echange.
+
 ## 4. Regles de forme qui decoulent des 3 precedentes
 
 - **Repondre a ce qui est demande, rien de plus.** Si l'autre ne pose aucune question, 2-3 lignes
@@ -104,4 +131,5 @@ connaitre notre vocabulaire de production.
 Relire le brouillon et verifier : (1) aucun `—` ni `–` · (2) aucune phrase qui reformule l'autre ·
 (3) aucune phrase qui presume sa decision · (4) longueur proportionnee a ce qui a ete demande ·
 (5) aucun point deja explique et confirme par l'autre plus haut dans le fil · (6) aucun terme qui
-vient de notre vocabulaire interne (nom de fichier, nom de variante, nom de jalon/passe).
+vient de notre vocabulaire interne (nom de fichier, nom de variante, nom de jalon/passe) ·
+(7) singulier "I" partout, zero "we"/"our" · (8) aucune concession offerte qu'on ne tiendrait pas.

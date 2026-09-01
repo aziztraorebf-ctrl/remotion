@@ -8,98 +8,52 @@ les aurait perdus pour de bon). Diagnostic + 3 pistes de correctif à trancher a
 `memory/projects/INCIDENT-BRANCHE-SUPPRIMEE-TRAVAIL-PERDU.md`. Ne pas refaire de ménage de
 branches sans avoir lu ce fichier.
 
-## ⭐⭐⭐ SPARK ICON (Upwork, PAS ENCORE CANDIDATÉ) — reprendre sur le rendu Remotion cassé
+## Spark Icon (Upwork) — candidature envoyée 2026-09-01, en attente de réponse
 
-Prototype de faisabilité pour "SVG Motion Designer Needed to Animate a Custom Spark Icon"
-(client Calgary, hourly, EXPERT). SVG mesuré au pixel contre le vrai `Spark.png` — validé à
-l'œil par Aziz. Contrôle SVG+GSAP (start/stop/loop/settle) prouvé fonctionnel en navigateur réel
-(Artifact web) — un bug de timeline GSAP (`repeat:-1` imbriqué faisant exploser la durée
-calculée à 1e10s) a été trouvé et corrigé en cours de route.
-
-⛔⛔ **Ne PAS redouter la faisabilité du projet** — le socle (SVG + GSAP) marche. Ce qui reste
-cassé est un problème d'OUTIL DE DÉMO (le rendu Remotion pour produire un clip vidéo de
-candidature), pas de faisabilité.
-
-⏭️ **PROCHAINE ACTION** : corriger `SparkAnimationPrototype.tsx` (remplacer l'injection manuelle
-du SVG par `dangerouslySetInnerHTML` + `useLayoutEffect(() => {...}, [frame])` — piste identifiée,
-pas encore testée), produire le clip candidature (étapes 1→5 du doc client, fond blanc neutre),
-rédiger et envoyer la candidature. Proposer fixed-price + milestones (contrat affiché en hourly =
-Work Diary Upwork incompatible avec notre méthode d'agents en fond).
-
-→ **Source de vérité unique** (détail technique complet, mesures, plan de reprise) :
-`memory/client-sim-tests/upwork-spark-icon/STATUS.md` — ne rien recopier d'autre ici.
+Bug de rendu résolu, clip produit et attaché, lettre envoyée. Rien à faire tant que le client n'a
+pas répondu. → `memory/client-sim-tests/upwork-spark-icon/STATUS.md`.
 
 ---
 
 ## ⭐⭐⭐ DÉCISION DU 2026-08-24 — LA CHAÎNE EST UNE VITRINE, LE FREELANCE PORTE L'EFFORT
 
-Décision d'Aziz. La chaîne continue (Gazoduc), mais elle **prouve les capacités, elle ne les monétise
-pas**. ⭐ **MàJ 29/08 : 1er contrat GAGNÉ** (Upwork, 350 $, ni signé ni payé) — le freelance a franchi
-le premier seuil, pas celui de la livraison. ⛔ Ça ne valide PAS le « déterminisme », qui reste une
-hypothèse. Doctrine + fer de lance retenu (pilier 2, objets animés par code) :
-`memory/doctrines/PILIERS-B2B.md` (en tête).
+Décision d'Aziz : la chaîne (Gazoduc) prouve les capacités, elle ne monétise pas. ⭐ 1er contrat
+Upwork GAGNÉ le 29/08 (350 $, cf section chill-meter plus bas) — ne valide PAS le « déterminisme »,
+qui reste hypothèse. Doctrine + fer de lance (pilier 2, objets animés par code) :
+`memory/doctrines/PILIERS-B2B.md`.
 
-**Acquis technique de la session** : pipeline **SVG → Lottie** prouvé, validé dans les 2 outils
-officiels de LottieFiles. On sait livrer un composant au format du client, pas seulement une vidéo.
-→ `memory/client-sim-tests/lottie-ui-lcd/STATUS.md`
+**Acquis technique** : pipeline **SVG → Lottie** prouvé (2 outils officiels LottieFiles), matte
+`tt` porté (commits `a42af19b`/`b4a53d3e`, 5/5 pochoirs, écart 0,03 %) → détail complet
+`memory/client-sim-tests/lottie-ui-lcd/STATUS.md` · `corpus-kamotion/CORPUS-REFERENCE-UI.md`.
+⛔ Chantier repro UI **CLOS le 2026-08-30** (corpus épuisé, 3 pièces livrées).
 
-**Prochaine étape (bloquante)** — ⭐ **RÉÉCRITE le 2026-08-29, les 2 items d'origine sont périmés** :
-~~courbes de Bézier~~ ✅ **FAITES le 24/08** (`lottie-ui/tools/svgpath.py` : grammaire complète
-M/L/H/V/C/S/Q/T/A/Z + quad→cubic + arc→cubics, 36 tests). ~~scène narrative~~ ⛔ **mauvaise cible** :
-zéro carte géographique sur 22 pièces d'un studio qui vend — le registre qui se paie est le **FLUX
-D'INTERFACE**.
-✅ **LE MATTE (`tt`) EST PORTÉ** — ⭐ corrigé le 2026-08-30, cette ligne le donnait encore comme
-« LE bloqueur » alors qu'il a été livré le 29/08 (commits `a42af19b` + `b4a53d3e` : `mask`/`clip-path`
-→ paire `td:1`/`tt:1`, **5 pochoirs sur 5** via précomposition, écart 0,03 %). Vérifié : 14 occurrences
-de `tt` dans `lottie-ui/tools/svg2lottie_scene.py`.
-→ `memory/client-sim-tests/corpus-kamotion/CORPUS-REFERENCE-UI.md`
-⛔ **Chantier CLOS le 2026-08-30** (3 pièces livrées, corpus épuisé) — `STARTER-repro-ui-animation.md`
-est conservé pour sa trace mais **ne décrit plus la suite** : voir `STARTER-portfolio-anime.md`.
-
-⭐⭐⭐ **PRIORITÉ 1 (décision d'Aziz, 2026-08-30 fin de session) — PORTFOLIO ANIMÉ**
-Le corpus est **ÉPUISÉ** : les 4 pièces d'interface sont reproduites et mesurées. On ne copie
-plus, on crée **nos** pièces, sur ce que le marché valide. Plan en 6 étapes (MCP Fiverr →
-rétro-ingénierie → SVG → code → `da-brief-anim.py` → itération), acquis et règles payées :
+⭐⭐⭐ **PRIORITÉ 1 (décision d'Aziz, 30/08) — PORTFOLIO ANIMÉ** : corpus épuisé, on crée
+désormais **nos** pièces sur ce que le marché valide (pas de copie). Plan 6 étapes (MCP Fiverr →
+rétro-ingénierie → SVG → code → `da-brief-anim.py` → itération) :
 → **`memory/starters/STARTER-portfolio-anime.md`** ⭐⭐
 
-⛔ Section ci-dessous **CLOSE** (gardée pour trace) :
-
-~~⭐⭐ **PRIORITÉ 1 DE LA PROCHAINE SESSION (décision d'Aziz, 2026-08-29 fin de session)** :~~
-**LES SCÈNES du corpus, pas les personnages.** On a 23 pièces dont seuls les personnages ont été
-exploités — le corpus est surtout du **FLUX D'INTERFACE**, le registre qui se paie. Choisir
-lesquelles animer.
-⏸️ **Le personnage HUMAIN passe EN PAUSE** (tout est sauvegardé : `STARTER-PERSO-VECTORIEL-V4.md`).
-Si un personnage est nécessaire : soit le **registre du CHIEN** (mascotte, primitives symétriques,
-frontal, référence pro à viser — les 3 cases qu'un humain corps entier ne coche pas), soit **prendre
-un modèle pro existant et l'animer** (prouvé : le douanier obéit ; il en existe des milliers).
-
-⛔ **Ne PAS refondre le gabarit d'ouverture des vidéos** : la mesure des 4 courbes de rétention
-INFIRME l'hypothèse d'un défaut systématique (les formes divergent).
-→ `memory/doctrines/DIAGNOSTIC-FLOP-VIDEO.md` § LES 5 FORMES DE COURBE
+⏸️ Personnage HUMAIN en pause (`STARTER-PERSO-VECTORIEL-V4.md`) — si besoin d'un perso : registre
+CHIEN (mascotte) ou modèle pro existant animé (prouvé sur le douanier).
+⛔ Ne PAS refondre le gabarit d'ouverture vidéo : 4 courbes de rétention INFIRMENT un défaut
+systématique → `memory/doctrines/DIAGNOSTIC-FLOP-VIDEO.md` § LES 5 FORMES DE COURBE.
 
 ---
 
 ## ⛔ DETTE MESURÉE LE 2026-08-30 — `kimi-k2.5` PÉRIMÉ dans 16 fichiers de code + 2 index
 
-CLAUDE.md impose **`kimi-k3` UNIQUEMENT** (décision d'Aziz du 2026-08-20) et l'import depuis
-`scripts/tools/api_models.py`. Relevé par grep sur le code ACTIF (archives exclues) : **16 fichiers**
-portent encore `kimi-k2.5` **en dur**, plus **`REVIEW-TOOLS-INDEX.md` et `SCRIPTS-INDEX.md`** qui le
-citent — donc la doctrine se propage à l'envers, tout nouveau script recopiant l'identifiant périmé.
+CLAUDE.md impose **`kimi-k3` UNIQUEMENT** (décision d'Aziz 20/08) + import depuis
+`scripts/tools/api_models.py`. 16 fichiers de code actif portent encore `kimi-k2.5` en dur, plus
+`REVIEW-TOOLS-INDEX.md`/`SCRIPTS-INDEX.md` qui le citent (la doctrine se propage à l'envers).
+⛔ Un modèle périmé peut répondre en se dégradant silencieusement (pas d'erreur garantie).
 
-⛔ **Un modèle périmé ne renvoie pas forcément une erreur** : il peut répondre en se dégradant
-silencieusement (`key-learnings` 2026-08-20 : « un modèle qui RÉPOND n'est pas un modèle SUPPORTÉ »).
+⭐ **Le patron existe déjà** : `scripts/tools/da-brief-anim.py` (30/08) importe ses 4 identifiants
+d'`api_models.py`, zéro en dur, et applique le vrai fix `reasoning_content` de k3 — recopier, ne pas
+réinventer. ⚠️ Réserve avant de migrer les 2 scripts VIDÉO NATIVE (`da-brief-video-3voix.py:40`,
+`da-brief-compare-2videos.py:31`) : vérifier que k3 accepte la vidéo native via Moonshot direct avant
+de basculer.
 
-⭐ **Le patron existe déjà** : `scripts/tools/da-brief-anim.py` (créé le 30/08) importe ses 4
-identifiants d'`api_models.py`, zéro en dur, **et applique le vrai fix du `reasoning_content` de k3**
-que `da-brief.py` contourne encore. Recopier ce fichier, ne pas réinventer.
-
-⚠️ **Réserve avant de migrer les 2 scripts VIDÉO NATIVE** (`da-brief-video-3voix.py:40`,
-`da-brief-compare-2videos.py:31`) : vérifier que k3 accepte la vidéo native via l'API Moonshot
-directe avant de basculer — c'est le seul chemin vidéo, une régression y serait coûteuse.
-
-**Chantier mécanique, ~30 min, à faire en début de session** (pas en clôture : 16 fichiers à relire
-un par un, la migration Gemini du 20/08 a montré qu'un remplacement de masse se relit fichier par
-fichier).
+**Chantier mécanique, ~30 min, à faire en DÉBUT de session** (16 fichiers à relire un par un, pas
+un remplacement de masse — cf. migration Gemini du 20/08).
 
 ---
 
@@ -164,60 +118,31 @@ après signalement (halo de fond opaque · catbox/litterbox HS, repli sur Blob).
 
 ---
 
-## 🔧 SESSION D'AUDIT DU WORKSPACE — à planifier (constitué le 2026-08-27)
+## 🔧 SESSION D'AUDIT DU WORKSPACE — à planifier (constitué le 2026-08-27, rien d'urgent)
 
-> Session dédiée, pas un fix au fil de l'eau. Les points s'ajoutent ici au fur et à mesure
-> qu'on en repère. Rien n'est urgent ; tout est du durcissement de système.
-
-**1. ⭐⭐⭐ Outiller le protocole des 2 échecs (le point le plus rentable)**
-La règle existe (`CLAUDE.md` global § « Protocole agent de diagnostic dédié ») : à la **2e**
-tentative infructueuse sur le même blocage → déléguer à un agent, NON-NÉGOCIABLE. Elle documente
-3 preuves de valeur : 40 min perdues sur des appels API (18/07) ; **4 itérations complètes** de
-dosage caméra sur le globe D3 avant de déléguer (02/08) — l'agent a trouvé la vraie cause en 1 passe ;
-et **3 tentatives de « fix » sur une conversion WebM/VP9 JAMAIS cassée** (29/08) — délégué à la 3e,
-pas à la 2e. ⭐ Ce 3e cas ajoute une nuance : les 2 vérifications qui « confirmaient » le bug
-partageaient le MÊME angle mort (toutes deux passaient par ffmpeg), d'où deux fausses confirmations
-qui semblaient indépendantes. **Un compteur de tentatives ne suffirait pas** — il faut aussi que le
-déclencheur demande « mes vérifications sont-elles vraiment indépendantes ? ». Détail :
-`feedback_transparence-lue-comme-bug.md` § extension 2026-08-29.
-⛔ **Mais rien ne compte les tentatives.** C'est une règle écrite sans gate, soit exactement le
-pattern `regle-ecrite-insuffisante-sans-gate-outille` — celui qui a fait échouer 3 fois la règle
-d'éviction de NEXT-ACTION avant qu'on l'outille le 27/08.
-Base de départ : `.claude/hooks/circuit-breaker.sh` compte déjà les éditions répétées d'un même
-fichier. Reste à décider ce qui définit une « tentative sur le même problème » (rendu rejeté sur le
-même défaut ≠ édition de fichier) et à quel seuil il propose la délégation plutôt qu'il ne bloque.
-
-**2. Audit des ~90 skills** (demandé le 2026-07-11, jamais fait — non urgent : les skills sont
-chargées sur description, elles ne coûtent rien tant qu'elles ne servent pas).
-
-**3. Vérifier que les gates ne meurent pas en silence.** Les 14 hooks sont câblés et s'exécutent
-(vérifié 27/08), mais le circuit-breaker était mort le 12/07 sans que personne le remarque. Un
-test d'exécution périodique de chaque hook éviterait la rechute.
+**1. ⭐⭐⭐ Outiller le protocole des 2 échecs** (le point le plus rentable). Règle déjà écrite
+(`CLAUDE.md` global § Protocole agent de diagnostic dédié), 3 preuves de valeur accumulées (18/07,
+02/08, 29/08 — cette dernière montre que 2 vérifications peuvent partager le même angle mort et
+sembler indépendantes à tort). ⛔ **Mais rien ne compte les tentatives** — pattern
+`regle-ecrite-insuffisante-sans-gate-outille`. Base de départ : `.claude/hooks/circuit-breaker.sh`
+compte déjà les éditions répétées d'un fichier ; reste à définir « tentative sur le même problème »
+et le seuil de délégation. Détail : `feedback_transparence-lue-comme-bug.md` § extension 2026-08-29.
+**2.** Audit des ~90 skills (demandé 11/07, jamais fait, non urgent).
+**3.** Vérifier que les gates ne meurent pas en silence (le circuit-breaker était mort le 12/07 sans
+que personne le remarque) — un test d'exécution périodique par hook éviterait la rechute.
 
 ---
 
 ## 🔧 BACKLOG TECHNIQUE — dette Gemini/outillage (2026-08-20, NON URGENT)
 
-Migration image faite (preview mort → GA → **défaut LITE**, -50 %). **Les 5 actions qui restent** :
-1. ⚠️ **`.claude/agents/visual-producer.md:407`** cite encore l'ancien identifiant image — **c'est
-   l'agent qui dépense de l'argent réel, à traiter en premier.** Les ~28 autres mentions sont
-   PASSIVES (templates, docstrings), à corriger au fil de l'eau. ⛔ NE PAS toucher aux archives.
-2. ⛔⛔ **Réparer la centralisation VISION AVANT toute bascule** : `VISION_MODEL` n'est importé par
-   AUCUN script — l'identifiant est en dur dans **42 fichiers actifs** (79 occurrences), parfois dans
-   une URL. Changer la constante ne change RIEN aujourd'hui.
-3. 💡 **Gisement à tester : `gemini-3.7-flash`** (stable) = −62 % input / −69 % output, 4× plus rapide
-   en vidéo. ⛔ Qualité de jugement NON testée sur nos cas exigeants — protocole = test à l'aveugle
-   sur un cas réel avant bascule. Détail : `memory/tools/gemini.md`.
-4. **Migrer les ~75 fichiers vers `scripts/tools/api_models.py`** (voix 9 · Kimi 34 · GPT 20 · GLM 9),
-   volontairement étalée : **tout NOUVEAU script importe du module**, les anciens se migrent quand on
-   les touche. ⚠️ `da-brief.py` reste sur k2.5 en contournant un bug de k3 → appliquer le vrai fix
-   (`memory/tools/kimi-k3-reasoning-borne.md`). ⏭️ GPT (`gpt-5.5` vs `gpt-5.6-sol`) : non tranché.
-5. **`scripts/tools/mkprevis-camera-seule.py`** non commité — à commiter ou écarter.
-
-⏭️ **1 arbitrage ouvert pour Aziz** : `FICHE-MOCKUP-3D` a hérité en silence du statut d'exception lors
-de sa scission (08-26) — soit l'inscrire au README des fiches, soit tailler son doublon de fin.
-⛔⛔ **NE JAMAIS RE-GRAVER UN CHIFFRE DE LIGNES DE FICHE ICI** (les 3 précédents étaient tous faux) :
-mesurer à la demande avec `wc -l memory/fiches/*.md`.
+Migration image faite (défaut LITE, -50 %). Reste : (1) ⚠️ `visual-producer.md:407` cite l'ancien
+identifiant image — agent qui dépense réellement, à traiter en premier ; le reste (~28 mentions
+passives) au fil de l'eau. (2) ⛔⛔ `VISION_MODEL` non importé par aucun script — en dur dans 42
+fichiers (79 occurrences) : changer la constante ne change rien aujourd'hui. (3) `gemini-3.7-flash`
+à tester à l'aveugle avant bascule (−62%/−69% coût, qualité non vérifiée) → `memory/tools/gemini.md`.
+(4) Migrer ~75 fichiers vers `api_models.py`, étalé au fil de l'eau ; `da-brief.py` reste sur k2.5,
+vrai fix dans `kimi-k3-reasoning-borne.md`. (5) `mkprevis-camera-seule.py` non commité, à trancher.
+⛔⛔ Ne jamais re-graver un chiffre de lignes de fiche ici : mesurer à la demande (`wc -l`).
 
 
 ## ⛔⛔ AVANT DE LIRE QUOI QUE CE SOIT — LES CHANTIERS VIVANTS SONT DANS DES WORKTREES
@@ -255,95 +180,28 @@ mesurer à la demande avec `wc -l memory/fiches/*.md`.
 
 ---
 
-## 🔧 BACKLOG — 2e test du workflow démo client (carto) — EN ATTENTE
+## 🔧 BACKLOG dormant — 5 chantiers en pause, aucun n'a bougé depuis 2+ semaines
 
-> Le workflow n'a été validé que sur UN brief (Zambie) : *une abstraction écrite sur un seul cas est
-> un pari, pas une brique*. On ne sait pas si `carto-selfreview` tient sur une carte claire, un globe
-> D3 ou un format vertical.
-> ▶️ **Starter complet (6 rappels payés) : `memory/starters/STARTER-PROMPT-2e-test-demo-carto.md`**
-> — extrait d'ici au wrap du 28/08.
-
-**Reste ouvert sur la Zambie (non bloquant)** : concept A sans tilt ni relief (décision de goût,
-l'ajouter affaiblirait le contraste du gabarit) · filigrane discret validé mais jamais posé ·
-GPT-5.5 en relecteur systématique à tester (il a battu les auteurs des planches — frames only, pas de vidéo).
-
-
----
-
-## 🔬 CHANTIER FMI — ouvert, rien n'est commencé (script seulement)
-
-> Extrait de ce fichier le 2026-08-27 vers **`memory/projects/CHANTIER-FMI.md`** (163 lignes).
-> Il était enterré sous un titre « ✅ SYSTÈME GRAVÉ » qui le faisait passer pour clos.
-> Phase A entière à faire — ne pas croire qu'on a de l'avance.
-
-## 🔬 PISTE OUVERTE (non urgente) — H3 : injecter NOTRE audio via `reference_audio_urls`
-
-✅ Le volet STYLES est **FAIT** (20/08) : Vector Poster et Sunjata prouvés transposables à seed
-constant → `memory/doctrines/PILIERS-B2B.md` § GABARIT DE CHOIX.
-⛔ **La seule limite qui reste** : l'audio est RÉGÉNÉRÉ par H3 (corrélation 0,46, la voix change).
-Piste jamais testée : `reference_audio_urls` sur `minimax/h3/reference-to-video`.
-⚠️ **Piège de grep** : `reference_audio_urls` (H3, **pluriel**) ≠ `reference_audio_url` (minimax-music,
-singulier, n'existe PAS en v2.6) — un grep fait conclure à tort que le champ est mort.
-⭐ **Prérequis non négociable** : archiver `.prompt.txt` + `.meta.json` (avec le **SEED**) à côté de
-chaque clip, sinon ce chemin est impossible. Recette d'édition :
-`memory/tools/edition-video-ciblee-omni-seedance.md`.
-⚠️ Exploratoire — à prendre quand l'Acte 3 est soldé.
-
-## 🎬 Showcase des capacités — reste LE DÉROULÉ (2026-08-15)
-
-⏭️ **PROCHAINE ACTION = le DÉROULÉ** (ordre / durée / musique) → index interne 3-4 min → **cut vente
-60-90 s**. ⛔ Zéro composant neuf à coder.
-✅ Charte de DA FAITE (`memory/doctrines/CHARTE-DA-FREELANCE.md`) — ⛔ ne plus l'annoncer « à écrire »,
-dérive détectée 2 fois (wraps du 20/08 et 27/08).
-⛔ **L'arbitrage des 2 planches-contact est ANNULÉ** — ne PAS le redemander. Les 53 templates sont
-archivés : la source est désormais la **production vivante publiée** (Sénégal, Soudan, AES, CFA,
-Gazoduc Actes 1-2-4-5 ; ⛔ Acte 3 exclu tant que l'acte ENTIER n'est pas validé).
-⛔⛔ **Leçon de méthode (payée 2×)** : un texte périmé gardé « pour mémoire » **reste lu comme actif** —
-il se SUPPRIME, l'avertissement seul suffit.
-→ `memory/projects/SHOWCASE-CAPACITES.md`
-
-## 💼 GIG FIVERR ENTRÉE DE GAMME (2026-08-12/13)
-
-Page validée par Aziz (`freelance-linkedin/GIG-PAGE-VALIDEE.md`), persona solo founder/startup.
-Reste ouvert : prix réels, nom commercial, portfolio de démo. Détail :
-`freelance-linkedin/BRIEF-GIG-ENTREE-DE-GAMME.md` § "Ce qui reste à trancher".
-
----
-
-## 🔧 BACKLOG — KORA & CARTES : 2 pistes non tranchées, dormantes depuis 16 j (2026-08-12/13)
-
-**Les 2 décisions qui restent ouvertes** (le reste de cette section est de la preuve déjà gravée) :
-- **Quel sujet ?** Piste A « pourquoi l'Afrique évolue / pays qui montent » (relancer SUJET-PRIME
-  6 étapes) **vs** mythologie africaine (mythe Anansi testé). Non tranché.
-- **Quel format ?** Insert dans une vidéo Mapbox/D3 existante **vs** vidéo complète. Non tranché.
-- Piste B (FMI/dette) : angle et squelette posés → `memory/projects/CHANTIER-FMI.md`.
-
-**Acquis déjà gravés ailleurs — ne pas les redire ici** :
-2 styles H3 validés sur le mythe Anansi (Poster Vector · Whiteboard Doodle) + prompts reproductibles
-et format officiel H3-Base → `memory/tools/minimax-h3-styles-tests.md` ·
-SVG codé direct par Fable 5 mode MAX, validé sur 2 cas → `memory/doctrines/SVG-SCENES-GENERATIVES.md`
-(⛔ dont la règle : **jamais dessiner un contour de pays à l'œil**, utiliser `d3-geo`/Natural Earth) ·
-storyboard multi-modèles refondu le 18/08 → `memory/fiches/FICHE-STORYBOARD.md` (auto-injectée).
-Détail des pistes : `memory/projects/EXPLORATION-DIVERSIFICATION-CHAINES.md`.
-
-
-## ⭐ CHAÎNE CANADA EN — test PIPELINE CONCLUANT (14/08) · 1 décision en attente : Mapbox réel vs 1re scène
-
-Marché EN validé (TubeLab, RPM jusqu'à 20$+). Script V3 FR validé jury 4 LLM. **3 styles H3 validés**
-(Hand Drawn, Poster Vector narratif + Poster Vector SaaS/logo/scène-2-personnages) + **format de prompt
-H3 officiel découvert et adopté par défaut** (l'ancien format 6-sections n'était pas le vrai format
-documenté) — détail `tools/minimax-h3-styles-tests.md` § "FORMAT DE PROMPT OFFICIEL". Reste à tester :
-Whiteboard Doodle. Décision à prendre : scène Mapbox réelle ou assembler la 1ère scène complète.
-Détail : `episodes/_rnd/canada-red-bay/STATUS.md`.
-
----
-
-## ⚠️ MiniMax H3 — défaut racine non résolu, contournement prouvé (2026-08-10/12)
-
-Scène multi-personnages dense (3+, contact physique) : écran noir/personnage disparaît, **toujours NON
-résolu** — seuil de délégation agent dédié atteint et non déclenché. Contournement PROUVÉ : 2
-personnages max, zéro contact croisé (4 clips testés, succès complet). Guide de prompting officiel +
-storyboard multi-panneaux également testés. Détail complet : `tools/minimax-h3-comfy-cloud.md`.
+- **2e test démo client carto** (EN ATTENTE) : validé sur 1 seul brief (Zambie) — pari, pas une
+  brique. Starter complet (6 rappels payés) : `memory/starters/STARTER-PROMPT-2e-test-demo-carto.md`.
+- **Chantier FMI** : rien commencé (script seulement) → `memory/projects/CHANTIER-FMI.md` (163 l.).
+- **H3 audio `reference_audio_urls`** (exploratoire, à prendre quand l'Acte 3 est soldé) : styles
+  FAITS (20/08), reste l'audio régénéré par H3 (corrélation 0,46). Piste jamais testée :
+  `reference_audio_urls` (H3, pluriel — ne pas confondre avec `reference_audio_url` minimax-music,
+  singulier, inexistant en v2.6). Prérequis : archiver `.prompt.txt`+`.meta.json` (SEED) par clip →
+  `memory/tools/edition-video-ciblee-omni-seedance.md`.
+- **Showcase des capacités** : reste LE DÉROULÉ (ordre/durée/musique) → cut vente 60-90s, zéro
+  composant neuf à coder. Charte DA déjà FAITE (`doctrines/CHARTE-DA-FREELANCE.md`).
+  → `memory/projects/SHOWCASE-CAPACITES.md`
+- **Gig Fiverr entrée de gamme** : page validée, reste prix réels/nom commercial/portfolio démo →
+  `freelance-linkedin/BRIEF-GIG-ENTREE-DE-GAMME.md` § "Ce qui reste à trancher".
+- **Kora & Cartes** (dormant depuis 16j) : 2 décisions ouvertes — quel sujet (Afrique qui monte vs
+  mythologie) et quel format (insert vs vidéo complète) → `memory/projects/EXPLORATION-DIVERSIFICATION-CHAINES.md`.
+- **Chaîne Canada EN** : pipeline conclu (marché validé TubeLab, script V3 jury 4 LLM, 3 styles H3
+  validés), 1 décision en attente (Mapbox réel vs 1ère scène) → `episodes/_rnd/canada-red-bay/STATUS.md`.
+- **MiniMax H3 — défaut racine non résolu** : scène multi-persos dense (3+, contact physique) =
+  écran noir, toujours NON résolu. Contournement prouvé : 2 persos max, zéro contact croisé →
+  `tools/minimax-h3-comfy-cloud.md`.
 
 ---
 
@@ -359,36 +217,31 @@ après des semaines de gel.
 | B (73,9→105,8 s) | ⏭️ porter l'animation sur le décor Fable 5 |
 | C (105,8→123,1 s) | ✅ **FINAL** — `acte3-segmentC-verrou-FINAL.mp4` |
 
-**⏭️ PAR QUOI REPRENDRE — le Beat 3 (panneau financement).** C'est le morceau le plus prêt : la spec
-existe au pixel près dans `breakdown-v5-json/beat3-breakdown.json`, aucune décision de goût à prendre,
-l'image-cible a déjà été montrée à Aziz. Manquent la banque barrée DANS le panneau, le trio
-ALGÉRIE → vanne ← NIGERIA, et les cylindres comparatifs. Détail : STATUS.md § ACTE 3.
+**⏭️ PAR QUOI REPRENDRE — le Beat 3 (panneau financement).** Le plus prêt : spec au pixel près dans
+`breakdown-v5-json/beat3-breakdown.json`, aucune décision de goût à prendre, image-cible déjà montrée
+à Aziz. Manquent : banque barrée DANS le panneau, trio ALGÉRIE→vanne←NIGERIA, cylindres comparatifs.
+Détail : STATUS.md § ACTE 3.
 
-⛔ **NE PAS ressortir la TRANCHÉE** (codée puis retirée le 18/08) : le script ne parle jamais de
-creusement, et c'est MON brief qui l'avait soufflée aux modèles.
-⛔ **NE PAS prolonger la rupture plein écran** au-delà de 155 frames : le clip ne boucle pas.
-⛔ **NE PAS remettre l'encart Adrar après la rupture** : décision d'Aziz, ce serait une redite.
+⛔ NE PAS ressortir la TRANCHÉE (retirée le 18/08, hors script). ⛔ NE PAS prolonger la rupture
+plein écran au-delà de 155 frames (ne boucle pas). ⛔ NE PAS remettre l'encart Adrar après la
+rupture (redite, décision d'Aziz).
 
-**Reste ensuite** : assemblage de l'Acte 4 (3 fichiers, 300 ms de marges à rogner, filtre
-`concat=n=N:v=1:a=0`) · CTA de fin (jamais commencé, ⛔ pas d'interpellation directe) · passe finale
-en palette sombre `PAL_GPT` pour les Actes 1/2/3, ⛔ PAS acte par acte.
+**Reste ensuite** : assemblage Acte 4 (3 fichiers, 300ms de marges à rogner, `concat=n=N:v=1:a=0`) ·
+CTA de fin (jamais commencé, pas d'interpellation directe) · passe palette sombre `PAL_GPT` pour
+Actes 1/2/3 (pas acte par acte).
 
-⭐ **MÉTHODE STORYBOARD REFONDUE cette session** (`memory/fiches/FICHE-STORYBOARD.md`) : audit du
-brief par un modèle tiers OBLIGATOIRE · 3 modèles dessinateurs (Grok/GPT/Gemini), 1 appel chacun,
-2 concepts par planche · le modèle pose un LISERÉ au lieu d'écrire · description case-par-case
-demandée APRÈS le choix, au modèle qui a dessiné. Testée le 18/08 : marche sur Grok et Gemini,
-GPT a rendu une planche inexploitable (à corriger en imposant « 4 colonnes par rangée »).
+⭐ Méthode storyboard refondue cette session (audit tiers obligatoire, 3 modèles dessinateurs 1 appel
+chacun, liseré au lieu d'écrire) → `memory/fiches/FICHE-STORYBOARD.md`.
 
 ---
 
 ## 🔧 BACKLOG — Studio réutilisable (Mécanisme 1 Gardien, pas urgent)
 
-Mécanisme 2 (Extracteur) codé et validé (~30 briques indexées) — détail `doctrines/STUDIO-REUTILISABLE-GATE.md`.
-Mécanisme 1 (Gardien) : pas codé, volontairement — à réévaluer si besoin, rien d'urgent.
-⚠️ **Dette CTA Short CFA** : worktree `remotion-cfa` (`feat/cfa-short-9x16`) jamais mergé, `SceneCta.tsx:152`
-dit encore "EN DESCRIPTION" alors que le rendu publié a été patché en aval par splice ffmpeg direct sur
-le fichier final — le fix n'est PAS dans la source. À trancher : appliquer le fix dans la source (resync)
-ou fermer le worktree si le repo principal fait foi. Un futur re-render depuis ce worktree réintroduirait le bug.
+Mécanisme 2 (Extracteur) codé et validé (~30 briques indexées) — `doctrines/STUDIO-REUTILISABLE-GATE.md`.
+Mécanisme 1 (Gardien) : pas codé, volontairement, rien d'urgent.
+⚠️ **Dette CTA Short CFA** : worktree `remotion-cfa` jamais mergé, `SceneCta.tsx:152` dit encore
+"EN DESCRIPTION" alors que le rendu publié a été patché en aval par splice ffmpeg — le fix n'est PAS
+dans la source. À trancher : resync la source ou fermer le worktree (sinon un re-render y réintroduit le bug).
 
 ---
 
@@ -406,60 +259,45 @@ ou fermer le worktree si le repo principal fait foi. Un futur re-render depuis c
 
 ## ⛔ NE PAS PROPOSER — AES abandonné volontairement (décision Aziz 2026-08-17). PAS une dette.
 
-⛔ **Ne plus le proposer en début de session, ne plus le compter dans le reste-à-faire.**
-La refonte V6 (script découpé/tagué/généré, audio validé, retiming vérifié) ne sera PAS assemblée
-ni republiée. **Raison, et c'est elle qui généralise** : l'échec à 5 vues/24h est un problème de
-TITRE / MINIATURE / SUJET, pas de production. Republier une version améliorée sur une vidéo morte
-ne rachète pas la distribution — l'historique de non-distribution reste attaché à la vidéo.
-✅ Ce qui reste utile : le **script V6 comme gold-standard de script dense** (pointeur conservé dans
-`ROUTAGE.md`), et les leçons de production, qui partent dans les prochaines vidéos.
-Détail historique : `episodes/warmap-sahel/STATUS.md`.
+Ne plus le proposer ni le compter dans le reste-à-faire. La refonte V6 ne sera PAS assemblée ni
+republiée : l'échec à 5 vues/24h est un problème de TITRE/MINIATURE/SUJET, pas de production —
+republier ne rachète pas la distribution. Reste utile : script V6 comme gold-standard de script
+dense (pointeur dans `ROUTAGE.md`). Détail : `episodes/warmap-sahel/STATUS.md`.
 
 ---
 
 ## ⏳ ACTIONS OUVERTES
 
-### Recharger le crédit OpenAI
-
-> ⚠️ **MAJ 2026-08-25 — l'impact dépasse Whisper** : OpenRouter renvoie aussi `402 Payment Required`, ce qui a
-> **empêché de tester GPT-5.5** dans le comparatif 3D du 25/08 (`llm-gen-3d.py`). Trou de mesure à combler
-> après recharge — c'est le seul modèle absent du classement 3D.
-Quota épuisé le 2026-07-25 (`429 insufficient_quota`). Bloque `whisper-align.py`/`transcribe-openai.py`.
-Contournement en place : `scripts/tools/forced-align.py` (ElevenLabs).
-
-### Activer les routines /schedule — NON FAIT, rappeler à Aziz
-Re-signaler en début de session jusqu'à confirmation. 2 routines cloud Postiz (Aziz les crée lui-même) :
-`/schedule jeudi 9h ... postiz-weekly-check.py` · `/schedule samedi 10h ... postiz-weekly-report.py`.
-Ajouter `POSTIZ_API_KEY` en env. **Quand Aziz confirme → supprimer cette section.**
-
-### Audit des skills du workspace — demandé le 2026-07-11, jamais fait
-88 dossiers sous `~/.claude/skills/` (global), suspicion de redondance. Cadrage : génériques vs
-spécifiques Remotion, traces d'usage réel, doublons fonctionnels, agents-vierges-en-parallèle.
+- **Recharger le crédit OpenAI** : quota épuisé 25/07 (`429`), bloque `whisper-align.py`/
+  `transcribe-openai.py` (contournement en place : `forced-align.py` ElevenLabs). OpenRouter renvoie
+  aussi `402` depuis le 25/08 — a empêché de tester GPT-5.5 dans le comparatif 3D, trou de mesure à
+  combler après recharge.
+- **Activer les routines /schedule** — NON FAIT, re-signaler en début de session jusqu'à confirmation
+  d'Aziz. 2 routines cloud Postiz (`postiz-weekly-check.py` jeudi 9h, `postiz-weekly-report.py`
+  samedi 10h), ajouter `POSTIZ_API_KEY`. Supprimer cette ligne une fois confirmé.
+- **Audit des skills du workspace** — demandé 11/07, jamais fait. 88 dossiers `~/.claude/skills/`,
+  suspicion de redondance (génériques vs spécifiques Remotion, doublons fonctionnels).
 
 ---
 
 ## 💡 BACKLOG (rien d'actif — ne pas lancer sans décision d'Aziz)
 
-- **Carrousel « Good News »** — pipeline prêt, jamais relancé : `python3 scripts/prepare-goodnews-weekly.py`.
+- **Carrousel « Good News »** — pipeline prêt, jamais relancé : `scripts/prepare-goodnews-weekly.py`.
 - **Carousels Instagram** — Or Africain + Thiaroye prêts, Mansa Moussa à refaire. Reco : Sénégal Pétrole.
 - **Système hook + CTA commentaire** — checklist hook 20s + template CTA 30-60s, jamais construits.
-- **Xénophobie SA** — angle validé (« double face »), données 2026 intégrées. Gate : demande TubeLab.
-  Dossier : `episodes/souverain/xenophobie-sa-EXPLORATION/`.
+- **Xénophobie SA** — angle validé (« double face »), données 2026 intégrées, gate demande TubeLab →
+  `episodes/souverain/xenophobie-sa-EXPLORATION/`.
 - **Pipeline Shorts automatisé trending** — pas maintenant, revenir quand le long format est en place.
-- **Peste 1347 mid-form horizontal** — concept validé, backlog (AES et Maroc Batteries sont abandonnés).
-  Fiche : `projects/peste-1347-midform.md`. 2 chantiers actés (narration voix vivante, multi-agent
-  post-fix) : `episodes/peste-1347/STATUS.md`.
-- ~~**`GeoFlowConnection`** — « à coder au 1er sujet à flux »~~ ⛔ **LIGNE PÉRIMÉE, retirée 2026-08-15** :
-  le composant EXISTE et est **publié** (Soudan Actes 3/4/5 + `SoudanWarMapEngine`, vérifié par grep).
-  ⚠️ Attention, **DEUX** fichiers portent ce nom, contrats opposés : `warmap/_shared/` = marqueur nu
-  (publié) · `_shared/mapbox/` = sprite orienté (dormant). Détail : `INTENTION-FORME-INDEX.md`.
-- **Patterns `_reference-atlas-poc/` non portés** : `AtlasParcheminGlobe.tsx` · `AnimatedCaravan.tsx` ·
-  `atlas-parchemin-mande.json`.
-- **Vox Papercraft** — pipeline officialisé (`doctrines/REVERSE-STYLE-VIDEO-VERS-ASSETS.md`). Reste :
-  halo détourage, retirer noms d'États, photo halftone, séquence multi-plans.
-- **R&D D3 16:9** — moteur agnostique ratio, prouvé sur Soudan. Backlog : sol enrichi, globe 2.0,
-  data-viz cartographique, flux `d3-force`/`d3-chord`, HUD tactique. Détail : `_rnd/d3-16x9/README.md`.
-- **Seedance personnage** — technique prouvée mais ÉCARTÉE (coût ~6.85$/clip). SVG reste la voie par défaut.
+- **Peste 1347 mid-form horizontal** — concept validé → `projects/peste-1347-midform.md`,
+  `episodes/peste-1347/STATUS.md`.
+- **`GeoFlowConnection`** — composant EXISTE et est publié (Soudan Actes 3/4/5). ⚠️ 2 fichiers du
+  même nom, contrats opposés : `warmap/_shared/` (publié) vs `_shared/mapbox/` (dormant) →
+  `INTENTION-FORME-INDEX.md`.
+- **Patterns `_reference-atlas-poc/` non portés** : `AtlasParcheminGlobe.tsx` · `AnimatedCaravan.tsx`.
+- **Vox Papercraft** — pipeline officialisé. Reste : halo détourage, noms d'États, photo halftone,
+  séquence multi-plans → `doctrines/REVERSE-STYLE-VIDEO-VERS-ASSETS.md`.
+- **R&D D3 16:9** — moteur agnostique ratio, prouvé sur Soudan → `_rnd/d3-16x9/README.md`.
+- **Seedance personnage** — technique prouvée mais ÉCARTÉE (coût ~6.85$/clip). SVG reste le défaut.
 
 ---
 

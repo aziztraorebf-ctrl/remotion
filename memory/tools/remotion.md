@@ -290,6 +290,27 @@ liée à l'ordre de layers ou à une sous-couche non identifiée par `l.id.inclu
   variable non-const. (Frequent sur les flags de variante A/B testes en session.)
 - Contexte d'usage detaille : [[doctrines/WARMAP-INSERT-SVG-ETATMAJOR]] (§Gotchas techniques).
 
+### ⛔⛔ `node.style.transform` en JS : syntaxe CSS ≠ syntaxe XML SVG — echec SILENCIEUX (2026-08-31, Spark Upwork)
+- **`scale(1 0.6)` (espace, pas virgule) est la syntaxe de l'attribut XML SVG** (`transform="scale(1 0.6)"`
+  sur l'element). **En CSS** (`style.transform`, `element.style.setProperty('transform', ...)`), c'est une
+  valeur **invalide** — `CSS.supports('transform','scale(1 0.6)')` retourne `false`. Le CSSOM **rejette
+  silencieusement** toute valeur `transform` invalide passee via `setProperty` OU assignation directe
+  (`node.style.transform = '...'`) : **aucune exception levee**, `node.getAttribute('style')` reste `null`,
+  `node.style.length === 0`, `getComputedStyle(node).transform === 'none'`.
+- **Piege classique en mutation DOM manuelle sur un SVG genere/importe** : le code mele les deux grammaires
+  sans le remarquer, parce qu'aucune erreur ne remonte — juste un element qui ne bouge jamais alors que le
+  reste du pipeline (frame, boucle, selecteur DOM) fonctionne correctement. Symptome trompeur : d'AUTRES
+  transforms sur d'autres nœuds du meme composant peuvent fonctionner (ex: `rotate(30deg)`, `scale(0.6)` —
+  un seul argument, syntaxe valide dans les deux grammaires), ce qui fait croire a un bug de timing/React
+  au lieu d'une valeur invalide precise.
+- **Fix** : soit ajouter la virgule (`scale(1, 0.6)`), soit — mieux — utiliser la fonction CSS a un seul
+  axe qui exprime l'intention exacte : `scaleY(${s})` au lieu de `scale(1 ${s})` pour une extension sur un
+  seul axe. Verifier avec `CSS.supports('transform', valeur)` avant d'assumer qu'une valeur composee est
+  valide.
+- Trouve par un agent Opus dedie (protocole diagnostic-2-echecs, CLAUDE.md) apres plusieurs hypotheses
+  fausses testees en session (nœud detache, timing React, clip-path, gel du CSSOM) — toutes reproduites et
+  refutees une a une avant la vraie cause. Contexte complet : `memory/client-sim-tests/upwork-spark-icon/STATUS.md`.
+
 ### Sprites & downscale — style graphique vs taille d'affichage
 Un sprite/portrait style **gravure fine à hachures/pointillés** NE SURVIT PAS à un downscale extrême
 (ex: diamètre `vmin*0.065` ≈ 70px sur 1080p → devient du bruit visuel illisible), contrairement à un

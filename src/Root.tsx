@@ -2,6 +2,11 @@ import { CfaShortHook9x16, CFA_SHORT_HOOK_FRAMES, CFA_SHORT_HOOK_FPS } from "./p
 import { CfaNuit1994Anime16x9, CFA_NUIT_1994_FRAMES, CFA_NUIT_1994_FPS } from "./projects/_rnd/fable-svg/CfaNuit1994Anime16x9";
 import { ChillMeterShowcase, SHOWCASE_FRAMES } from "./projects/_rnd/chill-meter/ChillMeterShowcase";
 import { ChillMeterOverlay } from "./projects/_rnd/chill-meter/ChillMeterOverlay";
+import {
+  SparkAnimationPrototype,
+  SPARK_PROTOTYPE_FRAMES,
+  SPARK_PROTOTYPE_FPS,
+} from "./projects/_rnd/spark-upwork/SparkAnimationPrototype";
 import { Composition, Folder, staticFile as staticFileRoot, useCurrentFrame } from "remotion";
 import { ZambiaConceptB, ZAMBIA_CONCEPT_B_FRAMES } from "./projects/_client-sim/zambia-peacecorps/ZambiaConceptB";
 import { ZambiaConceptA, ZAMBIA_CONCEPT_A_FRAMES } from "./projects/_client-sim/zambia-peacecorps/ZambiaConceptA";
@@ -5743,6 +5748,18 @@ export const RemotionRoot: React.FC = () => {
           height={1080}
         />
       </Folder>
+
+      {/* R&D ponctuel — prototype candidature Upwork "Spark Icon Animation".
+          Etapes 2-5 du doc client (FIRST SPARK -> BURST), rig SVG mesure au pixel
+          contre Spark.png reel (voir out/_r-and-d/spark-upwork/NOTES.md). */}
+      <Composition
+        id="RND-SparkUpwork-Prototype"
+        component={SparkAnimationPrototype}
+        durationInFrames={SPARK_PROTOTYPE_FRAMES}
+        fps={SPARK_PROTOTYPE_FPS}
+        width={700}
+        height={700}
+      />
 
       {/* R&D ponctuel — clip de portfolio candidature vokabl (muet narration, garde musique/SFX) */}
       <Composition

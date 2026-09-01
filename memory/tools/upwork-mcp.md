@@ -44,6 +44,14 @@ Tous les tools de lecture/écriture exigent `org_uid` à CHAQUE appel (pas seule
    que l'API confirme et ce que l'app affiche réellement au destinataire** — donc même un
    `list_messages` qui semble tout confirmer ne suffit pas.
 
+4. **`confirm_attachment_upload` échoue avec une ERREUR UPSTREAM EXPLICITE (pas un faux SUCCESS) —
+   2026-09-01, candidature spark-icon.** Distinct des bugs #1-3 ci-dessus : ici pas de rattachement
+   via le param `attachments` de `create`, mais un upload standalone (`start_attachment_upload` →
+   `get_upload_status` confirmant `status: done` → `confirm_attachment_upload`). Cette dernière
+   étape a échoué 2 fois de suite avec `error_code: UPSTREAM` — un vrai échec visible, pas un
+   succès trompeur. Le fichier était bien stocké côté Upwork (`file_uid` valide, `status: done`)
+   mais jamais rattaché au draft. Aziz a dû l'attacher manuellement dans l'app.
+
 **Cause racine non identifiée** — pas assez de recul pour trancher entre bug serveur MCP,
 mauvais relais d'un sous-champ à l'exécution finale, race condition, ou (cas #3) un problème
 de rendu/propagation côté app Upwork après un envoi via API tierce. Pour #1 et #2, les champs
