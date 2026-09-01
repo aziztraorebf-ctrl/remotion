@@ -111,3 +111,16 @@ correction d'un chiffre peut casser ce qui allait.
   de notification + une note d'aide + un pied (progression + bouton) — des pieces credibles du
   registre, pas du remplissage decoratif.
 - ⛔ Fleche hampe-rect + pointe-triangle : decrochement au raccord (voir TECHNIQUES).
+
+## 2026-08-31 — chassis metal chill-meter (2 pieges, payes en cours de route)
+- ⛔ **SHEEN DIAGONAL SUR LA COQUE ENTIERE = BANDE QUI COUPE LE PANNEAU EN DEUX.** Un degrade
+  d'opacite diagonal (x2=1 y2=0.35, op 0.16) pose sur un corps de 1272x716 lit comme une bande
+  claire oblique traversant coque ET percu jusque dans l'ecran. Meme famille que "tout lustre
+  devient une ligne a grande largeur" — la version DEGRADE DOUX n'y echappe pas. Fix : sheen
+  VERTICAL (colonnes de reflet, x2=1 y2=0) opacite <= 0.10. Les cassures nettes de reflet ne
+  sont belles que sur les PETITES surfaces (plaque titre, colliers).
+- ⛔ **RENDER RELANCE DEPUIS LE MAUVAIS CWD + `| grep` = MESURE D'UN RENDU PERIME.** Apres cd
+  dans le scratchpad, `python3 scripts/tools/...` (chemin relatif) a echoue, le grep a avale
+  l'erreur, et ma "iteration 2" a mesure les PNG de l'iteration 1 (chiffres STRICTEMENT
+  identiques = le signal). Reflexe : des que deux mesures successives sont identiques au
+  millieme, verifier les TIMESTAMPS des fichiers avant d'interpreter.

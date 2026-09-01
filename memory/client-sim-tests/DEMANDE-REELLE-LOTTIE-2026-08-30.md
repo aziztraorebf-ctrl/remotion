@@ -1,5 +1,34 @@
 # Demande réelle sur les plateformes Lottie — mesures du 2026-08-30
 
+> ## ⛔⛔ INFIRMÉ PAR VÉRIFICATION HUMAINE — 2026-08-30, le jour même
+>
+> **Aziz est allé sur IconScout et a tapé les mêmes requêtes dans l'interface réelle.**
+> Il n'a PAS trouvé de catégories quasi vides : « même pour la catégorie interface API,
+> j'ai mis les mêmes mots et c'est loin d'être quasi vide. Pour toutes les catégories il y
+> a quand même beaucoup de concurrence. »
+>
+> ⛔ **Les compteurs par catégorie de ce rapport (« new-feature = 9 pièces »,
+> « changelog = 1 », « api-interface = 24 ») sont FAUX.** Ne pas les réutiliser, ne pas
+> décider sur leur base. Ils venaient de titres de pages INDEXÉS par un moteur de
+> recherche — les pages elles-mêmes étaient en 403. Une donnée de seconde main a été
+> présentée comme une mesure d'offre ; la vérification directe l'infirme.
+>
+> ⭐ **La leçon de méthode** : même en portant sa source, un chiffre lu dans un extrait
+> indexé n'est pas une mesure de la page. Quand la page est inaccessible, le bon mot est
+> NON MESURÉ — pas « mesuré indirectement ». Même famille que
+> `feedback_chiffre-audit-relaye-sans-verification`.
+>
+> ⭐⭐ **Et la lecture d'Aziz renverse la conclusion** : « la concurrence est une bonne
+> chose quand même. Ça veut dire que c'est vivant, donc les gens la recherchent. » Une
+> catégorie vide est plus souvent un marché MORT qu'une opportunité — le rapport prenait
+> le vide pour un manque.
+>
+> **CE QUI RESTE VALABLE dans ce document** : (1) l'aveu que les téléchargements réels
+> sont NON MESURÉS (403 partout) — c'est le trou principal, toujours ouvert ; (2) publier
+> est gratuit et illimité, c'est TÉLÉCHARGER qui est rationné (10/mois) ; (3) les
+> verbatims de développeurs sur Hacker News (leur douleur = le poids des fichiers et le
+> workflow After Effects, pas la recherche d'animations).
+
 Mission : établir ce que les gens CHERCHENT et TÉLÉCHARGENT, et où est le manque, pour décider
 quelles pièces GRATUITES produire (crédibilité + trafic, pas revenu).
 

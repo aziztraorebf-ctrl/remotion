@@ -62,6 +62,32 @@ Lottie restent interdites. Enjeu : un **STANDARD REPRODUCTIBLE** (refaire une fe
 enfant, d'autres vetements). Souliers = forme hiker + teinte accent. Etats de visage acquis
 (`tete-bouche-a/b/c`, `tete-paupiere-g/d`, `display:none`).
 
+## 2026-08-31 — Chassis metal "Max Chill Factor Meter" (contrat Upwork reel)
+- Livre : `out/_r-and-d/chill-meter-upwork/concours-metal/metal-fable.svg` — 2 variantes
+  (brushed/machined), geometrie identique, 7 sous-groupes exiges chacun, 43 degrades prefixes.
+- **A REUSSI la ou 5 modeles externes ont echoue** : matiere metal SANS perdre l'icy blue.
+  Sat mesuree 0,320/0,325 (cible 0,32) en 2 iterations. Methode complete : TECHNIQUES.md
+  § "METAL EN SVG". Generateur rapatrie : `.../concours-metal/fable/gen-metal-fable.py`.
+- Prochain jalon probable : givre "physically attached" a poser sur ce chassis.
+
+## 2026-08-31 — Spark starburst (2e contrat Upwork, app d'ecriture mobile)
+- Livre : `out/_r-and-d/spark-upwork/spark-source.svg` (+ `gen-spark.py`, `NOTES.md`).
+  18 rayons + 9 gouttes, 206 ids uniques, viewBox 400, zero `<filter>`.
+- ⛔ **Dessine SANS le PNG du client** (jamais recu, verifie sur disque) — interpretation
+  depuis une description textuelle. Signale en tete de NOTES.md.
+- ⭐ **Rig de longueur = `scaleY` sur un `<g>` enfant**, le `rotate` de placement vivant sur
+  le `<g>` PARENT. 1 seule valeur numerique par rayon, timings independants, marche pareil
+  en GSAP et Remotion. Bat dasharray (impose une epaisseur constante — incompatible avec
+  "rayons fins ET larges") et le morphing de `d` (recalcul par frame).
+- ⭐ **Halo "non generique" sans filtre** : copie ELARGIE de la forme en jaune SATURE posee
+  dessous. ⛔ Un halo large en jaune PALE a faible opacite composite en KAKI sur fond sombre
+  (lit comme un contour sale) — serrer (x1,15-1,30) et saturer.
+- ⭐⭐ **PROUVER LE RIG, pas seulement le dessin** : rendre le SVG avec des scaleY varies
+  (l'etape "certains retractent pendant que d'autres grandissent"). C'est ce rendu-la qui a
+  revele qu'un rayon retracte garde sa largeur pleine et lit comme un moignon — invisible
+  sur le statique. Technique generalisable a tout livrable "structure pour animation".
+- Detail des 4 iterations et de la regle "rayon fin" : TECHNIQUES.md § STARBURST.
+
 ## Projets en cours
 
 - **repro-redeem** (2026-08-28) — reproduction d'un flux UI réellement vendu.

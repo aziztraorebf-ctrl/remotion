@@ -157,3 +157,85 @@ Rendre chaque `<g>` de 1er niveau SEUL dans un doc de meme viewBox, puis `Image.
 Donne la taille REELLE de chaque piece en une passe et prouve la conformite au brief
 (ici : ecrans 500x1080 exacts, les 2 toggles a 58x32 identiques, 6 membres a 420x55 identiques).
 Bien plus sur que de relire ses propres coordonnees.
+
+## ⭐⭐ METAL EN SVG : la recette qui tient une CIBLE DE SATURATION (2026-08-31, chill-meter)
+Mission : matiere metal (ref Grok) + couleur icy blue (ref maison, sat HLS chassis ~0,32) +
+forme (ref cliente). Les 5 modeles externes avaient tous perdu le bleu (sat 0,07-0,26).
+Resultat mesure : **sat 0,320 / 0,325** en 2 iterations. Ce qui a marche :
+1. **RELEVER la teinte dans l'image de reference AVANT de dessiner** (getpixel sur 10 points
+   du chassis) : hue 207-210 constante, B-R +23..+42. Toute la palette est construite a cette
+   hue — 9 niveaux (deep→spec), CHAQUE niveau garde un ratio B/R eleve. Le metal "gris" des
+   5 modeles = un B-R trop faible dans les TONS MOYENS (les grandes surfaces dominent la moyenne).
+2. **GENERATEUR Python plutot que SVG a la main** pour 2 variantes a geometrie identique :
+   layout declare une fois, palettes/traitements par variante, ids de degrades prefixes
+   mecaniquement, verifs (ids, elements interdits, camelCase) integrees a la generation.
+   Itérer une couleur = changer 1 hex, regenerer, re-mesurer.
+3. **ANNEAU D'ARETE en degrade vertical** : ring evenodd COMPLET rempli d'un linearGradient
+   (spec opacite forte en haut → ombre en bas). Donne l'arete qui accroche la lumiere SANS
+   liseré partiel (donc sans encoche) — generalisation propre de mes 2 regles existantes.
+4. **Empilement par panneau** : ombre portee (forme decalee, pas de flou) → tranche → corps →
+   grain/sheen → anneau d'arete → renfoncement (bevel + inset_ring + cavite + ombre interne
+   en degrade d'opacite). ~8 formes par panneau, conforme au ~10 du metier.
+5. **brushed vs machined sans toucher la geometrie** : stops serres (cassure de reflet),
+   liserés spec 0,95 vs 0,7, creux plus noirs, fente de vis en croix, cerne d'usinage complet
+   t=1,3 opacite 0,16. La cassure diagonale nette sur la PLAQUE (petite surface) est belle ;
+   sur la COQUE entiere elle serait une ligne (cf ECHECS).
+6. **Piloter la MESURE** : fond et cavites d'ecran calibres sous le seuil du script de mesure
+   (max(r,g,b)<40) pour que la moyenne porte sur le METAL seul. Sat et B-R sont COUPLES
+   (S≈(B-R)/(B+R) pour L<0,5) : on ne peut pas viser sat 0,32 ET B-R +40 a luminosite haute —
+   trancher pour la contrainte dure (sat), le dire dans le rapport.
+Livrable : out/_r-and-d/chill-meter-upwork/concours-metal/metal-fable.svg (+ generateur
+rapatrie dans fable/gen-metal-fable.py).
+
+## ⭐⭐ STARBURST / RAYONS IRREGULIERS (2026-08-31, spark-upwork, 4 iterations)
+
+### La forme d'un rayon : EPAULE PRECOCE, jamais un ventre
+⛔ Un rayon qui s'evase a MI-LONGUEUR est un **petale de fleur** : mon v1 lisait comme une
+marguerite / un anis etoile, et aucun reglage de couleur n'y change rien. C'est STRUCTUREL.
+✅ Un rayon de spark est le plus large **tres tot** (epaule a ~18 % de sa longueur, pres de
+la base) puis se retrecit de facon **monotone** jusqu'au bout. Retrecissement legerement
+CONCAVE = coup de pinceau ; trop concave = lame de poignard ; droit = triangle mou.
+
+### Le BOUT ARRONDI : plancher PROPORTIONNEL, jamais absolu
+Un brief qui dit "rounded ends" interdit `r_bout = demi * 0.2` (aiguilles). Mais un plancher
+**absolu** (`max(demi*0.42, 2.6)`) cree le defaut inverse : sur les rayons FINS (demi 1,6-3,4)
+il est plus large que le corps → ils gonflent en capsules identiques aux gros, et le contraste
+fin/large (souvent LE trait distinctif) disparait.
+✅ `r_bout = min(max(demi*0.46, 1.5), demi*0.92)` — borne haute relative a la demi-largeur.
+
+### ⭐⭐⭐ UN RAYON FIN INVISIBLE = un probleme de LONGUEUR/PLACEMENT, pas de largeur
+J'ai perdu **2 dosages de largeur** avant de mesurer. Methode qui a tranche en une passe :
+**rendre chaque rayon SEUL et relever sa bbox** (cf § BBOX PAR RENDU ISOLE).
+Verdict : les fins existaient (13 px d'epaisseur) mais faisaient 31-49 u de long contre 172 u
+pour les gros → **entierement noyes** dans la masse du voisin large du meme cluster.
+✅ **Regle : un rayon fin plus COURT qu'un gros voisin proche en angle ne se verra jamais.**
+Soit il le DEPASSE en longueur, soit il occupe un angle que rien ne couvre.
+⭐ Meme famille que "des le 2e dosage sans progres, chercher la cause" (ECHECS) : ici la cause
+n'etait meme pas dans la propriete que je retouchais.
+
+### Repartition angulaire : des VRAIS TROUS, sinon c'est une rosace
+18 rayons repartis "irregulierement" mais partout = rosace reguliere a l'oeil. Il faut des
+plages de 20-30 deg **totalement vides**, et des clusters de 2-3 rayons serres entre elles.
+
+### Pas de CORE au centre (quand le brief l'interdit)
+Ne pas se contenter d'ecarter les corps : les **sous-formes** d'empilement (face, nervure)
+doivent demarrer PLUS LOIN du centre que le corps (`creux + une fraction de lg`), sinon
+toutes les bases se superposent au centre exact et refabriquent la boule interdite.
+
+## ⭐⭐ LIVRABLE "STRUCTURE POUR ANIMATION" : PROUVER LE RIG, PAS LE STATIQUE (2026-08-31)
+Quand je livre un SVG destine a etre anime par quelqu'un d'autre, le rendu statique ne prouve
+rien du rig. **Rendre le SVG avec les handles a des valeurs VARIEES** (ici scaleY 0,15-1,0 sur
+18 rayons = l'etape "certains retractent pendant que d'autres grandissent") :
+- prouve que chaque handle existe, est bien cable et bouge la bonne piece ;
+- prouve que les pieces couplees suivent (le halo jumeau du rayon) ;
+- ⭐ **revele des defauts invisibles au repos** : un rayon retracte gardait sa largeur pleine
+  et lisait comme un moignon epais. Fix documente pour l'animateur (coupler X a Y) plutot que
+  fige dans le SVG — c'est une decision d'animation, pas de dessin.
+Cout : ~15 lignes de Python (substitution de chaine + rsvg-convert). A faire systematiquement.
+
+### Choisir la technique de longueur animable (3 options, tranchees)
+- `scaleY` sur un `<g>` ENFANT, le `rotate` de placement sur le `<g>` PARENT → 1 valeur
+  numerique par piece, timings independants, identique GSAP/Remotion. ✅ defaut.
+- `stroke-dasharray/dashoffset` → impose une epaisseur CONSTANTE : incompatible des que le
+  dessin melange pieces fines et larges. ⛔
+- morphing du `d` → recalcul de geometrie par frame (et du bout arrondi). ⛔ sauf besoin reel.
