@@ -524,6 +524,33 @@ Persona: <2-5 words>. Emotion: <2-3 adjectives>.
 
 **Integration Remotion** : `<Audio src={staticFile(sfx)} volume={0.3} />` dans la Sequence du clip concerne.
 
+### Trim pattern pour blips courts (< 0.5s minimum imposé)
+
+`duration_seconds` doit être >= 0.5 (error 400 sinon, validé 2026-05-04). Pour des blips RPG/HUD courts
+(notification, tick compteur), 0.5s est trop long et « traîne » (confirmé Aziz, Lab Hannibal Phase 1 :
+« le blip commence en même temps que le clip et traîne »). Aziz veut des SFX courts et secs pour ne pas
+saturer le mix audio (musique + narration + actions + SFX permanents = trop).
+
+**Solution** :
+1. Générer le SFX à 0.5s minimum via l'API
+2. Trim avec ffmpeg + fade-out pour éviter coupure brutale :
+```bash
+# Blip court 0.3s (déclenchement focus, notification)
+ffmpeg -y -i input.mp3 -t 0.3 -af "afade=t=out:st=0.22:d=0.08" output-trimmed.mp3
+
+# Tick très court 0.2s (apparition jauge HUD)
+ffmpeg -y -i input.mp3 -t 0.2 -af "afade=t=out:st=0.14:d=0.06" output-trimmed.mp3
+```
+3. Garder le 0.5s original en fallback (si on veut re-trim différemment plus tard)
+4. Référencer `*-trimmed.mp3` dans le code Remotion
+
+**Règle additionnelle (Aziz Phase 1.5)** : SFX d'apparition uniquement, JAMAIS continus. Pas de tick à
+chaque palier de chiffre qui descend (saturation mix). Réservé aux événements ponctuels : apparition
+jauge, déclenchement focus, transition de phase.
+
+Validé Lab Hannibal Phase 1.5, 2026-05-04. Composants `FocusBubble` + `StatGauge` consomment ces SFX
+trimmés.
+
 **Prompts qui marchent** :
 - Feu intense : "Intense crackling fire, burning village, wood snapping, embers popping, roaring flames in the distance"
 - Ambiance : "Ambient crackling campfire with distant burning, soft flames licking wood, occasional ember pops"

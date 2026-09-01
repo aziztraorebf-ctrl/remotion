@@ -35,6 +35,24 @@ Showcase de validation : `ProtoR-Vague1-Refactor-Showcase` (18 scènes × 9s = 2
 
 **Pour les Shorts 9:16** : les mêmes templates s'appliquent. Adapter les positions `screen_position_xy` au canvas 1080×1920. Les grilles (IconGrid, BarRace) se reconfigurent verticalement via useVideoConfig.
 
+**Patterns techniques du refactor Vague 1 (pour référence sur tout futur composant responsive)** :
+- **Module-level → component-level** : les fragments (ShatterReform), nodes (NetworkGraph) étaient
+  calculés au niveau module avant refactor — déplacés dans le composant via `useMemo` pour accéder à
+  `useVideoConfig()`.
+- **Fonctions paramétrées** : `buildFragments(width, height)`, `makeDefaultNodes(w, h)`,
+  `getSweepPath(angle, cx, cy, r)` — pattern scalable pour tout composant avec géométrie complexe.
+- **Scale factor** : `scale = Math.min(width, height) / 1080` pour les tailles absolues (rayons,
+  fontsizes) — préserve les proportions sans déformer.
+- **SVG viewBox dynamique** : `viewBox={\`0 0 ${width} ${height}\`}` obligatoire sur tout SVG
+  plein-écran.
+- **Ordre hooks** : `useVideoConfig()` AVANT tout `spring()` qui utilise `fps` — sinon TS2448
+  block-scoped variable used before declaration.
+
+Contexte de l'audit qui a déclenché ce refactor : audit code 2026-05-21 avait révélé
+`const W=1080; H=1920` hardcodés dans NetworkGraph, StackedBars, PulseNumber, ShatterReform, etc. En
+16:9 les compositions étaient déséquilibrées. Commit : `0108335`. Showcase :
+https://files.catbox.moe/40lmi9.mp4
+
 ---
 
 ## GROUPE A — DATA VISUALIZATION
@@ -453,6 +471,25 @@ Enchaîne bien avec : TextChoc (phrase choc ensuite), ChiffreChoc
 Format : 16:9 | Durée : 5s
 Mécanique : titre massive plein écran + photo B&W en fond + accent couleur
 Cas d'usage : accroches YouTube Short adaptables, titre de chapitre fort
+Composant source : `src/projects/_shared/components/inserts/BrutalHeadline.tsx`.
+
+**⛔ Règle structurelle NON-NÉGOCIABLE (et tout template avec séparation photo/texte)** : ne JAMAIS
+reconstruire la structure d'un template Souverain de zéro quand un composant partagé approuvé existe.
+- Photo occupe le HAUT de l'écran (`photoRatio` du composant, ~55% = 1056px)
+- Zone texte = BAS de l'écran avec son propre fond solide sombre (`#0a0a0a`)
+- Gradient de transition en bas de la photo → fond (height 200-220px)
+- Texte JAMAIS posé directement sur l'image — toujours dans sa zone sombre propre
+
+**Pourquoi** : Beat1 Silicon Savannah V1 et V2 avaient le texte directement sur la photo — illisible, ne
+ressemblait pas au template. Rewrite complet en V3 nécessaire. Perte de temps évitable.
+
+**Comment appliquer** :
+1. Avant de coder un beat basé sur un template existant → lire le fichier du composant source
+2. Reproduire EXACTEMENT la structure (photo zone, text zone, gradient) — ne pas improviser
+3. Après premier render → vérifier que la séparation est visible à l'écran
+4. Si texte sur image → stopper et reconstruire avant de continuer
+
+S'applique aussi à : SplitScreenSouverain, tout template avec zone photo + zone texte séparée.
 
 ### DataCard — Fiche donnée
 Format : 16:9 insert | Durée : 4s

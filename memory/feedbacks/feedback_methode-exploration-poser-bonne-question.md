@@ -1,0 +1,15 @@
+Session 2026-06-17 (Aziz fatigué de "tout recommencer", veut des graphismes premium / hooks qui ont du sens). Apprentissages de MÉTHODE durables (pas de contenu — voir [[HOOK-PREMIERE-MINUTE]], [[remotion-effects-rack-natif]], [[feedback_jetons-symboles-sous-exploites-warmap]] pour le contenu).
+
+**Why** : Aziz dit explicitement vers la fin "peut-être que je complexifie les choses ; un bon système réglerait le problème, comme la manière dont on construit nos vidéos". Le vrai besoin n'était pas un outil magique — c'était un SYSTÈME pour le hook (il en a un pour la production, pas pour l'ouverture). Reconnaître ça a recadré toute la session.
+
+**How to apply (méthode validée cette session)** :
+1. **Prouver par le render, jamais promettre.** À chaque hypothèse (rack effets 2D, 3D, jetons 3D), on a CODÉ + RENDU + analysé les frames soi-même AVANT de présenter. Résultat : on a tué des fausses pistes (rack 2D décevant, 3D pour jetons = pire que le plat) au lieu de les vendre. Le render tranche, pas l'opinion.
+2. **Croiser TERRAIN + MODÈLES.** Pour une question stratégique (grammaire de hook), on a lancé Last30Days (données réelles fraîches, 14M vidéos) ET le jury 3 modèles (da-brief.py --upstream). Quand les deux convergent → fiable. Quand ils divergent (hook court vs long) → c'est LÀ qu'est l'insight le plus précieux.
+3. **⚠️ ERREUR CORRIGÉE EN COURS : poser LA bonne question au jury.** 1er jury lancé sur "quel système technique construire" → Aziz a repris : il voulait "qu'est-ce que les chaînes FONT + des pistes à explorer", pas une solution clé en main. LEÇON : quand Aziz veut explorer, la question au jury doit être EXPLORATOIRE (archétypes, pistes, ce qui se transpose), pas prescriptive. Vérifier l'intention AVANT de dépenser des appels API. Ne pas brider à notre niche (techniques d'autres niches se transposent).
+4. **Ne pas sur-explorer.** Une fois terrain + modèles convergents, le décorticage frame-par-frame de chaînes externes devient REDONDANT (5 vidéos de plus ne changent pas la conclusion, juste la confirment). Savoir s'arrêter à "on a la réponse" et passer à l'application.
+5. **Vérifier l'état RÉEL, pas la doc.** Gotcha Context7 : il a sur-promis ~40 effets Remotion alors que la version installée (4.0.456) n'en a que 4. TOUJOURS vérifier node_modules avant d'annoncer une capacité (cf. règle CLAUDE.md "vérification avant affirmation").
+6. **Confirmer le coût avant tout appel payant** (fal.ai, Gemini image) en montrant le prompt — respecté, validé Aziz.
+
+**Ma faiblesse récurrente signalée** (gravée aussi dans [[remotion-effects-rack-natif]]) : 4 démos 3D trop sombres de suite. Toute scène 3D PART d'un éclairage LUMINEUX, on assombrit après.
+
+Séquence type qui a marché pour sortir Aziz de la fatigue : clarifier la VRAIE question (AskUserQuestion) → prouver/infirmer par render → croiser sources → graver une DOCTRINE-système (pas juste des notes) → appliquer à un cas réel. Le livrable final d'une session d'exploration = un SYSTÈME réutilisable, pas une découverte ponctuelle.

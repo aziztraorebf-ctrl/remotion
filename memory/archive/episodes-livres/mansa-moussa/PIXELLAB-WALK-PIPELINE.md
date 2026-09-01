@@ -1,7 +1,11 @@
 # PixelLab Walk Cycle Pipeline — Validé 2026-05-01
 
+> Fusionné le 2026-08-31 avec la version auto-memory (`atlas-mansa-moussa/PIXELLAB-WALK-PIPELINE.md`,
+> même date de création) — contenu unique des deux versions préservé, redites éliminées.
+
 ## Statut
-PIPELINE VALIDE. Pret pour integration dans Atlas Mansa Moussa V2 (session suivante).
+PIPELINE VALIDE. Integre en production dans Atlas Mansa Moussa V2 (voir § Session 2026-05-01 en fin
+de fichier — le walk cycle a ete porte et des assets reels generes, au-dela du POC initial ci-dessous).
 
 ## Ce qui a ete valide
 
@@ -106,3 +110,25 @@ Dossier : `public/pixellab-walk-test/`
 - **Pas de hop** si personnage statique
 - **WALK_FPS = 8** pour marche naturelle
 - **Flip = `scale(-1,1)`** dans un `<g>` wrapper, pas sur l'image directement
+- Labels SVG hors du groupe animation (pas superposable)
+- Taille canonique confirmee en integration : 64px (Mansa), 48px (chameau)
+
+## Session 2026-05-01 — Camera Track valide en production
+
+### Nouvelle regle : beats visuels obligatoires
+Ne JAMAIS utiliser les beats narration bruts pour les interpolations de duree.
+Toujours `narrToVisual(NARR.beat)` -> frames visuelles reelles.
+Erreur classique : `mecqueDeparture` -> `mecqueWord` = 1s narration mais 7s visuel apres inserts.
+
+### Assets generes et places (integration reelle, au-dela des tests POC ci-dessus)
+- `public/atlas-mansa-moussa/characters/mansa-moussa/` — walk_cycle E/W (6f), royal_pose S (4f), static 4 directions
+- `public/atlas-mansa-moussa/characters/chameau/` — walk_cycle E/W (4f), static 3 directions
+- `public/atlas-mansa-moussa/assets/pile-of-gold.png` — map object pixel art
+
+### Bugs restants connus (a corriger session suivante)
+1. Chameau trop proche de Mansa au depart (reduire retard ou augmenter offset X)
+2. Grisaillement S4 : seuls les pays avec `AFRICAN_FLAGS` virent au gris, pas tout le continent — corriger le filtre
+3. Sprites + encadres : superposition possible si perso marche vers zone avec label SVG
+
+### Prochaine session (a cette date)
+Voir `NEXT-SESSION-mansa-moussa-v2-finition.md` pour le brief actif (BLOC 7 karaoke + BLOC 8 render final).

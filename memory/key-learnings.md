@@ -1477,6 +1477,12 @@ quelques heures), nettoyer les uploads de vérification intermédiaires AU FIL D
 en fin de session. Le quota Hobby (1GB) est petit face à des vidéos 2K de plusieurs Mo chacune —
 une dizaine d'itérations suffit à le saturer.
 
+**1re occurrence documentée (2026-04-29, Atlas Tombouctou)** : upload `mini-diag.mp4` (4.6 MB) a
+échoué avec `ERROR (400): {"error":{"code":"bad_request","message":"Storage quota exceeded for Hobby
+plan (1GB maximum)"}}`. Avant un batch d'uploads (mini-renders A/B/C par exemple), vérifier l'espace
+dispo. Si error 400 quota : nettoyer puis retry (ne pas escalader vers payant sans validation Aziz).
+Long terme : si > 4 épisodes en parallèle = upgrade Pro ($20/mois, 100GB inclus).
+
 ---
 
 ## Prompt vidéo I2V multi-actions = mouvement dilué/ralenti — généralisable au-delà de H3 — 2026-08-14 (canada-red-bay, scène supermarché)

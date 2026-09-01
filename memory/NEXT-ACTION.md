@@ -63,21 +63,19 @@ un remplacement de masse — cf. migration Gemini du 20/08).
 alors que 3 branches non mergées existent réellement. Toujours vérifier `git branch --list` avant
 de faire confiance à cette section — elle se périme au premier `git checkout -b`.
 
-État réel (`git branch --merged master` ne retourne QUE `master`, donc les 3 suivantes portent du
+État réel (`git branch --merged master` ne retourne QUE `master`, les 3 suivantes portent du
 contenu unique) :
 
-- **`feat/chill-meter-jalon1`** — branche COURANTE de la session du 31/08. Porte tout le travail
-  du contrat chill-meter (métal, README, jalons) + celui du 31/08 (récupération CFA, MCP Upwork,
-  hook outbound-message-guard). Contient aussi tous les commits de `feat/portfolio-onboarding-
-  generique` (ancêtre commun) — donc la fusionner absorbe l'autre.
+- **`feat/chill-meter-jalon1`** — branche COURANTE (session 31/08). Porte le contrat chill-meter
+  (métal, README, jalons) + le travail du 31/08 (récupération CFA, MCP Upwork, hook
+  outbound-message-guard). Contient aussi tous les commits de `feat/portfolio-onboarding-generique`
+  (ancêtre commun) — la fusionner absorbe l'autre.
 - **`feat/portfolio-onboarding-generique`** — 5 commits, tous déjà présents dans
-  `feat/chill-meter-jalon1` (vérifié par `git log ... ^master`). Candidate probable à suppression
-  une fois `feat/chill-meter-jalon1` mergée dans master — pas de contenu unique détecté.
-- ⚠️ **`feat/zambia-demo-2concepts`** — **1 commit unique** (`7b024e66`, 21/08) : `gallery/index.html`,
-  `gallery/styles.css`, un poster PageCam (recherche en langage courant, intentions, favoris).
-  ⛔ **NE PAS supprimer sans décider** : ces fichiers **n'existent PAS sur master**. La galerie est
-  déployée sur GitHub Pages, donc son code de référence vit peut-être ailleurs — **vérifier où avant
-  de merger OU de supprimer**. Tant que ce n'est pas tranché, la branche reste.
+  `feat/chill-meter-jalon1`. Candidate à suppression une fois cette dernière mergée dans master.
+- ⚠️ **`feat/zambia-demo-2concepts`** — 1 commit unique (`7b024e66`, 21/08) : `gallery/index.html`,
+  `gallery/styles.css`, poster PageCam. ⛔ NE PAS supprimer sans décider : ces fichiers n'existent
+  PAS sur master, et la galerie déployée sur GitHub Pages a peut-être son code de référence ailleurs
+  — vérifier où avant de merger OU supprimer.
 
 ⛔⛔ **Avant tout futur ménage de branches** : lire
 `memory/projects/INCIDENT-BRANCHE-SUPPRIMEE-TRAVAIL-PERDU.md` — une branche supprimée le 28/08
@@ -92,57 +90,49 @@ commits.
 jalon) sont tous dans le contrat signé.
 
 ⏭️ **PROCHAINE ACTION : en attente de la réponse d'Abigail sur le jalon 1** (envoyé et confirmé
-reçu le 01/09 — message + 2 images, attachments vérifiés `scanStatus: CLEAN` dans le fil). Si elle
-valide : jalon 2 (7 sept, entrance/idle/0-25%/50%, sons déjà générés).
-⏸️ **Prospection Upwork mise en PAUSE par Aziz (01/09), 1-2 jours** — déjà 4 fronts ouverts
-(Abigail + 3 candidatures en attente : vokabl, Appstore promo video, +1). Ne pas relancer de
-candidature sans confirmation d'Aziz.
-⚠️ **Retraits Upwork bloqués tant que les infos fiscales ne sont pas fournies** — à régler avant le
-3 sept, n'empêche ni de travailler ni d'accepter le paiement sur la plateforme.
+reçu le 01/09). Si elle valide : jalon 2 (7 sept, entrance/idle/0-25%/50%, sons déjà générés).
+⏸️ Prospection Upwork en PAUSE par Aziz (01/09), 1-2j — déjà 4 fronts ouverts. Ne pas relancer sans
+confirmation d'Aziz.
+⚠️ Retraits Upwork bloqués tant que les infos fiscales ne sont pas fournies — à régler avant le 3 sept.
 
 ✅ **Chantier métal du châssis bouclé le 31/08** (4 passes, chacune corrigeant un défaut qu'Aziz a
-repéré sur la précédente — jamais moi) : gradients morts → concours 5 modèles (métal gagné, icy
-blue perdu) → Fable rebriefé sur la couleur (couleur juste, mais nouvelle silhouette) → Fable
-rebriefé sur la géométrie EXACTE (32/32 tracés vérifiés identiques). Finition **Machined** retenue
-(contraste mesuré 153 vs 122 pour Brushed), intégrée au composant de production, 2 bugs corrigés
-après signalement (halo de fond opaque · catbox/litterbox HS, repli sur Blob).
-⭐ 2 leçons de brief extraites, transposables à toute délégation visuelle future :
-`feedback_deleguer-un-defaut-nommer-ce-qui-ne-doit-pas-changer.md` ·
-`feedback_ameliorer-vs-remplacer-preciser-dans-le-brief.md`
+repéré) : gradients morts → concours 5 modèles (métal gagné, icy blue perdu) → couleur corrigée mais
+silhouette dérivée → géométrie EXACTE reverifiée (32/32 tracés identiques). Finition **Machined**
+retenue (contraste mesuré 153 vs 122), intégrée en production, 2 bugs corrigés après signalement.
+⭐ 2 leçons de brief transposables : `feedback_deleguer-un-defaut-nommer-ce-qui-ne-doit-pas-changer.md`
+· `feedback_ameliorer-vs-remplacer-preciser-dans-le-brief.md`
 
-⛔ **Ne PAS lui dire que les 6 états sont déjà rendus** — atout de négociation.
-⛔ Le **brief client PDF** (`BRIEF-CLIENT-ORIGINAL.pdf`, gitignoré) se RELIT avant toute action.
+⛔ Ne PAS lui dire que les 6 états sont déjà rendus (atout de négociation). ⛔ Brief client PDF
+(`BRIEF-CLIENT-ORIGINAL.pdf`, gitignoré) se RELIT avant toute action.
 
-→ **Source de vérité unique** (historique complet, tous les chiffres mesurés, liens de secours) :
-`memory/client-sim-tests/upwork-chill-meter/STATUS.md` — ne rien recopier d'autre ici.
+→ **Source de vérité unique** : `memory/client-sim-tests/upwork-chill-meter/STATUS.md`.
 
 ---
 
 ## 🔧 SESSION D'AUDIT DU WORKSPACE — à planifier (constitué le 2026-08-27, rien d'urgent)
 
-**1. ⭐⭐⭐ Outiller le protocole des 2 échecs** (le point le plus rentable). Règle déjà écrite
-(`CLAUDE.md` global § Protocole agent de diagnostic dédié), 3 preuves de valeur accumulées (18/07,
-02/08, 29/08 — cette dernière montre que 2 vérifications peuvent partager le même angle mort et
-sembler indépendantes à tort). ⛔ **Mais rien ne compte les tentatives** — pattern
-`regle-ecrite-insuffisante-sans-gate-outille`. Base de départ : `.claude/hooks/circuit-breaker.sh`
-compte déjà les éditions répétées d'un fichier ; reste à définir « tentative sur le même problème »
-et le seuil de délégation. Détail : `feedback_transparence-lue-comme-bug.md` § extension 2026-08-29.
-**2.** Audit des ~90 skills (demandé 11/07, jamais fait, non urgent).
-**3.** Vérifier que les gates ne meurent pas en silence (le circuit-breaker était mort le 12/07 sans
-que personne le remarque) — un test d'exécution périodique par hook éviterait la rechute.
+**1. ⭐⭐⭐ Outiller le protocole des 2 échecs** (point le plus rentable). Règle déjà écrite
+(`CLAUDE.md` global § Protocole agent de diagnostic dédié), 3 preuves de valeur (18/07, 02/08, 29/08
+— cette dernière montre que 2 vérifications peuvent partager le même angle mort et sembler
+indépendantes à tort). ⛔ Mais rien ne compte les tentatives — pattern
+`regle-ecrite-insuffisante-sans-gate-outille`. Base : `.claude/hooks/circuit-breaker.sh` compte déjà
+les éditions répétées d'un fichier ; reste à définir « tentative sur le même problème » et le seuil
+de délégation. Détail : `feedback_transparence-lue-comme-bug.md` § extension 2026-08-29.
+**2.** Audit des ~90 skills (demandé 11/07, non urgent). **3.** Vérifier que les gates ne meurent
+pas en silence (le circuit-breaker était mort le 12/07 sans que personne le remarque).
 
 ---
 
 ## 🔧 BACKLOG TECHNIQUE — dette Gemini/outillage (2026-08-20, NON URGENT)
 
 Migration image faite (défaut LITE, -50 %). Reste : (1) ⚠️ `visual-producer.md:407` cite l'ancien
-identifiant image — agent qui dépense réellement, à traiter en premier ; le reste (~28 mentions
-passives) au fil de l'eau. (2) ⛔⛔ `VISION_MODEL` non importé par aucun script — en dur dans 42
-fichiers (79 occurrences) : changer la constante ne change rien aujourd'hui. (3) `gemini-3.7-flash`
-à tester à l'aveugle avant bascule (−62%/−69% coût, qualité non vérifiée) → `memory/tools/gemini.md`.
-(4) Migrer ~75 fichiers vers `api_models.py`, étalé au fil de l'eau ; `da-brief.py` reste sur k2.5,
-vrai fix dans `kimi-k3-reasoning-borne.md`. (5) `mkprevis-camera-seule.py` non commité, à trancher.
-⛔⛔ Ne jamais re-graver un chiffre de lignes de fiche ici : mesurer à la demande (`wc -l`).
+identifiant image, agent qui dépense réellement, à traiter en premier (~28 mentions passives ailleurs,
+au fil de l'eau). (2) ⛔⛔ `VISION_MODEL` non importé par aucun script, en dur dans 42 fichiers
+(79 occurrences) : changer la constante ne change rien aujourd'hui. (3) `gemini-3.7-flash` à tester
+à l'aveugle avant bascule (−62%/−69% coût) → `memory/tools/gemini.md`. (4) Migrer ~75 fichiers vers
+`api_models.py`, étalé ; `da-brief.py` reste sur k2.5, vrai fix dans `kimi-k3-reasoning-borne.md`.
+(5) `mkprevis-camera-seule.py` non commité. ⛔⛔ Ne jamais re-graver un chiffre de lignes de fiche
+ici : mesurer à la demande (`wc -l`).
 
 
 ## ⛔⛔ AVANT DE LIRE QUOI QUE CE SOIT — LES CHANTIERS VIVANTS SONT DANS DES WORKTREES
@@ -158,25 +148,20 @@ vrai fix dans `kimi-k3-reasoning-borne.md`. (5) `mkprevis-camera-seule.py` non c
 > ```
 > Un commit récent dans un worktree **prime toujours** sur ce fichier-ci.
 >
-> ⚠️ **Stashs connus à vérifier** (peuvent être périmés — confirmer avant de dropper, re-vérifiés
-> présents le 2026-08-13) : au moins 1 sur la branche Soudan (`wip-soudan-itineraire-avant-rnd-port`,
-> chantier « itinéraire multi-étapes » — `ItineraireMultiEtapes16x9.tsx` etc.) et 2 WIP CFA sur
-> `feat/cfa-nuit1994-svg-mix`.
+> ⚠️ **Stashs connus à vérifier** (peuvent être périmés — confirmer avant de dropper) : ≥1 sur la
+> branche Soudan (`wip-soudan-itineraire-avant-rnd-port`) et 2 WIP CFA sur `feat/cfa-nuit1994-svg-mix`.
 >
 > ⛔⛔ **UNE AUTRE SESSION PEUT CHANGER LA BRANCHE ET LANCER UN MERGE PENDANT QUE TU TRAVAILLES**
-> (vécu 2026-08-20). Symptôme : un `git checkout <fichier>` échoue en `path is unmerged`, ou un typecheck
-> révèle des imports dupliqués qui n'existent pas dans `HEAD`. La cause n'est PAS ton edit — c'est
-> `.git/MERGE_HEAD` laissé par l'autre session, et le repo qui a basculé de branche sous tes pieds.
-> **Vérifier AVANT de conclure quoi que ce soit sur un fichier partagé** (`src/Root.tsx` en tête) :
+> (vécu 2026-08-20). Symptôme : `git checkout <fichier>` échoue en `path is unmerged`, ou un typecheck
+> révèle des imports dupliqués absents de `HEAD` — cause : `.git/MERGE_HEAD` d'une autre session.
+> **Vérifier avant de conclure sur un fichier partagé** (`src/Root.tsx` en tête) :
 > ```bash
 > git branch --show-current && ls -d .git/MERGE_HEAD 2>/dev/null && echo "MERGE EN COURS"
 > ```
-> ⛔ **Ne JAMAIS résoudre/abandonner le merge d'une autre session** (`reset`, `stash`, `merge --abort`,
-> `checkout` d'un fichier unmerged) : c'est son travail vivant. Signaler à Aziz, continuer sur les
-> fichiers non concernés, et re-vérifier la branche avant de commiter.
-> ⚠️ Corollaire : cette même session peut aussi **commiter TON travail à ta place** pour réparer la
-> cohérence du repo (vécu : `e6657203` a commité un composant que `Root.tsx` référençait). Relire
-> `git log` avant de supposer qu'un commit est de toi.
+> ⛔ Ne JAMAIS résoudre/abandonner le merge d'une autre session (`reset`, `stash`, `merge --abort`,
+> `checkout` d'un fichier unmerged) : c'est son travail vivant. Signaler à Aziz, continuer ailleurs.
+> ⚠️ Corollaire : cette même session peut aussi commiter TON travail à ta place (vécu : `e6657203`).
+> Relire `git log` avant de supposer qu'un commit est de toi.
 
 ---
 
@@ -316,15 +301,12 @@ Ce fichier a déjà dépassé 116 Ko (juillet) puis 26,5 Ko (août) faute d'appl
 
 ## 🔧 BACKLOG — 3 fiches saturées, à SCINDER (relevé au wrap 2026-08-27)
 
-Le budget d'une fiche est de **55 lignes** (c'est du contexte injecté à chaque édition concernée).
-Trois fiches le dépassent au point qu'un simple retrait de ligne ne sert à rien — c'est une
-**scission** qu'il faut, et elle doit suivre un vrai changement de DÉCLENCHEUR :
+Budget d'une fiche = **55 lignes** (contexte injecté à chaque édition). 3 fiches le dépassent au
+point qu'un simple retrait ne sert à rien — scission à faire en DÉBUT de session (pas en clôture,
+risque de rendre une fiche muette sans l'éprouver ensuite) :
 
 | Fiche | Lignes | Scission proposée |
 |---|---|---|
-| `FICHE-CLIP-GENERE.md` | 272 (5×) | sortir les § previs/générateurs (`mkprevis-*.py` + mesures d'amplitude) vers une fiche PREVIS. « Je dessine une trajectoire » ≠ « je lance une génération H3 ». |
-| `FICHE-UI-PRODUIT.md` | 196 (3,6×) | sortir les § MONTAGE + CURSEUR + SON vers `FICHE-ASSEMBLAGE`. « Je capture un écran » ≠ « je monte un film d'UI ». |
-| `FICHE-ASSEMBLAGE.md` | 132 (2,4×) | fusionner les 2 sections qui redisent le plafond Artifact 16 Mo à 25 lignes d'écart. |
-
-⚠️ Non fait en séance : scinder une fiche injectée automatiquement sans l'éprouver ensuite risque
-de la rendre muette au mauvais moment. À faire en début de session, pas en clôture.
+| `FICHE-CLIP-GENERE.md` | 272 (5×) | sortir § previs/générateurs vers une fiche PREVIS. |
+| `FICHE-UI-PRODUIT.md` | 196 (3,6×) | sortir § MONTAGE+CURSEUR+SON vers `FICHE-ASSEMBLAGE`. |
+| `FICHE-ASSEMBLAGE.md` | 132 (2,4×) | fusionner 2 sections qui redisent le plafond Artifact 16 Mo. |

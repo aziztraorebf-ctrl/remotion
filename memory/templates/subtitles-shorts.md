@@ -111,6 +111,44 @@ Resistance testee : fonds clairs (papercraft sepia), fonds charges (combat), fon
 - ❌ **Ne PAS** mettre le shake sur toute une scene -> nausee garantie
 - ❌ **Ne PAS** chainer plusieurs camera shake en moins de 5s -> pareil
 
+## Gotchas techniques additionnels (migré depuis auto-memory 2026-08-31)
+
+### Elisions francaises = merge automatique requis
+Whisper transcrit "l'aide" comme deux tokens : `"l"` + `"aide"`. Affichage brut : "L AIDE" au lieu
+de "L'AIDE" (14 occurrences constatees sur Sonjata Short : l, d, n, s, c, qu, j, t, m + voyelle
+suivante). Fix : `mergeElisions()` dans le composant — merge si lettre elision + gap < 0.4s + mot
+suivant commence par voyelle/h. Marche pour tous projets francais sans config.
+
+### wordOverrides pour corrections texte
+Une correction audio (ex: "laide" -> "bossue") doit aussi apparaitre en sous-titre correct.
+Override APRES le merge elision : utiliser la cle "l'aide" pas "laide". Casse-sensitive
+desactivee (matche le bare lowercase). Use case : noms historiques mal transcrits (ex: Sunjata ->
+SUNDIATA), corrections audio, mots tabous.
+
+### Subtitles per-scene, PAS global
+Une couche Subtitles globale (calee sur toute la duree du Short) accumule un drift apres ~45s : les
+durations des scenes Remotion (arrondies en frames) divergent des durations de narration master
+(continues). Fix : ajouter le composant `<Subtitles>` DANS chaque `<Sequence>` de scene avec
+`sceneStartS`/`sceneEndS` PROPRES a cette scene (pas les timestamps absolus du master) — le
+composant convertit deja correctement timestamps absolus master -> frames relatifs.
+
+### Skip subtitles sur scenes avec texte deja affiche
+Desactiver le composant (`showSubtitles = scene.name !== "X"`) sur : scenes avec citations deja
+affichees a l'ecran (doublon visuel), scenes ou une correction audio a desynchronise le texte
+Whisper d'origine (sous-titres faux), CTA avec textes cascade integres (surcharge visuelle).
+
+### Re-render obligatoire des scenes pre-assemblees apres modif du composant
+Si le pipeline produit des clips `scene*-assembled.mp4` PRE-RENDERED (narration + visuels deja
+graves), modifier `Subtitles`/`cameraShake`/etc. dans le composant `Scene*.tsx` NE SUFFIT PAS —
+il faut re-render explicitement ce clip (`npx remotion render src/index.ts SceneN
+public/assets/.../sceneN-assembled.mp4`), sinon le composant d'assemblage final (qui consomme les
+.mp4 pas le code source) ne voit jamais le changement.
+
+### Quota Vercel Blob Hobby = 1GB
+Nettoyer les renders de test intermediaires AVANT tout upload final. Garder seulement les renders
+FINAL valides + assets de reference. Suppression : `POST https://blob.vercel-storage.com/delete`
+avec `{"urls": [...]}`.
+
 ## Couts
 
 - Whisper API : ~$0.006/min (3 min narration = $0.018)

@@ -16,11 +16,25 @@ type: reference
 
 ### Caméra et mouvement
 - **Zoom progressif espace → pays → ville** (Or Africain, Hannibal) — `lerpCam` avec easing quadratique. **Delta zoom minimum 0.3-0.5** entre paliers (sinon invisible : règle tuiles Mapbox). Validé.
+  - **Pourquoi** : Mapbox utilise un système de tuiles à niveaux entiers. Un zoom de 1.0→1.08 reste sur
+    le MÊME niveau de tuile → rendu identique frame par frame, mouvement invisible à l'œil. Cas vécu :
+    push-in Beat 3b codé 1.0→1.08 sur 10s — Aziz a remarqué que rien ne bougeait, diff pixel mesuré 4.17
+    (≈ bruit). Monté à 1.0→1.4 + drift latéral → diff 9.75, mouvement perceptible.
+  - **Alternative vrai-subtil** : si on veut un effet VRAIMENT subtil sans changer de tuile, zoomer via
+    CSS `transform: scale()` sur le container Mapbox plutôt que `map.jumpTo({zoom})` — évite le rerender
+    de tuiles, donne un effet continu.
+  - **Ne jamais valider un mouvement à l'aveugle** : toujours vérifier avec un diff pixel entre frame
+    début et frame fin (`np.abs(a.astype(int) - b.astype(int)).mean()`). Si < 5, le mouvement est
+    probablement invisible. Validé 2026-05-07 sur Or Africain Beat 3b v4→v5.
 - **Drift caméra continue** (pan + zoom subtil) — interpolate continu sur toute la plage de frames, jamais segmenté. Évite saccades.
 - **Pullback final** — zoom out depuis cible vers vue large, finition. Validé Or Africain CTA.
 
 ### Style et palette
-- **Style GéoAfrique signature** — Océan `#03224c`, Terre `#2a1e0e`, Frontières `#5a3e1e`. Constante `STYLE_GEO_AFRIQUE` dans `MapboxOceanColor.tsx`. Validé Or Africain v7.
+- ⚠️ **PÉRIMÉ (corrigé 2026-08-31)** — **Style GéoAfrique V1** (ci-dessous) est ARCHIVÉ, remplacé par
+  **V5** (validé mobile 2026-05-06, seule version lisible en plein soleil) : voir
+  `tools/mapbox-style-geo-afrique-v5.md` pour la palette V5 à utiliser (`water:#1a3a5c`,
+  `land:#4a4a4a`, `border:#c8c8c8`, `space:#0d1b2a`). Le code de production actuel utilise déjà V5.
+- **Style GéoAfrique signature (V1, archivé)** — Océan `#03224c`, Terre `#2a1e0e`, Frontières `#5a3e1e`. Constante `STYLE_GEO_AFRIQUE` dans `MapboxOceanColor.tsx`. Validé Or Africain v7.
 - **`removeLabels(map)`** — carte sans labels (épuré). Cartouches textuels Remotion par-dessus. Validé.
 - **5 styles testés** — dark / satellite / relief / light / navNight (voir MAPBOX-COMPOSANTS.md).
 

@@ -175,6 +175,29 @@ Quand Beat N (master) handoff Beat N+1 (audio dédié) qui rejoue le mot pivot :
 
 Re-record d'un beat = fichier dédié + AUDIO_SEGMENTS RELATIVES, jamais splicer dans master.
 
+**Pattern validé sur Or Africain (2026-05-07, v3 → v5)** : ne JAMAIS splicer une nouvelle phrase TTS
+dans un master existant.
+
+**Pourquoi (gotcha confirmé)** — si on regénère juste 1 beat avec ElevenLabs eleven_v3 : le
+timbre/intonation peut varier de 100-300ms entre runs ; la durée totale peut varier énormément (Beat 4
+v2 Or Africain = 22.24s au lieu de 29.5s en v1, soit -7.26s) ; splicer dans le master rend l'écart
+audible (différence d'intensité émotionnelle, pause respiration).
+
+**Solution en 5 étapes** :
+1. Re-record le beat complet comme fichier séparé (pattern `narration-beat{N}-v{X}.mp3`)
+2. Whisper alignment sur le nouveau fichier → AUDIO_SEGMENTS en frames RELATIVES au début du beat (pas absolues au master)
+3. Composant Beat utilise `<Audio src={NEW_PATH} endAt={DURATION}>` sans `startFrom={BEAT_START}`
+4. Composant Full place le composant dans `<Sequence from={ABS_START}>` — Remotion gère la concaténation
+5. `timing.ts` : exporter `BEAT{N}_V{X}_DURATION_FRAMES` et calculer dynamiquement les boundaries
+
+Bénéfices : ne casse pas les autres beats déjà validés, permet de raffiner un seul beat sans re-render
+tout, décalage du master compensé proprement par les `<Sequence from>` du Full. Words karaoké : créer
+un `BEAT{N}_V{X}_WORDS` array depuis le forced alignment du nouveau fichier.
+
+Anti-patterns : re-record le master complet à chaque correction (perd les bonnes prises validées) ·
+splicer 3s de nouveau TTS dans le master via FFmpeg (audible) · garder les AUDIO_SEGMENTS en frames
+absolues du master quand le beat a son propre audio (désynchronisation garantie).
+
 ---
 
 ## SECTION 5 — Géographie : règles zéro approximation
@@ -192,6 +215,40 @@ JAMAIS écrire un polygone GeoJSON à la main. Toujours Natural Earth 50m pour f
 
 ### Empires historiques = aourednik/historical-basemaps
 GitHub CC BY-SA 4.0, par siècle (`world_1300.geojson`). Validé Empire Ghana + Mali Empire (52 vertices). Quand OHM absent.
+
+**Détail** : `aourednik/historical-basemaps` (https://github.com/aourednik/historical-basemaps) est un dataset
+GeoJSON par decennie/siecle (-2000 a 2010) couvrant les frontieres politiques mondiales aux principales
+periodes historiques.
+
+**Quand l'utiliser** : APRES verification que **OpenHistoricalMap n'a pas de relation correspondante**.
+Pattern de recherche :
+1. OHM Overpass : `relation[name~"X",i][type=boundary]` — si trouve, use that (precision OHM > basemaps)
+2. OHM Nominatim search par nom — souvent vide pour empires anciens
+3. Fallback : `aourednik/historical-basemaps` snapshots par siecle
+
+**URL pattern** : `https://raw.githubusercontent.com/aourednik/historical-basemaps/master/geojson/world_YYYY.geojson`
+(ex: world_1300.geojson, world_1400.geojson, world_500.geojson). 1MB par fichier en moyenne.
+
+**Properties cle par feature** :
+- `NAME` : nom de l'entite
+- `BORDERPRECISION` : self-declared 0-3 (1 = standard)
+- `SUBJECTO` : entite supraordinatrice si applicable
+- `geometry` : MultiPolygon
+
+**Cas valide Empire Ghana 2026-05-04** : OHM n'avait PAS de relation Mali Empire (verifie via 3 queries
+Overpass + Nominatim). aourednik 1300 contient `Mali` MultiPolygon 52 vertices outer ring → utilise via
+precompute-empire-ghana.mjs avec geoMercator center([-3,18]) scale(1400).
+
+**Workflow projet Atlas** :
+1. Recherche OHM en 1er
+2. Si absent : telecharger world_YYYY.geojson dans `data/geo/<projet>/<entite>_YYYY.geojson` avec metadata source
+3. Etendre `precompute-<projet>.mjs` pour projeter et stocker dans `<projet>-data.json`
+4. Documenter source + license dans le code
+
+**Verification** : quand le polygone disponible est trop simplifie (< 30 vertices) ou la periode disponible
+(siecle pas decennie) ne match pas exactement, decider entre :
+- Garder approximation tertiaire (ex: dataset present 1300, on parle 1240 = 60 ans plus tot, OK)
+- Aller vers solution alternative (point pulse capital + cartouche, sans polygone)
 
 ---
 
