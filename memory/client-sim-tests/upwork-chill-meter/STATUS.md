@@ -4,6 +4,76 @@
 > accepté par la cliente le 29/08, **offre v2 acceptée par Aziz le 30/08**. 350 $ → 297,50 $ net.
 > ⛔ Les décisions de ce fichier engagent contractuellement.
 
+## ⭐⭐⭐ ETAT AU 2026-09-02 (SOIR) : DEGIVRAGE REUSSI + BUG METAL-* CORRIGE
+
+### ✅ LE DEGIVRAGE A MARCHE — la cible du point 6 existe enfin
+`scripts/tools/gemini-i2i.py --ref` sur `ref-cliente.png`, 2 jets, tous deux exploitables :
+- `out/_r-and-d/chill-meter-upwork/degivrage/ref-degivree-A.png` — gunmetal sombre, usure SOBRE
+- `.../ref-degivree-B.png` — nettement plus clair, franchement ROUILLE et pique (cote Fallout)
+Glace/neige/halo bleu retires, jauge vide, ecran eteint, geometrie et usure du chassis intactes.
+⭐ Les 2 jets ne se contredisent pas : ils donnent la FOURCHETTE de ce que « rusted » veut dire
+chez elle. A garder comme tels, pas a departager.
+
+### ⭐⭐⭐ CE QUE LA COMPARAISON A ETAT EGAL A DONNE (le point 6 devient mesurable)
+| | Son metal nu | Le notre (avant) |
+|---|---|---|
+| Luminosite moyenne | 41-64 | 48 ✅ dans sa fourchette |
+| Micro-contraste | 25-33 | 24 ✅ quasi identique |
+| **Ratio p95/p5** | **11.8-14.5** | **3.9** ❌ |
+
+⛔⛔ **Le point 6 n'etait NI « trop clair » NI « pas assez de grain »** — les 2 premieres lignes le
+prouvent. C'est exactement ce que j'aurais dose dans le vide sans cette mesure (et ce que la session
+du matin a fait pendant des heures). Le seul ecart est la PLAGE TONALE.
+
+**Cause trouvee dans le code** : les 3 rampes de surface (`machined_body`/`_frame`/`_plate`) vivaient
+toutes entre L26 et L113 — bande etroite, jamais de vrai noir ni de vrai blanc. Les rampes a forte
+amplitude existaient deja (`machined_edge` L13->225) mais ne servent que sur des lisereS fins.
+⭐ Le grain `feTurbulence` de la passe Fable du 01/09 modulait A L'INTERIEUR de cette bande : d'ou
+le « grain inegal » constate. Il ne manquait pas de grain, il manquait l'ecart tonal a moduler.
+
+**Correctif applique (commit `610d2afd`)** : rampes elargies -> **ratio 3.9 -> 6.0 (+54 %)**.
+Sa cible est 11.8-14.5, donc a mi-chemin. Le reste n'est PLUS de la colorimetrie (cf. ci-dessous).
+
+### ⛔ BUG METAL-* CORRIGE — c'etaient DEUX bugs empiles, pas un
+1. `METAL_RAMPS` visait 5 ids `gpt_*`/`kimi_*` a 0 reference (le bug deja documente).
+2. ⭐ **Bug non documente, qui aurait fait echouer la correction du 1er** : les gradients
+   `machined_*` vivent dans `FABLE_METAL_DEFS`, pas dans `DEFS`, alors que `metalDefs()` n'operait
+   que sur `DEFS` et concatenait `FABLE_METAL_DEFS` APRES. `applyRamp` ne pouvait jamais les
+   atteindre. -> `metalDefs` opere desormais sur `ALL_DEFS`. Verifie : 0 id duplique entre les 2
+   blocs, donc l'ordre de concatenation est sans effet.
+3. Le garde-fou « svg inchange » levait un FAUX POSITIF sur `brushed`, dont la rampe redonne
+   volontairement les couleurs d'origine. Absence reelle et identite sont maintenant distinguees.
+Les 4 compositions rendent (verifie sur disque + md5). `brushed` == `flat` au hash : normal, voulu.
+
+### ⛔⛔ LECON DE METHODE — mesure biaisee par la facon de mesurer, 2 FOIS DE SUITE
+1re mesure : zones calees sur `scale=2` alors que le device n'avait pas double -> je mesurais le
+FOND NOIR (p5=1.0, ratio identique avant/apres).
+2e mesure : zones de metal correctes mais qui ne recouvraient PAS les surfaces repeintes -> verdict
+« 6.1 -> 6.1, aucun effet », j'ai failli conclure que le correctif ne marchait pas.
+✅ La bonne methode : masquer par le DIFF avant/apres (`|A-B| > 3`) et ne mesurer que les pixels
+reellement modifies -> 3.9 -> 6.0. **Le correctif marchait depuis le debut.**
+⭐ A retenir : avant de conclure « le fix n'a rien change », verifier que la zone mesuree est bien
+celle que le fix touche. Un diff d'images le dit en 3 lignes.
+
+### ⏭️ EN COURS — passe Fable MAX (rouille/usure), lancee en fond
+La plage tonale etant ouverte, ce qui manque n'est PLUS de la colorimetrie : son metal est *mange*,
+pique, accidente ; le notre est lisse et bien eclaire. **Un degrade est lisse par construction** —
+aucune valeur de `stop-color` ne creera une ecaillure. C'est le lot de Fable.
+Brief : liberte creative assumee (doctrine GUIDER SANS BRIDER — decision d'Aziz : trop contraindre
+ferait perdre un 1er jet potentiellement exceptionnel), 2 variantes `rouille-forte` /
+`rouille-retenue`, les 2 degivrages donnes comme FOURCHETTE et non comme cible.
+Contraintes gardees = contractuelles seulement : geometrie intacte, ecran/textes/jauge intouches,
+gamme sombre conservee (le givre bleu du jalon 2 vient se poser dessus), animations preservees.
+Livrables attendus : `out/_r-and-d/chill-meter-upwork/passe-rouille/rouille-{forte,retenue}.svg`.
+
+### ⛔ PISTE 3D — DEVENUE SANS OBJET (et c'est le degivrage qui l'a tranche)
+Son seul usage viable etait « obtenir un rendu de reference eclaire comme cible visuelle ». Cette
+cible, le degivrage la donne en 2 appels Gemini, sans mailler un panneau plat que ces modeles gerent
+mal. ⚠️ Ceci est une DEDUCTION, pas un test de la 3D (jamais essayee). Si on veut la voir tourner un
+jour par curiosite, elle reste possible — elle n'est simplement plus necessaire au point 6.
+
+<details><summary>Historique — ETAT AU 2026-09-02 (matin) : revision 1 traitee</summary>
+
 ## ⭐⭐⭐ ETAT AU 2026-09-02 : REVISION 1 DU JALON 1 TRAITEE — RIEN RENVOYE ENCORE
 
 Abigail a repondu au jalon 1. Elle **valide la structure** (« I do like the overall direction and
@@ -77,6 +147,10 @@ client, RELIRE son message et verifier que le chantier repond a une phrase qu'EL
 Si aucune phrase ne le demande, c'est notre exigence, pas la sienne — et elle se decide
 explicitement avec Aziz, pas en glissant dedans.
 
+</details>
+
+<details><summary>Historique — le plan de degivrage (execute, resultats ci-dessus)</summary>
+
 ### ⭐⭐ A FAIRE EN PREMIER LA PROCHAINE SESSION — DEGIVRER SA REFERENCE (idee d'Aziz, 02/09)
 
 Son image est elle-meme generee par IA. **Lui demander (Gemini i2i, `gemini-i2i.py --ref` sur le
@@ -124,6 +198,8 @@ quelques minutes a partir d'une image. **Deux usages, un seul est viable :**
 - ⚠️ **Inconnu a verifier au 1er essai** : ces modeles sont entraines surtout sur de l'organique et
   des props volumetriques. Un panneau d'instrument PLAT, symetrique, avec du texte et de fines
   gravures est un cas difficile pour eux. Ne pas promettre le resultat avant de l'avoir vu.
+
+</details>
 
 Explorer d'abord la **piste 3D** (jamais testee — mon « ca ne marcherait pas » de la session etait
 une extrapolation, pas un resultat) pour un envoi UNIQUE et solide plutot
