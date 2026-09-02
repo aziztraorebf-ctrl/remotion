@@ -98,10 +98,41 @@ cote", "11 pixels", la reserve sur le fichier source — elles sonnaient comme u
 ⭐ Les 2 reconstructions degivrees sont JOINTES au message comme justification de la demarche,
 l'usage de l'IA assume franchement (sa propre reference en vient).
 
-### ⏭️ RESTE POUR LE JALON 2
-- ⛔ `BottomEdgeEffect` sature l'image a fill75 (voile blanc). **PREEXISTANT** : controle avec
-  `rust:"none"` -> 16,8 % de cadre clair dans les 2 cas, a l'identique. Pas une regression.
-- Le givre « frimas adherent » plutot que « neige posee » (le vrai sujet du jalon 2, cf. plus bas).
+### ⏭️ RESTE POUR LE JALON 2 — evalue sur les rendus du 23/08 (Fill75 / Fill100)
+
+⚠️⚠️ **CORRECTION D'UNE AFFIRMATION FAITE PLUS TOT LE MEME JOUR** : j'ai rapporte que
+`BottomEdgeEffect` « sature l'image » a fill75 (16,8 % de cadre clair). **C'est FAUX en usage
+reel.** Ce voile venait de mes rendus sur FOND BLANC. Compose sur son vrai plateau, la brume du
+bas est discrete et son visage reste net. ⭐ Lecon : un overlay transparent ne se juge QUE
+compose sur le decor final, jamais sur le fond du rendu.
+
+**Ce qui MARCHE deja au 100 % (mesure, pas impression)** — la piste 3D n'a jamais ete necessaire :
+- Givre anime sur les **4 bords** de l'ecran ✅ (son point 1)
+- Particules/flocons sur tout le cadre ✅ (son point 6)
+- ⭐ **Son visage reste lisible : 0,2 % d'opacite MOYENNE sur la zone visage**, avec quelques
+  particules isolees a 53-60 % qui la traversent. C'est exactement son brief : « a small amount of
+  snow may pass over my face » + « my face should never be heavily obscured » ✅✅
+- Alpha reel verifie (`yuva444p12le`), 135 frames, 4,5 s.
+
+**Les 4 vrais chantiers du jalon 2** :
+1. ⛔ **SEPARER 75 % et 100 %.** Son brief est explicite au 75 % : « Cold mist rises from the
+   **bottom only** » + « The rest of the screen should **remain clear** ». Or le rendu actuel
+   disperse deja des flocons sur TOUT le cadre a 75 %, y compris pres d'elle a droite. Le 75 % en
+   fait trop, donc le 100 % ne monte plus en contraste : **c'est la PROGRESSION qui est ecrasee**,
+   pas un effet rate.
+2. ⚠️ **L'onde de choc** (« a frozen shock wave bursts from the meter », vers le haut et la droite,
+   qui s'estompe avant son visage) : **pas identifiee clairement** sur les frames extraites. A juger
+   sur la video en MOUVEMENT, une frame ne prouve rien sur un mouvement.
+3. Le givre « **frimas adherent** » plutot que « neige posee » — son exigence ecrite noir sur blanc
+   (brief p.5 : « physically attached to the metal surface, not like a flat graphic placed on top »).
+4. Repercuter les corrections du 02/09 : placement (POS_Y 706), trame d'ecran, rouille retenue.
+
+⭐ **Pas de cible visuelle pour le 100 %** : sa reference ne montre QUE le meter, jamais l'effet
+plein cadre. Meme situation qu'au jalon 1 avant le degivrage -> appliquer le meme geste EN SENS
+INVERSE (demander a Gemini d'AMPLIFIER sa reference jusqu'a l'etat 100 %) pour avoir une cible
+avant de coder. Cf. `feedback_comparer-a-etat-egal` § LE GESTE QUI DEBLOQUE.
+⛔ **A faire APRES sa reponse sur la texture** : construire le givre sur un metal qui peut encore
+changer serait a refaire.
 
 <details><summary>Historique — la passe Fable pendant qu'elle tournait</summary>
 
