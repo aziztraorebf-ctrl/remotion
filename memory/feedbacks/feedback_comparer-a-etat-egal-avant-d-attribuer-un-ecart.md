@@ -50,9 +50,76 @@ règle qui n'existe pas. Ne pas la réécrire ailleurs — réparer son déclenc
    de N frames, la frame 0 est le DÉBUT de l'animation (`--frame=104` sur `durationInFrames={105}`).
 3. Ne mesurer la matière qu'après avoir neutralisé les effets d'éclairage propres à l'état (halo,
    glow, overlay ambiant). Si on ne peut pas les neutraliser, **la mesure ne parle pas de la matière**.
+   ⭐⭐⭐ **Et quand SA référence est figée dans l'état final (on ne peut pas lui demander l'état nu) :
+   DÉGIVRER SA RÉFÉRENCE — voir la section suivante.** C'est la sortie de l'impasse que ce point 3
+   décrivait sans la résoudre.
 4. Corollaire de [[feedback_comparatif-storyboard-mesurer-pas-demander]] : mesurer ne suffit pas, il
    faut mesurer **la même chose des deux côtés**. Le biais n'est pas dans l'outil de mesure, il est
    dans le CADRAGE de la comparaison.
 
 Lié : [[feedback_ecart-brief-verifier-contre-la-reference-client]] ·
 [[feedback_gate-contourne-par-outil-alternatif]] · [[feedback_regle-ecrite-insuffisante-sans-gate-outille]]
+
+---
+
+## ⭐⭐⭐ LE GESTE QUI DÉBLOQUE — ramener SA référence dans NOTRE état (idée d'Aziz, 02/09/2026)
+
+> Ce feedback décrivait le piège mais laissait une impasse : « si on ne peut pas neutraliser les
+> effets, la mesure ne parle pas de la matière ». **Voici comment on en sort.** Prouvé le lendemain
+> du jour où le piège a coûté une session entière.
+
+**Le problème générique** : un client fournit une référence dans un ÉTAT FINAL qu'on ne peut pas
+lui demander de retirer (givrée, allumée, éclairée en studio, stylisée, retouchée, générée par IA).
+Notre livrable, lui, part de l'état NU. Aucune comparaison n'est valide, et on dose donc à l'aveugle
+sur le seul point subjectif du brief.
+
+**Le geste** : demander à un modèle image-to-image (`scripts/tools/gemini-i2i.py --ref`) de RETIRER
+l'état final et de rendre l'objet nu, en décrivant précisément l'état initial voulu (ici : châssis
+propre, écran éteint, jauge vide, sans glace ni halo). On obtient **SA référence dans NOTRE état**.
+
+**Pourquoi ça marche particulièrement bien ici** : sa référence était elle-même générée par IA. On
+ne « devine » pas ce qu'il y a dessous, on demande au même type d'outil de reconstruire ce qu'il
+aurait produit sans l'effet. C'est du **reverse engineering de référence client**.
+
+### Ce que ça a donné concrètement (mesures, pas impressions)
+| | Son métal nu | Le nôtre |
+|---|---|---|
+| Luminosité moyenne | 41-64 | 48 ✅ déjà dans sa fourchette |
+| Micro-contraste | 25-33 | 24 ✅ quasi identique |
+| **Ratio p95/p5 (plage tonale)** | **11,8-14,5** | **3,9** ❌ |
+
+⭐⭐ **Les 2 premières lignes sont le vrai gain** : elles ont prouvé que le défaut n'était NI « trop
+clair » NI « pas assez de grain » — les 2 axes sur lesquels j'aurais dosé pendant des heures (et
+sur lesquels la session précédente A dosé pendant des heures). Le seul écart réel était la PLAGE
+TONALE, dont la cause a été trouvée dans le code en 10 minutes : 3 rampes de dégradé coincées entre
+L26 et L113. **Une demande subjective (« more texture and character ») est devenue mesurable.**
+
+### Bénéfices en cascade, tous vérifiés
+- ⭐ **Ça rend des pistes lourdes SANS OBJET.** La piste 3D (générer un rendu éclairé comme cible)
+  visait exactement ce que le dégivrage donne en 2 appels Gemini, sans mailler un panneau plat que
+  ces modèles gèrent mal. Abandonnée sans regret. **Toujours tenter le geste le moins cher AVANT
+  d'ouvrir un chantier technique.**
+- ⭐ **Deux jets = une FOURCHETTE, pas une contradiction.** Les 2 sorties (une sobre, une franchement
+  rouillée) ne se départagent pas : elles donnent l'amplitude de ce que le mot du client (« rusted »)
+  peut vouloir dire. Elles sont devenues **les 2 variantes proposées à la cliente**, et les
+  reconstructions elles-mêmes ont été **jointes au message** comme justification de la démarche.
+- ⭐ **C'est un argument commercial.** Sans elles, 2 variantes ressemblent à 2 essais au hasard ;
+  avec elles, ce sont 2 lectures argumentées de SA propre référence. Le retour client passe de
+  « j'aime / j'aime pas » à « plutôt vers cette version-là ».
+
+### ⚠️ Limites à énoncer, au client comme à soi-même
+- Ce que le modèle rend est une **hypothèse plausible**, pas une vérité : il invente ce qu'il y a
+  sous l'effet. Exploitable pour la **DIRECTION** (plus sombre / plus terne / plus contrasté), jamais
+  pour un détail au pixel. Suffisant pour trancher un point subjectif.
+- **Le dire franchement au client** quand on lui montre les reconstructions. Ne rien cacher de
+  l'usage de l'IA : quand sa propre référence en vient (cas fréquent), c'est un langage commun, et
+  la transparence fait paraître méthodique plutôt que l'inverse.
+- Surveiller les hallucinations, relancer si le 1er jet dérive.
+
+### Quand déclencher ce geste
+Dès qu'un point du brief est SUBJECTIF (« plus de caractère », « plus premium », « plus vivant »)
+**et** que la référence du client montre un état qu'on ne livre pas. Ne pas attendre d'avoir dosé
+2 fois dans le vide : c'est précisément ce que ce geste évite, et il coûte 2 appels image.
+
+Lié : [[feedback_reference-image-superieure-a-description-texte-genai]] ·
+[[feedback_harnais-de-mesure-accuse-un-code-juste]] (4e piège : mesurer à côté de ce que le fix touche)

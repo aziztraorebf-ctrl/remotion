@@ -55,6 +55,56 @@ reellement modifies -> 3.9 -> 6.0. **Le correctif marchait depuis le debut.**
 ⭐ A retenir : avant de conclure « le fix n'a rien change », verifier que la zone mesuree est bien
 celle que le fix touche. Un diff d'images le dit en 3 lignes.
 
+### ✅ PASSE FABLE LIVREE ET INTEGREE — 2 variantes proposees a la cliente
+
+Fable 5 (mode MAX, liberte creative assumee) a produit 2 variantes, integrees sous prop
+`rust: "none" | "retenue" | "forte"` (defaut "none"), cablee du device jusqu'a l'overlay.
+- **retenue** : marbrures, coulures sous les vis, aretes usees. 0,02 % de surface rouillee.
+- **forte** : eclats aux coins, plaques mangees, corrosion en arc sous les vis, grille du panneau
+  power attaquee. 0,98 % (contre 1,19 % sur sa reference degivree la plus usee -> bon ordre).
+
+⚠️ **Son rapport annoncait 5,3 % de pixels chauds sur la forte ; mesure reelle 0,98 %.** Verifier
+les chiffres d'un agent, ne pas les relayer (cf. `feedback_chiffre-audit-relaye-sans-verification`).
+
+**Verifie au RENDU, pas a la compilation** : 4 rendus aux hashs distincts, givre 7 % -> 75 % entre
+idle et fill75, jauge et bouton animes, 0 id duplique, TS compile.
+
+⭐⭐ **DECOUVERTE QUI ORIENTE LE CHOIX** : une fois le givre pose, la rouille de la forte tombe de
+0,98 % a **0,19 %** — les 4/5 disparaissent sous la glace. Donc la **retenue risque d'etre presque
+invisible aux etats givres du jalon 2**. Dit a la cliente dans le message (argument utile pour elle).
+
+⛔ **Piste desaturation ECARTEE (et c'est Aziz qui a eu raison)** : notre metal reste bleu a 62 %
+contre 21-42 % chez elle, donc j'ai propose de desaturer vers le neutre. Faux raisonnement : je
+comparais notre objet NU a sa reference DEGIVREE, alors qu'elle ne verra JAMAIS l'objet nu — le
+givre bleu se pose dessus au jalon 2 et refroidit tout. **C'est le piege "etat egal" par l'autre
+bout.** A re-examiner apres avoir vu le givre, pas avant.
+
+### ⛔ PLACEMENT — defaut trouve par Aziz a l'oeil, confirme a 2 px pres
+Sa demande n°6 disait explicitement « No part of the meter should touch the music video ».
+Mesure sur son plateau reel : le cadre bas de la fenetre video finit a **y=725**, le meter
+commencait a **y=727**. **2 px** — ils se touchaient, pendant que **71 px** dormaient en bas.
+-> `POS_Y` 670 **-> 706**. Desormais 38 px sous la video, 35 px en dessous (marge basse gardee
+courte volontairement : les glacons debordent vers le bas). Verifie sur l'etat le plus charge
+(fill75, glacons pousses) : elements opaques jusqu'a y=1060, **rien n'est coupe**.
+✅ Centrage sous la video verifie aussi (sa consigne « centered under the video ») : fenetre
+centree sur x=453, meter sur x=468 -> 15 px d'ecart sur 856 px de large, soit < 2 %.
+
+### 📤 PRET A ENVOYER — Aziz envoie lui-meme (rien n'est parti)
+Message redige puis **raccourci par Aziz** (il a coupe les justifications : "regression de mon
+cote", "11 pixels", la reserve sur le fichier source — elles sonnaient comme une demonstration).
+4 pieces jointes sur Blob, **noms neutres** (regle 3sexies : aucun modele IA, version ni jargon) :
+`chill-meter-restrained-texture` · `chill-meter-heavy-texture` · `reference-metal-restrained` ·
+`reference-metal-heavy`. Liens dans `memory/INDEX-LIENS.md`, verifies par content-length reel.
+⭐ Les 2 reconstructions degivrees sont JOINTES au message comme justification de la demarche,
+l'usage de l'IA assume franchement (sa propre reference en vient).
+
+### ⏭️ RESTE POUR LE JALON 2
+- ⛔ `BottomEdgeEffect` sature l'image a fill75 (voile blanc). **PREEXISTANT** : controle avec
+  `rust:"none"` -> 16,8 % de cadre clair dans les 2 cas, a l'identique. Pas une regression.
+- Le givre « frimas adherent » plutot que « neige posee » (le vrai sujet du jalon 2, cf. plus bas).
+
+<details><summary>Historique — la passe Fable pendant qu'elle tournait</summary>
+
 ### ⏭️ EN COURS — passe Fable MAX (rouille/usure), lancee en fond
 La plage tonale etant ouverte, ce qui manque n'est PLUS de la colorimetrie : son metal est *mange*,
 pique, accidente ; le notre est lisse et bien eclaire. **Un degrade est lisse par construction** —
@@ -65,6 +115,8 @@ ferait perdre un 1er jet potentiellement exceptionnel), 2 variantes `rouille-for
 Contraintes gardees = contractuelles seulement : geometrie intacte, ecran/textes/jauge intouches,
 gamme sombre conservee (le givre bleu du jalon 2 vient se poser dessus), animations preservees.
 Livrables attendus : `out/_r-and-d/chill-meter-upwork/passe-rouille/rouille-{forte,retenue}.svg`.
+
+</details>
 
 ### ⛔ PISTE 3D — DEVENUE SANS OBJET (et c'est le degivrage qui l'a tranche)
 Son seul usage viable etait « obtenir un rendu de reference eclaire comme cible visuelle ». Cette
@@ -245,6 +297,8 @@ et on mentionne en 1 ligne dans le message qu'une version plus sobre existe si e
 **Fichiers finaux** : `out/_r-and-d/chill-meter-upwork/jalon1-final/`
 - `01-meter-design-final.png` — chassis seul, agrandi
 - `02-meter-in-context-final.png` — compose sur le plateau (yt-dlp abigirl-decor.png)
+
+</details>
 
 </details>
 
