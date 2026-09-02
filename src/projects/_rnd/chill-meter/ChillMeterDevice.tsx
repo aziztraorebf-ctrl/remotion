@@ -706,24 +706,31 @@ const Raw: React.FC<{ html: string; opacity?: number; transform?: string; style?
 // Les ids vises sont ceux du dessin : les 3 planches sources (Fable, Kimi, GPT) ont
 // chacune leurs propres degrades metal, d'ou les 3 prefixes.
 const METAL_RAMPS: Record<Exclude<MetalFinish, "flat">, Record<string, string[]>> = {
-  // ⛔⛔ Ces ids DOIVENT etre references par un url(#...) dans les groupes du dessin.
-  // Le fichier contient 26 gradients MORTS (vestiges du mix des 3 planches sources) :
+  // Ces ids DOIVENT etre references par un url(#...) dans les groupes du dessin.
+  // Le fichier contient des gradients MORTS (vestiges du mix des 3 planches sources) :
   // les viser ne produit AUCUN effet, sans erreur ni avertissement. Verifier avant
   // d'en ajouter un :  grep -o 'url(#<id>)' ChillMeterDevice.tsx | wc -l
-  // Le nombre de couleurs doit egaler le nombre de <stop> du gradient (7/5/5/4/3 ici).
+  // Le nombre de couleurs doit egaler le nombre de <stop> du gradient (7/4/5/4 ici).
+  //
+  // ⛔ Corrige le 2026-09-02 : cette table visait 5 ids gpt_*/kimi_* que le chassis
+  // Fable v2 (8ba98e96) n'utilise plus — 0 reference chacun, donc les 3 compositions
+  // Metal-* levaient le garde-fou au render. Les ids ci-dessous sont ceux du dessin.
   brushed: {
-    gpt_metalOuter: ["#93a6ba", "#48607a", "#22394d", "#38536b", "#1b3044", "#647e97", "#2b4055"],
-    gpt_metalInset: ["#7189a0", "#26394b", "#42586e", "#1a2d3e", "#5f7890"],
-    gpt_titlePlate: ["#44607a", "#1a2e43", "#2c4460", "#16283a", "#6f8ba2"],
-    gpt_screwFace: ["#b3c4d4", "#5b7288", "#2a3d4e", "#111d29"],
-    kimi_btnGrad: ["#4a5866", "#2b3641", "#1a222b"],
+    machined_body: ["#68737f", "#48525c", "#39424b", "#262d35", "#39424b", "#262d35", "#171b21"],
+    machined_frame: ["#68737f", "#48525c", "#39424b", "#262d35"],
+    machined_plate: ["#68737f", "#48525c", "#39424b", "#262d35", "#171b21"],
+    machined_btn: ["#39424b", "#262d35", "#171b21", "#0a0d11"],
   },
+  // ⭐ Plage tonale ELARGIE (mesure du 2026-09-02, comparaison a etat egal contre sa
+  // reference degivree) : son metal nu descend au quasi-noir dans les creux et monte
+  // au blanc franc sur les aretes — ratio p95/p5 de 51-81 contre 18 chez nous. Nos
+  // surfaces vivaient toutes entre L26 et L113, une bande etroite du milieu : c'est
+  // ce qui les faisait lire comme un aplat vectoriel, PAS un manque de grain.
   machined: {
-    gpt_metalOuter: ["#c2d0dd", "#5d7690", "#2b455c", "#4a6480", "#22384d", "#8299b0", "#33495f"],
-    gpt_metalInset: ["#8ba3ba", "#2d4257", "#51687e", "#1f3446", "#7089a2"],
-    gpt_titlePlate: ["#57748f", "#20364c", "#3a5470", "#1a2d40", "#88a3ba"],
-    gpt_screwFace: ["#d6e2ec", "#6d8499", "#31465a", "#14212e"],
-    kimi_btnGrad: ["#5c6b7b", "#33404d", "#1f2832"],
+    machined_body: ["#9aa6b2", "#5a6672", "#3b444e", "#1c222a", "#454f5a", "#191f26", "#080a0e"],
+    machined_frame: ["#a7b3bf", "#5f6b78", "#333c46", "#12171d"],
+    machined_plate: ["#9aa6b2", "#57626e", "#333c46", "#1a1f27", "#090c10"],
+    machined_btn: ["#4a545f", "#2b333c", "#12171d", "#05070a"],
   },
 };
 
@@ -754,8 +761,15 @@ const DRAWN_GRADIENTS: Set<string> = new Set(
     ?.map((u) => u.slice(5, -1)) ?? [],
 );
 
+// ⛔ Les gradients sont definis dans DEUX blocs : DEFS (planches GPT/Kimi) et
+// FABLE_METAL_DEFS (chassis Fable v2, ou vivent tous les machined_*). Le rendu
+// concatene les deux, donc les rampes doivent operer sur la concatenation —
+// sinon applyRamp ne trouve jamais un id defini dans le second bloc (bug du 02/09 :
+// "machined_body introuvable dans DEFS" alors qu'il existe bien, dans l'autre bloc).
+const ALL_DEFS = DEFS + FABLE_METAL_DEFS;
+
 const metalDefs = (finish: MetalFinish): string => {
-  if (finish === "flat") return DEFS;
+  if (finish === "flat") return ALL_DEFS;
   const ramps = METAL_RAMPS[finish];
   return Object.keys(ramps).reduce((svg, id) => {
     // Garde-fou en 2 temps. Un gradient MORT — defini dans DEFS mais jamais reference
@@ -768,12 +782,15 @@ const metalDefs = (finish: MetalFinish): string => {
           `Le modifier n'aurait aucun effet visible.`,
       );
     }
-    const out = applyRamp(svg, id, ramps[id]);
-    if (out === svg) {
-      throw new Error(`metalDefs: le gradient "${id}" est introuvable dans DEFS.`);
+    // Un "svg inchange" a DEUX causes possibles : le gradient est absent des DEFS
+    // (vrai bug), ou la rampe redonne exactement les couleurs deja en place (cas
+    // legitime : la finition "brushed" conserve volontairement la rampe d'origine).
+    // Ne lever que dans le premier cas, teste explicitement.
+    if (!svg.includes(`id="${id}"`)) {
+      throw new Error(`metalDefs: le gradient "${id}" est introuvable dans les DEFS.`);
     }
-    return out;
-  }, DEFS);
+    return applyRamp(svg, id, ramps[id]);
+  }, ALL_DEFS);
 };
 
 export const ChillMeterDevice: React.FC<ChillMeterProps> = ({ chill, frost, powerOn, frame, fps, metal = "flat" }) => {
@@ -792,7 +809,7 @@ export const ChillMeterDevice: React.FC<ChillMeterProps> = ({ chill, frost, powe
       xmlns="http://www.w3.org/2000/svg"
       style={{ overflow: "visible" }}
     >
-      <defs dangerouslySetInnerHTML={{ __html: metalDefs(metal) + FABLE_METAL_DEFS }} />
+      <defs dangerouslySetInnerHTML={{ __html: metalDefs(metal) }} />
 
       {/* --- chassis : toujours visible, il EST l'objet --- */}
       <Raw html={G.chassis} />
