@@ -71,3 +71,12 @@ et `public/_shared/sfx/SFX-INDEX.md` (⛔ y sont listés les fichiers corrompus)
   séparé figé au 2026-03-27 avec 3 compositions de démo. Ne verra jamais nos vraies
   compositions. Render local (`npx remotion render`), ou `scripts/render-mapbox.sh`
   pour tout ce qui touche à Mapbox/WebGL.
+
+### Chill meter (Abigail, AbiGirl Reacts) — revision 1 du jalon 1, 02/09/2026
+Les 4 pieces jointes preparees pour l'envoi (⛔ noms neutres : aucun modele, version ni jargon).
+Envoi fait par Aziz lui-meme depuis son telephone.
+- Texture sobre, en contexte : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/chill-meter/revision-1/chill-meter-restrained-texture-sBNwc2DBwjDzLYxg51FvB2rYua1psl.png
+- Texture marquee, en contexte : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/chill-meter/revision-1/chill-meter-heavy-texture-TttHilpFzMMfELbNS9dlnYExxTnqGB.png
+- Reference degivree sobre : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/chill-meter/revision-1/reference-metal-restrained-FeJsMBthyt5Dg5AsWtxgR5tRkJH2qL.png
+- Reference degivree rouillee : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/chill-meter/revision-1/reference-metal-heavy-H5HsrgUVaLFEOv06leIa6YdNSrhgoW.png
+- Page de comparaison interne (⛔ NE PAS envoyer a la cliente) : https://claude.ai/code/artifact/2297faf9-08b0-46a2-994a-ab46a27c3eb8
