@@ -24,7 +24,13 @@ export type MeterState =
 // meter reduit, colle bas-gauche sous la fenetre du clip, marge de securite avec la video.
 // SCALE au maximum exploitable compte tenu de l'espace vertical disponible sous la fenetre.
 const POS_X = 198;
-const POS_Y = 670;
+// ⭐ Descendu de 670 -> 706 le 02/09 : mesure sur son plateau reel, le cadre bas de
+// la fenetre video finit a y=725 et le meter commencait a y=727 — 2 px d'ecart, ils
+// se touchaient visuellement. Sa demande n°6 etait explicitement de ne PAS coller a
+// la fenetre video. Repartition retenue : 38 px de respiration sous la video, 35 px
+// sous le meter (marge basse gardee courte mais suffisante : les glacons du givre
+// debordent vers le bas au jalon 2).
+const POS_Y = 706;
 const SCALE = 0.373595;
 
 /** Effet de bord bas (75%) : brume + particules qui montent. */
