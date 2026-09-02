@@ -20,6 +20,52 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 
 ## 🔧 MÉTHODE & PROCESS
 
+### 2026-09-02 — ⛔⛔ UNE RÈGLE NON INJECTÉE EST UNE RÈGLE QUI N'EXISTE PAS (le vrai enseignement)
+
+Contrat Upwork chill-meter. J'ai comparé notre meter à l'état 0 % contre la référence cliente à
+~75 % (givre actif) et conclu faussement sur la matière du métal — coût : la majeure partie d'une
+session, 4 dosages de blending, 2 générations d'image payantes.
+
+**Or la règle existait**, écrite sur ce projet précis, dans `FICHE-BRIEF-CLIENT.md:160` :
+« Exiger l'ÉTAT NEUTRE quand la référence client montre l'état FINAL ».
+
+**Cause racine (trouvée au wrap, corrigée)** : le hook `fiche-inject.sh:186` déclenchait la fiche
+sur `client-sim|upwork|freelance-linkedin|BRIEF-CLIENT`. Le CODE du contrat vit sous
+`src/projects/_rnd/chill-meter/` — aucun motif ne matchait. **La fiche ne s'est jamais injectée de
+toute la session.** `chill-meter` ajouté, vérifié par test réel du hook. **2e occurrence** du même
+défaut d'adressage (1re : `FICHE-MOCKUP-3D`, 26/08, « ne se déclenchait jamais sur le code qu'elle
+documente »).
+
+⭐ **Le réflexe à prendre** : quand une règle écrite n'a pas empêché l'erreur qu'elle décrit, ne pas
+la réécrire ailleurs — **vérifier d'abord si elle était SOUS LES YEUX au bon moment**, et réparer
+son déclencheur. La mémoire du projet est un système d'adressage autant qu'un système d'écriture.
+→ `feedback_comparer-a-etat-egal-avant-d-attribuer-un-ecart`
+
+**Corollaire, 3e récidive du même écart** : j'ai enchaîné **4 dosages** avant de m'arrêter, là où
+CLAUDE.md impose de changer d'approche dès le **2e** essai infructueux (après le globe D3 le 02/08
+et la caméra Gazoduc). Les 3 fois, le signal était identique — **le symptôme ne bouge pas d'un essai
+à l'autre**. Un dosage qui change la valeur sans changer le symptôme n'est pas un mauvais dosage,
+c'est une mauvaise cause. Le compteur ne se tient pas tout seul : **écrire « essai 2/2 »** dans le
+message avant de coder le suivant.
+
+### 2026-09-02 — ⭐⭐ UN ÉLÉMENT « MANQUANT » SIGNALÉ PAR LE CLIENT : chercher la RÉGRESSION d'abord
+
+La cliente a signalé que les labels des boutons du bas manquaient. Réflexe naturel : les dessiner.
+`git log -p` a montré autre chose — **ils existaient dans `chill-meter-mix.svg` et ont été supprimés
+par erreur au commit `8ba98e96`**, lors de l'intégration du châssis Fable v2. Pas un oubli de
+conception : une **régression silencieuse introduite par une passe d'amélioration**.
+
+Les redessiner à neuf aurait produit des labels ne correspondant ni à la typo ni à l'espacement
+d'origine — et n'aurait rien appris sur la cause. ⛔ Une passe de délégation visuelle (Fable, GLM,
+Kimi) qui remplace un groupe SVG **emporte silencieusement ce qui n'était pas dans son brief**.
+
+**How to apply** : dès qu'un élément « manque » sur un livrable ayant subi une passe de délégation —
+(1) `git log -S "<nom du groupe>"` sur le fichier source AVANT de redessiner ; (2) s'il y était, le
+**restaurer** depuis l'historique (on récupère typo, espacement, ids exacts) ; (3) vérifier ce que
+la MÊME passe a emporté d'autre au même commit — une suppression accidentelle est rarement seule.
+**Coût réel** : c'est la CLIENTE qui l'a détecté, pas nous — une des 2 révisions du jalon consommée
+par un défaut qu'un diff élément-par-élément aurait attrapé avant envoi.
+
 ### 2026-08-29 — ⭐⭐⭐ UN AGENT NOMMÉ AVEC MÉMOIRE BAT UN AGENT GÉNÉRIQUE (correction d'Aziz)
 
 J'ai répondu « on ne peut pas entraîner un modèle » à une question qui ne portait pas sur le

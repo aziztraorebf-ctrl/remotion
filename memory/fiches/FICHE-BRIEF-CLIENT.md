@@ -136,9 +136,9 @@ concurrent qui dessine** — et c'est l'ouverture de proposition la plus forte (
 éliminent l'essentiel du bruit.
 
 ### Coûts et connects
-- ⛔ **Un job coûte 4 à 16 connects, pas 1** (0,15 $/connect, vérifié page officielle). 100 connects
-  ≈ **10-25 candidatures**. Bonus de **50 connects après le 1er achat** (nouveau freelance).
-  Recrédités souvent si le client interviewe ; **jamais** s'il choisit un autre ou si l'annonce expire.
+- ⛔ **Un job coûte 4 à 16 connects, pas 1** → 100 connects ≈ **10-25 candidatures**. Recrédités
+  souvent si le client interviewe ; **jamais** s'il choisit un autre ou si l'annonce expire.
+  (Tarifs détaillés : `memory/tools/upwork-mcp.md`, injecté par le hook sur tout chemin `upwork`.)
 - ⭐⭐ **Poser DEUX questions séparément : « sait-on PRODUIRE ça ? » et « sait-on le LIVRER dans SON
   format ? »** 3 briefs réels = 3 formats différents (MP4 · MOV alpha · `.json` Lottie), aucun ne
   dit « vidéo ». Un NON au format n'est pas un NON au brief : c'est un chantier de tuyauterie,
@@ -158,6 +158,8 @@ concurrent qui dessine** — et c'est l'ouverture de proposition la plus forte (
 - **Chercher les tests d'attention — il y en a souvent PLUSIEURS et ils sont distincts.** chill-meter en avait 2 : un mot-code (« FROSTY » en titre/objet) ET une question finale « quelle petite instruction hors design avez-vous remarquée ? » dont la réponse était le mot-code lui-même. Répondre EXPLICITEMENT à chacun.
 - **Relever ce que le brief demande et qu'on n'a PAS** (son, format, delivery) — l'annoncer soi-même plutôt que le laisser découvrir.
 - ⭐ **Exiger l'ÉTAT NEUTRE quand la référence client montre l'état FINAL** : sa réf était givrée à 100 % ; sans châssis propre livré à part, les paliers 0/25/50 % étaient impossibles → tout à refaire.
+- ⛔⛔ **COMPARER À ÉTAT ÉGAL — sinon la mesure attribue au MATÉRIAU ce qui vient de l'ÉTAT.** (chill-meter, 02/09, la MAJEURE partie d'une session) Sa réf montre l'objet à ~75-85 % (givre + halo bleu) ; comparé à notre état 0 %, verdict FAUX « notre métal a 3-5× trop de grain » — le grain mesuré était celui de SON GIVRE. **FIX : rendre NOTRE état équivalent d'abord** (`ChillMeter-Fill75`, **dernière** frame — la frame 0 est le début de l'animation), puis comparer. A montré en 1 image ce que 4 dosages n'avaient pas montré. → `feedback_comparer-a-etat-egal-avant-d-attribuer-un-ecart`
+- ⛔ **Une texture d'HABILLAGE se juge sur son USAGE** (masquée, en overlay, à taille finale), jamais sur sa beauté isolée. Recraft a sorti la plus belle image mais AVEC rivets et lignes de panneau intégrés — inutilisable sur un objet qui a déjà ses vis. Gemini a sorti la surface PURE, seule utilisable (`gemini-gen-image.py --hq` · `gemini-i2i.py --ref` pour partir d'une réf, ⚠️ pas de `--hq` sur i2i).
 - **La référence fournie fait autorité sur la forme.** Ne pas dire « j'ai dessiné X » quand on a suivi SON image.
 
 ## ⛔⛔ CE QU'IL FAUT DIRE AVANT DE COMMENCER (vectorisation d'un logo client)

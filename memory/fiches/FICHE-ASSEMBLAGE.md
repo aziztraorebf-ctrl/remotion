@@ -13,6 +13,18 @@
   embarque les pixels de bord anti-aliasés contre le fond → biais **systématique** vers le fond
   (mesuré sur le même mot : `rgb(165,133,73)` au p97 contre `rgb(204,165,93)` au p99,5).
 
+### ⛔⛔ FRAME 0 ≠ ÉTAT ÉTABLI · MESURER UNE TEXTURE (2026-09-02, chill-meter)
+- ⛔ **Sur une compo de N frames, la frame 0 est le DÉBUT de l'animation.** Pour juger un état à son
+  maximum (givre plein, remplissage 75 %), rendre la **dernière** : `--frame=104` sur
+  `durationInFrames={105}`. Rendre la frame 0 d'une compo « Fill75 » donne un objet à 0 %, et toute
+  mesure faite dessus décrit un autre état que celui qu'on croit mesurer.
+- ⛔ **Mesurer une TEXTURE = séparation de fréquences** (`sub - gaussian_filter(sub, sigma)`), sur
+  des zones de **matière plate**, à l'écart des arêtes, textes et vis. 2 erreurs payées le même
+  jour : (1) fenêtre à cheval sur une arête → on mesure le contraste de l'ARÊTE, pas le grain ;
+  (2) fenêtre hors du `getbbox()` du contenu → retourne **0.000**, qui se lit à tort comme « pas de
+  grain ». ⚠️ Aucun script du repo n'outille ça (`scipy.ndimage` seulement dans `test-groupement.py`)
+  — à outiller au 2e cas d'usage réel, pas avant.
+
 ### ⛔⛔ POLICE : la pile système SATURE à `fontWeight: 600`
 Mesuré (« Confidence » @68px) : `400→340px · 500→352 · **600→363 · 700→363 · 800→363 · 900→363**`.
 Chromium n'a que les faces discrètes de Helvetica Neue — au-delà de 600 il n'a plus rien.

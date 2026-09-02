@@ -4,7 +4,66 @@
 > accepté par la cliente le 29/08, **offre v2 acceptée par Aziz le 30/08**. 350 $ → 297,50 $ net.
 > ⛔ Les décisions de ce fichier engagent contractuellement.
 
-## ⭐⭐⭐ ETAT AU 2026-09-01 : JALON 1 ENVOYE ET CONFIRME RECU
+## ⭐⭐⭐ ETAT AU 2026-09-02 : REVISION 1 DU JALON 1 TRAITEE — RIEN RENVOYE ENCORE
+
+Abigail a repondu au jalon 1. Elle **valide la structure** (« I do like the overall direction and
+structure, solid starting point ») et demande **6 revisions** avant approbation. Ceci consomme la
+1re des 2 revisions du jalon 1.
+
+**Les 6 demandes et leur traitement (tout est code + rendu + verifie a l'oeil) :**
+1. Plus de texture / caractere antique-rustique → passe Fable 5 mode MAX (palette bleu-acier →
+   gunmetal, 3 calques `feTurbulence`, vis vieillies, aerations creusees, tubes a relief).
+   ⚠️ Repartition du grain INEGALE (grandes surfaces riches, petits elements a peine) — a reprendre.
+2. Labels des boutons du bas manquants → **RESTAURES**. Cause trouvee par `git log -p` : ils
+   existaient dans `chill-meter-mix.svg` et ont ete **supprimes par erreur au commit `8ba98e96`**
+   (integration du chassis Fable v2). Regression silencieuse, pas un oubli de conception.
+3. Flocons du titre a harmoniser → **AJOUTES** autour de « AbiGirl Reacts » (il n'y en avait AUCUN),
+   meme symbole `fable_sym_flocon` que ceux du sous-titre, comme elle le demandait.
+4. Bouton power mal centre → **RECENTRE**. Ecart mesure : voyant a `cy=555`, sa cavite a `cy=544`
+   = 11 px. Rayon 26 → 24 pour epouser la cavite.
+5. Precision generale des details → couverte par la passe Fable.
+6. Taille/placement trop grands → **SCALE 0.52 → 0.373595**, **POS 96,616 → 198,670**, mesures sur
+   sa capture. Le meter ne touche plus la fenetre video (sa contrainte explicite).
+
+⚠️ **HORS DEMANDE CLIENTE** (vient d'une remarque d'Aziz, pas d'elle) : le pattern `gpt_screenGrid`
+dessinait des triangles diagonaux tres visibles sur la dalle → ramene a une trame imperceptible,
+sa reference montrant une dalle noire unie. **A assumer comme tel si elle le remarque.**
+
+### ⭐⭐ LE VRAI ECART RESTANT — c'est le GIVRE, pas le metal (jalon 2)
+
+Revele par la comparaison **a etat egal** (notre `ChillMeter-Fill75` frame 104 contre sa reference
+a ~75-85 %), apres une longue fausse piste sur la matiere du metal :
+- **Notre givre = « neige posee »** (amas blancs opaques sur les aretes + glacons tres dessines).
+  **Le sien = « frimas adherent »** (pellicule fine qui epouse la surface, coulures, halo diffus).
+  ⭐ Elle l'avait ANTICIPE dans son brief original : « look physically attached to the metal
+  surface, not like a flat graphic placed on top ». C'est le vrai sujet du jalon 2.
+- **`BottomEdgeEffect`** (brume du bas) = aplat cyan trop opaque, monte sur ~1/3 du cadre, la ou sa
+  reference montre un voile diffus transparent.
+
+### ⛔ PISTE TEXTURE RASTER — testee, MESUREE, abandonnee (ne pas refaire le trajet)
+
+Plaquer une texture photo en `<pattern>` + `<clipPath>` sur la coque : **techniquement ca marche**
+(render Remotion OK, groupes d'animation intacts). Mais les **4 dosages** testes font tous BAISSER
+le contraste local (micro 12,66 → 7,6..10,9) et/ou assombrissent (lum 33,6 → 21,8 au pire). Sur une
+surface a lum ~33/255, `overlay` n'a plus d'amplitude et `multiply` ne sait qu'assombrir.
+Texture conservee : `public/_client-sim/chill-meter/metal-grain.png`. Commentaire explicatif laisse
+dans `ChillMeterDevice.tsx`.
+
+### ⛔ BUG OUVERT (preexistant, verifie sur HEAD AVANT les modifs de cette session)
+
+`ChillMeter-Metal-Flat` / `-Brushed` / `-Machined` **plantent au render** : le garde-fou
+`DRAWN_GRADIENTS` leve « le gradient `gpt_metalOuter` n'est reference par aucun `url(#...)` ».
+Mesure : les 5 gradients vises par `METAL_RAMPS` ont **0 reference** dans le fichier — le chassis
+Fable v2 (`8ba98e96`) n'utilise plus aucun `gpt_*`. Seule `ChillMeter-Idle` rend.
+⭐ Le garde-fou fait son travail ; c'est `METAL_RAMPS` qui est obsolete. A corriger avant livraison.
+
+### ⏭️ DECISION AZIZ — ne PAS renvoyer tout de suite
+
+Explorer d'abord la **piste 3D** (habillage extrait d'un rendu 3D — jamais testee, mon « ca ne
+marcherait pas » etait une extrapolation, pas un resultat) pour un envoi UNIQUE et solide plutot
+que deux envois partiels. Il ne restera qu'1 revision sur le jalon 1 apres celle-ci.
+
+<details><summary>Historique — ETAT AU 2026-09-01 : JALON 1 ENVOYE ET CONFIRME RECU</summary>
 
 Envoye via MCP Upwork (`send_message`) : message + 2 pieces jointes (`01-meter-design-final.png`,
 `02-meter-in-context-final.png`). Confirmation de reception verifiee dans le fil (`list_messages`) —

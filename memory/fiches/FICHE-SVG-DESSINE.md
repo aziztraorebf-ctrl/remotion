@@ -208,7 +208,22 @@ Au **2e échec sur le même défaut** (y compris un rendu rejeté 2× sur le mê
 2. Puis le protocole agent-dédié du CLAUDE.md global (reverse engineering → agent frais qui RAPPORTE) — déjà en contexte à chaque session, pas repris ici.
 
 
-↔ **Objet 3D généré (R3F)** : registre voisin, outil d'APPOINT — détail dans
-`memory/doctrines/SVG-SCENES-GENERATIVES.md` § extension 3D.
-⛔ **Un classement de modèles ne se transpose PAS d'un registre à l'autre** : GLM 1er en SVG,
-DERNIER en 3D (mesuré 2026-08-25).
+⛔ **3e récidive le 2026-09-02** (chill-meter) : **4 dosages** de blending d'une texture avant de
+m'arrêter. Le compteur ne se tient pas tout seul — **écrire « essai 2/2 »** dans le message avant de
+coder le suivant. Les 3 fois (globe D3, caméra Gazoduc, ici), le signal était le même : *le symptôme
+ne bouge pas d'un essai à l'autre*.
+
+⛔⛔ **PLAQUER UNE TEXTURE RASTER SUR UNE SURFACE DÉJÀ SOMBRE = un PLAFOND, pas un dosage**
+(chill-meter, 02/09). La technique est valide (`<pattern patternUnits="userSpaceOnUse">` +
+`<image href={staticFile(...)}>` + `<clipPath>` : le render Remotion passe, les groupes d'animation
+restent intacts). Mais **4 dosages mesurés** (multiply+overlay · overlay seul · normal ·
+normal+soft-light) font TOUS baisser le contraste local (micro 12,66 → 7,6..10,9) et/ou assombrir
+(lum 33,6 → 21,8). Sur une surface à lum ~33/255, `overlay` n'a plus d'amplitude et `multiply` ne
+sait qu'assombrir. ⭐ **Vérifier la luminance de la surface AVANT de choisir un mode de fusion.**
+
+⚠️ **BUG OUVERT (chill-meter, vérifié sur HEAD)** : `ChillMeter-Metal-Flat/-Brushed/-Machined`
+plantent — les 5 gradients visés par `METAL_RAMPS` ont **0 référence `url()`** depuis le châssis
+Fable v2 (`8ba98e96`). Le garde-fou `DRAWN_GRADIENTS` fait son travail ; c'est `METAL_RAMPS` qui est
+obsolète. Seule `ChillMeter-Idle` rend.
+
+↔ **Objet 3D généré (R3F)** : registre voisin — `memory/doctrines/SVG-SCENES-GENERATIVES.md` § extension 3D.

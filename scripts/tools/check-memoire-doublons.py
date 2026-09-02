@@ -50,6 +50,17 @@ MARQUEURS_STUB = (
     "Source de vérité désormais unique", "source de verite desormais unique",
     "a été fusionné", "a ete fusionne", "fusionné dans", "fusionne dans",
     "Ne pas recréer de contenu ici", "Ne rien écrire ici",
+    # Ajoutes le 2026-09-02 : le chantier memoire du 31/08 a ecrit ses stubs avec
+    # ces formulations, absentes de la liste. Resultat : 231 fausses collisions et
+    # un code retour 2 a chaque wrap, sur ZERO vrai doublon (recomptes un par un).
+    # Un gate qui crie au loup finit ignore — et le jour ou un vrai fragment
+    # invisible apparait, personne ne le voit. Cf feedback_semantic-test-gate-pas-signal-informatif.
+    "MIGRÉ vers", "MIGRE vers", "migré vers", "migre vers",
+    "Source de vérité : voir", "Source de verite : voir",
+    "(repo, source de vérité)", "(repo, source de verite)",
+    "Source de vérité :", "Source de verite :",
+    "Créé directement dans le repo", "Cree directement dans le repo",
+    "source de vérité unique", "source de verite unique",
 )
 
 

@@ -183,7 +183,14 @@ fi
 # C'est le MEME piege que .svg (2026-08-17), index.html et timing.ts : 4e occurrence.
 # 1re tentative posee dans la branche BASH (FILE_PATH vide) -> ne declenchait jamais ;
 # 2e posee APRES le filtre .tsx -> les .md rejetes. Detecte par le TEST, pas la relecture.
-if printf '%s' "$FILE_PATH" | grep -qiE 'client-sim|upwork|freelance-linkedin|BRIEF-CLIENT'; then
+# ⛔⛔ 2026-09-02 — DEFAUT D'ADRESSAGE, 2e occurrence (la 1re : FICHE-MOCKUP-3D le 26/08).
+# Le CODE d'un contrat client vit sous src/projects/_rnd/<projet>/, sa MEMOIRE sous
+# memory/client-sim-tests/. Le motif ne couvrait que la memoire : la fiche ne s'est JAMAIS
+# declenchee sur le code de production du seul contrat signe (chill-meter, 350 $).
+# Coût payé : sa ligne « exiger l'ETAT NEUTRE quand la reference client montre l'etat FINAL »
+# n'etait pas en contexte au moment ou j'ai compare notre etat 0 % a sa reference a 75 %
+# — diagnostic faux sur la matiere, majeure partie d'une session perdue.
+if printf '%s' "$FILE_PATH" | grep -qiE 'client-sim|upwork|freelance-linkedin|BRIEF-CLIENT|chill-meter'; then
   add_fiche "FICHE-BRIEF-CLIENT.md" "FICHE BRIEF CLIENT" "$FILE_PATH"
   # upwork-mcp.md vit dans memory/tools/, pas memory/fiches/ (c'est une doc d'outil, pas
   # une fiche de production) -> add_fiche ne s'applique pas (cherche dans FICHES_DIR).

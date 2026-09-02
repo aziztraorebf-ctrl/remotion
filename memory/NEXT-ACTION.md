@@ -83,14 +83,19 @@ portait 2 fichiers jamais commités, récupérés par chance seulement. Toujours
 `git status`/modifications non commitées sur une branche AVANT de la supprimer, pas seulement ses
 commits.
 
-## ⭐⭐⭐ CONTRAT UPWORK chill-meter — SIGNÉ le 2026-08-30, jalon 1 ENVOYÉ le 2026-09-01
+## ⭐⭐⭐ CONTRAT UPWORK chill-meter — RÉVISION 1 du jalon 1 TRAITÉE le 2026-09-02, RIEN RENVOYÉ
 
 **Premier contrat freelance, actif.** Offre v2 acceptée le 30/08 (350 $ → 297,50 $ net, 3 jalons,
 3/7/11 sept.) — les 3 points de révision (dossier source + README, dates, 2 tours de révision par
 jalon) sont tous dans le contrat signé.
 
-⏭️ **PROCHAINE ACTION : en attente de la réponse d'Abigail sur le jalon 1** (envoyé et confirmé
-reçu le 01/09). Si elle valide : jalon 2 (7 sept, entrance/idle/0-25%/50%, sons déjà générés).
+⏭️ **PROCHAINE ACTION : tester la piste 3D, PUIS renvoyer le jalon 1.** Abigail a répondu : elle
+valide la structure et demande 6 révisions (toutes traitées le 02/09 — labels boutons, flocons du
+titre, bouton power recentré de 11 px, SCALE 0.52→0.374, passe Fable sur le métal). Décision d'Aziz :
+ne pas renvoyer tout de suite, explorer d'abord la piste 3D pour un envoi UNIQUE (il ne reste qu'1
+révision sur ce jalon). Le vrai écart restant est le **givre** (« neige posée » chez nous vs
+« frimas adhérent » chez elle), pas le métal — mesuré par comparaison à état égal.
+→ Détail complet + bug ouvert `ChillMeter-Metal-*` : `memory/client-sim-tests/upwork-chill-meter/STATUS.md`.
 ⏸️ Prospection Upwork en PAUSE par Aziz (01/09), 1-2j — déjà 4 fronts ouverts. Ne pas relancer sans
 confirmation d'Aziz.
 ⚠️ Retraits Upwork bloqués tant que les infos fiscales ne sont pas fournies — à régler avant le 3 sept.

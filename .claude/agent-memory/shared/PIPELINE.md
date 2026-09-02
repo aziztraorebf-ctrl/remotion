@@ -14,12 +14,17 @@
 
 ---
 
-## 💰 CONTRAT UPWORK chill-meter (AbiGirl Reacts) — jalon 1 envoyé, en attente réponse cliente
+## 💰 CONTRAT UPWORK chill-meter (AbiGirl Reacts) — révision 1 traitée, RIEN renvoyé
 
 **Premier contrat freelance signé (30/08), actif.** 350 $ → 297,50 $ net, 3 jalons (3/7/11 sept).
-Jalon 1 (design statique du châssis, finition métal machinée) envoyé et confirmé reçu le 01/09.
-⏭️ **En attente de la réponse d'Abigail.** Si validé : jalon 2 (entrance/idle/0-25%/50%, sons déjà
-générés). Prospection Upwork en pause 1-2 jours (4 fronts déjà ouverts : ce contrat + 3 candidatures).
+Abigail a répondu au jalon 1 : structure VALIDÉE, **6 révisions demandées** — toutes traitées le
+02/09 (labels boutons restaurés, flocons du titre, bouton power recentré de 11 px, SCALE
+0.52→0.373595, passe Fable 5 sur le métal, écran en dalle noire).
+⏭️ **Tester la piste 3D d'abord, PUIS renvoyer** (décision Aziz : un envoi unique plutôt que deux
+partiels ; il ne reste qu'1 révision sur ce jalon). Vrai écart restant = le **givre** (« neige
+posée » vs « frimas adhérent »), pas le métal. ⛔ Bug ouvert : `ChillMeter-Metal-Flat/-Brushed/
+-Machined` plantent (`METAL_RAMPS` vise 5 gradients morts) — à corriger avant livraison.
+Prospection Upwork en pause 1-2 jours (4 fronts déjà ouverts : ce contrat + 3 candidatures).
 → Source de vérité : `memory/client-sim-tests/upwork-chill-meter/STATUS.md`.
 
 ---

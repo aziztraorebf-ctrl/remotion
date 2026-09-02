@@ -11,7 +11,7 @@ manquante entre les deux — elles arrivent au bon moment, sans bloquer.
 Cause d'échec n°1 mesurée par audit (2026-08-17) : **« brique existante non trouvée »**
 (6 cas documentés, ~20 itérations perdues). Les règles existaient ; elles n'étaient pas retrouvées.
 
-## Les fiches actuelles (11)
+## Les fiches actuelles (13)
 | Fiche | Se déclenche quand | Source du déclenchement |
 |---|---|---|
 | `FICHE-SVG-DESSINE.md` | on écrit du SVG dessiné dans un `.tsx` | ≥4 primitives OU un `d={`/`d="M`, avec ≥2 primitives (garde-fou anti-icône) |
@@ -24,7 +24,8 @@ Cause d'échec n°1 mesurée par audit (2026-08-17) : **« brique existante non 
 | `FICHE-MOCKUP-3D.md` | `_demos/devices/`, `PhoneModel`, `LaptopModel`, `GridBackdrop`, `FlatDevice`… | Mockup d'appareil 3D + UI plaquée dedans. Scindée de FICHE-UI-PRODUIT le 2026-08-26 (problème d'ADRESSAGE : elle ne se déclenchait jamais sur le code qu'elle documente). |
 | `FICHE-UI-PRODUIT.md` | on simule un ECRAN / dashboard / app (pilier B2B n3) | chemin `live-page(-light)/`, `shotcraft-lib/`, `_client-sim/*(Promo|Dashboard|Screen|Mockup)`, OU commande `capture-northshield`/`capture-template`/`puppeteer`/`http.server 88`/`live-layout.json` |
 | `FICHE-AUDIO.md` | on génère/aligne de l'audio, ou on cale un timing | commande `generate-narration`/`generate-sfx`/`forced-align`/`splice-segment`/`elevenlabs`/`minimax-music`, OU fichier `timing.ts`/`whisper-words*.ts`, OU contenu `<Audio`/`staticFile(*.mp3`/`sfx/`/`startFrom={` |
-| `FICHE-BRIEF-CLIENT.md` | on trie/lit/répond à un **brief client freelance** (Upwork & co) | chemin contenant `client-sim`/`upwork`/`freelance-linkedin`/`BRIEF-CLIENT` — volontairement NARROW, zéro coût sur la production vidéo. ⚠️ Placée AVANT le filtre `.tsx` (cibles = `.md` ET `.tsx`) : 4e occurrence du même piège après `.svg`, `index.html`, `timing.ts` |
+| `FICHE-BRIEF-CLIENT.md` | on trie/lit/répond à un **brief client freelance** (Upwork & co) **ou on code le livrable d'un contrat signé** | chemin contenant `client-sim`/`upwork`/`freelance-linkedin`/`BRIEF-CLIENT`/**`chill-meter`** — volontairement NARROW, zéro coût sur la production vidéo. ⚠️ Placée AVANT le filtre `.tsx` (cibles = `.md` ET `.tsx`) : 4e occurrence du même piège après `.svg`, `index.html`, `timing.ts`. ⛔⛔ **`chill-meter` ajouté le 2026-09-02 — 2e occurrence du défaut d'ADRESSAGE (après MOCKUP-3D)** : le CODE d'un contrat vit sous `src/projects/_rnd/<projet>/`, sa MÉMOIRE sous `client-sim-tests/` ; la fiche ne se déclenchait donc JAMAIS sur le code du seul contrat signé. Coût payé : sa règle « exiger l'ÉTAT NEUTRE quand la réf client montre l'état FINAL » absente du contexte au moment exact où j'ai fait une comparaison à état inégal (majeure partie d'une session) |
+| `FICHE-GESTE-ANIME.md` | on écrit du code de **MOUVEMENT** (`spring`/`interpolate` sur position, échelle, opacité) OU on manipule une partition Lottie | 2 déclencheurs dans `fiche-inject.sh` : branche Bash-Lottie (L114-123) + branche mouvement (L263-265). ⚠️ **Absente de ce tableau pendant tout son cycle de vie** — détecté au wrap du 2026-09-02, alors que c'est la plus grosse des 13 (275 l.) |
 | `FICHE-ARSENAL-SCENE.md` | On s'apprête à dessiner une primitive SVG sur une carte ou à poser un marqueur (`fiche-inject.sh:188`) | Dit ce qu'on POSSÈDE (jetons, cartouches, effets vivants, pièges d'import) — les autres fiches disent la méthode |
 
 Le hook : `.claude/hooks/fiche-inject.sh`, branché dans `settings.json` sur **DEUX matchers : `Bash` ET
@@ -37,8 +38,11 @@ déclenche les trois premières).
 Chaque fiche n'est injectée **qu'une fois par fichier et par session** (sentinelles dans
 `$TMPDIR/fiche-inject-<session_id>/`). **Ne jamais retirer ce mécanisme.**
 
-**Coût RE-MESURÉ le 2026-08-23** (les **11** fiches pèsent **105554 octets ≈ 26388 tokens** si toutes
-injectées ; en pratique ~2 fiches se déclenchent par fichier, ≈ 3 250 tokens) :
+**Coût RE-MESURÉ le 2026-09-02** (`wc -c memory/fiches/FICHE-*.md`) : les **13** fiches pèsent
+**186 986 octets ≈ 46 700 tokens** si toutes injectées ; en pratique ~2-3 se déclenchent par fichier.
+⛔⛔ Le chiffre précédent (11 fiches / 105 554 o, relevé le 23/08) était **faux de 77 %** : 2 fiches
+n'étaient pas comptées, dont la plus grosse (`FICHE-GESTE-ANIME`, 275 l.). C'est exactement ce que
+ce paragraphe interdit — « ne JAMAIS déduire ce chiffre, le re-mesurer ». Re-mesurer à CHAQUE wrap :
 ⭐ `FICHE-BRIEF-CLIENT` (**~3 240 tokens** — re-mesurée le 2026-08-26 après la refonte de la
 section de tri, « stack d'abord, prix ensuite » ; était 1 361) n'aggrave PAS le jour typique : son déclencheur est NARROW
 (chemins client-sim/upwork uniquement) et elle sort en anticipé sur les `.md`. Sur un `.tsx` de

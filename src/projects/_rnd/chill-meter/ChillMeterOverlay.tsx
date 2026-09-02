@@ -20,10 +20,12 @@ export type MeterState =
   | "fill75"
   | "fill100";
 
-// Placement calque sur la capture du brief (p.7) : bas-gauche, sous la fenetre du clip.
-const POS_X = 96;
-const POS_Y = 616;
-const SCALE = 0.52;
+// Placement recalibre sur la capture de reference envoyee par Abigail (retour Jalon 1, 2026-09-01) :
+// meter reduit, colle bas-gauche sous la fenetre du clip, marge de securite avec la video.
+// SCALE au maximum exploitable compte tenu de l'espace vertical disponible sous la fenetre.
+const POS_X = 198;
+const POS_Y = 670;
+const SCALE = 0.373595;
 
 /** Effet de bord bas (75%) : brume + particules qui montent. */
 const BottomEdgeEffect: React.FC<{ intensity: number; frame: number; fps: number }> = ({
