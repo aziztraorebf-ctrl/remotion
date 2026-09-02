@@ -59,8 +59,27 @@ Fable v2 (`8ba98e96`) n'utilise plus aucun `gpt_*`. Seule `ChillMeter-Idle` rend
 
 ### ⏭️ DECISION AZIZ — ne PAS renvoyer tout de suite
 
-Explorer d'abord la **piste 3D** (habillage extrait d'un rendu 3D — jamais testee, mon « ca ne
-marcherait pas » etait une extrapolation, pas un resultat) pour un envoi UNIQUE et solide plutot
+⭐ **CADRAGE DE LA PISTE 3D (a lire avant de la tester — question d'Aziz, 02/09).** Les modeles
+image-to-3D (Hunyuan3D, Rodin, Trellis, TripoSR — via fal.ai ou le MCP Comfy Cloud :
+`api_hunyuan3d_text_to_model`, `api_rodin3d_gen2_5_text_to_3d`) sortent un maillage texture en
+quelques minutes a partir d'une image. **Deux usages, un seul est viable :**
+- ⛔ **EXTRAIRE LA TEXTURE pour la plaquer sur notre SVG — non recommande (non teste).** La texture
+  qui en sort est UV-mappee sur LA GEOMETRIE QUE LE MODELE A INVENTEE, pas sur nos formes : la
+  plaquer sur notre chassis poserait des morceaux au hasard par rapport a nos decoupes. Ce n'est pas
+  un probleme de qualite mais de **correspondance geometrique**. 2e obstacle : **sa reference est
+  givree** — le modele cuirait la glace dans le maillage et la texture, alors qu'il nous faut un
+  chassis NU que `frost` fait evoluer de 0 a 1.
+- ✅ **GENERER UN RENDU DE REFERENCE ECLAIRE — c'est CA l'usage.** Pas pour en extraire une matiere,
+  mais pour obtenir notre objet avec un **eclairage 3D coherent** (ombres portees justes, occlusion
+  dans les recoins, aretes qui accrochent la lumiere) et s'en servir de **cible visuelle** pour
+  regler nos degrades SVG. ⭐ Coherent avec la mesure de cette session : le facteur determinant est
+  l'ECLAIRAGE, pas la rugosite — et c'est ce que Gemini approximait mal.
+- ⚠️ **Inconnu a verifier au 1er essai** : ces modeles sont entraines surtout sur de l'organique et
+  des props volumetriques. Un panneau d'instrument PLAT, symetrique, avec du texte et de fines
+  gravures est un cas difficile pour eux. Ne pas promettre le resultat avant de l'avoir vu.
+
+Explorer d'abord la **piste 3D** (jamais testee — mon « ca ne marcherait pas » de la session etait
+une extrapolation, pas un resultat) pour un envoi UNIQUE et solide plutot
 que deux envois partiels. Il ne restera qu'1 revision sur le jalon 1 apres celle-ci.
 
 <details><summary>Historique — ETAT AU 2026-09-01 : JALON 1 ENVOYE ET CONFIRME RECU</summary>
