@@ -59,6 +59,37 @@ Fable v2 (`8ba98e96`) n'utilise plus aucun `gpt_*`. Seule `ChillMeter-Idle` rend
 
 ### ⏭️ DECISION AZIZ — ne PAS renvoyer tout de suite
 
+### ⛔⛔ AVANT TOUTE PISTE TECHNIQUE — RELIRE CE QU'ELLE DEMANDE VRAIMENT (garde-fou, Aziz 02/09)
+
+Ses mots exacts : « **I do like the overall direction and structure**, and I think this is a solid
+starting point » · « **Overall, I like the direction and structure**, but I'd like these revisions
+made before approving Milestone 1 ».
+
+Ses 6 demandes : texture/caractere antique · labels des boutons · style des flocons · alignement du
+bouton power · precision des details · taille/placement. **AUCUNE ne parle de realisme volumetrique,
+de matiere photographique, ni de 3D.** Le mot le plus fort est « antique, rustique, weathered » —
+du CARACTERE, pas du photorealisme. **5 des 6 points ont ete regles en ~1 h.**
+
+⛔ Le reste de la session (texture raster, 4 dosages, piste 3D) est parti d'un diagnostic que
+**J'AI** pose — « le SVG ne peut pas produire une vraie matiere » — pas d'une demande d'elle.
+⭐ **Reflexe a prendre : quand une session derive vers un chantier technique lourd sur un livrable
+client, RELIRE son message et verifier que le chantier repond a une phrase qu'ELLE a ecrite.**
+Si aucune phrase ne le demande, c'est notre exigence, pas la sienne — et elle se decide
+explicitement avec Aziz, pas en glissant dedans.
+
+### ⭐⭐ A FAIRE EN PREMIER LA PROCHAINE SESSION — DEGIVRER SA REFERENCE (idee d'Aziz, 02/09)
+
+Son image est elle-meme generee par IA. **Lui demander (Gemini i2i, `gemini-i2i.py --ref` sur le
+crop deja extrait) de retirer la glace, la neige et le halo bleu, et de rendre l'objet NU** — en
+decrivant precisement l'etat initial voulu (chassis propre, ecran eteint ou noir, jauge vide).
+
+Pourquoi c'est le bon premier geste : ca donne **sa reference dans NOTRE etat**, donc la comparaison
+la plus directe possible — bien moins cher qu'un render, et ca aurait evite toute la fausse piste
+de cette session (cf. `feedback_comparer-a-etat-egal-avant-d-attribuer-un-ecart`).
+⚠️ Surveiller les hallucinations (il peut inventer des details sous la glace) : re-tenter si le
+1er jet derive. Et **le faire AVANT la 3D** — si on a une cible propre, la 3D devient peut-etre
+inutile.
+
 ⭐ **CADRAGE DE LA PISTE 3D (a lire avant de la tester — question d'Aziz, 02/09).** Les modeles
 image-to-3D (Hunyuan3D, Rodin, Trellis, TripoSR — via fal.ai ou le MCP Comfy Cloud :
 `api_hunyuan3d_text_to_model`, `api_rodin3d_gen2_5_text_to_3d`) sortent un maillage texture en
