@@ -90,6 +90,22 @@ de cette session (cf. `feedback_comparer-a-etat-egal-avant-d-attribuer-un-ecart`
 1er jet derive. Et **le faire AVANT la 3D** — si on a une cible propre, la 3D devient peut-etre
 inutile.
 
+⭐⭐ **C'EST SURTOUT LA CLE DU POINT 6** (« more texture and character », le seul de ses 6 points qui
+soit SUBJECTIF — les 5 autres etaient factuels : un label absent, 11 px de decalage, une echelle).
+« Aged, rusted, weathered » ne dit pas OU S'ARRETER : c'est exactement pour ca que j'ai dose dans le
+vide cette session, **sans cible**. Degivrer sa reference donne cette cible — on voit SON METAL NU
+et on le compare au notre **dans le meme etat**, sans que le givre pollue la lecture. Le point 6
+cesse alors d'etre une appreciation et devient mesurable (son metal nu est-il plus sombre ? plus
+contraste ? plus terne ?) — les mesures de cette session redeviennent valides parce qu'elles
+porteraient enfin sur deux objets comparables.
+⭐ **Issue probable a garder en tete** : que son metal nu soit PROCHE du notre, ou n'en differe que
+par 1-2 reglages de degrade. Dans ce cas le point 6 se regle en quelques valeurs et **toute la piste
+3D devient sans objet**. C'est la vraie raison de commencer par la : pas seulement moins cher —
+ca peut rendre le reste inutile.
+⚠️ Ce que Gemini rendra est une **hypothese plausible** du metal nu (il invente ce qu'il y a sous la
+glace), pas une verite. Exploitable pour la DIRECTION (plus sombre / plus terne / plus contraste),
+pas pour le detail au pixel. C'est suffisant pour le point 6.
+
 ⭐ **CADRAGE DE LA PISTE 3D (a lire avant de la tester — question d'Aziz, 02/09).** Les modeles
 image-to-3D (Hunyuan3D, Rodin, Trellis, TripoSR — via fal.ai ou le MCP Comfy Cloud :
 `api_hunyuan3d_text_to_model`, `api_rodin3d_gen2_5_text_to_3d`) sortent un maillage texture en
