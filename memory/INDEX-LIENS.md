@@ -87,3 +87,8 @@ Sequence complete : arrivee en diagonale, atterrissage, allumage progressif. Com
 plateau reel, meme placement/centrage que les images fixes.
 - ⛔ Clip 2s (premier jet, remplace) : lien conserve pour historique, ne plus utiliser
 - ⭐ Clip FINAL 4s (entrance + 2.5s d'ecran allume, sur le plateau) : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/chill-meter/revision-1c/entrance-4s-on-set-vPySH05dsZqZFnbSyc94vG93ZxriC1.mp4
+
+### Chill meter — 2 planches finales (design + contexte plateau), 03/09/2026
+- Sombre (dark gunmetal) : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/chill-meter/revision-1d/chill-meter-dark-gunmetal-uBz5luPLGv2kvz0uvcIEgN2OaKnqdQ.jpg
+- Claire (light gunmetal) : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/chill-meter/revision-1d/chill-meter-light-gunmetal-0hsCOnsAKF37ntGjNJ2eQeizkbHGLw.jpg
++ clip 4s (entrance-4s-on-set, deja dans ce fichier plus haut). 3 fichiers au total pour l'envoi.
