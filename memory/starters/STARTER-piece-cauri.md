@@ -15,6 +15,22 @@
 objet précieux · point du semis · grain du flux · brique de la colonne · débris. C'est la
 règle R6 de l'analyse, et c'est ce qui rend la pièce tenable en coût.
 
+## ⭐ Ce qui a CHANGÉ le 2026-09-03 (3e session, courte)
+
+- **Test du dispositif IRIS fait sur l'animatic gris** (question d'Aziz : « est-ce que la
+  caméra bouge dans la référence ? »). Réponse mesurée : oui, 45 % du temps notable / 25 %
+  franchement, mais SEULEMENT pendant les transitions — jamais en continu (règle R10).
+- ⛔ **Piège trouvé et documenté au § 4 du brief** : l'IRIS ne se fait PAS en bougeant le zoom
+  et le contenu sur la même fenêtre temporelle — les deux mouvements se contrarient (le semis
+  qui apparaît en périphérie pendant que le cadre recule). L'ordre correct est en 2 temps :
+  contenu déjà en place sous cadre serré, PUIS SEULEMENT le dézoom qui le révèle.
+- **Décision : pas de v3 de correction sur l'animatic gris.** Le défaut est un problème de
+  TIMING, pas de dessin — il se réglera directement sur la vraie coquille, où ce genre de
+  séquencement se juge mieux que sur des cercles gris. `animatic_v2_iris.mp4` reste comme
+  preuve du piège, `animatic_v1.mp4` reste la référence de rythme validée.
+- **Rien d'autre n'a bougé** : le rythme (20,6 s), l'écart long/court, les 4 dispositifs et
+  les 3 règles sonores du § 4-7 restent ce qui a été verrouillé le 2026-09-02 ci-dessous.
+
 ## ⭐ Ce qui a CHANGÉ le 2026-09-02 (2e session)
 
 - **La contrainte de morphing est ASSOUPLIE** (décision Aziz, sur mesure). Le § 4 exigeait

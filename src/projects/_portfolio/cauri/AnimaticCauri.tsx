@@ -28,6 +28,12 @@
 // d'animation, elle est une propriete de la structure. C'est la traduction litterale
 // de « chaque forme est la matiere de la suivante » (brief § 4).
 //
+// ⭐ 2e passe (2026-09-03) : test du dispositif IRIS (R5 de l'analyse continuous-flow,
+// out/_r-and-d/fable-vs-opus-ted-ed-style/source-ted-ed/ANALYSE-CONTINUOUS-FLOW.md).
+// La camera bouge SEULEMENT sur 2 passages (1->2 et 6->7) — cf. IRIS dans animatic-timing.ts
+// — et reste fixe partout ailleurs, conformement a la mesure sur la reference (cadre pose
+// ~55 % du temps, tout changement d'echelle confine a une transition).
+//
 // Contraintes projet : interpolate()/spring() uniquement, extrapolate "clamp",
 // zero CSS transition / setTimeout / @keyframes / requestAnimationFrame.
 import React from "react";
@@ -40,6 +46,7 @@ import {
   PART_TRANSFORMATION,
   VB,
   alea,
+  zoomCamera,
 } from "./animatic-timing";
 
 const FOND = "#1c1c1e";
@@ -90,6 +97,9 @@ export const AnimaticCauri: React.FC = () => {
   // --- respiration : l'etat 1 n'est pas fige, l'etat 7 se pose ---
   const souffle = Math.sin(t * 1.5) * 2.2;
 
+  // --- camera : zoom = 1 partout, sauf sur les 2 passages IRIS ---
+  const zoom = zoomCamera(t);
+
   return (
     <AbsoluteFill style={{ backgroundColor: FOND }}>
       <svg
@@ -98,6 +108,9 @@ export const AnimaticCauri: React.FC = () => {
         viewBox={`0 0 ${VB.w} ${VB.h}`}
         style={{ display: "block" }}
       >
+        <g
+          transform={`translate(${VB.w / 2} ${VB.h / 2}) scale(${zoom}) translate(${-VB.w / 2} ${-VB.h / 2})`}
+        >
         {Array.from({ length: N }, (_, i) => {
           // chaque particule suit sa propre fenetre temporelle a l'interieur de la transition
           const retard = RETARDS[i];
@@ -127,6 +140,7 @@ export const AnimaticCauri: React.FC = () => {
             />
           );
         })}
+        </g>
       </svg>
     </AbsoluteFill>
   );

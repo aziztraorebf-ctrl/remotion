@@ -186,3 +186,47 @@ export const CIBLES: Record<EtatNom, Cible[]> = {
   effondrement: effondrement(N),
   calme: calme(N),
 };
+
+// --------------------------------------------------------------------------
+// CAMERA — test du dispositif IRIS (R5 de l'analyse continuous-flow).
+// Mesure sur la reference : le cadre est fixe ~55 % du temps, et TOUT changement
+// d'echelle se produit PENDANT une transition, jamais en continu. On reprend
+// cette regle telle quelle : la camera ne bouge QUE sur les 2 passages ci-dessous,
+// et reste totalement fixe (zoom = 1) partout ailleurs — y compris pendant les
+// 5 autres transitions, qui restent portees par le mouvement des particules seul.
+// --------------------------------------------------------------------------
+
+/**
+ * Les 2 seuls passages ou la camera bouge, avec le zoom de DEPART et d'ARRIVEE.
+ * zoom = 1 -> cadre normal. zoom > 1 -> on s'approche (la coquille deborde le cadre,
+ * le semis qu'elle contenait devient visible en grand). zoom < 1 -> on s'eloigne.
+ *
+ * 1->2 : on ETAIT au contact de la coquille seule (zoom serre), on s'eloigne
+ *        jusqu'au cadre normal, revelant au passage le semis deja en place.
+ * 6->7 : symetrique inverse — on se rapproche jusqu'a ne plus voir qu'une coquille,
+ *        exactement le cadrage de l'etat 1. C'est ce qui rend la boucle gratuite.
+ */
+export const IRIS = [
+  { deEtat: "coquille", versEtat: "semis", zoomDepart: 2.4, zoomArrivee: 1.0 },
+  { deEtat: "effondrement", versEtat: "calme", zoomDepart: 1.0, zoomArrivee: 2.4 },
+] as const;
+
+/**
+ * Calcule le zoom courant (1 = cadre normal) pour un instant t (secondes).
+ * En dehors des 2 fenetres IRIS : toujours 1 — la camera ne bouge pas ailleurs,
+ * conformement a la mesure (cadre fixe hors transition).
+ */
+export const zoomCamera = (t: number): number => {
+  for (const passage of IRIS) {
+    const iVers = ETATS.findIndex((e) => e.nom === passage.versEtat);
+    const debut = BORNES[iVers]; // le zoom se joue PENDANT la transformation de l'etat d'arrivee
+    const dureeTransfo = ETATS[iVers].duree * PART_TRANSFORMATION;
+    const fin = debut + dureeTransfo;
+    if (t >= debut - 1e-6 && t <= fin) {
+      const k = dureeTransfo > 0 ? (t - debut) / dureeTransfo : 1;
+      const kk = k * k * (3 - 2 * k); // meme adoucissement que le reste de l'animatic
+      return passage.zoomDepart + (passage.zoomArrivee - passage.zoomDepart) * kk;
+    }
+  }
+  return 1;
+};
