@@ -81,3 +81,8 @@ Envoi fait par Aziz lui-meme depuis son telephone.
 - Reference degivree sobre : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/chill-meter/revision-1/reference-metal-restrained-FeJsMBthyt5Dg5AsWtxgR5tRkJH2qL.png
 - Reference degivree rouillee : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/chill-meter/revision-1/reference-metal-heavy-H5HsrgUVaLFEOv06leIa6YdNSrhgoW.png
 - Page de comparaison interne (⛔ NE PAS envoyer a la cliente) : https://claude.ai/code/artifact/2297faf9-08b0-46a2-994a-ab46a27c3eb8
+
+### Chill meter — clip allumage (entrance), version claire, 03/09/2026
+Sequence complete : arrivee en diagonale, atterrissage, allumage progressif. Composee sur son
+plateau reel, meme placement/centrage que les images fixes.
+- Clip (2s, sur le plateau) : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/chill-meter/revision-1c/entrance-on-set-gyEl9zR0NKMcjzWbZcHKOxKyaR2yzg.mp4
