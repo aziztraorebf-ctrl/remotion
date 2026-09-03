@@ -8,10 +8,66 @@ les aurait perdus pour de bon). Diagnostic + 3 pistes de correctif à trancher a
 `memory/projects/INCIDENT-BRANCHE-SUPPRIMEE-TRAVAIL-PERDU.md`. Ne pas refaire de ménage de
 branches sans avoir lu ce fichier.
 
-## Spark Icon (Upwork) — candidature envoyée 2026-09-01, en attente de réponse
+## ⛔⛔⭐⭐⭐ PRIORITÉ — CÂBLER NOTRE SYSTÈME SUR LE TRAVAIL CLIENT (constat d'Aziz, 2026-09-03)
 
-Bug de rendu résolu, clip produit et attaché, lettre envoyée. Rien à faire tant que le client n'a
-pas répondu. → `memory/client-sim-tests/upwork-spark-icon/STATUS.md`.
+> **Session dédiée à ouvrir.** Chantier d'analyse en profondeur, à NE PAS entamer au fil d'une
+> session de production. Branche suggérée : `fix/cablage-systeme-travail-client`.
+
+**Le constat, dans les mots d'Aziz** : « notre repo ne sert à rien si on ne l'utilise pas quand
+vient le temps de régler des problèmes, autre que pour la vidéo YouTube. Surtout si c'est pour des
+clients Upwork, il devrait servir aussi à partir de maintenant. »
+
+**Ce qui l'a déclenché** : sur le contrat chill-meter (2 jours, 4 tentatives échouées sur un écart
+de teinte), Aziz a proposé de consulter des modèles externes. Ça a débloqué le problème en un
+appel. ⛔ **Or c'est exactement ce que fait le DA-brief, qui existe, est outillé, a un skill dédié
+— et n'a JAMAIS été invoqué sur ce contrat.** Je l'ai réimplémenté à la main (planche comparative
++ brief + 3 appels) sans reconnaître que je refaisais un outil qu'on possède.
+
+**Ce n'est pas un oubli isolé — c'est un schéma, 4 occurrences sur le même contrat** :
+- DA-brief (existe, outillé, skill dédié) → jamais invoqué
+- `FICHE-BRIEF-CLIENT.md` portait « exiger l'ÉTAT NEUTRE quand la réf client montre l'état FINAL »
+  → ne s'injectait pas sur `src/projects/_rnd/chill-meter/`, corrigé APRÈS avoir payé l'erreur
+- Règle « matière finale d'abord, code ajusté ensuite » → j'ai failli rendre un clip d'animation
+  sur un châssis qu'on savait devoir changer (rattrapé par Aziz, pas par le système)
+- Protocole « déléguer à un agent dédié dès le 2e échec » → j'en étais au 4e
+
+**La cause commune** : le système est câblé pour la PRODUCTION VIDÉO. Les gates visent
+`src/projects/souverain/`, les fiches ciblent des chemins de beats, les skills parlent storyboard
+et scènes. Le travail client vit ailleurs (`src/projects/_rnd/`, `memory/client-sim-tests/`,
+`src/projects/_client-sim/`) et **traverse le système sans rien déclencher**.
+⭐ Le repo n'est pas inutile : il est **ADRESSÉ AU MAUVAIS ENDROIT**. C'est la 3e occurrence
+connue du défaut d'adressage (FICHE-MOCKUP-3D 26/08, FICHE-BRIEF-CLIENT 02/09).
+
+**Le chantier, 4 étapes** :
+1. Recenser ce qui DEVRAIT se déclencher sur du travail client (DA-brief, fiche client, gates de
+   vérification, protocole de délégation, règles de message client, conventions de nommage).
+2. **TESTER lesquels s'activent réellement** sur un chemin client — par exécution du hook avec un
+   `file_path` ET un `content` (⚠️ `fiche-inject.sh` sort en 0 sans contenu : un test sans
+   `new_string` donne un faux négatif, vécu le 02/09), **jamais par relecture**.
+3. Corriger les déclencheurs qui ratent.
+4. Écrire une entrée de routage « TRAVAIL CLIENT » dans `ROUTAGE.md` : quoi ouvrir au début d'un
+   contrat, comme il en existe une pour les épisodes.
+
+⚠️ **Nuance à garder** : le DA-brief n'aurait probablement pas évité CE problème précis (il
+intervient avant de coder, ici on réagissait à un retour client). Mais la MÉTHODE qu'il porte —
+plusieurs voix externes plutôt que moi seul — est exactement ce qui a débloqué. Ce n'est pas
+l'outil qui manquait, c'est le RÉFLEXE de l'invoquer hors production vidéo.
+
+📄 Méthode née de l'incident, déjà documentée :
+`memory/tools/consultation-llm-externe-probleme-visuel-bloque.md`
+
+## ⭐⭐⭐ REPRENDRE ICI — Pièce portfolio « Le cauri » (2026-09-02)
+
+Brief + recherche TERMINÉS, aucun pixel produit. Étape suivante : faire dessiner le jeu de
+formes avec la contrainte de morphing (une matière en 7 états, pas 7 dessins).
+→ **`memory/starters/STARTER-piece-cauri.md`** — tout y est.
+
+⛔ Les 3 repros TED-Ed = **R&D interne, jamais montrées**
+(`out/_r-and-d/fable-vs-opus-ted-ed-style/STATUT.md`). On garde les RIGS, pas les fichiers.
+
+## Spark Icon (Upwork) — envoyée 2026-09-01, attente passive
+
+Rien à faire tant que le client n'a pas répondu. → `memory/client-sim-tests/upwork-spark-icon/STATUS.md`.
 
 ---
 
