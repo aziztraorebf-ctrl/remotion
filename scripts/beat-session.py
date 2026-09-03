@@ -654,9 +654,15 @@ def phase_resolve_assets(episode: str, beat_num: int, resolution: str) -> None:
 
 
 SELF_REVIEW_CRITERIA = [
-    # Groupe 1 — Remplissage écran
-    ("G1-1", "Aucune zone > 25% de l'écran vide sans contenu intentionnel"),
-    ("G1-2", "Le contenu principal occupe au moins 60% de la hauteur visible"),
+    # Groupe 1 — Composition (corrigé 2026-09-03 : G1-1/G1-2 contredisaient
+    # CHARTE-DA-FREELANCE.md — « le vide est un élément de composition, ne pas
+    # remplir un plan parce qu'il paraît vide » — en testant l'OCCUPATION brute
+    # au lieu de l'INTENTION. Mesuré : un plan à 85% de vide non signifiant
+    # passait G1-2 aussi bien qu'un plan à respiration maîtrisée. Le vide reste
+    # un défaut s'il est SUBI (rien ne justifie pourquoi la zone est vide) —
+    # ce n'est jamais sa surface en % qui tranche, c'est l'intention derrière.
+    ("G1-1", "Chaque zone vide a une raison lisible (respiration, silence avant un beat, cadrage du sujet) — sinon c'est un manque, pas un choix"),
+    ("G1-2", "Le point focal du plan est identifiable en un coup d'œil — le vide autour, s'il y en a, le sert plutôt que de le diluer"),
     ("G1-3", "Pas de padding/margin excessif qui pousse le contenu hors de sa zone"),
     # Groupe 2 — Layout & positionnement
     ("G2-1", "Chaque élément est dans la zone assignée par le storyboard"),
