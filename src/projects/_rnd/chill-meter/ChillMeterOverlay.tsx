@@ -23,7 +23,11 @@ export type MeterState =
 // Placement recalibre sur la capture de reference envoyee par Abigail (retour Jalon 1, 2026-09-01) :
 // meter reduit, colle bas-gauche sous la fenetre du clip, marge de securite avec la video.
 // SCALE au maximum exploitable compte tenu de l'espace vertical disponible sous la fenetre.
-const POS_X = 198;
+// ⭐ 180 (et non 198) depuis le 03/09 : elle demande le meter centre sous le cadre video
+// COMPLET, « use the black side strips as guides » — donc bandes noires laterales incluses,
+// pas la zone d'image. Cadre complet mesure sur son plateau : x 29..872, centre = 450.
+// Le meter etait centre sur 468, soit 18 px trop a droite.
+const POS_X = 180;
 // ⭐ Descendu de 670 -> 706 le 02/09 : mesure sur son plateau reel, le cadre bas de
 // la fenetre video finit a y=725 et le meter commencait a y=727 — 2 px d'ecart, ils
 // se touchaient visuellement. Sa demande n°6 etait explicitement de ne PAS coller a
