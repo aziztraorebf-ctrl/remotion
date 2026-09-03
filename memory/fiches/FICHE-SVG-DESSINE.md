@@ -221,9 +221,28 @@ normal+soft-light) font TOUS baisser le contraste local (micro 12,66 → 7,6..10
 (lum 33,6 → 21,8). Sur une surface à lum ~33/255, `overlay` n'a plus d'amplitude et `multiply` ne
 sait qu'assombrir. ⭐ **Vérifier la luminance de la surface AVANT de choisir un mode de fusion.**
 
-⚠️ **BUG OUVERT (chill-meter, vérifié sur HEAD)** : `ChillMeter-Metal-Flat/-Brushed/-Machined`
-plantent — les 5 gradients visés par `METAL_RAMPS` ont **0 référence `url()`** depuis le châssis
-Fable v2 (`8ba98e96`). Le garde-fou `DRAWN_GRADIENTS` fait son travail ; c'est `METAL_RAMPS` qui est
-obsolète. Seule `ChillMeter-Idle` rend.
+✅ **BUG CORRIGÉ (chill-meter, 2026-09-02, vérifié au rendu le 03/09)** : `ChillMeter-Metal-Flat/
+-Brushed/-Machined` rendent tous les trois. `METAL_RAMPS` re-pointée sur les gradients réellement
+dessinés par le châssis Fable v2, et `metalDefs()` opère désormais sur `ALL_DEFS` (les deux blocs de
+defs concaténés) au lieu du seul premier bloc — c'est ce 2e défaut, non documenté au départ, qui
+aurait fait échouer la 1re correction seule.
+
+⭐⭐⭐ **PILE DE MATIÈRE, pas un dosage d'opacité** — pour faire lire une surface SVG comme un métal
+usé/patiné (pas « camouflage »/tache uniforme) : (1) reseuiller l'alpha de chaque `feColorMatrix`
+(gain/offset), jamais l'opacité globale d'un calque entier, (2) rendre la texture MONOCHROME
+(R−B → ~0), garder la teinte confinée à UN calque dédié (ex. un calque `_oxide`), (3) masquer la
+texture aux zones réelles (vis, joints, arêtes basses) via un masque dédié, PAS en pleine surface,
+(4) ajouter une VRAIE lumière (highlight directionnel + spéculaires + occlusion) — c'est souvent le
+manque réel derrière un défaut perçu comme « mauvaise teinte ». Preuve : chill-meter, 4 dosages
+d'opacité/blend échoués avant ce fix (commit `578e79ec`, 2026-09-03) — débloqué par une consultation
+à 3 modèles externes qui ont réfuté l'hypothèse « juste réduire l'opacité » avant qu'elle soit tentée.
+
+⛔ **Un calque superposé (rouille/usure ajoutée par une passe postérieure) n'hérite PAS des
+corrections faites au calque de base.** Corriger la teinte d'une pièce ne suffit pas si un second
+groupe dessine PAR-DESSUS (une passe d'agent, un filtre d'usure séparé) et garde son opacité
+d'origine — vérifier TOUS les calques empilés sur une pièce avant de conclure qu'elle est corrigée.
+Preuve : chill-meter, corrigé en 2 temps distincts (commit `43f93670`, 2026-09-03) — le fix de la
+pièce elle-même ne suffisait pas, il a fallu une 2e constante ciblant spécifiquement le calque
+superposé de rouille, sans toucher aux autres pièces ni à la variante déjà livrée.
 
 ↔ **Objet 3D généré (R3F)** : registre voisin — `memory/doctrines/SVG-SCENES-GENERATIVES.md` § extension 3D.

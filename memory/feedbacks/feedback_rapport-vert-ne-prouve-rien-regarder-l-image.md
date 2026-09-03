@@ -131,3 +131,16 @@ pas contre une impression générale de vivacité.
 réflexe est de conclure "ça marche globalement", alors que c'est le signal exact d'une mutation qui
 échoue sur UN sous-ensemble précis (souvent lié à une différence de syntaxe/valeur entre les
 éléments qui bougent et ceux qui ne bougent pas, comme ici scale à 2 arguments vs 1 argument).
+
+### 2026-09-03 — la préférence s'étend à la méthode de DIAGNOSTIC, pas seulement à la validation
+
+Contrat chill-meter : Aziz a proposé une consultation à 3 modèles externes avec les DEUX images
+(la référence client et notre rendu, côte à côte sur une même planche) plutôt que d'accepter mon
+diagnostic textuel seul sur l'écart de teinte. Pattern confirmé plusieurs fois le même jour : il a
+aussi tranché chaque correction de châssis en comparant des rendus, jamais sur un rapport seul.
+
+⭐ Ce n'est plus seulement "regarder l'image avant de valider un livrable fini" — c'est **choisir
+une méthode de diagnostic qui montre les deux termes de la comparaison**, plutôt qu'une méthode qui
+décrit un seul objet dans l'absolu. Voir [[consultation-llm-externe-probleme-visuel-bloque]] pour
+la mécanique complète : envoyer une planche à 2 panneaux (pas la référence seule) est ce qui a
+débloqué un problème où le breakdown d'une image isolée avait échoué le même jour.

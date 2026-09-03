@@ -73,10 +73,14 @@ Ne JAMAIS dire « je ne peux pas / je n'ai pas accès » sans avoir consulté la
 > Ils sont ici pour que tout agent les reçoive. Chacun vient d'un incident réel.
 
 - ⛔⛔ **AUCUNE commande git destructive dans un répertoire partagé** — ni `checkout`, ni `reset`,
-  ni `stash`/`stash pop`. Vécu 2×: un agent a écrasé le travail d'un autre par `git checkout`
+  ni `stash`/`stash pop`. Vécu 3×: un agent a écrasé le travail d'un autre par `git checkout`
   (2026-07-01) ; un agent `/wrap` a fait un `git stash` pendant que la session avait 25 fichiers non
-  commités — `git status` est revenu VIDE, tout semblait perdu (2026-08-01). Un agent commite
-  NOMMÉMENT ses propres fichiers, jamais `git add -A`.
+  commités — `git status` est revenu VIDE, tout semblait perdu (2026-08-01) ; malgré la règle déjà
+  écrite ici, `git stash`/`stash pop` réutilisés 3× le 2026-09-03 (contrat chill-meter) pour
+  comparer un rendu à HEAD, pendant qu'une AUTRE session travaillait sur la même branche — aucun
+  dégât cette fois (vérifié), mais le risque était réel et évitable : `git show HEAD:<chemin> ><temp>`
+  ou une copie du fichier avant modification donnent la même comparaison sans jamais toucher à
+  l'index partagé. Un agent commite NOMMÉMENT ses propres fichiers, jamais `git add -A`.
 - ⛔ **NOM PROPRE à l'écran → vérifier l'orthographe (Wikipédia) AVANT le render.** « HEMETI » au
   lieu de « HEMEDTI » en ouverture d'un Acte : perte de crédibilité documentaire immédiate.
 - ⛔ **Whisper : API seulement, JAMAIS en local** (fallback ElevenLabs).

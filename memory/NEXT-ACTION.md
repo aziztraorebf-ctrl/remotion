@@ -164,32 +164,21 @@ portait 2 fichiers jamais commités, récupérés par chance seulement. Toujours
 `git status`/modifications non commitées sur une branche AVANT de la supprimer, pas seulement ses
 commits.
 
-## ⭐⭐⭐ CONTRAT UPWORK chill-meter — RÉVISION 1 du jalon 1 TRAITÉE le 2026-09-02, RIEN RENVOYÉ
+## CONTRAT UPWORK chill-meter — RÉVISION 2 envoyée le 2026-09-03, attente passive
 
 **Premier contrat freelance, actif.** Offre v2 acceptée le 30/08 (350 $ → 297,50 $ net, 3 jalons,
-3/7/11 sept.) — les 3 points de révision (dossier source + README, dates, 2 tours de révision par
-jalon) sont tous dans le contrat signé.
+3/7/11 sept.).
 
-⏭️ **PROCHAINE ACTION : tester la piste 3D, PUIS renvoyer le jalon 1.** Abigail a répondu : elle
-valide la structure et demande 6 révisions (toutes traitées le 02/09 — labels boutons, flocons du
-titre, bouton power recentré de 11 px, SCALE 0.52→0.374, passe Fable sur le métal). Décision d'Aziz :
-ne pas renvoyer tout de suite, explorer d'abord la piste 3D pour un envoi UNIQUE (il ne reste qu'1
-révision sur ce jalon). Le vrai écart restant est le **givre** (« neige posée » chez nous vs
-« frimas adhérent » chez elle), pas le métal — mesuré par comparaison à état égal.
-→ Détail complet + bug ouvert `ChillMeter-Metal-*` : `memory/client-sim-tests/upwork-chill-meter/STATUS.md`.
-⏸️ Prospection Upwork en PAUSE par Aziz (01/09), 1-2j — déjà 4 fronts ouverts. Ne pas relancer sans
-confirmation d'Aziz.
-⚠️ Retraits Upwork bloqués tant que les infos fiscales ne sont pas fournies — à régler avant le 3 sept.
+✅ **Révision 2 (dernière prévue au contrat) envoyée le 03/09** : teinte gunmetal réglée (le
+camouflage brun signalé par Abigail a disparu, débloqué par consultation externe à 3 modèles +
+agent Opus en effort max), variante claire ajoutée et recommandée, centrage/labels/flocons
+corrigés, clip d'allumage 4s livré. 3 pièces jointes envoyées (2 planches JPG + 1 clip MP4),
+liens vérifiés. La piste 3D a été évoquée puis **écartée pour ce contrat** (coût export alpha +
+animation), notée comme R&D pure séparée plus haut dans ce fichier.
 
-✅ **Chantier métal du châssis bouclé le 31/08** (4 passes, chacune corrigeant un défaut qu'Aziz a
-repéré) : gradients morts → concours 5 modèles (métal gagné, icy blue perdu) → couleur corrigée mais
-silhouette dérivée → géométrie EXACTE reverifiée (32/32 tracés identiques). Finition **Machined**
-retenue (contraste mesuré 153 vs 122), intégrée en production, 2 bugs corrigés après signalement.
-⭐ 2 leçons de brief transposables : `feedback_deleguer-un-defaut-nommer-ce-qui-ne-doit-pas-changer.md`
-· `feedback_ameliorer-vs-remplacer-preciser-dans-le-brief.md`
-
-⛔ Ne PAS lui dire que les 6 états sont déjà rendus (atout de négociation). ⛔ Brief client PDF
-(`BRIEF-CLIENT-ORIGINAL.pdf`, gitignoré) se RELIT avant toute action.
+⏭️ **Rien à faire tant qu'Abigail n'a pas répondu.** Elle peut : choisir une teinte, demander une
+petite retouche (au cas par cas, pas garanti sans facturation), ou approuver directement.
+⚠️ Retraits Upwork bloqués tant que les infos fiscales ne sont pas fournies.
 
 → **Source de vérité unique** : `memory/client-sim-tests/upwork-chill-meter/STATUS.md`.
 
