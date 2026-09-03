@@ -30,9 +30,9 @@ Ex vérifié (A4 RessourceUnique) : `FRAME_CENTER=[821.3, 237.7]`, `FRAME_SCALE=
 **Mapbox 1 seule Map continue** — `src/projects/souverain/senegal-petrole-gaz/SenegalActe2Continu.tsx`
 1 `<div>`, 1 `new mapboxgl.Map`, phases dans un seul `useEffect`, `map.jumpTo({center,zoom,bearing,pitch})` (l.286),
 projection des dots APRÈS le jumpTo. Valeurs validées : zoom 7.2→7.8 (dolly in) · Pull Back 7.8→3.6 ·
-pitch 0→45 (crane down) · bearing 0→-18 (orbit lent). Durées doctrine : Pull Back Reveal et Whip Pan = **60f actives** ;
-orbit 200-600f ; tilt 100-300f ; blur CSS pic **12-16px à mi-course**.
-⚠️ Blur/60f viennent de la doctrine, non vérifiés dans un composant appliqué.
+pitch 0→45 (crane down) · bearing 0→-18 (orbit lent). Durées doctrine (blur/60f non vérifiés dans un
+composant appliqué) : Pull Back Reveal et Whip Pan = **60f actives** ; orbit 200-600f ; tilt 100-300f ;
+blur CSS pic **12-16px à mi-course**.
 
 **Pan/travelling SVG** — transformer le CONTENU dans un `viewBox` **FIXE** (`<g transform>`).
 ⛔ ne JAMAIS animer `viewBox`. Construire la scène plus large que le cadre. Zoom validé : 3.1x.
@@ -66,6 +66,12 @@ glissante du tracé (`windowBBox`, back 45% / ahead 10%, `scaleFit` borné 1.3-2
 4. **Mapbox frame-driven obligatoire** : `useCurrentFrame` + `interpolate` + `map.jumpTo()`. ⛔ `flyTo`/`easeTo`
    (incompatibles headless). Render : `scripts/render-mapbox.sh` (pas Vercel).
    Un `interpolate` qui sature (`Math.min(1,p)` convergé en 2-3s sur un beat de 15s) laisse la caméra strictement immobile.
+5. ⛔⛔ **ZOOM DE CAMÉRA ET DÉPLACEMENT DU CONTENU NE SE JOUENT JAMAIS SUR LA MÊME FENÊTRE TEMPORELLE.**
+   Les deux mouvements simultanés se contrarient visuellement (le contenu suivant apparaît en périphérie
+   pendant que le cadre recule/avance — illisible). Fix : deux temps stricts — (1) le contenu suivant est
+   ENTIÈREMENT en place, caché par le cadrage serré ; (2) SEULEMENT ENSUITE la caméra dézoome/zoome pour
+   le révéler. Cas particulier du piège fond/contenu simultané (mise en file, jamais simultané) — vaut
+   aussi pour caméra/position. Testé et vu sur `animatic_v2_iris.mp4` (pièce « Le cauri », 2026-09-03).
 
 ## MESURER AVANT DE RETOUCHER
 ⭐ **Outil dédié : `python3 scripts/tools/measure-camera.py --help`** (créé 2026-08-17, 4 sous-commandes : `speed` · `scale` · `motion` · `sheet`).
@@ -114,7 +120,7 @@ Coût documenté de ne pas l'avoir fait : 4 + 3 + 3 itérations complètes (code
 ## MÉCANISMES — piège 3D
 
 
-5. ⛔⛔ **UN OBJET 3D N'EST PAS LISIBLE SOUS TOUS LES ANGLES — un tour complet traverse des ANGLES MORTS.** Une CLÉ vue exactement de face confond son anneau avec sa tige et se lit comme un TOURNEVIS. Le fix n'est PAS de re-doser lumière/épaisseur (**3 rendus perdus** à le faire) : c'est de changer le **GESTE** — osciller autour de l'angle 3/4 lisible au lieu de tourner à 360°. Valeurs retenues (`PremiumCard3D.tsx` : `READABLE = 0.85` rad, amplitude décroissante 0.7→0.55→0.30) : plage lisible **-0.2 à ~1.1 rad**, au-delà de 1.2 rad l'objet passe par la tranche. Banc de vérification : `keys/KeyBench.tsx` affiche les 4 angles côte à côte — **un objet beau à un seul angle est disqualifié**. Même famille que les pièges 1-3 : la cause est STRUCTURELLE (le geste), jamais le dosage. (2026-08-25)
+6. ⛔⛔ **UN OBJET 3D N'EST PAS LISIBLE SOUS TOUS LES ANGLES — un tour complet traverse des ANGLES MORTS.** Une CLÉ vue exactement de face confond son anneau avec sa tige et se lit comme un TOURNEVIS. Le fix n'est PAS de re-doser lumière/épaisseur (**3 rendus perdus** à le faire) : c'est de changer le **GESTE** — osciller autour de l'angle 3/4 lisible au lieu de tourner à 360°. Valeurs retenues (`PremiumCard3D.tsx` : `READABLE = 0.85` rad, amplitude décroissante 0.7→0.55→0.30) : plage lisible **-0.2 à ~1.1 rad**, au-delà de 1.2 rad l'objet passe par la tranche. Banc de vérification : `keys/KeyBench.tsx` affiche les 4 angles côte à côte — **un objet beau à un seul angle est disqualifié**. Même famille que les pièges 1-3 : la cause est STRUCTURELLE (le geste), jamais le dosage. (2026-08-25)
 
 ## 3D — cadrage et matiere
 → Cette fiche couvre le GESTE de camera. Le CADRAGE 3D (`z = (largeur_unites * H) / (2*tan(fov/2) * largeur_px)`),

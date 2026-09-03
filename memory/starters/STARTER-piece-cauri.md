@@ -15,6 +15,29 @@
 objet précieux · point du semis · grain du flux · brique de la colonne · débris. C'est la
 règle R6 de l'analyse, et c'est ce qui rend la pièce tenable en coût.
 
+## ⭐ Comparaison faite avec GGW et cacao (2026-09-03) — DÉCISION : on garde le flux continu
+
+Aziz s'est rappelé de 2 pièces narratives SVG pur déjà publiées, registre parchemin
+noir&blanc : `out/PRET-PUBLICATION/ggw-muraille-verte-FINAL.mp4` (2min21, 7 beats, validé
+25/06) et `out/PRET-PUBLICATION/cacao-chocolat-FINAL.mp4` (98,5s, 5 beats, validé 29/06).
+Question posée : est-ce qu'on a déjà la solution, sans avoir besoin du chantier cauri ?
+
+**Revu les deux à l'image (frames échantillonnées + mesure des silences audio).** Elles ont
+déjà, sans qu'on l'ait théorisé, plusieurs des dispositifs de l'analyse continuous-flow :
+réassignation d'une primitive (cabosse, arbre), une ANCRE (portrait médaillon qui traverse
+GGW), une coupe verticale sol/racines proche du rig `ReseauPropagation`. GGW a un vrai
+rythme de silences audio (33 pauses/141s) ; cacao presque aucun (1/98s) — a verifier si
+voulu ou a corriger si on reprend cette reference plus tard.
+
+**Ce qu'elles n'ont PAS** : ce sont des BEATS (des écrans qui se suivent), pas un flux
+continu où une forme devient la suivante sans repasser par un cadre neutre — exactement
+la distinction qu'Aziz a formulée lui-même. Donc le morphing continu qu'on vise avec le
+cauri est une vraie première pour la production, pas une redite de GGW/cacao.
+
+⭐ **Décision d'Aziz : on continue sur le flux continu**, tel que construit dans ce
+chantier. GGW/cacao restent une référence de registre visuel (parchemin, réassignation,
+ancre) à consulter si utile, mais ne remplacent pas le chantier cauri.
+
 ## ⭐ Ce qui a CHANGÉ le 2026-09-03 (3e session, courte)
 
 - **Test du dispositif IRIS fait sur l'animatic gris** (question d'Aziz : « est-ce que la
