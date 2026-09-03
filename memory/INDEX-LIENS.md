@@ -85,4 +85,5 @@ Envoi fait par Aziz lui-meme depuis son telephone.
 ### Chill meter — clip allumage (entrance), version claire, 03/09/2026
 Sequence complete : arrivee en diagonale, atterrissage, allumage progressif. Composee sur son
 plateau reel, meme placement/centrage que les images fixes.
-- Clip (2s, sur le plateau) : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/chill-meter/revision-1c/entrance-on-set-gyEl9zR0NKMcjzWbZcHKOxKyaR2yzg.mp4
+- ⛔ Clip 2s (premier jet, remplace) : lien conserve pour historique, ne plus utiliser
+- ⭐ Clip FINAL 4s (entrance + 2.5s d'ecran allume, sur le plateau) : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/chill-meter/revision-1c/entrance-4s-on-set-vPySH05dsZqZFnbSyc94vG93ZxriC1.mp4
