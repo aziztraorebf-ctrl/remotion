@@ -123,10 +123,32 @@ def b64_file(path):
     return base64.b64encode(open(path, "rb").read()).decode()
 
 
+def _mouvement_block():
+    """Bloc MOUVEMENT importé depuis da-brief.py (source unique) — ajouté 2026-09-03.
+
+    ⚠️ Contrairement à ANGLES_BLOCK/EXPERT_BLOCK ci-dessus qui sont des COPIES à synchroniser
+    à la main, celui-ci est chargé par référence : ce script reçoit la VIDÉO NATIVE, c'est donc
+    celui où le mouvement compte le plus — une copie qui dériverait ici serait le pire endroit.
+    Si l'import échoue (fichier déplacé/renommé), on continue SANS le bloc plutôt que de casser
+    une review : le mouvement est un ajout, pas une dépendance vitale.
+    """
+    try:
+        import importlib.util
+        p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "da-brief.py")
+        spec = importlib.util.spec_from_file_location("dab", p)
+        dab = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(dab)
+        return dab.MOUVEMENT_BLOCK
+    except Exception as e:
+        print(f"[warn] bloc MOUVEMENT non chargé ({e}) — review poursuivie sans lui")
+        return ""
+
+
 def build_prompt(brief_path, cartographic_upstream=False):
     prompt = open(brief_path, encoding="utf-8").read()
     prompt += ANGLES_BLOCK
     prompt += EXPERT_BLOCK_UPSTREAM if cartographic_upstream else EXPERT_BLOCK_EXTERNAL_REF
+    prompt += _mouvement_block()
     return prompt
 
 

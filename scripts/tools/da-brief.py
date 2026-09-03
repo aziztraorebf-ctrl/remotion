@@ -134,6 +134,62 @@ nos contraintes — ce qu'un pro ferait de mieux AVEC LES MÊMES OUTILS, pas un 
 """
 
 
+# Bloc MOUVEMENT — injecté par défaut (comme AI-SLOP), ajouté 2026-09-03.
+# POURQUOI : audit croisé briefs/livrables. Le mouvement n'était convoqué NULLE PART dans ce
+# script — seulement « easing robotique », noyé dans la liste de symptômes de l'angle 4. Mesuré
+# côté rendus : 33 intervalles sur 48 sous 2,5 de diff (espacement linéaire, aucun ralenti final),
+# et plasticité 4/10 dans GRILLE-JUGEMENT-MIDFORM.md. Le raisonnement porté ici vient de
+# `motion-design-brief.py` (QUOI/QUAND/COMMENT + « pourquoi ce choix sert le message »), qui fait
+# un autre métier (plan d'animation sur un SVG figé) et n'était donc utilisable dans aucune review.
+# ⛔ La question posée est l'USAGE, jamais une valeur : ce script ne prescrit pas de durées ni de
+# damping — les chiffres se mesurent, ils ne se briefent pas.
+MOUVEMENT_BLOCK = """
+
+=== SECTION OBLIGATOIRE — LE MOUVEMENT LUI-MÊME ===
+Ne juge pas ici la composition ni la couleur : uniquement COMMENT les choses bougent.
+1. SPACING (≠ timing) : le timing dit combien de temps dure un geste, le SPACING dit où se trouve
+   l'objet entre le début et la fin. Un mouvement dont les positions intermédiaires sont
+   régulièrement espacées est LINÉAIRE — il se lit comme mécanique, mort, "généré". Repère les
+   gestes où la vitesse ne varie pas : démarrage sans accélération, arrivée sans ralenti.
+2. CAUSALITÉ : chaque mouvement semble-t-il DÉCIDÉ, ou subi ? Un objet qui se met en route sans
+   rien qui l'annonce paraît tiré par une force extérieure au lieu de partir de lui-même. Où
+   manque-t-il une amorce (un recul, une compression, un temps d'arrêt) avant le geste principal ?
+3. ARRIVÉE : que se passe-t-il à la FIN d'un geste ? S'arrête-t-il net sur sa valeur cible (signe
+   d'un easing coupé), ou se pose-t-il — dépassement puis retour, ou décélération franche ?
+4. INTENTION : chaque élément qui bouge a-t-il une RAISON narrative de bouger à cet instant ?
+   Nomme les mouvements décoratifs (ça bouge pour ne pas être statique) — ce sont des candidats
+   au retrait, pas au réglage.
+5. HIÉRARCHIE : tout bouge-t-il en même temps et de la même façon ? Qu'est-ce qui devrait mener,
+   suivre, ou rester immobile pour que le reste se lise ?
+⛔ NE DONNE AUCUN CHIFFRE (durées, damping, pixels) : ces valeurs se mesurent sur le rendu, elles
+ne se devinent pas. Décris le DÉFAUT observé et le geste correctif en langage de mouvement.
+⛔ Un objet qui ne se déplace pas dans la vraie vie (bâtiment, lingot, pierre, outil) ne GLISSE
+jamais : il apparaît, change, s'illumine sur place. Seuls les véhicules glissent de façon crédible.
+NOTRE STACK : `spring()` et `interpolate()` frame-driven (Remotion). PAS de CSS transition, pas de
+@keyframes, pas d'After Effects. ⚠️ `extrapolateRight: "clamp"` supprime le dépassement d'un spring —
+si un geste doit dépasser puis revenir, le clamp est le premier suspect.
+"""
+
+MOUVEMENT_BLOCK_UPSTREAM = """
+
+=== SECTION OBLIGATOIRE — LE MOUVEMENT (préventif, sur le PLAN) ===
+On ne te montre PAS un rendu mais un PLAN, avant d'écrire la moindre ligne de code. Pour chaque
+moment où quelque chose est censé bouger, réponds : QUOI bouge (quelle propriété), QUAND (à quel
+instant relatif), COMMENT (le mouvement accélère-t-il, ralentit-il, dépasse-t-il ?) et surtout
+POURQUOI ce choix SERT LE MESSAGE — pas juste "ça bouge pour bouger".
+Puis pose les 3 questions qui préviennent un mouvement mort :
+1. Lesquels de ces gestes risquent de sortir LINÉAIRES (vitesse constante) une fois codés ?
+2. Lesquels démarrent sans amorce, et paraîtront donc subis plutôt que décidés ?
+3. Qu'est-ce qui bouge ici SANS raison narrative, et qu'il vaudrait mieux ne pas animer du tout ?
+⛔ NE PRESCRIS AUCUN CHIFFRE (durées, damping, pixels) — décris l'intention de mouvement, les
+valeurs se mesureront au rendu.
+⛔ Un objet inerte dans la vraie vie (bâtiment, lingot, pierre) ne glisse jamais : il apparaît,
+change, s'illumine sur place. Seuls les véhicules glissent de façon crédible.
+NOTRE STACK : `spring()` / `interpolate()` frame-driven (Remotion). PAS de CSS transition, pas
+d'After Effects, pas de 3D.
+"""
+
+
 # ── VARIANTES UPSTREAM (mode PRÉVENTIF — review du PLAN avant d'écrire du code) ──
 # Idée Aziz 2026-06-07 : utiliser les mêmes piliers EN AMONT, sur le plan (script verrouillé +
 # templates choisis + assets décidés), pas sur un rendu. On PRÉVIENT l'AI-slop au lieu de le
@@ -177,7 +233,8 @@ Ce qu'un pro ferait de mieux AVEC LES MÊMES OUTILS que nous, pas un rêve infai
 """
 
 
-def build_prompt(brief_path, catalog_path, aislop=True, expert=False, upstream=False, angles=True):
+def build_prompt(brief_path, catalog_path, aislop=True, expert=False, upstream=False, angles=True,
+                 mouvement=True):
     prompt = open(brief_path, encoding="utf-8").read()
     if catalog_path and os.path.exists(catalog_path):
         prompt += "\n\n=== CATALOGUE D'INSPIRATION (format compact) ===\n" + open(catalog_path, encoding="utf-8").read()
@@ -190,6 +247,10 @@ def build_prompt(brief_path, catalog_path, aislop=True, expert=False, upstream=F
         prompt += AISLOP_BLOCK_UPSTREAM if upstream else AISLOP_BLOCK
     if expert:
         prompt += EXPERT_BLOCK_UPSTREAM if upstream else EXPERT_BLOCK
+    # MOUVEMENT : injecté par défaut. Le seul axe que l'angle 4 ne couvrait que par
+    # « easing robotique » — insuffisant, mesuré 4/10 en plasticité (audit 2026-09-03).
+    if mouvement:
+        prompt += MOUVEMENT_BLOCK_UPSTREAM if upstream else MOUVEMENT_BLOCK
     return prompt
 
 
@@ -306,6 +367,8 @@ def main():
     ap.add_argument("--only", choices=["gemini", "kimi", "deepseek"], default=None, help="Un seul modele")
     ap.add_argument("--max-tokens", type=int, default=16000)  # Kimi = thinking model, <16000 tronque (finish_reason:length)
     ap.add_argument("--no-aislop", action="store_true", help="Désactiver le bloc AI-slop (ON par défaut)")
+    ap.add_argument("--no-mouvement", action="store_true",
+                    help="Désactiver le bloc MOUVEMENT (ON par défaut) — pour une review d'image fixe")
     ap.add_argument("--expert", action="store_true", help="Ajouter le bloc point-de-vue expert")
     ap.add_argument("--upstream", action="store_true",
                     help="Mode PRÉVENTIF : review du PLAN avant code (blocs prospectifs). Active --expert + DeepSeek 3e voix par défaut.")
@@ -335,7 +398,8 @@ def main():
         frames.append((sm, caption))
         print(f"[frame] {path} -> {sm} ({os.path.getsize(sm)//1024} Ko) | {caption}")
 
-    prompt = build_prompt(args.brief, args.catalog, aislop=not args.no_aislop, expert=args.expert, upstream=args.upstream)
+    prompt = build_prompt(args.brief, args.catalog, aislop=not args.no_aislop, expert=args.expert,
+                          upstream=args.upstream, mouvement=not args.no_mouvement)
     blocks = []
     if args.upstream: blocks.append("UPSTREAM")
     if not args.no_aislop: blocks.append("ai-slop")

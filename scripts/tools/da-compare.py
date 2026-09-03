@@ -147,6 +147,8 @@ def main():
                     help="Forcer le pilier (sinon déduit de --ref)")
     ap.add_argument("--expert", action="store_true", help="Approfondir le point de vue expert")
     ap.add_argument("--no-aislop", action="store_true", help="Désactiver l'approfondissement AI-slop")
+    ap.add_argument("--no-mouvement", action="store_true",
+                    help="Désactiver le bloc MOUVEMENT (ON par défaut) — pour une comparaison d'images fixes")
     ap.add_argument("--no-angles", action="store_true", help="Désactiver le socle d'angles obligatoires (déconseillé)")
     ap.add_argument("--max-tokens", type=int, default=8000)
     args = ap.parse_args()
@@ -175,8 +177,13 @@ def main():
         prompt += dab.AISLOP_BLOCK
     if args.expert:
         prompt += dab.EXPERT_BLOCK
+    # MOUVEMENT (ajouté 2026-09-03, même motif que dans da-brief.py) : le mouvement n'était
+    # convoqué nulle part, mesuré 4/10 en plasticité. Mode comparatif = on juge un RENDU -> variante aval.
+    if not args.no_mouvement:
+        prompt += dab.MOUVEMENT_BLOCK
     print(f"[compare] pilier={pillar} · angles={'OFF' if args.no_angles else 'ON'} · "
-          f"aislop={'OFF' if args.no_aislop else 'ON'} · expert={'ON' if args.expert else 'OFF'}")
+          f"aislop={'OFF' if args.no_aislop else 'ON'} · expert={'ON' if args.expert else 'OFF'} · "
+          f"mouvement={'OFF' if args.no_mouvement else 'ON'}")
 
     try:
         from google import genai
