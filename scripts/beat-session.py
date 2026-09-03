@@ -985,6 +985,102 @@ def phase_upload(episode: str, beat_num: int, video_path: str, gate: dict) -> No
     ntfy("beat_done", beat, video_url, msg)
 
 
+COHERENCE_PROMPT = """Tu compares plusieurs BEATS (scenes) d'un MEME episode video, deja produits
+independamment. On te montre une frame de chacun, dans l'ordre de l'episode. Ta seule question :
+CES SCENES SE RECONNAISSENT-ELLES COMME FAISANT PARTIE DU MEME FILM ?
+
+Ne juge PAS chaque scene individuellement (composition/mouvement deja verifies ailleurs).
+Compare-les ENTRE ELLES sur :
+1. FOND : meme traitement de fond (couleur de base, texture, grille/vignette) ou incoherent
+   d'une scene a l'autre sans raison narrative de le changer ?
+2. TEMPERATURE : la palette chaude/froide reste-t-elle stable, ou saute-t-elle sans transition ?
+3. ELEMENTS RECURRENTS : un cartouche, un bandeau source, un style de label -- apparait-il UNE FOIS
+   puis disparait, ou revient-il comme un element du langage visuel de l'episode ?
+4. TYPOGRAPHIE : memes familles/graisses partout, ou une scene semble d'un autre projet ?
+Pour CHAQUE rupture trouvee : quelle scene la cause, contre quelle(s) autre(s), et le geste concret
+pour la refermer (reprendre TEL element de telle scene -- pas une regle generale).
+Si les scenes se tiennent, dis-le : ce n'est pas un defaut a inventer a tout prix.
+NOTRE STACK : React/Remotion, Tailwind, SVG anime. PAS d'After Effects/3D."""
+
+
+def phase_coherence(episode: str, beat_num: int) -> None:
+    """
+    Compare le beat qui vient d'etre fini contre TOUS les autres beats deja rendus du meme
+    episode (out/episodes/<episode>/beat*-FINAL.mp4) -- fond/palette/typo/elements recurrents.
+    Non-bloquant : aucun seuil, aucun score. Ajoute 2026-09-03 (audit briefs/livrables) : la
+    direction artistique est bien demandee par beat, mais RIEN ne compare deux beats du meme
+    episode -- mesure : 4 frames du meme film, ni fond ni temperature ni un seul element commun.
+    A lancer avec au moins 2 beats-FINAL.mp4 presents ; sinon rien a comparer.
+    """
+    import glob
+    import threading
+    import importlib.util
+
+    final_dir = PROJECT_ROOT / "out" / "episodes" / episode
+    videos = sorted(
+        Path(p) for p in glob.glob(str(final_dir / "beat*-FINAL.mp4"))
+    )
+    if len(videos) < 2:
+        print(f"[coherence] {len(videos)} beat(s) rendu(s) pour {episode} -- rien a comparer (2 minimum).")
+        return
+
+    print(f"\n=== COHERENCE INTER-SCENES — {episode} ({len(videos)} beats) ===")
+    for v in videos:
+        print(f"  - {v.name}")
+
+    # Reutilise l'infrastructure d'appel de da-brief.py (downscale/call_gemini/call_kimi) au lieu
+    # d'en recopier une 4e version -- meme pattern d'import que _mouvement_block() dans
+    # da-brief-video-3voix.py : import par reference, on continue degrade si indisponible.
+    dab_path = os.path.join(str(SCRIPTS_DIR), "tools", "da-brief.py")
+    try:
+        spec = importlib.util.spec_from_file_location("dab", dab_path)
+        dab = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(dab)
+    except Exception as e:
+        print(f"[ERROR] da-brief.py non chargeable ({e}) -- coherence annulee, corriger le chemin.")
+        return
+
+    frames_dir = Path(f"/tmp/coherence_{episode}")
+    frames_dir.mkdir(exist_ok=True)
+    frames = []
+    for v in videos:
+        raw = frames_dir / f"{v.stem}.jpg"
+        # -ss AVANT -i (seek rapide, decodage minimal). Verifie : si -ss depasse la duree
+        # du fichier, ffmpeg n'ecrit RIEN (pas de derniere frame de secours) -- d'ou le
+        # if not raw.exists() plus bas, qui saute proprement ce beat au lieu de planter.
+        subprocess.run([
+            "ffmpeg", "-ss", "2", "-i", str(v), "-vf", "scale=640:-1",
+            "-frames:v", "1", str(raw), "-y"
+        ], capture_output=True)
+        if not raw.exists():
+            print(f"  [WARN] extraction echouee pour {v.name}, ignoree")
+            continue
+        sm = dab.downscale(str(raw))
+        frames.append((sm, v.stem))
+
+    if len(frames) < 2:
+        print("[coherence] Moins de 2 frames extraites avec succes -- annule.")
+        return
+
+    results = {}
+    targets = [
+        threading.Thread(target=dab.call_gemini, args=(COHERENCE_PROMPT, frames, 8000, results)),
+        threading.Thread(target=dab.call_kimi, args=(COHERENCE_PROMPT, frames, 8000, results)),
+    ]
+    for t in targets: t.start()
+    for t in targets: t.join()
+
+    out_dir = Path("/tmp/da-refs")
+    out_dir.mkdir(exist_ok=True)
+    for name in ("gemini", "kimi"):
+        if name in results:
+            out = out_dir / f"coherence-{episode}-{name}.md"
+            out.write_text(results[name], encoding="utf-8")
+            print(f"[sauvegarde] {name} -> {out}")
+
+    print(f"\n[coherence] Signal, pas juge -- verifier chaque rupture pointee contre les frames avant d'agir.")
+
+
 def phase_review(episode: str, beat_num: int, video_path: str, gate: dict) -> None:
     beat = f"beat{beat_num}"
 
@@ -1082,9 +1178,10 @@ def main():
                         help='Slug épisode (ex: silicon-savannah, niger-uranium)')
     parser.add_argument('--beat', type=int, required=True,
                         help='Numéro du beat (ex: 6)')
-    parser.add_argument('--phase', choices=['scan', 'preflight', 'breakdown', 'spec-table', 'self-review', 'review', 'upload', 'full'],
+    parser.add_argument('--phase', choices=['scan', 'preflight', 'breakdown', 'spec-table', 'self-review', 'review', 'upload', 'coherence', 'full'],
                         default='preflight',
-                        help='Phase à exécuter (défaut: preflight). scan = Phase 0 templates (OBLIGATOIRE avant breakdown)')
+                        help='Phase à exécuter (défaut: preflight). scan = Phase 0 templates (OBLIGATOIRE avant breakdown). '
+                             'coherence = compare ce beat contre les autres beats déjà rendus du même épisode (2 mini., non-bloquant)')
     parser.add_argument('--video', type=str, default=None,
                         help='Chemin vidéo rendue (requis pour --phase review ou full)')
     parser.add_argument('--resolve-assets', action='store_true',
@@ -1133,6 +1230,10 @@ def main():
             sys.exit(1)
         gate = phase_preflight(args.episode, args.beat)
         phase_upload(args.episode, args.beat, args.video, gate)
+        phase_coherence(args.episode, args.beat)
+
+    elif args.phase == 'coherence':
+        phase_coherence(args.episode, args.beat)
 
     elif args.phase == 'full':
         if not args.video:
