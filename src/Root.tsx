@@ -8,6 +8,12 @@ import {
   SPARK_PROTOTYPE_FPS,
 } from "./projects/_rnd/spark-upwork/SparkAnimationPrototype";
 import { Composition, Folder, staticFile as staticFileRoot, useCurrentFrame } from "remotion";
+import { AuraSplashGrok } from "./projects/_client-sim/aura-splash/AuraSplashGrok";
+import { AuraSplashGemini } from "./projects/_client-sim/aura-splash/AuraSplashGemini";
+import { AuraSplashGeminiV2 } from "./projects/_client-sim/aura-splash/AuraSplashGeminiV2";
+import { AuraSplashGpt, AURA_SPLASH_FPS, AURA_SPLASH_FRAMES } from "./projects/_client-sim/aura-splash/AuraSplashGpt";
+import { AnimaticCauri } from "./projects/_portfolio/cauri/AnimaticCauri";
+import { DUREE_TOTALE as CAURI_DUREE_S } from "./projects/_portfolio/cauri/animatic-timing";
 import { ZambiaConceptB, ZAMBIA_CONCEPT_B_FRAMES } from "./projects/_client-sim/zambia-peacecorps/ZambiaConceptB";
 import { ZambiaConceptA, ZAMBIA_CONCEPT_A_FRAMES } from "./projects/_client-sim/zambia-peacecorps/ZambiaConceptA";
 import { ZambiaTraitementA, ZAMBIA_A_FRAMES } from "./projects/_client-sim/zambia-peacecorps/ZambiaTraitementA";
@@ -5782,6 +5788,58 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
         defaultProps={{ muteNarration: true }}
       />
+
+      {/* AURA — splash screen 3 s, candidature client. 3 traitements a comparer,
+          chacun fidele a une voix du DA-brief (Grok / Gemini / GPT). */}
+      <Folder name="AURA-splash">
+        <Composition
+          id="AURA-Grok"
+          component={AuraSplashGrok}
+          durationInFrames={AURA_SPLASH_FRAMES}
+          fps={AURA_SPLASH_FPS}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="AURA-Gemini"
+          component={AuraSplashGemini}
+          durationInFrames={AURA_SPLASH_FRAMES}
+          fps={AURA_SPLASH_FPS}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="AURA-Gemini-V2"
+          component={AuraSplashGeminiV2}
+          durationInFrames={AURA_SPLASH_FRAMES}
+          fps={AURA_SPLASH_FPS}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="AURA-Gpt"
+          component={AuraSplashGpt}
+          durationInFrames={AURA_SPLASH_FRAMES}
+          fps={AURA_SPLASH_FPS}
+          width={1080}
+          height={1920}
+        />
+      </Folder>
+
+
+      {/* CAURI — animatic de travail (JETABLE). Valide l'enchainement des 7 etats
+          sans coupe et l'ecart flux long / flux court. Gris neutre volontaire :
+          aucune couleur du brief, le look se juge sur le dessin. */}
+      <Folder name="CAURI">
+        <Composition
+          id="Cauri-Animatic"
+          component={AnimaticCauri}
+          durationInFrames={Math.round(CAURI_DUREE_S * 30)}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+      </Folder>
 
     </>
   );
