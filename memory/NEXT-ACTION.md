@@ -8,6 +8,31 @@ les aurait perdus pour de bon). Diagnostic + 3 pistes de correctif à trancher a
 `memory/projects/INCIDENT-BRANCHE-SUPPRIMEE-TRAVAIL-PERDU.md`. Ne pas refaire de ménage de
 branches sans avoir lu ce fichier.
 
+## R&D — tester la 3D jusqu'au bout, en exploration pure (idée d'Aziz, 2026-09-03)
+
+> Session parallèle, DÉTACHÉE de tout contrat en cours. Pas de délai, pas de livrable client.
+
+On avait écarté la 3D pour le chill-meter sans vraiment la tester (raisonnement, pas mesure).
+Aziz veut fermer la boucle : générer un châssis 3D via R3F/Three.js avec Claude Opus ou Fable,
+voir jusqu'où ça va, et mesurer les vrais compromis plutôt que de les supposer.
+
+Ce que la session actuelle a identifié comme COÛT si on l'utilisait pour un livrable :
+- Export alpha (ProRes 4444 transparent) : un rendu 3D est opaque par defaut, demande un
+  pipeline de compositing separe, jamais teste sur ce repo
+- Animation : le givre 0->1 et le remplissage sont pilotes par des props React simples en SVG ;
+  en 3D il faudrait les recreer sur un maillage (shaders/materiaux), un autre langage technique
+- Vitesse d'iteration : un dosage SVG se corrige en 1 ligne et se rend en 10s ; un ajustement de
+  materiau 3D (roughness/metalness/normal maps) est plus long a juger et a rendre
+
+Ce qu'on pourrait GAGNER, a verifier reellement plutot que supposer :
+- Eclairage physiquement coherent (speculaire, occlusion) qu'on simule a la main en SVG
+  (cf. `rf_key`, masques de joints du chill-meter) viendrait gratuitement d'un vrai moteur
+
+But du test : mesurer si un rendu 3D fixe (PAS l'export final anime) peut servir de cible visuelle
+plus fiable qu'un breakdown texte->hex pour calibrer un chassis SVG. C'est l'usage deja identifie
+comme viable dans `memory/client-sim-tests/upwork-chill-meter/STATUS.md` (« rendu de reference
+eclaire », pas « extraire une texture ») — jamais teste concretement.
+
 ## ⛔⛔⭐⭐⭐ PRIORITÉ — CÂBLER NOTRE SYSTÈME SUR LE TRAVAIL CLIENT (constat d'Aziz, 2026-09-03)
 
 > **Session dédiée à ouvrir.** Chantier d'analyse en profondeur, à NE PAS entamer au fil d'une
