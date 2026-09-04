@@ -5765,6 +5765,18 @@ export const RemotionRoot: React.FC = () => {
           height={1080}
           defaultProps={{ state: "entrance" as const }}
         />
+        {/* Clip d'allumage 4 s : l'entree (arrivee diagonale, atterrissage, rebond,
+            allumage) puis 2,5 s d'ecran allume qui respire. Meme structure que le
+            clip valide du 03/09, mais sur le chassis RUSTIQUE choisi par la cliente. */}
+        <Composition
+          id="ChillMeter-Entrance4s-Rustic"
+          component={ChillMeterOverlay}
+          durationInFrames={120}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "entrance" as const, chassis: "rustic" as const }}
+        />
         <Composition
           id="ChillMeter-Idle"
           component={ChillMeterOverlay}

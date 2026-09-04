@@ -107,12 +107,34 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frame,
       style={{ overflow: "visible" }}
     >
       <defs>
-        {/* Halo de l'ecran : bleu froid, plus dense au centre. */}
-        <radialGradient id="rustic_screenGlow" cx="50%" cy="50%" r="62%">
-          <stop offset="0%" stopColor="#4db8ff" stopOpacity={0.34} />
-          <stop offset="55%" stopColor="#2b7fd4" stopOpacity={0.15} />
-          <stop offset="100%" stopColor="#0d2b4a" stopOpacity={0} />
+        {/* Halo de l'ecran. Mesure sur SA reference allumee : luminance moyenne 65,3 et
+            p90 = 219 sur la dalle, contre 33,8 / 72 chez nous avant correction — l'ecran
+            paraissait rester eteint. Ce sont surtout les HAUTES LUMIERES qui manquaient,
+            d'ou un centre franchement clair et non un voile uniforme.
+            Sa dalle est tres bleue : B 103,6 contre R 27,7. */}
+        <radialGradient id="rustic_screenGlow" cx="50%" cy="54%" r="70%">
+          <stop offset="0%" stopColor="#7fd0ff" stopOpacity={0.20} />
+          <stop offset="45%" stopColor="#3f9fe0" stopOpacity={0.13} />
+          <stop offset="100%" stopColor="#123a63" stopOpacity={0} />
         </radialGradient>
+        {/* Nappe basse : chez elle la dalle est plus chaude en lumiere vers le bas,
+            sous la jauge — c'est ce qui donne l'impression d'un ecran retro-eclaire. */}
+        <linearGradient id="rustic_screenFloor" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0%" stopColor="#6fc8ff" stopOpacity={0.16} />
+          <stop offset="60%" stopColor="#3f9fe0" stopOpacity={0.05} />
+          <stop offset="100%" stopColor="#1b4f7d" stopOpacity={0} />
+        </linearGradient>
+        {/* Ce qui fait vraiment "allume" chez elle : les ELEMENTS rayonnent sur une dalle
+            restee sombre (60 % de ses pixels sont sous 40 de luminance, mediane 28, mais
+            14 % depassent 180). Un voile uniforme donne l'inverse : du laiteux qui noie
+            le texte. D'ou ce filtre de lueur applique aux graduations et au titre. */}
+        <filter id="rustic_screenBloom" x="-25%" y="-40%" width="150%" height="180%">
+          <feGaussianBlur stdDeviation="6" result="b" />
+          <feMerge>
+            <feMergeNode in="b" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
 
         {/* Remplissage d'une case : cyan lumineux, plus clair en haut. */}
         <linearGradient id="rustic_caseFill" x1="0" y1="0" x2="0" y2="1">
@@ -148,7 +170,17 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frame,
 
       {/* ================= 2. HALO DE L'ECRAN ================= */}
       {powerOn > 0.01 && (
-        <g opacity={powerOn * (0.72 + breathe * 0.28)}>
+        <g opacity={powerOn}>
+          {/* retro-eclairage : la dalle s'allume, elle ne recoit pas juste un voile */}
+          <rect
+            x={ECRAN.x}
+            y={ECRAN.y}
+            width={ECRAN.w}
+            height={ECRAN.h}
+            rx={ECRAN.r}
+            fill="url(#rustic_screenFloor)"
+            style={{ mixBlendMode: "screen" }}
+          />
           <rect
             x={ECRAN.x}
             y={ECRAN.y}
@@ -156,8 +188,18 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frame,
             height={ECRAN.h}
             rx={ECRAN.r}
             fill="url(#rustic_screenGlow)"
+            opacity={0.82 + breathe * 0.18}
             style={{ mixBlendMode: "screen" }}
           />
+        </g>
+      )}
+
+      {/* Lueur ciblee : la reglette de graduations et le bandeau du titre s'allument,
+          au lieu d'un voile uniforme sur toute la dalle. */}
+      {powerOn > 0.01 && (
+        <g opacity={powerOn * (0.7 + breathe * 0.3)} filter="url(#rustic_screenBloom)">
+          <rect x={ECRAN.x + 60} y={CASE_Y - 32} width={ECRAN.w - 120} height={4}
+                rx={2} fill="#8fdcff" opacity={0.5} />
         </g>
       )}
 
