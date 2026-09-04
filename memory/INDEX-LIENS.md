@@ -88,7 +88,26 @@ plateau reel, meme placement/centrage que les images fixes.
 - ⛔ Clip 2s (premier jet, remplace) : lien conserve pour historique, ne plus utiliser
 - ⭐ Clip FINAL 4s (entrance + 2.5s d'ecran allume, sur le plateau) : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/chill-meter/revision-1c/entrance-4s-on-set-vPySH05dsZqZFnbSyc94vG93ZxriC1.mp4
 
+### Chill meter — storyboard des effets d ecran (6 concepts), 04/09/2026
+3 gestes par palier (75 % et 100 %), generes depuis le device rustique givre. ⛔ CIBLES DE
+DIRECTION, pas des rendus : Gemini a redessine le plateau, le device est flou. Ne PAS envoyer
+comme apercu du livrable. Reco : B (montee) au 75 %, D (onde) au 100 % — les 2 qui se codent.
+- Page de choix : https://claude.ai/code/artifact/34a247e1-7890-492f-9776-1dff6771a0b3
+- Fichiers : out/_r-and-d/chill-meter-3d/storyboard/
+
+### Chill meter — parcours 0→100 % sur le device RUSTIQUE, 04/09/2026
+Le nouveau chassis (son image comme decor + nos couches) : entree, idle, 4 paliers, givre en
+3 planches. Usage INTERNE — rien n'a ete envoye a la cliente.
+- Video HQ 21 s (CRF 15, 2,1 Mo) : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/chill-meter/revision-2/CHILL-METER-parcours-HQ-DRBkMMEzxw8qfhWarmgaD869DxwoDd.mp4
+- Page de suivi (video + mesures + planches) : https://claude.ai/code/artifact/3244ead5-6fa8-4fcd-8dc0-e84722712ae7
+
 ### Chill meter — 2 planches finales (design + contexte plateau), 03/09/2026
 - Sombre (dark gunmetal) : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/chill-meter/revision-1d/chill-meter-dark-gunmetal-uBz5luPLGv2kvz0uvcIEgN2OaKnqdQ.jpg
 - Claire (light gunmetal) : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/chill-meter/revision-1d/chill-meter-light-gunmetal-0hsCOnsAKF37ntGjNJ2eQeizkbHGLw.jpg
 + clip 4s (entrance-4s-on-set, deja dans ce fichier plus haut). 3 fichiers au total pour l'envoi.
+
+## Chill-meter — session 2026-09-04 (chassis rustique)
+- Calage au pixel : https://claude.ai/code/artifact/939f45dd-98eb-4ec6-8e4c-db5f414eebcd
+- Cibles 75/100 % : https://claude.ai/code/artifact/33ac07b5-93cd-4c63-82c3-24f8cbd435ae
+- Vapeur 3D (3 versions) : https://claude.ai/code/artifact/7dc2e733-bf7c-40f9-9d53-b723905efcea
+- Ideation 4 LLM sur la progression : https://claude.ai/code/artifact/42473d83-81b5-4a0f-acd0-56959b5cb4ca
