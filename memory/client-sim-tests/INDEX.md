@@ -24,6 +24,11 @@ fiche**, pas seulement dans le récit du test.
 
 ## Tests réalisés
 
+- 🔴🔴 **chill-meter / AbiGirl (CONTRAT ACTIF)** — 2026-09-04 : **chassis REJETE par la cliente**,
+  changement de base en cours. Elle exige comme design une image qui est **la notre** (generation
+  Gemini du 02/09 qu'on lui avait jointe). Decision : son PNG comme decor + nos couches animees.
+  Calage mesure et verifie. ⭐ **Reprise : `memory/starters/STARTER-chill-meter-device-rustique.md`**
+
 - **Upwork « Appstore promo video »** — 2026-09-01, candidature envoyée (15 $, app kids education,
   20-30s à partir d'un screen recording de l'app). Portfolio 6 pièces joint MANUELLEMENT par Aziz
   (bug MCP `attachments` sur `manage_proposals create`, 2e occurrence confirmée — cf.

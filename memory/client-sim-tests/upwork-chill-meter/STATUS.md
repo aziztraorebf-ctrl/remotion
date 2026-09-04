@@ -4,7 +4,35 @@
 > accepté par la cliente le 29/08, **offre v2 acceptée par Aziz le 30/08**. 350 $ → 297,50 $ net.
 > ⛔ Les décisions de ce fichier engagent contractuellement.
 
-## ⭐⭐⭐ ETAT AU 2026-09-03 : REVISION 2 TRAITEE ET ENVOYEE — teinte gunmetal reglee
+## 🔴🔴 ETAT AU 2026-09-04 : CHASSIS REJETE — CHANGEMENT DE BASE, chantier en cours
+
+> ⭐⭐⭐ **REPRISE : `memory/starters/STARTER-chill-meter-device-rustique.md`** (tout le detail
+> du nouveau chantier : la decision, le calage mesure, les pieges, les fichiers).
+
+**Abigail a REJETE notre chassis** et exige comme base une image « rustique/lourde » qu'elle
+croit avoir fournie. ⭐⭐⭐ **C'est NOTRE image** : correlation 1.000 avec
+`degivrage/ref-degivree-B.png`, une generation Gemini du 02/09 qu'on lui avait JOINTE comme
+justification de demarche. Elle n'a ni source, ni calques : c'est un PNG 1195x896.
+
+**Decision prise** : utiliser son PNG **tel quel** comme decor (100 % de sa matiere) et poser
+nos 4 couches animees par-dessus (22 segments, LED, 5 labels verts, halo). Ni vectorisation
+(perd le grain, 2362 paths / 0 groupe), ni 3D (sa demande porte sur la MATIERE, pas la geometrie).
+
+**Calage DEJA FAIT et verifie a l'oeil** : `out/_r-and-d/chill-meter-3d/calage/CALAGE.json`
+(22 cases, LED (1113,451) r16,5, ecran, sol y=717, et les 5 labels avec icone/texte separes).
+
+**Ses 6 demandes** : texture rustique gardee (acquis) · ton gunmetal (SANS OBJET, c'est son
+image) · glow bleu · **labels verts sans les icones** · centrage sous la fenetre video ·
+**ne pas flotter** (y=717).
+
+⚠️ **Le livrable contractuel n'a PAS ete touche** — tout le travail vit sur `rnd/chill-meter-3d`.
+⚠️ **Calendrier a revoir** : le rejet rebat les jalons 2 (7 sept) et 3 (11 sept).
+⚠️ **Decision commerciale en attente** : dire ou non a Abigail que l'image vient de nous.
+⏭️ **Non traite : LE SON** (elle liste des SFX precis par palier, perimetre jamais discute).
+
+<details><summary>Historique — ETAT AU 2026-09-03 : revision 2 envoyee (teinte gunmetal)</summary>
+
+## ETAT AU 2026-09-03 : REVISION 2 TRAITEE ET ENVOYEE — teinte gunmetal reglee
 
 ### 📤 ENVOYE A ABIGAIL (3 pieces jointes, noms neutres, verifiees par content-length)
 - `chill-meter-dark-gunmetal.jpg` — planche design isole + sur son plateau, teinte SOMBRE
@@ -243,6 +271,8 @@ jour par curiosite, elle reste possible — elle n'est simplement plus necessair
 </details>
 
 <details><summary>Historique — ETAT AU 2026-09-02 (matin) : revision 1 traitee</summary>
+
+</details>
 
 ## ⭐⭐⭐ ETAT AU 2026-09-02 : REVISION 1 DU JALON 1 TRAITEE — RIEN RENVOYE ENCORE
 

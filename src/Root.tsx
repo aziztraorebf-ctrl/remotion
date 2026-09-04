@@ -3,6 +3,9 @@ import { CfaNuit1994Anime16x9, CFA_NUIT_1994_FRAMES, CFA_NUIT_1994_FPS } from ".
 import { ChillMeterShowcase, SHOWCASE_FRAMES } from "./projects/_rnd/chill-meter/ChillMeterShowcase";
 import { ChillMeterOverlay } from "./projects/_rnd/chill-meter/ChillMeterOverlay";
 import { ShockWave3D, SHOCKWAVE_3D_FRAMES } from "./projects/_rnd/chill-meter/ShockWave3D";
+import { ShockWave3Dv2, SHOCKWAVE_V2_FRAMES } from "./projects/_rnd/chill-meter/ShockWave3D_v2";
+import { ColdVapor3D, COLD_VAPOR_FRAMES } from "./projects/_rnd/chill-meter/ColdVapor3D";
+import { ColdVaporLayers, VAPOR_LAYERS_FRAMES } from "./projects/_rnd/chill-meter/ColdVaporLayers";
 import {
   SparkAnimationPrototype,
   SPARK_PROTOTYPE_FRAMES,
@@ -5663,6 +5666,78 @@ export const RemotionRoot: React.FC = () => {
       <Composition id="Zambia-ConceptB-Continent" component={ZambiaConceptB} durationInFrames={ZAMBIA_CONCEPT_B_FRAMES} fps={30} width={1920} height={1080} />
 
       <Folder name="RND-ChillMeter">
+        <Composition
+          id="ChillMeter-VaporLayers75"
+          component={ColdVaporLayers}
+          durationInFrames={VAPOR_LAYERS_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ showGuides: false }}
+        />
+        <Composition
+          id="ChillMeter-VaporLayers75-Guides"
+          component={ColdVaporLayers}
+          durationInFrames={VAPOR_LAYERS_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ showGuides: true }}
+        />
+        <Composition
+          id="ChillMeter-Vapor75"
+          component={ColdVapor3D}
+          durationInFrames={COLD_VAPOR_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "stagne" as const, showGuides: false }}
+        />
+        <Composition
+          id="ChillMeter-Vapor100"
+          component={ColdVapor3D}
+          durationInFrames={COLD_VAPOR_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "souffle" as const, showGuides: false }}
+        />
+        <Composition
+          id="ChillMeter-Vapor75-Guides"
+          component={ColdVapor3D}
+          durationInFrames={COLD_VAPOR_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "stagne" as const, showGuides: true }}
+        />
+        <Composition
+          id="ChillMeter-Vapor100-Guides"
+          component={ColdVapor3D}
+          durationInFrames={COLD_VAPOR_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "souffle" as const, showGuides: true }}
+        />
+        <Composition
+          id="ChillMeter-ShockWave3Dv2"
+          component={ShockWave3Dv2}
+          durationInFrames={SHOCKWAVE_V2_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ showAnchor: false }}
+        />
+        <Composition
+          id="ChillMeter-ShockWave3Dv2-Anchor"
+          component={ShockWave3Dv2}
+          durationInFrames={SHOCKWAVE_V2_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ showAnchor: true }}
+        />
         <Composition
           id="ChillMeter-ShockWave3D-Anchor"
           component={ShockWave3D}

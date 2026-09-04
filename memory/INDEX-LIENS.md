@@ -92,3 +92,9 @@ plateau reel, meme placement/centrage que les images fixes.
 - Sombre (dark gunmetal) : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/chill-meter/revision-1d/chill-meter-dark-gunmetal-uBz5luPLGv2kvz0uvcIEgN2OaKnqdQ.jpg
 - Claire (light gunmetal) : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/chill-meter/revision-1d/chill-meter-light-gunmetal-0hsCOnsAKF37ntGjNJ2eQeizkbHGLw.jpg
 + clip 4s (entrance-4s-on-set, deja dans ce fichier plus haut). 3 fichiers au total pour l'envoi.
+
+## Chill-meter — session 2026-09-04 (chassis rustique)
+- Calage au pixel : https://claude.ai/code/artifact/939f45dd-98eb-4ec6-8e4c-db5f414eebcd
+- Cibles 75/100 % : https://claude.ai/code/artifact/33ac07b5-93cd-4c63-82c3-24f8cbd435ae
+- Vapeur 3D (3 versions) : https://claude.ai/code/artifact/7dc2e733-bf7c-40f9-9d53-b723905efcea
+- Ideation 4 LLM sur la progression : https://claude.ai/code/artifact/42473d83-81b5-4a0f-acd0-56959b5cb4ca
