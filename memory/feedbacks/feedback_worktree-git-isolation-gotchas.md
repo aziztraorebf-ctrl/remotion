@@ -29,6 +29,31 @@ branche il ecrit. On ne le voit qu'en le cherchant.
 **Le reflexe** : `git branch --show-current` AVANT chaque commit d'un chantier long, pas seulement au
 debut. Une seule commande, et c'est le seul moment ou l'erreur est encore gratuite.
 
+### ⛔⛔ SUITE IMMEDIATE (2026-09-04) — « COMMITE » NE VEUT PAS DIRE « ACCESSIBLE »
+
+J'ai conclu le wrap en disant « le travail est en securite, tout est dans le commit ». **C'etait
+vrai et inutile** : la session suivante a ouvert le repo, cherche le starter, et repondu a Aziz
+« ce fichier n'existe pas ». Elle a alors lu l'ANCIEN etat (STATUS pre-rejet) et propose de
+reprendre un chantier que la cliente venait d'abandonner.
+
+⛔ **Un fichier memoire commite sur une branche que le repertoire n'a pas est INVISIBLE pour
+toutes les autres sessions.** La memoire se lit sur le DISQUE, pas dans l'historique git. Un
+starter que personne ne peut ouvrir ne sert a rien — pire, il donne a l'orchestrateur la fausse
+certitude d'avoir transmis.
+
+✅ **LE REFLEXE, en fin de session quand le repertoire est sur une AUTRE branche que la sienne** :
+apres le commit, EXTRAIRE les fichiers memoire vers le disque sans changer de branche :
+```
+for f in <fichiers memoire>; do git show <ma-branche>:"$f" > "$f"; done
+```
+Ils apparaissent alors en `M`/`??` dans le working tree partage (donc visibles par tous), sans
+toucher a l'index, sans checkout, sans risque pour la session voisine.
+⛔ Ne PAS extraire les fichiers de CODE de la meme facon : eux appartiennent a la branche et
+melangeraient deux chantiers. Uniquement `memory/` — la memoire est commune a toutes les sessions.
+
+✅ **Le test qui aurait attrape l'erreur** : avant de cloturer, faire `ls <chemin-du-starter>`
+depuis le repertoire de travail — pas `git show`. Si `ls` echoue, la session suivante echouera.
+
 ### ⭐ VARIANTE (2026-09-04) — mes commits sont SAUFS, mais mes FICHIERS ont disparu
 
 Meme configuration (2 sessions, 1 repo, aucun worktree), symptome INVERSE et plus effrayant :
