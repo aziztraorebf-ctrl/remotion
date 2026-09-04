@@ -17,6 +17,14 @@ import { ChillMeterRustic, RUSTIC_W, RUSTIC_H, RUSTIC_SOL_Y } from "./ChillMeter
  *  "svg" = l'ancien chassis dessine, garde tant qu'elle n'a pas valide le nouveau. */
 export type Chassis = "rustic" | "svg";
 
+/** Les effets de givre plein cadre (brume du bas, onde, neige).
+ *  ⭐ Coupes par defaut depuis le 04/09 : on montre L'OBJET dans son etat initial.
+ *  Le givre est le sujet du JALON 2, il se retravaille apres validation de la texture.
+ *  ⛔ Ne PAS supprimer ce code : il est deja ecrit et mesure, il sera rallume tel quel.
+ *  Rappel du brief (p.8) : au 75 %, la brume vient du BAS UNIQUEMENT et « the rest of
+ *  the screen should remain clear » — or la version actuelle couvre les 1920 px de large. */
+export type Effects = "off" | "on";
+
 export type MeterState =
   | "entrance"
   | "idle"
@@ -318,7 +326,8 @@ export const ChillMeterOverlay: React.FC<{
   metal?: MetalFinish;
   rust?: RustPass;
   chassis?: Chassis;
-}> = ({ state, metal = "flat", rust = "none", chassis = "rustic" }) => {
+  effects?: Effects;
+}> = ({ state, metal = "flat", rust = "none", chassis = "rustic", effects = "off" }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -403,6 +412,12 @@ export const ChillMeterOverlay: React.FC<{
       extrapolateRight: "clamp",
       easing: Easing.out(Easing.cubic),
     });
+  }
+
+  // Etat initial : l'objet seul, sans habillage de givre plein cadre.
+  if (effects === "off") {
+    bottomEdge = 0;
+    fullChill = 0;
   }
 
   return (
