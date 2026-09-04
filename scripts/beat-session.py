@@ -989,6 +989,17 @@ COHERENCE_PROMPT = """Tu compares plusieurs BEATS (scenes) d'un MEME episode vid
 independamment. On te montre une frame de chacun, dans l'ordre de l'episode. Ta seule question :
 CES SCENES SE RECONNAISSENT-ELLES COMME FAISANT PARTIE DU MEME FILM ?
 
+⛔ AVANT DE SIGNALER QUOI QUE CE SOIT, LIS CECI : tu ne vois qu'UNE frame figee par scene, sans le
+texte dit, sans le code, sans savoir ce que l'episode RACONTE. Un changement visuel entre deux beats
+peut etre le POINT NARRATIF du film, pas un defaut -- ex: un sujet qui MEURT dans un beat et REVIENT
+A LA VIE dans un autre DOIT changer d'etat visuel (couleur, forme, densite) ; c'est le recit qui
+fonctionne, pas une incoherence. Teste TOUJOURS : "ce changement pourrait-il raconter quelque chose
+(avant/apres, echec/reussite, cause/consequence) ?" Si oui, ne le signale PAS comme un defaut --
+mentionne-le dans "CE QUI RACONTE VRAIMENT" en fin de reponse. Ne signale QUE ce qui n'a aucune
+justification narrative plausible et ressemble a un oubli technique (police differente sans raison,
+element qui disparait sans que rien ne l'explique, fond qui change sans qu'aucun evenement du recit
+ne le justifie).
+
 Ne juge PAS chaque scene individuellement (composition/mouvement deja verifies ailleurs).
 Compare-les ENTRE ELLES sur :
 1. FOND : meme traitement de fond (couleur de base, texture, grille/vignette) ou incoherent
@@ -999,6 +1010,9 @@ Compare-les ENTRE ELLES sur :
 4. TYPOGRAPHIE : memes familles/graisses partout, ou une scene semble d'un autre projet ?
 Pour CHAQUE rupture trouvee : quelle scene la cause, contre quelle(s) autre(s), et le geste concret
 pour la refermer (reprendre TEL element de telle scene -- pas une regle generale).
+⛔ NE DEVINE JAMAIS une valeur de code (hex, nom de variable, propriete CSS) que tu n'as pas vue --
+tu regardes une IMAGE compressee, pas le fichier source. Decris ce que tu VOIS ("un vert plus fonce",
+"un trait plus epais"), jamais une valeur precise que tu inventes pour paraitre technique.
 Si les scenes se tiennent, dis-le : ce n'est pas un defaut a inventer a tout prix.
 NOTRE STACK : React/Remotion, Tailwind, SVG anime. PAS d'After Effects/3D."""
 
@@ -1011,6 +1025,24 @@ def phase_coherence(episode: str, beat_num: int) -> None:
     direction artistique est bien demandee par beat, mais RIEN ne compare deux beats du meme
     episode -- mesure : 4 frames du meme film, ni fond ni temperature ni un seul element commun.
     A lancer avec au moins 2 beats-FINAL.mp4 presents ; sinon rien a comparer.
+
+    ⛔ FIABILITE MESUREE (pas supposee) -- epreuve reelle 2026-09-03/04, ggw-muraille-verte (6 beats,
+    episode publie, jamais touche depuis) :
+    - Kimi a signale "rupture de style" entre B2 (arbres qui meurent) et B5 (arbres qui reviennent
+      a la vie) -- alors que le commentaire du code dit explicitement "modele REPRIS DE B2/B3,
+      coherence visuelle du short, acquis #1". C'est le POINT NARRATIF de l'episode, pas un defaut :
+      Kimi n'a vu qu'une image figee par beat, jamais le texte ni l'intention.
+    - Kimi a cite des couleurs hex precises (#5d4037, #4caf50) qui n'existent NULLE PART dans le
+      code -- inventees en inferant depuis une image compressee 640px, presentees comme des faits.
+    - Kimi a affirme "absence totale de soleil" sur B6 -- le code contient explicitement un
+      "soleil/horizon discret : fade-in". Affirmation factuellement fausse.
+    - Gemini a echoue ce jour-la (503 UNAVAILABLE, surcharge temporaire) -- le script a degrade
+      proprement (erreur ecrite dans le .md, pas de crash), mais un run peut n'avoir qu'UNE voix.
+    -> COHERENCE_PROMPT renforce le 2026-09-04 pour reduire ces faux positifs (distinguer rupture
+    narrative de rupture technique, interdire d'inventer des valeurs de code). Mais la discipline
+    reste NON-NEGOCIABLE : chaque rupture signalee se VERIFIE contre le vrai code (grep sur le
+    fichier du beat cite) AVANT d'y toucher -- jamais appliquee telle quelle. Un rapport qui semble
+    coherent et cite des details precis peut etre entierement construit sur une image mal lue.
     """
     import glob
     import threading
