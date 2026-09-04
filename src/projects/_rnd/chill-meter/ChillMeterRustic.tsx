@@ -12,7 +12,7 @@
 //    Source : out/_r-and-d/chill-meter-3d/calage/CALAGE.json
 
 import React from "react";
-import { staticFile } from "remotion";
+import { staticFile, delayRender, continueRender } from "remotion";
 
 /** Dimensions natives du PNG de base. Le repere de TOUTES les constantes ci-dessous. */
 export const RUSTIC_W = 1195;
@@ -89,6 +89,19 @@ export type RusticProps = {
 
 export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frame, fps }) => {
   const t = frame / fps;
+
+  // ⛔ Le decor est une <image> SVG : contrairement au <Img> de Remotion, elle n'est PAS
+  // attendue par le renderer. Mesure du 04/09 : 1 frame sur 510 sortait SANS le PNG —
+  // il ne restait que nos couches vectorielles flottant sur le vide, et ca tombait sur la
+  // 1re frame de Fill50, donc pile a la jonction entre deux etats (defaut vu par Aziz).
+  // delayRender bloque la capture tant que l'image n'est pas decodee.
+  const [handle] = React.useState(() => delayRender("chargement du decor rustique"));
+  React.useEffect(() => {
+    const img = new Image();
+    img.onload = () => continueRender(handle);
+    img.onerror = () => continueRender(handle);
+    img.src = staticFile("_client-sim/chill-meter/device-rustique.png");
+  }, [handle]);
 
   // Respiration lente du halo : l'appareil est allume, jamais fige.
   const breathe = 0.5 + 0.5 * Math.sin((t * Math.PI * 2) / 2.6);
