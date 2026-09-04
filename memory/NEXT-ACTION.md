@@ -164,25 +164,26 @@ portait 2 fichiers jamais commités, récupérés par chance seulement. Toujours
 `git status`/modifications non commitées sur une branche AVANT de la supprimer, pas seulement ses
 commits.
 
-## CONTRAT UPWORK chill-meter — RÉVISION 2 envoyée le 2026-09-03, attente passive
+## 🔴🔴 CONTRAT UPWORK chill-meter — CHÂSSIS REJETÉ le 2026-09-04, chantier en cours
 
-**Premier contrat freelance, actif.** Offre v2 acceptée le 30/08 (350 $ → 297,50 $ net, 3 jalons,
-3/7/11 sept.).
+**Premier contrat freelance, actif.** 350 $ → 297,50 $ net, 3 jalons (3/7/11 sept.).
 
-✅ **Révision 2 (dernière prévue au contrat) envoyée le 03/09** : teinte gunmetal réglée (le
-camouflage brun signalé par Abigail a disparu, débloqué par consultation externe à 3 modèles +
-agent Opus en effort max), variante claire ajoutée et recommandée, centrage/labels/flocons
-corrigés, clip d'allumage 4s livré. 3 pièces jointes envoyées (2 planches JPG + 1 clip MP4),
-liens vérifiés. La piste 3D a été évoquée puis **écartée pour ce contrat** (coût export alpha +
-animation), notée comme R&D pure séparée plus haut dans ce fichier.
+⛔ **Abigail a RÉPONDU et a REJETÉ notre châssis SVG.** Elle exige comme base une image
+« rustique/lourde » qu'elle croit avoir fournie — c'est en fait **notre propre génération Gemini
+du 02/09** (corrélation 1.000 avec `degivrage/ref-degivree-B.png`), qu'on lui avait jointe comme
+justification de démarche.
 
-⏭️ **Rien à faire tant qu'Abigail n'a pas répondu.** Elle peut : choisir une teinte, demander une
-petite retouche (au cas par cas, pas garanti sans facturation), ou approuver directement.
-⚠️ Retraits Upwork bloqués tant que les infos fiscales ne sont pas fournies.
+⭐⭐⭐ **REPRISE : `memory/starters/STARTER-chill-meter-device-rustique.md`** — tout y est :
+la décision (son PNG comme décor + nos 4 couches animées par-dessus), le calage au pixel déjà
+mesuré et vérifié (`out/_r-and-d/chill-meter-3d/calage/CALAGE.json`), ses 6 demandes, les
+6 pièges payés le 04/09, et les acquis 3D mis en pause.
 
-→ **Source de vérité unique** : `memory/client-sim-tests/upwork-chill-meter/STATUS.md`.
+⏭️ **Prochaine action : l'ASSEMBLAGE** — poser les 22 segments, la LED (1113,451), les 5 labels
+verts (icônes exclues), le halo. Puis centrage sous la fenêtre vidéo + atterrissage sur y=717.
 
----
+⚠️ **Calendrier à revoir** : le rejet rebat les jalons 2 (7 sept) et 3 (11 sept).
+⚠️ **Décision commerciale en attente** (Aziz) : dire ou non à Abigail que l'image vient de nous.
+⏭️ **Jamais discuté : LE SON** — son brief liste des SFX précis par palier, périmètre inconnu.
 
 ## 🔧 SESSION D'AUDIT DU WORKSPACE — à planifier (constitué le 2026-08-27, rien d'urgent)
 
