@@ -437,7 +437,7 @@ export const ChillMeterOverlay: React.FC<{
             transformOrigin: "top left",
           }}
         >
-          <ChillMeterRustic chill={chill} powerOn={powerOn} frame={frame} fps={fps} />
+          <ChillMeterRustic chill={chill} powerOn={powerOn} frost={frost} frame={frame} fps={fps} />
         </div>
       ) : (
         <div

@@ -78,16 +78,33 @@ const LABELS: { t: string; x: number; y: number; w: number; h: number }[] = [
   { t: "ABOUT", x: 912, y: 645, w: 65, h: 18 },
 ];
 
+/**
+ * Les 3 planches de matiere givree, generees par Gemini i2i depuis le MEME device nu,
+ * puis extraites en calque : on ne garde que ce qui s'est ECLAIRCI (la glace ajoute de la
+ * lumiere), le reste redevient transparent. Sans cette extraction, l'image brute repeint
+ * tout l'objet en bleu et la rouille validee par la cliente disparait (mesure : le metal
+ * passait de R-B +7,9 a -30,7 ; apres extraction il revient a +2,0, sa cible etant +2,4).
+ * ⛔ Ne jamais poser l'image brute : toujours le calque.
+ */
+const GIVRE = [
+  { src: "_client-sim/chill-meter/givre-50.png", from: 0.0, to: 0.45 },
+  { src: "_client-sim/chill-meter/givre-75.png", from: 0.35, to: 0.75 },
+  { src: "_client-sim/chill-meter/givre-100.png", from: 0.65, to: 1.0 },
+] as const;
+
 export type RusticProps = {
   /** 0..100 — pilote le remplissage de la jauge. */
   chill: number;
   /** 0..1 — allumage du voyant et de l'ecran. */
   powerOn: number;
+  /** 0..1 — le givre qui pousse SUR l'appareil (sa section 5 : « Frost begins forming
+   *  directly on the meter »). Pilote le fondu entre les 3 planches de matiere. */
+  frost?: number;
   frame: number;
   fps: number;
 };
 
-export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frame, fps }) => {
+export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost = 0, frame, fps }) => {
   const t = frame / fps;
 
   // ⛔ Le decor est une <image> SVG : contrairement au <Img> de Remotion, elle n'est PAS
@@ -102,6 +119,27 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frame,
     img.onerror = () => continueRender(handle);
     img.src = staticFile("_client-sim/chill-meter/device-rustique.png");
   }, [handle]);
+
+  // Les 3 planches de givre, prechargees de la meme facon (meme piege : <image> SVG).
+  const [frostHandle] = React.useState(() => delayRender("chargement des planches de givre"));
+  React.useEffect(() => {
+    let left = GIVRE.length;
+    const done = () => { left -= 1; if (left === 0) continueRender(frostHandle); };
+    GIVRE.forEach((g) => {
+      const im = new Image();
+      im.onload = done;
+      im.onerror = done;
+      im.src = staticFile(g.src);
+    });
+  }, [frostHandle]);
+
+  // Fondu enchaine entre les planches : chacune monte puis reste, la suivante se pose
+  // par-dessus. On n'en RETIRE jamais — le givre ne peut que s'ajouter, ce qui repond a
+  // « The frost should appear to GROW naturally onto the meter as the chill level rises ».
+  const frostOpacity = (g: (typeof GIVRE)[number]) => {
+    if (frost <= g.from) return 0;
+    return Math.min(1, (frost - g.from) / (g.to - g.from));
+  };
 
   // Respiration lente du halo : l'appareil est allume, jamais fige.
   const breathe = 0.5 + 0.5 * Math.sin((t * Math.PI * 2) / 2.6);
@@ -180,6 +218,25 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frame,
         height={RUSTIC_H}
         preserveAspectRatio="none"
       />
+
+      {/* ============ 1bis. LE GIVRE SUR L'APPAREIL (sa section 5) ============ */}
+      {frost > 0.001 &&
+        GIVRE.map((g) => {
+          const op = frostOpacity(g);
+          if (op <= 0.001) return null;
+          return (
+            <image
+              key={g.src}
+              href={staticFile(g.src)}
+              x={0}
+              y={0}
+              width={RUSTIC_W}
+              height={RUSTIC_H}
+              opacity={op}
+              preserveAspectRatio="none"
+            />
+          );
+        })}
 
       {/* ================= 2. HALO DE L'ECRAN ================= */}
       {powerOn > 0.01 && (
