@@ -122,12 +122,24 @@ green power button **softly glows in and out** · feel **alive, but not distract
   « **No screen-wide visual effect should happen yet. Only the meter itself changes.** »
 - **75 %** : 1er effet d'ecran, « **bottom edge only** » · « Cold mist rises from the **bottom
   only** » · « **The rest of the screen should remain clear** »
-- **100 %** : givre sur les 4 bords · onde de choc depuis le meter vers le haut/la droite qui
-  « fades before fully reaching my face » · « Wind gusts, snow, icy particles [...] **across the
+- **100 %** : « Frost animates around **all 4 screen edges** » · onde de choc depuis le meter,
+  « expands **upward and toward the right side** » MAIS « **fades before fully reaching my face** »
+  (dit 2 fois, l. 118-120 et 337-338). La direction vers elle est VOULUE ; ce qui est interdit
+  c'est de l'atteindre. -> l'onde doit s'eteindre AVANT son visage ET ne pas couvrir la fenetre video. · « Wind gusts, snow, icy particles [...] **across the
   frame** » · « A small amount of snow may pass over my face » MAIS « My face should **never be
   heavily obscured** »
-  ⛔ Le "couloir protege" etait une INVENTION de ma part : au 100 % elle demande explicitement
-  l'effet SUR TOUT LE CADRE (cf. § PIEGES n°1).
+  ⛔⛔ **CORRECTION DU 04/09 (soir) — j'avais tort DEUX FOIS sur ce point.**
+  1er temps : j'ai invente un "couloir protege" autour de son visage (jamais demande).
+  2e temps : en me corrigeant, j'ai ecrit que la contrainte « does not block the music video »
+  ne valait QUE pour le placement de l'objet — parce que je ne l'avais vue que dans la section
+  *Meter Placement*. **FAUX.** Elle apparait DEUX FOIS, et la seconde (ligne 377) est dans
+  « **Important Creative Rules** », les regles generales du projet :
+  > « Make sure it does not block the music video. »
+  -> **La fenetre video ne doit JAMAIS etre couverte, ni par l'objet ni par les EFFETS**, a
+  aucun palier. Defaut repere par Aziz a l'oeil sur les cibles (givre accroche au cadre video).
+  -> Ce qui reste vrai : au 100 % l'effet couvre bien LE RESTE du cadre (« across the frame »).
+  ⭐ Lecon : une contrainte peut etre repetee dans PLUSIEURS sections avec des portees
+  differentes. Grep le brief ENTIER sur les mots-cles, ne pas conclure sur la 1re occurrence.
 
 ### § 8 — Exports (contractuel)
 « ready to import into **CapCut** » · « **Transparent background versions only** » · « **Separate

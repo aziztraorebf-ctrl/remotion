@@ -4,7 +4,144 @@
 > accepté par la cliente le 29/08, **offre v2 acceptée par Aziz le 30/08**. 350 $ → 297,50 $ net.
 > ⛔ Les décisions de ce fichier engagent contractuellement.
 
-## ⭐⭐⭐ ETAT AU 2026-09-02 (SOIR) : DEGIVRAGE REUSSI + BUG METAL-* CORRIGE
+## 🔴🔴 ETAT AU 2026-09-04 : CHASSIS REJETE — CHANGEMENT DE BASE, chantier en cours
+
+> ⭐⭐⭐ **REPRISE : `memory/starters/STARTER-chill-meter-device-rustique.md`** (tout le detail
+> du nouveau chantier : la decision, le calage mesure, les pieges, les fichiers).
+
+**Abigail a REJETE notre chassis** et exige comme base une image « rustique/lourde » qu'elle
+croit avoir fournie. ⭐⭐⭐ **C'est NOTRE image** : correlation 1.000 avec
+`degivrage/ref-degivree-B.png`, une generation Gemini du 02/09 qu'on lui avait JOINTE comme
+justification de demarche. Elle n'a ni source, ni calques : c'est un PNG 1195x896.
+
+**Decision prise** : utiliser son PNG **tel quel** comme decor (100 % de sa matiere) et poser
+nos 4 couches animees par-dessus (22 segments, LED, 5 labels verts, halo). Ni vectorisation
+(perd le grain, 2362 paths / 0 groupe), ni 3D (sa demande porte sur la MATIERE, pas la geometrie).
+
+**Calage DEJA FAIT et verifie a l'oeil** : `out/_r-and-d/chill-meter-3d/calage/CALAGE.json`
+(22 cases, LED (1113,451) r16,5, ecran, sol y=717, et les 5 labels avec icone/texte separes).
+
+**Ses 6 demandes** : texture rustique gardee (acquis) · ton gunmetal (SANS OBJET, c'est son
+image) · glow bleu · **labels verts sans les icones** · centrage sous la fenetre video ·
+**ne pas flotter** (y=717).
+
+### ✅ CE QUI TOURNE DEJA (session du 04/09 au soir, verifie au RENDU compose sur le plateau NU)
+- **Parcours complet 630 frames / 21 s** (entree + idle + 4 paliers), alpha reel `yuva444p12le`,
+  **0 frame defectueuse**. Video HQ + pages de suivi : `memory/INDEX-LIENS.md`.
+- 5 etats de jauge justes (0/5/11/17/22 cases) · entree conforme au brief **6/6** (§ 2 verifie
+  point par point) · ecran allume **lum 14,4 -> 45,9** (x3,2) · givre du device en 3 planches.
+
+**Les 3 techniques qui ont debloque** (detail dans le starter) :
+1. **Detourage par composante connexe**, pas par seuil — le PNG arrive en RGB opaque sur fond
+   noir, et un seuil laisse passer son halo d'ombre en echarpe translucide (1,17 % du cadre).
+2. ⛔⛔ **Extraction du givre en CALQUE** : ne garder que ce qui s'ECLAIRCIT. Gemini ne depose
+   pas du givre, il REPEINT l'objet en bleu (metal R-B +7,9 -> -30,7 : la rouille qu'elle vient
+   de valider disparait). Apres extraction : +2,0, sa cible etant +2,4. Ne JAMAIS poser l'image brute.
+3. ⛔ **`delayRender` sur toute `<image>` SVG** — non attendue par le renderer : 1 frame sur 510
+   sortait sans decor, pile sur une jonction d'etats (defaut vu a l'oeil par Aziz).
+
+### ⏭️ EN COURS — les 2 effets d'ecran (delegue a un agent Opus)
+Cibles validees par Aziz : `storyboard/RETENU-75-C3-blocs-bas.png` (banquise de blocs de glace
+au bord bas) · `RETENU-100-F3-fleurs-bords.png` (fleurs de glace poussant des 4 bords).
+Brief : `out/_r-and-d/chill-meter-3d/BRIEF-EFFETS-ECRAN.md` — exigence + arsenal + 6 interdits
+CHIFFRES + liberte du moyen (doctrine GUIDER SANS BRIDER, redecouverte par Aziz).
+⛔ **4 tentatives le prouvent : Gemini ne sait pas preserver une zone.** La fenetre video se
+protege AU CODE (clipPath), jamais par le prompt. Sa regle, dans « Important Creative Rules » :
+« Make sure it does not block the music video » — elle vaut pour les EFFETS, pas que le placement.
+
+⚠️ **Le livrable contractuel n'a PAS ete touche** — tout le travail vit sur `rnd/chill-meter-3d`.
+⚠️ **Calendrier a revoir** : le rejet rebat les jalons 2 (7 sept) et 3 (11 sept).
+⚠️ **Decision commerciale en attente** : dire ou non a Abigail que l'image vient de nous.
+⏭️ **Non traite : LE SON** (elle liste des SFX precis par palier, perimetre jamais discute).
+
+<details><summary>Historique — ETAT AU 2026-09-03 : revision 2 envoyee (teinte gunmetal)</summary>
+
+## ETAT AU 2026-09-03 : REVISION 2 TRAITEE ET ENVOYEE — teinte gunmetal reglee
+
+### 📤 ENVOYE A ABIGAIL (3 pieces jointes, noms neutres, verifiees par content-length)
+- `chill-meter-dark-gunmetal.jpg` — planche design isole + sur son plateau, teinte SOMBRE
+- `chill-meter-light-gunmetal.jpg` — meme planche, teinte CLAIRE (celle qu'on recommande)
+- `entrance-4s-on-set.mp4` — clip d'allumage (arrivee + atterrissage + 2,5 s d'ecran allume),
+  compose sur son plateau reel. **Explicitement cadre dans le message comme jalon 1 seulement**
+  (pas le givre/remplissage, ca c'est le jalon 2) pour ne rien promettre de premature.
+Liens : `memory/INDEX-LIENS.md`. Fichiers sources : `out/_r-and-d/chill-meter-upwork/envoi/`
+(itérations intermediaires archivees dans `_archive-iterations/` du meme dossier).
+
+Message : recommandation motivee vers la teinte claire (plus de marge de contraste pour le
+givre du jalon 2, la rouille reste lisible sous la glace au lieu de tomber a 0,19 % d'opacite
+comme sur la sombre) — SANS decider a sa place. Rappel explicite que c'est la **2e et derniere
+revision prevue au contrat** sur ce jalon, avec une ouverture non ecrite (pas dans le message,
+au cas par cas) a traiter une petite retouche si elle en signale une — decision d'Aziz, pas une
+clause contractuelle.
+
+### ✅ CE QUI A ETE REGLE CE TOUR (2026-09-03, apres son retour sur la revision 1)
+
+**Elle a choisi la variante FORTE** (rouille marquee) et valide la direction. Sa seule critique :
+la teinte « leans a little beige/brown throughout », elle demande du gunmetal gris froid.
+
+**Diagnostic qui a debloque, en 2 temps** :
+1. Mesure directe : sa reference est un gris QUASI NEUTRE (chroma 8,5-9,7), notre chassis etait
+   bien plus sature localement (jusqu'a 33 sur l'ensemble de l'image — biais par l'ecran allume).
+2. **3 modeles externes consultes en parallele (GPT-5.5 / Grok-4.6 / Gemini 3.1 Pro)**, avec LES
+   DEUX IMAGES cote a cote (pas la reference seule) + nos 4 tentatives echouees + la question
+   explicite « challengez notre hypothese ». Ils convergent : le probleme n'etait PAS la teinte
+   moyenne (aveugle a l'axe kaki) mais la STRUCTURE — les calques de rouille (`rf_*`) couvraient
+   67-83 % de chaque surface en lavis plein, pas en accent. Reduire leur opacite (l'hypothese que
+   j'allais tenter) etait refutee par avance : "wrong color, wrong value, wrong spatial statistics,
+   not masked by cavity/AO". Methode documentee : `memory/tools/consultation-llm-externe-probleme-visuel-bloque.md`.
+3. Agent Opus 5 en effort max, brief avec le diagnostic complet, a reconstruit la pile de matiere
+   (base froide -> grain monochrome -> occlusion -> rouille MASQUEE aux joints/vis -> speculaires
+   sur aretes). Resultat mesure sur le metal pur : chroma 8,5 (vs 9,7 chez elle), lum p90 118,8
+   (vs 126,1). Le camouflage a disparu.
+
+**2 variantes finales gardees** (prop `rust`) :
+- `gunmetal` (sombre) : lum p50 51,3, p90 118,8
+- `gunmetal-pale` (claire, NOUVELLE ce tour) : lum p50 58,9, **p90 133,3 — au-dessus de sa ref**
+
+⚠️⚠️ **3 faux departs techniques avant le bon resultat sur gunmetal-pale**, tous corriges AVANT
+tout commit visible :
+1. Rampes dupliquees en `pale_*` mais jamais referencees par le dessin -> rendu identique au
+   pixel pres, silencieux. Meme piege que le bug `METAL_RAMPS` deja documente.
+2. Edition EN PLACE de `FABLE_METAL_DEFS` (source COMMUNE avec `gunmetal` deja livree) -> a fait
+   bouger `gunmetal` au bit pres sans le vouloir. Detecte par diff avant tout commit.
+3. Bonne methode : dupliquer les 4 groupes du dessin (`G_PALE`) avec leurs `url(#machined_*)`
+   rediriges vers des gradients `pale_machined_*` neufs. Verifie par diff pixel-exact contre HEAD
+   a CHAQUE etape : les 4 autres variantes (`none`/`retenue`/`forte`/`gunmetal`) sont restees
+   identiques au bit pres tout du long.
+
+⚠️ 2 corrections supplementaires sur `gunmetal-pale`, la plaque titre et les boutons du bas
+trainant derriere le reste (constat d'Aziz, confirme par mesure) :
+- Voiles `aged_mottle`/`aged_grain` herites de la 1re passe Fable (jamais nettoyes, opacite
+  0,38-0,55 d'origine) reduits dans `G_PALE` uniquement.
+- Rouille des boutons (calque SEPARE, `rustLayer("boutons")`, distinct de `G_PALE`) allegee via
+  une nouvelle constante `RUST_GUNMETAL_PALE_LAYERS`, sans toucher a `gunmetal` sombre.
+
+### ✅ AUTRES CORRECTIONS DE CE TOUR
+- **Centrage sous la video** : elle redemandait « use the black side strips as guides » (le
+  cadre COMPLET, pas juste l'image). Remesure : `POS_X` 198 -> 180, ecart 18 px corrige a 0 px.
+- **Labels des boutons en VERT** (`#6fff6f`, meme vert que le voyant power) — sa demande
+  explicite, icones laissees en bleu comme precise. Confirme dans les mots exacts du brief.
+- **Flocons STATUS et CALIBRATE decolles du texte** (constat d'Aziz a l'oeil, confirme par
+  mesure : 62 px d'ecart pour STATUS contre 84 px pour ABOUT ; CALIBRATE mesurait 84 px mais
+  restait visuellement colle a cause de la longueur du mot). Alignes sur ABOUT, dans les 2
+  groupes de dessin (chassis normal + `G_PALE`) en un seul geste.
+- **Clip d'allumage 4 s** : `entrance` (2 s) + `idle` (2 s) concatenes avec alpha preservee
+  (`yuva444p12le`). Alpha initialement PERDU au rendu -> il faut `--pixel-format=yuva444p10le`
+  ET `--image-format=png` ensemble, le profil ProRes seul ne suffit pas. Framerate initialement
+  tombe a 25fps au lieu de 30 lors de la composition ffmpeg -> `-r 30` explicite. Saut theorique
+  de 0,02 sur l'opacite ecran au point de jonction (le `breathe` repart de t=0) : verifie sur 8
+  frames autour du raccord, invisible a l'oeil, accepte tel quel.
+
+### 3D — evoquee, non testee, ecartee pour ce contrat
+Aziz a demande si tester la 3D (R3F, Fable/Opus) pourrait reproduire sa reference a 100 %.
+Reponse : oui probablement pour l'eclairage, mais coute l'export alpha (jamais teste sur ce
+repo, un rendu 3D est opaque par defaut) et l'animation (props React simples en SVG vs
+shaders/materiaux en 3D). Note comme R&D pure, session separee, jamais commencee :
+`memory/NEXT-ACTION.md` § R&D 3D.
+
+### ⛔ PISTE 3D (point 6, jalon 1) — TOUJOURS SANS OBJET, cf. raisonnement ci-dessous
+
+<details><summary>Historique — ETAT AU 2026-09-02 (SOIR) : DEGIVRAGE REUSSI + BUG METAL-* CORRIGE</summary>
 
 ### ✅ LE DEGIVRAGE A MARCHE — la cible du point 6 existe enfin
 `scripts/tools/gemini-i2i.py --ref` sur `ref-cliente.png`, 2 jets, tous deux exploitables :
@@ -155,7 +292,11 @@ cible, le degivrage la donne en 2 appels Gemini, sans mailler un panneau plat qu
 mal. ⚠️ Ceci est une DEDUCTION, pas un test de la 3D (jamais essayee). Si on veut la voir tourner un
 jour par curiosite, elle reste possible — elle n'est simplement plus necessaire au point 6.
 
+</details>
+
 <details><summary>Historique — ETAT AU 2026-09-02 (matin) : revision 1 traitee</summary>
+
+</details>
 
 ## ⭐⭐⭐ ETAT AU 2026-09-02 : REVISION 1 DU JALON 1 TRAITEE — RIEN RENVOYE ENCORE
 
