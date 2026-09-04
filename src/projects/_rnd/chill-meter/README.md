@@ -1,3 +1,11 @@
+> ⚠️ **THIS DOCUMENT DESCRIBES THE PREVIOUS BUILD (pre 2026-09-04).**
+> The client rejected the hand-drawn SVG casing on 2026-09-04 and asked to move forward from the
+> rustic/weathered meter image instead. The device is being rebuilt on that image as its base,
+> with the animated layers (gauge segments, power LED, button labels, screen glow) composited on
+> top. The sections below about the casing, the metal finishes and the frost-free base are
+> **out of date** and will be rewritten before the next delivery.
+> Internal reference for the rebuild: `memory/starters/STARTER-chill-meter-device-rustique.md`
+
 # Max Chill Factor Meter — Source Project
 
 Animated overlay for the **AbiGirl Reacts** YouTube channel.
