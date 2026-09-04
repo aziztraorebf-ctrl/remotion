@@ -11,6 +11,11 @@ import React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, interpolate, spring, Easing } from "remotion";
 import { ChillMeterDevice, DEVICE_W, DEVICE_H, type MetalFinish, type RustPass } from "./ChillMeterDevice";
 import { GivreDefs, CRISTAUX, ECLATS, FLEURS } from "./GivrePlanche";
+import { ChillMeterRustic, RUSTIC_W, RUSTIC_H, RUSTIC_SOL_Y } from "./ChillMeterRustic";
+
+/** Quel chassis on rend. "rustic" = l'image choisie par la cliente (revision 2, 04/09).
+ *  "svg" = l'ancien chassis dessine, garde tant qu'elle n'a pas valide le nouveau. */
+export type Chassis = "rustic" | "svg";
 
 export type MeterState =
   | "entrance"
@@ -36,6 +41,19 @@ const POS_X = 180;
 // debordent vers le bas au jalon 2).
 const POS_Y = 706;
 const SCALE = 0.373595;
+
+// ---- Geometrie du chassis RUSTIQUE (l'image choisie par la cliente) ----
+// Le PNG fait 1195x896 alors que l'ancien SVG faisait 1448x1086 : l'echelle differe donc,
+// mais on vise la MEME largeur a l'ecran (541 px) et le MEME centre x que le chassis valide.
+const RUSTIC_SCALE = 0.452691; // 541 / 1195
+// ⭐ Centre 450 : « use the black side strips as guides » — centre sous le cadre video
+// COMPLET (bandes noires incluses), mesure sur son plateau x 29..872.
+const RUSTIC_POS_X = 179.5;
+// ⭐ Cale sur le SOL du device (y=717 dans l'image), pas sur le bas du PNG : sa demande n°6
+// est que le meter ne FLOTTE pas. Le sol tombe donc a 706 + 717*scale = 1031.
+const RUSTIC_POS_Y = 706;
+/** y ou le chassis rustique pose au sol, dans le repere 1920x1080. */
+const RUSTIC_SOL_SCREEN = RUSTIC_POS_Y + RUSTIC_SOL_Y * RUSTIC_SCALE;
 
 /** Effet de bord bas (75%) : brume + particules qui montent. */
 const BottomEdgeEffect: React.FC<{ intensity: number; frame: number; fps: number }> = ({
@@ -295,11 +313,12 @@ const FullChillEffect: React.FC<{ progress: number; frame: number; fps: number }
   );
 };
 
-export const ChillMeterOverlay: React.FC<{ state: MeterState; metal?: MetalFinish; rust?: RustPass }> = ({
-  state,
-  metal = "flat",
-  rust = "none",
-}) => {
+export const ChillMeterOverlay: React.FC<{
+  state: MeterState;
+  metal?: MetalFinish;
+  rust?: RustPass;
+  chassis?: Chassis;
+}> = ({ state, metal = "flat", rust = "none", chassis = "rustic" }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -391,27 +410,43 @@ export const ChillMeterOverlay: React.FC<{ state: MeterState; metal?: MetalFinis
     <AbsoluteFill>
       <BottomEdgeEffect intensity={bottomEdge} frame={frame} fps={fps} />
 
-      <div
-        style={{
-          position: "absolute",
-          left: POS_X + entX,
-          top: POS_Y + entY + bounce,
-          width: DEVICE_W * SCALE,
-          height: DEVICE_H * SCALE,
-          transform: `scale(${SCALE})`,
-          transformOrigin: "top left",
-        }}
-      >
-        <ChillMeterDevice
-          chill={chill}
-          frost={frost}
-          powerOn={powerOn}
-          frame={frame}
-          fps={fps}
-          metal={metal}
-          rust={rust}
-        />
-      </div>
+      {chassis === "rustic" ? (
+        <div
+          style={{
+            position: "absolute",
+            left: RUSTIC_POS_X + entX,
+            top: RUSTIC_POS_Y + entY + bounce,
+            width: RUSTIC_W * RUSTIC_SCALE,
+            height: RUSTIC_H * RUSTIC_SCALE,
+            transform: `scale(${RUSTIC_SCALE})`,
+            transformOrigin: "top left",
+          }}
+        >
+          <ChillMeterRustic chill={chill} powerOn={powerOn} frame={frame} fps={fps} />
+        </div>
+      ) : (
+        <div
+          style={{
+            position: "absolute",
+            left: POS_X + entX,
+            top: POS_Y + entY + bounce,
+            width: DEVICE_W * SCALE,
+            height: DEVICE_H * SCALE,
+            transform: `scale(${SCALE})`,
+            transformOrigin: "top left",
+          }}
+        >
+          <ChillMeterDevice
+            chill={chill}
+            frost={frost}
+            powerOn={powerOn}
+            frame={frame}
+            fps={fps}
+            metal={metal}
+            rust={rust}
+          />
+        </div>
+      )}
 
       <FullChillEffect progress={fullChill} frame={frame} fps={fps} />
     </AbsoluteFill>
