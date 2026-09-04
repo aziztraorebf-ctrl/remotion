@@ -95,6 +95,53 @@ Incertitudes assumees : rayon d'arrondi des cases (~4 px, lu au zoom) ; rayon 52
 
 ---
 
+## 📄 SES MOTS EXACTS — copies du PDF, ne plus travailler de memoire (04/09)
+
+> ⛔⛔ **Le 04/09 j'ai ecrit la sequence d'entree sans rouvrir le brief**, puis propose de la
+> "corriger" en faisant monter la jauge pendant l'entree — ce qui aurait VIOLE sa section 4
+> (le remplissage part de 0 %). Aziz a exige la verification : la sequence etait deja conforme
+> point par point. ⭐ Source : `BRIEF-CLIENT-ORIGINAL.pdf` (10 p.), extraire avec
+> `pdftotext -layout`. **Citer, ne jamais paraphraser de memoire.**
+
+### § 2 — Entrance + Power-On (VERIFIE CONFORME au code actuel, 6/6)
+- « enter from the **left side** near the music video » -> `entX` -720 -> 0 ✅
+- « move **diagonally downward** into its final position » -> `entY` -300 -> 0 ✅
+- « land with a **small impact** » -> IMPACT = frame 26 ✅
+- « a **tiny bounce** when it locks into place » -> -17 / +5 / 0 sur 17 frames ✅
+- « **After landing**, the meter should power on » -> `powerOn` demarre a IMPACT+8 ✅
+- « The green power button should **light up** » ✅
+⛔ **Rien n'est demande APRES l'allumage dans cette section.** La suite est § 3 Idle, pas un
+remplissage. Un clip d'entree qui "ne fait plus rien" a la fin est CONFORME, pas casse.
+
+### § 3 — Idle : « soft blue glow · subtle screen shimmer · light icy movement inside the meter ·
+green power button **softly glows in and out** · feel **alive, but not distracting** »
+
+### § 4/5/6/7 — la progression (l'ordre est contractuel)
+- **0->25 %** : « No frost should be on the meter yet », a 25 % « still look normal »
+- **50 %** : le givre se forme SUR L'APPAREIL (aretes, coins, vis, joints) —
+  « **No screen-wide visual effect should happen yet. Only the meter itself changes.** »
+- **75 %** : 1er effet d'ecran, « **bottom edge only** » · « Cold mist rises from the **bottom
+  only** » · « **The rest of the screen should remain clear** »
+- **100 %** : givre sur les 4 bords · onde de choc depuis le meter vers le haut/la droite qui
+  « fades before fully reaching my face » · « Wind gusts, snow, icy particles [...] **across the
+  frame** » · « A small amount of snow may pass over my face » MAIS « My face should **never be
+  heavily obscured** »
+  ⛔ Le "couloir protege" etait une INVENTION de ma part : au 100 % elle demande explicitement
+  l'effet SUR TOUT LE CADRE (cf. § PIEGES n°1).
+
+### § 8 — Exports (contractuel)
+« ready to import into **CapCut** » · « **Transparent background versions only** » · « **Separate
+files for each meter state** » · « exported as **full-screen transparent overlays, not cropped
+tightly** around the meter »
+
+### ⏭️ LE SON — ecart reel, jamais discute
+Elle liste des SFX **par palier** : entree = « small **thud** » + « small mechanical **click** » +
+« subtle **power-on** sound » · 50 % = freeze crackle, frosty pulse · 75 % = icy chime, wind ·
+100 % = strong cold whoosh, low-impact cold boom, icy chime, freeze crackle, wind gust, snow
+shimmer. **Perimetre contractuel inconnu** — a trancher avant le jalon 3.
+
+---
+
 ## 🎯 CE QU'ELLE DEMANDE (message du 2026-09-04, 6 points)
 
 1. Garder la texture rustique/patinee → ✅ acquis par construction (on garde son PNG)
@@ -138,7 +185,19 @@ Branche : `rnd/chill-meter-3d` (deja active). ⚠️ Le livrable contractuel
 5. **⛔ 3 echecs a re-doser des constantes a la main** (couleur/hauteur/trous de la vapeur) :
    chaque correction en cassait une autre. Densite et lisibilite du mouvement tirent sur la
    meme corde. → Deleguer des le 2e echec, comme le protocole l'exige.
-6. **⛔ Ne pas juger un overlay sur fond neutre** — toujours compose sur son plateau reel
+6. **⛔⛔ Ecrire une sequence sans rouvrir le brief** (04/09). J'ai decrit l'entree de memoire,
+   puis propose de "corriger" un temps mort en faisant monter la jauge pendant l'entree — ce qui
+   aurait viole sa § 4 (« The meter should **start at 0 %** »). Verification exigee par Aziz : la
+   sequence etait conforme 6/6. ⭐ Le PDF est SUR DISQUE (`BRIEF-CLIENT-ORIGINAL.pdf`), extraire
+   par `pdftotext -layout` et CITER. Un livrable client ne se code jamais sur un souvenir.
+   -> Ses mots exacts sont maintenant recopies dans ce starter, § SES MOTS EXACTS.
+7. **⛔ Le fond de controle contenait l'ANCIEN livrable** (04/09). J'ai compose mes rendus sur
+   `envoi/entrance-4s-on-set.mp4`, qui n'est pas le plateau nu mais un rendu deja composite avec
+   l'ancien chassis SVG : les deux s'empilaient. Aziz l'a vu a l'oeil et nomme exactement ; je
+   l'ai contredit en mesurant l'alpha de MON overlay (mesure juste, mauvaise couche) au lieu de
+   rendre le FOND SEUL. -> Plateau nu = `public/_shared/rnd/abigirl-decor.png`.
+   Detail : `memory/feedbacks/feedback_fond-de-controle-contient-le-livrable-precedent.md`
+8. **⛔ Ne pas juger un overlay sur fond neutre** — toujours compose sur son plateau reel
    (`out/_r-and-d/chill-meter-upwork/envoi/entrance-4s-on-set.mp4`, frame 10), avec PIL
    `alpha_composite` (l'alpha est DROIT, non premultiplie ; ffmpeg overlay le perd sur `select`).
 
