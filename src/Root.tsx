@@ -2,6 +2,7 @@ import { CfaShortHook9x16, CFA_SHORT_HOOK_FRAMES, CFA_SHORT_HOOK_FPS } from "./p
 import { CfaNuit1994Anime16x9, CFA_NUIT_1994_FRAMES, CFA_NUIT_1994_FPS } from "./projects/_rnd/fable-svg/CfaNuit1994Anime16x9";
 import { ChillMeterShowcase, SHOWCASE_FRAMES } from "./projects/_rnd/chill-meter/ChillMeterShowcase";
 import { ChillMeterOverlay } from "./projects/_rnd/chill-meter/ChillMeterOverlay";
+import { Effet75Seul, Effet100Seul, OndeSeule, EFFET75_FRAMES, EFFET100_FRAMES } from "./projects/_rnd/chill-meter/EffetsEcran";
 import { ShockWave3D, SHOCKWAVE_3D_FRAMES } from "./projects/_rnd/chill-meter/ShockWave3D";
 import { ShockWave3Dv2, SHOCKWAVE_V2_FRAMES } from "./projects/_rnd/chill-meter/ShockWave3D_v2";
 import { ColdVapor3D, COLD_VAPOR_FRAMES } from "./projects/_rnd/chill-meter/ColdVapor3D";
@@ -5850,6 +5851,52 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
           defaultProps={{ state: "idle" as const, metal: "machined" as const }}
+        />
+        {/* Les 2 effets d'ecran SEULS (sans le meter) — pour mesurer les zones protegees
+            sans que l'objet ne fausse le comptage de pixels. */}
+        <Composition
+          id="ChillMeter-Effet75-Seul"
+          component={Effet75Seul}
+          durationInFrames={EFFET75_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* L'onde SEULE — diagnostic : verifier qu'elle est bien dessinee et ou. */}
+        <Composition
+          id="ChillMeter-OndeSeule"
+          component={OndeSeule}
+          durationInFrames={EFFET100_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ChillMeter-Effet100-Seul"
+          component={Effet100Seul}
+          durationInFrames={EFFET100_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Les 2 paliers COMPLETS : meter + effet, tels qu'ils seront livres. */}
+        <Composition
+          id="ChillMeter-Fill75-Effets"
+          component={ChillMeterOverlay}
+          durationInFrames={105}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill75" as const, effects: "on" as const }}
+        />
+        <Composition
+          id="ChillMeter-Fill100-Effets"
+          component={ChillMeterOverlay}
+          durationInFrames={135}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill100" as const, effects: "on" as const }}
         />
         <Composition
           id="ChillMeter-Showcase"
