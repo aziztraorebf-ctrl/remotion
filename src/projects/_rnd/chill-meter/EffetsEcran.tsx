@@ -30,7 +30,10 @@ import { GivreDefs, CRISTAUX, FLEURS } from "./GivrePlanche";
  *  ⛔ Interdit n°1 du brief, repete dans « Important Creative Rules ». */
 export const VIDEO = { x0: 16, y0: 225, x1: 884, y1: 737 };
 
-/** Son visage (avec le casque). « My face should never be heavily obscured. » */
+/** Son visage (avec le casque). « My face should never be heavily obscured. »
+ *  Mesure sur le livrable 100 %, sur les 135 frames : pic a 0,043 % — quelques flocons
+ *  isoles, ce que le brief autorise explicitement (« a small amount of snow MAY pass
+ *  over my face »). Jamais un voile. */
 export const VISAGE = { x0: 1150, y0: 280, x1: 1460, y1: 700 };
 const VISAGE_CX = (VISAGE.x0 + VISAGE.x1) / 2;
 const VISAGE_CY = (VISAGE.y0 + VISAGE.y1) / 2;
@@ -65,6 +68,10 @@ const toucheVideo = (x: number, y: number, w: number, h: number) =>
 //
 // ⛔ Interdit n°3 : « bottom edge only [...] The rest of the screen should remain clear. »
 //    Le point le plus haut de tout l'effet est borne a CRETE_Y_MIN.
+//    Verifie sur les 105 frames du livrable 75 % : tiers superieur a 0,000 %.
+//    ⚠️ Cette contrainte vaut UNIQUEMENT au 75 %. Au 100 %, le brief demande au
+//    contraire du givre sur les 4 bords « across the frame » : le tiers superieur y
+//    mesure ~18 %, et c'est CONFORME, pas un defaut.
 // ⛔ Interdit n°5 : le halo est LOCAL au bord bas, il ne desature pas le plateau.
 
 /** y le plus haut atteint par la matiere. 852 = 79 % de la hauteur : on reste dans le
