@@ -245,9 +245,19 @@ diffus bleu** (saturation 0,572), pas des volutes de fumee. Le SVG/CSS y suffit 
 
 ## ⏭️ NON TRAITE — a trancher
 
-- **LE SON.** Son brief liste des SFX precis par palier (« strong cold whoosh », « low-impact
-  cold boom », « freeze crackle », « wind gust »). **Jamais discute, perimetre contractuel
-  inconnu.** A verifier avant le jalon 3.
+- **LE SON — ⛔ NE PAS le traiter comme un risque technique : c'est REGLE depuis le 29/08.**
+  15 SFX generes (ElevenLabs), **15/15 exploitables au 1er essai**, recette versionnee dans
+  `scripts/tools/sfx-familles-chill-meter.py`, fichiers dans
+  `out/_r-and-d/chill-meter-upwork/sfx-test/`. **3 familles nommees** : `organic` · `impact` ·
+  `retrotech` (dispositif d'Aziz : on fait CHOISIR entre des familles nommees, pas entre N
+  fichiers). Prototype de showcase groupe par etat : `showcase/SHOWCASE-sons-v1.mp4`.
+  ⭐ Plan pour le jalon 2 : livrer les memes animations avec 2-3 bandes-son differentes, elle
+  choisit ce qu'elle ENTEND. Detail : STATUS.md § SON — teste le 29/08.
+  ⛔⛔ **Ce qui reste ouvert est COMMERCIAL, pas technique** : le son est-il dans les 350 $, et
+  faut-il l'integrer au MOV ou le livrer en piste separee (sur CapCut, integre = non coupable
+  independamment) ? **Ne pas re-poser la question de la FAISABILITE** — vecu le 04/09, je l'ai
+  presentee 4-5 fois comme un angle mort alors que `sfx-test/` etait sur le disque. Confondre
+  « perimetre de facturation inconnu » avec « on ne sait pas le faire » est une faute de lecture.
 - **Le givre des 4 bords du 100 %** : existe en SVG, non retravaille.
 - **Recraft** : `recraftv4_1` marche en generation et coute MOINS cher que v3 (35 vs 40 credits),
   mais le MCP ne l'expose pas → API REST directe. 8 endpoints sur 14 absents du MCP.
