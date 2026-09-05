@@ -301,7 +301,7 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
           const head = isPartial ? 0.85 + breathe * 0.15 : 1;
 
           return (
-            <g key={i} opacity={op * head}>
+            <g key={i} opacity={op * head * powerOn}>
               {/* diffusion sous la case — donne l'impression que ca eclaire la dalle */}
               <rect
                 x={c.x - 2}
@@ -381,6 +381,8 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
           const pad = 3;
           return (
             <g key={l.t}>
+              {/* La plaque couvre le texte d'origine en TOUTES circonstances : appareil
+                  eteint, elle laisse une plaque nue et sombre — c'est l'etat correct. */}
               <rect
                 x={l.x - pad}
                 y={l.y - pad}
@@ -401,7 +403,12 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
                 textLength={l.w}
                 lengthAdjust="spacingAndGlyphs"
                 fill={VERT}
-                opacity={0.72 + powerOn * 0.28}
+                /* ⛔ Les labels sont ETEINTS tant que l'appareil ne l'est pas. Bug corrige le
+                   04/09 (repere par Aziz) : la formule etait `0.72 + powerOn * 0.28`, donc les
+                   textes restaient verts a 72 % sur un appareil eteint — aucune difference
+                   lisible entre allume et eteint, alors que c'est tout le sens de l'entree.
+                   Ils s'allument avec le voyant power et l'ecran, en meme temps. */
+                opacity={powerOn}
               >
                 {l.t}
               </text>
