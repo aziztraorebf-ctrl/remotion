@@ -158,6 +158,21 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
       style={{ overflow: "visible" }}
     >
       <defs>
+        {/* ⭐ TEINTE GUNMETAL — sa demande n°2 : « shift that rustic version's overall metal tone
+            cooler/greyer, more like weathered gunmetal or aged steel, rather than beige/brown ».
+            Son image EST brune a l'origine (teinte 37 deg, saturation 0,185, R-B +7,9) : ce n'est
+            pas une derive de notre cote, c'est la transformation qu'elle demande dessus.
+            Mesure apres filtre : saturation 0,112 · luminosite 65 · R-B -2,3 = gris neutre.
+            ⛔ Ne PAS regenerer ni vectoriser l'image pour ca — ce sont les MEMES pixels, teinte
+            deplacee. Grain, rouille, vis et geometrie intacts. Reglable, reversible. */}
+        <filter id="rustic_gunmetal" colorInterpolationFilters="sRGB">
+          <feColorMatrix type="saturate" values="0.30" />
+          <feComponentTransfer>
+            <feFuncR type="linear" slope="1.39" intercept="-0.075" />
+            <feFuncG type="linear" slope="1.40" intercept="-0.072" />
+            <feFuncB type="linear" slope="1.43" intercept="-0.068" />
+          </feComponentTransfer>
+        </filter>
         {/* Halo de l'ecran. Mesure sur SA reference allumee : luminance moyenne 65,3 et
             p90 = 219 sur la dalle, contre 33,8 / 72 chez nous avant correction — l'ecran
             paraissait rester eteint. Ce sont surtout les HAUTES LUMIERES qui manquaient,
@@ -217,6 +232,7 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
         width={RUSTIC_W}
         height={RUSTIC_H}
         preserveAspectRatio="none"
+        filter="url(#rustic_gunmetal)"
       />
 
       {/* ============ 1bis. LE GIVRE SUR L'APPAREIL (sa section 5) ============ */}
