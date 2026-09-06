@@ -184,11 +184,21 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
             ⛔ Ne PAS regenerer ni vectoriser l'image pour ca — ce sont les MEMES pixels, teinte
             deplacee. Grain, rouille, vis et geometrie intacts. Reglable, reversible. */}
         <filter id="rustic_gunmetal" colorInterpolationFilters="sRGB">
-          <feColorMatrix type="saturate" values="0.30" />
+          {/* ⭐⭐ REVU LE 06/09 — le filtre MANGEAIT la rouille qu'elle redemande le 05/09.
+              Mesure : la zone rouillee sort du PNG a R-B = +12,4 et arrivait a l'ecran a
+              -3,8. La cause n'etait PAS la saturation (simulee a 0,30/0,45/0,62/0,80 : la
+              zone reste negative partout) mais les PENTES du feComponentTransfer — le bleu
+              montait plus vite que le rouge (1,43 contre 1,39), sur TOUS les pixels.
+              Pentes egalisees, le refroidissement vient maintenant du seul intercept du
+              bleu. Mesure apres correction : chassis -1,4 (le gunmetal validé le 03/09
+              etait autour de -1,0) et zone rouillee +0,6, redevenue chaude.
+              ⛔ Le PNG B1 sans filtre est a +5,9, soit PLUS chaud que l'image beige qu'elle
+              a rejetee (+3,7) : ne pas retirer ce filtre, seulement le doser. */}
+          <feColorMatrix type="saturate" values="0.45" />
           <feComponentTransfer>
-            <feFuncR type="linear" slope="1.39" intercept="-0.075" />
-            <feFuncG type="linear" slope="1.40" intercept="-0.072" />
-            <feFuncB type="linear" slope="1.43" intercept="-0.068" />
+            <feFuncR type="linear" slope="1.41" intercept="-0.072" />
+            <feFuncG type="linear" slope="1.41" intercept="-0.072" />
+            <feFuncB type="linear" slope="1.40" intercept="-0.075" />
           </feComponentTransfer>
         </filter>
         {/* Halo de l'ecran. Mesure sur SA reference allumee : luminance moyenne 65,3 et
