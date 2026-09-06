@@ -49,6 +49,28 @@ Deux cas, meme mecanisme, sur le meme contrat :
 → Formuler le critere d'extraction comme un VERBE MESURABLE sur les pixels, jamais comme
 une zone dessinee a la main.
 
+## ⛔ CLIPPER UNE ZONE : ses formes ne sont PRESQUE JAMAIS des rectangles
+
+Poser une couche sur une matiere qu'on n'a pas dessinee suppose de delimiter OU elle
+s'applique. Le reflexe du `<rect>` est faux par defaut : une image generee est pleine de
+panneaux biseautes, d'angles coupes, de bords arrondis.
+
+**Vecu 2026-09-06, en DEUX passes sur le meme clip** (le bandeau « AbiGirl Reacts ») :
+1. Clip rectangulaire -> le bleu debordait sur les cotes ET laissait le haut du panneau
+   gris. Ca se lisait comme un aplat plaque par-dessus, pas comme du metal qui s'allume.
+2. Corrige en `<polygon>` (octogone)... mais avec un bord droit pose a x=1000 au lieu de
+   x=948 : le bleu bavait encore sur la piece cylindrique du chassis. **Aziz l'a vu sur le
+   rendu, apres que je l'aie declare corrige.**
+
+⭐ La 2e passe est la vraie lecon : corriger la FORME sans re-mesurer les BORNES, c'est le
+pattern « correction appliquee a moitie » — le symptome change, le defaut reste.
+
+**La methode** : zoomer le PNG avec une grille de reperes (crop + `ImageDraw` tous les
+10-25 px), LIRE les sommets a l'oeil, et les verifier des DEUX cotes (la symetrie n'est pas
+garantie). Une detection automatique par seuil echoue ici : elle capte le chassis autour.
+
+⛔ Et verifier sur le RENDU compose, pas sur le PNG : une bavure de 52 px se voit a l'ecran.
+
 ## LA CHECKLIST — avant d'integrer toute matiere generee
 
 1. **Puis-je la retirer d'une ligne ?** Si non, ce n'est pas une couche, c'est un remplacement.
@@ -56,7 +78,9 @@ une zone dessinee a la main.
    B0/B1/B2 produits en une passe le 06/09).
 3. **Qu'est-ce que le modele a change que je n'ai PAS demande ?** Mesurer, ne pas supposer :
    geometrie (bornes du device), zones protegees (ecran, LED, boutons), % de pixels touches.
-4. **Le client peut-il revenir a l'etat d'avant ?** C'est la vraie question : un client qui
+4. **Ma zone de clip epouse-t-elle la forme reelle ?** (cf. section ci-dessus) Un `<rect>`
+   sur une forme biseautee deborde et laisse des angles morts.
+5. **Le client peut-il revenir a l'etat d'avant ?** C'est la vraie question : un client qui
    ne peut pas revenir en arriere n'a plus le droit de changer d'avis — et il changera d'avis.
 
 ## ⚠️ CE QUE CA NE DISPENSE PAS DE FAIRE
