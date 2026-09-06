@@ -56,3 +56,30 @@ applique — ce chantier doit le rendre systematique, pas optionnel.
 
 Voir [[feedback_accord-dans-le-fil-nexiste-pas-dans-le-contrat]] ·
 `memory/client-sim-tests/upwork-chill-meter/STATUS.md` (§ la lecon a graver)
+
+## ⭐⭐⭐ CE QUE CE CONTRAT PRODUIT VRAIMENT (constat d'Aziz, 06/09)
+
+> « Chaque etape nous permet d'ameliorer le workflow client. On a cree des choses qu'on
+> n'aurait peut-etre jamais pense a faire par nous-memes, reutilisables exactement comme pour
+> la chaine YouTube. Chaque echec ou chaque probleme permet de batir quelque chose de beaucoup
+> plus solide pour le prochain. »
+
+**Un contrat client difficile est un GENERATEUR D'OUTILLAGE, pas seulement une facture.** Sa
+valeur ne se mesure pas au montant (350 $ pour un cahier des charges de motion designer) mais
+a ce qu'il force a construire — et qu'aucune session de R&D interne n'aurait produit, faute
+d'un client reel pour poser la contrainte.
+
+**Recolte du seul jalon 1 (22/08 -> 06/09)**, tout reutilisable hors de ce contrat :
+| Brique | Ne serait jamais nee sans ce contrat |
+|---|---|
+| `memory/doctrines/REVERSIBILITE-MATIERE-GENEREE.md` | il fallait un client qui change d'avis sur une matiere DEJA validee |
+| `scripts/tools/verifier-avant-envoi.py` + `CONFORMITE.json` | il fallait qu'un defaut parte chez un vrai client sans qu'on le voie |
+| `feedback_annoter-l-image-plutot-qu-expliquer-au-client` | il fallait 3 allers-retours sur un ecart mesure a 0,0 px |
+| Ce chantier de cadrage | il fallait un client qui ne soit jamais contraint d'arbitrer |
+| Clip octogonal, extraction par gain colorimetrique, ombre de contact | techniques nees d'un defaut precis, pas d'une exploration |
+
+⭐ **Le corollaire operationnel** : quand un contrat client coince, la question n'est pas
+seulement « comment je debloque ce livrable » mais **« quelle brique manquante ce blocage
+revele-t-il ? »** — et l'extraire pendant qu'on la paie, pas apres.
+⛔ Ne PAS en conclure qu'un contrat sous-paye se justifie par l'apprentissage : le
+desequilibre reste a corriger (c'est l'objet de ce fichier). Les deux sont vrais en meme temps.
