@@ -53,13 +53,23 @@ const SCALE = 0.373595;
 // ---- Geometrie du chassis RUSTIQUE (l'image choisie par la cliente) ----
 // Le PNG fait 1195x896 alors que l'ancien SVG faisait 1448x1086 : l'echelle differe donc,
 // mais on vise la MEME largeur a l'ecran (541 px) et le MEME centre x que le chassis valide.
-const RUSTIC_SCALE = 0.452691; // 541 / 1195
-// ⭐ Centre 450 : « use the black side strips as guides » — centre sous le cadre video
-// COMPLET (bandes noires incluses), mesure sur son plateau x 29..872.
-const RUSTIC_POS_X = 179.5;
-// ⭐ Cale sur le SOL du device (y=717 dans l'image), pas sur le bas du PNG : sa demande n°6
-// est que le meter ne FLOTTE pas. Le sol tombe donc a 706 + 717*scale = 1031.
-const RUSTIC_POS_Y = 706;
+const RUSTIC_SCALE = 0.423431; // 506 / 1195
+// ⭐⭐ RECALE LE 06/09 sur SA PROPRE MAQUETTE (BRIEF-CLIENT-ORIGINAL.pdf, p.7).
+// Mesure comparee : on reproduisait sa geometrie HORIZONTALE au pixel (meter a 62,5 % de la
+// largeur video contre 63,4 % chez elle ; centrage 0,0 px contre 7,5 px d'ecart chez elle),
+// et on ECRASAIT sa geometrie VERTICALE — 3,2 % de marge sous le meter contre 24,3 % chez
+// elle. Son meter est POSE dans un espace ; le notre etait plaque contre le bord bas.
+// C'est ce que ses mots decrivaient sans pouvoir le nommer (« ca ne touche pas le sol »,
+// « centre-le », 3 fois de suite).
+// ⛔ Sa maquette n'est PAS reproductible a l'identique : son cadrage differe du plateau
+// qu'elle nous a fourni (sa fenetre video occupe 33 % de la largeur, celle du plateau reel
+// 44 % ; il lui reste 51 % de hauteur sous la video, a nous 33 %). Appliquer ses proportions
+// telles quelles imposerait un meter reduit de moitie. Compromis retenu : sa taille relative
+// (60 % de la largeur video, elle est a 63 %) et la marge basse portee de 35 a 82 px.
+const RUSTIC_POS_X = 197.5;
+// Centre sur 450,5 — le meme que la fenetre video (bandes noires incluses, « use the black
+// side strips as guides »).
+const RUSTIC_POS_Y = 693.2;
 /** y ou le chassis rustique pose au sol, dans le repere 1920x1080. */
 const RUSTIC_SOL_SCREEN = RUSTIC_POS_Y + RUSTIC_SOL_Y * RUSTIC_SCALE;
 
