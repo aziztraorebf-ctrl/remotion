@@ -4,6 +4,31 @@
 > accepté par la cliente le 29/08, **offre v2 acceptée par Aziz le 30/08**. 350 $ → 297,50 $ net.
 > ⛔ Les décisions de ce fichier engagent contractuellement.
 
+## ✅ ÉTAT AU 2026-09-06 (SOIR) : JALON 1 ENVOYÉ, EN ATTENTE DE SA RÉPONSE
+
+Message + 5 pièces envoyés par Aziz (via catbox/Litterbox, liens dans le message). Ses 6
+demandes du 05/09 toutes traitées, mesurées, et vérifiées sur les rendus composés sur son
+plateau — voir le double-check dans la page d'envoi. Rien à faire tant qu'elle ne répond pas.
+
+**Ce qui reste ouvert, nommé dans le message envoyé** :
+- Le placement (image 4) : sa référence AI n'est pas reproductible sur son vrai plateau (video
+  41,6 % vs 43,9 % de largeur — quasi identique ; l'écart réel est que sa vidéo finit plus haut,
+  38 % d'espace libre contre 33 %). On lui demande de trancher : taille actuelle ou plus petit
+  avec plus d'air.
+- Le nom de la chaîne qui s'allume au 75 % (au-delà de « la plaque bleuit », le NOM s'illumine)
+  et le powered-on look : livrés en avance sur les jalons 2/3, nommés comme « not locked in yet ».
+
+Branche `rnd/chill-meter-3d`, alignée sur `ef92f017` dans les 2 worktrees au soir du 06/09.
+⚠️ `retro-gates-multi-session` (autre worktree) construit en parallèle les gates multi-session —
+NE PAS y toucher.
+
+**3 briques méthode extraites de ce seul jalon** (réutilisables sur tout futur contrat) :
+`memory/doctrines/REVERSIBILITE-MATIERE-GENEREE.md` ·
+`memory/feedbacks/feedback_annoter-l-image-plutot-qu-expliquer-au-client.md` ·
+`memory/projects/CHANTIER-CADRAGE-REVISIONS-CLIENT.md`.
+
+---
+
 ## 🔴🔴🔴 ETAT AU 2026-09-05 (SOIR) : SA REPONSE RECUE — 6 demandes, dont 3 HORS JALON 1
 
 > ⛔⛔ **NE PAS CODER AVANT D'AVOIR ENVOYE LE MESSAGE DE CADRAGE.** Deux de ses demandes sont

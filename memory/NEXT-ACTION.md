@@ -164,26 +164,33 @@ portait 2 fichiers jamais commités, récupérés par chance seulement. Toujours
 `git status`/modifications non commitées sur une branche AVANT de la supprimer, pas seulement ses
 commits.
 
-## 🔴🔴 CONTRAT UPWORK chill-meter — CHÂSSIS REJETÉ le 2026-09-04, chantier en cours
+## 🔴 CONTRAT UPWORK chill-meter — JALON 1 ENVOYÉ le 2026-09-06, en attente de réponse
 
-**Premier contrat freelance, actif.** 350 $ → 297,50 $ net, 3 jalons (3/7/11 sept.).
+**Premier contrat freelance, actif.** 350 $ → 297,50 $ net, 3 jalons (jalon 1 = 105 $, soumis
+02/09 non payé — la relance fait partie du message envoyé).
 
-⛔ **Abigail a RÉPONDU et a REJETÉ notre châssis SVG.** Elle exige comme base une image
-« rustique/lourde » qu'elle croit avoir fournie — c'est en fait **notre propre génération Gemini
-du 02/09** (corrélation 1.000 avec `degivrage/ref-degivree-B.png`), qu'on lui avait jointe comme
-justification de démarche.
+✅ **Message envoyé le 06/09** avec les 5 pièces (meter mis à jour, 50 vs 75, centrage annoté,
+sa référence vs son plateau, clip video). Ses 6 demandes du 05/09 toutes traitées et MESURÉES
+(rouille en accents, icônes bleues, powered-on + le NOM de la chaîne qui s'allume — pas
+seulement la plaque —, centrage 1,5 px, ombre de contact). Détail complet :
+`memory/client-sim-tests/upwork-chill-meter/STATUS.md` (dernière section, 06/09).
 
-⭐⭐⭐ **REPRISE : `memory/starters/STARTER-chill-meter-device-rustique.md`** — tout y est :
-la décision (son PNG comme décor + nos 4 couches animées par-dessus), le calage au pixel déjà
-mesuré et vérifié (`out/_r-and-d/chill-meter-3d/calage/CALAGE.json`), ses 6 demandes, les
-6 pièges payés le 04/09, et les acquis 3D mis en pause.
+⏭️ **PROCHAINE ACTION : lire sa réponse.** Rien à faire tant qu'elle ne répond pas. Si elle
+revient sur le placement (image 4, l'arbitrage taille/espace) ou sur le nom qui s'allume
+(présenté comme jalon 3 anticipé, « not locked in yet ») — les 2 points ouverts nommément
+dans le message.
 
-⏭️ **Prochaine action : l'ASSEMBLAGE** — poser les 22 segments, la LED (1113,451), les 5 labels
-verts (icônes exclues), le halo. Puis centrage sous la fenêtre vidéo + atterrissage sur y=717.
+⭐⭐⭐ **3 briques nées de ce seul jalon, réutilisables sur TOUT futur contrat client** :
+- `memory/doctrines/REVERSIBILITE-MATIERE-GENEREE.md` — poser une couche EXTRAITE sur une
+  matière déjà validée, jamais la remplacer ; clipper une zone épouse sa forme, jamais un `<rect>`
+- `memory/feedbacks/feedback_annoter-l-image-plutot-qu-expliquer-au-client.md` — un désaccord
+  SPATIAL se règle par une image annotée DÈS LE 1er tour, pas après 3 messages
+- `memory/projects/CHANTIER-CADRAGE-REVISIONS-CLIENT.md` — « tout est modifiable » communique
+  un coût marginal nul ; sujet à traiter AVANT le jalon 2 (session dédiée, pas en fin de session)
 
-⚠️ **Calendrier à revoir** : le rejet rebat les jalons 2 (7 sept) et 3 (11 sept).
-⚠️ **Décision commerciale en attente** (Aziz) : dire ou non à Abigail que l'image vient de nous.
-⏭️ **Jamais discuté : LE SON** — son brief liste des SFX précis par palier, périmètre inconnu.
+Branche : `rnd/chill-meter-3d` (worktree `wt-chill`, alignée sur le repo principal au 06/09
+soir). ⚠️ Un worktree parallèle (`retro-gates-multi-session`) construit en ce moment les gates
+multi-session sur ce même dossier — NE PAS y toucher, chantier d'une autre session.
 
 ## 🔧 SESSION D'AUDIT DU WORKSPACE — à planifier (constitué le 2026-08-27, rien d'urgent)
 

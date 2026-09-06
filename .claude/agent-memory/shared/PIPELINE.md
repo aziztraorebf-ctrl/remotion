@@ -14,13 +14,17 @@
 
 ---
 
-## 💰 CONTRAT UPWORK chill-meter (AbiGirl Reacts) — révision 2 envoyée, attente passive
+## 💰 CONTRAT UPWORK chill-meter (AbiGirl Reacts) — jalon 1 envoyé le 06/09, attente passive
 
-**Premier contrat freelance signé (30/08), actif.** 350 $ → 297,50 $ net, 3 jalons (3/7/11 sept).
-Révision 2 (dernière prévue au contrat) envoyée le 03/09 : teinte gunmetal réglée (camouflage brun
-disparu), variante claire ajoutée et recommandée, centrage/labels/flocons corrigés, clip d'allumage
-4s livré. 3D évoquée puis écartée pour ce contrat. ⏭️ Rien à faire tant qu'Abigail n'a pas répondu.
+**Premier contrat freelance signé (30/08), actif.** 350 $ → 297,50 $ net, 3 jalons (jalon 1 =
+105 $, soumis 02/09 non payé). 3e révision (au-delà des 2 prévues au contrat) envoyée le 06/09 :
+ses 6 demandes du 05/09 toutes traitées et mesurées — rouille en accents, icônes bleues, powered-on
++ le nom de la chaîne qui s'allume au 75 % (jalon 3 anticipé, nommé comme tel dans le message),
+centrage à 1,5 px, ombre de contact. ⏭️ Rien à faire tant qu'Abigail n'a pas répondu.
 → Source de vérité : `memory/client-sim-tests/upwork-chill-meter/STATUS.md`.
+→ 3 briques méthode nées de ce jalon : `memory/doctrines/REVERSIBILITE-MATIERE-GENEREE.md` ·
+`memory/feedbacks/feedback_annoter-l-image-plutot-qu-expliquer-au-client.md` ·
+`memory/projects/CHANTIER-CADRAGE-REVISIONS-CLIENT.md`.
 
 ---
 
