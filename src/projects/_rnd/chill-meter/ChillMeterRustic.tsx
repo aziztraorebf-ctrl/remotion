@@ -94,9 +94,11 @@ const ICONE_Y1 = 672;
  *  le texte est DANS son image, on le recolore sans le redessiner. */
 const TITRE = { x0: 200, y0: 298, x1: 990, y1: 350 };
 
-/** Le bandeau « AbiGirl Reacts » grave dans le metal (x 195..1000, y 150..280).
- *  Il s'illumine au 75 % — sa demande de differenciation 50/75. */
-const BANDEAU = { x0: 195, y0: 148, x1: 1002, y1: 282 };
+/** Le bandeau « AbiGirl Reacts » grave dans le metal. ⛔ Ce n'est PAS un rectangle :
+ *  c'est un OCTOGONE allonge aux angles coupes. Un clip rectangulaire debordait sur les
+ *  cotes et laissait le haut du panneau gris — l'illumination se lisait comme un aplat
+ *  plaque par-dessus (defaut vu par Aziz le 06/09). Sommets releves dans le PNG. */
+const BANDEAU_PTS = "252,130 976,130 1000,154 1000,222 976,246 252,246 228,222 228,154";
 
 const LABELS: { t: string; x: number; y: number; w: number; h: number }[] = [
   { t: "STATUS", x: 192, y: 644, w: 70, h: 19 },
@@ -281,7 +283,7 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
           <clipPath id="clip_ic_CALIBRATE"><rect x={665} y={ICONE_Y0} width={26} height={ICONE_Y1 - ICONE_Y0} /></clipPath>
           <clipPath id="clip_ic_ABOUT"><rect x={879} y={ICONE_Y0} width={26} height={ICONE_Y1 - ICONE_Y0} /></clipPath>
           <clipPath id="clip_titre"><rect x={TITRE.x0} y={TITRE.y0} width={TITRE.x1 - TITRE.x0} height={TITRE.y1 - TITRE.y0} /></clipPath>
-          <clipPath id="clip_bandeau"><rect x={BANDEAU.x0} y={BANDEAU.y0} width={BANDEAU.x1 - BANDEAU.x0} height={BANDEAU.y1 - BANDEAU.y0} /></clipPath>
+          <clipPath id="clip_bandeau"><polygon points={BANDEAU_PTS} /></clipPath>
           {/* Le titre « MAX CHILL DETECTION » vire au bleu lumineux a l'allumage. Comme les
               icones : sa luminance pilote un degrade, son trace est conserve au pixel. */}
           <filter id="rustic_titreBleu" colorInterpolationFilters="sRGB">
