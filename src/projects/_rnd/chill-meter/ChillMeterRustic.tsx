@@ -98,7 +98,7 @@ const TITRE = { x0: 200, y0: 298, x1: 990, y1: 350 };
  *  c'est un OCTOGONE allonge aux angles coupes. Un clip rectangulaire debordait sur les
  *  cotes et laissait le haut du panneau gris — l'illumination se lisait comme un aplat
  *  plaque par-dessus (defaut vu par Aziz le 06/09). Sommets releves dans le PNG. */
-const BANDEAU_PTS = "252,130 976,130 1000,154 1000,222 976,246 252,246 228,222 228,154";
+const BANDEAU_PTS = "272,133 916,133 948,163 948,210 916,240 272,240 240,210 240,163";
 
 const LABELS: { t: string; x: number; y: number; w: number; h: number }[] = [
   { t: "STATUS", x: 192, y: 644, w: 70, h: 19 },
