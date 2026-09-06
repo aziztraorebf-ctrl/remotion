@@ -23,6 +23,10 @@ export const RUSTIC_SOL_Y = 717;
 
 /** Vert du voyant power, repris pour les labels (sa demande n°4). */
 const VERT = "#6fff6f";
+/** Le bleu glace des icones — sa demande du 05/09 : « make the symbols/icons to the left of
+ *  each word blue so they stand out more and match the icy-blue look of the meter ».
+ *  Repris de la dalle de l'ecran (B 103,6 contre R 27,7), pour que les deux se repondent. */
+const BLEU_ICONE = "#5ecdff";
 
 /**
  * Les 22 cases de la jauge, mesurees une par une (liseres verticaux, position sub-pixel).
@@ -70,6 +74,20 @@ const ECRAN = { x: 117, y: 285, w: 901, h: 301, r: 52 };
  * ⛔ Par SUPERPOSITION, jamais par inpaint : teste le 04/09, l'inpaint ne sait pas re-ecrire
  *    du texte, les mots deviennent des taches lumineuses.
  */
+/** Les 5 icones, mesurees DANS le PNG (starter, verifie le 06/09). Elles ne sont PAS du
+ *  texte : elles font partie de l'image de la cliente. On ne peut donc pas les re-ecrire
+ *  comme les labels — on les RECOLORE par un filtre applique a leur seule zone.
+ *  Bornes verticales : y 636..672 (les icones debordent la bande des lettres, 644..665). */
+const ICONES: { t: string; x0: number; x1: number }[] = [
+  { t: "STATUS", x0: 160, x1: 184 },
+  { t: "DATA", x0: 334, x1: 361 },
+  { t: "HUD", x0: 503, x1: 532 },
+  { t: "CALIBRATE", x0: 665, x1: 690 },
+  { t: "ABOUT", x0: 879, x1: 904 },
+];
+const ICONE_Y0 = 636;
+const ICONE_Y1 = 672;
+
 const LABELS: { t: string; x: number; y: number; w: number; h: number }[] = [
   { t: "STATUS", x: 192, y: 644, w: 70, h: 19 },
   { t: "DATA", x: 372, y: 645, w: 47, h: 18 },
@@ -222,6 +240,32 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
         <filter id="rustic_softLed" x="-150%" y="-150%" width="400%" height="400%">
           <feGaussianBlur stdDeviation="5" />
         </filter>
+        {/* ⭐ RECOLORATION DES ICONES EN BLEU — sa demande du 05/09.
+            Les icones sont DANS son PNG : impossible de les re-ecrire comme les labels
+            (qui sont, eux, du texte SVG pose sur un aplat). On garde donc son dessin exact
+            et on ne remplace que la TEINTE : la luminance d'origine pilote un degrade qui
+            va du noir de la plaque au bleu glace. Le trace, l'epaisseur et l'antialiasing
+            de la cliente sont conserves au pixel — seule la couleur change.
+            ⛔ Ne PAS repeindre par un aplat : ca ecraserait le dessin en une tache. */}
+          <clipPath id="clip_ic_STATUS"><rect x={160} y={ICONE_Y0} width={25} height={ICONE_Y1 - ICONE_Y0} /></clipPath>
+          <clipPath id="clip_ic_DATA"><rect x={334} y={ICONE_Y0} width={28} height={ICONE_Y1 - ICONE_Y0} /></clipPath>
+          <clipPath id="clip_ic_HUD"><rect x={503} y={ICONE_Y0} width={30} height={ICONE_Y1 - ICONE_Y0} /></clipPath>
+          <clipPath id="clip_ic_CALIBRATE"><rect x={665} y={ICONE_Y0} width={26} height={ICONE_Y1 - ICONE_Y0} /></clipPath>
+          <clipPath id="clip_ic_ABOUT"><rect x={879} y={ICONE_Y0} width={26} height={ICONE_Y1 - ICONE_Y0} /></clipPath>
+        <filter id="rustic_iconeBleue" colorInterpolationFilters="sRGB">
+          <feColorMatrix
+            type="matrix"
+            values="0.33 0.34 0.33 0 0
+                    0.33 0.34 0.33 0 0
+                    0.33 0.34 0.33 0 0
+                    0    0    0    1 0"
+          />
+          <feComponentTransfer>
+            <feFuncR type="table" tableValues="0.04 0.37" />
+            <feFuncG type="table" tableValues="0.06 0.80" />
+            <feFuncB type="table" tableValues="0.09 1.00" />
+          </feComponentTransfer>
+        </filter>
       </defs>
 
       {/* ================= 1. LE DECOR — son image, intacte ================= */}
@@ -368,6 +412,27 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
           />
         </g>
       )}
+
+      {/* ============ 4bis. LES 5 ICONES, RECOLOREES EN BLEU ============
+          Sa demande du 05/09 : « the symbols/icons to the left of each word blue ».
+          ⚠️ Elle avait dit l'inverse le 03/09 (« can stay their current color ») — c'est
+          un changement d'avis assume de sa part, pas une correction de notre travail.
+          Chaque zone re-affiche le decor a travers le filtre de teinte, en clip.
+          Elles s'allument avec l'appareil, comme les labels et le voyant. */}
+      <g opacity={powerOn}>
+          {ICONES.map((ic) => (
+            <g key={ic.t} clipPath={`url(#clip_ic_${ic.t})`}>
+              <image
+                href={staticFile("_client-sim/chill-meter/device-rustique.png")}
+                x={0}
+                y={0}
+                width={RUSTIC_W}
+                height={RUSTIC_H}
+                filter="url(#rustic_iconeBleue)"
+              />
+            </g>
+          ))}
+      </g>
 
       {/* ================= 5. LES 5 LABELS EN VERT =================
           Le texte d'origine est bleu-gris clair sur plaque sombre : on le couvre par un
