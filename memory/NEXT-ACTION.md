@@ -188,8 +188,8 @@ dans le message.
 - `memory/projects/CHANTIER-CADRAGE-REVISIONS-CLIENT.md` — « tout est modifiable » communique
   un coût marginal nul ; sujet à traiter AVANT le jalon 2 (session dédiée, pas en fin de session)
 
-Branche : `rnd/chill-meter-3d` (worktree `wt-chill`, alignée sur le repo principal au 06/09
-soir). ⚠️ Un worktree parallèle (`retro-gates-multi-session`) construit en ce moment les gates
+Branche de travail : `fix/chill-meter-ancrage-sol` (repo principal), mergée par avance rapide
+dans `rnd/chill-meter-3d` (worktree `wt-chill`) — les deux pointent sur le même commit au 06/09. ⚠️ Un worktree parallèle (`retro-gates-multi-session`) construit en ce moment les gates
 multi-session sur ce même dossier — NE PAS y toucher, chantier d'une autre session.
 
 ## 🔧 SESSION D'AUDIT DU WORKSPACE — à planifier (constitué le 2026-08-27, rien d'urgent)

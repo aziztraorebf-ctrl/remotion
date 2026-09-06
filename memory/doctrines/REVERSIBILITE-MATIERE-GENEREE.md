@@ -88,6 +88,21 @@ compare au risque de trancher une decision visuelle sur un artefact de simulatio
 cas ici : quelques `npx remotion still` suffisent), soit ne simuler QUE pour se donner un
 ordre de grandeur avant de rendre — jamais comme verdict final.
 
+## ⛔ TEXTE GRAVÉ EN RELIEF (pas peint) : aucun seuil de luminance ne l'isole
+
+Vecu 2× sur ce meme contrat, jamais remonte hors commentaire de code avant ce jour.
+Un nom/texte GRAVE dans une image generee (relief eclaire par le haut, pas une couleur
+plate) ne peut PAS s'extraire par seuil de luminance — ca ne capte que les ARETES
+eclairees, jamais le corps du caractere (teste et mesure le 06/09, cf. ChillMeterRustic.tsx
+const NOM_CHAINE).
+
+→ La seule methode qui marche : REDESSINER le texte en SVG par-dessus, cale au pixel sur
+le trace mesure (bornes x/y relevees a la grille, comme pour un clip — meme discipline de
+mesure que la section ci-dessus), et animer CE texte-la. Le relief grave reste dessous et
+continue de porter la matiere ; le SVG n'ajoute que la lumiere.
+⭐ Prouve 2 fois sur le meme device (les 5 labels des boutons, puis le nom de la chaine) :
+c'est une technique reutilisable, pas un bricolage ponctuel.
+
 ## LA CHECKLIST — avant d'integrer toute matiere generee
 
 1. **Puis-je la retirer d'une ligne ?** Si non, ce n'est pas une couche, c'est un remplacement.
