@@ -100,6 +100,15 @@ const TITRE = { x0: 200, y0: 298, x1: 990, y1: 350 };
  *  plaque par-dessus (defaut vu par Aziz le 06/09). Sommets releves dans le PNG. */
 const BANDEAU_PTS = "272,133 916,133 948,163 948,210 916,240 272,240 240,210 240,163";
 
+/** Le nom de la chaine, redessine en SVG par-dessus le texte GRAVE de son image.
+ *  ⛔ Les lettres du PNG ne sont pas peintes mais gravees en relief : aucun seuil de
+ *  luminance ne les isole (teste 06/09 — il ne capte que les aretes eclairees).
+ *  On recouvre donc le trace mesure (x 358..852, hauteur 58, centre y=186) par un <text>
+ *  qu'on peut allumer librement. Meme technique que les 5 labels des boutons.
+ *  fontSize 66 et non 62 : legerement plus large que le grave, pour le couvrir entierement
+ *  jusqu'aux extremites (le « A » et le « s » debordaient a 62). */
+const NOM_CHAINE = { texte: "AbiGirl Reacts", cx: 605, cy: 187, size: 66, w: 500 };
+
 const LABELS: { t: string; x: number; y: number; w: number; h: number }[] = [
   { t: "STATUS", x: 192, y: 644, w: 70, h: 19 },
   { t: "DATA", x: 372, y: 645, w: 47, h: 18 },
@@ -286,6 +295,14 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
           <clipPath id="clip_bandeau"><polygon points={BANDEAU_PTS} /></clipPath>
           {/* Le titre « MAX CHILL DETECTION » vire au bleu lumineux a l'allumage. Comme les
               icones : sa luminance pilote un degrade, son trace est conserve au pixel. */}
+          {/* Halo du nom de chaine : le texte lumineux diffuse sur le metal autour. */}
+          <filter id="rustic_nomGlow" x="-12%" y="-45%" width="124%" height="190%">
+            <feGaussianBlur stdDeviation="5" result="b" />
+            <feMerge>
+              <feMergeNode in="b" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
           <filter id="rustic_titreBleu" colorInterpolationFilters="sRGB">
             <feColorMatrix
               type="matrix"
@@ -525,6 +542,29 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
             height={RUSTIC_H}
             filter="url(#rustic_bandeauBleu)"
           />
+        </g>
+      )}
+
+      {/* ⭐ Le NOM DE LA CHAINE s'allume avec le bandeau. Son idee du 05/09 va jusque-la :
+          « have AbiGirl Reacts light up in blue and glow at 75% » — ce n'est pas seulement
+          la plaque qui bleuit, c'est le NOM qui s'illumine. Le metal grave reste dessous et
+          continue de porter la matiere ; le texte SVG ne fait qu'ajouter la lumiere. */}
+      {bandeauOn > 0.005 && (
+        <g opacity={bandeauOn * 0.86} filter="url(#rustic_nomGlow)">
+          <text
+            x={NOM_CHAINE.cx}
+            y={NOM_CHAINE.cy}
+            textAnchor="middle"
+            dominantBaseline="central"
+            fontFamily="'Arial Black', 'Arial Bold', Arial, sans-serif"
+            fontWeight={900}
+            fontSize={NOM_CHAINE.size}
+            textLength={NOM_CHAINE.w}
+            lengthAdjust="spacingAndGlyphs"
+            fill="#8fd9ff"
+          >
+            {NOM_CHAINE.texte}
+          </text>
         </g>
       )}
 
