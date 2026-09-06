@@ -88,6 +88,16 @@ const ICONES: { t: string; x0: number; x1: number }[] = [
 const ICONE_Y0 = 636;
 const ICONE_Y1 = 672;
 
+/** « MAX CHILL DETECTION » — mesure dans le PNG le 06/09 (x 205..983, y 303..344).
+ *  Sa demande du 05/09 : « I'd also like MAX CHILL DETECTION to gain some blue color/glow
+ *  when the meter powers on so that area feels more alive ». Meme mecanique que les icones :
+ *  le texte est DANS son image, on le recolore sans le redessiner. */
+const TITRE = { x0: 200, y0: 298, x1: 990, y1: 350 };
+
+/** Le bandeau « AbiGirl Reacts » grave dans le metal (x 195..1000, y 150..280).
+ *  Il s'illumine au 75 % — sa demande de differenciation 50/75. */
+const BANDEAU = { x0: 195, y0: 148, x1: 1002, y1: 282 };
+
 const LABELS: { t: string; x: number; y: number; w: number; h: number }[] = [
   { t: "STATUS", x: 192, y: 644, w: 70, h: 19 },
   { t: "DATA", x: 372, y: 645, w: 47, h: 18 },
@@ -161,6 +171,14 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
 
   // Respiration lente du halo : l'appareil est allume, jamais fige.
   const breathe = 0.5 + 0.5 * Math.sin((t * Math.PI * 2) / 2.6);
+
+  // Le bandeau « AbiGirl Reacts » s'allume ENTRE le 50 % et le 75 % : c'est ce qui separe
+  // les deux paliers qu'elle trouvait trop proches. Idee d'Abigail (05/09), reprise telle
+  // quelle. Palier, pas rampe : rien jusqu'a 55, plein a 75.
+  const bandeauOn =
+    powerOn *
+    Math.max(0, Math.min(1, (chill - 55) / 20)) *
+    (0.80 + breathe * 0.20);
 
   // Nombre de cases allumees. La derniere case s'allume progressivement -> pas de saut.
   const exact = (chill / 100) * CASES.length;
@@ -262,6 +280,38 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
           <clipPath id="clip_ic_HUD"><rect x={503} y={ICONE_Y0} width={30} height={ICONE_Y1 - ICONE_Y0} /></clipPath>
           <clipPath id="clip_ic_CALIBRATE"><rect x={665} y={ICONE_Y0} width={26} height={ICONE_Y1 - ICONE_Y0} /></clipPath>
           <clipPath id="clip_ic_ABOUT"><rect x={879} y={ICONE_Y0} width={26} height={ICONE_Y1 - ICONE_Y0} /></clipPath>
+          <clipPath id="clip_titre"><rect x={TITRE.x0} y={TITRE.y0} width={TITRE.x1 - TITRE.x0} height={TITRE.y1 - TITRE.y0} /></clipPath>
+          <clipPath id="clip_bandeau"><rect x={BANDEAU.x0} y={BANDEAU.y0} width={BANDEAU.x1 - BANDEAU.x0} height={BANDEAU.y1 - BANDEAU.y0} /></clipPath>
+          {/* Le titre « MAX CHILL DETECTION » vire au bleu lumineux a l'allumage. Comme les
+              icones : sa luminance pilote un degrade, son trace est conserve au pixel. */}
+          <filter id="rustic_titreBleu" colorInterpolationFilters="sRGB">
+            <feColorMatrix
+              type="matrix"
+              values="0.33 0.34 0.33 0 0
+                      0.33 0.34 0.33 0 0
+                      0.33 0.34 0.33 0 0
+                      0    0    0    1 0"
+            />
+            <feComponentTransfer>
+              <feFuncR type="table" tableValues="0.02 0.45" />
+              <feFuncG type="table" tableValues="0.05 0.86" />
+              <feFuncB type="table" tableValues="0.10 1.00" />
+            </feComponentTransfer>
+            <feGaussianBlur stdDeviation="0.7" />
+          </filter>
+          {/* Le bandeau grave prend une lueur bleue au 75 % — sa differenciation 50/75. */}
+          <filter id="rustic_bandeauBleu" colorInterpolationFilters="sRGB">
+            <feColorMatrix type="matrix"
+              values="0.30 0.35 0.30 0 0
+                      0.30 0.35 0.30 0 0
+                      0.30 0.35 0.30 0 0
+                      0    0    0    1 0" />
+            <feComponentTransfer>
+              <feFuncR type="table" tableValues="0.03 0.42" />
+              <feFuncG type="table" tableValues="0.07 0.82" />
+              <feFuncB type="table" tableValues="0.12 1.00" />
+            </feComponentTransfer>
+          </filter>
         <filter id="rustic_iconeBleue" colorInterpolationFilters="sRGB">
           <feColorMatrix
             type="matrix"
@@ -419,6 +469,59 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
             ry={POWER.r * 0.24}
             fill="#eaffea"
             opacity={0.6}
+          />
+        </g>
+      )}
+
+      {/* ============ 4ter. « MAX CHILL DETECTION » S'ILLUMINE ============
+          Sa demande du 05/09 : « I'd also like MAX CHILL DETECTION to gain some blue
+          color/glow when the meter powers on so that area feels more alive and connected
+          to the chill theme. » Le titre est grave dans SON image : on le recolore, on ne
+          le redessine pas. Il respire avec l'ecran, l'allumage suit `powerOn`. */}
+      <g opacity={powerOn * (0.82 + breathe * 0.18)} clipPath="url(#clip_titre)">
+        <image
+          href={staticFile("_client-sim/chill-meter/device-rustique.png")}
+          x={0}
+          y={0}
+          width={RUSTIC_W}
+          height={RUSTIC_H}
+          filter="url(#rustic_titreBleu)"
+        />
+      </g>
+
+      {/* ============ 4quater. EDGE LIGHTING — le contour de l'appareil ============
+          « light blue edge lighting around the device [...] I don't want it overly bright,
+          but it should clearly feel powered on. » Une lueur froide qui court le long du
+          cadre : elle nait de l'ecran allume et leche le metal autour. */}
+      {powerOn > 0.01 && (
+        <rect
+          x={ECRAN.x - 26}
+          y={ECRAN.y - 26}
+          width={ECRAN.w + 52}
+          height={ECRAN.h + 52}
+          rx={ECRAN.r + 22}
+          fill="none"
+          stroke="#7ad4ff"
+          strokeWidth={9}
+          opacity={powerOn * (0.20 + breathe * 0.10)}
+          filter="url(#rustic_screenBloom)"
+        />
+      )}
+
+      {/* ============ 4quinquies. LE BANDEAU S'ALLUME AU 75 % ============
+          Sa demande du 05/09 : « the jump between 50% and 75% does not feel different
+          enough [...] one idea is to have AbiGirl Reacts light up in blue and glow at 75% ».
+          C'est SON idee, reprise telle quelle : le bandeau grave reste metal jusqu'au 50 %,
+          puis s'illumine entre 55 et 75 % — un evenement, pas une montee continue. */}
+      {bandeauOn > 0.005 && (
+        <g opacity={bandeauOn} clipPath="url(#clip_bandeau)">
+          <image
+            href={staticFile("_client-sim/chill-meter/device-rustique.png")}
+            x={0}
+            y={0}
+            width={RUSTIC_W}
+            height={RUSTIC_H}
+            filter="url(#rustic_bandeauBleu)"
           />
         </g>
       )}
