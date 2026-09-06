@@ -63,6 +63,13 @@ const RUSTIC_POS_Y = 706;
 /** y ou le chassis rustique pose au sol, dans le repere 1920x1080. */
 const RUSTIC_SOL_SCREEN = RUSTIC_POS_Y + RUSTIC_SOL_Y * RUSTIC_SCALE;
 
+// ---- Empreinte au sol, mesuree DANS le PNG (06/09) ----
+// A y=717 (la ligne de sol), le device occupe x 131..1039 : c'est la surface qui porte,
+// pas la largeur totale du chassis (1099 px plus haut, aux epaulements).
+const SOL_EMPREINTE_X0 = 131;
+const SOL_EMPREINTE_W = 908;
+const SOL_OMBRE_H = 26;
+
 // ⛔ Les anciens BottomEdgeEffect / FullChillEffect (brume en linear-gradient + heptagones)
 // ont ete REMPLACES le 2026-09-04 par EffetsEcran.tsx : ils dataient de l'ancien chassis,
 // leur brume couvrait les 1920 px de large (le brief exige « bottom edge only »), et leur
@@ -95,6 +102,22 @@ export const ChillMeterOverlay: React.FC<{
         easing: Easing.out(Easing.quad),
       })
     : 0;
+
+  // Ombre de contact : large et pale tant que l'objet est en l'air, resserree et dense
+  // une fois pose. C'est ce couple etalement/densite qui fait lire l'appui — une ombre
+  // d'opacite constante suit l'objet sans jamais le poser.
+  const ombreEtal = isEntrance
+    ? interpolate(frame, [0, IMPACT, IMPACT + 17], [1.22, 1.0, 1.0], {
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+      })
+    : 1;
+  const ombreOpacite = isEntrance
+    ? interpolate(frame, [0, IMPACT - 6, IMPACT, IMPACT + 17], [0, 0.45, 1, 1], {
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+      })
+    : 1;
 
   // allumage juste apres l'atterrissage
   const powerOn = isEntrance
@@ -177,6 +200,33 @@ export const ChillMeterOverlay: React.FC<{
       {/* 75 % — la banquise du bord bas. Elle passe DERRIERE le meter : la glace monte
           autour de l'instrument, elle ne le recouvre pas. */}
       <BottomIceBank intensity={bottomEdge} t={frame / fps} />
+
+      {/* Ombre de CONTACT — ce qui pose reellement l'objet sur le plateau.
+          ⛔ Sa demande n°6 (« especially once animated ») n'etait PAS un defaut
+          d'animation : mesure du 06/09, le device est immobile au pixel pres des la
+          frame 48, et le spring d'entree retombe a 0,000 px de residuel des la frame 80.
+          Il ne flottait pas au sens d'une oscillation — il ne reposait sur RIEN.
+          RUSTIC_SOL_SCREEN existait deja mais n'etait CABLE a aucun element dessine :
+          une ligne de sol qui vit comme un nombre et que rien ne materialise a l'ecran.
+          L'ombre se resserre et s'assombrit a l'atterrissage : c'est le contact qui
+          rend l'appui lisible, pas le recalage vertical (deja juste). */}
+      {chassis === "rustic" && (
+        <div
+          style={{
+            position: "absolute",
+            left: RUSTIC_POS_X + entX + SOL_EMPREINTE_X0 * RUSTIC_SCALE,
+            top: RUSTIC_SOL_SCREEN - SOL_OMBRE_H / 2 + bounce * 0.12,
+            width: SOL_EMPREINTE_W * RUSTIC_SCALE * ombreEtal,
+            height: SOL_OMBRE_H,
+            marginLeft: (SOL_EMPREINTE_W * RUSTIC_SCALE * (1 - ombreEtal)) / 2,
+            borderRadius: "50%",
+            background:
+              "radial-gradient(ellipse at center, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.34) 42%, rgba(0,0,0,0) 72%)",
+            opacity: ombreOpacite,
+            filter: "blur(7px)",
+          }}
+        />
+      )}
 
       {chassis === "rustic" ? (
         <div
