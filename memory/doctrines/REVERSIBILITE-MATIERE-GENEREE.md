@@ -71,6 +71,23 @@ garantie). Une detection automatique par seuil echoue ici : elle capte le chassi
 
 ⛔ Et verifier sur le RENDU compose, pas sur le PNG : une bavure de 52 px se voit a l'ecran.
 
+## ⛔ NE JAMAIS TRANCHER UN FILTRE SVG SUR UNE SIMULATION NUMPY — RENDRE POUR DE VRAI
+
+Vecu 2026-09-06, meme session que le clip octogonal. Pour trier rapidement 4 valeurs de
+saturation d'un filtre `feColorMatrix` + `feComponentTransfer`, j'ai reimplemente le filtre
+en Python/numpy pour comparer sans payer 4 renders Remotion. **La simulation etait fausse** :
+le metal ressortait violace, alors que le vrai rendu (une fois fait) etait correct. Deux
+variantes ont ete comparees sur un artefact avant qu'on s'en apercoive.
+
+⛔ Un filtre SVG passe par la chaine de rendu du navigateur (espace colorimetrique,
+clamping, ordre d'application des primitives) qu'une reimplementation matricielle a la
+main reproduit rarement au pixel pres. **Le cout d'un vrai render Remotion est faible
+compare au risque de trancher une decision visuelle sur un artefact de simulation.**
+
+→ Pour trier des variantes d'un filtre SVG : soit rendre chaque variante pour de vrai (le
+cas ici : quelques `npx remotion still` suffisent), soit ne simuler QUE pour se donner un
+ordre de grandeur avant de rendre — jamais comme verdict final.
+
 ## LA CHECKLIST — avant d'integrer toute matiere generee
 
 1. **Puis-je la retirer d'une ligne ?** Si non, ce n'est pas une couche, c'est un remplacement.

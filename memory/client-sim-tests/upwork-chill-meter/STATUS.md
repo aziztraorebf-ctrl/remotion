@@ -4,6 +4,18 @@
 > accepté par la cliente le 29/08, **offre v2 acceptée par Aziz le 30/08**. 350 $ → 297,50 $ net.
 > ⛔ Les décisions de ce fichier engagent contractuellement.
 
+## 📋 LES 3 JALONS — libellés officiels (tirés du contrat Upwork via MCP le 06/09)
+
+| # | Libellé exact | Montant | Échéance |
+|---|---|---|---|
+| 1 | « Static meter design approval. Clean premium base meter, not heavily frosted. » | 105 $ | 03/09 |
+| 2 | « Entrance/power-on, idle loop, 0–25%, and **50%** frost-on-meter states. » | 140 $ | 07/09 |
+| 3 | « **75%** bottom-edge effect, 100% full chill effect, final exports + React/Remotion source folder. » | 105 $ | 11/09 |
+
+⛔ Le **50 % est au jalon 2**, le **75 % au jalon 3** — ils ne sont pas ensemble. Une demande de
+"différencier 50 et 75" chevauche donc 2 jalons. Le jalon 3 contient aussi les exports finaux et
+le dossier source Remotion — c'est le jalon de LIVRAISON, pas seulement d'effets.
+
 ## ✅ ÉTAT AU 2026-09-06 (SOIR) : JALON 1 ENVOYÉ, EN ATTENTE DE SA RÉPONSE
 
 Message + 5 pièces envoyés par Aziz (via catbox/Litterbox, liens dans le message). Ses 6
