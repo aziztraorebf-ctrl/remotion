@@ -4,6 +4,108 @@
 > accepté par la cliente le 29/08, **offre v2 acceptée par Aziz le 30/08**. 350 $ → 297,50 $ net.
 > ⛔ Les décisions de ce fichier engagent contractuellement.
 
+## 🔴🔴🔴 ETAT AU 2026-09-05 (SOIR) : SA REPONSE RECUE — 6 demandes, dont 3 HORS JALON 1
+
+> ⛔⛔ **NE PAS CODER AVANT D'AVOIR ENVOYE LE MESSAGE DE CADRAGE.** Deux de ses demandes sont
+> **inexecutables en l'etat** (deja faites et mesurees), et 3 relevent des jalons 2 et 3.
+> Son message integral : voir la conversation Upwork du 05/09 (room `bc1dd916`).
+
+### LE TRI DE SES 6 DEMANDES — verifie contre le brief contractuel et son message du 03/09
+
+| # | Demande | Verdict | Preuve |
+|---|---|---|---|
+| 1 | Metal : **remettre de la rouille chaude** en accents (fissures, vis, vents, coins) sans revenir au beige | ✅ **LEGITIME jalon 1** | Son 03/09 disait DEJA « with rust and wear **as accents** instead of the casing feeling beige or brown ». Elle demande le curseur entre 2 bornes qu'elle avait posees ENSEMBLE. Pas un revirement. |
+| 2 | Boutons : labels verts (OK) mais **icones en BLEU** | ⚠️ **REVIREMENT, mais petit** | Son 03/09 : « The icons/symbols before the words **can stay their current color** ». Le starter en avait fait un tableau de coordonnees pour ne PAS y toucher. C'est elle qui change d'avis. Executable vite. |
+| 3 | **Powered-on look** : halo bleu ecran, edge lighting, « MAX CHILL DETECTION » qui s'illumine | ⛔ **JALON 2** | Contrat : jalon 1 = « Static meter design approval ». Jalon 2 = « Entrance/**power-on**, idle loop... ». |
+| 4 | **50 % vs 75 %** : differencier, « AbiGirl Reacts » qui s'allume au 75 % | ⛔ **JALON 3** | Le 75 % est nommement dans le jalon 3 (`NotFunded`). Le 50 % est jalon 2. |
+| 5 | **Placement** : deplacer vers la gauche pour centrer sous la video | ⚠️ **DEJA FAIT ET MESURE** | 3e fois qu'elle le demande. `POS_X` 198 -> 180, ecart ramene a **0 px**, mesure. Soit elle regarde une version anterieure, soit sa notion de « centre » differe de la mesure. |
+| 6 | **Grounding** : que le meter ne flotte pas, « **especially once animated** » | ⚠️ **STATIQUE DEJA POSE** | `CALAGE.json` : SOL y=717, device s'arrete y=720. `CTRL-06b-sol.png` le montre a l'oeil : bord bas et ligne de sol colles. |
+
+### ✅ GROUNDING (#6) — MESURE LE 06/09 : elle a RAISON, mais pas pour la raison supposee. CORRIGE.
+
+⛔ **L'hypothese qui vivait ici etait FAUSSE** (« le rebond d'entree ne retombe pas a 0 »).
+Mesuree deux fois, elle est infirmee :
+- spring d'entree (damping 11) : **0,000 px de residuel des la frame 80**, sous-pixel des la 43 ;
+- sur le clip REELLEMENT envoye le 03/09 : device **immobile au pixel pres de la frame 48 a la
+  fin** (bas a y=1045 sur 72 frames consecutives).
+
+⭐⭐⭐ **LA VRAIE CAUSE, vue en REGARDANT l'image** : le device ne flottait pas au sens d'une
+oscillation — **il ne reposait sur RIEN**. Arrete a 20 px au-dessus de la bande noire, en plein
+mur rose, sans ombre ni surface. `RUSTIC_SOL_SCREEN` etait **calcule mais cable a aucun element
+dessine** : une ligne de sol vivant comme un nombre. (Meme schema que les cercles du globe D3.)
+
+✅ **CORRIGE** (commit `59141039`, branche `fix/chill-meter-ancrage-sol`) : ombre de contact
+ancree sur la ligne de sol, dimensionnee sur l'empreinte reelle mesuree dans le PNG (x 131..1039
+a y=717 = 908 px), qui se resserre en s'assombrissant a l'atterrissage. Mesure : -45 points de
+luminance sur la ligne de sol. Avant/apres : https://claude.ai/code/artifact/0b79d779-f285-47e4-a21f-401c9a3920bb
+→ Lecons : `memory/feedbacks/feedback_ligne-de-sol-calculee-mais-cablee-a-rien.md`
+
+### ⚠️ CENTRAGE (#5) — l'axe est exact, mais sa remarque reste FONDEE
+
+Mesure 06/09 : ecart **0,0 px** (fenetre video centree 450,5 / device 450,5). MAIS le device
+**deborde de 321 px SOUS la fenetre video** et empiete sur la peluche en bas a gauche.
+⛔ Repondre « c'est mesure a 0 px » serait techniquement juste et **commercialement inutile** —
+c'est la 3e fois qu'elle le demande. Quand elle dit « centrer », elle ne parle probablement pas
+de l'axe (parfait) mais du bloc qui parait trop bas / trop grand pour la zone.
+→ D'ou la capture annotee : la faire DESIGNER au lieu de decrire.
+
+### 📤 CE QU'ON LUI ENVOIE — une capture ANNOTEE (idee d'Aziz, meilleure que lui en demander une)
+
+⛔ **Ne PAS lui demander de produire une capture** : un client a qui on donne des devoirs repond
+lentement ou pas. **Lui en FOURNIR une** : le device sur son plateau, avec la **ligne de sol** et
+l'**axe de centrage** traces dessus, en UNE image. Elle repond en DESIGNANT, plus en decrivant.
+Deplace #5 et #6 du subjectif (« ca flotte ») vers le mesurable. Matiere prete :
+`out/_r-and-d/chill-meter-3d/calage/CTRL-06b-sol.png` (deja annotee, a recomposer sur le plateau).
+
+### ⭐⭐⭐ LA FORME DE L'ENVOI — DES IMAGES FIXES, ZERO ANIMATION (idee d'Aziz, 05/09 soir)
+
+⛔ **Ne PAS lui renvoyer un rendu anime pour ce tour.** Une image fixe se corrige en UN aller-retour ;
+une animation se re-rend en entier. Aujourd'hui on lui envoie du fini et elle reagit dessus — le
+cout du desaccord est maximal, et c'est ce qui a produit 4 rondes.
+
+⭐ **Ses 3 demandes « hors jalon » sont des ETATS VISUELS, pas des mouvements** — toutes jugeables
+sur image fixe, aucune ne demande d'animer quoi que ce soit :
+| Sa demande | Ce que c'est vraiment |
+|---|---|
+| Powered-on look (halo, edge lighting, « MAX CHILL DETECTION » illumine) | **1 image** |
+| Differenciation 50 % vs 75 % | **2 images COTE A COTE** |
+| Rouille en accents | **1 image** |
+⭐ Le 50/75 est un probleme de **CONTRASTE ENTRE DEUX ETATS** : ca se juge mieux sur 2 images
+juxtaposees que dans une video ou elle ne peut pas comparer.
+
+**L'envoi complet, en UNE fois, sans produire une seule frame d'animation** :
+1. La planche des etats fixes (rouille + allume + 50 % + 75 %) — elle valide la DIRECTION.
+2. La capture annotee (ligne de sol + axe de centrage) — elle DESIGNE au lieu de decrire (#5, #6).
+→ L'animation ne part qu'APRES sa validation de la direction. On ne re-rend plus rien a l'aveugle.
+
+⭐⭐ **C'est notre propre doctrine du STORYBOARD, jamais appliquee au travail client** : « le modele
+PROPOSE, on valide, PUIS on code » — deplacer le jugement de gout d'apres-render (cher) vers
+avant-code (gratuit). Sur ce contrat, 2 planches cote a cote au round 1 auraient probablement
+economise 2 rondes.
+
+### ⚖️ CE QU'ON DEMANDE EN RETOUR — la relation est a sens unique aujourd'hui
+
+**Etat financier reel** : jalon 1 **soumis le 02/09, NON PAYE** (105 $). Jalons 2 et 3 **`NotFunded`**
+— l'argent n'est meme pas depose. Elle a eu **3 rondes** de revision la ou le contrat en prevoit 2.
+
+Les 3 contreparties a poser dans le message (courtoises, aucune agressivite) :
+1. **L'approbation du jalon 1** une fois ces retouches livrees. Un tour de plus contre la fermeture
+   du jalon : un echange, pas une faveur.
+2. **Le financement du jalon 2** avant d'attaquer les etats animes (mecanique normale d'Upwork).
+3. **Sa validation en UNE fois** — elle ecrit elle-meme « we are very close », c'est le moment de
+   lui faire dire que ces changements-la sont les derniers du jalon 1.
+⭐ Accepter #3 et #4 (jalons 2 et 3) dans le jalon 1 est une **CONCESSION REELLE**. La NOMMER, sans
+la refuser : une concession tue devient la norme, et le jalon 2 s'ouvrirait avec le meme desequilibre.
+
+### ⛔⛔ LA LECON A GRAVER — ne jamais montrer un livrable d'un jalon FUTUR
+
+**Envoyer le clip d'allumage 4 s pendant la validation du jalon 1 etait l'erreur** (constat d'Aziz,
+que je partage). En mettant un etat ANIME sous ses yeux pendant un jalon STATIQUE, on a ouvert la
+porte aux retours #3 et #4. Elle ne fait que commenter ce qu'on lui a montre.
+→ **Le perimetre d'une revision suit ce qu'on MONTRE, pas ce que le contrat dit.** Vaut pour tout
+contrat a jalons. (Le clip avait pourtant ete « explicitement cadre comme jalon 1 seulement » dans
+le message du 03/09 — **le cadrage ecrit n'a pas suffi**. Seul ne pas montrer suffit.)
+
 ## 🔴🔴 ETAT AU 2026-09-04 : CHASSIS REJETE — CHANGEMENT DE BASE, chantier en cours
 
 > ⭐⭐⭐ **REPRISE : `memory/starters/STARTER-chill-meter-device-rustique.md`** (tout le detail
@@ -25,10 +127,43 @@ nos 4 couches animees par-dessus (22 segments, LED, 5 labels verts, halo). Ni ve
 image) · glow bleu · **labels verts sans les icones** · centrage sous la fenetre video ·
 **ne pas flotter** (y=717).
 
+### ✅ CE QUI TOURNE DEJA (session du 04/09 au soir, verifie au RENDU compose sur le plateau NU)
+- **Parcours complet 630 frames / 21 s** (entree + idle + 4 paliers), alpha reel `yuva444p12le`,
+  **0 frame defectueuse**. Video HQ + pages de suivi : `memory/INDEX-LIENS.md`.
+- 5 etats de jauge justes (0/5/11/17/22 cases) · entree conforme au brief **6/6** (§ 2 verifie
+  point par point) · ecran allume **lum 14,4 -> 45,9** (x3,2) · givre du device en 3 planches.
+
+**Les 3 techniques qui ont debloque** (detail dans le starter) :
+1. **Detourage par composante connexe**, pas par seuil — le PNG arrive en RGB opaque sur fond
+   noir, et un seuil laisse passer son halo d'ombre en echarpe translucide (1,17 % du cadre).
+2. ⛔⛔ **Extraction du givre en CALQUE** : ne garder que ce qui s'ECLAIRCIT. Gemini ne depose
+   pas du givre, il REPEINT l'objet en bleu (metal R-B +7,9 -> -30,7 : la rouille qu'elle vient
+   de valider disparait). Apres extraction : +2,0, sa cible etant +2,4. Ne JAMAIS poser l'image brute.
+3. ⛔ **`delayRender` sur toute `<image>` SVG** — non attendue par le renderer : 1 frame sur 510
+   sortait sans decor, pile sur une jonction d'etats (defaut vu a l'oeil par Aziz).
+
+### ⏭️ EN COURS — les 2 effets d'ecran (delegue a un agent Opus)
+Cibles validees par Aziz : `storyboard/RETENU-75-C3-blocs-bas.png` (banquise de blocs de glace
+au bord bas) · `RETENU-100-F3-fleurs-bords.png` (fleurs de glace poussant des 4 bords).
+Brief : `out/_r-and-d/chill-meter-3d/BRIEF-EFFETS-ECRAN.md` — exigence + arsenal + 6 interdits
+CHIFFRES + liberte du moyen (doctrine GUIDER SANS BRIDER, redecouverte par Aziz).
+⛔ **4 tentatives le prouvent : Gemini ne sait pas preserver une zone.** La fenetre video se
+protege AU CODE (clipPath), jamais par le prompt. Sa regle, dans « Important Creative Rules » :
+« Make sure it does not block the music video » — elle vaut pour les EFFETS, pas que le placement.
+
 ⚠️ **Le livrable contractuel n'a PAS ete touche** — tout le travail vit sur `rnd/chill-meter-3d`.
 ⚠️ **Calendrier a revoir** : le rejet rebat les jalons 2 (7 sept) et 3 (11 sept).
-⚠️ **Decision commerciale en attente** : dire ou non a Abigail que l'image vient de nous.
-⏭️ **Non traite : LE SON** (elle liste des SFX precis par palier, perimetre jamais discute).
+✅ **TRANCHE le 2026-09-05 (Aziz) : NON, sujet clos — ne plus le re-poser.** Le contrat definit
+le livrable comme le **CapCut/MOV + le JSON d'animation** : « le fichier source » n'a JAMAIS
+designe le PNG du decor. On le fournit dans le livrable de toute facon, donc la provenance de
+l'image n'a aucune portee contractuelle. Ne pas rouvrir ce faux probleme.
+⏭️ **LE SON : faisabilite LEVEE le 29/08** — 15 SFX generes, 15/15 exploitables au 1er essai,
+3 familles nommees (organic/impact/retrotech), recette dans `scripts/tools/sfx-familles-chill-meter.py`,
+fichiers dans `out/_r-and-d/chill-meter-upwork/sfx-test/` (voir § SON plus bas).
+⚠️ Ce qui reste ouvert est **COMMERCIAL uniquement** : dans les 350 $ ou non, et integre au MOV
+ou livre en piste separee (sur CapCut, integre = non coupable independamment).
+⛔ **Ne PAS re-poser la question de la FAISABILITE** — vecu le 04/09, presentee 4-5 fois comme un
+angle mort alors que `sfx-test/` etait sur le disque.
 
 <details><summary>Historique — ETAT AU 2026-09-03 : revision 2 envoyee (teinte gunmetal)</summary>
 
