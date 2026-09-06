@@ -16,6 +16,56 @@
 "différencier 50 et 75" chevauche donc 2 jalons. Le jalon 3 contient aussi les exports finaux et
 le dossier source Remotion — c'est le jalon de LIVRAISON, pas seulement d'effets.
 
+## 🔴 ÉTAT AU 2026-09-06 (NUIT) : SA RÉPONSE REÇUE — jury externe lancé sur le flottement
+
+Abigail a répondu avec 5 demandes (taille inchangée, placement/grounding via SA VRAIE capture
+jointe, icônes bleues dès l'idle, powered-on sur MAX CHILL DETECTION, glow isolé au texte
+au 75 %) + une reconnaissance explicite qu'on avait raison sur le centrage et que sa
+référence IA était décalée. Message de confirmation envoyé (24-48h), rien d'autre à faire
+côté client tant que le travail n'est pas prêt.
+
+### ⭐⭐⭐ SA VRAIE CAPTURE (jointe au message) — LA VRAIE CAUSE DU FLOTTEMENT
+
+Mesurée : `out/_r-and-d/chill-meter-3d/REFERENCE-CLIENTE/vraie-capture-06-09.png` (2880×1608).
+Sa fenêtre vidéo finit à 66,7 % de la hauteur (contre 67,0 % sur notre plateau yt-dlp actuel)
+— **notre plateau EST déjà quasi identique en cadrage**. Ce n'est donc PAS un problème de
+cadrage général : cette capture précise montre un **premier plan que notre plateau n'a pas**
+(le piano blanc + une peluche, visibles en bas-gauche), qui recoupe exactement la zone où
+pose le meter.
+
+### ⭐⭐⭐ JURY EXTERNE 4 VOIX (06/09, `scripts/tools/jury-chill-meter-flottement.py`)
+
+GPT-6 Astra + Grok 4.6 + Gemini 3.1 Pro + Kimi K3, appelés en parallèle SANS contexte du
+repo (pour éviter tout biais), avec juste sa vraie capture + notre rendu actuel. **Verdict
+UNANIME, jamais discuté entre eux** :
+- ⛔ **L'ombre plus prononcée est REJETÉE par les 4** — mots quasi identiques : « une ombre
+  sur du vide reste une ombre sur du vide » (Kimi), « une ombre plus grasse sous un sticker
+  reste un sticker » (Grok).
+- ⭐ **La vraie cause : notre décor de production n'a pas le premier plan** (piano/peluche)
+  qui donne un repère de profondeur à cet endroit. Le meter n'a rien à quoi s'ancrer.
+- ⭐⭐⭐ **La technique proposée par les 4 : l'OCCLUSION PARTIELLE** — faire passer un bout du
+  premier plan (bord du piano, peluche) DEVANT le bas du meter. Un objet partiellement caché
+  par le décor est immédiatement lu comme faisant partie de la scène.
+- Bonus (Grok + Kimi) : les stalactites de givre qui pendent dans le vide sous l'objet
+  « crient lévitation » indépendamment du reste — défaut jamais identifié avant ce jury.
+Sorties complètes : `/tmp/da-refs/jury-flottement-{gpt6,grok,gemini,kimi}.md`.
+
+### ⏭️ PLAN D'ACTION DÉCIDÉ (Aziz, 06/09)
+
+1. Basculer le décor de production vers sa vraie capture (ou une frame équivalente au même
+   premier plan) — PAS un ajustement d'ombre.
+2. Découper le morceau de piano/peluche à faire passer devant le bas du meter.
+3. ⭐⭐⭐ **Tester sur EXTRAIT VIDÉO réel (1-2 min, yt-dlp), pas seulement en statique** — et sur
+   PLUSIEURS vidéos/cadrages de sa chaîne, pas une seule. Le fond ne bouge pas dans notre
+   pipeline (frame fixe choisie), donc l'occlusion reste valable tant que le DÉCOR est le bon ;
+   le risque n'est pas le mouvement de la vidéo hôte, c'est de changer de cadrage sans refaire
+   le travail de calage.
+4. Vérifier sur les 4 états ANIMÉS (idle, 50 %, 75 %, entrée) — le meter bouge pendant
+   l'entrée, l'occlusion doit rester cohérente à toutes les frames.
+
+⭐⭐ **Corollaire stratégique (Aziz)** : ce chantier constitue une PRÉ-PRODUCTION du jalon 2
+(les états animés). Documenter la démarche (jury, décision, code) sert doublement.
+
 ## ✅ ÉTAT AU 2026-09-06 (SOIR) : JALON 1 ENVOYÉ, EN ATTENTE DE SA RÉPONSE
 
 Message + 5 pièces envoyés par Aziz (via catbox/Litterbox, liens dans le message). Ses 6
