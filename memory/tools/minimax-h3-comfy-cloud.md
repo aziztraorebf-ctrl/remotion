@@ -2033,3 +2033,35 @@ ever passes between the camera and him, the camera never goes through a wall"*.
 il vit) et reste cohérente au retour — le modèle ne fige pas le sujet pour gérer le mouvement de caméra.
 C'est ce qui rend l'orbite exploitable une fois le previs corrigé.
 
+
+## ✅ 2026-09-07 — CONFIRMATION : `run_template` echoue encore, `submit_workflow` marche
+
+Re-verifie sur un cas neuf (brume/fumee pour le chill-meter). Le bug de la ligne 246 est
+TOUJOURS d'actualite et se reproduit a l'identique :
+- `run_template` + `input_overrides` sur `video_minimax_h3_i2v` : le prompt EST pris en compte,
+  mais l'image de depart reste celle de DEMO du template (souris de gaming transparente).
+  2 tentatives, 2 echecs. Sortie **640x480 carree** alors que l'image source etait 16:9 —
+  c'est le 2e symptome deja documente.
+- **Le gabarit `scripts/tools/comfy-graphs/minimax-h3-r2v-graph-template.json` + `submit_workflow`
+  a marche du 1er coup** : notre image utilisee, resolution 864x480 respectee, `dry_run`
+  valide sans aucun warning (contre 2 warnings sur chaque `run_template`).
+
+⭐ Rappel de la sequence qui marche (ne pas re-deviner) :
+1. `upload_file` -> renvoie une commande `curl PUT` a executer -> recuperer le `name`
+2. charger le gabarit R2V, remplacer SEULEMENT : `137.image` (le name), `138.value` (prompt),
+   `132.value` (duree en s), et `136.width`/`136.height` en **INT litteraux**
+3. si une seule reference : **supprimer** `136.inputs["ref_images.ref_image_1"]` ET le node `139`
+4. `submit_workflow(dry_run=true)` d'abord (gratuit), puis reel
+5. `wait_for_job` en boucle, `get_output`, puis **verifier la resolution reelle du fichier**
+   (le serveur renvoie un advisory explicite la-dessus)
+
+### Fond noir pur = pas de detourage necessaire
+Mesure sur le clip produit : coin (0,0,0) exact, zone haute a 0,5/255 de moyenne, **64 % de
+pixels quasi-noirs** — meme profil que l'asset d'explosion valide (`64,2 %`). Donc
+`mixBlendMode: "screen"` suffit pour l'integrer dans Remotion, AUCUN detourage alpha
+(Bria/rembg) n'est necessaire ni justifie. Cf. `feedback_gemini-assets-fond-transparent.md`
+et `src/projects/_rnd/vox-repro/Scene2JetsStrike.tsx` (« LE TEST CLE »).
+
+⛔ Piege de prompt rencontre : demander a la brume de « se dissoudre / thin out » vide le
+cadre en fin de clip (frame finale noire) — inutilisable en boucle. Pour un effet en `<Loop>`,
+demander une turbulence CONTINUE sans disparition.
