@@ -95,5 +95,11 @@ Mesure à l'appui si besoin : panneau du piano x=109..356, meter x=188..716.
 | Brouillon de message | `.../messages/BROUILLON-message-revision-07-09.txt` |
 | Code | `src/projects/_rnd/chill-meter/ChillMeterRustic.tsx` + `ChillMeterOverlay.tsx` |
 | Page de suivi (visuels) | https://claude.ai/code/artifact/5850aa17-cd86-4f75-9d8b-e0be02de5592 |
+
+⚠️ **La page de suivi pese 9,7 Mo au 07/09 (plafond 16 Mo)** — chaque video y est embarquee en
+base64, ce qui multiplie sa taille par ~1,33. Quelques ajouts de plus la saturent.
+→ Avant d'y ajouter une video : soit **alleger/retirer les anciennes**, soit **ouvrir une 2e page**.
+⛔ Elle est editee par PLUSIEURS sessions : toujours `Artifact action:"read"` AVANT de republier,
+sinon on ecrase le travail d'une autre session (une republication concurrente a eu lieu le 07/09).
 | Sa vraie capture de plateau | `out/_r-and-d/chill-meter-3d/REFERENCE-CLIENTE/vraie-capture-06-09.png` |
 | MOV périmés (⛔ ne pas envoyer) | `out/_r-and-d/chill-meter-upwork/*.mov` (23/08) |
