@@ -50,6 +50,37 @@ UNANIME, jamais discuté entre eux** :
   « crient lévitation » indépendamment du reste — défaut jamais identifié avant ce jury.
 Sorties complètes : `/tmp/da-refs/jury-flottement-{gpt6,grok,gemini,kimi}.md`.
 
+### ✅ OCCLUSION — PROTOTYPE VALIDÉ (06/09 nuit, après 3 échecs)
+
+⛔ **3 essais ratés avant d'y arriver**, tous la même erreur de fond : poser un **rectangle**
+là où l'arête du couvercle de piano est une **diagonale**. Les 2 premiers (Claude) plaquaient
+un bandeau qui avalait 50 px de châssis et masquait les boutons. Le 3e (agent délégué) avait
+le bon contour et la bonne méthode, mais une arête posée trop bas (y≈1012) : seulement 3,7 %
+du châssis occlus → **mesurable mais invisible à l'œil**. ⭐ Rappel : un chiffre qui bouge ne
+prouve pas qu'un problème visuel est résolu — il a fallu regarder plusieurs zooms pour le voir.
+
+✅ **Ce qui marche (PROTO4)** : arête remontée à y≈1005-1042, qui mord **20-30 px du châssis
+sur toute la largeur**, pas seulement le pied gauche.
+- Mesure finale : **6,9 % du châssis occlus** (le jury demandait 5-15 %) et **100 % des
+  stalactites de givre absorbées** — ce qui règle le défaut bonus signalé par Grok + Kimi
+  (« les stalactites qui pendent dans le vide crient lévitation »).
+- Prototype : `out/_r-and-d/chill-meter-3d/PROTO-OCCLUSION-VALIDE.png` (vérifié à l'œil au
+  plein cadre ET au zoom serré, pas seulement à la mesure).
+
+**Polygone du couvercle, repère 1920×1080** (à porter en `clipPath` SVG) :
+```
+140,1005  215,1002  300,1006  352,1012  430,1022  520,1030  620,1036  720,1042
+820,1050  900,1058  1000,1066  1100,1074  1920,1080  140,1080
+```
+**Ordre de rendu strict** : plateau → meter → ombre clippée → couvercle clippé.
+Détails : `feGaussianBlur stdDeviation≈2.5` sur le bord du clip (le décor est flou, une arête
+nette trahirait le découpage) · ombre de contact `rgb(12,16,26)` opacité 0.70, floutée à ≈16,
+elle-même clippée sur le même polygone, silhouette bornée à y 761-1050 pour exclure les
+stalactites.
+
+⚠️ **Ces coordonnées valent pour CETTE frame de plateau.** Si le décor change, relire le
+polygone sur grille — ne pas réajuster au jugé (c'est l'erreur des 3 premiers essais).
+
 ### ⏭️ PLAN D'ACTION DÉCIDÉ (Aziz, 06/09)
 
 1. Basculer le décor de production vers sa vraie capture (ou une frame équivalente au même
