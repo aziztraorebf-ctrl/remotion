@@ -194,4 +194,12 @@ Nommage : `beatN_v3.mp4` (wip) → `beatN_V3.mp4` (présenté) → `beatN-FINAL.
 ## Langue & emojis
 - Communication : français. Code/docs techniques : anglais.
 - **NO EMOJIS IN CODE** : interdit `.ts .tsx .js .json .yaml .env` · autorisé `.md .txt` uniquement.
+  ⭐ **Ce qui compte = ce qui est AFFICHÉ ou EXÉCUTÉ** : zéro emoji dans une string rendue à
+  l'écran, un nom de variable/fichier/clé JSON, ou une valeur de données. En **commentaire**,
+  les marqueurs de gravité `⛔ ⭐ ⚠️ ✅` sont admis — ils ne sont ni compilés ni affichés, et
+  ils se repèrent plus vite que `WARNING:` dans un fichier de 700 lignes (pratique constante
+  du repo). ⛔ Cette tolérance ne s'étend PAS aux strings : un emoji dans un `<text>` part
+  dans la vidéo livrée au client. *(Précisé le 2026-09-07 : un agent de vérification a
+  signalé 34 emojis en commentaire comme violation — faux positif qui masquait le vrai
+  risque. Une règle qu'on viole en la citant s'affaiblit et fait rater les vraies fautes.)*
 - **ACCENTS FR OBLIGATOIRES dans les strings AFFICHÉES** (texte à l'écran en JSX) : « SOUVERAINETÉ », pas « SOUVERAINETE ». NO-EMOJIS ≠ NO-ACCENTS — ne pas omettre É/È/À/Ç par confusion. Vérifier avant render (un titre amputé d'accent = faux visuel).
