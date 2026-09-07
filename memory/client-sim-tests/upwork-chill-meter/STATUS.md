@@ -4,6 +4,23 @@
 > accepté par la cliente le 29/08, **offre v2 acceptée par Aziz le 30/08**. 350 $ → 297,50 $ net.
 > ⛔ Les décisions de ce fichier engagent contractuellement.
 
+## 🔑 ACCÈS RAPIDE — les infos qu'on recherche à CHAQUE session
+
+> ⛔ Ajouté le 06/09 : l'URL de la chaîne était bien dans ce fichier (ligne ~1225) mais enterrée
+> en bas d'un fichier de 1200+ lignes. Je l'ai cherchée avec un mauvais motif de grep et j'ai
+> conclu à tort qu'elle n'existait nulle part. **Les infos d'accès vivent en TÊTE, pas au fond.**
+
+| Quoi | Où |
+|---|---|
+| Chaîne YouTube cliente | `https://youtube.com/@abigirl_reacts` (107 K abonnés) |
+| Room Upwork (messages) | `room_bc1dd916da7ec932f9e0d1ca6719dc96` · org_uid `2091222257557754811` |
+| Contrat Upwork | id `44402562` · offre `112403774` |
+| Sa VRAIE capture de plateau (06/09) | `out/_r-and-d/chill-meter-3d/REFERENCE-CLIENTE/vraie-capture-06-09.png` |
+| Décor de travail 16:9 | `/tmp/vraie-capture-1920x1080.png` (regénérable depuis la capture) |
+| Notre ancien plateau (yt-dlp, 22/08) | `public/_shared/rnd/abigirl-decor.png` |
+| Le PNG du device (décor du meter) | `public/_client-sim/chill-meter/device-rustique.png` |
+| Brief client original (PDF 10 p.) | `memory/client-sim-tests/upwork-chill-meter/BRIEF-CLIENT-ORIGINAL.pdf` |
+
 ## 📋 LES 3 JALONS — libellés officiels (tirés du contrat Upwork via MCP le 06/09)
 
 | # | Libellé exact | Montant | Échéance |
