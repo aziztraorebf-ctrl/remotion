@@ -100,14 +100,13 @@ const TITRE = { x0: 200, y0: 298, x1: 990, y1: 350 };
  *  plaque par-dessus (defaut vu par Aziz le 06/09). Sommets releves dans le PNG. */
 const BANDEAU_PTS = "272,133 916,133 948,163 948,210 916,240 272,240 240,210 240,163";
 
-/** Le nom de la chaine, redessine en SVG par-dessus le texte GRAVE de son image.
- *  ⛔ Les lettres du PNG ne sont pas peintes mais gravees en relief : aucun seuil de
- *  luminance ne les isole (teste 06/09 — il ne capte que les aretes eclairees).
- *  On recouvre donc le trace mesure (x 358..852, hauteur 58, centre y=186) par un <text>
- *  qu'on peut allumer librement. Meme technique que les 5 labels des boutons.
- *  fontSize 66 et non 62 : legerement plus large que le grave, pour le couvrir entierement
- *  jusqu'aux extremites (le « A » et le « s » debordaient a 62). */
-const NOM_CHAINE = { texte: "AbiGirl Reacts", cx: 605, cy: 187, size: 66, w: 500 };
+/** ⛔ 06/09 — LE NOM DE LA CHAINE N'EST PLUS REDESSINE EN `<text>`.
+ *  L'ancienne approche (constante `NOM_CHAINE`, Arial Black posee sur le trace grave) est
+ *  supprimee : la police du PNG est une grotesque geometrique, pas Arial Black, et la
+ *  superposition mesuree derive jusqu'a une largeur de lettre entiere des « Reacts ».
+ *  Le texte SVG doublait donc la gravure d'un fantome decale — la cause du « blurry »
+ *  qu'elle signale le 06/09. L'illumination passe desormais par `mask_bandeauTexte`, un
+ *  pochoir extrait de SON image (donc cale au pixel). Voir le commentaire de ce masque. */
 
 const LABELS: { t: string; x: number; y: number; w: number; h: number }[] = [
   { t: "STATUS", x: 192, y: 644, w: 70, h: 19 },
@@ -320,6 +319,13 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
+          {/* Halo SEUL (sans le graphique net par-dessus) : sert au rayonnement du nom de
+              chaine sur le metal. ⛔ Ne pas reutiliser `rustic_nomGlow` pour ca — son
+              `feMerge` re-ajoute `SourceGraphic`, ce qui reposerait un aplat net plein
+              bandeau par-dessus le halo. */}
+          <filter id="rustic_nomGlowOnly" x="-12%" y="-45%" width="124%" height="190%">
+            <feGaussianBlur stdDeviation="5" />
+          </filter>
           <filter id="rustic_titreBleu" colorInterpolationFilters="sRGB">
             <feColorMatrix
               type="matrix"
@@ -335,25 +341,64 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
             </feComponentTransfer>
             <feGaussianBlur stdDeviation="0.7" />
           </filter>
-          {/* Le bandeau grave prend une lueur bleue au 75 % — sa differenciation 50/75. */}
-          <filter id="rustic_bandeauBleu" colorInterpolationFilters="sRGB">
-            <feColorMatrix type="matrix"
-              values="0.30 0.35 0.30 0 0
-                      0.30 0.35 0.30 0 0
-                      0.30 0.35 0.30 0 0
-                      0    0    0    1 0" />
-            {/* ⭐ 06/09 : SEULS LE TEXTE ET LES SYMBOLES S'ILLUMINENT, PAS LA PLAQUE.
-                Sa demande : « only the text and symbols should light up, not the plate or
-                the metal behind it ». Le plancher des 3 tables etait a 0.03/0.07/0.12 :
-                le metal SOMBRE de la plaque recevait donc deja du bleu, et c'est toute la
-                plaque qui virait. On ramene le plancher a ~0 : le sombre reste sombre, et
-                seules les LETTRES GRAVEES (extremite claire de la table) s'allument.
-                La courbe est en plus poussee vers le haut (exposant) pour que seuls les
-                pixels vraiment clairs du grave montent — le texte reste NET, aucun flou. */}
+          {/* ============ LE MASQUE DU TEXTE GRAVE DU BANDEAU ============
+              ⭐⭐⭐ 06/09 (3e passe) — sa demande du 06/09 est explicite : « I want only the
+              wording and symbols to light up blue — not the plaque/nameplate or the metal
+              behind them. Please make sure the wording and symbols stay sharp and not blurry. »
+
+              ⛔ POURQUOI LES 2 CORRECTIFS PRECEDENTS ONT ECHOUE — cause racine commune.
+              Tous deux passaient TOUTE la plaque dans un filtre de couleur
+              (`feComponentTransfer`) en esperant qu'une table de transfert separe le texte du
+              metal. C'est structurellement impossible ICI : un filtre de couleur ne sait
+              distinguer que par la VALEUR du pixel, or sur cette plaque le texte et la plaque
+              occupent la MEME plage. Mesure (zone x264..928 / y154..221) : l'histogramme de
+              luminance est strictement UNIMODAL (aucun creux entre 0 et 255, pic large 72-136),
+              et les faces de lettres (~110-125) chevauchent les reflets clairs du metal
+              (~90-100) — 20 niveaux d'ecart sur 255. Consequence : v1 (plancher sombre ecrase)
+              a NOIRCI la plaque ; v2 (table inversee) a TEINTE toute la plaque en bleu uniforme
+              et tue la rouille. Le probleme n'etait donc pas le DOSAGE de la table, mais le
+              fait meme d'utiliser un filtre global la ou il faut une SELECTION SPATIALE.
+              3 autres discriminateurs par pixel ont ete mesures et ecartes de la meme facon
+              (variance de texture, amplitude de gradient, integration du relief) : tous
+              unimodaux sur cette matiere grunge.
+
+              ⛔ Pourquoi PAS un `<text>` SVG en masque (piste envisagee) : la police du PNG est
+              une grotesque geometrique (bols circulaires, `a` a etage unique) ; seule Arial
+              Black est disponible ici. Superposition mesuree : la derive cumulee atteint une
+              largeur de lettre entiere des « Reacts », et le trace des G/R/a/c/t differe. Un
+              masque decale allumerait la plaque A COTE des lettres — pire que le bug.
+
+              ✅ CE QUI MARCHE : les lettres ne se distinguent pas par leur VALEUR mais par leur
+              RELIEF — elles sont embossees, avec un lisere clair fin en haut-gauche et une ombre
+              portee dure en bas-droite. Un top-hat morphologique (lum - ouverture 7x7) isole ce
+              lisere fin sans repondre au grain large de la rouille (p99=120 contre p50=10), et
+              lisere + ombre portee ENCADRENT chaque glyphe : un remplissage de contour donne le
+              corps plein des lettres, au trace exact du PNG. Le masque est donc EXTRAIT DE SON
+              IMAGE — d'ou un calage au pixel, impossible a obtenir avec une police.
+              Verification : les seules colonnes vides sont x=324/604/924, exactement les
+              espaces inter-mots. Genere hors ligne, fige dans `bandeau-texte-mask.png`
+              (1195x896, aligne 1:1 sur le PNG du device).
+
+              ⚠️ Le masque sert de POCHOIR a un aplat bleu pose PAR-DESSUS l'image intacte :
+              la plaque n'est jamais remplacee par une copie filtree, donc sa matiere (grain,
+              rouille, reflets) est conservee au pixel pres. Pas de flou : le seul adoucissement
+              est l'antialiasing de 0,6 px cuit dans l'alpha du PNG. */}
+          <mask id="mask_bandeauTexte" maskUnits="userSpaceOnUse" x={0} y={0} width={RUSTIC_W} height={RUSTIC_H}>
+            <image
+              href={staticFile("_client-sim/chill-meter/bandeau-texte-mask.png")}
+              x={0}
+              y={0}
+              width={RUSTIC_W}
+              height={RUSTIC_H}
+            />
+          </mask>
+          {/* Recolore en BLEU tout en conservant le relief (plancher a 0,35, pas 0) — utilise
+              UNIQUEMENT au pochoir de mask_bandeauTexte, jamais sur la plaque elle-meme. */}
+          <filter id="rustic_bandeauTexteBleu" colorInterpolationFilters="sRGB">
             <feComponentTransfer>
-              <feFuncR type="table" tableValues="0 0 0.10 0.46" />
-              <feFuncG type="table" tableValues="0 0 0.26 0.86" />
-              <feFuncB type="table" tableValues="0 0.02 0.40 1.00" />
+              <feFuncR type="table" tableValues="0.12 0.24 0.32 0.36" />
+              <feFuncG type="table" tableValues="0.35 0.52 0.64 0.70" />
+              <feFuncB type="table" tableValues="0.62 0.78 0.88 0.94" />
             </feComponentTransfer>
           </filter>
         <filter id="rustic_iconeBleue" colorInterpolationFilters="sRGB">
@@ -560,37 +605,52 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
           puis s'illumine entre 55 et 75 % — un evenement, pas une montee continue. */}
       {bandeauOn > 0.005 && (
         <g opacity={bandeauOn} clipPath="url(#clip_bandeau)">
-          <image
-            href={staticFile("_client-sim/chill-meter/device-rustique.png")}
-            x={0}
-            y={0}
-            width={RUSTIC_W}
-            height={RUSTIC_H}
-            filter="url(#rustic_bandeauBleu)"
-          />
+          {/* ⭐⭐ 06/09 (3e passe, Aziz a compare au titre "MAX CHILL DETECTION" et juge le
+              1er correctif trop faible) — `screen` depend du fond : sur le biseau CLAIR des
+              lettres (mesure : luminance du texte va de 18 a 147/255 sous ce meme masque),
+              `screen` + bleu reste proche du gris d'origine — seuls les creux sombres
+              viraient franchement bleu. D'ou "seul le contour s'allume", pas le corps du mot.
+              FIX : l'image, deja filtree par `rustic_bandeauTexteBleu` (qui RECOLORE en bleu
+              tout en conservant le relief — plancher remonte a 0,35 au lieu de 0, donc le
+              creux le plus sombre ne redescend jamais au noir), est posee au pochoir. Le
+              masque garantit qu'on ne touche QUE le texte : contrairement au 1er essai
+              (defaut du 06/09 matin), il n'y a plus besoin de discriminer clair/sombre sur
+              toute la plaque — la geometrie du pochoir fait deja ce travail. */}
+          <g mask="url(#mask_bandeauTexte)">
+            <image
+              href={staticFile("_client-sim/chill-meter/device-rustique.png")}
+              x={0}
+              y={0}
+              width={RUSTIC_W}
+              height={RUSTIC_H}
+              filter="url(#rustic_bandeauTexteBleu)"
+            />
+          </g>
         </g>
       )}
 
-      {/* ⭐ Le NOM DE LA CHAINE s'allume avec le bandeau. Son idee du 05/09 va jusque-la :
-          « have AbiGirl Reacts light up in blue and glow at 75% » — ce n'est pas seulement
-          la plaque qui bleuit, c'est le NOM qui s'illumine. Le metal grave reste dessous et
-          continue de porter la matiere ; le texte SVG ne fait qu'ajouter la lumiere. */}
+      {/* ⭐ Le NOM DE LA CHAINE diffuse une lueur sur le metal autour — « light up in blue and
+          GLOW at 75% ». Le halo est tire du MEME masque que l'aplat ci-dessus, donc il epouse
+          le trace reel de sa gravure.
+
+          ⛔⛔ 06/09 — CE BLOC PORTAIT LE « FLOU » QU'ELLE SIGNALE (« make sure the wording and
+          symbols stay sharp and not blurry »). Il dessinait ici un `<text>` Arial Black cale
+          sur des coordonnees approchees, PUIS le passait dans `rustic_nomGlow` (flou 5 px).
+          Or la police du PNG n'est pas Arial Black : superposition mesuree, la derive cumulee
+          atteint une largeur de lettre entiere des « Reacts ». Le rendu montrait donc le vrai
+          texte grave + un DOUBLE flou decale par-dessus — exactement l'impression de flou
+          decrite. Le texte SVG est supprime ; seul reste un halo issu du masque exact.
+          Le halo est volontairement pose SOUS aucun texte concurrent : la nettete vient de
+          l'aplat au pochoir (bloc precedent), le flou ne sert qu'au rayonnement autour. */}
       {bandeauOn > 0.005 && (
-        <g opacity={bandeauOn * 0.86} filter="url(#rustic_nomGlow)">
-          <text
-            x={NOM_CHAINE.cx}
-            y={NOM_CHAINE.cy}
-            textAnchor="middle"
-            dominantBaseline="central"
-            fontFamily="'Arial Black', 'Arial Bold', Arial, sans-serif"
-            fontWeight={900}
-            fontSize={NOM_CHAINE.size}
-            textLength={NOM_CHAINE.w}
-            lengthAdjust="spacingAndGlyphs"
-            fill="#8fd9ff"
-          >
-            {NOM_CHAINE.texte}
-          </text>
+        <g
+          opacity={bandeauOn * 0.5}
+          clipPath="url(#clip_bandeau)"
+          style={{ mixBlendMode: "screen" }}
+        >
+          <g mask="url(#mask_bandeauTexte)" filter="url(#rustic_nomGlowOnly)">
+            <rect x={0} y={0} width={RUSTIC_W} height={RUSTIC_H} fill="#8fd9ff" />
+          </g>
         </g>
       )}
 
