@@ -50,7 +50,7 @@ UNANIME, jamais discuté entre eux** :
   « crient lévitation » indépendamment du reste — défaut jamais identifié avant ce jury.
 Sorties complètes : `/tmp/da-refs/jury-flottement-{gpt6,grok,gemini,kimi}.md`.
 
-### ✅ OCCLUSION — PROTOTYPE VALIDÉ (06/09 nuit, après 3 échecs)
+### ⛔ OCCLUSION — 4 ESSAIS RATÉS, NON RÉSOLU (06/09 nuit) — REPRENDRE ICI
 
 ⛔ **3 essais ratés avant d'y arriver**, tous la même erreur de fond : poser un **rectangle**
 là où l'arête du couvercle de piano est une **diagonale**. Les 2 premiers (Claude) plaquaient
@@ -59,15 +59,28 @@ le bon contour et la bonne méthode, mais une arête posée trop bas (y≈1012) 
 du châssis occlus → **mesurable mais invisible à l'œil**. ⭐ Rappel : un chiffre qui bouge ne
 prouve pas qu'un problème visuel est résolu — il a fallu regarder plusieurs zooms pour le voir.
 
-✅ **Ce qui marche (PROTO4)** : arête remontée à y≈1005-1042, qui mord **20-30 px du châssis
-sur toute la largeur**, pas seulement le pied gauche.
-- Mesure finale : **6,9 % du châssis occlus** (le jury demandait 5-15 %) et **100 % des
-  stalactites de givre absorbées** — ce qui règle le défaut bonus signalé par Grok + Kimi
-  (« les stalactites qui pendent dans le vide crient lévitation »).
-- Prototype : `out/_r-and-d/chill-meter-3d/PROTO-OCCLUSION-VALIDE.png` (vérifié à l'œil au
-  plein cadre ET au zoom serré, pas seulement à la mesure).
+⛔ **PROTO4 (4e essai) EST RATÉ AUSSI — repéré par Aziz, pas par moi.** J'avais remonté
+l'arête à y≈1005-1042 et validé sur une vue plein cadre réduite : 6,9 % du châssis occlus,
+100 % des stalactites absorbées, les chiffres tombaient dans la fourchette du jury.
+**Mais le résultat est une AMPUTATION ASYMÉTRIQUE, pas une occlusion** :
+- **à GAUCHE** : le coin inférieur est tranché net en diagonale, les boutons STATUS et DATA
+  sont coupés en pleine hauteur, le bord arrondi du châssis a disparu ;
+- **à DROITE** : le châssis est intact (coin, vis, bord métallique, stalactites encore visibles).
+Preuve visuelle : `out/_r-and-d/chill-meter-3d/DEFAUT-OCCLUSION-ASYMETRIE.png` (les 2 coins
+côte à côte, même échelle).
 
-**Polygone du couvercle, repère 1920×1080** (à porter en `clipPath` SVG) :
+⭐⭐⭐ **LA CAUSE — j'ai INVERSÉ LA PENTE de l'arête.** Sur la photo, le rebord du couvercle de
+piano descend **vers la gauche** ; mon polygone le fait au contraire *remonter* à gauche
+(y≈1005 alors que le châssis y descend jusqu'à 1049 → ~44 px mangés de ce côté), pendant qu'à
+droite il passe sous l'objet sans rien toucher.
+
+⛔⛔ **LA LEÇON DE MÉTHODE, la plus chère de la session** : j'ai validé sur une vue PLEIN CADRE
+RÉDUITE où le défaut était invisible, et sur des chiffres qui tombaient juste. Aziz l'a vu
+**sur son téléphone, sur une image plus petite encore** — parce qu'il a COMPARÉ LES DEUX CÔTÉS
+au lieu de regarder l'ensemble. → Sur un objet symétrique, toujours comparer gauche/droite au
+même zoom ; une mesure globale (« 6,9 % occlus ») ne dit RIEN sur la répartition.
+
+**Polygone du 4e essai — ⛔ NE PAS LE REPRENDRE TEL QUEL** (pente inversée à gauche) :
 ```
 140,1005  215,1002  300,1006  352,1012  430,1022  520,1030  620,1036  720,1042
 820,1050  900,1058  1000,1066  1100,1074  1920,1080  140,1080
@@ -78,8 +91,10 @@ nette trahirait le découpage) · ombre de contact `rgb(12,16,26)` opacité 0.70
 elle-même clippée sur le même polygone, silhouette bornée à y 761-1050 pour exclure les
 stalactites.
 
-⚠️ **Ces coordonnées valent pour CETTE frame de plateau.** Si le décor change, relire le
-polygone sur grille — ne pas réajuster au jugé (c'est l'erreur des 3 premiers essais).
+⏭️ **CE QU'IL RESTE À FAIRE SUR CE POINT** : relire l'arête réelle du couvercle sur grille
+en vérifiant **le sens de la pente** (elle descend vers la gauche), puis re-tester en comparant
+systématiquement les 2 coins bas au même zoom avant de conclure.
+⚠️ Les coordonnées valent pour CETTE frame de plateau : si le décor change, tout est à relire.
 
 ### ⏭️ PLAN D'ACTION DÉCIDÉ (Aziz, 06/09)
 

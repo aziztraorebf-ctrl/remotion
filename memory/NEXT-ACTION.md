@@ -175,10 +175,12 @@ sa référence vs son plateau, clip video). Ses 6 demandes du 05/09 toutes trait
 seulement la plaque —, centrage 1,5 px, ombre de contact). Détail complet :
 `memory/client-sim-tests/upwork-chill-meter/STATUS.md` (dernière section, 06/09).
 
-⏭️ **PROCHAINE ACTION : lire sa réponse.** Rien à faire tant qu'elle ne répond pas. Si elle
-revient sur le placement (image 4, l'arbitrage taille/espace) ou sur le nom qui s'allume
-(présenté comme jalon 3 anticipé, « not locked in yet ») — les 2 points ouverts nommément
-dans le message.
+🔴 **ELLE A RÉPONDU LE 06/09 — 5 demandes, aucune encore codée. Délai annoncé : 24-48 h.**
+⭐⭐⭐ **REPRISE : `memory/starters/STARTER-chill-meter-revision-06-09.md`** — tout y est :
+ses 5 demandes, le verdict du jury externe 4 voix sur le flottement, et surtout le POINT
+BLOQUANT (4 essais ratés sur l'occlusion, avec la cause du 4e : pente d'arête inversée).
+Elle a reconnu qu'on avait raison sur le centrage et que sa référence IA était décalée ;
+elle a joint sa VRAIE capture de plateau, qui devient la référence.
 
 ⭐⭐⭐ **3 briques nées de ce seul jalon, réutilisables sur TOUT futur contrat client** :
 - `memory/doctrines/REVERSIBILITE-MATIERE-GENEREE.md` — poser une couche EXTRAITE sur une
