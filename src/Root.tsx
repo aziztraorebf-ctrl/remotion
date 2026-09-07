@@ -5839,6 +5839,33 @@ export const RemotionRoot: React.FC = () => {
           defaultProps={{ state: "fill75" as const, avecPlateau: true }}
         />
         <Composition
+          id="ChillMeter-TEST-NeigeH3"
+          component={TestBrumeH3}
+          durationInFrames={105}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill75" as const, avecPlateau: true, effet: "neige" as const }}
+        />
+        <Composition
+          id="ChillMeter-TEST-BordsPousse"
+          component={TestBrumeH3}
+          durationInFrames={105}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill100" as const, avecPlateau: true, effet: "bords-pousse" as const }}
+        />
+        <Composition
+          id="ChillMeter-TEST-BordsRespire"
+          component={TestBrumeH3}
+          durationInFrames={105}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill100" as const, avecPlateau: true, effet: "bords-respire" as const }}
+        />
+        <Composition
           id="ChillMeter-TEST-BrumeH3-fondNoir"
           component={TestBrumeH3}
           durationInFrames={105}

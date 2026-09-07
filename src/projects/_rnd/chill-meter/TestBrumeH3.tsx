@@ -26,10 +26,14 @@ import { ChillMeterOverlay, type MeterState } from "./ChillMeterOverlay";
 /** Hauteur de la bande de brume a l'ecran, en px sur 1080. */
 const BANDE_H = 420;
 
-export const TestBrumeH3: React.FC<{ state?: MeterState; avecPlateau?: boolean }> = ({
-  state = "fill75",
-  avecPlateau = true,
-}) => {
+/** Quel effet on teste. "brume" = bande basse ; "neige" = plein cadre. */
+export type EffetTeste = "brume" | "neige" | "bords-pousse" | "bords-respire";
+
+export const TestBrumeH3: React.FC<{
+  state?: MeterState;
+  avecPlateau?: boolean;
+  effet?: EffetTeste;
+}> = ({ state = "fill75", avecPlateau = true, effet = "brume" }) => {
   const frame = useCurrentFrame();
 
   // Montee douce : jamais l'opacite pleine d'un coup, sinon la brume "apparait" au lieu
@@ -52,14 +56,28 @@ export const TestBrumeH3: React.FC<{ state?: MeterState; avecPlateau?: boolean }
           matiere lumineuse subsiste. Aucun detourage, aucun credit API. */}
       <Sequence from={0}>
         <OffthreadVideo
-          src={staticFile("_client-sim/chill-meter/test-brume/brume-h3.mp4")}
+          src={staticFile(
+            effet === "neige"
+              ? "_client-sim/chill-meter/test-brume/neige-h3.mp4"
+              : effet === "bords-pousse"
+                ? "_client-sim/chill-meter/test-brume/bords-pousse.mp4"
+                : effet === "bords-respire"
+                  ? "_client-sim/chill-meter/test-brume/bords-respire.mp4"
+                  : "_client-sim/chill-meter/test-brume/brume-h3.mp4",
+          )}
           muted
           style={{
             position: "absolute",
             left: 0,
-            bottom: 0,
+            // ⛔ Cadrage DIFFERENT selon l'effet, ce n'est pas un detail :
+            //  - la brume monte du sol -> bande basse ancree en bas ;
+            //  - la neige TOMBE -> doit occuper TOUT le cadre, sinon les flocons
+            //    apparaissent au milieu de l'ecran au lieu de venir du haut.
+            //  - le givre de BORDS encadre tout le cadre -> plein cadre lui aussi.
+            ...(effet === "brume"
+              ? { bottom: 0, height: BANDE_H }
+              : { top: 0, height: 1080 }),
             width: 1920,
-            height: BANDE_H,
             // ⛔ PAS `cover` : le clip fait 864x480 (ratio 1,8) et la bande 1920x420
             // (ratio 4,57). `cover` l'agrandit a 1067px de haut pour couvrir la largeur,
             // puis en rogne 647 — on ne voyait qu'une fine tranche du MILIEU du clip, pas
@@ -68,9 +86,37 @@ export const TestBrumeH3: React.FC<{ state?: MeterState; avecPlateau?: boolean }
             objectFit: "fill",
             mixBlendMode: "screen",
             opacity: opacite,
-            // tue la ligne de coupe en haut du rectangle du clip
-            maskImage: "linear-gradient(to top, black 45%, transparent 100%)",
-            WebkitMaskImage: "linear-gradient(to top, black 45%, transparent 100%)",
+            // Masque seulement pour la brume : il tue la ligne de coupe en haut de sa
+            // bande. La neige occupe tout le cadre, elle n'a pas de bord a cacher —
+            // un masque l'effacerait en haut, la ou les flocons doivent entrer.
+            ...(effet === "brume"
+              ? {
+                  maskImage: "linear-gradient(to top, black 45%, transparent 100%)",
+                  WebkitMaskImage: "linear-gradient(to top, black 45%, transparent 100%)",
+                }
+              : {}),
+            // ⛔ GIVRE DE BORDS — mesure du 07/09 : le givre poussait trop LOIN vers
+            // l'interieur, surtout a GAUCHE ou il debordait sur la fenetre video qui
+            // joue (60,9 % des pixels du bord gauche touches, +28,3 de luminance, contre
+            // 0,4 % au centre de la fenetre). On le RETIENT aux bords par un masque qui
+            // eteint le givre des qu'il depasse la bordure — plutot que de regenerer.
+            // Gauche plus serre que les autres cotes : c'est la que sa video se trouve.
+            ...(effet === "bords-pousse" || effet === "bords-respire"
+              ? {
+                  maskImage:
+                    "linear-gradient(to right, black 0%, transparent 6%), " +
+                    "linear-gradient(to left, black 0%, transparent 14%), " +
+                    "linear-gradient(to bottom, black 0%, transparent 13%), " +
+                    "linear-gradient(to top, black 0%, transparent 13%)",
+                  WebkitMaskImage:
+                    "linear-gradient(to right, black 0%, transparent 6%), " +
+                    "linear-gradient(to left, black 0%, transparent 14%), " +
+                    "linear-gradient(to bottom, black 0%, transparent 13%), " +
+                    "linear-gradient(to top, black 0%, transparent 13%)",
+                  maskComposite: "add",
+                  WebkitMaskComposite: "source-over",
+                }
+              : {}),
             pointerEvents: "none",
           }}
         />
