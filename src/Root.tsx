@@ -5857,6 +5857,15 @@ export const RemotionRoot: React.FC = () => {
           defaultProps={{ state: "fill100" as const, avecPlateau: true, effet: "bords-pousse" as const }}
         />
         <Composition
+          id="ChillMeter-TEST-BordsBlanc"
+          component={TestBrumeH3}
+          durationInFrames={105}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill100" as const, avecPlateau: true, effet: "bords-blanc" as const }}
+        />
+        <Composition
           id="ChillMeter-TEST-BordsRespire"
           component={TestBrumeH3}
           durationInFrames={105}

@@ -27,7 +27,7 @@ import { ChillMeterOverlay, type MeterState } from "./ChillMeterOverlay";
 const BANDE_H = 420;
 
 /** Quel effet on teste. "brume" = bande basse ; "neige" = plein cadre. */
-export type EffetTeste = "brume" | "neige" | "bords-pousse" | "bords-respire";
+export type EffetTeste = "brume" | "neige" | "bords-pousse" | "bords-respire" | "bords-blanc";
 
 export const TestBrumeH3: React.FC<{
   state?: MeterState;
@@ -59,8 +59,10 @@ export const TestBrumeH3: React.FC<{
           src={staticFile(
             effet === "neige"
               ? "_client-sim/chill-meter/test-brume/neige-h3.mp4"
-              : effet === "bords-pousse"
-                ? "_client-sim/chill-meter/test-brume/bords-pousse.mp4"
+              : effet === "bords-blanc"
+                ? "_client-sim/chill-meter/test-brume/bords-pousse-blanc.mp4"
+                : effet === "bords-pousse"
+                  ? "_client-sim/chill-meter/test-brume/bords-pousse.mp4"
                 : effet === "bords-respire"
                   ? "_client-sim/chill-meter/test-brume/bords-respire.mp4"
                   : "_client-sim/chill-meter/test-brume/brume-h3.mp4",
@@ -101,7 +103,7 @@ export const TestBrumeH3: React.FC<{
             // 0,4 % au centre de la fenetre). On le RETIENT aux bords par un masque qui
             // eteint le givre des qu'il depasse la bordure — plutot que de regenerer.
             // Gauche plus serre que les autres cotes : c'est la que sa video se trouve.
-            ...(effet === "bords-pousse" || effet === "bords-respire"
+            ...(effet === "bords-pousse" || effet === "bords-respire" || effet === "bords-blanc"
               ? {
                   maskImage:
                     "linear-gradient(to right, black 0%, transparent 6%), " +
