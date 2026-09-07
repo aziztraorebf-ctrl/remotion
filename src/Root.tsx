@@ -4,6 +4,7 @@ import { ChillMeterShowcase, SHOWCASE_FRAMES } from "./projects/_rnd/chill-meter
 import { ChillMeterOverlay } from "./projects/_rnd/chill-meter/ChillMeterOverlay";
 import { ChillMeterPreviewSurSonPlateau } from "./projects/_rnd/chill-meter/ChillMeterPreviewSurSonPlateau";
 import { TestBrumeH3 } from "./projects/_rnd/chill-meter/TestBrumeH3";
+import { RecapClient, RECAP_DUREE } from "./projects/_rnd/chill-meter/RecapClient";
 import { Effet75Seul, Effet100Seul, OndeSeule, EFFET75_FRAMES, EFFET100_FRAMES } from "./projects/_rnd/chill-meter/EffetsEcran";
 import { ShockWave3D, SHOCKWAVE_3D_FRAMES } from "./projects/_rnd/chill-meter/ShockWave3D";
 import { ShockWave3Dv2, SHOCKWAVE_V2_FRAMES } from "./projects/_rnd/chill-meter/ShockWave3D_v2";
@@ -5861,6 +5862,17 @@ export const RemotionRoot: React.FC = () => {
             l'effet tient sur de la vraie video et pas sur une image fixe. */}
         {/* RECAP des corrections client : le meter SEUL sur sa vraie video, sans effet R&D.
             Un ID par etat a montrer — le montage se fait ensuite en ffmpeg. */}
+        {/* ⭐ LE RECAP ENVOYE A LA CLIENTE — une seule prise continue de son extrait
+            reel, cadre plein, annotations en haut. 2 chapitres marques : jalon 1 a
+            valider, puis apercu des jalons 2/3. Cf. l'en-tete de RecapClient.tsx. */}
+        <Composition
+          id="ChillMeter-RECAP-Client"
+          component={RecapClient}
+          durationInFrames={RECAP_DUREE}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
         <Composition
           id="ChillMeter-RECAP-Idle"
           component={TestBrumeH3}
