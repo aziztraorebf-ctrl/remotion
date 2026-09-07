@@ -27,6 +27,32 @@
   Mon jugement vaut sur des images fixes ; c'est son œil qui tranche (précédent : il a vu
   l'asymétrie de l'occlusion que mes chiffres avaient ratée).
 
+## ⏭️ PROCHAINE ÉTAPE — REFAIRE la vidéo récap (verdict Aziz, 07/09)
+
+⛔ **La vidéo récap du 07/09 est REJETÉE** (`out/_r-and-d/chill-meter-3d/RECAP-5-corrections.mp4`,
+25 s, 6 plans). Techniquement propre (aucun gel, annotations lisibles) mais **mauvaise forme** :
+j'ai fait des ZOOMS RECADRÉS et des comparaisons avant/après en split — donc « du statique,
+différents écrans qui défilent ». On ne voit jamais vraiment sa vidéo, juste « du coin de l'œil ».
+
+⭐ **CE QU'IL FAUT FAIRE À LA PLACE** (mots d'Aziz) : reprendre la forme de nos vidéos habituelles,
+celle utilisée pour les tests d'effets d'animation —
+- **CADRE PLEIN, JAMAIS RECADRÉ** : son extrait vidéo réel qui joue, en entier, et l'objet posé
+  dans son coin **exactement comme il apparaîtra dans sa vidéo YouTube**.
+- **Les annotations apparaissent EN HAUT de l'écran** par-dessus, comme déjà fait (cf. la vidéo
+  annotée des 4 demandes, `ANNOTEE-verification-06-09-v4.mp4`, qui elle avait la bonne forme).
+- ⛔ **AUCUNE frame statique, aucun zoom recadré, aucun split avant/après.** L'objet reste à sa
+  place et à sa taille réelles pendant que la vidéo joue.
+
+**Matériel déjà prêt et réutilisable** :
+- Extrait réel : `public/_client-sim/chill-meter/test-brume/plateau-reel.mp4` (30 s, sans son)
+- Compos plein cadre sans effet R&D : `ChillMeter-RECAP-{Idle,Entrance,Fill75,Fill100}`
+  (`plateauVideo: true`, `effet: "aucun"`) — déjà rendues, c'est la BONNE base
+- Cartons d'annotation : `.../scratchpad/recap/c1..c6.png` (à refaire si le montage change)
+
+⛔ **Piège déjà payé sur ce montage** : un `ffmpeg concat -c copy` FIGE l'image en gardant la
+durée normale (gel de 12 s non détecté à l'œil). Assembler avec le **filtre `concat` en
+réencodant**, et vérifier par échantillonnage dense (1 frame/1,2 s, hashs tous distincts).
+
 ## 3. ⛔ CE QUI MANQUE POUR ENVOYER
 
 1. **Les 6 MOV alpha sont PÉRIMÉS** — `out/_r-and-d/chill-meter-upwork/*.mov` datent du
