@@ -9,7 +9,11 @@
 
 Sa réponse du 06/09 est arrivée avec **5 demandes** + une reconnaissance explicite qu'on avait
 raison sur le centrage et que sa référence IA était décalée. Message de confirmation envoyé
-(24-48 h). **Aucune des 5 demandes n'est encore codée.**
+(24-48 h).
+
+⛔ **MIS À JOUR LE 07/09 — les 5 demandes sont CODÉES, MESURÉES et COMMITÉES.**
+(Cette ligne disait « aucune n'est encore codée » : vrai le 06/09, faux depuis.)
+→ État réel et ce qui reste à livrer : `memory/client-sim-tests/upwork-chill-meter/LIVRAISON-ETAT-07-09.md`
 
 ## ✅ CE QUI EST ACQUIS (ne pas refaire)
 

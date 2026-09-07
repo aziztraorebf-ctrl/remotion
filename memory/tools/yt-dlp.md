@@ -8,15 +8,22 @@
 > le fix EN DUR (import `force_ipv4` natif, plus besoin d'y penser) — mais TOUT NOUVEAU script réseau
 > doit importer `scripts/tools/force_ipv4.py` en première ligne dès sa création, pas après coup.
 
-## ⛔ 3 INSTALLATIONS CONCURRENTES SUR CETTE MACHINE — utiliser la bonne (2026-08-22)
+## ⛔ 3 INSTALLATIONS CONCURRENTES SUR CETTE MACHINE — utiliser la bonne
 
-`which -a yt-dlp` renvoie **3 binaires**. Un seul est à jour :
+`which -a yt-dlp` renvoie **3 binaires**, de versions DIFFÉRENTES qui glissent dans le temps.
 
-| Chemin | Version au 2026-08-22 | Verdict |
+| Chemin | Version **mesurée le 2026-09-07** | Verdict |
 |---|---|---|
-| `/opt/homebrew/Caskroom/miniforge/base/bin/yt-dlp` | **2026.08.19** | ✅ **le seul à utiliser** |
-| `/opt/homebrew/bin/yt-dlp` | 2026.03.17 | ⛔ >90 j → **HTTP 403** sur YouTube |
-| `/Library/Frameworks/Python.framework/Versions/3.14/bin/yt-dlp` | 2026.03.17 | ⛔ idem |
+| `/Library/Frameworks/Python.framework/Versions/3.14/bin/yt-dlp` | **2026.08.19** | ✅ **1er du PATH — c'est celui qu'appelle `yt-dlp` nu** |
+| `/opt/homebrew/Caskroom/miniforge/base/bin/yt-dlp` | **2026.08.19** | ✅ à jour aussi |
+| `/opt/homebrew/bin/yt-dlp` | 2026.03.17 | ⛔ **PÉRIMÉ → HTTP 403** — et c'est le chemin que citent les règles ! |
+
+⛔⛔ **NE PAS GRAVER UN CHEMIN ABSOLU** : ce tableau a déjà été faux une fois. Au 22/08 le binaire
+Python 3.14 était périmé ; un `pip install --upgrade yt-dlp` le 07/09 l'a mis à jour **sans toucher
+celui de Homebrew** — inversant le verdict de 2 lignes sur 3. Un chemin absolu fige une installation
+qui peut cesser d'être la bonne.
+→ **Utiliser `yt-dlp` nu (résolu par le PATH) ou `python3 -m yt_dlp`**, et vérifier par
+`for p in $(which -a yt-dlp); do echo -n "$p : "; $p --version; done` en cas de doute.
 
 ⚠️ `pip install --upgrade yt-dlp` met à jour **miniforge**, PAS le binaire de `/opt/homebrew/bin/`
 que le PATH résout en premier — donc `yt-dlp --version` continue d'afficher l'ancienne après upgrade.

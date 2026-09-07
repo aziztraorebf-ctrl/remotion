@@ -58,6 +58,13 @@ ont rien changé. FIX : embarquer Inter (`@remotion/google-fonts/Inter`, axe com
   pas un bug. Vécu 2026-08-22 : défaut inexistant signalé à Aziz, code modifié pour rien, agent de diagnostic
   mobilisé. **Avant de conclure à un défaut sur une frame transparente : MESURER**
   (`Image.open(f).convert("RGBA").getpixel((x,y))` → `(0,0,0,0)` = tout va bien).
+- ⭐⭐⭐ **AVANT de payer un détourage alpha : tester `mixBlendMode: "screen"` sur fond noir.**
+  Mesuré sur le vrai plateau (chill-meter, 07/09) : `screen` gratuit = **+18,2 d'écart / 42,8 % de
+  pixels** ; alpha Bria (~57 crédits, 11 crédits/s) = **+1,8 / 32,6 %**. Bria fait un travail
+  techniquement PARFAIT (`alpha_mode=1`, 256 valeurs) mais compose MOINS BIEN : une matière
+  lumineuse (brume, fumée, glow, explosion) est ADDITIVE — `screen` fait exactement ça, l'alpha
+  REMPLACE les pixels du fond, gris compris → voile grisâtre qui assombrit. ⛔ L'alpha réel ne sert
+  que pour une matière **OPAQUE** devant masquer l'arrière-plan. **Ne pas repayer ce test.**
   Cf. `feedback_transparence-lue-comme-bug.md`.
 - **Mapbox / WebGL → `./scripts/render-mapbox.sh <CompositionId> <out.mp4> [args]` OBLIGATOIRE.** `npx remotion render` nu échoue en « Failed to initialize WebGL ». Le script fixe ce qui a été payé : `chrome-headless-shell`, `--gl=angle`, `--concurrency=1`, public-dir slim par symlinks (évite de copier 2,4 Go). **~1,5 fps en 1080p** (mesure 2026-08-22 ; le « ~5 fps » historique était optimiste x3). ⛔ **VIDÉO SEULEMENT** — le script est câblé en dur sur `remotion render` (L41) : pour une **IMAGE FIXE** WebGL/Three.js il ne sert à rien (`--frames=0` échoue en « output directory of the image sequence cannot have an extension »). Utiliser `still` à la main : `npx remotion still src/index.ts <Comp> <out.png> --browser-executable=node_modules/.remotion/chrome-headless-shell/mac-arm64/chrome-headless-shell-mac-arm64/chrome-headless-shell --gl=angle --image-format=png` (2026-08-25).
 - **D3 / SVG pur → `npx remotion render` local classique.** ⛔ `scripts/tools/render-on-vercel.py` = POC ABANDONNÉ, ne JAMAIS l'utiliser (repo Vercel figé au 2026-03-27, 3 compos de démo, ne verra jamais nos compositions).
