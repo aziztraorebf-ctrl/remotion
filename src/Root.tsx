@@ -5856,6 +5856,23 @@ export const RemotionRoot: React.FC = () => {
           height={1080}
           defaultProps={{ state: "fill100" as const, avecPlateau: true, effet: "bords-pousse" as const }}
         />
+        {/* ⭐ LE TEST ULTIME : l'effet sur un EXTRAIT REEL de sa chaine (30 s, sans son).
+            900 frames a 30 fps. Le plateau BOUGE — c'est la seule facon de voir si
+            l'effet tient sur de la vraie video et pas sur une image fixe. */}
+        <Composition
+          id="ChillMeter-TEST-SurSaVideo"
+          component={TestBrumeH3}
+          durationInFrames={900}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            state: "fill100" as const,
+            avecPlateau: true,
+            effet: "bords-blanc" as const,
+            plateauVideo: true,
+          }}
+        />
         <Composition
           id="ChillMeter-TEST-BordsBlanc"
           component={TestBrumeH3}

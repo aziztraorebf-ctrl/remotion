@@ -20,7 +20,7 @@
 //  - Un blend pose PAR-DESSUS des traits fins les delave (key-learnings.md:638) -> la brume
 //    passe SOUS le meter, jamais au-dessus.
 import React from "react";
-import { AbsoluteFill, OffthreadVideo, Sequence, staticFile, useCurrentFrame, interpolate } from "remotion";
+import { AbsoluteFill, Loop, OffthreadVideo, Sequence, staticFile, useCurrentFrame, interpolate } from "remotion";
 import { ChillMeterOverlay, type MeterState } from "./ChillMeterOverlay";
 
 /** Hauteur de la bande de brume a l'ecran, en px sur 1080. */
@@ -33,28 +33,52 @@ export const TestBrumeH3: React.FC<{
   state?: MeterState;
   avecPlateau?: boolean;
   effet?: EffetTeste;
-}> = ({ state = "fill75", avecPlateau = true, effet = "brume" }) => {
+  /** true = compose sur un EXTRAIT REEL de sa chaine, pas sur la capture fixe. */
+  plateauVideo?: boolean;
+}> = ({ state = "fill75", avecPlateau = true, effet = "brume", plateauVideo = false }) => {
   const frame = useCurrentFrame();
 
   // Montee douce : jamais l'opacite pleine d'un coup, sinon la brume "apparait" au lieu
   // de monter. Le clip fait 124 frames a 24 fps ; ici on tient sur 105 frames a 30 fps.
-  const opacite = interpolate(frame, [0, 25, 80, 104], [0, 0.85, 0.85, 0.6], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
+  // Sur un test long (extrait video reel), l'effet doit TENIR : montee puis plateau,
+  // pas une retombee a la frame 104 comme sur les tests courts de 105 frames.
+  const opacite = plateauVideo
+    ? interpolate(frame, [0, 40], [0, 0.85], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
+    : interpolate(frame, [0, 25, 80, 104], [0, 0.85, 0.85, 0.6], {
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+      });
+
+  // Le clip d'effet fait ~124 frames ; sur 900 frames il faut le BOUCLER, sinon il
+  // disparait au bout de 4 s. Boucle simple sans crossfade — la matiere est continue,
+  // le raccord ne se lit pas (pattern deja valide sur ProtoInsertMatiereConduite).
+  const CLIP_FRAMES = 124;
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
-      {avecPlateau && (
-        <img
-          src={staticFile("_client-sim/chill-meter/reference-06-09/plateau.png")}
-          style={{ position: "absolute", top: 0, left: 0, width: 1920, height: 1080 }}
-        />
-      )}
+      {/* Le plateau : image fixe par defaut, VIDEO REELLE quand `plateauVideo`.
+          ⛔ <Sequence> obligatoire autour d'OffthreadVideo (il lit sinon la frame
+          ABSOLUE de la composition) — meme piege que pour l'effet ci-dessous. */}
+      {avecPlateau &&
+        (plateauVideo ? (
+          <Sequence from={0}>
+            <OffthreadVideo
+              src={staticFile("_client-sim/chill-meter/test-brume/plateau-reel.mp4")}
+              muted
+              style={{ position: "absolute", top: 0, left: 0, width: 1920, height: 1080 }}
+            />
+          </Sequence>
+        ) : (
+          <img
+            src={staticFile("_client-sim/chill-meter/reference-06-09/plateau.png")}
+            style={{ position: "absolute", top: 0, left: 0, width: 1920, height: 1080 }}
+          />
+        ))}
 
       {/* LA BRUME — sous le meter, en `screen` : le noir du clip disparait, seule la
           matiere lumineuse subsiste. Aucun detourage, aucun credit API. */}
       <Sequence from={0}>
+        <Loop durationInFrames={CLIP_FRAMES}>
         <OffthreadVideo
           src={staticFile(
             effet === "neige"
@@ -122,6 +146,7 @@ export const TestBrumeH3: React.FC<{
             pointerEvents: "none",
           }}
         />
+        </Loop>
       </Sequence>
 
       {/* Le meter PAR-DESSUS la brume : ses traits fins et son texte restent nets. */}
