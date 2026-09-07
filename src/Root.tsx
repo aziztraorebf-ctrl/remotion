@@ -5859,6 +5859,44 @@ export const RemotionRoot: React.FC = () => {
         {/* ⭐ LE TEST ULTIME : l'effet sur un EXTRAIT REEL de sa chaine (30 s, sans son).
             900 frames a 30 fps. Le plateau BOUGE — c'est la seule facon de voir si
             l'effet tient sur de la vraie video et pas sur une image fixe. */}
+        {/* RECAP des corrections client : le meter SEUL sur sa vraie video, sans effet R&D.
+            Un ID par etat a montrer — le montage se fait ensuite en ffmpeg. */}
+        <Composition
+          id="ChillMeter-RECAP-Idle"
+          component={TestBrumeH3}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "idle" as const, avecPlateau: true, effet: "aucun" as const, plateauVideo: true }}
+        />
+        <Composition
+          id="ChillMeter-RECAP-Entrance"
+          component={TestBrumeH3}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "entrance" as const, avecPlateau: true, effet: "aucun" as const, plateauVideo: true }}
+        />
+        <Composition
+          id="ChillMeter-RECAP-Fill75"
+          component={TestBrumeH3}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill75" as const, avecPlateau: true, effet: "aucun" as const, plateauVideo: true }}
+        />
+        <Composition
+          id="ChillMeter-RECAP-Fill100"
+          component={TestBrumeH3}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill100" as const, avecPlateau: true, effet: "aucun" as const, plateauVideo: true }}
+        />
         <Composition
           id="ChillMeter-TEST-SurSaVideo"
           component={TestBrumeH3}

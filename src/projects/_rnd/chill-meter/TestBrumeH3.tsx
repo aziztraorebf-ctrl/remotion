@@ -27,7 +27,7 @@ import { ChillMeterOverlay, type MeterState } from "./ChillMeterOverlay";
 const BANDE_H = 420;
 
 /** Quel effet on teste. "brume" = bande basse ; "neige" = plein cadre. */
-export type EffetTeste = "brume" | "neige" | "bords-pousse" | "bords-respire" | "bords-blanc";
+export type EffetTeste = "brume" | "neige" | "bords-pousse" | "bords-respire" | "bords-blanc" | "aucun";
 
 export const TestBrumeH3: React.FC<{
   state?: MeterState;
@@ -76,7 +76,10 @@ export const TestBrumeH3: React.FC<{
         ))}
 
       {/* LA BRUME — sous le meter, en `screen` : le noir du clip disparait, seule la
-          matiere lumineuse subsiste. Aucun detourage, aucun credit API. */}
+          matiere lumineuse subsiste. Aucun detourage, aucun credit API.
+          `effet: "aucun"` = le meter SEUL sur le plateau (recap des corrections client :
+          on montre le device, pas les effets R&D). */}
+      {effet !== "aucun" && (
       <Sequence from={0}>
         <Loop durationInFrames={CLIP_FRAMES}>
         <OffthreadVideo
@@ -148,6 +151,7 @@ export const TestBrumeH3: React.FC<{
         />
         </Loop>
       </Sequence>
+      )}
 
       {/* Le meter PAR-DESSUS la brume : ses traits fins et son texte restent nets. */}
       <ChillMeterOverlay state={state} chassis="rustic" />
