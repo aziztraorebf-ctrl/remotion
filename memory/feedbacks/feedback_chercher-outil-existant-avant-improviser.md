@@ -67,3 +67,34 @@ le score Gemini/GPT s'est inversé selon l'outil utilisé).
 d'environnement (GPU, process zombie, config système) → `ls scripts/tools/*.py`, `ls scripts/*.sh`, ou
 `grep` sur le symptôme/la tâche dans `memory/` et `scripts/` EN PREMIER. Si l'outil existe mais ne couvre
 pas exactement le besoin, l'ÉTENDRE avec un flag rétrocompatible plutôt que d'en écrire un nouveau à côté.
+
+
+## Cas 3 — Chercher NOTRE HISTORIQUE, pas seulement nos scripts (2026-09-07)
+
+⭐ **Extension de la même leçon à un cran au-dessus** : les cas 1 et 2 disent « cherche l'OUTIL
+existant ». Celui-ci dit **« cherche la MÉTHODE déjà éprouvée »** — la doctrine, le gabarit, le
+diagnostic déjà posé, même quand aucun script ne porte le nom du problème.
+
+Session 2026-09-07 : pour animer une image avec MiniMax H3 via Comfy Cloud, j'ai tâtonné sur des
+IDs de nodes, échoué 2 fois (le template gardait son image de démo, sortie 640×640 au lieu du 16:9
+demandé), puis commencé à sonder le catalogue de nodes à l'aveugle. **Aziz a dû m'arrêter** :
+« pourquoi ne pas lancer un agent pour aller voir comment on a fait ? Ce n'est pas la première fois
+qu'on crée des vidéos avec nos images. »
+
+Un agent de reverse engineering a trouvé en une passe que **le bug était documenté chez nous depuis
+le 11 août** (`memory/tools/minimax-h3-comfy-cloud.md` ligne 246, section « CAUSE RACINE TROUVÉE ET
+CORRIGÉE »), avec le symptôme EXACT, et qu'un **gabarit fonctionnel dormait dans le repo**
+(`scripts/tools/comfy-graphs/minimax-h3-r2v-graph-template.json`). Il a marché du premier coup.
+
+**Pourquoi le protocole existant n'a pas suffi** : la règle du CLAUDE.md déclenche la délégation à
+« 2+ échecs sur le même problème technique ». Ici le déclencheur aurait dû être **antérieur** — dès
+l'instant où je m'apprêtais à explorer un outil que le projet a DÉJÀ utilisé des dizaines de fois.
+Je n'avais pas encore échoué ; j'allais échouer.
+
+**How to apply** : avant d'explorer un outil/une API que le projet utilise déjà (H3, Comfy, Gemini,
+Mapbox, PixelLab…), **ouvrir sa fiche `memory/tools/<outil>.md` AVANT le premier appel**, pas après
+le 2e échec. Chercher en particulier les sections « CAUSE RACINE », « ⛔ », « gabarit », « ne pas
+utiliser X ». Corollaire : un `ls scripts/tools/comfy-graphs/` ou `ls scripts/tools/ | grep <outil>`
+coûte 2 secondes et peut faire gagner une heure. Voisin de
+[[registre-visuel-briques-existantes-non-consultees-avant-code]] (même angle mort, appliqué au code)
+et de [[capacite-modele-supposee-verifier-le-catalogue]].
