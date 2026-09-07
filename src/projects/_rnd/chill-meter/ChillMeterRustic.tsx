@@ -602,55 +602,34 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
           Sa demande du 05/09 : « the jump between 50% and 75% does not feel different
           enough [...] one idea is to have AbiGirl Reacts light up in blue and glow at 75% ».
           C'est SON idee, reprise telle quelle : le bandeau grave reste metal jusqu'au 50 %,
-          puis s'illumine entre 55 et 75 % — un evenement, pas une montee continue. */}
+          puis s'illumine entre 55 et 75 % — un evenement, pas une montee continue.
+
+          ⭐⭐⭐ 07/09 (4e passe) — Aziz a vu le defaut SANS ZOOM sur un screenshot : meme apres
+          le pochoir topologique (masque troue corrige), le rendu SVG restait "pas net, pas
+          comme un neon" — les jambages hauts (A/b/l) se noient dans le givre au-dessus, le
+          contraste manque. Son idee : appliquer EXACTEMENT la meme technique deja validee
+          pour le GIVRE (cf. const GIVRE plus haut) — au lieu de construire un pochoir
+          GEOMETRIQUE puis de le colorer par filtre SVG, generer l'image ENTIERE dans l'etat
+          voulu (Gemini i2i : meme device, texte "AbiGirl Reacts" en neon bleu net) puis
+          EXTRAIRE le calque (ne garder que ce qui s'est eclairci, restreint aux pixels ou le
+          device original est deja OPAQUE — sinon le fond blanc de studio de Gemini, hors de
+          l'objet, se fait passer pour de la lumiere). Alignement verifie : diff moyenne 3,3/255
+          sur une zone stable (vis, cadre), donc aucune derive geometrique — contrairement a la
+          police vectorielle de substitution deja tentee et abandonnee (derive d'une largeur de
+          lettre sur "Reacts"). Recolore vers #7ad4ff (palette du reste du meter) en conservant
+          la structure de luminosite du glow genere. Fichier : bandeau-neon.png,
+          `scripts/tools/gemini-gen-bandeau-neon.py` pour regenerer si device-rustique.png
+          change. `mask_bandeauTexte` et ses filtres restent dans les <defs> (utilises
+          ailleurs potentiellement) mais ne sont plus consommes ici. */}
       {bandeauOn > 0.005 && (
         <g opacity={bandeauOn} clipPath="url(#clip_bandeau)">
-          {/* ⭐⭐ 06/09 (3e passe, Aziz a compare au titre "MAX CHILL DETECTION" et juge le
-              1er correctif trop faible) — `screen` depend du fond : sur le biseau CLAIR des
-              lettres (mesure : luminance du texte va de 18 a 147/255 sous ce meme masque),
-              `screen` + bleu reste proche du gris d'origine — seuls les creux sombres
-              viraient franchement bleu. D'ou "seul le contour s'allume", pas le corps du mot.
-              FIX : l'image, deja filtree par `rustic_bandeauTexteBleu` (qui RECOLORE en bleu
-              tout en conservant le relief — plancher remonte a 0,35 au lieu de 0, donc le
-              creux le plus sombre ne redescend jamais au noir), est posee au pochoir. Le
-              masque garantit qu'on ne touche QUE le texte : contrairement au 1er essai
-              (defaut du 06/09 matin), il n'y a plus besoin de discriminer clair/sombre sur
-              toute la plaque — la geometrie du pochoir fait deja ce travail. */}
-          <g mask="url(#mask_bandeauTexte)">
-            <image
-              href={staticFile("_client-sim/chill-meter/device-rustique.png")}
-              x={0}
-              y={0}
-              width={RUSTIC_W}
-              height={RUSTIC_H}
-              filter="url(#rustic_bandeauTexteBleu)"
-            />
-          </g>
-        </g>
-      )}
-
-      {/* ⭐ Le NOM DE LA CHAINE diffuse une lueur sur le metal autour — « light up in blue and
-          GLOW at 75% ». Le halo est tire du MEME masque que l'aplat ci-dessus, donc il epouse
-          le trace reel de sa gravure.
-
-          ⛔⛔ 06/09 — CE BLOC PORTAIT LE « FLOU » QU'ELLE SIGNALE (« make sure the wording and
-          symbols stay sharp and not blurry »). Il dessinait ici un `<text>` Arial Black cale
-          sur des coordonnees approchees, PUIS le passait dans `rustic_nomGlow` (flou 5 px).
-          Or la police du PNG n'est pas Arial Black : superposition mesuree, la derive cumulee
-          atteint une largeur de lettre entiere des « Reacts ». Le rendu montrait donc le vrai
-          texte grave + un DOUBLE flou decale par-dessus — exactement l'impression de flou
-          decrite. Le texte SVG est supprime ; seul reste un halo issu du masque exact.
-          Le halo est volontairement pose SOUS aucun texte concurrent : la nettete vient de
-          l'aplat au pochoir (bloc precedent), le flou ne sert qu'au rayonnement autour. */}
-      {bandeauOn > 0.005 && (
-        <g
-          opacity={bandeauOn * 0.5}
-          clipPath="url(#clip_bandeau)"
-          style={{ mixBlendMode: "screen" }}
-        >
-          <g mask="url(#mask_bandeauTexte)" filter="url(#rustic_nomGlowOnly)">
-            <rect x={0} y={0} width={RUSTIC_W} height={RUSTIC_H} fill="#8fd9ff" />
-          </g>
+          <image
+            href={staticFile("_client-sim/chill-meter/bandeau-neon.png")}
+            x={0}
+            y={0}
+            width={RUSTIC_W}
+            height={RUSTIC_H}
+          />
         </g>
       )}
 
