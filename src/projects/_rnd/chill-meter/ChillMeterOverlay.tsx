@@ -70,6 +70,13 @@ const SOL_EMPREINTE_X0 = 131;
 const SOL_EMPREINTE_W = 908;
 const SOL_OMBRE_H = 26;
 
+/** Panneau blanc du piano — MESURE le 06/09 par segmentation couleur + RANSAC (0,4 px
+ *  de RMS). C'est le coin en pointe du panneau avant, pas une surface traversante :
+ *  il s'arrete NET a x=356. Sert de support au reflet, et documente pourquoi
+ *  l'occlusion est impossible (le meter, lui, va de x=188 a x=716). */
+const PIANO_X0 = 188;   // debut du reflet : bord gauche du meter (le panneau commence a 109)
+const PIANO_X1 = 356;   // fin MESUREE du panneau — au-dela, aucune surface de premier plan
+
 // ⛔ Les anciens BottomEdgeEffect / FullChillEffect (brume en linear-gradient + heptagones)
 // ont ete REMPLACES le 2026-09-04 par EffetsEcran.tsx : ils dataient de l'ancien chassis,
 // leur brume couvrait les 1920 px de large (le brief exige « bottom edge only »), et leur
@@ -209,21 +216,97 @@ export const ChillMeterOverlay: React.FC<{
           RUSTIC_SOL_SCREEN existait deja mais n'etait CABLE a aucun element dessine :
           une ligne de sol qui vit comme un nombre et que rien ne materialise a l'ecran.
           L'ombre se resserre et s'assombrit a l'atterrissage : c'est le contact qui
-          rend l'appui lisible, pas le recalage vertical (deja juste). */}
+          rend l'appui lisible, pas le recalage vertical (deja juste).
+
+          ⭐⭐ 06/09 — POURQUOI DEUX OMBRES ET PAS UNE.
+          L'OCCLUSION EST GEOMETRIQUEMENT IMPOSSIBLE SUR CE PLATEAU : mesure a 0,4 px
+          pres (agent dedie, 3 methodes, 5 seuils), le panneau du piano ne couvre que
+          x=109..356 alors que le meter va de x=188 a x=716. Les deux tiers droits du
+          bo1tier n'ont AUCUN element de premier plan devant eux — le banc, lui, est en
+          ARRIERE-plan (son bord superieur MONTE vers la droite, il fuit vers le fond).
+          Toute occlusion fidele au decor est donc forcement asymetrique, et une
+          asymetrie sur un objet symetrique se lit comme une AMPUTATION (4 essais rejetes,
+          dont un ou le bouton DATA etait tranche). Le jury demandait « ne pas flotter » ;
+          l'occlusion n'etait que le MOYEN qu'il proposait, pas l'exigence.
+          On ancre donc par les deux indices qui, eux, sont disponibles partout :
+
+          1. OMBRE DE CONTACT DURE (ci-dessous) — c'est l'indice le plus fort quand il
+             n'y a pas de surface d'appui visible. Une ombre unique et floue se lit comme
+             « objet en vol stationnaire » ; un vrai contact a TOUJOURS deux composantes :
+             un noyau serre et dense sur la ligne de contact (quasi net) + l'etalement
+             ambiant diffus. Seul le second existait — d'ou la sensation de flottement. */}
+      {chassis === "rustic" && (
+        <>
+          {/* (a) NOYAU DE CONTACT — serre, dense, a peine floute. C'est LUI qui pose
+              l'objet. Il ne fait que 38 % de l'empreinte en hauteur et reste colle a la
+              ligne de sol : plus il est etroit et net, plus l'appui est credible. */}
+          <div
+            style={{
+              position: "absolute",
+              left: RUSTIC_POS_X + entX + SOL_EMPREINTE_X0 * RUSTIC_SCALE,
+              // ⛔ PAS centre sur la ligne de sol : le chassis est opaque JUSQU'A y=1030
+              // (mesure : 373 px opaques a 1030, plus que 33 a 1035). Une ombre centree
+              // sur RUSTIC_SOL_SCREEN a donc sa moitie haute CACHEE DERRIERE l'objet, et
+              // seule sa moitie basse, la plus faible, ressortait — d'ou une ombre
+              // presente dans l'alpha mais invisible a l'ecran. On la pose SOUS la base.
+              top: RUSTIC_SOL_SCREEN + 1 + bounce * 0.12,
+              width: SOL_EMPREINTE_W * RUSTIC_SCALE * ombreEtal * 0.94,
+              height: SOL_OMBRE_H * 0.38,
+              marginLeft: (SOL_EMPREINTE_W * RUSTIC_SCALE * (1 - ombreEtal * 0.94)) / 2,
+              borderRadius: "50%",
+              background:
+                "radial-gradient(ellipse at center, rgba(0,0,0,0.86) 0%, rgba(0,0,0,0.62) 55%, rgba(0,0,0,0) 88%)",
+              opacity: ombreOpacite,
+              filter: "blur(2px)",
+            }}
+          />
+          {/* (b) ETALEMENT AMBIANT — l'ombre douce d'origine, conservee telle quelle.
+              Elle seule ne posait pas l'objet, mais elle porte le volume. */}
+          <div
+            style={{
+              position: "absolute",
+              left: RUSTIC_POS_X + entX + SOL_EMPREINTE_X0 * RUSTIC_SCALE,
+              // Meme correction que le noyau : centre sur la ligne de sol, cet etalement
+              // etait aux 2/3 masque par le chassis. On le descend et on l'etire pour
+              // qu'il porte le noyau au lieu de mourir en 8 px.
+              top: RUSTIC_SOL_SCREEN - 2 + bounce * 0.12,
+              width: SOL_EMPREINTE_W * RUSTIC_SCALE * ombreEtal * 1.06,
+              height: SOL_OMBRE_H * 1.5,
+              marginLeft: (SOL_EMPREINTE_W * RUSTIC_SCALE * (1 - ombreEtal * 1.06)) / 2,
+              borderRadius: "50%",
+              background:
+                "radial-gradient(ellipse at center, rgba(0,0,0,0.70) 0%, rgba(0,0,0,0.40) 45%, rgba(0,0,0,0) 78%)",
+              opacity: ombreOpacite,
+              filter: "blur(7px)",
+            }}
+          />
+        </>
+      )}
+
+      {/* 2. REFLET SUR LE PANNEAU DU PIANO — le 2e indice d'appartenance.
+          Le panneau blanc du piano est la SEULE surface claire et lisse du plateau
+          situee devant le plan du meter : mesuree x=109..356, arete haute plate a
+          y~993 (pente reelle 0,54 deg, donc horizontale a l'oeil). C'est physiquement
+          le seul endroit ou un reflet est justifie — on ne le pose donc PAS ailleurs,
+          et surtout pas symetriquement : un reflet a droite serait invente (le banc y
+          est en arriere-plan, il ne peut rien reflechir du meter).
+          ⛔ Volontairement TRES discret : un reflet trop lu se voit comme une tache.
+          Il dit seulement « cet objet partage la lumiere de cette piece ». Il suit
+          l'entree (entX/bounce) pour rester solidaire de l'objet. */}
       {chassis === "rustic" && (
         <div
           style={{
             position: "absolute",
-            left: RUSTIC_POS_X + entX + SOL_EMPREINTE_X0 * RUSTIC_SCALE,
-            top: RUSTIC_SOL_SCREEN - SOL_OMBRE_H / 2 + bounce * 0.12,
-            width: SOL_EMPREINTE_W * RUSTIC_SCALE * ombreEtal,
-            height: SOL_OMBRE_H,
-            marginLeft: (SOL_EMPREINTE_W * RUSTIC_SCALE * (1 - ombreEtal)) / 2,
-            borderRadius: "50%",
+            left: PIANO_X0,
+            top: RUSTIC_SOL_SCREEN - 4 + bounce * 0.12,
+            width: PIANO_X1 - PIANO_X0,
+            height: 46,
             background:
-              "radial-gradient(ellipse at center, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.34) 42%, rgba(0,0,0,0) 72%)",
-            opacity: ombreOpacite,
-            filter: "blur(7px)",
+              "linear-gradient(to bottom, rgba(150,205,235,0.20) 0%, rgba(150,205,235,0.09) 45%, rgba(150,205,235,0) 100%)",
+            opacity: ombreOpacite * 0.85,
+            filter: "blur(6px)",
+            mixBlendMode: "screen",
+            pointerEvents: "none",
           }}
         />
       )}
