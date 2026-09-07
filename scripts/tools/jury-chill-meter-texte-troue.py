@@ -33,10 +33,11 @@ OUT_DIR = "/tmp/da-refs"
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 MAX_TOKENS = 24000
 
-GPT6_MODEL = "openai/gpt-6-astra"
-GROK_MODEL = "x-ai/grok-4.6"
-GEMINI_MODEL = "gemini-3.1-pro-preview"
-KIMI_MODEL = "kimi-k3"
+# ⛔ Jamais d'identifiant en dur : la source de verite est api_models.py.
+from api_models import GPT_SOL as GPT6_MODEL, GROK_TEXT_VISION as GROK_MODEL, KIMI  # noqa: E402
+
+GEMINI_MODEL = "gemini-3.1-pro-preview"   # dernier PRO existant (la serie 3.5+ est Flash only)
+KIMI_MODEL = KIMI
 
 
 def load_env():
