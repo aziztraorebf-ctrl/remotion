@@ -94,6 +94,13 @@ qui vit SUR la vitre. Le precedent est dans son propre decor.
    = 2026.03.17 alors que pip a 2026.8.19 → **tenter d'abord la mise à jour** avant de rechercher
    une autre cause. Chaîne : `https://youtube.com/@abigirl_reacts`.
 
+## ⛔ AVANT TOUT ENVOI — lire la fiche de livraison
+
+`memory/client-sim-tests/upwork-chill-meter/LIVRAISON-ETAT-07-09.md`
+Elle dit ce qui est fait (les 5 demandes + leurs commits), ce qui MANQUE pour envoyer
+(les 6 MOV alpha datent du 23/08, donc PERIMES — a regenerer), la question de perimetre
+non tranchee, et ou est le brouillon de message.
+
 ## 🔗 Fichiers clés
 
 - 📱 **Page de suivi (artifact, à enrichir toute la session)** :
