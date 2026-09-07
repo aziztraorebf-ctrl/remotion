@@ -96,6 +96,10 @@ qui vit SUR la vitre. Le precedent est dans son propre decor.
 
 ## 🔗 Fichiers clés
 
+- 📱 **Page de suivi (artifact, à enrichir toute la session)** :
+  https://claude.ai/code/artifact/5850aa17-cd86-4f75-9d8b-e0be02de5592
+  (comparatif avant/après de l'ancrage + la démonstration que l'occlusion est impossible)
+
 - Code : `src/projects/_rnd/chill-meter/ChillMeterRustic.tsx` + `ChillMeterOverlay.tsx`
 - Branche : `fix/chill-meter-ancrage-sol` (repo principal) = `rnd/chill-meter-3d` (worktree `wt-chill`)
 - Décor de travail : `/tmp/vraie-capture-1920x1080.png` (sa capture recadrée 16:9)
