@@ -2,6 +2,7 @@ import { CfaShortHook9x16, CFA_SHORT_HOOK_FRAMES, CFA_SHORT_HOOK_FPS } from "./p
 import { CfaNuit1994Anime16x9, CFA_NUIT_1994_FRAMES, CFA_NUIT_1994_FPS } from "./projects/_rnd/fable-svg/CfaNuit1994Anime16x9";
 import { ChillMeterShowcase, SHOWCASE_FRAMES } from "./projects/_rnd/chill-meter/ChillMeterShowcase";
 import { ChillMeterOverlay } from "./projects/_rnd/chill-meter/ChillMeterOverlay";
+import { ChillMeterPreviewSurSonPlateau } from "./projects/_rnd/chill-meter/ChillMeterPreviewSurSonPlateau";
 import { Effet75Seul, Effet100Seul, OndeSeule, EFFET75_FRAMES, EFFET100_FRAMES } from "./projects/_rnd/chill-meter/EffetsEcran";
 import { ShockWave3D, SHOCKWAVE_3D_FRAMES } from "./projects/_rnd/chill-meter/ShockWave3D";
 import { ShockWave3Dv2, SHOCKWAVE_V2_FRAMES } from "./projects/_rnd/chill-meter/ShockWave3D_v2";
@@ -5808,6 +5809,18 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="ChillMeter-Fill75"
           component={ChillMeterOverlay}
+          durationInFrames={105}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill75" as const }}
+        />
+        {/* PREVIEW SEULEMENT (06/09) — jamais livree a la cliente. Composite le meter
+            (fond transparent, INCHANGE) par-dessus sa vraie capture, en h264 opaque,
+            pour juger en video le resultat en contexte sans depedre de l'export alpha. */}
+        <Composition
+          id="ChillMeter-PREVIEW-Fill75-sur-plateau"
+          component={ChillMeterPreviewSurSonPlateau}
           durationInFrames={105}
           fps={30}
           width={1920}
