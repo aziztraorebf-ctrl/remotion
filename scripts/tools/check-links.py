@@ -17,6 +17,7 @@ Exit 0 si aucun lien mort, 1 sinon (utilisable en pre-commit / CI).
 """
 import os
 import re
+import subprocess
 import sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
@@ -99,6 +100,30 @@ def scan_file(path, label=None, base_dir=None):
     return results
 
 
+def branches_portant(chemin: str) -> list:
+    """Les branches locales qui portent ce chemin. Vide si git echoue.
+
+    Sert a distinguer « le chemin est faux » (absent partout) de « la branche est
+    en retard » (present ailleurs) — voir le commentaire dans main().
+    """
+    chemin = chemin.lstrip("./")
+    try:
+        refs = subprocess.run(
+            ["git", "for-each-ref", "--format=%(refname:short)", "refs/heads/"],
+            cwd=ROOT, capture_output=True, text=True, timeout=10)
+        if refs.returncode != 0:
+            return []
+        out = []
+        for b in refs.stdout.split():
+            r = subprocess.run(["git", "cat-file", "-e", f"{b}:{chemin}"],
+                               cwd=ROOT, capture_output=True, timeout=10)
+            if r.returncode == 0:
+                out.append(b)
+        return out
+    except (subprocess.SubprocessError, OSError):
+        return []
+
+
 def main():
     args = sys.argv[1:]
     if args and args[0] == "--all":
@@ -136,10 +161,35 @@ def main():
     if not broken:
         print("OK — aucun lien mort.")
         return 0
-    print(f"\n{len(broken)} LIEN(S) MORT(S) :")
+    # Un chemin absent du worktree COURANT peut exister sur une autre branche :
+    # les fichiers de navigation (dont MEMORY.md, qui vit hors du repo) indexent
+    # l'union de ce qui a ete appris, le worktree n'en porte qu'une intersection.
+    # Sans ce tri, le rapport dit « INTROUVABLE » pour du contenu bien vivant et
+    # pousse a supprimer la ligne d'index. Mesure du 2026-09-07 : 2 liens sur 2
+    # etaient dans ce cas (presents sur 4 et 5 branches).
+    ailleurs, absents = [], []
     for label, ln, cited in broken:
-        print(f"  {label}:{ln}  ->  {cited}  (INTROUVABLE)")
-    return 1
+        if branches_portant(cited):
+            ailleurs.append((label, ln, cited, branches_portant(cited)))
+        else:
+            absents.append((label, ln, cited))
+
+    if absents:
+        print(f"\n{len(absents)} LIEN(S) MORT(S) — absents de TOUTE branche :")
+        for label, ln, cited in absents:
+            print(f"  {label}:{ln}  ->  {cited}  (INTROUVABLE)")
+
+    if ailleurs:
+        print(f"\n{len(ailleurs)} lien(s) presents SUR UNE AUTRE BRANCHE "
+              f"(branche courante en retard) :")
+        for label, ln, cited, br in ailleurs:
+            suffixe = f" (+{len(br) - 1})" if len(br) > 1 else ""
+            print(f"  {label}:{ln}  ->  {cited}  [{br[0]}{suffixe}]")
+        print("  ⛔ NE PAS supprimer ces lignes : le savoir existe, c'est la branche "
+              "qui est en retard.")
+        print("  Recuperer sans rien ecraser : git show <branche>:<chemin> > <chemin>")
+
+    return 1 if absents else 0
 
 
 if __name__ == "__main__":

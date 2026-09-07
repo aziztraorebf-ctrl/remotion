@@ -19,7 +19,7 @@ Claude est Expert Video Director (Remotion). Aziz est le réalisateur : il décr
 | Gemini — TTS test | `gemini-3.1-flash-tts-preview` |
 | Voix ElevenLabs Souverain/Atlas | `z3gESu49naEZW8Af2Upm` (GéoAfrique V2) |
 | Minimax musique | `fal-ai/minimax-music/v2.6`, payload `{prompt, is_instrumental: true}` (pas de `reference_audio_url`) |
-| Kimi (review + vision→SVG) | **`kimi-k3` UNIQUEMENT** via Moonshot API — importer `KIMI` de `scripts/tools/api_models.py`. ⛔ k2.5 / k2.6 / k26 PÉRIMÉS (décision Aziz 2026-08-20 : une seule variante, la plus récente). ⚠️ `da-brief.py` est resté sur k2.5 en **contournant** un bug de k3 (`reasoning_content`) au lieu de le corriger — cf. `memory/tools/kimi-k3-reasoning-borne.md` : appliquer le vrai fix en le migrant. |
+| Kimi (review + vision→SVG) | **`kimi-k3` UNIQUEMENT** via Moonshot API — importer `KIMI` de `scripts/tools/api_models.py`. ⛔ k2.5 / k2.6 / k26 PÉRIMÉS (décision Aziz 2026-08-20 : une seule variante, la plus récente). ⚠️ `da-brief.py` encore sur k2.5 (contournement d'un bug k3) → `memory/tools/kimi-k3-reasoning-borne.md`. |
 | DeepSeek — 3e voix DA-brief (TEXTE only, PAS de vision) | `deepseek/deepseek-v4-pro` via OpenRouter |
 | GPT — texte+vision (SVG, breakdown JSON, idéation) | `openai/gpt-5.5` via OpenRouter |
 | GPT — génération image | `gpt-5.4-image-2` via OpenRouter (PAS `gpt-5.5-image`, n'existe pas) |
@@ -149,7 +149,7 @@ info n'est PAS trouvée en 1 grep/lecture dans `memory/doctrines/`, `feedbacks/`
 **Absolus** : SCAN templates (CATALOGUE-CARTE-VIVANTE + MAPBOX-COMPOSANTS) AVANT code · Production Brief validé Aziz AVANT code (SFX plancher 0.50, pitch 32 si 1-4 pays) · 2 appels Gemini MAX · drapeaux : `MapboxCountryFlagDecal` (source-image) sur carte avec pitch ; `useClipFlags` seulement à pitch=0 — JAMAIS `drawFlagCanvas`. Détail : `memory/doctrines/CARTO-OVERLAYS-PRINCIPES.md` · drapeau/effet vivant obligatoire. S'applique à TOUT nouveau beat, même un Short fait « comme ça ».
 
 **⛔ GEMINI = SIGNAL, JAMAIS JUGE** (les deux pipelines) : le score est consultatif. Procédure : 1 appel → vérifier chaque point contre le réel → appliquer seulement ce qui est vrai → STOP. JAMAIS de boucle Gemini→fix→Gemini. Le jugement d'Aziz prime. Outils review : `scripts/tools/REVIEW-TOOLS-INDEX.md`.
-ℹ️ **Upload VIDÉO complète à Gemini 3.1 Pro = FIABLE** (Files API, validé 2026-06-16 ; le bug "répond sans voir" du 13 juin est résolu). Permet de juger MOUVEMENT/rythme/transitions/SON — supérieur aux frames figées pour un breakdown premium. Fiabilité déjà prouvée (test archivé pour référence : `scripts/tools/_archive/gemini-video-upload-test.py`). Détail : `memory/tools/gemini-video-upload-fiable.md`. (Gemini reste SIGNAL, pas juge.)
+ℹ️ **Upload VIDÉO complète à Gemini 3.1 Pro = FIABLE** — juger MOUVEMENT/rythme/transitions/SON, supérieur aux frames figées. Détail : `memory/tools/gemini-video-upload-fiable.md`. (Gemini reste SIGNAL, pas juge.)
 
 ---
 
@@ -167,7 +167,7 @@ info n'est PAS trouvée en 1 grep/lecture dans `memory/doctrines/`, `feedbacks/`
 
 **Async PixelLab** : jamais annoncer « j'attends » sans exécuter le `sleep` Bash réel. Détail du flow (`animate_character` → `sleep 120` → `get_character()`, relance si "None yet") : `memory/doctrines/ATLAS-PIXELLAB-PLAYBOOK.md`.
 
-**Config** : Node v24.6.0, npm (pas bun), macOS. Packages : `@remotion/paths`, `@remotion/shapes`, `lucide-react`. Clés API : `.env` racine (Mapbox inclus), jamais hardcoder, détail `memory/apis-and-tools.md`. ⛔ **`scripts/tools/render-on-vercel.py` = POC ABANDONNÉ, NE PAS UTILISER** (confirmé 2026-08-02 : pointe vers un repo Vercel séparé `aziztraorebf-ctrl/remotion-renderer` figé au 2026-03-27, 3 compositions de démo `MyComp`/`GeoTest`/`NextLogo` seulement — ne verra jamais nos vraies compositions, porter est disproportionné vu nos 2.3 Go d'assets + Mapbox/deck.gl). Render >30s (D3/SVG pur, PAS Mapbox/WebGL) → `npx remotion render` classique en local. **EXCEPTION Mapbox/WebGL → `scripts/render-mapbox.sh` OBLIGATOIRE** (Vercel ne supporte pas WebGL headless). QA : `scripts/visual_review.py` (routeur multi-modèles review). Audio : `scripts/generate-narration-expressive.py` (narration ElevenLabs) + `scripts/generate-sfx-elevenlabs.py` (SFX).
+**Config** : Node v24.6.0, npm (pas bun), macOS. Packages : `@remotion/paths`, `@remotion/shapes`, `lucide-react`. Clés API : `.env` racine (Mapbox inclus), jamais hardcoder, détail `memory/apis-and-tools.md`. ⛔ **`scripts/tools/render-on-vercel.py` = POC ABANDONNÉ, NE PAS UTILISER** (tranché 2026-08-02, détail `memory/apis-and-tools.md`). Render >30s (D3/SVG pur, PAS Mapbox/WebGL) → `npx remotion render` classique en local. **EXCEPTION Mapbox/WebGL → `scripts/render-mapbox.sh` OBLIGATOIRE** (Vercel ne supporte pas WebGL headless). QA : `scripts/visual_review.py` (routeur multi-modèles review). Audio : `scripts/generate-narration-expressive.py` (narration ElevenLabs) + `scripts/generate-sfx-elevenlabs.py` (SFX).
 
 ---
 
