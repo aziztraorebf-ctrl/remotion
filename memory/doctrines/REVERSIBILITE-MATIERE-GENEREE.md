@@ -88,6 +88,24 @@ compare au risque de trancher une decision visuelle sur un artefact de simulatio
 cas ici : quelques `npx remotion still` suffisent), soit ne simuler QUE pour se donner un
 ordre de grandeur avant de rendre — jamais comme verdict final.
 
+## ⛔ UN FILTRE SVG GLOBAL PEUT INVERSER LA CHALEUR D'UNE ZONE
+
+Vecu 2026-09-06 (commit `a45512e0`). On avait pose un calque de rouille chaude sur le device,
+mesure a **+12,4 de R-B dans le PNG source** (franchement chaud). A l'ecran, la meme zone
+sortait a **-3,8** : le filtre gunmetal applique a TOUTE l'image ne l'attenuait pas, il
+**INVERSAIT sa chaleur**.
+
+⛔ La cause n'etait PAS la saturation (simulee a 0,30 / 0,45 / 0,62 / 0,80 : la zone reste
+negative partout) mais les **PENTES du `feComponentTransfer`** : le bleu montait plus vite que
+le rouge (slope 1,43 contre 1,39) sur TOUS les pixels. Un ecart de 0,04 entre canaux suffit a
+retourner le signe d'une difference de 12 points.
+
+→ **Un filtre qui "refroidit en moyenne" peut refroidir tres inegalement** selon la couleur
+locale. Quand une couche posee ne ressort pas comme attendu : mesurer **canal par canal**
+(R, G, B separement) avant/apres, pas seulement la luminance globale ou un avant/apres visuel.
+⭐ Meme famille d'erreur que la mesure globale qui masque une repartition asymetrique —
+cf. [[feedback_objet-symetrique-comparer-les-2-cotes-au-meme-zoom]].
+
 ## ⛔ TEXTE GRAVÉ EN RELIEF (pas peint) : aucun seuil de luminance ne l'isole
 
 Vecu 2× sur ce meme contrat, jamais remonte hors commentaire de code avant ce jour.

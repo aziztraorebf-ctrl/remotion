@@ -46,4 +46,15 @@ Elle reste a coder et a VERIFIER sur le rendu reel, comme toute recommandation e
 cf. [[feedback_rapport-vert-ne-prouve-rien-regarder-l-image]]. Un jury qui converge dit
 « regarde par la », pas « c'est regle ».
 
+## 🔗 LA FAMILLE « CONVERGENCE DE MODELES » — 4 fiches, 4 angles DIFFERENTS
+
+Le sujet essaime : verifier laquelle s'applique AVANT d'en ecrire une 5e.
+| Fiche | Ce qu'elle traite |
+|---|---|
+| [[convergence-modeles-sur-brief-biaise-nest-pas-une-preuve]] | le BRIEF oriente : elles renvoient mon cadrage |
+| [[feedback_convergence-modeles-vaut-le-critere-donne]] | le CRITERE : une convergence mesure ce qu'on lui a demande |
+| [[feedback_convergence-llm-tester-en-retirant-le-contexte]] | le TEST : relancer sans le contexte suspect |
+| [[feedback_convergence-spontanee-2-modeles-signal-fort]] | 2 voix spontanees = signal |
+| **celle-ci** | **l'ISOLATION MUTUELLE : N voix en parallele, sans contexte partage, qui ne se voient pas** |
+
 Voir `memory/client-sim-tests/upwork-chill-meter/STATUS.md` § JURY EXTERNE 4 VOIX (06/09)
