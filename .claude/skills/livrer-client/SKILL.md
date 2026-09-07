@@ -8,6 +8,31 @@ description: "Verifier et empaqueter un livrable client (alpha, codec, nommage, 
 Le rendu existe. Ce skill le rend envoyable : verifier ce que le client verra, l'empaqueter
 sous un nom qu'il comprend, et lui expliquer en clair ce qu'il recoit.
 
+## Phase 0 — ⛔ LE RENDU EST-IL POSTERIEUR AUX CORRECTIONS ? (bloquant)
+
+**A faire AVANT tout le reste.** Un rendu qui precede une correction ne la contient pas — quelle
+que soit la qualite de sa verification technique.
+
+```bash
+ls -la out/.../livrable.mov                                  # date du rendu
+git log -1 --format=%ci -- src/projects/.../MonComposant.tsx  # date du code source
+```
+Rendu plus ancien que le code -> **PERIME**. Le re-rendre. Ne pas le verifier, ne pas
+l'empaqueter, ne pas l'envoyer.
+
+⛔ **Cout reel (chill-meter, 2026-09-07)** : 6 fichiers `.mov` alpha etaient prets dans le dossier
+de livraison Upwork, dates du **23 aout** — soit AVANT les 5 corrections client des 6-7 septembre.
+Ils etaient **techniquement irreprochables** : ProRes 4444, alpha verifiee, nommage correct. Donc
+**indiscernables d'un livrable a jour par TOUTES les verifications des phases 1 a 4 de ce skill**.
+Envoyes tels quels, ils auraient montre a la cliente exactement la version qu'elle venait de
+demander de corriger. Rattrape seulement parce qu'une fiche d'etat a ete redigee a la main.
+
+⭐ C'est le symetrique de la regle CLAUDE.md « verifier CODE + VISUEL avant de reutiliser une
+brique », appliquee au RENDU au lieu du composant : un rendu qu'on n'a pas date n'est pas un
+acquis, c'est une dette.
+
+---
+
 ## Phase 1 — Rendre au bon codec
 
 La question qui decide tout : **le client a-t-il besoin de transparence ?** Elle est censee
