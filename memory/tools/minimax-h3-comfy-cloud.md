@@ -2065,3 +2065,36 @@ et `src/projects/_rnd/vox-repro/Scene2JetsStrike.tsx` (« LE TEST CLE »).
 ⛔ Piege de prompt rencontre : demander a la brume de « se dissoudre / thin out » vide le
 cadre en fin de clip (frame finale noire) — inutilisable en boucle. Pour un effet en `<Loop>`,
 demander une turbulence CONTINUE sans disparition.
+
+### ⭐⭐ Bria (detourage alpha payant) TESTE le 2026-09-07 — le `screen` GRATUIT gagne
+
+Test demande par Aziz (« mieux vaut ne pas dire d'emblee qu'on n'en a pas besoin ») sur le
+clip de brume : `BriaTransparentVideoBackground` -> `JoinImageWithAlpha` -> `SaveWEBM`.
+Cout mesure : **11 credits/seconde** (~57 credits pour 5,2 s).
+
+**Bria fait techniquement un travail PARFAIT** : `alpha_mode=1`, 256 valeurs d'alpha
+distinctes, 66,7 % transparent, degrades continus (1,1 % seulement de pixels pleinement
+opaques). Rien a redire sur l'outil.
+
+⛔ **MAIS le resultat compose est MOINS BON que le `screen` gratuit** — mesure sur le vrai
+plateau (zone hors objet) :
+| methode | ecart moyen | pixels modifies |
+|---|---|---|
+| `mixBlendMode: screen` (gratuit) | **+18,2** | 42,8 % |
+| alpha Bria (~57 credits) | +1,8 | 32,6 % |
+
+**CAUSE (physique, pas technique)** : une brume lumineuse est un phenomene **ADDITIF** —
+elle EMET de la lumiere. `screen` fait exactement ca. Une composition alpha REMPLACE les
+pixels du fond par ceux du clip, gris compris — d'ou un voile grisatre terne qui
+ASSOMBRIT par endroits (visible a l'oeil : volutes gris-vert sales sur le visage/l'epaule,
+ca lit comme de la salete sur l'objectif, pas comme du givre).
+
+⭐ **REGLE** : pour toute matiere LUMINEUSE (brume, fumee eclairee, particules, glow,
+explosion, onde de choc), rester en `screen` sur fond noir. L'alpha reel n'a d'interet que
+pour une matiere OPAQUE qui doit masquer ce qu'il y a derriere (un objet, un personnage).
+Ne pas repayer ce test.
+
+⛔ Gotcha technique au passage : `upload_file` refuse les .mp4 (confirme) -> passer par un
+GIF (`ffmpeg -vf "fps=24,scale=W:H,palettegen/paletteuse"`), charge par `LoadImage` puis
+`CreateVideo`. Et le `seed` de Bria est plafonne a **2147483647** — un seed H3 (bien plus
+grand) fait echouer la validation AVANT tout appel payant (aucun credit perdu).
