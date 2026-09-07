@@ -42,7 +42,12 @@ CLAUDE_HOME = Path.home() / ".claude"
 PROJ_MEM = CLAUDE_HOME / "projects" / "-Users-clawdbot-Workspace-remotion" / "memory"
 
 # (chemin, seuil_octets, plafond_dur_ou_None)
-# MEMORY.md : plafond SYSTEME a 25000 o / 200 lignes, troncature SILENCIEUSE au-dela.
+# ⛔ SOURCE DE VERITE DES PLAFONDS : memory/BUDGET.md. Ce script APPLIQUE cette politique,
+# il ne la definit pas. Aligne le 2026-09-07 sur MEMORY.md (15000) et NEXT-ACTION.md (20480),
+# l'ecart etant documente dans BUDGET.md comme « alignement du script = etape suivante ».
+# Toute revision d'un plafond se decide dans BUDGET.md D'ABORD, puis se reporte ici.
+# MEMORY.md : plafond SYSTEME a 25000 o / 200 lignes, troncature SILENCIEUSE au-dela ;
+# le plafond de POLITIQUE (15000) est plus strict et prime.
 CHAINE = [
     # 34 Ko : CLAUDE.md est le SEUL fichier charge dans les subagents (MEMORY.md ne l'est
     # pas). Il accueille donc les GATES migres le 2026-08-27 — ce poids est un transfert
@@ -50,8 +55,8 @@ CHAINE = [
     # ici est le nombre de LIGNES (adherence < 200), suivi ci-dessous.
     (REPO / "CLAUDE.md", 34000, None),
     (CLAUDE_HOME / "CLAUDE.md", 18000, None),
-    (PROJ_MEM / "MEMORY.md", 20000, 25000),
-    (REPO / "memory" / "NEXT-ACTION.md", 35000, None),
+    (PROJ_MEM / "MEMORY.md", 12000, 15000),   # BUDGET.md : alerte 80%, dur 15000
+    (REPO / "memory" / "NEXT-ACTION.md", 20480, None),  # BUDGET.md : plafond dur 20480
     (REPO / "memory" / "ROUTAGE.md", 40000, None),
     (REPO / ".claude" / "agent-memory" / "shared" / "PIPELINE.md", 25000, None),
 ]
@@ -146,8 +151,19 @@ def mentions_orphelines() -> list[str]:
     toutes lettres. Un nom nu comme `globe-d3-briques-exactes-pas-variante-maison`
     n'est pas un chemin — il passait donc au vert alors que 14 mentions sur 43
     ne correspondaient a AUCUN fichier (constate le 2026-08-27 : des abreviations
-    du nom reel, ecrites de memoire). Rien n'etait perdu, mais un grep exact
-    echouait et l'index devenait trompeur.
+    du nom reel, ecrites de memoire).
+
+    ⛔ CETTE HYPOTHESE N'EST PLUS LA SEULE CAUSE (mesure 2026-09-07). MEMORY.md vit
+    HORS du repo (~/.claude/projects/...), donc COMMUN a toutes les branches, alors
+    que memory/feedbacks/ vit DANS le repo, donc PAR BRANCHE. L'index reference
+    l'union de ce qui a ete appris ; le worktree courant n'en porte qu'une
+    intersection. Les 14 orphelins mesures ce jour-la existaient TOUS sur 2 a 6
+    autres branches (3 sur master) — rien n'etait perdu, et les supprimer de
+    MEMORY.md aurait detruit la seule trace d'un savoir vivant ailleurs.
+
+    D'ou la separation en 2 catégories : ABSENT PARTOUT (vraie alerte, le nom est
+    faux) vs SUR UNE AUTRE BRANCHE (le contenu existe, c'est la branche qui est en
+    retard). Ne jamais pousser a supprimer la 2e categorie.
     """
     mem = PROJ_MEM / "MEMORY.md"
     if not mem.exists():
@@ -180,6 +196,30 @@ def mentions_orphelines() -> list[str]:
             if m not in stems and f"feedback_{m}" not in stems:
                 orphelins.append(m)
     return orphelins
+
+
+def branches_portant(nom: str) -> list[str]:
+    """Les branches locales qui portent feedback_<nom>.md, branche courante exclue.
+
+    Sert a distinguer « le nom est faux » (absent partout) de « la branche est en
+    retard » (present ailleurs). Voir le docstring de mentions_orphelines().
+    """
+    chemin = f"memory/feedbacks/feedback_{nom}.md"
+    try:
+        refs = subprocess.run(
+            ["git", "for-each-ref", "--format=%(refname:short)", "refs/heads/"],
+            cwd=REPO, capture_output=True, text=True, timeout=10)
+        if refs.returncode != 0:
+            return []
+        porteuses = []
+        for b in refs.stdout.split():
+            r = subprocess.run(["git", "cat-file", "-e", f"{b}:{chemin}"],
+                               cwd=REPO, capture_output=True, timeout=10)
+            if r.returncode == 0:
+                porteuses.append(b)
+        return porteuses
+    except (subprocess.SubprocessError, OSError):
+        return []
 
 
 def main() -> int:
@@ -228,13 +268,41 @@ def main() -> int:
 
     orph = mentions_orphelines()
     if orph:
-        alertes.append(
-            f"  ⚠️  MEMORY.md : {len(orph)} mention(s) NUE(S) sans fichier correspondant "
-            f"(angle mort de check-links) —")
-        for m in orph[:5]:
-            alertes.append(f"        · {m}")
-        if len(orph) > 5:
-            alertes.append(f"        · … et {len(orph) - 5} autre(s)")
+        # Trier : le contenu existe-t-il sur une AUTRE branche ? Sans ce tri, le
+        # message poussait a supprimer des lignes indexant un savoir bien vivant.
+        ailleurs: dict[str, list[str]] = {}
+        introuvables: list[str] = []
+        for m in orph:
+            br = branches_portant(m)
+            if br:
+                ailleurs[m] = br
+            else:
+                introuvables.append(m)
+
+        if introuvables:
+            alertes.append(
+                f"  ⚠️  MEMORY.md : {len(introuvables)} mention(s) NUE(S) introuvable(s) "
+                f"SUR TOUTE BRANCHE — le nom est probablement faux :")
+            for m in introuvables[:5]:
+                alertes.append(f"        · {m}")
+            if len(introuvables) > 5:
+                alertes.append(f"        · … et {len(introuvables) - 5} autre(s)")
+
+        if ailleurs:
+            alertes.append(
+                f"  ℹ️  MEMORY.md : {len(ailleurs)} mention(s) dont le fichier existe SUR UNE "
+                f"AUTRE BRANCHE (branche courante en retard) —")
+            for m, br in list(ailleurs.items())[:3]:
+                alertes.append(f"        · {m} → {br[0]}"
+                               + (f" (+{len(br) - 1})" if len(br) > 1 else ""))
+            if len(ailleurs) > 3:
+                alertes.append(f"        · … et {len(ailleurs) - 3} autre(s)")
+            alertes.append(
+                "     ⛔ NE PAS supprimer ces lignes : le savoir existe, c'est la branche "
+                "qui est en retard.")
+            alertes.append(
+                "     Recuperer sans rien ecraser : "
+                "git show <branche>:<chemin> > <chemin>")
 
     if total > BUDGET_TOTAL:
         alertes.insert(0, (

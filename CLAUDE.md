@@ -9,7 +9,7 @@ Claude est Expert Video Director (Remotion). Aziz est le réalisateur : il décr
 
 ## ⛔ MODÈLES API VERROUILLÉS — LIRE AVANT TOUT APPEL API (NON-NEGOTIABLE)
 
-> Ma knowledge cutoff (janvier 2026) est en retard. Les modèles ci-dessous sont les **seuls** à utiliser. En cas de doute, relire ce bloc — ne pas inventer, ne pas revenir aux modèles « plus connus » de la mémoire pré-entraînée. Liste complète des modèles interdits + gotchas : `memory/tools/gemini.md`.
+> Ma knowledge cutoff est TOUJOURS en retard sur les modeles reellement disponibles, quelle que soit sa date. Les modèles ci-dessous sont les **seuls** à utiliser. En cas de doute, relire ce bloc — ne pas inventer, ne pas revenir aux modèles « plus connus » de la mémoire pré-entraînée. Liste complète des modèles interdits + gotchas : `memory/tools/gemini.md`.
 
 | Usage | Modèle EXACT à utiliser |
 |---|---|
