@@ -80,6 +80,10 @@
         "hooks": [
           {
             "type": "command",
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/git-destructif-gate.sh"
+          },
+          {
+            "type": "command",
             "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/pre-final-promotion.sh",
             "timeout": 10
           },
