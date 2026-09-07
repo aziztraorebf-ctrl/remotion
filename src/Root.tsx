@@ -3,6 +3,7 @@ import { CfaNuit1994Anime16x9, CFA_NUIT_1994_FRAMES, CFA_NUIT_1994_FPS } from ".
 import { ChillMeterShowcase, SHOWCASE_FRAMES } from "./projects/_rnd/chill-meter/ChillMeterShowcase";
 import { ChillMeterOverlay } from "./projects/_rnd/chill-meter/ChillMeterOverlay";
 import { ChillMeterPreviewSurSonPlateau } from "./projects/_rnd/chill-meter/ChillMeterPreviewSurSonPlateau";
+import { TestBrumeH3 } from "./projects/_rnd/chill-meter/TestBrumeH3";
 import { Effet75Seul, Effet100Seul, OndeSeule, EFFET75_FRAMES, EFFET100_FRAMES } from "./projects/_rnd/chill-meter/EffetsEcran";
 import { ShockWave3D, SHOCKWAVE_3D_FRAMES } from "./projects/_rnd/chill-meter/ShockWave3D";
 import { ShockWave3Dv2, SHOCKWAVE_V2_FRAMES } from "./projects/_rnd/chill-meter/ShockWave3D_v2";
@@ -5826,6 +5827,25 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
           defaultProps={{ state: "fill75" as const }}
+        />
+        {/* TEST INTERNE 07/09 — brume H3 en mixBlendMode screen, jamais livree */}
+        <Composition
+          id="ChillMeter-TEST-BrumeH3"
+          component={TestBrumeH3}
+          durationInFrames={105}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill75" as const, avecPlateau: true }}
+        />
+        <Composition
+          id="ChillMeter-TEST-BrumeH3-fondNoir"
+          component={TestBrumeH3}
+          durationInFrames={105}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill75" as const, avecPlateau: false }}
         />
         <Composition
           id="ChillMeter-PREVIEW-Idle-sur-plateau"
