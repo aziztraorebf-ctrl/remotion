@@ -146,6 +146,19 @@ plutôt que sur une ville). **3e occurrence = seuil de duplication dépassé —
 prochain usage réel**, pas dans le vide (même règle que les 4 implémentations de sprite-sur-chemin
 ci-dessus). ⚠️ Ne PAS coder une 4e variante sans extraire.
 
+⛔⛔ **4e occurrence le 2026-09-07** — la règle ci-dessus a été ENFREINTE :
+`_rnd/chill-meter/TestBrumeH3.tsx` a réimplémenté la mécanique à la main, alors que son propre
+auteur CITAIT les précédents en commentaire (il savait donc que le pattern existait). Usage
+partiel — **pas de carte ni de pin géo-ancré** ici, seulement la couche d'intégration :
+`<Sequence>` + `<Loop>` + `<OffthreadVideo>` + `mixBlendMode:"screen"` + `maskImage` en dégradé.
+⭐ **C'est cette COUCHE D'INTÉGRATION qui doit être extraite en premier** (elle est commune aux
+4 usages), pas l'insert cartographique complet (spécifique à 3 des 4) :
+`VideoScreenBlendInsert({ src, zone, loopFrames, maskEdge, objectFit })`.
+Gotchas à embarquer dans le composant (tous payés au moins une fois) : `<Sequence>` obligatoire
+(sinon frame ABSOLUE), `objectFit:"fill"` et non `"cover"` quand le ratio du clip diffère de la
+zone (mesuré : 647 px rognés sur un clip 864×480 dans une bande 1920×420), et l'insert posé SOUS
+les éléments à traits fins (un blend par-dessus les délave).
+
 **Ce qui va DANS le cadre** — familles identifiées, seule la n°1 est testée :
 1. ⭐ **La matière** (testé, validé) : ce qui transite dans le tuyau — gaz, pétrole, minerai, grain.
 2. ⭐ **Le mécanisme en coupe** (TESTÉ ET VALIDÉ 2026-08-17, Gazoduc Acte 5) : vanne, compresseur,
