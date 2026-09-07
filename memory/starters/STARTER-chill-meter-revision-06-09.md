@@ -133,3 +133,18 @@ Son message complet confirme le centrage (elle l'a vu dans notre image) et ajout
 
 ⏭️ Rendu vidéo demandé par Aziz en cours : `ChillMeter-Fill75` (75% isolé) + composite sur
 sa vraie capture, format webm alpha pour préserver la transparence lors du composite.
+
+## ✅ Export ALPHA fonctionnel — verifie le 07/09
+
+Le bug d'export video transparent (webm/prores perdaient l'alpha) etait une DOUBLE erreur
+de verification de ma part, aucun bug Remotion. Detail + commande : `memory/tools/remotion.md`
+§ Export video avec ALPHA. Commande retenue pour la livraison (ProRes 4444, CapCut) :
+```
+npx remotion render src/index.ts <composition-id> out.mov \
+  --codec=prores --prores-profile=4444 --pixel-format=yuva444p10le --image-format=png --scale=1
+```
+1er export reel (ChillMeter-Fill75, avec le fix bandeau + ombre renforcee + glacons masques)
+verifie objectivement (alpha 0-255, 255 valeurs, ~93% transparent) et visuellement (fond gris
+neutre, aucun defaut) : `out/_r-and-d/chill-meter-3d/verif-alpha-06-09/ChillMeter-Fill75-alpha-VERIF.mov`
+(43 Mo — fichier de VERIFICATION, pas encore le paquet de livraison officiel du jalon 3, le
+jalon 1 est toujours impaye).
