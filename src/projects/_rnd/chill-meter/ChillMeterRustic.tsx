@@ -325,10 +325,18 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
                       0.30 0.35 0.30 0 0
                       0.30 0.35 0.30 0 0
                       0    0    0    1 0" />
+            {/* ⭐ 06/09 : SEULS LE TEXTE ET LES SYMBOLES S'ILLUMINENT, PAS LA PLAQUE.
+                Sa demande : « only the text and symbols should light up, not the plate or
+                the metal behind it ». Le plancher des 3 tables etait a 0.03/0.07/0.12 :
+                le metal SOMBRE de la plaque recevait donc deja du bleu, et c'est toute la
+                plaque qui virait. On ramene le plancher a ~0 : le sombre reste sombre, et
+                seules les LETTRES GRAVEES (extremite claire de la table) s'allument.
+                La courbe est en plus poussee vers le haut (exposant) pour que seuls les
+                pixels vraiment clairs du grave montent — le texte reste NET, aucun flou. */}
             <feComponentTransfer>
-              <feFuncR type="table" tableValues="0.03 0.42" />
-              <feFuncG type="table" tableValues="0.07 0.82" />
-              <feFuncB type="table" tableValues="0.12 1.00" />
+              <feFuncR type="table" tableValues="0 0 0.10 0.46" />
+              <feFuncG type="table" tableValues="0 0 0.26 0.86" />
+              <feFuncB type="table" tableValues="0 0.02 0.40 1.00" />
             </feComponentTransfer>
           </filter>
         <filter id="rustic_iconeBleue" colorInterpolationFilters="sRGB">
@@ -573,8 +581,10 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
           ⚠️ Elle avait dit l'inverse le 03/09 (« can stay their current color ») — c'est
           un changement d'avis assume de sa part, pas une correction de notre travail.
           Chaque zone re-affiche le decor a travers le filtre de teinte, en clip.
-          Elles s'allument avec l'appareil, comme les labels et le voyant. */}
-      <g opacity={powerOn}>
+          ⭐ 06/09 : elles sont bleues DES L'IDLE (0 %), plus a l'allumage. Sa demande :
+          « the button icons should already be blue before the meter powers on ». Le bleu
+          est donc une propriete de l'objet, pas un etat d'allumage — opacite constante. */}
+      <g opacity={1}>
           {ICONES.map((ic) => (
             <g key={ic.t} clipPath={`url(#clip_ic_${ic.t})`}>
               <image
