@@ -53,11 +53,21 @@ def main():
     brighten *= orig[:, :, 3] > 10  # exclut le fond blanc de studio de Gemini, hors objet
 
     alpha = np.clip(brighten * 3.0, 0, 255)
-    lum_norm = (gen.mean(2, keepdims=True) / 255.0)
-    recolored = np.clip(TARGET[None, None, :] * (0.35 + 0.65 * lum_norm), 0, 255)
+
+    # ⛔ 07/09 — Aziz a compare a l'image Gemini brute : le lettrage y est BEAUCOUP plus
+    # lumineux/nean que dans le 1er calque livre. Cause mesuree : `TARGET*(0.35+0.65*lum)`
+    # ecrasait l'intensite (couleur au pic du texte tombait a [86,150,180] contre [115,244,
+    # 255] chez Gemini). FIX : on garde la couleur NATIVE de Gemini (qui porte deja
+    # l'intensite du glow — c'est LUI qui a ete genere pour etre lumineux) et on ne
+    # deplace la teinte que legerement vers la palette du meter, en pondere par la
+    # LUMINOSITE reelle (pas un plancher artificiel qui eteint tout).
+    target_norm = TARGET / TARGET.max()
+    lum_glow = gen.max(2, keepdims=True)  # canal dominant = intensite du glow au pixel
+    recolored = np.clip(target_norm[None, None, :] * lum_glow, 0, 255)
+    final_rgb = np.clip(0.15 * recolored + 0.85 * gen, 0, 255)
 
     out = np.zeros((*lum_orig.shape, 4), dtype="uint8")
-    out[:, :, :3] = recolored.astype("uint8")
+    out[:, :, :3] = final_rgb.astype("uint8")
     out[:, :, 3] = alpha.astype("uint8")
     Image.fromarray(out, "RGBA").save(OUT)
     print(f"ecrit {OUT} — {(alpha > 20).sum()} px allumes")
