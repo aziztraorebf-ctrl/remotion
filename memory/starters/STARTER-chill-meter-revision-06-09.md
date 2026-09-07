@@ -104,3 +104,32 @@ qui vit SUR la vitre. Le precedent est dans son propre decor.
 - Branche : `fix/chill-meter-ancrage-sol` (repo principal) = `rnd/chill-meter-3d` (worktree `wt-chill`)
 - Décor de travail : `/tmp/vraie-capture-1920x1080.png` (sa capture recadrée 16:9)
 - Prototypes d'occlusion : `/private/tmp/.../scratchpad/agent-occlusion/`
+
+## ✅ 2e MESSAGE DU 06/09 (le même jour) — reçu APRÈS la 1ère passe de code
+
+⛔ **Correction importante** : sa "vraie capture" jointe à ce 2e message est **le fichier
+identique, checksum MD5 confirmé**, à `vraie-capture-06-09.png` déjà mesuré. Pas de nouveau
+plateau à intégrer — toute la géométrie mesurée (panneau x=109..356, etc.) reste valide.
+
+Son message complet confirme le centrage (elle l'a vu dans notre image) et ajoute :
+- **« Give it a stronger shadow/contact shadow underneath »** — elle tranche EXPLICITEMENT
+  contre le jury externe (qui rejetait « une ombre plus grasse »). C'est sa lecture qui
+  prime. ⛔ Ce point manquait de mon 1er résumé — vrai trou de suivi, pas une question
+  d'interprétation.
+- **« Move the meter slightly lower vertically »** — idem, absent du 1er résumé.
+- Les 4 autres demandes (taille, icônes bleues idle, MAX CHILL bleu, 75% isolé au texte)
+  confirmées mot pour mot, rien de nouveau dessus.
+
+### Corrections codées suite à ce 2e message (même session)
+- `POS_Y` / `RUSTIC_POS_Y` : `706` → `706 + 18` (descente mesurée, marge dispo 49 px avant
+  que la ligne de sol touche le bas du cadre 1080).
+- Ombre de contact **renforcée** (pas juste repositionnée) : noyau 0.38→0.52 de hauteur,
+  alpha 0.86→0.94 ; étalement 1.5→2.1 de hauteur, largeur ×1.06→×1.14, alpha 0.70→0.80.
+  Mesure : assombrissement passe de -75 (pic) à **-123 (pic), plateau -60/-85** sur une
+  bande bien plus large.
+- **Glaçons masqués au sol** (défaut du jury jamais traité avant ce tour) : `mask_givreFade`
+  dans `ChillMeterRustic.tsx`, dégradé qui efface le calque de givre 55 px avant
+  `RUSTIC_SOL_Y` — sans régénération d'image, le givre est un calque procédural par-dessus.
+
+⏭️ Rendu vidéo demandé par Aziz en cours : `ChillMeter-Fill75` (75% isolé) + composite sur
+sa vraie capture, format webm alpha pour préserver la transparence lors du composite.

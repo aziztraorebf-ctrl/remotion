@@ -47,7 +47,11 @@ const POS_X = 180;
 // la fenetre video. Repartition retenue : 38 px de respiration sous la video, 35 px
 // sous le meter (marge basse gardee courte mais suffisante : les glacons du givre
 // debordent vers le bas au jalon 2).
-const POS_Y = 706;
+// ⭐⭐ 06/09 (2e message, meme jour) : sa vraie capture confirmee identique (checksum),
+// mais nouvelle demande explicite « move the meter slightly lower vertically ». Marge
+// disponible avant que la ligne de sol ne touche le bas du cadre 1080 : 49 px (mesure).
+// Descente moderee et documentee, a ajuster au visionnage : +18 px.
+const POS_Y = 706 + 18;
 const SCALE = 0.373595;
 
 // ---- Geometrie du chassis RUSTIQUE (l'image choisie par la cliente) ----
@@ -59,7 +63,7 @@ const RUSTIC_SCALE = 0.452691; // 541 / 1195
 const RUSTIC_POS_X = 179.5;
 // ⭐ Cale sur le SOL du device (y=717 dans l'image), pas sur le bas du PNG : sa demande n°6
 // est que le meter ne FLOTTE pas. Le sol tombe donc a 706 + 717*scale = 1031.
-const RUSTIC_POS_Y = 706;
+const RUSTIC_POS_Y = 706 + 18;
 /** y ou le chassis rustique pose au sol, dans le repere 1920x1080. */
 const RUSTIC_SOL_SCREEN = RUSTIC_POS_Y + RUSTIC_SOL_Y * RUSTIC_SCALE;
 
@@ -234,7 +238,16 @@ export const ChillMeterOverlay: React.FC<{
              n'y a pas de surface d'appui visible. Une ombre unique et floue se lit comme
              « objet en vol stationnaire » ; un vrai contact a TOUJOURS deux composantes :
              un noyau serre et dense sur la ligne de contact (quasi net) + l'etalement
-             ambiant diffus. Seul le second existait — d'ou la sensation de flottement. */}
+             ambiant diffus. Seul le second existait — d'ou la sensation de flottement.
+
+             ⭐⭐ 06/09 (2e message, meme jour) : sa demande EXPLICITE — « Give it a stronger
+             shadow/contact shadow underneath so it feels more grounded [...] even if it
+             may technically be aligned to the floor line, it still visually reads like it
+             is hovering. » Elle tranche elle-meme le desaccord avec le jury externe (qui
+             rejetait « une ombre plus grasse ») : c'est SA lecture qui prime, pas la leur.
+             Noyau et etalement renforces en densite ET en etendue par rapport au 1er
+             passage — toujours positionnes SOUS la base (cf. note ci-dessous), jamais
+             recentres sur la ligne de sol. */}
       {chassis === "rustic" && (
         <>
           {/* (a) NOYAU DE CONTACT — serre, dense, a peine floute. C'est LUI qui pose
@@ -251,11 +264,11 @@ export const ChillMeterOverlay: React.FC<{
               // presente dans l'alpha mais invisible a l'ecran. On la pose SOUS la base.
               top: RUSTIC_SOL_SCREEN + 1 + bounce * 0.12,
               width: SOL_EMPREINTE_W * RUSTIC_SCALE * ombreEtal * 0.94,
-              height: SOL_OMBRE_H * 0.38,
+              height: SOL_OMBRE_H * 0.52,
               marginLeft: (SOL_EMPREINTE_W * RUSTIC_SCALE * (1 - ombreEtal * 0.94)) / 2,
               borderRadius: "50%",
               background:
-                "radial-gradient(ellipse at center, rgba(0,0,0,0.86) 0%, rgba(0,0,0,0.62) 55%, rgba(0,0,0,0) 88%)",
+                "radial-gradient(ellipse at center, rgba(0,0,0,0.94) 0%, rgba(0,0,0,0.74) 55%, rgba(0,0,0,0) 88%)",
               opacity: ombreOpacite,
               filter: "blur(2px)",
             }}
@@ -270,14 +283,14 @@ export const ChillMeterOverlay: React.FC<{
               // etait aux 2/3 masque par le chassis. On le descend et on l'etire pour
               // qu'il porte le noyau au lieu de mourir en 8 px.
               top: RUSTIC_SOL_SCREEN - 2 + bounce * 0.12,
-              width: SOL_EMPREINTE_W * RUSTIC_SCALE * ombreEtal * 1.06,
-              height: SOL_OMBRE_H * 1.5,
-              marginLeft: (SOL_EMPREINTE_W * RUSTIC_SCALE * (1 - ombreEtal * 1.06)) / 2,
+              width: SOL_EMPREINTE_W * RUSTIC_SCALE * ombreEtal * 1.14,
+              height: SOL_OMBRE_H * 2.1,
+              marginLeft: (SOL_EMPREINTE_W * RUSTIC_SCALE * (1 - ombreEtal * 1.14)) / 2,
               borderRadius: "50%",
               background:
-                "radial-gradient(ellipse at center, rgba(0,0,0,0.70) 0%, rgba(0,0,0,0.40) 45%, rgba(0,0,0,0) 78%)",
+                "radial-gradient(ellipse at center, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.50) 42%, rgba(0,0,0,0) 80%)",
               opacity: ombreOpacite,
-              filter: "blur(7px)",
+              filter: "blur(8px)",
             }}
           />
         </>

@@ -292,6 +292,23 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
           <clipPath id="clip_ic_CALIBRATE"><rect x={665} y={ICONE_Y0} width={26} height={ICONE_Y1 - ICONE_Y0} /></clipPath>
           <clipPath id="clip_ic_ABOUT"><rect x={879} y={ICONE_Y0} width={26} height={ICONE_Y1 - ICONE_Y0} /></clipPath>
           <clipPath id="clip_titre"><rect x={TITRE.x0} y={TITRE.y0} width={TITRE.x1 - TITRE.x0} height={TITRE.y1 - TITRE.y0} /></clipPath>
+          {/* ⭐⭐⭐ 06/09 — LES STALACTITES QUI PENDENT DANS LE VIDE (jury : « crient
+              levitation », defaut independant de l'occlusion). Mesure : a 75 %, le givre
+              (`givre-75.png`) redescend jusqu'a y=750 (35 px sous RUSTIC_SOL_Y=717) ; a
+              100 %, jusqu'a y=810 (93 px sous le sol). Rien ne pose sous l'appareil, donc
+              ces glacons flottent litteralement dans l'air. Pas besoin de regenerer
+              l'image (le givre est un calque procedural applique par-dessus, pas une
+              matiere a refaire) : un DEGRADE qui efface le calque en descendant vers le
+              sol suffit — masque, pas cutter, pour eviter un bord net qui trahirait
+              le decoupage. */}
+          <linearGradient id="rustic_givreFade" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#fff" />
+            <stop offset={`${((RUSTIC_SOL_Y - 55) / RUSTIC_H) * 100}%`} stopColor="#fff" />
+            <stop offset={`${(RUSTIC_SOL_Y / RUSTIC_H) * 100}%`} stopColor="#000" />
+          </linearGradient>
+          <mask id="mask_givreFade" maskUnits="userSpaceOnUse" x={0} y={0} width={RUSTIC_W} height={RUSTIC_H}>
+            <rect x={0} y={0} width={RUSTIC_W} height={RUSTIC_H} fill="url(#rustic_givreFade)" />
+          </mask>
           <clipPath id="clip_bandeau"><polygon points={BANDEAU_PTS} /></clipPath>
           {/* Le titre « MAX CHILL DETECTION » vire au bleu lumineux a l'allumage. Comme les
               icones : sa luminance pilote un degrade, son trace est conserve au pixel. */}
@@ -381,6 +398,7 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
               height={RUSTIC_H}
               opacity={op}
               preserveAspectRatio="none"
+              mask="url(#mask_givreFade)"
             />
           );
         })}
