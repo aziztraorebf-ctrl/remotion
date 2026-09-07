@@ -23,32 +23,67 @@ raison sur le centrage et que sa référence IA était décalée. Message de con
    meter). Script : `scripts/tools/jury-chill-meter-flottement.py` · sorties : `/tmp/da-refs/`.
 3. **Le nom de la chaîne qui s'allume au 75 %** — codé et commité (`ef92f017`).
 
-## ⛔ LE POINT BLOQUANT — 4 ESSAIS RATÉS SUR L'OCCLUSION
+## ✅ LE POINT BLOQUANT EST TRANCHE — L'OCCLUSION EST IMPOSSIBLE (06/09)
 
-| Essai | Qui | Erreur |
-|---|---|---|
-| 1 et 2 | Claude | Un `<rect>` horizontal là où l'arête est une diagonale → 50 px de châssis avalés, boutons masqués |
-| 3 | Agent délégué | Bon contour, bonne méthode, mais arête trop basse (y≈1012) → 3,7 % occlus, **mesurable mais invisible à l'œil** |
-| 4 | Claude | Arête remontée → chiffres corrects (6,9 %, 100 % des stalactites) mais **AMPUTATION ASYMÉTRIQUE** : coin bas-gauche tranché, boutons STATUS/DATA coupés, alors que le côté droit est intact |
+⛔⛔ **NE PLUS TENTER D'OCCLUSION. NE PLUS RETOUCHER LE POLYGONE.** Les 4 essais rates
+n'etaient pas des erreurs de dosage : **la surface de premier plan n'existe pas**.
 
-⭐⭐⭐ **CAUSE DU 4e : LA PENTE EST INVERSÉE.** Sur la photo, le rebord du couvercle descend
-**vers la gauche**. Mon polygone le fait remonter à gauche (y≈1005 alors que le châssis y
-descend à 1049 → 44 px mangés), et à droite il passe sous l'objet sans rien toucher.
+Mesure a 0,4 px pres (agent dedie : segmentation couleur + RANSAC, 3 methodes, 5 seuils) :
+- Le panneau du piano couvre **x=109..356** seulement — c'est le coin en POINTE du panneau
+  avant, pas une surface traversante. Il s'arrete NET a x=356.
+- Le meter va de **x=188 a x=716**. Les **2/3 droits n'ont AUCUN element de premier plan**
+  devant eux ; le banc, lui, est en ARRIERE-plan (son bord superieur MONTE vers la droite).
+- Couverture maximale possible : **5,7 % de l'objet**, sur son seul tiers gauche.
 
-⛔⛔ **LA LEÇON LA PLUS CHÈRE** : j'ai validé sur une vue plein cadre réduite + des chiffres
-qui tombaient dans la fourchette. **Aziz a vu le défaut sur son téléphone**, sur une image plus
-petite, parce qu'il a **comparé les deux côtés** au lieu de regarder l'ensemble.
-→ Sur un objet symétrique : TOUJOURS comparer gauche/droite au même zoom. Une mesure globale
-ne dit rien sur la répartition.
-Preuves : `DEFAUT-OCCLUSION-ASYMETRIE.png` (les 2 coins côte à côte) · `PROTO4-OCCLUSION-RATEE.png`.
+Donc toute occlusion fidele au decor est NECESSAIREMENT asymetrique — et une asymetrie sur
+un objet symetrique se lit comme une AMPUTATION. La simulation avec la geometrie exacte
+**reproduit precisement l'echec des 4 tentatives**. Cause geometrique, pas algorithmique.
+
+⛔ **La note « le rebord descend vers la gauche » etait FAUSSE** (elle a guide 2 essais) :
+l'arete est **PLATE** (+1,2 px sur 130 px, soit 0,54°). Ce qu'on prenait pour une diagonale
+etait le FLANC ombre du meuble — un autre objet. Donnees : `POLYLIGNE.json` dans le
+scratchpad de l'agent.
+
+**Ce qu'on a fait a la place** (commit `456747ee`) : le jury demandait « ne pas flotter » ;
+l'occlusion n'etait que son MOYEN. Ancrage par les 2 indices disponibles partout :
+1. **Ombre de contact a 2 composantes** — noyau serre et dense + etalement ambiant. Une
+   ombre unique et floue se lit comme « vol stationnaire ».
+2. **Reflet** du meter borne a x=188..356 (seule surface claire devant le plan du meter).
+
+⛔ Defaut trouve au passage : les 2 ombres etaient centrees sur la ligne de sol alors que le
+chassis est opaque JUSQU'A cette ligne — leur moitie haute etait **cachee derriere l'objet**.
+Presentes dans l'alpha, invisibles a l'ecran. Repositionnees sous la base.
+Mesure : assombrissement -75 a y=1036 (visible), tail -45 jusqu'a y=1056.
+
+⛔⛔ **LA LECON LA PLUS CHERE** (conservee) : j'ai valide le 4e essai sur une vue plein cadre
+reduite + des chiffres dans la fourchette. **Aziz a vu le defaut sur son telephone**, sur une
+image plus petite, parce qu'il a **compare les deux cotes**.
+→ Sur un objet symetrique : TOUJOURS comparer gauche/droite au meme zoom.
+Lecon generalisee : `memory/feedbacks/feedback_occlusion-impossible-mesurer-le-decor-avant-de-doser.md`
+
+## ⚠️ LA QUESTION DE FOND, POSEE PAR AZIZ (06/09) — non tranchee avec la cliente
+
+Le meter est pose dans la bande SOUS sa fenetre video, par-dessus le clavier du piano. Il est
+trop grand pour reposer dessus et il chevauche le cadre video. **Il se lit comme un overlay
+d'interface — parce que c'en est un.** Aucune ombre ne le fera passer pour un objet physique.
+
+Elle demande donc en partie l'impossible : ancrer un objet a un endroit ou il n'y a rien pour
+l'ancrer. **Meme schema que le centrage** : elle avait « l'impression » que ce n'etait pas
+centre, on a mesure (66,7 % vs 67,0 %), elle l'a reconnu. Une cliente au feeling decrit
+fiablement le SYMPTOME, pas la CAUSE — a nous de traduire.
+⭐ Argument disponible : son enseigne neon « AbiGirl Reacts » est deja un element graphique
+qui vit SUR la vitre. Le precedent est dans son propre decor.
 
 ## ⏭️ PAR OÙ REPRENDRE — dans cet ordre
 
-1. **L'occlusion** (le point dur) : relire l'arête réelle du couvercle sur grille en vérifiant
-   **le sens de la pente**, re-tester, et comparer les 2 coins bas au même zoom AVANT de conclure.
-   Paramètres du 4e essai (ombre, ordre de rendu, feather) dans le STATUS — seul le polygone
-   est à refaire.
-2. **Les 4 autres demandes d'Abigail**, toutes simples à côté :
+1. ✅ **FAIT — les 4 demandes simples** (commit `77f23964`) : icônes bleues dès l'idle ·
+   « MAX CHILL DETECTION » (déjà couvert par le clip TITRE, vérifié au rendu) · au 75 %
+   seuls le texte et les symboles s'illuminent (plancher du filtre ramené à ~0, le métal
+   sombre ne reçoit plus de bleu) · taille inchangée (aucune réduction n'avait été appliquée).
+2. ✅ **FAIT — l'ancrage** (commit `456747ee`), voir ci-dessus. **Reste à faire juger par
+   Aziz sur son téléphone** : mon jugement « flotte / flotte pas » vaut sur des rendus fixes.
+3. ⏭️ **Décider quoi écrire à la cliente** sur l'occlusion impossible (cf. section ci-dessus).
+4. Le détail des 4 demandes, pour mémoire :
    - icônes des boutons bleues **dès l'idle / 0 %** (actuellement elles s'allument avec `powerOn`)
    - « MAX CHILL DETECTION » + ses symboles en bleu à l'allumage
    - au 75 % : **seuls le texte et les symboles** s'illuminent, PAS la plaque ni le métal derrière
