@@ -8,7 +8,15 @@
  */
 import React from "react";
 import { AbsoluteFill, useCurrentFrame, interpolate } from "remotion";
-import { GeminiRig, IDLE, WALK_A_EXPORT, WALK_B_EXPORT, type Palette } from "./ProtoGeminiActionChain";
+// ⭐ MIGRE le 2026-09-08 vers le rig CANONIQUE. Avant : `./ProtoGeminiActionChain`,
+// une 2e version du meme composant aux props INCOMPATIBLES (`palette` objet vs props a plat).
+// Les deux exportaient `GeminiRig` — collision detectee par audit-composants-index.py.
+// Le canonique manquait la couleur de botte : `bootColor` lui a ete ajoute le meme jour
+// (la semelle etait deja dessinee, seule sa couleur etait codee en dur).
+import { GeminiRig, IDLE, WALK_A, WALK_B } from "../../_shared/personnage-vivant-svg/rig/GeminiRig";
+
+/** Palette locale a cette demo (le rig canonique prend des props a plat). */
+type Palette = { skin: string; shirt: string; pants: string; hat: string; boot: string; ink: string };
 
 const PARCH = "#e8dcc0";
 const HALF_STEP = 14;
@@ -24,8 +32,8 @@ function lerpAngles(a: typeof IDLE, b: typeof IDLE, t: number) {
 function walkCycle(frame: number) {
   const stepIndex = Math.floor(frame / HALF_STEP);
   const localT = (frame % HALF_STEP) / HALF_STEP;
-  const from = stepIndex % 2 === 0 ? WALK_A_EXPORT : WALK_B_EXPORT;
-  const to = stepIndex % 2 === 0 ? WALK_B_EXPORT : WALK_A_EXPORT;
+  const from = stepIndex % 2 === 0 ? WALK_A : WALK_B;
+  const to = stepIndex % 2 === 0 ? WALK_B : WALK_A;
   return lerpAngles(from, to, localT);
 }
 
@@ -57,9 +65,17 @@ export const ProtoGeminiPaletteDemo: React.FC = () => {
               <div style={{ fontFamily: "Georgia, serif", fontSize: 16, color: "#8a2b2b", marginBottom: 8, textAlign: "center", height: 40 }}>
                 {v.label}
               </div>
-              <svg width={360} height={560} viewBox="-100 -60 400 600">
-                <line x1={-100} y1={500} x2={300} y2={500} stroke="#2b2117" strokeWidth={2} opacity={0.3} />
-                <GeminiRig a={pose} palette={v.palette} />
+              <svg width={360} height={560} viewBox="-100 -60 400 700">
+                <line x1={-100} y1={585} x2={300} y2={585} stroke="#2b2117" strokeWidth={2} opacity={0.3} />
+                <GeminiRig
+                  a={pose}
+                  skinTone={v.palette.skin}
+                  clothesColor={v.palette.shirt}
+                  pantsColor={v.palette.pants}
+                  hatColor={v.palette.hat}
+                  bootColor={v.palette.boot}
+                  inkColor={v.palette.ink}
+                />
               </svg>
             </div>
           ))}

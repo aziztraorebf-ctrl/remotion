@@ -51,7 +51,7 @@ K3 est parfaitement utilisable une fois borne.
 | `scripts/tools/llm-gen-svg.py` | ✅ **payload FIXE le 2026-08-27** (max_tokens 16000 + reasoning.max_tokens 2000) |
 | `scripts/tools/llm-gen-blueprint.py` | ⚠️ idem |
 | `scripts/tools/kimi-vision-fill-scene.py` | ⚠️ idem |
-| `scripts/tools/da-brief.py` | reste sur `kimi-k2.5` (avait fui le probleme au lieu de le resoudre) |
+| `scripts/tools/da-brief.py` | ✅ **MIGRE le 2026-09-08** — borne posee, repli supprime, teste par appel reel |
 
 ## ⛔ Le piege qui a camoufle le bug (a ne jamais reproduire)
 
@@ -115,9 +115,33 @@ APPLIQUER LE REMEDE ».
 - ✅ `llm-gen-blueprint.py:87` et `kimi-vision-fill-scene.py:109` portent bien le fix
   (`reasoning.max_tokens: 2000`) — le tableau ci-dessus les donnait encore en attente.
   **Une fiche qui signale a tort un trou fait re-parcourir un chantier deja fait.**
-- ⛔ `da-brief.py` reste le SEUL script en contournement (encore sur k2.5).
+- ✅ `da-brief.py` MIGRE le 2026-09-08 (voir ci-dessous). **Plus aucun script en contournement.**
 - ⚠️ **Piege reproduit puis corrige le meme jour** : `da-brief-anim.py`, ecrit cette session,
   citait cette fiche en commentaire **et repliait quand meme sur `reasoning_content`** — sans
   poser la borne. Corrige : borne posee, repli SUPPRIME (un `content` vide doit lever une
   vraie erreur, pas etre masque par la reflexion brute).
   ⭐ **Citer une fiche n'est pas l'appliquer.** Le commentaire donnait l'illusion du contrôle.
+
+
+---
+
+## ✅ 2026-09-08 — `da-brief.py` migre, le contournement a vecu 6 SEMAINES
+
+Dernier script en k2.5, et le pire cas : il **citait** cette fiche en commentaire tout en
+appliquant l'inverse — le commentaire disait « pour re-tenter k3 un jour : passer
+reasoning.max_tokens ~2000 », et le payload ne le passait pas. Il portait EN PLUS le repli
+interdit `msg.get("content") or msg.get("reasoning")`, **en double** (kimi ET deepseek).
+
+**Mesure de l'appel reel apres migration** (OpenRouter, `moonshotai/kimi-k3`) :
+`10,8 s` · `finish_reason: stop` · `content: "OK"` · 49 completion_tokens dont **0** de reasoning.
+→ **Le hang n'a jamais ete une fatalite de k3.** Le contournement a coute 6 semaines de
+qualite degradee (k2.5 au lieu du modele courant) pour un fix d'une ligne, deja ecrit ici.
+
+Applique : identifiant importe d'`api_models.py` (plus en dur), `reasoning.max_tokens: 2000`,
+les 2 replis supprimes et remplaces par un echec bruyant (affiche `finish_reason` +
+`reasoning_tokens`), et la garde n°1 de cette fiche (OpenRouter renvoie une erreur en HTTP 200).
+
+⭐ **Ce que ce cas ajoute aux precedents** : un commentaire qui decrit le remede sans l'appliquer
+est plus nocif qu'un silence — il fait croire au lecteur suivant que la question est instruite.
+C'est la 3e forme du meme mode d'echec (documenter ≠ appliquer · citer ≠ appliquer · **decrire
+le fix dans le commentaire du code qui ne l'applique pas**).

@@ -378,7 +378,7 @@
 
 | Nom | Les 2 versions | État |
 |---|---|---|
-| `GeminiRig` ⛔ | `_shared/personnage-vivant-svg/rig/GeminiRig.tsx` (313 l., 03/07) **= LE CANONIQUE** · `_rnd/svg-scenes/ProtoGeminiActionChain.tsx` (201 l., 02/07) | **Signatures incompatibles** : le canonique prend `GeminiRigProps`, le proto prend `{a, palette}`. 4 fichiers importent le canonique ; ⚠️ **`ProtoGeminiPaletteDemo.tsx` importe encore le PROTO** — à migrer. |
+| `GeminiRig` ✅ | `_shared/personnage-vivant-svg/rig/GeminiRig.tsx` **= LE CANONIQUE, seul exporté** | **RÉSOLU le 2026-09-08.** `ProtoGeminiPaletteDemo` migré vers le canonique ; `bootColor` ajouté au canonique pour ne rien perdre (la semelle était déjà dessinée, sa couleur était codée en dur) ; l'export du proto `_rnd/ProtoGeminiActionChain` retiré — il garde sa version en interne comme trace d'exploration. `LimbAngles` était identique des 2 côtés, seul l'habillage divergeait. |
 | `DiscContent` / `DiscRing` | `_shared/components/DiscFrame.tsx` (89 l.) · `_client-sim/noteshield/ui/DiscFrame.tsx` (83 l.) | Réellement divergents (76 lignes d'écart), même date. Seul noteshield importe sa version locale ; **la version `_shared` n'est importée par personne**. Trancher avant de réutiliser l'une ou l'autre. |
 
 ⛔ **Ne jamais résoudre une collision en supprimant à l'aveugle** : les 2 versions peuvent être

@@ -31,6 +31,11 @@ export type GeminiRigProps = {
   inkColor?: string;
   hatType?: "conical" | "cap" | "scarf" | "none";
   hatColor?: string;
+  /** Couleur de la semelle/botte. Defaut #3E2723 (valeur historique, inchangee).
+   *  Ajoutee le 2026-09-08 : la semelle etait DEJA dessinee mais sa couleur etait
+   *  codee en dur, ce qui empechait la recoloration complete d'un personnage et
+   *  maintenait une 2e version divergente du rig dans `_rnd/ProtoGeminiActionChain`. */
+  bootColor?: string;
 };
 
 export const WALK_A: LimbAngles = {
@@ -219,12 +224,13 @@ export const GeminiRig: React.FC<GeminiRigProps> = ({
   inkColor = "#1A1A1A",
   hatType = "conical",
   hatColor,
+  bootColor,
 }) => {
   const ink = inkColor;
   const skin = skinTone;
   const clothes = clothesColor;
   const pants = pantsColor;
-  const sole = "#3E2723";
+  const sole = bootColor ?? "#3E2723";
   const isFrontal = faceView === "front";
 
   const defaultHatColor = hatType === "cap" ? "#5e7245" : hatType === "scarf" ? "#b5552f" : "#D2B48C";

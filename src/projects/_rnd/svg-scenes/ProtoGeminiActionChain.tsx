@@ -98,7 +98,14 @@ const ArmFront = ({ upper, lower, p }: { upper: number; lower: number; p: Palett
   </g>
 );
 
-export const GeminiRig: React.FC<{ a: LimbAngles; palette?: Palette }> = ({ a, palette = PALETTE_DEFAULT }) => (
+// ⛔ NE PLUS EXPORTER ce composant (2026-09-08). Il portait le MEME nom que le rig
+// canonique `_shared/personnage-vivant-svg/rig/GeminiRig.tsx` avec des props
+// INCOMPATIBLES (`palette` objet vs props a plat) : deux `GeminiRig` importables,
+// un import au hasard = un rendu casse. Collision detectee par
+// `scripts/tools/audit-composants-index.py`. Le seul consommateur externe
+// (ProtoGeminiPaletteDemo) a ete migre vers le canonique le meme jour.
+// Ce proto garde sa version EN INTERNE : c'est la trace de l'exploration d'origine.
+const GeminiRig: React.FC<{ a: LimbAngles; palette?: Palette }> = ({ a, palette = PALETTE_DEFAULT }) => (
   <g transform={`translate(${a.hipX}, ${a.hipY}) rotate(${a.torsoTilt})`}>
     <g transform={`translate(0, -135) rotate(${a.armUpperBack})`}>
       <path d="M -7,40 L 7,40 L 6,90 L -6,90 Z" fill={palette.skin} stroke={palette.ink} strokeWidth={4} strokeLinejoin="round" />

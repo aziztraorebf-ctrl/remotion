@@ -25,6 +25,7 @@ import os
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import force_ipv4  # noqa: E402,F401 — DOIT s'importer avant tout appel réseau (IPv6 mort en sandbox)
+import api_models  # noqa: E402 — source de verite unique des identifiants de modeles
 
 import json
 import base64
@@ -36,10 +37,14 @@ import urllib.request
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 OUT_DIR = "/tmp/da-refs"
 GEMINI_MODEL = "gemini-3.1-pro-preview"
-KIMI_MODEL = "moonshotai/kimi-k2.5"  # k3 dispo mais thinking non-borne -> hang 6-8min sur gros prompt+images
-# (root cause confirmee 2026-07-22 : k3 part en reasoning long AVANT tout content ; sans "reasoning":{"max_tokens":N}
-# dans le payload OpenRouter, un appel non-streame peut ne jamais retourner avant le timeout urllib. Revenir a
-# k2.5 = fiable/rapide. Pour re-tenter k3 un jour : passer reasoning.max_tokens ~2000 dans le payload call_kimi.)
+# ⭐ MIGRE vers k3 le 2026-09-08 — le contournement a vecu 6 semaines.
+# Le hang n'etait PAS une fatalite de k3 : la cause racine (diagnostiquee le 2026-07-22)
+# est que son reasoning n'est pas borne par defaut, et `max_tokens` ne protege pas —
+# il plafonne l'ENSEMBLE (reasoning + contenu), donc le reasoning le mange entierement.
+# Le champ a borner est `reasoning.max_tokens`, DISTINCT. Fix + mesures :
+# memory/tools/kimi-k3-reasoning-borne.md (33 s au lieu d'un hang, sur gros prompt SVG).
+# ⛔ Ne pas re-ecrire un identifiant en dur ici : api_models.py est la source de verite.
+KIMI_MODEL = f"moonshotai/{api_models.KIMI}"  # OpenRouter exige le prefixe vendeur
 DEEPSEEK_MODEL = "deepseek/deepseek-v4-pro"  # 3e voix CONCEPTUELLE, ~10-20x moins cher. TEXTE ONLY (pas de vision).
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
@@ -293,7 +298,11 @@ def call_kimi(prompt, frames, max_tokens, results):
         content.append({"type": "text", "text": f"\n[{caption}] :"})
         content.append({"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{b64(fp)}"}})
     payload = {"model": KIMI_MODEL, "messages": [{"role": "user", "content": content}],
-               "max_tokens": max_tokens, "temperature": 0.4}
+               "max_tokens": max_tokens, "temperature": 0.4,
+               # ⛔ SANS CETTE BORNE, k3 consomme tout le budget en reasoning et rend
+               # `content: null` — voire HANG (>2 min) sur un gros prompt + images.
+               # `max_tokens` seul ne protege PAS. → kimi-k3-reasoning-borne.md
+               "reasoning": {"max_tokens": 2000}}
     try:
         print("[kimi] envoi...")
         req = urllib.request.Request(
@@ -303,8 +312,25 @@ def call_kimi(prompt, frames, max_tokens, results):
         )
         with urllib.request.urlopen(req, timeout=300) as r:
             data = json.loads(r.read().decode())
+        # OpenRouter renvoie souvent une ERREUR en HTTP 200 : l'acces direct a
+        # ["choices"] explose alors en KeyError en MASQUANT le message reel de l'API.
+        if "choices" not in data:
+            raise RuntimeError(f"reponse sans 'choices' : {data.get('error', data)}")
         msg = data["choices"][0]["message"]
-        results["kimi"] = msg.get("content") or msg.get("reasoning") or "[vide]"
+        # ⛔ NE PAS replier sur `reasoning` : la fiche nomme ce repli « le piege qui a
+        # camoufle le bug » — il ecrit la REFLEXION BRUTE dans la sortie ET ANNONCE UN
+        # SUCCES, alors que le modele n'a rien redige. Avec la borne posee au payload,
+        # `content` est rempli ; s'il ne l'est pas, c'est une VRAIE erreur qui doit se voir.
+        contenu = msg.get("content")
+        if not contenu:
+            fr = data["choices"][0].get("finish_reason", "?")
+            rt = (data.get("usage") or {}).get("completion_tokens_details", {}).get("reasoning_tokens", "?")
+            results["kimi"] = (f"[ERREUR kimi] `content` vide (finish_reason={fr}, "
+                             f"reasoning_tokens={rt}). NE PAS replier sur reasoning — "
+                             f"verifier le payload, cf. memory/tools/kimi-k3-reasoning-borne.md")
+            print(f"[kimi] ERREUR: content vide (finish_reason={fr})")
+            return
+        results["kimi"] = contenu
         print("[kimi] OK")
     except Exception as e:
         results["kimi"] = f"[ERREUR kimi] {e}"
@@ -338,8 +364,25 @@ def call_deepseek(prompt, frames, max_tokens, results):
         )
         with urllib.request.urlopen(req, timeout=300) as r:
             data = json.loads(r.read().decode())
+        # OpenRouter renvoie souvent une ERREUR en HTTP 200 : l'acces direct a
+        # ["choices"] explose alors en KeyError en MASQUANT le message reel de l'API.
+        if "choices" not in data:
+            raise RuntimeError(f"reponse sans 'choices' : {data.get('error', data)}")
         msg = data["choices"][0]["message"]
-        results["deepseek"] = msg.get("content") or msg.get("reasoning") or "[vide]"
+        # ⛔ NE PAS replier sur `reasoning` : la fiche nomme ce repli « le piege qui a
+        # camoufle le bug » — il ecrit la REFLEXION BRUTE dans la sortie ET ANNONCE UN
+        # SUCCES, alors que le modele n'a rien redige. Avec la borne posee au payload,
+        # `content` est rempli ; s'il ne l'est pas, c'est une VRAIE erreur qui doit se voir.
+        contenu = msg.get("content")
+        if not contenu:
+            fr = data["choices"][0].get("finish_reason", "?")
+            rt = (data.get("usage") or {}).get("completion_tokens_details", {}).get("reasoning_tokens", "?")
+            results["deepseek"] = (f"[ERREUR deepseek] `content` vide (finish_reason={fr}, "
+                             f"reasoning_tokens={rt}). NE PAS replier sur reasoning — "
+                             f"verifier le payload, cf. memory/tools/kimi-k3-reasoning-borne.md")
+            print(f"[deepseek] ERREUR: content vide (finish_reason={fr})")
+            return
+        results["deepseek"] = contenu
         print("[deepseek] OK")
     except Exception as e:
         results["deepseek"] = f"[ERREUR deepseek] {e}"
