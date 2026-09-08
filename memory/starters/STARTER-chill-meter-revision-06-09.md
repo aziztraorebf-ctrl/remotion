@@ -199,7 +199,22 @@ n'a **aucune cible visuelle validée** — sa référence ne montre jamais cet �
 
 ### ⏭️ CE QUI RESTE
 
-1. **Le message** — brouillon dans `messages/BROUILLON-message-revision-07-09.txt`, à réécrire
-   avec la séparation des jalons (4 corrections à valider / power-on + 75 % en aperçu) et sans
-   mention du 100 %. **Jamais relu par Aziz.**
-2. **L'envoi** — les 6 MOV partent par Upwork (trop lourds pour un Artifact).
+1. ✅ **Le message est VALIDÉ par Aziz (08/09)** : `messages/MESSAGE-VALIDE-08-09.txt`.
+   Contrôle des 8 points de `feedback_message-client-ne-pas-sonner-genere` passé (0 tiret
+   cadratin, 0 « we/our », 0 jargon interne, 304 mots).
+   ⛔ L'ancien brouillon est marqué `.PERIME.txt` — ne pas le reprendre.
+
+   ⭐⭐⭐ **3 coupes d'Aziz sur ma version, à retenir** :
+   - ⛔⛔ **J'avais écrit « The six overlay files are ready to send once you've had a look. »
+     Retiré.** Ces fichiers SONT le jalon 3 (« final exports + source folder ») : les proposer
+     alors que le jalon 1 n'est pas payé, c'est livrer le dernier jalon avant d'avoir fermé le
+     premier, et créer une obligation qu'elle n'avait pas demandée. Si elle dit oui, il ne
+     reste plus rien à échanger. **Un réflexe de serviabilité qui détruit la position de
+     négociation.** On envoie les exports quand TOUT est fini, jamais en cours de révision.
+   - **La justification de l'aperçu retirée** (« you wanted to be sure the look was right ») :
+     elle l'a déjà expliqué elle-même, le redire = règle 3bis (ne pas re-dérouler un point
+     acquis) et ça sonne comme une demande de permission pour du travail déjà fait.
+   - **« What I'd like to close now is the four items above » retiré** : redondant avec la
+     phrase sur milestone 2 ou 3, qui pose la frontière toute seule.
+
+2. **L'envoi** — le message + le récap vidéo. ⛔ **PAS les 6 MOV** (voir ci-dessus).
