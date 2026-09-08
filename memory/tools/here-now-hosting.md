@@ -103,7 +103,7 @@ Le `claimToken` est retourné UNE SEULE FOIS à la création. Sauvegarder imméd
 ### Banc d'ecoute musique CFA 2026-07-30
 - Slug : `earthy-parcel-d3gg`
 - URL : https://earthy-parcel-d3gg.here.now/
-- claimToken : `22616a63baa500fe33763c90e5ed04588af6253c9ba5c687f69f23b09280e673`
+- claimToken : `<purge 2026-09-08 — voir .secrets-local/here-now-tokens.txt, hors git>`
 - Expire si non claime : 2026-07-31T04:21:32Z
 - Source : `scratchpad/cfa-musique-ecoute.html` (5 lecteurs, audios sur Vercel Blob)
 - Update : `publish-here-now.sh <fichier> earthy-parcel-d3gg 22616a63baa500fe33763c90e5ed04588af6253c9ba5c687f69f23b09280e673`

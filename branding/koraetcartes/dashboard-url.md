@@ -4,7 +4,7 @@
 
 **Live URL** : https://quaint-charm-bbs4.here.now/
 **Slug** : `quaint-charm-bbs4`
-**claimToken** : `bc4e1b73ca0f172a093c653d4d88a446979e3e0b5a00dd8850f9b2ef97234712`
+**claimToken** : `<purge 2026-09-08 — voir .secrets-local/here-now-tokens.txt, hors git>`
 **Expire claim** : 2026-05-29T20:45:52Z
 
 **Commande mise à jour :**

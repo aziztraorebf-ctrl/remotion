@@ -2,7 +2,7 @@
 
 - URL : https://witty-pulsar-ww22.here.now/
 - Slug : witty-pulsar-ww22
-- claimToken : a1822cd52f9938743eb098cbafc78b902287d53d4250787e567473320e5ed495
+- claimToken : `<purge 2026-09-08 — voir .secrets-local/here-now-tokens.txt, hors git>`
 - Expire si non claimé : 2026-08-02T23:05:21.385Z
 - Source locale : `scratchpad/gazoduc-voix-comparaison.html`
 - Contenu : Océane (référence) + 8 voix FR "energetic/dynamic" (Claudia, Harmonie, Marie Line,
