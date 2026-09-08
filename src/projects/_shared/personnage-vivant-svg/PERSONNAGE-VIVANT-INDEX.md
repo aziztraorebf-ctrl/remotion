@@ -106,7 +106,9 @@ Leçon : [[feedback_stick-figure-profil-marche-capacite-debloquee]].
 
 **Chemin** : `src/projects/_shared/personnage-vivant-svg/rig/GeminiRig.tsx`. Composant `GeminiRig` (props
 `GeminiRigProps` : `a: LimbAngles`, `face?: FaceExpression`, `faceView?: FaceView`, `skinTone`, `clothesColor`,
-`pantsColor`, `inkColor`, `hatType`, `hatColor`). Poses exportées : `IDLE`, `WALK_A`, `WALK_B` (type `LimbAngles`).
+`pantsColor`, `inkColor`, `hatType`, `hatColor`, **`bootColor`** — ajoutée le 2026-09-08 : la semelle était
+déjà dessinée mais sa couleur codée en dur, ce qui empêchait la recoloration complète et maintenait une 2e
+version divergente du rig dans `_rnd/ProtoGeminiActionChain` (collision résolue le même jour)). Poses exportées : `IDLE`, `WALK_A`, `WALK_B` (type `LimbAngles`).
 Helpers : `lerp`, `lerpAngles` (interpolation continue des angles entre 2 poses — LE mécanisme qui porte le
 mouvement, cf. § plus bas). 2 vues (`FaceView`: `"profile"|"front"`), 5 expressions (`FaceExpression`: `"none"|
 "neutral"|"smile"|"serious"|"surprise"|"angry"`), 3 chapeaux (`hatType`: `"conical"|"cap"|"scarf"`).
@@ -128,13 +130,27 @@ seul jet. Piste de repli notée mais **pas implémentée** : main-silhouette sim
 (pas de doigts individuels) plutôt qu'un rig à phalanges. Ne pas retenter un rig à doigts
 individuels sans cette simplification préalable.
 
-### ⚠️ Piège d'intégration — offset vertical pieds-au-sol (520*scale, pas 210*scale)
-Découvert 2026-07-03 (scène cargo 16:9) : pour aligner les pieds de `GeminiRig` au sol dans une NOUVELLE
-scène à une NOUVELLE échelle, l'offset vertical de positionnement doit être `~520 * scale` (pas `210 * scale`,
-erreur intuitive si on part de `hipY=340` seul). Les pieds du rig sont à `y≈520` dans son repère local
-(`hipY=340` + jambes `~180`), pas à `y≈210`. Utiliser un offset trop petit fait "flotter" le personnage
-au-dessus du sol/de l'eau au lieu d'y être ancré. Ce n'est PAS un bug du composant — un piège d'intégration
-qui se reproduira pour quiconque positionne `GeminiRig` sans le savoir.
+### ⚠️ Piège d'intégration — offset vertical pieds-au-sol (⛔ IL DÉPEND DE LA POSE)
+Découvert 2026-07-03 (scène cargo 16:9) : pour aligner les pieds de `GeminiRig` au sol, l'offset vertical
+n'est PAS `~210 * scale` (erreur intuitive) mais l'ordonnée réelle des pieds — `hipY + ~220` (cuisse 110 +
+tibia 90 + pied 20).
+
+⛔⛔ **CORRIGÉ le 2026-09-08 — cette section n'annonçait qu'UNE valeur alors que `hipY` VARIE selon la pose** :
+
+| Pose | `hipY` | pieds à y≈ |
+|---|---|---|
+| `IDLE` | 340 | **560** |
+| `WALK_A` / `WALK_B` | **365** | **585** |
+
+(Physiquement cohérent : les hanches descendent en marche.) L'ancienne rédaction ne citait que
+`hipY=340` → « pieds à y≈520 », **faux dans les deux cas** et surtout en MARCHE, qui est justement le
+cas où l'on cadre. Coût réel : `ProtoGeminiPaletteDemo`, migré vers ce rig le 08/09, avait un `viewBox`
+s'arrêtant à y=540 — **les pieds des 3 personnages étaient coupés** et la ligne de sol passait aux
+mollets. Invisible pour `tsc` comme pour les gates : la géométrie ne se compile pas, elle se regarde.
+
+⭐ **Le geste sûr** : ne pas recopier une constante d'ici — lire le `hipY` de la pose employée
+(`grep "hipY:" rig/GeminiRig.tsx`) et y ajouter ~220. Puis rendre 1 frame et REGARDER.
+Un offset trop petit fait "flotter" le personnage ; un `viewBox` trop court lui coupe les pieds.
 
 **⛔ Distinct du rig CAPSULE (`StickRig`/`StickFigureSimplified`, § plus bas dans ce même fichier)** — ce sont
 2 systèmes complémentaires, PAS concurrents (voir § "Deux systèmes distincts" ci-dessous) :

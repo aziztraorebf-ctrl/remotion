@@ -131,3 +131,30 @@ pas contre une impression générale de vivacité.
 réflexe est de conclure "ça marche globalement", alors que c'est le signal exact d'une mutation qui
 échoue sur UN sous-ensemble précis (souvent lié à une différence de syntaxe/valeur entre les
 éléments qui bougent et ceux qui ne bougent pas, comme ici scale à 2 arguments vs 1 argument).
+
+---
+
+## ⭐⭐ VARIANTE (2026-09-08) — `tsc` VERT + gate VERT, et les pieds hors du cadre
+
+Le cas source est un outil qui s'auto-évalue. Voici la variante la plus banale, donc la plus
+piégeuse : **des garde-fous qui disent vrai chacun dans son périmètre, et un rendu cassé.**
+
+Migration de `ProtoGeminiPaletteDemo` vers le rig canonique. Après coup :
+- `npx tsc --noEmit` : **8 erreurs avant, 8 après** — aucune régression, vrai ;
+- `audit-composants-index.py` : la collision `GeminiRig` a **disparu** — vrai aussi.
+
+Frame rendue et REGARDÉE : **les pieds des 3 personnages étaient coupés en bas du cadre**, et la
+ligne de sol passait au niveau des mollets. Cause : les deux rigs n'ont pas le même `hipY`
+(**340** côté proto, **365** côté canonique) — les pieds tombaient à y≈585 pour un `viewBox`
+s'arrêtant à 540. Le `viewBox` avait été calé pour l'ANCIEN rig et n'avait pas bougé.
+
+> **Aucun des deux gates ne pouvait voir ça** : l'un vérifie les types, l'autre les noms exportés.
+> La géométrie ne se compile pas — elle se regarde.
+
+⭐ **La règle** : après tout changement de composant qui DESSINE (rig, layout, viewBox, échelle),
+rendre 1 frame et l'ouvrir. Le coût est de ~20 s (`npx remotion still <compo> <out.png> --frame=N`).
+⛔ « Ça compile et le gate est vert » n'est PAS une vérification de rendu — c'est la vérification
+que rien d'AUTRE n'a cassé.
+
+Voisin : [[feedback_petit-objet-ne-se-juge-pas-sur-frames-redimensionnees]] ·
+[[feedback_animation-vs-image-fixe-mesurer-frames-uniques]].

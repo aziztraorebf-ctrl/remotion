@@ -22,3 +22,34 @@ quand le pattern source vient d'un beat au sujet narratif différent (ici : Acte
 ---
 Migré depuis auto-memory (`feedback_geo-reutilisee-reverifier-perimetre-echelle.md`) le 2026-08-31, contenu
 original inchangé.
+
+---
+
+## ⭐⭐⭐ LE MIROIR (2026-09-08) — avant de migrer vers un « canonique », vérifier ce qu'il NE FAIT PAS
+
+Ci-dessus : réutiliser un pattern validé ailleurs sans reconfirmer son périmètre. Voici le même
+piège dans l'autre sens — **remplacer une version « périmée » par la version « canonique »** sans
+vérifier que la canonique couvre tout.
+
+Deux `GeminiRig` coexistaient (collision détectée par `audit-composants-index.py`) : le canonique
+`_shared/personnage-vivant-svg/rig/` et un proto `_rnd/svg-scenes/ProtoGeminiActionChain`. La
+consigne évidente était « migrer vers le canonique ». Le canonique est plus riche partout — 5
+expressions de visage, 2 vues, 3 chapeaux — **sauf sur un point** : il n'exposait **aucune couleur
+de botte**, là où le proto avait `palette.boot`.
+
+⛔ Migrer tel quel aurait **dégradé** une composition R&D active dont le sujet EST la recoloration.
+« Canonique » veut dire *fait autorité*, pas *fait tout*.
+
+⭐ **Ce qui a sauvé le coup** : comparer les DEUX signatures avant de toucher au code. `LimbAngles`
+était identique (cinématique compatible) — seul l'habillage divergeait. Et le correctif s'est
+révélé trivial : la semelle **était déjà dessinée** dans le canonique, sa couleur simplement codée
+en dur (`const sole = "#3E2723"`, exactement le défaut du proto). Exposer `bootColor` a suffi.
+
+**Le geste, avant toute migration vers un canonique** :
+1. lister les props/capacités des DEUX versions et faire le diff, pas seulement lire le nom ;
+2. tout ce que l'ancienne fait et pas la nouvelle → **porter dans le canonique D'ABORD**, migrer ensuite ;
+3. rendre et regarder (cf. [[feedback_rapport-vert-ne-prouve-rien-regarder-l-image]] § variante 08/09 :
+   ici le `hipY` différait entre les deux rigs et coupait les pieds hors cadre).
+
+⭐ Résoudre une collision par la suppression de l'export du doublon (plutôt que par la suppression
+du fichier) préserve la trace de l'exploration tout en rendant l'import ambigu impossible.
