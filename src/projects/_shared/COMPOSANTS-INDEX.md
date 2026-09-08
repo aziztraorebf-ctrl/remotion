@@ -328,6 +328,21 @@
 > ⚠️ = statut `proto` (pas encore réutilisé ailleurs, ou 2 versions divergentes à trancher avant extraction
 > propre) — tout le reste est `prouvé` (validé sur un épisode publié). Détail complet du rattrapage :
 > conversation 2026-08-07, non archivée en fichier séparé (retrouvable via `git log` sur cette section si besoin).
+>
+> ⛔⛔ **VÉRIFIÉ LE 2026-09-08 — 16 entrées de cet index sont INTROUVABLES. Deux causes :**
+>
+> 1. **Le worktree `remotion-cfa` N'EXISTE PLUS** (ni comme worktree git, ni comme dossier). Les
+>    9 lignes qui pointent `remotion-cfa/…` désignent du code **inaccessible aujourd'hui**
+>    (`ControlLever`, `SnapLock`, `ActiveConstraintChain`, `CollapsingPileToken`, `PriceTagImpact`,
+>    `KeyGlyph`, `Mvt3Signature`, `ZonePlaque`). Elles sont conservées comme **trace d'intention**,
+>    pas comme briques importables : le code est à retrouver dans l'historique git avant tout usage.
+> 2. **`AvionRoulage`, `RadarTour`, `VehiculePiste`** étaient annoncés « prouvé, rattrapage
+>    2026-08-14 » dans `GazoducActe3InsertSecurite.tsx` : le fichier existe, **les composants n'y
+>    sont pas** — et n'existent sur AUCUNE branche. L'entrée promettait une brique jamais écrite.
+>
+> ⭐ **Une entrée qui ment ferme la recherche** : personne ne va vérifier, et la vraie brique reste
+> invisible. Avant de citer un composant ici, vérifier qu'il est **exporté** :
+> `python3 scripts/tools/audit-composants-index.py` (gate automatique sur l'écriture de ce fichier).
 
 | Composant | Import (chemin réel, pas encore `_shared`) | Quand Aziz dit... |
 |---|---|---|
@@ -354,6 +369,20 @@
 | `AvionRoulage` (prouvé, rattrapage 2026-08-14) | `souverain/gazoduc-aagp-tsgp/GazoducActe3InsertSecurite.tsx` (L268-345) | "un avion au sol en mouvement banal, jamais un décollage/atterrissage dramatisé" — silhouette pseudo-3/4 complète (cockpit, réacteurs, dérive, hublots, train d'atterrissage, feux de navigation réglementaires) qui roule à vitesse constante puis sort de cadre. En prod depuis 2026-08-08, généré Fable 5 mode MAX, validé Aziz. |
 
 ---
+
+## ⚠️ COLLISIONS DE NOMS — mesurées le 2026-09-08
+
+> Un même nom exporté depuis 2 fichiers différents, avec des contrats DIFFÉRENTS. Le risque n'est
+> pas le doublon : c'est d'importer la mauvaise version sans le savoir.
+> Détection automatique : `python3 scripts/tools/audit-composants-index.py`
+
+| Nom | Les 2 versions | État |
+|---|---|---|
+| `GeminiRig` ⛔ | `_shared/personnage-vivant-svg/rig/GeminiRig.tsx` (313 l., 03/07) **= LE CANONIQUE** · `_rnd/svg-scenes/ProtoGeminiActionChain.tsx` (201 l., 02/07) | **Signatures incompatibles** : le canonique prend `GeminiRigProps`, le proto prend `{a, palette}`. 4 fichiers importent le canonique ; ⚠️ **`ProtoGeminiPaletteDemo.tsx` importe encore le PROTO** — à migrer. |
+| `DiscContent` / `DiscRing` | `_shared/components/DiscFrame.tsx` (89 l.) · `_client-sim/noteshield/ui/DiscFrame.tsx` (83 l.) | Réellement divergents (76 lignes d'écart), même date. Seul noteshield importe sa version locale ; **la version `_shared` n'est importée par personne**. Trancher avant de réutiliser l'une ou l'autre. |
+
+⛔ **Ne jamais résoudre une collision en supprimant à l'aveugle** : les 2 versions peuvent être
+utilisées par des scènes différentes. Vérifier les imports (`grep -rn "from.*<Nom>"`) avant.
 
 ## Import type
 
