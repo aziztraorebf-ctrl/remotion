@@ -23,7 +23,9 @@ Tags V3 pour narration analyste (registre documentaire) : [solemn] [serious] [re
 [slows down] [pause] [tense] [calm] [dramatic tone]. EVITER rires/soupirs/SFX (hors registre).
 """
 import argparse
+import json
 import os
+import random
 import re
 import subprocess
 import sys
@@ -141,14 +143,31 @@ def tts_v3(text: str, dest: Path) -> bool:
     return True
 
 
-def sts_geoafrique(src: Path, dest: Path) -> bool:
+def sts_geoafrique(src: Path, dest: Path, seed: int | None = None) -> bool:
+    """Conversion STS. `seed` rend le tirage REJOUABLE — pas identique.
+
+    ⚠️ Ce que l'API garantit vraiment (doc officielle, verifiee 2026-09-08) :
+    « If specified, our system will make a best effort to sample deterministically.
+      Determinism is not guaranteed. »
+    Ce n'est PAS le `noise_seed` de Minimax H3 (`h3-clip-avec-previs.py`), qui pilote
+    le bruit de depart d'un modele de diffusion et reproduit fidelement. Ici le modele
+    est autoregressif : chaque token depend des precedents, et la moindre variation en
+    amont (version du modele, batching serveur) decale toute la suite.
+
+    → Le seed sert donc a TRACER et a REJOUER souvent, pas a figer. Pour corriger UN mot
+      sans remettre en jeu le reste du bloc, l'outil reste `scripts/tools/splice-segment.py`.
+    Plage acceptee : 0 a 4294967295.
+    """
     import json as _json
+    payload = {"model_id": MODEL_STS, "output_format": "mp3_44100_128",
+               "voice_settings": _json.dumps(STS_SETTINGS)}
+    if seed is not None:
+        payload["seed"] = str(seed)
     with open(src, "rb") as fh:
         r = requests.post(
             f"https://api.elevenlabs.io/v1/speech-to-speech/{VOICE_GEOAFRIQUE}",
             headers={"xi-api-key": API_KEY},
-            data={"model_id": MODEL_STS, "output_format": "mp3_44100_128",
-                  "voice_settings": _json.dumps(STS_SETTINGS)},
+            data=payload,
             files={"audio": ("src.mp3", fh, "audio/mpeg")},
             timeout=300,
         )
@@ -157,7 +176,8 @@ def sts_geoafrique(src: Path, dest: Path) -> bool:
         return False
     dest.write_bytes(r.content)
     cost = r.headers.get("x-character-count", "?")
-    print(f"  STS GeoAfrique OK ({len(r.content)/1024:.0f}KB, {cost} credits)")
+    marque = f", seed {seed}" if seed is not None else ""
+    print(f"  STS GeoAfrique OK ({len(r.content)/1024:.0f}KB, {cost} credits{marque})")
     return True
 
 
@@ -180,20 +200,40 @@ def concat_mp3(parts, out: Path):
     listf.unlink(missing_ok=True)
 
 
-def gen_part(part_text: str, out_part: Path, tmp: Path, prefix: str) -> Path:
-    """Genere UNE partie (decoupee en sous-segments si >MAX_CHARS) -> 1 mp3."""
+def gen_part(part_text: str, out_part: Path, tmp: Path, prefix: str,
+             seeds: list[int] | None = None) -> Path:
+    """Genere UNE partie (decoupee en sous-segments si >MAX_CHARS) -> 1 mp3.
+
+    ⭐ JOURNAL SYSTEMATIQUE : un seed est TOUJOURS tire et ecrit dans <out>.seeds.json,
+    meme quand l'appelant n'en fournit pas. Sans ca, un bon tirage est irrecuperable —
+    on ne sait pas quoi rejouer, et le « best effort » de l'API ne sert a rien.
+    Vecu : « re-tirer a l'aveugle » etait la seule parade documentee aux mots baves
+    (memory/tools/PIPELINE-VOIX-VIVANTE-VALIDE.md), avec 6 regenerations en une session.
+    """
     segs = split_segments(part_text)
     finals = []
+    journal = []
     for i, seg in enumerate(segs):
         print(f"  segment {i+1}/{len(segs)} ({len(seg)} chars)")
         v3f = tmp / f"{prefix}_v3_{i:02d}.mp3"
         gaf = tmp / f"{prefix}_geo_{i:02d}.mp3"
+        if seeds and i < len(seeds):
+            seed = seeds[i]
+        else:
+            seed = random.randint(0, 4294967295)
         if not tts_v3(seg, v3f):
             print("  ABORT (TTS V3 echec)"); sys.exit(1)
-        if not sts_geoafrique(v3f, gaf):
+        if not sts_geoafrique(v3f, gaf, seed=seed):
             print("  ABORT (STS echec)"); sys.exit(1)
+        journal.append({"segment": i, "seed": seed, "chars": len(seg),
+                        "debut": seg[:60]})
         finals.append(gaf)
     concat_mp3(finals, out_part)
+    jf = out_part.with_suffix(".seeds.json")
+    jf.write_text(json.dumps({"partie": prefix, "voix": VOICE_GEOAFRIQUE,
+                              "model_sts": MODEL_STS, "segments": journal},
+                             ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"  seeds -> {jf.name}  (rejouer : --seeds {','.join(str(s['seed']) for s in journal)})")
     return out_part
 
 
@@ -215,6 +255,11 @@ def main():
                     help="slug d'UNE partie a (re)generer seule (reparation chirurgicale). Ex: --only-part p3")
     ap.add_argument("--no-concat", action="store_true", help="ne pas assembler le mp3 global")
     ap.add_argument("--dry-run", action="store_true", help="estime le cout sans appel API")
+    ap.add_argument("--seeds", type=str, default=None,
+                    help="seeds STS a rejouer, separes par des virgules (1 par segment, "
+                         "dans l'ordre). Repris depuis <sortie>.seeds.json d'un rendu "
+                         "precedent. ⚠️ l'API ne garantit qu'un 'best effort' : un meme "
+                         "seed peut ne pas redonner exactement le meme audio.")
     ap.add_argument("--sts-stability", type=float, default=None,
                     help="override stability STS (defaut serie 0.45)")
     args = ap.parse_args()
@@ -244,6 +289,23 @@ def main():
     print(f"Duree approx    : {all_min:.1f} min -> STS {sts_credits} credits")
     print(f"TOTAL ESTIME    : ~{all_chars + sts_credits} credits")
 
+    seeds = None
+    if args.seeds:
+        try:
+            seeds = [int(x) for x in args.seeds.split(",") if x.strip()]
+        except ValueError:
+            print(f"ERROR: --seeds attend des entiers separes par des virgules, recu : {args.seeds}")
+            sys.exit(1)
+        hors = [s for s in seeds if not 0 <= s <= 4294967295]
+        if hors:
+            print(f"ERROR: seed hors plage 0-4294967295 : {hors}")
+            sys.exit(1)
+        if len(parts) > 1:
+            print(f"⚠️  --seeds s'applique aux segments de CHAQUE partie ({len(parts)} parties). "
+                  f"Pour rejouer une partie precise, utiliser --only-part.")
+        print(f"SEEDS rejoues   : {seeds}")
+        print("  ⚠️ l'API ne garantit qu'un 'best effort' : le rendu peut differer malgre le seed.")
+
     if args.dry_run:
         print("\n[DRY-RUN] aucun appel API effectue.")
         return
@@ -257,7 +319,7 @@ def main():
     for slug, body in parts:
         out_part = Path(f"{stem}-{slug}.mp3")
         print(f"\n=== PARTIE {slug} ({len(body)} chars) -> {out_part.name} ===")
-        gen_part(body, out_part, tmp, prefix=slug)
+        gen_part(body, out_part, tmp, prefix=slug, seeds=seeds)
         print(f"  OK -> {out_part.name}  {catbox(out_part)}")
         part_files.append(out_part)
 

@@ -89,8 +89,8 @@ Réponse VÉRIFIÉE (doc `elevenlabs.io/docs/overview/models`) :
 - ⚠️ Les DÉFORMATIONS de prononciation (« alliés »→« haïs », « renversent »→« rengarcent ») viennent de
   l'étape STS v2 (artefact de conversion, PAS de la source). Parades : (1) segmenter + re-tirer le
   segment fautif (règle structurante ci-dessous) ; (2) stability STS plus haute (0.45→0.55) ; (3) paramètre
-  `seed` (dispo à l'API STS, jamais implémenté dans notre script — TODO) pour re-tirer de façon
-  déterministe ; (4) CAPS/ellipses sur le mot fragile.
+  `seed` — ⭐ **IMPLÉMENTÉ le 2026-09-08** (`--seeds`, + journal `.seeds.json` écrit à CHAQUE rendu) ;
+  (4) CAPS/ellipses sur le mot fragile.
 
 ## ⛔⛔ MÉTHODE AUDIT AUDIO — WHISPER MENT, L'OREILLE D'AZIZ TRANCHE (gravé 2026-07-08, Soudan Acte 2)
 Session pénible (6 régénérations) dont voici les leçons DURES pour ne jamais recommencer :
@@ -129,8 +129,8 @@ nouveau : Auphonic = loudness/EQ/dé-bruitage, aucune fonction de pitch/prosodie
 génération (déjà établi dans [[TTS-VOIX-VIVANTE-BENCHMARK-2026-06]]). **Solution qui a marché** : corriger
 les vrais problèmes de texte, puis RE-TIRER le bloc entier (pas de correction audio post-hoc possible sur
 un artefact de conversion STS) — cohérent avec la règle déjà écrite "le STS n'est pas déterministe, un
-nouveau tirage suffit souvent" (section MÉTHODE AUDIT AUDIO ci-dessus). Le paramètre `seed` (jamais
-implémenté, cf TODO) permettrait de fixer un bon tirage une fois trouvé plutôt que de re-tirer à l'aveugle.
+nouveau tirage suffit souvent" (section MÉTHODE AUDIT AUDIO ci-dessus). ⭐ Le paramètre `seed` est implémenté depuis le 2026-09-08 — mais **il ne FIXE pas un tirage**, voir
+la section dédiée plus bas : l'API ne promet qu'un « best effort ».
 
 ## ⭐⭐ SPLICE — remplacer UN segment fautif sans re-tirer tout le bloc (construit 2026-08-01)
 
@@ -300,8 +300,44 @@ Micro-coupures STS = NON bloquantes (disparaissent sous SFX/musique). Auphonic =
 
 ## ✅ FAIT (2026-08-02) — anciens points 1-2 : script mis à jour vers Harmonie, Gazoduc complet régénéré/assemblé/uploadé.
 
+## ⭐⭐ SEED STS — TRAÇABLE, PAS DÉTERMINISTE (implémenté 2026-09-08)
+
+⛔ **Ne pas confondre avec le `seed` de Minimax H3.** Ce sont deux mécanismes différents :
+
+| | **ElevenLabs STS** | **Minimax H3** (`noise_seed`) |
+|---|---|---|
+| Modèle | **autorégressif** (token par token) | **diffusion** (débruitage) |
+| Ce que le seed pilote | l'échantillonnage du tirage | le **bruit de départ** du calcul |
+| Garantie officielle | *« best effort to sample deterministically. **Determinism is not guaranteed.** »* | reproduction fiable à entrées identiques |
+
+Chez H3 le seed EST le point de départ : même seed + même image = même clip. Chez ElevenLabs chaque
+token dépend des précédents — une variation en amont (version du modèle, batching serveur) décale
+toute la suite. D'où le « best effort » : ils ne peuvent pas le promettre.
+
+**Ce que ça donne concrètement** :
+- ✅ un **journal de bord** : on sait quel tirage a produit quoi, et on peut le rejouer *souvent* ;
+- ✅ un **A/B propre** : changer `stability` 0.45 → 0.55 à seed constant isole le paramètre testé ;
+- ⚠️ **pas une garantie** : le même seed peut redonner un mot bavé.
+
+**Usage** :
+```bash
+# rendu normal — un seed est TOUJOURS tiré et journalisé
+python3 scripts/generate-narration-expressive.py --text-file s.txt --out out.mp3
+#   -> out-<partie>.seeds.json  + la ligne « rejouer : --seeds 12,34,56 »
+
+# rejouer un bon tirage (⚠️ best effort)
+python3 scripts/generate-narration-expressive.py --text-file s.txt --out out.mp3 --seeds 12,34,56
+```
+
+⭐ **Le journal est le vrai apport, pas le flag.** Sans lui, un bon tirage reste irrécupérable :
+on ne sait pas quoi rejouer. C'est ce qui transforme le « re-tirage à l'aveugle » (6 régénérations
+en une session, mesuré le 08/07) en re-tirage **traçable**.
+
+⛔ **Le seed ne remplace pas le SPLICE.** Pour corriger UN mot sans remettre en jeu le reste du bloc
+(déjà bon), l'outil reste `scripts/tools/splice-segment.py` — voir sa section plus haut. Le seed
+aide à retrouver un tirage ; le splice garantit de ne pas dégrader ce qui marchait.
+
 ## BACKLOG (pas urgent)
-- Ajouter le paramètre `seed` au script pour re-tirage déterministe sur mots fragiles (jamais implémenté).
 - Tester le bouton "Enhance" EL comme second avis sur un texte déjà taggé manuellement.
 
 ## RÉFÉRENCES BENCHMARK (sauvegardées)
