@@ -110,3 +110,34 @@ IA-sonnantes, où le blocage forcerait des reformulations parfois inutiles.
 **Confirme le principe déjà établi** : la fiche/règle seule n'a jamais suffi ici, dans la
 MÊME session où la règle était pourtant fraîche en mémoire. Le gate mécanique est la seule
 protection qui tienne sur une tâche générative à volume de tokens élevé.
+
+---
+
+## ⭐⭐⭐ UN OUTIL LIVRÉ MAIS NON BRANCHÉ EST UNE INTENTION, PAS UN GARDE-FOU (2026-09-08)
+
+Le cas le plus net du corpus, parce que **je l'ai commis en expliquant la règle**.
+
+Session du 08/09 : j'explique à Aziz pourquoi les 8 dashboards HTML de `dashboard/` sont morts
+depuis juin, pourquoi 5 projets d'app ont été abandonnés — *« non outillé = non fait »*. Puis je
+livre `scripts/tools/audit-composants-index.py`, un audit qui trouve 16 entrées fausses dans le
+catalogue. **Appelé par personne.** Aucun hook, aucun skill, aucune commande de session ne le
+déclenche. Dans une semaine, l'index aurait de nouveaux fantômes et le script serait oublié.
+
+Corrigé dans la même session : `.claude/hooks/index-composants-gate.sh` (PostToolUse), déclenché
+sur l'écriture de `COMPOSANTS-INDEX.md`, **vu se déclencher seul** sur une vraie édition.
+
+**Le test à s'appliquer avant de dire qu'un fix est fait** :
+> *Quel ÉVÉNEMENT déclenche ce script ? Si la réponse est « quelqu'un pense à le lancer », ce
+> n'est pas un garde-fou — c'est une intention.*
+
+⭐ **Corollaire de placement, mesuré la même session** : le bon déclencheur n'est pas le plus
+fréquent, c'est le plus PRÉCIS. `COMPOSANTS-INDEX.md` ne bouge que ~9 fois en 2 mois : un rappel
+au `SessionStart` aurait été du bruit permanent pour un événement rare — et le bruit fait
+désactiver les gates. Le gotcha doit vivre **au moment du geste**, pas au démarrage.
+
+⭐ **Corollaire d'ordre** : un hook qui BLOQUE se place en **position 1** de son bloc matcher. Un
+blocage amont (pour une autre raison) consomme le déclenchement et masque le suivant — c'est
+pourquoi `secret-write-guard.sh` a été inséré avant les 8 autres hooks `Edit|Write`.
+
+Voisin : [[feedback_tester-le-script-nest-pas-tester-le-branchement]] (le pendant : un gate branché
+mais jamais vu se déclencher n'est pas prouvé) · [[pipeline-publication-manquant-evitement]].

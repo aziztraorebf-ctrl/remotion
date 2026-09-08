@@ -50,5 +50,33 @@ contenant « Let me think about this scene carefully... » passait pour une gene
 
 Modele correct deja present dans le repo : `scripts/tools/kimi-svg-ideation.py` L70-77.
 
+---
+
+## ⭐⭐⭐ LE MIROIR — le commentaire dit VRAI, le code dit FAUX, et j'ai cru le commentaire (2026-09-08)
+
+Le cas ci-dessus : le code contredit la memoire, on suit le code, on paie. **Le cas inverse coute
+autant** — et il est plus sournois parce que le commentaire, lui, est rassurant.
+
+`scripts/tools/check-poids-contexte.py` portait en tete :
+> « Aligne le 2026-09-07 sur MEMORY.md (15000) et NEXT-ACTION.md (20480) »
+
+Le code, 10 lignes plus bas, portait `(MEMORY.md, 20000, 25000)` et `(NEXT-ACTION.md, 35000, None)`.
+**Consequence mesuree** : NEXT-ACTION a 25511 o violait la politique de 25 % **sans declencher un mot**
+pendant des jours. Un instrument de mesure qui ment = un plafond qui n'existe pas.
+
+⛔ **Ma faute, et c'est la lecon** : j'ai LU ce commentaire pendant un audit, conclu « le fix est deja
+fait », et **raye le point de mon plan**. Un agent d'audit l'a trouve, pas moi. J'avais la bonne
+information sous les yeux et j'ai choisi la version confortable.
+
+**La regle** : quand un commentaire affirme qu'une valeur est alignee/corrigee/migree, **lire la
+VALEUR, jamais la phrase**. Un commentaire est une intention datee ; seul le code s'execute.
+Cout de la verification : 5 secondes de `grep`. Cout de l'omission : un garde-fou muet.
+
+⭐ Corollaire de la meme session : j'ai declare `PIPELINE.md` « perime depuis le 22 juillet » sur la foi
+de `git log` — le fichier avait ete modifie le 6 septembre **sans etre commite**. `git log` mesure les
+COMMITS, `stat` mesure le DISQUE. Deux points d'un plan etaient fondes sur cette mesure fausse.
+Pour « ce fichier est-il a jour ? », c'est le disque qui fait foi.
+
 Voisin : [[kimi-k3-reasoning-borne]] (le cas source) · [[feedback_rapport-agent-texte-pas-preuve-verifier-disque]]
-(meme famille : un artefact produit ≠ un succes) · [[feedback_verifier-son-propre-souvenir-comme-un-verdict-llm]].
+(meme famille : un artefact produit ≠ un succes) · [[feedback_verifier-son-propre-souvenir-comme-un-verdict-llm]]
+· [[feedback_chiffre-audit-relaye-sans-verification]] (meme famille : relayer un chiffre sans le refaire).
