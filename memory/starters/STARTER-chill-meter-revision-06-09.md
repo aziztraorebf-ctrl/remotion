@@ -159,3 +159,47 @@ verifie objectivement (alpha 0-255, 255 valeurs, ~93% transparent) et visuelleme
 neutre, aucun defaut) : `out/_r-and-d/chill-meter-3d/verif-alpha-06-09/ChillMeter-Fill75-alpha-VERIF.mov`
 (43 Mo — fichier de VERIFICATION, pas encore le paquet de livraison officiel du jalon 3, le
 jalon 1 est toujours impaye).
+
+---
+
+## 📦 ÉTAT AU 08/09 — les 6 MOV sont FAITS, il reste le message
+
+### Où sont les livrables
+
+| Quoi | Où | Vérifié |
+|---|---|---|
+| ⭐ **Les 6 MOV alpha à envoyer** | `out/_r-and-d/chill-meter-upwork/v2-07-09/` (208 Mo) | Alpha **décodé**, pas juste déclaré : 93 % du cadre transparent sur les 6. Corrections présentes (objet x 189..715, descendu de 85 px vs les périmés). |
+| Récap client (26 s) | `out/_r-and-d/chill-meter-3d/recap-v2/RECAP-client-v5.mp4` · [Blob](https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/RECAP-client-v5-hklzVBMz9Bjw56k85W9Anl9lcTTT6I.mp4) | 785 frames, tous segments animés |
+| Page de suivi (visuels) | https://claude.ai/code/artifact/5850aa17-cd86-4f75-9d8b-e0be02de5592 | à jour |
+
+⛔ **Les 6 MOV du 23/08 ont été SUPPRIMÉS** (0,54 Go, périmés et jamais envoyés). `out/` est
+gitignore : ils ne sont pas récupérables — mais ils se regénèrent en 6 rendus depuis les
+compositions `ChillMeter-{Entrance,Idle,Fill25,Fill50,Fill75,Fill100}`.
+
+### La forme du récap — ce qui a été rejeté, et pourquoi
+
+Deux versions rejetées avant la bonne, même cause à chaque fois : **montrer un ÉTAT au lieu
+d'un CHANGEMENT**.
+1. v1 (zooms recadrés + splits avant/après) → « du statique, différents écrans qui défilent ».
+2. v3 (cadre plein, mais objet en `state="idle"`) → mesuré : **0,10 %** de pixels changeant
+   sur la zone de l'objet. Sa vidéo bougeait derrière, ce qui masquait l'objet inerte.
+   ⭐ Ses 4 demandes ne sont pas des états mais des **changements** (une ombre qui se forme,
+   un objet qui se pose) : ça se montre en train de se produire.
+3. v5 retenue : entrée + atterrissage + montée à 50 % | carton | power-on | 75 %.
+
+⭐⭐ **Le découpage des chapitres est IMPOSÉ par le code, pas choisi** :
+`ChillMeterRustic.tsx:190` → `bandeauOn = powerOn * clamp((chill - 55) / 20)`. L'allumage de
+la plaque est piloté par le NIVEAU — rien jusqu'à 55, plein à 75. Le montrer **oblige** à
+monter au 75 %. Donc le chapitre 1 s'arrête à 50 % (`fill50` va de 25 à 50) et la plaque y
+reste métal : rien du jalon 3 ne fuite dans la partie à valider.
+
+⛔ **Pas de 100 % dans le récap** (décision Aziz 08/09, vérifiée contre la source) : il n'est
+dans aucune de ses 5 demandes, il vient du contrat (jalon 3, le moins financé) et surtout il
+n'a **aucune cible visuelle validée** — sa référence ne montre jamais cet état.
+
+### ⏭️ CE QUI RESTE
+
+1. **Le message** — brouillon dans `messages/BROUILLON-message-revision-07-09.txt`, à réécrire
+   avec la séparation des jalons (4 corrections à valider / power-on + 75 % en aperçu) et sans
+   mention du 100 %. **Jamais relu par Aziz.**
+2. **L'envoi** — les 6 MOV partent par Upwork (trop lourds pour un Artifact).

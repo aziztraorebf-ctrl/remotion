@@ -24,6 +24,9 @@
 | **Abigail — AbiGirl Reacts** ⭐<br>Max Chill Factor Meter | https://claude.ai/code/artifact/652c7c39-1529-45a7-8d0b-929098180b9b | Contrat signé le 30/08 (350 $, 3 jalons). Historique complet, vérification contre le brief, calendrier des jalons, message de livraison prêt à copier. ⛔ **Le bouton d'enregistrement de la page ne fonctionne pas de façon fiable** — les 2 fichiers à envoyer sont sur Blob (liens ci-dessous, ouvrir + appui long pour enregistrer). |
 | ↳ Jalon 1 — chassis seul | https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/01-meter-design-final-PeKpctxBRUhpKlfvEy29HKKFbPioUU.png | PNG, 491 Ko, vérifié |
 | ↳ Jalon 1 — en contexte | https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/02-meter-in-context-final-nMDmZxSyGbZWIrteuNKA9CY22XS34k.png | PNG, 2 Mo, vérifié |
+| ↳ **Page de suivi — révision 06-07/09** ⭐ | https://claude.ai/code/artifact/5850aa17-cd86-4f75-9d8b-e0be02de5592 | L'ancrage au sol, les 5 corrections, le récap client animé. LA page du chantier de révision — l'enrichir, ne pas en créer une 2e. |
+| ↳ **Récap client** (vidéo, 26 s) | https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/RECAP-client-v5-hklzVBMz9Bjw56k85W9Anl9lcTTT6I.mp4 | Version envoyée : cadre plein, 2 chapitres (jalon 1 à valider / aperçu). S'arrête au 75 %, pas de 100 %. |
+| ↳ **⭐ LES 6 MOV ALPHA À LIVRER** (sur disque, 208 Mo) | `out/_r-and-d/chill-meter-upwork/v2-07-09/` | ⛔ **Pas en ligne** — trop lourds pour un Artifact (16 Mo), ils partent par Upwork. Rendus le 08/09, ProRes 4444, 1920×1080. Alpha **vérifié en décodant** (93 % du cadre transparent), corrections présentes (objet x 189..715, descendu de 85 px vs les périmés). Les 6 du 23/08 ont été **supprimés** — regénérables via `ChillMeter-{Entrance,Idle,Fill25,Fill50,Fill75,Fill100}` avec `--codec=prores --prores-profile=4444 --pixel-format=yuva444p10le` (⛔ le pixel-format est obligatoire, sinon pas d'alpha). |
 
 ## 🎬 Pages de production (Artifact)
 
