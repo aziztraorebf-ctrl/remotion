@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Jury LLM 3 modeles pour script video (clarte + densite/flux fusionnes en 1 seul passage).
-Kimi k2.5 (Moonshot direct) + Gemini 3.1 Pro (Google genai direct) + GPT-5.5 (OpenRouter).
+Kimi k3 (Moonshot direct) + Gemini 3.1 Pro (Google genai direct) + GPT-5.5 (OpenRouter).
 
 Usage :
     python3 scripts/tools/jury-script-llm.py <fichier.md> <marqueur_debut> <marqueur_fin> [--contexte "texte"]
@@ -109,7 +109,11 @@ def call_kimi(brief):
     if not MOONSHOT_API_KEY:
         return "ERROR: MOONSHOT_API_KEY missing"
     payload = {
-        "model": "kimi-k2.5",
+        "model": "kimi-k3",
+# ⛔ SANS cette borne, k3 consomme tout le budget en reasoning et rend
+# `content: null` — voire HANG sur un gros prompt. `max_tokens` seul
+# ne protege PAS. -> memory/tools/kimi-k3-reasoning-borne.md
+"reasoning": {"max_tokens": 2000},
         "messages": [{"role": "user", "content": brief}],
         "max_tokens": 8000,
     }
@@ -121,7 +125,7 @@ def call_kimi(brief):
     if r.status_code != 200:
         return f"ERROR Kimi {r.status_code}: {r.text[:500]}"
     msg = r.json()["choices"][0]["message"]
-    return msg.get("content") or msg.get("reasoning_content") or ""
+    return msg.get("content")
 
 
 def call_gemini(brief):
@@ -175,7 +179,7 @@ def main():
     results = {}
     with ThreadPoolExecutor(max_workers=3) as ex:
         futures = {
-            ex.submit(call_kimi, brief): "kimi-k2.5",
+            ex.submit(call_kimi, brief): "kimi-k3",
             ex.submit(call_gemini, brief): "gemini-3.1-pro-preview",
             ex.submit(call_gpt, brief): "gpt-5.5",
         }

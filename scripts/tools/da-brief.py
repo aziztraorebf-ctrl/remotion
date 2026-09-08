@@ -3,7 +3,7 @@
 da-brief.py — DA-BRIEF-GATE générique : review créative AMONT avant de coder un acte/beat.
 
 Envoie un brief DA + (catalogue optionnel) + (frames optionnelles, auto-downscalées)
-à Gemini 3.1 Pro + Kimi K2.5 EN PARALLELE. Sorties dans /tmp/da-refs/.
+à Gemini 3.1 Pro + Kimi K3 EN PARALLELE. Sorties dans /tmp/da-refs/.
 
 Doctrine : memory/doctrines/DA-BRIEF-GATE.md (LIRE avant usage).
 Modèles VERROUILLES : gemini-3.1-pro-preview + moonshotai/kimi-k3 (OpenRouter, identifiant

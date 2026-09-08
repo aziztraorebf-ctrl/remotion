@@ -1,5 +1,5 @@
 """
-kimi-video-review-custom.py — Review d'UNE vidéo par Kimi K2.5 avec un BRIEF LIBRE.
+kimi-video-review-custom.py — Review d'UNE vidéo par Kimi K3 avec un BRIEF LIBRE.
 
 Équivalent Kimi de `gemini-video-review-custom.py` : il manquait à la boîte à outils. On avait
 `kimi-video-compare.py` (2 vidéos, gabarit comparatif figé) et `kimi-frames-review.py` (frames
@@ -36,7 +36,7 @@ import base64
 import urllib.request
 import urllib.error
 
-KIMI_MODEL = "kimi-k2.5"
+KIMI_MODEL = "kimi-k3"
 MOONSHOT_URL = "https://api.moonshot.ai/v1/chat/completions"
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -92,7 +92,7 @@ def main():
             ],
         }],
         "max_tokens": 16000,   # modèle thinking : jamais moins
-        "temperature": 1,      # SEULE valeur acceptée par kimi-k2.5
+        "temperature": 1,      # SEULE valeur acceptee par kimi-k3 (comme k3) — HTTP 400 sinon
     }
     req = urllib.request.Request(
         MOONSHOT_URL, data=json.dumps(payload).encode(),
@@ -107,7 +107,7 @@ def main():
         sys.exit(1)
 
     msg = data["choices"][0]["message"]
-    text = msg.get("content") or msg.get("reasoning_content") or ""
+    text = msg.get("content")
     if not text.strip():
         print("[kimi-video] ⚠️  réponse VIDE (content ET reasoning_content) — payload trop gros ?")
         sys.exit(1)

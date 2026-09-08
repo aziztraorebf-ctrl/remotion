@@ -1,9 +1,9 @@
 """
-kimi-video-compare.py — Test COMPARATIF via Kimi K2.5 natif (Moonshot API, vidéo en base64).
+kimi-video-compare.py — Test COMPARATIF via Kimi K3 natif (Moonshot API, vidéo en base64).
 
 Pendant Gemini Files API (da-compare.py), Kimi n'a jamais eu d'équivalent vidéo-native fonctionnel
 dans ce repo (liens HTTP publics REFUSÉS par l'API Moonshot — confirmé 2026-07-18, seul base64 ou
-ms://file_id fonctionnent). Ce script envoie 2 vidéos COMPLÈTES en base64 à Kimi K2.5, même gabarit
+ms://file_id fonctionnent). Ce script envoie 2 vidéos COMPLÈTES en base64 à Kimi K3, même gabarit
 de question que da-compare.py (référence qui marche vs nouveau qui décolle pas).
 
 Fix IPv4 importé automatiquement (force_ipv4.py) — plus besoin du wrapper run_ipv4.py en CLI.
@@ -24,7 +24,7 @@ import urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 OUT_DIR = "/tmp/da-refs"
-KIMI_MODEL = "kimi-k2.5"
+KIMI_MODEL = "kimi-k3"
 MOONSHOT_URL = "https://api.moonshot.ai/v1/chat/completions"
 
 COMPARE_TEMPLATE = """RÔLE
@@ -112,13 +112,13 @@ def main():
             ],
         }],
         "max_tokens": args.max_tokens,
-        "temperature": 1,  # Kimi K2.5 n'accepte QUE temperature=1 (erreur explicite sinon)
+        "temperature": 1,  # Kimi k3 (comme k3) n'accepte QUE temperature=1 (erreur explicite sinon)
     }
     req = urllib.request.Request(
         MOONSHOT_URL, data=json.dumps(payload).encode(),
         headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"},
     )
-    print("[kimi-video] envoi à Kimi K2.5 (2 vidéos base64)...")
+    print("[kimi-video] envoi à Kimi K3 (2 vidéos base64)...")
     try:
         with urllib.request.urlopen(req, timeout=300) as r:
             data = json.loads(r.read().decode())
@@ -127,7 +127,7 @@ def main():
         print(f"[kimi-video] HTTP {e.code}: {body[:1000]}")
         sys.exit(1)
     msg = data["choices"][0]["message"]
-    text = msg.get("content") or msg.get("reasoning_content") or "[vide]"
+    text = msg.get("content")
 
     os.makedirs(OUT_DIR, exist_ok=True)
     out = os.path.join(OUT_DIR, f"kimi-compare-{args.label}.md")

@@ -28,7 +28,7 @@ import urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 GEMINI_MODEL = "gemini-3.1-pro-preview"
-KIMI_MODEL = "kimi-k2.5"
+KIMI_MODEL = "kimi-k3"
 KIMI_MOONSHOT_URL = "https://api.moonshot.ai/v1/chat/completions"
 
 PROMPT_TEMPLATE = """Tu es un motion designer senior et directeur artistique, expert en publicites
@@ -168,7 +168,7 @@ def call_kimi_compare(prompt, ref_path, ours_path, max_tokens, results):
         with urllib.request.urlopen(req, timeout=420) as r:
             data = json.loads(r.read().decode())
         msg = data["choices"][0]["message"]
-        results["kimi"] = msg.get("content") or msg.get("reasoning") or "[vide]"
+        results["kimi"] = msg.get("content")
         print("[kimi] OK")
     except Exception as e:
         results["kimi"] = f"[ERREUR kimi] {e}"

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-da-brief-acte1.py — Envoie le brief DA Acte 1 a Gemini 3.1 Pro + Kimi K2.5 EN PARALLELE.
+da-brief-acte1.py — Envoie le brief DA Acte 1 a Gemini 3.1 Pro + Kimi K3 EN PARALLELE.
 
 Chaque modele recoit : le brief (da-brief-acte1.txt) + le catalogue Map Animation
 compact + 2 frames de reference (hook Sahel V3, Sudan Epic). Reponses sauvegardees
@@ -8,7 +8,7 @@ dans /tmp/da-refs/ pour synthese par Claude.
 
 Modeles VERROUILLES (CLAUDE.md) :
   - Gemini : gemini-3.1-pro-preview
-  - Kimi   : moonshotai/kimi-k2.5 via OpenRouter
+  - Kimi   : moonshotai/kimi-k3 via OpenRouter
 
 Usage : python3 scripts/warmap/da-brief-acte1.py
 """
@@ -27,7 +27,7 @@ FRAME_SUDAN = "/tmp/da-refs/sudan-epic-v4-sm.jpg"
 OUT_DIR = "/tmp/da-refs"
 
 GEMINI_MODEL = "gemini-3.1-pro-preview"
-KIMI_MODEL = "moonshotai/kimi-k2.5"
+KIMI_MODEL = "moonshotai/kimi-k3"
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 
@@ -92,7 +92,7 @@ def call_gemini(prompt, results):
 
 
 # --------------------------------------------------------------------------
-# KIMI K2.5 (OpenRouter)
+# KIMI K3 (OpenRouter)
 # --------------------------------------------------------------------------
 def call_kimi(prompt, results):
     key = os.getenv("OPENROUTER_API_KEY")
@@ -127,7 +127,7 @@ def call_kimi(prompt, results):
         with urllib.request.urlopen(req, timeout=300) as r:
             data = json.loads(r.read().decode())
         msg = data["choices"][0]["message"]
-        results["kimi"] = msg.get("content") or msg.get("reasoning") or "[vide]"
+        results["kimi"] = msg.get("content")
         print("[kimi] OK")
     except Exception as e:
         results["kimi"] = f"[ERREUR kimi] {e}"
@@ -141,7 +141,7 @@ def main():
             print(f"[ERREUR] fichier manquant: {f}")
             sys.exit(1)
     prompt = build_prompt()
-    print(f"[brief] {len(prompt)} chars + 2 frames -> Gemini 3.1 Pro + Kimi K2.5 (parallele)\n")
+    print(f"[brief] {len(prompt)} chars + 2 frames -> Gemini 3.1 Pro + Kimi K3 (parallele)\n")
 
     results = {}
     threads = [

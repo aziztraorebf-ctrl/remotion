@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Kimi K2.5 — Brief Mapbox camera + overlays pour épisodes Souverain.
+Kimi K3 — Brief Mapbox camera + overlays pour épisodes Souverain.
 
 Usage:
   python3 scripts/tools/kimi-mapbox-brief.py --prompt "votre prompt complet" [--output fichier.md]
@@ -8,7 +8,7 @@ Usage:
 
 NOTES TECHNIQUES (validées 2026-05-31) :
   - Moonshot direct API : content=null bug (mode thinking only). NE PAS UTILISER.
-  - OpenRouter moonshotai/kimi-k2.5 : finish_reason=stop, contenu complet. TOUJOURS utiliser.
+  - OpenRouter moonshotai/kimi-k3 : finish_reason=stop, contenu complet. TOUJOURS utiliser.
   - max_tokens=3000 optimal (assez pour 2-3 beats détaillés). Splitter si >3 beats.
   - temperature=1 obligatoire (seule valeur acceptée par Kimi).
   - Fallback reasoning si content est null (bug Venice provider sur certains appels).
@@ -23,7 +23,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions'
-KIMI_MODEL = 'moonshotai/kimi-k2.5'
+KIMI_MODEL = 'moonshotai/kimi-k3'
 
 MAPBOX_CONTEXT = """RÈGLES MAPBOX HEADLESS (non-négociables) :
 - Mouvements : jumpTo UNIQUEMENT dans useCurrentFrame Remotion. JAMAIS flyTo/easeTo.
@@ -72,7 +72,7 @@ def call_kimi(prompt_text, max_tokens=3000):
         print("ERREUR: OPENROUTER_API_KEY manquant dans .env", file=sys.stderr)
         sys.exit(1)
 
-    print(f"Envoi à Kimi K2.5 (OpenRouter)... [{len(prompt_text)} chars prompt]", flush=True)
+    print(f"Envoi à Kimi K3 (OpenRouter)... [{len(prompt_text)} chars prompt]", flush=True)
 
     resp = requests.post(
         OPENROUTER_URL,
@@ -116,7 +116,7 @@ def call_kimi(prompt_text, max_tokens=3000):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Brief Kimi K2.5 pour plans caméra Mapbox Souverain')
+    parser = argparse.ArgumentParser(description='Brief Kimi K3 pour plans caméra Mapbox Souverain')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('--prompt', help='Prompt complet en ligne de commande')
     group.add_argument('--prompt-file', help='Fichier texte contenant le prompt')

@@ -1,4 +1,4 @@
-"""DA-brief mouvement — Flowdesk Volet 2A, 3 voix EN PARALLELE (Gemini 3.1 Pro + GPT-5.5 + Kimi K2.5).
+"""DA-brief mouvement — Flowdesk Volet 2A, 3 voix EN PARALLELE (Gemini 3.1 Pro + GPT-5.5 + Kimi K3).
 
 Envoie le brief texte (da-brief-2a-mouvement.txt) + les 4 frames du storyboard abstrait au 3
 modeles vision, en parallele. Pattern calque sur scripts/tools/da-brief.py (doctrine
@@ -27,7 +27,7 @@ OUT_DIR = os.path.join(PROJECT_DIR, "da-brief-2a-mouvement-out")
 
 GEMINI_MODEL = "gemini-3.1-pro-preview"
 GPT_MODEL = "openai/gpt-5.5"
-KIMI_MODEL = "moonshotai/kimi-k2.5"
+KIMI_MODEL = "moonshotai/kimi-k3"
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 BRIEF_PATH = os.path.join(PROJECT_DIR, "da-brief-2a-mouvement.txt")
@@ -120,7 +120,7 @@ def call_openrouter_vision(model_key, model_id, prompt, frames, results, max_tok
         with urllib.request.urlopen(req, timeout=300) as r:
             data = json.loads(r.read().decode())
         msg = data["choices"][0]["message"]
-        results[model_key] = msg.get("content") or msg.get("reasoning") or "[vide]"
+        results[model_key] = msg.get("content")
         print(f"[{model_key}] OK")
     except Exception as e:
         results[model_key] = f"[ERREUR {model_key}] {e}"

@@ -119,7 +119,9 @@ def call_grok(brief):
         if r.status_code != 200:
             return f"ERROR Grok {r.status_code}: {r.text[:500]}"
         msg = r.json()["choices"][0]["message"]
-        return msg.get("content") or msg.get("reasoning_content") or ""
+        # ⛔ pas de repli silencieux sur reasoning_content : un contenu vide doit
+        # se voir, pas etre remplace par la reflexion brute du modele.
+        return msg.get("content") or ""
     except Exception as e:
         return f"EXCEPTION Grok: {e}"
 
