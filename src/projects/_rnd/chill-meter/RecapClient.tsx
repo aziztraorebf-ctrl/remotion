@@ -62,11 +62,15 @@ const CH2_ENTRANCE = 210; // 7 s — power-on (demande 5a)
 // s'afficher des f0 : elle promettrait un allumage qu'on ne voit pas encore (defaut
 // constate au 1er rendu de cette compo). Elle entre a la frame 40, pendant la montee.
 const ENTRANCE_ANNOT_DELAI = 40;
-const CH2_FILL75 = 165; // 5,5 s — « AbiGirl Reacts » qui s'allume (demande 5b)
-const CH2_FILL100 = 135; // 4,5 s — l'etat plein, pour situer le 75 %
+const CH2_FILL75 = 200; // 6,7 s — « AbiGirl Reacts » qui s'allume (demande 5b)
+// ⛔ PAS DE 100 % (retire le 08/09, decision Aziz) : il n'est dans AUCUNE de ses
+// 5 demandes — il vient du contrat (jalon 3, le moins finance) et, surtout, il n'a
+// AUCUNE cible visuelle validee : sa reference ne montre jamais cet etat (STATUS.md:528).
+// Le montrer ouvrirait une discussion de gout gratuite sur un etat qu'elle n'a pas
+// demande. On s'arrete a sa demande reelle.
 
 export const RECAP_DUREE =
-  CH1_ENTREE + CH1_MONTEE + CARTON + CH2_ENTRANCE + CH2_FILL75 + CH2_FILL100;
+  CH1_ENTREE + CH1_MONTEE + CARTON + CH2_ENTRANCE + CH2_FILL75;
 
 const T_CARTON = CH1_ENTREE + CH1_MONTEE;
 const T_CH2 = T_CARTON + CARTON;
@@ -179,7 +183,7 @@ const CartonJalon: React.FC = () => {
           textAlign: "center",
         }}
       >
-        The animated states below are next milestone
+        The animation below comes in the next milestones
       </div>
       <div
         style={{
@@ -191,7 +195,8 @@ const CartonJalon: React.FC = () => {
           textAlign: "center",
         }}
       >
-        Shown early so you can see where it is going — nothing to approve here yet.
+        Shown early so you can see the direction. Any change to the animation
+        itself belongs to milestone 2 or 3.
       </div>
     </AbsoluteFill>
   );
@@ -285,17 +290,6 @@ export const RecapClient: React.FC = () => {
           accent="#7ec8f0"
           texte="Preview — 75%"
           sousTexte="Only the wording and the two snowflakes light up — the plaque stays as it is."
-        />
-      </Sequence>
-      <Sequence
-        from={T_CH2 + CH2_ENTRANCE + CH2_FILL75}
-        durationInFrames={CH2_FILL100}
-      >
-        <Segment
-          state="fill100"
-          accent="#7ec8f0"
-          texte="Preview — 100%"
-          sousTexte="Full chill, for reference."
         />
       </Sequence>
     </AbsoluteFill>
