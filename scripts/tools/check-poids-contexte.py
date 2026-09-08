@@ -42,7 +42,22 @@ CLAUDE_HOME = Path.home() / ".claude"
 PROJ_MEM = CLAUDE_HOME / "projects" / "-Users-clawdbot-Workspace-remotion" / "memory"
 
 # (chemin, seuil_octets, plafond_dur_ou_None)
-# MEMORY.md : plafond SYSTEME a 25000 o / 200 lignes, troncature SILENCIEUSE au-dela.
+#
+# ⛔ SOURCE DE VERITE : memory/BUDGET.md. Ce script APPLIQUE la politique, il ne la
+# definit pas. Toute revision se decide dans BUDGET.md D'ABORD, puis se reporte ici.
+#
+# ⚠️ NE PAS CONFONDRE DEUX PLAFONDS DIFFERENTS (amalgame corrige le 2026-09-08) :
+#   - plafond SYSTEME  : ~25000 o / 200 lignes pour MEMORY.md. Au-dela, Claude Code
+#     tronque SILENCIEUSEMENT a chaque chargement. C'est une limite technique subie.
+#   - plafond POLITIQUE : 15000 o (MEMORY.md) et 20480 o (NEXT-ACTION.md). C'est NOTRE
+#     choix — le juste milieu entre "leger" et "bordel" — plus strict que le systeme,
+#     et c'est LUI qu'on applique ici.
+#
+# Aligne le 2026-09-08 : le code portait encore 20000/25000 (MEMORY) et 35000/aucun
+# (NEXT-ACTION) alors qu'un commentaire annoncait deja l'alignement. Le commentaire
+# disait vrai, le code disait autre chose — et c'est le code qui s'execute.
+# Consequence mesuree : NEXT-ACTION a 25510 o violait la politique de 25 % sans
+# declencher un mot. Un instrument de mesure qui ment = un plafond qui n'existe pas.
 CHAINE = [
     # 34 Ko : CLAUDE.md est le SEUL fichier charge dans les subagents (MEMORY.md ne l'est
     # pas). Il accueille donc les GATES migres le 2026-08-27 — ce poids est un transfert
@@ -50,8 +65,8 @@ CHAINE = [
     # ici est le nombre de LIGNES (adherence < 200), suivi ci-dessous.
     (REPO / "CLAUDE.md", 34000, None),
     (CLAUDE_HOME / "CLAUDE.md", 18000, None),
-    (PROJ_MEM / "MEMORY.md", 20000, 25000),
-    (REPO / "memory" / "NEXT-ACTION.md", 35000, None),
+    (PROJ_MEM / "MEMORY.md", 12000, 15000),        # BUDGET.md : alerte 80%, dur 15000
+    (REPO / "memory" / "NEXT-ACTION.md", 16384, 20480),  # BUDGET.md : alerte 80%, dur 20480
     (REPO / "memory" / "ROUTAGE.md", 40000, None),
     (REPO / ".claude" / "agent-memory" / "shared" / "PIPELINE.md", 25000, None),
 ]
@@ -196,9 +211,15 @@ def main() -> int:
             "CLAUDE.md (projet)" if path.is_relative_to(REPO) else "CLAUDE.md (global)")
 
         if plafond and taille > plafond:
+            # ⚠️ Ne PAS dire "troncature silencieuse" ici : ce plafond est celui de
+            # NOTRE politique (BUDGET.md), pas la limite technique. La troncature
+            # systeme n'arrive que vers 25000 o / 200 lignes, et sur MEMORY.md seul.
+            # Amalgame corrige le 2026-09-08 apres correction d'Aziz.
+            sys_warn = (" ⚠️ Au-dela de ~25000 o, le systeme tronque EN PLUS silencieusement."
+                        if nom == "MEMORY.md" and taille > 25000 else "")
             alertes.append(
-                f"  ⛔ {nom} : {taille} o — DEPASSE LE PLAFOND DUR {plafond} o. "
-                f"TRONCATURE SILENCIEUSE en cours.")
+                f"  ⛔ {nom} : {taille} o — DEPASSE LE PLAFOND DUR {plafond} o "
+                f"(politique BUDGET.md).{sys_warn}")
         elif plafond and taille > plafond * 0.88:
             alertes.append(
                 f"  ⚠️  {nom} : {taille} o — approche le plafond dur ({plafond} o).")
