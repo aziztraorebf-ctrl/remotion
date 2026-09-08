@@ -9,6 +9,23 @@
 //    et a sa taille reelles, exactement comme il apparaitra dans sa video YouTube.
 //  - Les annotations arrivent EN HAUT, par-dessus, sans jamais toucher au cadre.
 //  - ZERO frame statique, zero zoom, zero split avant/apres.
+//
+// ⛔⛔ DEFAUT DE LA v3, MESURE ET CORRIGE (07/09, souleve par Aziz) : le chapitre 1 etait
+// en `state="idle"` — un ETAT FIXE. Mesure sur la zone de l'objet seule (crop 560x300,
+// 145 echantillons a 0,2 s) : 0,10 % de pixels changeant en moyenne, soit du bruit de
+// compression. Seule SA video bougeait derriere, ce qui masquait que l'objet, lui, ne
+// faisait rien — et l'echantillonnage global (hashs de frames entieres) ne pouvait pas
+// le voir. ⭐ Ses 4 corrections ne sont pas des etats, ce sont des CHANGEMENTS : une
+// ombre qui se forme, un objet qui se pose, des icones qui s'allument. Ca se montre en
+// train de se produire, pas sur un objet inerte.
+//
+// ⭐⭐ CONTRAINTE QUI DECOUPE LES CHAPITRES (ChillMeterRustic.tsx:190) :
+//     bandeauOn = powerOn * clamp((chill - 55) / 20)
+// L'allumage de la plaque « AbiGirl Reacts » est pilote par le NIVEAU, pas par un etat
+// nomme : rien jusqu'a 55, plein a 75. Le montrer OBLIGE donc a monter jusqu'au 75 % —
+// il n'existe aucun moyen de le montrer « avant ». D'ou : le chapitre 1 monte a 50 %
+// (`fill50` va de 25 a 50, sous le seuil) et la plaque y reste metal, donc rien du
+// jalon 3 n'est devoile dans la partie a valider ; l'allumage vit dans l'apercu.
 // Reference de forme validee : out/_r-and-d/chill-meter-3d/recap-forme-ref/
 //   ANNOTEE-verification-06-09-v4.mp4
 //
@@ -32,7 +49,12 @@ import { ChillMeterOverlay, type MeterState } from "./ChillMeterOverlay";
 const FPS = 30;
 
 /** Les 4 corrections du jalon 1, puis l'apercu. Duree en frames. */
-const CH1_IDLE = 300; // 10 s — les 4 corrections se lisent sur l'objet au repos
+// CHAPITRE 1 — tout est MOUVEMENT : l'objet arrive et se pose (l'ombre se forme a
+// l'impact = correction 3 visible en train de se produire), s'allume icones deja bleues
+// (correction 4), a sa position basse (2) et sa taille inchangee (1). Puis la jauge monte
+// jusqu'a 50 % pour montrer que l'objet VIT, sans franchir le seuil de 55 % du bandeau.
+const CH1_ENTREE = 150; // 5 s — arrivee, atterrissage, allumage
+const CH1_MONTEE = 165; // 5,5 s — montee de la jauge jusqu'a 50 %
 const CARTON = 60; // 2 s — la frontiere entre les deux jalons
 const CH2_ENTRANCE = 210; // 7 s — power-on (demande 5a)
 // ⛔ MESURE 07/09 (bleu du sous-titre, B-R au coeur des glyphes) : +4 a la frame 0 du
@@ -44,7 +66,10 @@ const CH2_FILL75 = 165; // 5,5 s — « AbiGirl Reacts » qui s'allume (demande 
 const CH2_FILL100 = 135; // 4,5 s — l'etat plein, pour situer le 75 %
 
 export const RECAP_DUREE =
-  CH1_IDLE + CARTON + CH2_ENTRANCE + CH2_FILL75 + CH2_FILL100;
+  CH1_ENTREE + CH1_MONTEE + CARTON + CH2_ENTRANCE + CH2_FILL75 + CH2_FILL100;
+
+const T_CARTON = CH1_ENTREE + CH1_MONTEE;
+const T_CH2 = T_CARTON + CARTON;
 
 /** Le plateau reel qui tourne SANS INTERRUPTION sous tout le montage.
  *  C'est ce qui fait qu'on ne « defile » pas d'un ecran a l'autre : une seule prise. */
@@ -191,32 +216,40 @@ export const RecapClient: React.FC = () => {
       {/* Une seule prise continue : le plateau ne s'interrompt jamais. */}
       <PlateauContinu />
 
-      {/* ---- CHAPITRE 1 : les 4 corrections du jalon 1, a valider ---- */}
-      {/* Les 4 se lisent simultanement sur l'objet au repos (taille, position, ombre,
-          icones bleues) : on ne coupe donc pas entre elles, on fait defiler le texte
-          pendant que l'objet reste a l'ecran, immobile et entier. */}
-      <Sequence from={0} durationInFrames={CH1_IDLE}>
-        <ChillMeterOverlay state="idle" chassis="rustic" />
+      {/* ---- CHAPITRE 1 : les 4 corrections du jalon 1, a valider ----
+           ⛔ En MOUVEMENT, pas en etat fixe : c'est le defaut mesure de la v3. */}
+
+      {/* L'objet arrive, atterrit, s'allume. L'ombre de contact se forme A L'IMPACT :
+          la correction 3 se voit donc se produire, au lieu d'etre decrite. */}
+      <Sequence from={0} durationInFrames={CH1_ENTREE}>
+        <ChillMeterOverlay state="entrance" chassis="rustic" />
       </Sequence>
-      <Sequence from={0} durationInFrames={75}>
+      {/* Puis la jauge monte jusqu'a 50 % — l'objet VIT, et la plaque reste metal
+          (seuil du bandeau a 55 %), donc rien du jalon 3 n'apparait ici. */}
+      <Sequence from={CH1_ENTREE} durationInFrames={CH1_MONTEE}>
+        <ChillMeterOverlay state="fill50" chassis="rustic" />
+      </Sequence>
+
+      {/* Les annotations defilent PAR-DESSUS le mouvement continu. */}
+      <Sequence from={0} durationInFrames={78}>
         <Annotation
           texte="1. Size unchanged  ·  2. Moved slightly lower"
           sousTexte="Same meter size as before, sitting lower in the frame."
         />
       </Sequence>
-      <Sequence from={75} durationInFrames={75}>
+      <Sequence from={78} durationInFrames={72}>
         <Annotation
           texte="3. Stronger contact shadow"
-          sousTexte="Darker shadow underneath, so it sits in the scene instead of hovering."
+          sousTexte="Watch the shadow as it lands — darker underneath, so it sits in the scene instead of hovering."
         />
       </Sequence>
-      <Sequence from={150} durationInFrames={75}>
+      <Sequence from={150} durationInFrames={80}>
         <Annotation
           texte="4. Button icons blue from the start"
           sousTexte="Blue at idle / 0%, not only once the meter fills."
         />
       </Sequence>
-      <Sequence from={225} durationInFrames={75}>
+      <Sequence from={230} durationInFrames={85}>
         <Annotation
           texte="Frost no longer floats below the meter"
           sousTexte="Something I spotted on my side — it now stops at the base."
@@ -224,17 +257,17 @@ export const RecapClient: React.FC = () => {
       </Sequence>
 
       {/* ---- LA FRONTIERE ENTRE LES JALONS, VISIBLE A L'ECRAN ---- */}
-      <Sequence from={CH1_IDLE} durationInFrames={CARTON}>
-        <ChillMeterOverlay state="idle" chassis="rustic" />
+      <Sequence from={T_CARTON} durationInFrames={CARTON}>
+        <ChillMeterOverlay state="fill50" chassis="rustic" />
         <CartonJalon />
       </Sequence>
 
       {/* ---- CHAPITRE 2 : apercu (jalons 2 et 3), rien a approuver ---- */}
-      <Sequence from={CH1_IDLE + CARTON} durationInFrames={CH2_ENTRANCE}>
+      <Sequence from={T_CH2} durationInFrames={CH2_ENTRANCE}>
         <ChillMeterOverlay state="entrance" chassis="rustic" />
       </Sequence>
       <Sequence
-        from={CH1_IDLE + CARTON + ENTRANCE_ANNOT_DELAI}
+        from={T_CH2 + ENTRANCE_ANNOT_DELAI}
         durationInFrames={CH2_ENTRANCE - ENTRANCE_ANNOT_DELAI}
       >
         <Annotation
@@ -244,7 +277,7 @@ export const RecapClient: React.FC = () => {
         />
       </Sequence>
       <Sequence
-        from={CH1_IDLE + CARTON + CH2_ENTRANCE}
+        from={T_CH2 + CH2_ENTRANCE}
         durationInFrames={CH2_FILL75}
       >
         <Segment
@@ -255,7 +288,7 @@ export const RecapClient: React.FC = () => {
         />
       </Sequence>
       <Sequence
-        from={CH1_IDLE + CARTON + CH2_ENTRANCE + CH2_FILL75}
+        from={T_CH2 + CH2_ENTRANCE + CH2_FILL75}
         durationInFrames={CH2_FILL100}
       >
         <Segment
