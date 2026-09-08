@@ -14,10 +14,17 @@
 # La fuite s'est produite exactement la — dans des fichiers de documentation (dashboard-url.md,
 # here-now-links.md). Un scan de secrets qui ignore la doc ne sert a rien.
 #
-# Ce qu'il couvre : les patterns a valeur (token = valeur), pas les mentions du mot seul.
-# Ce qu'il NE couvre PAS : un secret ecrit via `cat > f <<EOF` en Bash (non matche ici pour
-# eviter les faux positifs massifs sur des commandes legitimes), ni un secret colle par Aziz
-# lui-meme. Le .env reste le bon endroit pour un secret.
+# Ce qu'il couvre : les patterns a valeur (label = valeur), pas les mentions du mot seul.
+#
+# ⛔ LIMITES CONNUES (mesurees au test le 2026-09-08, assumees — ne pas croire le hook
+# exhaustif) :
+#   1. Un token NU, sans label devant ("Le token est abc123...") passe. Detecter toute
+#      chaine de 20 chars produirait des faux positifs massifs (hashes git, base64,
+#      chemins) qui feraient desactiver le hook — pire que la faille.
+#   2. Un secret ecrit via `cat > f <<EOF` en Bash n'est pas matche (matcher Edit|Write
+#      seulement) : couvrir Bash bloquerait des commandes legitimes en masse.
+#   3. Un secret colle par Aziz lui-meme ne passe pas par un tool, donc jamais intercepte.
+# Ce hook rattrape l'OUBLI courant, il ne remplace pas la regle : un secret va dans .env.
 
 INPUT=$(cat)
 TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // empty')
@@ -46,8 +53,11 @@ esac
 [[ "$FILE_PATH" == *"/.env"* ]] && exit 0
 [[ "$(basename "$FILE_PATH")" == ".env" ]] && exit 0
 
-# --- Archives : contenu historique preserve, on ne reecrit pas le passe
-[[ "$FILE_PATH" == *"_archive"* ]] || [[ "$FILE_PATH" == *"/archive/"* ]] && exit 0
+# --- Archives : contenu historique preserve, on ne reecrit pas le passe.
+# ⚠️ Matcher un SEGMENT de chemin, pas une sous-chaine : `notes_archive_2026.md` est un
+# fichier versionne ordinaire et doit rester scanne (faille trouvee au test le 2026-09-08).
+[[ "$FILE_PATH" == */_archive/* ]] && exit 0
+[[ "$FILE_PATH" == */archive/* ]] && exit 0
 
 # --- Detection : nom_de_secret <separateur> VALEUR (>= 12 chars), backticks/quotes optionnels
 #     Le mot seul ("claimToken est retourne une fois") ne matche pas : il faut une valeur.
