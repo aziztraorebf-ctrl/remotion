@@ -235,7 +235,7 @@ economise 2 rondes.
 
 ### ⚖️ CE QU'ON DEMANDE EN RETOUR — la relation est a sens unique aujourd'hui
 
-**Etat financier reel** : jalon 1 **soumis le 02/09, NON PAYE** (105 $). Jalons 2 et 3 **`NotFunded`**
+**Etat financier REEL, verifie via l'API Upwork le 08/09 (contrat 44402562)** — CORRIGE : les 350 $ des 3 jalons sont TOUS `fundedAmount` renseignes (105/140/105 $), deposes en bloc a l'ouverture du contrat (30/08). Jalon 1 = `Submitted` (soumis le 05/09, en attente de SA revue, PAS de paiement de sa part). Jalons 2/3 = `state: NotFunded` mais avec `fundedAmount` deja rempli — la description du jalon 2 dit "Due after Milestone 1 approval", donc `NotFunded` ici signifie vraisemblablement "pas encore active dans la sequence", pas "l'argent n'existe pas". ⚠️ Nuance non tranchee avec certitude (l'API ne le dit pas explicitement) mais le fait solide est : l'argent des 3 jalons semble deja depose, ce qui bloque est SON APPROBATION du jalon 1, pas un depot de sa part.
 — l'argent n'est meme pas depose. Elle a eu **3 rondes** de revision la ou le contrat en prevoit 2.
 
 Les 3 contreparties a poser dans le message (courtoises, aucune agressivite) :

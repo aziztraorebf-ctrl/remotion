@@ -218,3 +218,22 @@ n'a **aucune cible visuelle validée** — sa référence ne montre jamais cet �
      phrase sur milestone 2 ou 3, qui pose la frontière toute seule.
 
 2. **L'envoi** — le message + le récap vidéo. ⛔ **PAS les 6 MOV** (voir ci-dessus).
+
+
+---
+
+## 💰 CORRECTIF FINANCIER (08/09, verifie via API Upwork, pas suppose)
+
+⛔ Une affirmation anterieure de ce dossier disait « l'argent n'est meme pas depose » pour
+les jalons 2/3. **C'ETAIT FAUX** — verifie via `mcp__upwork__upwork__list_milestones` sur le
+contrat `44402562` : les 350 $ des 3 jalons ont un `fundedAmount` deja rempli (105/140/105 $),
+vraisemblablement deposes en bloc a l'ouverture (30/08). Jalon 1 = `Submitted` (soumis 05/09,
+en attente de SA revue). Jalons 2/3 = `state: NotFunded` mais fonds presents ; la description
+du jalon 2 dit « Due after Milestone 1 approval » — ce qui bloque le jalon 2 est vraisemblablement
+son APPROBATION du jalon 1, pas un depot d'argent de sa part.
+
+⭐ Detail complet + nuance non tranchee : `STATUS.md` § Etat financier reel (corrige 08/09).
+
+**Decision Aziz (08/09)** : ne PAS envoyer de 2e message pour demander le financement du
+jalon 2. Le message deja envoye est clair, le travail montre deja l'avance sur le jalon 2
+(power-on, montee a 50%) et une partie du jalon 3 (75%). On attend sa reponse.
