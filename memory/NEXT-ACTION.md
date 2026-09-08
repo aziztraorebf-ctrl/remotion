@@ -33,53 +33,31 @@ plus fiable qu'un breakdown texte->hex pour calibrer un chassis SVG. C'est l'usa
 comme viable dans `memory/client-sim-tests/upwork-chill-meter/STATUS.md` (« rendu de reference
 eclaire », pas « extraire une texture ») — jamais teste concretement.
 
-## ⛔⛔⭐⭐⭐ PRIORITÉ — CÂBLER NOTRE SYSTÈME SUR LE TRAVAIL CLIENT (constat d'Aziz, 2026-09-03)
+## ⛔⛔⭐⭐⭐ PRIORITÉ — CÂBLER NOTRE SYSTÈME SUR LE TRAVAIL CLIENT (constat d'Aziz, 03/09)
 
-> **Session dédiée à ouvrir.** Chantier d'analyse en profondeur, à NE PAS entamer au fil d'une
-> session de production. Branche suggérée : `fix/cablage-systeme-travail-client`.
+> **Session dédiée à ouvrir**, jamais au fil d'une session de production.
+> Branche suggérée : `fix/cablage-systeme-travail-client`.
 
-**Le constat, dans les mots d'Aziz** : « notre repo ne sert à rien si on ne l'utilise pas quand
-vient le temps de régler des problèmes, autre que pour la vidéo YouTube. Surtout si c'est pour des
-clients Upwork, il devrait servir aussi à partir de maintenant. »
+**Le constat d'Aziz** : « notre repo ne sert à rien si on ne l'utilise pas quand vient le temps de
+régler des problèmes, autre que pour la vidéo YouTube. »
 
-**Ce qui l'a déclenché** : sur le contrat chill-meter (2 jours, 4 tentatives échouées sur un écart
-de teinte), Aziz a proposé de consulter des modèles externes. Ça a débloqué le problème en un
-appel. ⛔ **Or c'est exactement ce que fait le DA-brief, qui existe, est outillé, a un skill dédié
-— et n'a JAMAIS été invoqué sur ce contrat.** Je l'ai réimplémenté à la main (planche comparative
-+ brief + 3 appels) sans reconnaître que je refaisais un outil qu'on possède.
-
-**Ce n'est pas un oubli isolé — c'est un schéma, 4 occurrences sur le même contrat** :
-- DA-brief (existe, outillé, skill dédié) → jamais invoqué
-- `FICHE-BRIEF-CLIENT.md` portait « exiger l'ÉTAT NEUTRE quand la réf client montre l'état FINAL »
-  → ne s'injectait pas sur `src/projects/_rnd/chill-meter/`, corrigé APRÈS avoir payé l'erreur
-- Règle « matière finale d'abord, code ajusté ensuite » → j'ai failli rendre un clip d'animation
-  sur un châssis qu'on savait devoir changer (rattrapé par Aziz, pas par le système)
-- Protocole « déléguer à un agent dédié dès le 2e échec » → j'en étais au 4e
-
-**La cause commune** : le système est câblé pour la PRODUCTION VIDÉO. Les gates visent
-`src/projects/souverain/`, les fiches ciblent des chemins de beats, les skills parlent storyboard
-et scènes. Le travail client vit ailleurs (`src/projects/_rnd/`, `memory/client-sim-tests/`,
-`src/projects/_client-sim/`) et **traverse le système sans rien déclencher**.
-⭐ Le repo n'est pas inutile : il est **ADRESSÉ AU MAUVAIS ENDROIT**. C'est la 3e occurrence
-connue du défaut d'adressage (FICHE-MOCKUP-3D 26/08, FICHE-BRIEF-CLIENT 02/09).
+**La cause** : le système est câblé pour la PRODUCTION VIDÉO (gates visant `souverain/`, fiches
+ciblant des chemins de beats). Le travail client vit ailleurs — `_rnd/`, `client-sim-tests/`,
+`_client-sim/` — et **traverse le système sans rien déclencher**. Le repo n'est pas inutile, il est
+**ADRESSÉ AU MAUVAIS ENDROIT** (3e occurrence du défaut d'adressage : FICHE-MOCKUP-3D 26/08,
+FICHE-BRIEF-CLIENT 02/09). Mesuré sur le contrat chill-meter : 4 outils qui existaient n'ont pas
+été déclenchés, dont le DA-brief que j'ai réimplémenté à la main sans le reconnaître.
 
 **Le chantier, 4 étapes** :
-1. Recenser ce qui DEVRAIT se déclencher sur du travail client (DA-brief, fiche client, gates de
-   vérification, protocole de délégation, règles de message client, conventions de nommage).
-2. **TESTER lesquels s'activent réellement** sur un chemin client — par exécution du hook avec un
+1. Recenser ce qui DEVRAIT se déclencher sur du travail client (DA-brief, fiche client, gates,
+   protocole de délégation, règles de message client, nommage).
+2. **TESTER lesquels s'activent vraiment** sur un chemin client — par exécution du hook avec un
    `file_path` ET un `content` (⚠️ `fiche-inject.sh` sort en 0 sans contenu : un test sans
-   `new_string` donne un faux négatif, vécu le 02/09), **jamais par relecture**.
+   `new_string` donne un faux négatif, vécu 02/09), **jamais par relecture**.
 3. Corriger les déclencheurs qui ratent.
-4. Écrire une entrée de routage « TRAVAIL CLIENT » dans `ROUTAGE.md` : quoi ouvrir au début d'un
-   contrat, comme il en existe une pour les épisodes.
+4. Écrire une entrée de routage « TRAVAIL CLIENT » dans `ROUTAGE.md`.
 
-⚠️ **Nuance à garder** : le DA-brief n'aurait probablement pas évité CE problème précis (il
-intervient avant de coder, ici on réagissait à un retour client). Mais la MÉTHODE qu'il porte —
-plusieurs voix externes plutôt que moi seul — est exactement ce qui a débloqué. Ce n'est pas
-l'outil qui manquait, c'est le RÉFLEXE de l'invoquer hors production vidéo.
-
-📄 Méthode née de l'incident, déjà documentée :
-`memory/tools/consultation-llm-externe-probleme-visuel-bloque.md`
+📄 `memory/tools/consultation-llm-externe-probleme-visuel-bloque.md` (méthode née de l'incident).
 
 ## ⭐⭐⭐ REPRENDRE ICI — Pièce portfolio « Le cauri » (2026-09-02)
 
@@ -96,102 +74,59 @@ Rien à faire tant que le client n'a pas répondu. → `memory/client-sim-tests/
 
 ---
 
-## ⭐⭐⭐ DÉCISION DU 2026-08-24 — LA CHAÎNE EST UNE VITRINE, LE FREELANCE PORTE L'EFFORT
+## ⭐⭐⭐ PRIORITÉ 1 — PORTFOLIO ANIMÉ (décision d'Aziz, 30/08)
 
-Décision d'Aziz : la chaîne (Gazoduc) prouve les capacités, elle ne monétise pas. ⭐ 1er contrat
-Upwork GAGNÉ le 29/08 (350 $, cf section chill-meter plus bas) — ne valide PAS le « déterminisme »,
-qui reste hypothèse. Doctrine + fer de lance (pilier 2, objets animés par code) :
-`memory/doctrines/PILIERS-B2B.md`.
-
-**Acquis technique** : pipeline **SVG → Lottie** prouvé (2 outils officiels LottieFiles), matte
-`tt` porté (commits `a42af19b`/`b4a53d3e`, 5/5 pochoirs, écart 0,03 %) → détail complet
-`memory/client-sim-tests/lottie-ui-lcd/STATUS.md` · `corpus-kamotion/CORPUS-REFERENCE-UI.md`.
-⛔ Chantier repro UI **CLOS le 2026-08-30** (corpus épuisé, 3 pièces livrées).
-
-⭐⭐⭐ **PRIORITÉ 1 (décision d'Aziz, 30/08) — PORTFOLIO ANIMÉ** : corpus épuisé, on crée
-désormais **nos** pièces sur ce que le marché valide (pas de copie). Plan 6 étapes (MCP Fiverr →
-rétro-ingénierie → SVG → code → `da-brief-anim.py` → itération) :
-→ **`memory/starters/STARTER-portfolio-anime.md`** ⭐⭐
+Corpus repro épuisé (chantier CLOS le 30/08, 3 pièces livrées) : on crée désormais **nos** pièces
+sur ce que le marché valide, pas de copie. Plan 6 étapes → **`memory/starters/STARTER-portfolio-anime.md`** ⭐⭐
 
 ⏸️ Personnage HUMAIN en pause (`STARTER-PERSO-VECTORIEL-V4.md`) — si besoin d'un perso : registre
 CHIEN (mascotte) ou modèle pro existant animé (prouvé sur le douanier).
-⛔ Ne PAS refondre le gabarit d'ouverture vidéo : 4 courbes de rétention INFIRMENT un défaut
-systématique → `memory/doctrines/DIAGNOSTIC-FLOP-VIDEO.md` § LES 5 FORMES DE COURBE.
+⛔ Ne PAS refondre le gabarit d'ouverture vidéo → `memory/doctrines/DIAGNOSTIC-FLOP-VIDEO.md`
+§ LES 5 FORMES DE COURBE (4 courbes INFIRMENT un défaut systématique).
+
+> Le cadre stratégique (chaîne = vitrine · fer de lance pilier 2 · acquis SVG→Lottie) est gravé
+> dans `memory/doctrines/PILIERS-B2B.md` — ce n'est plus une action, ne pas le redupliquer ici.
 
 ---
 
-## ⛔ DETTE MESURÉE LE 2026-08-30 — `kimi-k2.5` PÉRIMÉ dans 16 fichiers de code + 2 index
+## 🌿 ÉTAT GIT — ne jamais figer une liste ici, l'EXÉCUTER
 
-CLAUDE.md impose **`kimi-k3` UNIQUEMENT** (décision d'Aziz 20/08) + import depuis
-`scripts/tools/api_models.py`. 16 fichiers de code actif portent encore `kimi-k2.5` en dur, plus
-`REVIEW-TOOLS-INDEX.md`/`SCRIPTS-INDEX.md` qui le citent (la doctrine se propage à l'envers).
-⛔ Un modèle périmé peut répondre en se dégradant silencieusement (pas d'erreur garantie).
+⛔ **Cette section a été fausse 3 fois** (30/08, 31/08, 08/09). La version du 31/08 annonçait
+« 4 branches vivantes » et présentait comme mergeables 2 branches **déjà mergées** — elle portait
+pourtant son propre avertissement « elle se périme au premier `git checkout -b` ». Un avertissement
+n'empêche pas la péremption : **une commande, si.**
 
-⭐ **Le patron existe déjà** : `scripts/tools/da-brief-anim.py` (30/08) importe ses 4 identifiants
-d'`api_models.py`, zéro en dur, et applique le vrai fix `reasoning_content` de k3 — recopier, ne pas
-réinventer. ⚠️ Réserve avant de migrer les 2 scripts VIDÉO NATIVE (`da-brief-video-3voix.py:40`,
-`da-brief-compare-2videos.py:31`) : vérifier que k3 accepte la vidéo native via Moonshot direct avant
-de basculer.
+```bash
+git branch --no-merged master    # ce qui porte du travail unique (11 le 08/09)
+git branch --merged master       # supprimables sans risque
+```
 
-**Chantier mécanique, ~30 min, à faire en DÉBUT de session** (16 fichiers à relire un par un, pas
-un remplacement de masse — cf. migration Gemini du 20/08).
+⚠️ **`feat/zambia-demo-2concepts`** — 1 commit unique (`7b024e66`, 21/08) : `gallery/index.html`,
+`gallery/styles.css`, poster PageCam, absents de master. ⛔ NE PAS supprimer sans décider : la
+galerie GitHub Pages a peut-être là son code de référence. **Seule branche à arbitrer.**
 
----
+⛔⛔ **Avant tout ménage de branches** : `memory/projects/INCIDENT-BRANCHE-SUPPRIMEE-TRAVAIL-PERDU.md`
+— une branche supprimée le 28/08 portait 2 fichiers jamais commités, récupérés par chance.
+Vérifier `git status` sur la branche AVANT suppression, pas seulement ses commits.
 
-## 🌿 ÉTAT GIT — **4 branches vivantes** (corrigé 2026-08-31, la note du 30/08 était périmée dès l'ouverture d'une nouvelle branche le 31)
+## ⭐⭐⭐ CONTRAT UPWORK chill-meter — ACTIF (1er contrat freelance)
 
-⛔ **Dérive détectée par le wrap du 31/08** : cette section affirmait "1 SEULE branche vivante"
-alors que 3 branches non mergées existent réellement. Toujours vérifier `git branch --list` avant
-de faire confiance à cette section — elle se périme au premier `git checkout -b`.
+⚠️ **L'ÉTAT D'AVANCEMENT NE VIT PAS ICI** — il se périme en heures et une session parallèle y
+travaille. Source de vérité unique, à ouvrir en premier :
+→ **`memory/client-sim-tests/upwork-chill-meter/STATUS.md`**
 
-État réel (`git branch --merged master` ne retourne QUE `master`, les 3 suivantes portent du
-contenu unique) :
+Cadre contractuel (stable) : offre v2 acceptée le 30/08, 350 $ → 297,50 $ net, 3 jalons
+(3/7/11 sept.), 2 tours de révision par jalon, dossier source + README dus.
 
-- **`feat/chill-meter-jalon1`** — branche COURANTE (session 31/08). Porte le contrat chill-meter
-  (métal, README, jalons) + le travail du 31/08 (récupération CFA, MCP Upwork, hook
-  outbound-message-guard). Contient aussi tous les commits de `feat/portfolio-onboarding-generique`
-  (ancêtre commun) — la fusionner absorbe l'autre.
-- **`feat/portfolio-onboarding-generique`** — 5 commits, tous déjà présents dans
-  `feat/chill-meter-jalon1`. Candidate à suppression une fois cette dernière mergée dans master.
-- ⚠️ **`feat/zambia-demo-2concepts`** — 1 commit unique (`7b024e66`, 21/08) : `gallery/index.html`,
-  `gallery/styles.css`, poster PageCam. ⛔ NE PAS supprimer sans décider : ces fichiers n'existent
-  PAS sur master, et la galerie déployée sur GitHub Pages a peut-être son code de référence ailleurs
-  — vérifier où avant de merger OU supprimer.
+Invariants à ne pas perdre :
+- ⛔ Ne PAS lui dire que les 6 états sont déjà rendus (atout de négociation).
+- ⛔ Relire `BRIEF-CLIENT-ORIGINAL.pdf` (gitignoré) avant toute action.
+- ⚠️ Retraits Upwork bloqués tant que les infos fiscales ne sont pas fournies.
+- ⏸️ Prospection Upwork en PAUSE par Aziz (01/09) — ne pas relancer sans sa confirmation.
 
-⛔⛔ **Avant tout futur ménage de branches** : lire
-`memory/projects/INCIDENT-BRANCHE-SUPPRIMEE-TRAVAIL-PERDU.md` — une branche supprimée le 28/08
-portait 2 fichiers jamais commités, récupérés par chance seulement. Toujours vérifier
-`git status`/modifications non commitées sur une branche AVANT de la supprimer, pas seulement ses
-commits.
-
-## ⭐⭐⭐ CONTRAT UPWORK chill-meter — RÉVISION 1 du jalon 1 TRAITÉE le 2026-09-02, RIEN RENVOYÉ
-
-**Premier contrat freelance, actif.** Offre v2 acceptée le 30/08 (350 $ → 297,50 $ net, 3 jalons,
-3/7/11 sept.) — les 3 points de révision (dossier source + README, dates, 2 tours de révision par
-jalon) sont tous dans le contrat signé.
-
-⏭️ **PROCHAINE ACTION : tester la piste 3D, PUIS renvoyer le jalon 1.** Abigail a répondu : elle
-valide la structure et demande 6 révisions (toutes traitées le 02/09 — labels boutons, flocons du
-titre, bouton power recentré de 11 px, SCALE 0.52→0.374, passe Fable sur le métal). Décision d'Aziz :
-ne pas renvoyer tout de suite, explorer d'abord la piste 3D pour un envoi UNIQUE (il ne reste qu'1
-révision sur ce jalon). Le vrai écart restant est le **givre** (« neige posée » chez nous vs
-« frimas adhérent » chez elle), pas le métal — mesuré par comparaison à état égal.
-→ Détail complet + bug ouvert `ChillMeter-Metal-*` : `memory/client-sim-tests/upwork-chill-meter/STATUS.md`.
-⏸️ Prospection Upwork en PAUSE par Aziz (01/09), 1-2j — déjà 4 fronts ouverts. Ne pas relancer sans
-confirmation d'Aziz.
-⚠️ Retraits Upwork bloqués tant que les infos fiscales ne sont pas fournies — à régler avant le 3 sept.
-
-✅ **Chantier métal du châssis bouclé le 31/08** (4 passes, chacune corrigeant un défaut qu'Aziz a
-repéré) : gradients morts → concours 5 modèles (métal gagné, icy blue perdu) → couleur corrigée mais
-silhouette dérivée → géométrie EXACTE reverifiée (32/32 tracés identiques). Finition **Machined**
-retenue (contraste mesuré 153 vs 122), intégrée en production, 2 bugs corrigés après signalement.
-⭐ 2 leçons de brief transposables : `feedback_deleguer-un-defaut-nommer-ce-qui-ne-doit-pas-changer.md`
-· `feedback_ameliorer-vs-remplacer-preciser-dans-le-brief.md`
-
-⛔ Ne PAS lui dire que les 6 états sont déjà rendus (atout de négociation). ⛔ Brief client PDF
-(`BRIEF-CLIENT-ORIGINAL.pdf`, gitignoré) se RELIT avant toute action.
-
-→ **Source de vérité unique** : `memory/client-sim-tests/upwork-chill-meter/STATUS.md`.
+⭐ 2 leçons de brief transposables, nées de ce contrat :
+`feedback_deleguer-un-defaut-nommer-ce-qui-ne-doit-pas-changer.md` ·
+`feedback_ameliorer-vs-remplacer-preciser-dans-le-brief.md`
 
 ---
 
@@ -209,52 +144,41 @@ pas en silence (le circuit-breaker était mort le 12/07 sans que personne le rem
 
 ---
 
-## 🔧 BACKLOG TECHNIQUE — dette Gemini/outillage (2026-08-20, NON URGENT)
+## 🔧 DETTE TECHNIQUE — identifiants de modèles en dur (NON URGENT, mesuré 20/08 et 30/08)
 
-Migration image faite (défaut LITE, -50 %). Reste : (1) ⚠️ `visual-producer.md:407` cite l'ancien
-identifiant image, agent qui dépense réellement, à traiter en premier (~28 mentions passives ailleurs,
-au fil de l'eau). (2) ⛔⛔ `VISION_MODEL` non importé par aucun script, en dur dans 42 fichiers
-(79 occurrences) : changer la constante ne change rien aujourd'hui. (3) `gemini-3.7-flash` à tester
-à l'aveugle avant bascule (−62%/−69% coût) → `memory/tools/gemini.md`. (4) Migrer ~75 fichiers vers
-`api_models.py`, étalé ; `da-brief.py` reste sur k2.5, vrai fix dans `kimi-k3-reasoning-borne.md`.
-(5) `mkprevis-camera-seule.py` non commité. ⛔⛔ Ne jamais re-graver un chiffre de lignes de fiche
-ici : mesurer à la demande (`wc -l`).
+⛔ Un modèle périmé peut se dégrader **silencieusement** (pas d'erreur garantie). ⭐ Le patron à
+recopier existe : `scripts/tools/da-brief-anim.py` importe ses 4 identifiants d'`api_models.py`,
+zéro en dur, et applique le vrai fix `reasoning_content` de k3.
 
+- ⚠️ **`visual-producer.md:407`** cite l'ancien identifiant image — agent qui DÉPENSE réellement,
+  à traiter en premier (~28 mentions passives ailleurs, au fil de l'eau).
+- ⛔⛔ **`VISION_MODEL` importé par aucun script**, en dur dans 42 fichiers : changer la constante
+  ne change rien aujourd'hui.
+- **`kimi-k2.5` périmé** dans 16 fichiers de code + `REVIEW-TOOLS-INDEX.md`/`SCRIPTS-INDEX.md`
+  (la doctrine se propage à l'envers). CLAUDE.md impose `kimi-k3` UNIQUEMENT depuis le 20/08.
+  ⚠️ Avant de migrer les 2 scripts VIDÉO NATIVE (`da-brief-video-3voix.py:40`,
+  `da-brief-compare-2videos.py:31`) : vérifier que k3 accepte la vidéo native via Moonshot direct.
+  `da-brief.py` contourne encore le bug au lieu de le corriger → `kimi-k3-reasoning-borne.md`.
+- **`gemini-3.7-flash`** à tester à l'aveugle avant bascule (−62 %/−69 % coût) → `memory/tools/gemini.md`.
+- **`mkprevis-camera-seule.py`** non commité.
 
-## ⛔⛔ AVANT DE LIRE QUOI QUE CE SOIT — LES CHANTIERS VIVANTS SONT DANS DES WORKTREES
+⛔⛔ Ne jamais re-graver ici un chiffre de lignes de fiche : mesurer à la demande (`wc -l`).
 
-> **Ce fichier (repo principal) est structurellement EN RETARD** sur les chantiers qui vivent ailleurs.
-> ⛔ **Ne JAMAIS recopier ici une table figée des worktrees** (elle se périme en 1-3 jours — vécu 2×,
-> 2026-07-27 et 2026-07-30, alors même que l'avertissement était présent et lu). **Toujours exécuter** :
-> ```bash
-> for w in $(git worktree list --porcelain | grep ^worktree | cut -d' ' -f2); do
->   echo "=== $w [$(git -C $w branch --show-current)]"; git -C $w log --oneline -3
-> done
-> git stash list
-> ```
-> Un commit récent dans un worktree **prime toujours** sur ce fichier-ci.
+## ⛔⛔ AVANT DE LIRE — les chantiers vivants sont dans des WORKTREES
+
+> Ce fichier (repo principal) est structurellement **EN RETARD** sur les chantiers qui vivent
+> ailleurs. Un commit récent dans un worktree prime toujours sur lui.
+> ⛔ **Ne jamais figer ici une table de worktrees/branches** — l'EXÉCUTER :
+> `git worktree list` · `git branch --no-merged master` · `git stash list`
 >
-> ⚠️ **Stashs connus à vérifier** (peuvent être périmés — confirmer avant de dropper) : ≥1 sur la
-> branche Soudan (`wip-soudan-itineraire-avant-rnd-port`) et 2 WIP CFA sur `feat/cfa-nuit1994-svg-mix`.
->
-> ⛔⛔ **UNE AUTRE SESSION PEUT CHANGER LA BRANCHE ET LANCER UN MERGE PENDANT QUE TU TRAVAILLES**
-> (vécu 2026-08-20). Symptôme : `git checkout <fichier>` échoue en `path is unmerged`, ou un typecheck
-> révèle des imports dupliqués absents de `HEAD` — cause : `.git/MERGE_HEAD` d'une autre session.
-> **Vérifier avant de conclure sur un fichier partagé** (`src/Root.tsx` en tête) :
-> ```bash
-> git branch --show-current && ls -d .git/MERGE_HEAD 2>/dev/null && echo "MERGE EN COURS"
-> ```
-> ⛔ Ne JAMAIS résoudre/abandonner le merge d'une autre session (`reset`, `stash`, `merge --abort`,
-> `checkout` d'un fichier unmerged) : c'est son travail vivant. Signaler à Aziz, continuer ailleurs.
-> ⚠️ Corollaire : cette même session peut aussi commiter TON travail à ta place (vécu : `e6657203`).
-> Relire `git log` avant de supposer qu'un commit est de toi.
+> ⛔⛔ Protocole complet (merge d'une autre session · commandes destructives interdites ·
+> suppression de branche · worktrees sur /tmp · push) :
+> **`memory/doctrines/HYGIENE-GIT-MULTI-SESSION.md`**
 
 ---
 
 ## 🔧 BACKLOG dormant — 5 chantiers en pause, aucun n'a bougé depuis 2+ semaines
 
-- **2e test démo client carto** (EN ATTENTE) : validé sur 1 seul brief (Zambie) — pari, pas une
-  brique. Starter complet (6 rappels payés) : `memory/starters/STARTER-PROMPT-2e-test-demo-carto.md`.
 - **Chantier FMI** : rien commencé (script seulement) → `memory/projects/CHANTIER-FMI.md` (163 l.).
 - **H3 audio `reference_audio_urls`** (exploratoire, à prendre quand l'Acte 3 est soldé) : styles
   FAITS (20/08), reste l'audio régénéré par H3 (corrélation 0,46). Piste jamais testée :
