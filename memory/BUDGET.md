@@ -1,9 +1,13 @@
 # BUDGET.md — budgets mémoire (source de vérité)
 
-> Config centralisée des plafonds mémoire. Le script `scripts/tools/check-poids-contexte.py`
-> applique aujourd'hui des seuils légèrement différents (voir § Écarts constatés ci-dessous) —
-> ce fichier documente la POLITIQUE cible ; l'alignement du script est une étape suivante,
-> pas faite ici.
+> Config centralisée des plafonds mémoire. ⭐ **`scripts/tools/check-poids-contexte.py` et
+> `.claude/hooks/budget-memoire-gate.sh` sont ALIGNÉS sur ce fichier depuis le 2026-09-08**
+> (commit `19a3f7d7`) — ce fichier définit, ils appliquent. Toute révision se décide ICI d'abord.
+>
+> ⚠️ **Deux plafonds de natures différentes, ne pas les confondre** (amalgame corrigé le 08/09) :
+> le plafond de **POLITIQUE** ci-dessous est NOTRE choix (dépassement = dette, rien ne casse) ;
+> le plafond **SYSTÈME** (~25 000 o **ou** 200 lignes, `MEMORY.md` seul) est une limite technique
+> de Claude Code — au-delà, troncature **silencieuse** à chaque chargement.
 
 ## MEMORY.md (fichier chargé à chaque session)
 
@@ -49,15 +53,20 @@ Chemin : `/Users/clawdbot/Workspace/remotion/memory/NEXT-ACTION.md`
 - Tout **NOUVEAU contenu** (mémoire créée par Claude en session) doit être écrit DIRECTEMENT
   dans le repo, jamais dans l'auto-memory, sauf pour MEMORY.md lui-même.
 
-## Écarts constatés entre `check-poids-contexte.py` et cette politique (2026-08-31)
+## ✅ Alignement script ↔ politique — FAIT le 2026-09-08
 
-Le script encode aujourd'hui (§ `CHAINE`) :
-- `MEMORY.md` : seuil d'alerte 20 000 o, **plafond dur 25 000 o** — plus large que le
-  12 288 o cible ci-dessus.
-- `NEXT-ACTION.md` : seuil d'alerte 35 000 o, **pas de plafond dur codé** (`None`) — cette
-  politique en fixe un à 20 480 o.
+Cette section documentait un écart (le script tolérait 25 000 o pour `MEMORY.md` et **aucun**
+plafond dur pour `NEXT-ACTION.md`). **L'écart est corrigé** — `CHAINE` encode désormais
+`MEMORY.md 12000/15000` et `NEXT-ACTION.md 16384/20480`.
 
-Ces écarts ne sont PAS corrigés dans ce chantier (Couche 2, migration factuelle uniquement).
-Prochaine étape logique : aligner `CHAINE` dans `check-poids-contexte.py` sur les plafonds
-ci-dessus, une fois la dette NEXT-ACTION.md résorbée (sinon le script hurlerait en continu
-sur un plafond déjà connu comme non tenu).
+⛔ **Ce que l'écart avait coûté, à ne pas reproduire** : `NEXT-ACTION.md` à 25 510 o violait la
+politique de 25 % **sans déclencher un mot**, parce que l'instrument de mesure ne mesurait pas ce
+que la politique disait. Un plafond que rien ne vérifie n'existe pas. Pire : le script portait
+déjà un commentaire annonçant l'alignement, ce qui a fait rayer le point d'un plan d'audit — le
+commentaire disait vrai, le code disait autre chose, et c'est le code qui s'exécute
+(→ `feedback_commentaire-code-perime-bat-la-doctrine` § LE MIROIR).
+
+**Règle qui en découle** : après toute révision d'un plafond ici, reporter la valeur dans
+`check-poids-contexte.py` (§ `CHAINE`) ET `budget-memoire-gate.sh` **dans la même session**, puis
+lancer le script pour voir l'alerte changer. Un plafond révisé et non reporté est une politique
+qui ne s'applique à rien.

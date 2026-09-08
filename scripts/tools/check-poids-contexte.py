@@ -163,9 +163,22 @@ def mentions_orphelines() -> list[str]:
     ne correspondaient a AUCUN fichier (constate le 2026-08-27 : des abreviations
     du nom reel, ecrites de memoire). Rien n'etait perdu, mais un grep exact
     echouait et l'index devenait trompeur.
+
+    ETENDU le 2026-09-08 a TOUS les index de memoire, pas seulement MEMORY.md :
+    ce jour-la, 10 lecons citees comme acquises n'existaient sur AUCUN chemin de
+    master (elles vivaient sur des branches non mergees), dont
+    `tester-le-script-nest-pas-tester-le-branchement` — cite en top-3 de MEMORY.md
+    ET repris dans INDEX-FEEDBACKS-METHODE.md. Trois citations concordantes, zero
+    fichier : chaque index faisait confiance aux autres. Un index de memoire est un
+    catalogue comme un autre, et il ment de la meme facon.
     """
-    mem = PROJ_MEM / "MEMORY.md"
-    if not mem.exists():
+    cibles = [
+        PROJ_MEM / "MEMORY.md",
+        REPO / "memory" / "INDEX-FEEDBACKS-METHODE.md",
+        REPO / "memory" / "ROUTAGE.md",
+    ]
+    cibles = [c for c in cibles if c.exists()]
+    if not cibles:
         return []
     stems = set()
     for root in (PROJ_MEM, REPO / "memory"):
@@ -173,7 +186,15 @@ def mentions_orphelines() -> list[str]:
             for f in root.rglob("*.md"):
                 stems.add(f.stem)
                 stems.add(f.stem.replace("feedback_", ""))
-    txt = mem.read_text(encoding="utf-8")
+    orphelins = []
+    for cible in cibles:
+        txt = cible.read_text(encoding="utf-8")
+        prefixe = "" if cible.name == "MEMORY.md" else f"{cible.name}: "
+        orphelins.extend(_orphelins_du_texte(txt, stems, prefixe))
+    return orphelins
+
+
+def _orphelins_du_texte(txt: str, stems: set, prefixe: str = "") -> list[str]:
     orphelins = []
     for line in txt.split("\n"):
         if not line.strip().startswith("- "):
@@ -193,7 +214,7 @@ def mentions_orphelines() -> list[str]:
             if re.search(re.escape(m) + r"['\u2019]", s):
                 continue
             if m not in stems and f"feedback_{m}" not in stems:
-                orphelins.append(m)
+                orphelins.append(prefixe + m)
     return orphelins
 
 

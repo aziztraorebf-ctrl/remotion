@@ -188,8 +188,10 @@ zéro en dur, et applique le vrai fix `reasoning_content` de k3.
 - **Showcase des capacités** : reste LE DÉROULÉ (ordre/durée/musique) → cut vente 60-90s, zéro
   composant neuf à coder. Charte DA déjà FAITE (`doctrines/CHARTE-DA-FREELANCE.md`).
   → `memory/projects/SHOWCASE-CAPACITES.md`
-- **Gig Fiverr entrée de gamme** : page validée, reste prix réels/nom commercial/portfolio démo →
-  `freelance-linkedin/BRIEF-GIG-ENTREE-DE-GAMME.md` § "Ce qui reste à trancher".
+- **Gig Fiverr** : page RÉÉCRITE et validée le 05/09 (Lottie/UI, facturation à l'ÉLÉMENT,
+  50/120/250, 9 vendeurs mesurés) → **`memory/freelance-linkedin/GIG-PAGE-VALIDEE.md`**. Reste :
+  nom commercial + pièces de démo. ⛔ `BRIEF-GIG-ENTREE-DE-GAMME.md` est l'offre PÉRIMÉE — ne
+  pas y retourner pour les prix, ils sont tranchés.
 - **Kora & Cartes** (dormant depuis 16j) : 2 décisions ouvertes — quel sujet (Afrique qui monte vs
   mythologie) et quel format (insert vs vidéo complète) → `memory/projects/EXPLORATION-DIVERSIFICATION-CHAINES.md`.
 - **Chaîne Canada EN** : pipeline conclu (marché validé TubeLab, script V3 jury 4 LLM, 3 styles H3
