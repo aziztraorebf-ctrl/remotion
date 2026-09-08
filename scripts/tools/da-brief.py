@@ -6,7 +6,8 @@ Envoie un brief DA + (catalogue optionnel) + (frames optionnelles, auto-downscal
 à Gemini 3.1 Pro + Kimi K2.5 EN PARALLELE. Sorties dans /tmp/da-refs/.
 
 Doctrine : memory/doctrines/DA-BRIEF-GATE.md (LIRE avant usage).
-Modèles VERROUILLES : gemini-3.1-pro-preview + moonshotai/kimi-k2.5 (OpenRouter).
+Modèles VERROUILLES : gemini-3.1-pro-preview + moonshotai/kimi-k3 (OpenRouter, identifiant
+importe d'api_models.py — migre le 2026-09-08, cf. memory/tools/kimi-k3-reasoning-borne.md).
 
 Usage :
   python3 scripts/tools/da-brief.py \\

@@ -64,19 +64,18 @@ vidéo de référence. Deux défauts, tous deux mesurés après coup :
 ⭐ Sur un rendu muet — le cas de toute scène Remotion avant mixage — il n'y a de toute
 façon aucun audio à analyser. **Le repère est l'image.**
 
+⛔ **SEED STS ≠ seed H3.** Un seed est TOUJOURS tiré et journalisé dans `<sortie>.seeds.json`
+(même sans `--seeds`) : il sert à RETROUVER un bon tirage, **jamais à le figer** — ElevenLabs est
+autorégressif, sa doc dit « determinism is not guaranteed », contrairement au `noise_seed` H3
+(diffusion, reproductible — cf. FICHE-CLIP-GENERE). Pour corriger UN mot sans remettre le bloc
+entier en jeu : `scripts/tools/splice-segment.py`, pas un re-tirage.
+
 **L'outil** : `python3 scripts/tools/sfx-cues.py <video.mp4> [--crop W:H:X:Y] [--json out]`
 Il classe trois familles d'événements, seuils **relatifs** à la vidéo analysée (un seuil
 absolu ne survit pas au changement de registre) :
-| type | ce que c'est | son par défaut |
-|---|---|---|
-| `COUPE` | rupture franche, **rare et isolée** | `ui/plate-pop.mp3` |
-| `APPARITION` | un élément entre : l'encre augmente sans que tout change | `ui/node-appear.mp3` |
-| `POSE` | un mouvement continu **s'arrête** — le temps fort qu'on oublie | `data/stat-tick.mp3` |
-Sortie : un bloc `{ at, src, vol }` prêt à coller.
-
-⭐ **Validé objectivement** : sur la référence Foster, ses 7 `COUPE` retrouvent **exactement**
-les 7 bornes de plans mesurées à la main pendant la session (1,600 · 5,600 · 13,600 ·
-25,067 · 27,067 · 28,067 · 40,467 s).
+3 types détectés (`COUPE` · `APPARITION` · `POSE`), sortie `{ at, src, vol }` prête à coller —
+détail des sons par défaut dans le `--help` du script. ⭐ Validé : ses 7 `COUPE` retrouvent
+exactement les 7 bornes de plans mesurées à la main sur la référence Foster.
 
 ⛔ **Une COUPE est rare et isolée** : le seuil d'intensité ne suffit pas, il faut le CONTEXTE.
 Sans ce garde-fou, une salve d'apparitions rapides (une phrase qui s'écrit mot à mot) sortait

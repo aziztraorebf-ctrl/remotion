@@ -3,7 +3,12 @@
 > Créé 2026-07-19 après que Claude ait hésité sur les scripts exacts (Aziz : "corrige ta mémoire").
 > Source de vérité unique : quel script lance quel modèle pour reviewer une VIDÉO COMPLÈTE (mouvement,
 > rythme, son) — PAS des frames figées. Tous dans `scripts/tools/`.
-> ⛔ Modèles VERROUILLÉS (CLAUDE.md) : Gemini vision/vidéo = `gemini-3.1-pro-preview` · Kimi = `kimi-k2.5`.
+> ⛔ Modèles VERROUILLÉS (CLAUDE.md) : Gemini vision/vidéo = `gemini-3.1-pro-preview` · Kimi = **`kimi-k3`**
+> (décision Aziz du 20/08 ; ce fichier annonçait encore k2.5 jusqu'au 08/09 alors qu'il se présente comme
+> source de vérité — il contredisait CLAUDE.md). ⚠️ Réserve : les 2 scripts VIDÉO NATIVE
+> (`da-brief-video-3voix.py`, `da-brief-compare-2videos.py`) ne se migrent PAS à l'aveugle — k3 en vidéo
+> native via Moonshot direct n'est pas vérifié. Les scripts encore en k2.5 sont listés dans
+> `memory/tools/kimi-k3-reasoning-borne.md` § CE QUI RESTE.
 > ⛔ RÈGLE D'OR : LLM = SIGNAL, jamais juge. 1 appel/modèle → synthèse extractive tracée (G/K, RETENU/
 > OPTION/ÉCARTÉ+raison) → coder. Jamais de boucle review→fix→review. Jugement d'Aziz prime.
 

@@ -154,11 +154,13 @@ zéro en dur, et applique le vrai fix `reasoning_content` de k3.
   à traiter en premier (~28 mentions passives ailleurs, au fil de l'eau).
 - ⛔⛔ **`VISION_MODEL` importé par aucun script**, en dur dans 42 fichiers : changer la constante
   ne change rien aujourd'hui.
-- **`kimi-k2.5` périmé** dans 16 fichiers de code + `REVIEW-TOOLS-INDEX.md`/`SCRIPTS-INDEX.md`
-  (la doctrine se propage à l'envers). CLAUDE.md impose `kimi-k3` UNIQUEMENT depuis le 20/08.
-  ⚠️ Avant de migrer les 2 scripts VIDÉO NATIVE (`da-brief-video-3voix.py:40`,
-  `da-brief-compare-2videos.py:31`) : vérifier que k3 accepte la vidéo native via Moonshot direct.
-  `da-brief.py` contourne encore le bug au lieu de le corriger → `kimi-k3-reasoning-borne.md`.
+- **`kimi-k2.5` périmé** — chiffre RE-MESURÉ le 08/09 : **15 scripts actifs** (le « 16 fichiers »
+  précédent comptait `api_models.py`, qui cite k2.5 pour l'INTERDIRE). ⛔ Et **14 fichiers portent
+  encore le repli interdit** `content or reasoning` — sur un jury ou une review, il fait passer une
+  réflexion brute pour un verdict. Liste complète + réserves : `kimi-k3-reasoning-borne.md` § CE QUI RESTE.
+  ✅ `da-brief.py` MIGRÉ le 08/09 — avec `da-brief-anim.py`, ce sont les 2 patrons à recopier.
+  ⚠️ Migrer par PETITS LOTS avec un appel réel de test : la plupart passent par Moonshot NATIF (pas
+  OpenRouter), et les 2 scripts VIDÉO NATIVE ne se migrent pas à l'aveugle.
 - **`gemini-3.7-flash`** à tester à l'aveugle avant bascule (−62 %/−69 % coût) → `memory/tools/gemini.md`.
 - **`mkprevis-camera-seule.py`** non commité.
 

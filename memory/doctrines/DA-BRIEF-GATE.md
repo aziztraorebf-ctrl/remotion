@@ -84,7 +84,7 @@ Le brief envoyé aux DEUX modèles contient, dans cet ordre :
    Un PNG full-res (1.4 Mo → 1.9 Mo base64) ralentit ENORMÉMENT l'appel (vu 2026-06-07).
    Vaut pour TOUT appel modèle+image, pas que la review vidéo.
 2. **Les deux modèles en PARALLÈLE, séparément** (threads). Modèles verrouillés :
-   `gemini-3.1-pro-preview` + `moonshotai/kimi-k2.5` (via OpenRouter).
+   `gemini-3.1-pro-preview` + `moonshotai/kimi-k3` (via OpenRouter — migré le 2026-09-08).
 3. **Claude fait une SYNTHÈSE EXTRACTIVE TRACÉE** (voir section dédiée ci-dessous) — JAMAIS une synthèse molle
    type "3/3 valident, voici les points". OBLIGATOIRE à chaque appel. Gemini/Kimi = SIGNAL, JAMAIS JUGE. Vérifier, ne pas gober.
 4. **Aziz tranche le GOÛT** (regrouper les questions de goût en 1 point de contrôle, le reste = technique tranché par Claude).

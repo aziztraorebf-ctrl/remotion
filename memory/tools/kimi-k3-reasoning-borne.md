@@ -115,7 +115,10 @@ APPLIQUER LE REMEDE ».
 - ✅ `llm-gen-blueprint.py:87` et `kimi-vision-fill-scene.py:109` portent bien le fix
   (`reasoning.max_tokens: 2000`) — le tableau ci-dessus les donnait encore en attente.
   **Une fiche qui signale a tort un trou fait re-parcourir un chantier deja fait.**
-- ✅ `da-brief.py` MIGRE le 2026-09-08 (voir ci-dessous). **Plus aucun script en contournement.**
+- ✅ `da-brief.py` MIGRE le 2026-09-08 (voir ci-dessous).
+- ⛔⛔ **MAIS le chantier N'EST PAS CLOS** — mesure du 2026-09-08 : **15 scripts actifs** ecrivent
+  encore `kimi-k2.5`/`k2.6` en dur, et **14 fichiers portent toujours le repli interdit**
+  `content or reasoning`. Voir § CE QUI RESTE en fin de fichier.
 - ⚠️ **Piege reproduit puis corrige le meme jour** : `da-brief-anim.py`, ecrit cette session,
   citait cette fiche en commentaire **et repliait quand meme sur `reasoning_content`** — sans
   poser la borne. Corrige : borne posee, repli SUPPRIME (un `content` vide doit lever une
@@ -145,3 +148,36 @@ les 2 replis supprimes et remplaces par un echec bruyant (affiche `finish_reason
 est plus nocif qu'un silence — il fait croire au lecteur suivant que la question est instruite.
 C'est la 3e forme du meme mode d'echec (documenter ≠ appliquer · citer ≠ appliquer · **decrire
 le fix dans le commentaire du code qui ne l'applique pas**).
+
+
+---
+
+## ⛔⛔ CE QUI RESTE — le chantier n'est pas clos (mesure du 2026-09-08)
+
+**J'ai ecrit « Plus aucun script en contournement » le 08/09 apres avoir migre `da-brief.py`.
+C'etait FAUX**, et c'est le mode d'echec `correction-appliquee-a-moitie-etendre-a-tous-les-derives`
+— celui que MEMORY.md garde dans son top-3 — rejoue dans le fichier meme qui documente ce mode
+d'echec. Trouve par un agent d'audit au wrap, pas par moi.
+
+### 15 scripts ACTIFS encore en `kimi-k2.5`/`k2.6` en dur
+`visual_review.py` · `warmap/da-brief-acte1.py` · et dans `scripts/tools/` :
+`da-brief-compare-2videos` · `da-brief-video-3voix` · `jury-script-creatif-llm` ·
+`jury-script-llm` · `jury-thumbnail-llm` · `jury-titres-llm` · `kimi-frames-review` ·
+`kimi-mapbox-brief` · `kimi-svg-ideation` · `kimi-video-compare` · `kimi-video-review-custom` ·
+`storyboard-concepts-texte` · plus `src/projects/_client-sim/flowdesk/scripts/da-brief-mouvement.py`.
+(`api_models.py` cite k2.5 uniquement pour l'INTERDIRE — legitime, ne pas compter.)
+⛔ Les 13 scripts sous `_archive/` sont hors sujet : archives, jamais executees.
+
+### 14 fichiers portent encore le repli interdit
+La consigne « deux gardes a repliquer PARTOUT » est ecrite ici depuis le **2026-07-30**. 6 semaines
+plus tard elle n'etait appliquee que dans `da-brief-anim.py`, puis `da-brief.py`.
+⛔ **Le cout n'est pas theorique** : sur un jury de titres ou une review video, ce repli fait passer
+une REFLEXION BRUTE pour un verdict — on prend une deliberation interne du modele pour un signal.
+
+### ⚠️ Reserve avant de migrer en lot
+La majorite de ces scripts appellent **Moonshot NATIF** (`api.moonshot.ai`), pas OpenRouter : le
+referentiel d'identifiants y differe (`kimi-k3` sans prefixe vendeur) et le comportement du
+reasoning n'y est pas forcement identique. ⛔ Les 2 scripts VIDEO NATIVE
+(`da-brief-video-3voix.py`, `da-brief-compare-2videos.py`) ne se migrent PAS a l'aveugle — k3 en
+video native n'est pas verifie. **Migrer par petits lots, en testant un appel reel a chaque fois**,
+jamais par un sed global.
