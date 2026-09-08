@@ -2,7 +2,7 @@
 """
 Jury LLM 4 modeles pour la CRITIQUE CREATIVE d'un script video (hook, rythme, technicite, ton),
 PAS la conformite doctrine (pour ca, voir scripts/tools/jury-script-llm.py -- clarte/densite/flux).
-Kimi k2.5 (Moonshot) + Gemini 3.1 Pro (Google genai) + GPT-5.6 Sol (OpenRouter) + Grok 4.20 (xAI).
+Kimi k3 (Moonshot) + Gemini 3.1 Pro (Google genai) + GPT-5.6 Sol (OpenRouter) + Grok 4.20 (xAI).
 
 Chaque modele recoit le SCRIPT COMPLET et repond a un brief structure : technicite/decrochage,
 force du hook, dynamisme/retention, equilibre vulgarisation/serieux, ton humain (reference chaines
@@ -107,7 +107,11 @@ def call_kimi(brief):
     if not MOONSHOT_API_KEY:
         return "ERROR: MOONSHOT_API_KEY missing"
     payload = {
-        "model": "kimi-k2.5",
+        "model": "kimi-k3",
+# ⛔ SANS cette borne, k3 consomme tout le budget en reasoning et rend
+# `content: null` — voire HANG sur un gros prompt. `max_tokens` seul
+# ne protege PAS. -> memory/tools/kimi-k3-reasoning-borne.md
+"reasoning": {"max_tokens": 2000},
         "messages": [{"role": "user", "content": brief}],
         "max_tokens": 12000,
     }
@@ -120,7 +124,7 @@ def call_kimi(brief):
         if r.status_code != 200:
             return f"ERROR Kimi {r.status_code}: {r.text[:500]}"
         msg = r.json()["choices"][0]["message"]
-        return msg.get("content") or msg.get("reasoning_content") or ""
+        return msg.get("content")
     except Exception as e:
         return f"EXCEPTION Kimi: {e}"
 
@@ -177,7 +181,7 @@ def call_grok(brief):
         if r.status_code != 200:
             return f"ERROR Grok {r.status_code}: {r.text[:500]}"
         msg = r.json()["choices"][0]["message"]
-        return msg.get("content") or msg.get("reasoning_content") or ""
+        return msg.get("content")
     except Exception as e:
         return f"EXCEPTION Grok: {e}"
 
@@ -198,7 +202,7 @@ def main():
     results = {}
     with ThreadPoolExecutor(max_workers=4) as ex:
         futures = {
-            ex.submit(call_kimi, brief): "kimi-k2.5",
+            ex.submit(call_kimi, brief): "kimi-k3",
             ex.submit(call_gemini, brief): "gemini-3.1-pro-preview",
             ex.submit(call_gpt, brief): "gpt-5.6-sol",
             ex.submit(call_grok, brief): "grok-4.20-reasoning",

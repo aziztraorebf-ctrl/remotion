@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-kimi-svg-ideation.py — Ideation NARRATIVE d'une scene SVG via Kimi K2.5 (multimodal).
+kimi-svg-ideation.py — Ideation NARRATIVE d'une scene SVG via Kimi K3 (multimodal).
 
 Kimi propose des IDEES de scene narrative pour un beat, en connaissant le niveau SVG
 faisable grace a des frames de reference JOINTES (calibrage du medium, PAS un modele a copier).
 
 NOTES TECHNIQUES :
-  - OpenRouter moonshotai/kimi-k2.5 (multimodal, valide 2026-06-24 : accepte image_url).
+  - OpenRouter moonshotai/kimi-k3 (multimodal, valide 2026-06-24 : accepte image_url).
   - temperature=1 obligatoire (seule valeur acceptee par Kimi).
   - Fallback reasoning si content est null.
   - Images encodees en data URL base64 (jpeg/png).
@@ -27,7 +27,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions'
-KIMI_MODEL = 'moonshotai/kimi-k2.5'
+KIMI_MODEL = 'moonshotai/kimi-k3'
 
 
 def encode_image(path):
@@ -49,7 +49,7 @@ def call_kimi(prompt_text, image_paths, max_tokens=4000):
     for p in image_paths:
         content.append({'type': 'image_url', 'image_url': {'url': encode_image(p)}})
 
-    print(f"Envoi a Kimi K2.5 (OpenRouter)... [{len(prompt_text)} chars + {len(image_paths)} images]", flush=True)
+    print(f"Envoi a Kimi K3 (OpenRouter)... [{len(prompt_text)} chars + {len(image_paths)} images]", flush=True)
 
     resp = requests.post(
         OPENROUTER_URL,
@@ -86,7 +86,7 @@ def call_kimi(prompt_text, image_paths, max_tokens=4000):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Ideation narrative scene SVG via Kimi K2.5 (multimodal)')
+    parser = argparse.ArgumentParser(description='Ideation narrative scene SVG via Kimi K3 (multimodal)')
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('--prompt', help='Prompt complet en ligne de commande')
     group.add_argument('--prompt-file', help='Fichier texte contenant le prompt')

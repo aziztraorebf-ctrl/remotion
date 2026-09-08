@@ -37,7 +37,7 @@ import urllib.request
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 OUT_DIR = "/tmp/da-refs"
 GEMINI_MODEL = "gemini-3.1-pro-preview"
-KIMI_MODEL = "kimi-k2.5"  # API Moonshot directe (PAS OpenRouter) — seul chemin video native
+KIMI_MODEL = "kimi-k3"  # API Moonshot directe (PAS OpenRouter) — seul chemin video native
 KIMI_MOONSHOT_URL = "https://api.moonshot.ai/v1/chat/completions"
 GPT56_MODEL = "openai/gpt-5.6-sol"  # via OpenRouter — video refusee, frames seulement
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
@@ -212,7 +212,7 @@ def call_kimi_video(prompt, video_path, max_tokens, results):
         with urllib.request.urlopen(req, timeout=300) as r:
             data = json.loads(r.read().decode())
         msg = data["choices"][0]["message"]
-        results["kimi"] = msg.get("content") or msg.get("reasoning") or "[vide]"
+        results["kimi"] = msg.get("content")
         print("[kimi] OK")
     except Exception as e:
         results["kimi"] = f"[ERREUR kimi] {e}"
@@ -241,7 +241,7 @@ def call_gpt56sol_frames(prompt, frames, max_tokens, results):
         with urllib.request.urlopen(req, timeout=300) as r:
             data = json.loads(r.read().decode())
         msg = data["choices"][0]["message"]
-        results["gpt56sol"] = msg.get("content") or msg.get("reasoning") or "[vide]"
+        results["gpt56sol"] = msg.get("content")
         print("[gpt56sol] OK")
     except Exception as e:
         results["gpt56sol"] = f"[ERREUR gpt56sol] {e}"

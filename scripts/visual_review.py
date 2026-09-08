@@ -7,7 +7,7 @@ Usage:
   python3 scripts/visual_review.py <video_ou_image> [options]
 
 Options:
-  --model kimi      Kimi K2.5 via Moonshot — feedback narratif DA (défaut)
+  --model kimi      Kimi K3 via Moonshot — feedback narratif DA (défaut)
   --model qwen      Qwen3 VL 235B via OpenRouter — audit JSON générique
   --model gemini    Gemini 3.1-pro-preview — review beat Souverain avec code_values (RECOMMANDÉ)
   --storyboard PATH Image storyboard de référence (optionnel, utilisé avec --model gemini)
@@ -54,7 +54,7 @@ OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions'
 GEMINI_URL     = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent'
 
 QWEN_MODEL = 'qwen/qwen3-vl-235b-a22b-thinking'
-KIMI_MODEL = 'kimi-k2.5'
+KIMI_MODEL = 'kimi-k3'
 
 # ─── Prompts ─────────────────────────────────────────────────────────────────
 
@@ -471,7 +471,7 @@ def review_kimi(filepath: str, prompt: str, n_frames: int, offset: float) -> dic
         return None
 
     content = build_openai_content(filepath, prompt, n_frames, offset)
-    print("Envoi à Kimi K2.5 (Moonshot)...")
+    print("Envoi à Kimi K3 (Moonshot)...")
     try:
         resp = requests.post(
             MOONSHOT_URL,
@@ -492,7 +492,7 @@ def review_kimi(filepath: str, prompt: str, n_frames: int, offset: float) -> dic
         text = msg.get('content') or msg.get('reasoning_content') or ''
 
         print(f"\n{'='*80}")
-        print(f"KIMI K2.5 — NARRATIVE REVIEW")
+        print(f"KIMI K3 — NARRATIVE REVIEW")
         print(f"Tokens: {tokens_in} in + {tokens_out} out = ${cost:.4f}")
         print(f"{'='*80}\n")
         print(text)

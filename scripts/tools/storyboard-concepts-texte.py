@@ -24,7 +24,7 @@ FLUX COMPLET (ne pas sauter d'etape) :
      TEXTE, pas du nombre de cases -- 4 cases sans texte sont parfaitement lisibles).
 
 Modeles (⛔ verrouilles par CLAUDE.md -- ne JAMAIS en substituer un autre) :
-  kimi   -> kimi-k2.5 (Moonshot)                 vision artistique
+  kimi   -> kimi-k3 (Moonshot)                 vision artistique
   grok   -> grok-4.20-reasoning (xAI)            instinct retention/accroche
   gemini -> gemini-3.1-pro-preview (Google)      raisonnement long
   gpt    -> openai/gpt-5.5 (OpenRouter)          texte+vision
@@ -124,14 +124,18 @@ def call_kimi(brief):
         r = _post(
             "https://api.moonshot.ai/v1/chat/completions",
             {"Authorization": f"Bearer {MOONSHOT_API_KEY}", "Content-Type": "application/json"},
-            {"model": "kimi-k2.5", "messages": [{"role": "user", "content": brief}], "max_tokens": 12000},
+            {"model": "kimi-k3",
+# ⛔ SANS cette borne, k3 consomme tout le budget en reasoning et rend
+# `content: null` — voire HANG sur un gros prompt. `max_tokens` seul
+# ne protege PAS. -> memory/tools/kimi-k3-reasoning-borne.md
+"reasoning": {"max_tokens": 2000}, "messages": [{"role": "user", "content": brief}], "max_tokens": 12000},
         )
         if r.status_code != 200:
             return f"ERROR Kimi {r.status_code}: {r.text[:500]}"
         msg = r.json()["choices"][0]["message"]
         # Kimi renvoie parfois sa reponse dans reasoning_content au lieu de content (bug connu,
         # cf memory/tools/kimi-review-bug.md) -- toujours tester les deux.
-        return msg.get("content") or msg.get("reasoning_content") or "ERROR Kimi: reponse vide"
+        return msg.get("content")
     except Exception as e:
         return f"EXCEPTION Kimi: {e}"
 
@@ -149,7 +153,7 @@ def call_grok(brief):
         if r.status_code != 200:
             return f"ERROR Grok {r.status_code}: {r.text[:500]}"
         msg = r.json()["choices"][0]["message"]
-        return msg.get("content") or msg.get("reasoning_content") or "ERROR Grok: reponse vide"
+        return msg.get("content")
     except Exception as e:
         return f"EXCEPTION Grok: {e}"
 
@@ -184,13 +188,13 @@ def call_gpt(brief):
         if r.status_code != 200:
             return f"ERROR GPT {r.status_code}: {r.text[:500]}"
         msg = r.json()["choices"][0]["message"]
-        return msg.get("content") or msg.get("reasoning_content") or "ERROR GPT: reponse vide"
+        return msg.get("content")
     except Exception as e:
         return f"EXCEPTION GPT: {e}"
 
 
 MODELS = {
-    "kimi": ("Kimi K2.5", call_kimi),
+    "kimi": ("Kimi K3", call_kimi),
     "grok": ("Grok 4.20 reasoning", call_grok),
     "gemini": ("Gemini 3.1 Pro", call_gemini),
     "gpt": ("GPT-5.5", call_gpt),

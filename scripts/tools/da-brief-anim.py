@@ -368,8 +368,22 @@ def call_openrouter(cle, modele, prompt, frames_par_video, res):
     try:
         with urllib.request.urlopen(req, timeout=600) as r:
             d = json.loads(r.read())
+        # OpenRouter renvoie souvent une ERREUR en HTTP 200 : ["choices"] explose
+        # alors en KeyError en MASQUANT le message reel de l'API.
+        if "choices" not in d:
+            raise RuntimeError(f"reponse sans 'choices' : {d.get('error', d)}")
         msg = d["choices"][0]["message"]
-        res[cle] = msg.get("content") or msg.get("reasoning") or "[vide]"
+        # ⛔ NE PAS replier sur `reasoning` : cette fonction est GENERIQUE et peut
+        # recevoir k3, dont le reasoning non borne rend `content: null`. Le repli
+        # ecrirait la reflexion brute EN ANNONCANT UN SUCCES.
+        # -> memory/tools/kimi-k3-reasoning-borne.md § « le piege qui a camoufle le bug »
+        contenu = msg.get("content")
+        if not contenu:
+            fr = d["choices"][0].get("finish_reason", "?")
+            res[cle] = (f"[ERREUR {cle}] `content` vide (finish_reason={fr}). "
+                        f"NE PAS replier sur reasoning — verifier le payload.")
+            return
+        res[cle] = contenu
     except Exception as e:  # noqa: BLE001
         res[cle] = f"[ERREUR {cle}] {e}"
 

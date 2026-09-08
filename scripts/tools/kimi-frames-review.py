@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Kimi K2.5 review avec FRAMES — recette fiable (OpenRouter, temp=1, max_tokens haut, fallback reasoning).
+"""Kimi K3 review avec FRAMES — recette fiable (OpenRouter, temp=1, max_tokens haut, fallback reasoning).
 Usage: python3 kimi-frames-review.py <brief.txt> <out.md> <img1> <img2> ...
 """
 import os, sys, base64, requests
@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(ROOT / ".env")
 URL = "https://openrouter.ai/api/v1/chat/completions"
-MODEL = "moonshotai/kimi-k2.5"
+MODEL = "moonshotai/kimi-k3"
 
 def main():
     brief_file, out = sys.argv[1], sys.argv[2]
@@ -24,7 +24,7 @@ def main():
         b64 = base64.b64encode(Path(p).read_bytes()).decode()
         content.append({"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{b64}"}})
 
-    print(f"Envoi Kimi K2.5 ({len(imgs)} frames)...", flush=True)
+    print(f"Envoi Kimi K3 ({len(imgs)} frames)...", flush=True)
     resp = requests.post(URL, headers={
         "Authorization": f"Bearer {key}", "Content-Type": "application/json",
         "HTTP-Referer": "https://geoafrique.com", "X-Title": "GeoAfrique Souverain",
@@ -40,7 +40,7 @@ def main():
     data = resp.json()
     choice = data["choices"][0]
     msg = choice["message"]
-    txt = msg.get("content") or msg.get("reasoning") or ""
+    txt = msg.get("content")
     finish = choice.get("finish_reason", "?")
     usage = data.get("usage", {})
     print(f"finish_reason: {finish} | {usage.get('prompt_tokens',0)}in + {usage.get('completion_tokens',0)}out | {len(txt)} chars", flush=True)
