@@ -130,6 +130,10 @@
         "hooks": [
           {
             "type": "command",
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/secret-write-guard.sh"
+          },
+          {
+            "type": "command",
             "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/circuit-breaker.sh",
             "timeout": 10
           },

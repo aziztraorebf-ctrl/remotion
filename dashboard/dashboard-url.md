@@ -4,7 +4,7 @@
 
 **Live URL** : https://onyx-monsoon-mrar.here.now/
 **Slug** : `onyx-monsoon-mrar`
-**claimToken** : `dd5a8de6e5c4edcf1921ded8121eb35e1b9f446e41689720b873c633a9b3c1ea`
+**claimToken** : `<purge 2026-09-08 — voir .secrets-local/here-now-tokens.txt, hors git>`
 **Expire claim** : 2026-05-22T05:24:51 UTC
 
 **Contenu** : audit 33 templates + benchmark 7 videos doc (Caspian/JH/Vox/PolyMatter/Map Men/Wendover/RLL) + 5 frames refs visuelles + V1 MapboxSatelliteSenegal validee + roadmap Phase 2-4.
@@ -23,7 +23,7 @@
 
 **Live URL** : https://dusky-echo-k4sw.here.now/
 **Slug** : `dusky-echo-k4sw`
-**claimToken** : `48a96092401a5b4dc0ae5b87e6d35494dfce0770a5d13c1e17c00995aef02f7e`
+**claimToken** : `<purge 2026-09-08 — voir .secrets-local/here-now-tokens.txt, hors git>`
 **Expire claim** : 2026-05-15T23:56:53 UTC
 
 **Commande mise à jour :**
@@ -40,7 +40,7 @@
 
 **Live URL** : https://azure-maple-drf6.here.now/
 **Slug** : `azure-maple-drf6`
-**claimToken** : `7985f7fb1b8713de4e7b1a7433752c05bdf1b75882526f136f1111642c0d93ea`
+**claimToken** : `<purge 2026-09-08 — voir .secrets-local/here-now-tokens.txt, hors git>`
 **Expire claim** : 2026-05-12T22:28:35 UTC — claim avant ce délai
 
 **Commande mise à jour :**
@@ -57,7 +57,7 @@
 
 **Live URL** : https://bright-brook-pmfd.here.now/
 **Slug** : `bright-brook-pmfd`
-**claimToken** : `e27e1d9ad5d0e8bd7b2d54468af964e623e0a1a73be0284a8acc1ec977d44f95`
+**claimToken** : `<purge 2026-09-08 — voir .secrets-local/here-now-tokens.txt, hors git>`
 **Expire claim** : 2026-05-11T16:31:26 UTC — claim avant ce délai
 
 Hub complet : 7 beats (vidéos + statut) + audio narration v5 + musique v1 + storyboards V2 + script v5 intégral.
@@ -76,7 +76,7 @@ Hub complet : 7 beats (vidéos + statut) + audio narration v5 + musique v1 + sto
 
 **Live URL** : https://lilac-mosaic-bnjp.here.now/
 **Slug** : `lilac-mosaic-bnjp`
-**claimToken** : `5b5cf150a89d85be340be3fb8b566420eef86afda37c824c4f557e7b28690cf2`
+**claimToken** : `<purge 2026-09-08 — voir .secrets-local/here-now-tokens.txt, hors git>`
 **Expire claim** : 2026-05-11T07:10:23 UTC — claim avant ce délai
 
 **Commande mise à jour :**
@@ -93,7 +93,7 @@ Hub complet : 7 beats (vidéos + statut) + audio narration v5 + musique v1 + sto
 
 **Live URL** : https://wintry-willow-ehew.here.now/
 **Slug** : `wintry-willow-ehew`
-**claimToken** : `4e5d2fe156d6563ba7bbdcdfc8be4efb1f97a27ab22df8fa8d4558dc7b5a5bda`
+**claimToken** : `<purge 2026-09-08 — voir .secrets-local/here-now-tokens.txt, hors git>`
 **Expire claim** : 2026-05-12T22:28:05 UTC — claim avant ce délai
 
 **Commande mise à jour :**
@@ -112,7 +112,7 @@ Hub complet : 7 beats (vidéos + statut) + audio narration v5 + musique v1 + sto
 
 **Live URL** : https://sunny-nimbus-qycq.here.now/
 **Slug** : `sunny-nimbus-qycq`
-**claimToken** : `e142c0f742f15612c398ebae9f9642faf8c113d3cf153ae8bcc1d06127e325ab`
+**claimToken** : `<purge 2026-09-08 — voir .secrets-local/here-now-tokens.txt, hors git>`
 **Expire claim** : 2026-05-22T19:18:05 UTC — claim avant ce délai
 
 **Commande mise à jour :**

@@ -6,6 +6,33 @@ type: reference
 
 # here.now — Hosting HTML anonyme
 
+> ⚠️ **PLUS LA VOIE PAR DÉFAUT depuis le 2026-09-08.** La chaîne d'upload en vigueur
+> (`CLAUDE.md` § Communication mobile) est : **Artifact Claude** (défaut, < 16 Mo) →
+> **Vercel Blob** (> 16 Mo) → **catbox/Litterbox** (secours). here.now n'y figure plus et
+> n'a plus servi depuis fin août 2026. Ce fichier reste pour la trace et pour la consigne
+> de sécurité ci-dessous. **Ne pas le rouvrir comme une recommandation.**
+
+## ⛔⛔ TOUS LES claimToken ANTÉRIEURS AU 2026-09-08 SONT BRÛLÉS — décision d'Aziz
+
+15 `claimToken` ont vécu **en clair dans le dépôt PUBLIC** du 2026-05-20 au 2026-09-08
+(6 fichiers). Au moment de la découverte, **10 pages répondaient encore** et **4 avaient leur
+token exposé — dont une page CLIENT** (flowdesk, `velvet-portal-r5s9`). Un `claimToken` autorise
+`PUT /api/v1/publish/:slug` : n'importe qui pouvait remplacer le contenu d'une page livrée.
+
+**Décision (2026-09-08)** : on ne réécrit PAS l'historique git (lourd, dépôt public, casse les
+clones). On considère ces tokens comme **compromis** :
+
+- ⛔ **Ne JAMAIS réutiliser un ancien token** pour mettre à jour une page. Une page dont le token
+  a fuité doit être **republiée sous un NOUVEAU slug**, et l'ancienne URL abandonnée.
+- ⛔ **Ne jamais recommiter un token** : le hook `.claude/hooks/secret-write-guard.sh` bloque
+  désormais l'écriture (PreToolUse `Edit|Write`, position 1 du bloc).
+- ✅ Les tokens purgés sont conservés hors git dans `.secrets-local/here-now-tokens.txt`
+  (gitignore) — **uniquement** pour retrouver quelle page correspond à quoi, pas pour republier.
+- ⚠️ **À faire au prochain besoin de republier une de ces pages** : nouveau slug, nouveau token,
+  et mettre à jour le lien partout où il est référencé.
+
+Contexte plus large : `memory/starters/STARTER-vault-mcp.md` (session du 2026-09-07/08).
+
 ## Contexte du problème
 
 **Catbox.moe NE FONCTIONNE PAS pour HTML** :
@@ -103,7 +130,7 @@ Le `claimToken` est retourné UNE SEULE FOIS à la création. Sauvegarder imméd
 ### Banc d'ecoute musique CFA 2026-07-30
 - Slug : `earthy-parcel-d3gg`
 - URL : https://earthy-parcel-d3gg.here.now/
-- claimToken : `22616a63baa500fe33763c90e5ed04588af6253c9ba5c687f69f23b09280e673`
+- claimToken : `<purge 2026-09-08 — voir .secrets-local/here-now-tokens.txt, hors git>`
 - Expire si non claime : 2026-07-31T04:21:32Z
 - Source : `scratchpad/cfa-musique-ecoute.html` (5 lecteurs, audios sur Vercel Blob)
 - Update : `publish-here-now.sh <fichier> earthy-parcel-d3gg 22616a63baa500fe33763c90e5ed04588af6253c9ba5c687f69f23b09280e673`
