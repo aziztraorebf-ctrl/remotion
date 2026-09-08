@@ -1,8 +1,9 @@
 # INDEX — Méthode & feedbacks-clés
 
-> Extrait de `MEMORY.md` le 2026-09-08 : le fichier dépassait son plafond DUR de 15000 o
-> (16989 o) et subissait donc une **troncature silencieuse à chaque chargement de session** —
-> une partie de ce savoir n'était déjà plus lue. Rien n'est supprimé ici, tout est déplacé.
+> Extrait de `MEMORY.md` le 2026-09-08 : le fichier était à 16989 o, au-dessus de notre
+> plafond de POLITIQUE (15000 o). ⚠️ Ce 15000 est un choix NÔTRE — le juste milieu entre
+> « léger » et « bordel » — **pas** la limite technique : la troncature silencieuse du
+> système, elle, arrive vers 25000 o / 200 lignes. Rien n'est supprimé ici, tout est déplacé.
 >
 > ⛔ **Index dense** : chaque entrée est un nom de fichier de `memory/feedbacks/`.
 > Pour le détail : `grep -l <nom> memory/feedbacks/` puis lire le fichier.

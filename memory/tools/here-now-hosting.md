@@ -6,6 +6,33 @@ type: reference
 
 # here.now — Hosting HTML anonyme
 
+> ⚠️ **PLUS LA VOIE PAR DÉFAUT depuis le 2026-09-08.** La chaîne d'upload en vigueur
+> (`CLAUDE.md` § Communication mobile) est : **Artifact Claude** (défaut, < 16 Mo) →
+> **Vercel Blob** (> 16 Mo) → **catbox/Litterbox** (secours). here.now n'y figure plus et
+> n'a plus servi depuis fin août 2026. Ce fichier reste pour la trace et pour la consigne
+> de sécurité ci-dessous. **Ne pas le rouvrir comme une recommandation.**
+
+## ⛔⛔ TOUS LES claimToken ANTÉRIEURS AU 2026-09-08 SONT BRÛLÉS — décision d'Aziz
+
+15 `claimToken` ont vécu **en clair dans le dépôt PUBLIC** du 2026-05-20 au 2026-09-08
+(6 fichiers). Au moment de la découverte, **10 pages répondaient encore** et **4 avaient leur
+token exposé — dont une page CLIENT** (flowdesk, `velvet-portal-r5s9`). Un `claimToken` autorise
+`PUT /api/v1/publish/:slug` : n'importe qui pouvait remplacer le contenu d'une page livrée.
+
+**Décision (2026-09-08)** : on ne réécrit PAS l'historique git (lourd, dépôt public, casse les
+clones). On considère ces tokens comme **compromis** :
+
+- ⛔ **Ne JAMAIS réutiliser un ancien token** pour mettre à jour une page. Une page dont le token
+  a fuité doit être **republiée sous un NOUVEAU slug**, et l'ancienne URL abandonnée.
+- ⛔ **Ne jamais recommiter un token** : le hook `.claude/hooks/secret-write-guard.sh` bloque
+  désormais l'écriture (PreToolUse `Edit|Write`, position 1 du bloc).
+- ✅ Les tokens purgés sont conservés hors git dans `.secrets-local/here-now-tokens.txt`
+  (gitignore) — **uniquement** pour retrouver quelle page correspond à quoi, pas pour republier.
+- ⚠️ **À faire au prochain besoin de republier une de ces pages** : nouveau slug, nouveau token,
+  et mettre à jour le lien partout où il est référencé.
+
+Contexte plus large : `memory/starters/STARTER-vault-mcp.md` (session du 2026-09-07/08).
+
 ## Contexte du problème
 
 **Catbox.moe NE FONCTIONNE PAS pour HTML** :
