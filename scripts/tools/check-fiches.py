@@ -97,6 +97,27 @@ def main():
 # chiffre, zero faux positif — contrairement a la veracite du contenu qui ne s'automatise pas.
 BUDGET_LIGNES = 55
 
+# --- ajout 2026-09-08 : ne pas crier sur ce qui est DEJA arbitre ---
+# Le script signalait 12 fiches hors budget alors que le README en exempte 7 par un
+# arbitrage ECRIT et motive (« la camera est le pain point n°1 », « le storyboard
+# deplace le jugement avant le code, 49 % de re-travail »...). Une alerte qui repete
+# du connu devient du bruit, et le bruit fait desactiver les gates — c'est exactement
+# le mecanisme documente dans index-composants-gate.sh. Les exemptions sont LUES depuis
+# le README (source de verite unique) : en durcir la liste ici la ferait diverger.
+def _exemptions() -> set:
+    """Fiches dont le depassement est arbitre par ecrit dans memory/fiches/README.md."""
+    import pathlib
+    import re
+    readme = pathlib.Path(__file__).resolve().parents[2] / "memory" / "fiches" / "README.md"
+    if not readme.is_file():
+        return set()
+    txt = readme.read_text(encoding="utf-8")
+    m = re.search(r"hors budget assum(.{0,900}?)⛔⛔", txt, re.S)
+    if not m:
+        return set()
+    return {n if n.endswith(".md") else n + ".md"
+            for n in re.findall(r"`(FICHE-[A-Z0-9-]+)`", m.group(1))}
+
 
 def check_budget_lignes():
     import pathlib
@@ -104,16 +125,24 @@ def check_budget_lignes():
     dossier = pathlib.Path(__file__).resolve().parents[2] / "memory" / "fiches"
     if not dossier.is_dir():
         return []
+    exempt = _exemptions()
     trop = []
     total = 0
+    n_exempt = 0
     for f in sorted(dossier.glob("FICHE-*.md")):
         n = len(f.read_text(encoding="utf-8").splitlines())
         total += n
         if n > BUDGET_LIGNES:
+            if f.name in exempt:
+                n_exempt += 1
+                continue
             trop.append((f.name, n))
     if not trop:
+        if n_exempt:
+            print(f"\n   ({n_exempt} fiche(s) hors budget, depassement ARBITRE dans README.md)")
         return []
-    print(f"\n⚠️  BUDGET DE LIGNES DEPASSE ({len(trop)} fiche(s), {total} lignes au total)")
+    print(f"\n⚠️  BUDGET DE LIGNES DEPASSE ({len(trop)} fiche(s) NON arbitree(s), "
+          f"{total} lignes au total, {n_exempt} exemptee(s) par README.md)")
     print(f"   Chaque fiche est injectee dans le contexte a chaque edition — budget {BUDGET_LIGNES} lignes.")
     for nom, n in sorted(trop, key=lambda x: -x[1]):
         print(f"   {n:>4} l. ({n / BUDGET_LIGNES:.1f}x)  {nom}")
