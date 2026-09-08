@@ -14,6 +14,28 @@
 
 ---
 
+## 🔧 SYSTÈME — chantier mémoire/sécurité du 2026-09-08 (CLOS, ne pas rouvrir)
+
+Session sans production visuelle. Ce qui a changé et qui affecte TOUTE session future :
+
+- 🔐 **15 `claimToken` purgés** du dépôt PUBLIC (exposés depuis le 20/05, 4 sur des pages encore
+  vivantes dont une page CLIENT). ⛔ Tokens here.now antérieurs au 08/09 = **BRÛLÉS**, republier
+  sous un nouveau slug → `memory/tools/here-now-hosting.md`. Nouveau gate `secret-write-guard.sh`
+  (PreToolUse, **position 1**, ne skippe pas les `.md`).
+- 📚 **`audit-composants-index.py`** + gate `index-composants-gate.sh` (PostToolUse sur
+  `COMPOSANTS-INDEX.md`) : 16 fantômes, 11 non-importables, 3 collisions détectés à chaque écriture.
+  ⛔ `GeminiRig` existe en 2 versions aux signatures incompatibles.
+- 🧠 **MEMORY.md 16989 → 10462 o** (~60 leçons extraites vers `memory/INDEX-FEEDBACKS-METHODE.md`) ·
+  **NEXT-ACTION 25511 → 19447 o** · `check-poids-contexte.py` réaligné sur `BUDGET.md` (il tolérait
+  25000 quand la politique dit 15000 : le plafond n'existait pas).
+- 💾 **35 fichiers rapatriés** de l'auto-memory (hors git, non sauvegardés) + **10 leçons
+  récupérées** de branches non mergées — elles étaient citées dans MEMORY.md et introuvables.
+- ⛔ **295 commits non poussés depuis 18 jours** → poussés. `origin/master` est à jour.
+- 📄 Doctrine `memory/doctrines/HYGIENE-GIT-MULTI-SESSION.md` (worktrees, merge concurrent,
+  commandes destructives, push). Plan Vault+MCP en réserve : `memory/starters/STARTER-vault-mcp.md`.
+
+---
+
 ## 💰 CONTRAT UPWORK chill-meter (AbiGirl Reacts) — révision 1 traitée, RIEN renvoyé
 
 **Premier contrat freelance signé (30/08), actif.** 350 $ → 297,50 $ net, 3 jalons (3/7/11 sept).
