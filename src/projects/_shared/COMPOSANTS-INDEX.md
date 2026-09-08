@@ -1,4 +1,6 @@
 # Index des composants partagés — par cas d'usage
+<!-- Audit automatique : `python3 scripts/tools/audit-composants-index.py` (gate PostToolUse actif). -->
+
 > ⭐ **AVANT cet index : passe par `INTENTION-FORME-INDEX.md`** (déduis l'intention d'abord — doctrine
 > [[CONTINUITE-SCENE-INTENTION-DABORD]]). Cet index est la FICHE TECHNIQUE consultée une fois la forme déduite,
 > pas un catalogue-vitrine où l'on cherche « quoi mettre ».
