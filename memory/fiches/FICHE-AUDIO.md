@@ -37,6 +37,7 @@ repart de zéro et l'argument « on change le son sans retoucher l'image » ne t
 ⛔ Whisper pour JUGER une prononciation — il « corrige » ce qui bave. Il aligne, il ne juge pas. Seule l'oreille d'Aziz valide.
 ⛔ `-c copy` sur un concat MP3 — casse les timestamps. → `filter_complex` / re-encode libmp3lame.
 ⛔ `--only-part pN` ne re-concatène PAS le global — re-concaténer à la main, sinon lien périmé présenté.
+⛔ `-ss`/`-t` APRÈS `-i` avec `volumedetect`/`silencedetect` : borne le MUXER, pas le filtre — mesure plate sur tout le flux restant, pas la fenêtre voulue (fausse un diagnostic entier). → `-ss`/`-t` AVANT `-i`, ou `atrim=start:end` dans `filter_complex`. Détail : `memory/tools/ffmpeg.md`.
 
 ## PIPELINE
 1. **Texte** : paragraphes fusionnés par transition de sujet · tags INTRA-phrase juste avant le mot ciblé (pas en tête) · CAPS 1-2/paragraphe · `[pause]` sur les 1-2 pics SEULEMENT · ⛔ jamais `[laughs]`/`[clears throat]`.

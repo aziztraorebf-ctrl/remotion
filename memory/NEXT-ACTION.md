@@ -59,15 +59,6 @@ FICHE-BRIEF-CLIENT 02/09). Mesuré sur le contrat chill-meter : 4 outils qui exi
 
 📄 `memory/tools/consultation-llm-externe-probleme-visuel-bloque.md` (méthode née de l'incident).
 
-## ⭐⭐⭐ REPRENDRE ICI — Pièce portfolio « Le cauri » (2026-09-02)
-
-Brief + recherche TERMINÉS, aucun pixel produit. Étape suivante : faire dessiner le jeu de
-formes avec la contrainte de morphing (une matière en 7 états, pas 7 dessins).
-→ **`memory/starters/STARTER-piece-cauri.md`** — tout y est.
-
-⛔ Les 3 repros TED-Ed = **R&D interne, jamais montrées**
-(`out/_r-and-d/fable-vs-opus-ted-ed-style/STATUT.md`). On garde les RIGS, pas les fichiers.
-
 ## Spark Icon (Upwork) — envoyée 2026-09-01, attente passive
 
 Rien à faire tant que le client n'a pas répondu. → `memory/client-sim-tests/upwork-spark-icon/STATUS.md`.

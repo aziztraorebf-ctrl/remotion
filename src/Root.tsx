@@ -13,6 +13,7 @@ import { AuraSplashGemini } from "./projects/_client-sim/aura-splash/AuraSplashG
 import { AuraSplashGeminiV2 } from "./projects/_client-sim/aura-splash/AuraSplashGeminiV2";
 import { AuraSplashGpt, AURA_SPLASH_FPS, AURA_SPLASH_FRAMES } from "./projects/_client-sim/aura-splash/AuraSplashGpt";
 import { AnimaticCauri } from "./projects/_portfolio/cauri/AnimaticCauri";
+import { PieceCauri } from "./projects/_portfolio/cauri/PieceCauri";
 import { DUREE_TOTALE as CAURI_DUREE_S } from "./projects/_portfolio/cauri/animatic-timing";
 import { ZambiaConceptB, ZAMBIA_CONCEPT_B_FRAMES } from "./projects/_client-sim/zambia-peacecorps/ZambiaConceptB";
 import { ZambiaConceptA, ZAMBIA_CONCEPT_A_FRAMES } from "./projects/_client-sim/zambia-peacecorps/ZambiaConceptA";
@@ -5834,6 +5835,16 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="Cauri-Animatic"
           component={AnimaticCauri}
+          durationInFrames={Math.round(CAURI_DUREE_S * 30)}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Piece definitive : coquille dessinee, son (SFX+narration+musique), 4 fonds
+            testes. Chantier clos en R&D concluante (2026-09-08) — voir starter. */}
+        <Composition
+          id="Cauri-Piece"
+          component={PieceCauri}
           durationInFrames={Math.round(CAURI_DUREE_S * 30)}
           fps={30}
           width={1920}

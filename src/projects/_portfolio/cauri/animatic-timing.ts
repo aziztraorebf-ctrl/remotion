@@ -13,18 +13,21 @@
  *
  * Le reglage du rythme se fait ICI et nulle part ailleurs.
  *
- * ⭐ Point de tension du brief : l'etat 3 (le flux LONG) doit durer assez pour que
- * « long » se RESSENTE, alors que la piece entiere tient en 15-25 s. C'est le
- * curseur principal a discuter apres visionnage.
+ * ⭐ Durees etirees d'un facteur 1,1204 le 2026-09-08, pour caler sur la narration
+ * GeoAfrique generee (23,08s reel, mesure ffprobe). Rythme RELATIF entre etats
+ * intact — memes proportions que le decoupage valide sur l'animatic gris (20,6s) —
+ * seule la duree absolue change. La voix porte le sens narratif, elle dicte le
+ * tempo plutot que l'inverse (decision Aziz). Texte source :
+ * out/_r-and-d/cauri/son/narration-texte-v2.txt (hors repo, gitignore).
  */
 export const ETATS = [
-  { id: 1, nom: "coquille", duree: 2.0, dit: "l'objet precieux" },
-  { id: 2, nom: "semis", duree: 2.6, dit: "la rarete" },
-  { id: 3, nom: "flux-long", duree: 5.2, dit: "la distance qui fait la valeur" },
-  { id: 4, nom: "colonne", duree: 3.0, dit: "la valeur" },
-  { id: 5, nom: "flux-court", duree: 2.4, dit: "1845 : le raccourci" },
-  { id: 6, nom: "effondrement", duree: 2.8, dit: "l'effondrement" },
-  { id: 7, nom: "calme", duree: 2.6, dit: "fin, permet la boucle" },
+  { id: 1, nom: "coquille", duree: 2.241, dit: "l'objet precieux" },
+  { id: 2, nom: "semis", duree: 2.913, dit: "la rarete" },
+  { id: 3, nom: "flux-long", duree: 5.826, dit: "la distance qui fait la valeur" },
+  { id: 4, nom: "colonne", duree: 3.361, dit: "la valeur" },
+  { id: 5, nom: "flux-court", duree: 2.689, dit: "1845 : le raccourci" },
+  { id: 6, nom: "effondrement", duree: 3.137, dit: "l'effondrement" },
+  { id: 7, nom: "calme", duree: 2.913, dit: "fin, permet la boucle" },
 ] as const;
 
 export type EtatNom = (typeof ETATS)[number]["nom"];
@@ -51,8 +54,22 @@ export const BORNES: number[] = ETATS.reduce<number[]>(
  */
 export const PART_TRANSFORMATION = 0.55;
 
-/** Nombre de particules. Constant sur toute la piece — c'est ce qui interdit la coupe. */
-export const N = 260;
+/**
+ * Nombre d'exemplaires. Constant sur toute la piece — c'est ce qui interdit la coupe.
+ *
+ * ⭐ Baisse de 260 a 90 le 2026-09-06, apres le 1er rendu de la piece dessinee.
+ * 260 etait un heritage de l'animatic, ou chaque particule etait un DISQUE de 4-7 px.
+ * Avec des coquilles dessinees (10-34 px), la meme quantite sature : le semis lisait
+ * l'abondance au lieu de la RARETE (le propos meme du § 4), et les grains du flux
+ * fusionnaient en amas au lieu de rester des coquilles distinctes (mesure : zoom x8
+ * sur l'etat 3, les ovales se recouvrent).
+ *
+ * ⭐ Le vrai gain n'est pas la separation, c'est la TAILLE : a 90 exemplaires on peut
+ * porter le grain au-dessus du seuil de 18 px, donc GARDER la fente dans les flux.
+ * R6 (la coquille reste reconnaissable dans ses 5 roles) redevient visible, alors
+ * qu'a 260 la primitive etait perdue dans 4 etats sur 7.
+ */
+export const N = 90;
 
 /** Cadre de travail (16:9 full HD). */
 export const VB = { w: 1920, h: 1080 };
@@ -156,15 +173,33 @@ const fluxCourt = (n: number): Cible[] => {
   });
 };
 
-/** ETAT 6 — l'effondrement : la colonne s'ecrase, tout retombe et s'etale au sol. */
+/**
+ * ETAT 6 — l'effondrement : la colonne s'ecrase et fait un TAS.
+ *
+ * ⭐ Corrige le 2026-09-06 apres le 1er rendu dessine. La version precedente tirait x
+ * uniformement sur 76 % de la largeur : les debris s'etalaient en bande reguliere sur
+ * tout l'ecran — ca lisait « deplacement lateral », pas « effondrement ». Ce qui
+ * manquait n'etait pas un dosage mais la FORME du tas.
+ *
+ * Une colonne qui s'ecroule retombe AUTOUR DE SON PIED : dense au centre (la ou la
+ * colonne se tenait, VB.w * 0.5), se rarefiant vers les bords. On tire donc un ecart
+ * au centre avec une puissance > 1, qui concentre pres de zero, et le tas est d'autant
+ * plus HAUT qu'on est pres du centre — c'est le profil d'un tas, pas d'un tapis.
+ */
 const effondrement = (n: number): Cible[] => {
   const r = alea(97);
   const sol = VB.h * 0.83;
-  return Array.from({ length: n }, () => ({
-    x: VB.w * (0.12 + r() * 0.76),
-    // tas : plus dense pres du sol, quelques particules encore en l'air
-    y: sol - Math.pow(r(), 2.2) * VB.h * 0.2,
-  }));
+  const pied = VB.w * 0.5; // la colonne de l'etat 4 se tient au centre
+  return Array.from({ length: n }, () => {
+    // ecart au pied : puissance 1,9 => beaucoup de debris pres du centre, peu au loin
+    const ecart = Math.pow(r(), 1.9) * VB.w * 0.34;
+    const cote = r() < 0.5 ? -1 : 1;
+    const x = pied + cote * ecart;
+    // hauteur du tas : maximale au pied, nulle aux extremites
+    const proximite = 1 - ecart / (VB.w * 0.34);
+    const hauteurTas = Math.pow(proximite, 1.4) * VB.h * 0.17;
+    return { x, y: sol - r() * hauteurTas };
+  });
 };
 
 /** ETAT 7 — retour au calme : un semis apaise, proche de l'etat 2, pour boucler. */
@@ -227,6 +262,23 @@ export const zoomCamera = (t: number): number => {
       const kk = k * k * (3 - 2 * k); // meme adoucissement que le reste de l'animatic
       return passage.zoomDepart + (passage.zoomArrivee - passage.zoomDepart) * kk;
     }
+    // ⛔ TENIR la valeur AVANT la fenetre (corrige le 2026-09-06).
+    // Avant : on retombait a 1 hors fenetre, y compris AVANT le 1er passage — donc le
+    // zoom sautait de 1,00 a 2,40 en UNE frame a l'entree du raccord. Mesure sur le
+    // rendu v4 : la coquille passe de 240 px a 576 px entre t=1,9 s et t=2,0 s. Un recul
+    // qui commence par une coupe, sur une piece dont la contrainte est le ZERO COUPE.
+    // L'etat 1 doit etre TENU au zoom de depart : on est au contact de la coquille,
+    // et c'est de la qu'on recule.
+    //
+    // ⛔ On ne sort PAS de la boucle pour un t situe APRES la fenetre : il faut laisser
+    // les passages suivants s'exprimer. Une 1re version faisait `if (t > fin) return
+    // zoomArrivee` ici — le 2e IRIS (6->7) ne se declenchait alors jamais, le zoom
+    // restait plat a 1,0 jusqu'a la fin (verifie par simulation sur les 618 frames).
+    // La valeur d'apres-derniere-fenetre est donc rendue APRES la boucle.
+    if (t < debut) return passage.zoomDepart;
   }
-  return 1;
+  // apres la derniere fenetre : on tient la valeur d'arrivee du dernier passage joue,
+  // sinon la boucle de fin (6->7) se refermerait elle aussi par une coupe.
+  const dernier = IRIS[IRIS.length - 1];
+  return dernier.zoomArrivee;
 };

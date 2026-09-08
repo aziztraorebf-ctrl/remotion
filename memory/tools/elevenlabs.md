@@ -524,6 +524,24 @@ Persona: <2-5 words>. Emotion: <2-3 adjectives>.
 
 **Integration Remotion** : `<Audio src={staticFile(sfx)} volume={0.3} />` dans la Sequence du clip concerne.
 
+### ⭐ Choisir un registre sonore : générer N familles en une passe, pas en itérant
+
+Quand le registre sonore d'une pièce n'est pas encore tranché (ex. matière/monnaie/abstrait),
+générer les N candidats **en une seule passe** et les monter tous sur l'image (mêmes instants
+mesurés, mêmes règles de mix) plutôt qu'itérer séquentiellement sur un seul en espérant deviner
+le bon. Coût faible : la génération est fiable au 1er tir, donc N variantes coûtent à peine plus
+qu'une seule, alors que se tromper de registre après validation coûte cher (tout refaire).
+
+Méthode : 1) définir les gestes sonores sur des instants MESURÉS (pas au jugé) ; 2) générer
+chaque geste dans chaque registre candidat, prompts versionnés dans le script générateur, pas
+seulement les `.mp3` produits ; 3) monter chaque registre séparément sur la vidéo inchangée,
+mêmes règles de mix ; 4) présenter les N versions montées (pas des fichiers isolés — un son
+seul ne dit pas comment il vit dans le mix) sur une page unique pour choix à l'oreille.
+⛔ Vérifier les niveaux de sortie AVANT de comparer (mesurer, pas à l'oreille) — un gain fixe
+entre familles peut cacher qu'une famille sort 30 dB plus bas qu'une autre.
+
+Source : chantier cauri, 2026-09-08 (3 familles : matière/monnaie/abstrait, 8 gestes chacune).
+
 ### Trim pattern pour blips courts (< 0.5s minimum imposé)
 
 `duration_seconds` doit être >= 0.5 (error 400 sinon, validé 2026-05-04). Pour des blips RPG/HUD courts
