@@ -669,3 +669,65 @@ qualité de ce qui se cache derrière.
 grille où titre/prix/note sont déjà affichés à côté ? Pas encore explorée — nécessiterait de
 regarder les vignettes qui SORTENT du lot (comme Alan, texte pur sur fond noir) plutôt que
 celles qui s'y fondent, et comprendre pourquoi elles fonctionnent malgré tout.
+
+---
+
+## PARTIE 7 (09/09) — comment amorcer les tout premiers avis SANS réseau, LÉGALEMENT
+
+Question d'Aziz : sans réseau (pas de LinkedIn, pas de famille/amis à solliciter), comment
+sortir de la case "zéro avis" sans risquer un bannissement ? Recherche faite sur les CGU
+Fiverr elles-mêmes, les outils officiels de Fiverr, et des témoignages terrain (Reddit).
+
+### ⛔⛔ CE QUI EST FORMELLEMENT INTERDIT (vérifié dans les CGU Fiverr, pas supposé)
+
+- **§ 5.2 Non-Circumvention** : proposer/accepter un contact ou paiement HORS Fiverr est une
+  violation matérielle des CGU — jusqu'à **10 000 $ de dommages liquidés** exigibles + bannissement
+  permanent. Ça couvre directement les groupes Discord/Telegram/Facebook qui "postent des jobs à
+  prendre" pour arranger un paiement hors plateforme — l'intuition de méfiance d'Aziz était juste.
+- **§ 6.4 Reviews** : "Purchases arranged, determined to artificially enhance Seller ratings...
+  may result in permanent suspension of all related accounts." Un faux petit projet payé pour
+  obtenir un avis "gratuit" ou arrangé est explicitement visé.
+→ **Conclusion : aucune piste d'amorçage artificiel n'est sûre.** Toute idée du type "réseau
+d'entraide entre vendeurs" ou "j'achète un avis via un petit projet arrangé" est une zone de
+bannissement direct, pas un risque théorique.
+
+### Ce que Fiverr propose OFFICIELLEMENT — vérifié, ça ne résout PAS le problème
+
+- **Buyer Requests** (les acheteurs postent une demande, les vendeurs répondent) : **restreint
+  aux comptes qui ont déjà un niveau** — inaccessible ou très limité pour un compte à 0 avis.
+  Pas le levier de démarrage espéré.
+- **Seller Plus Kickstart** (15$/mois, "conçu pour les nouveaux vendeurs") : donne recherche de
+  mots-clés, feedback IA sur le gig, "growth tools" (promotions/coupons). ⛔ **Toutes ces
+  promotions ciblent des clients qui ont DÉJÀ trouvé ta page** — réduction de prix pour un
+  visiteur déjà là, zéro effet sur la DÉCOUVRABILITÉ initiale. Un commentaire Reddit d'utilisateur
+  réel : *"They are trying to milk you. Do not fall for it. Seller Plus is total bs and has VERY
+  little use."* Payant, sans preuve d'efficacité sur le vrai problème (zéro avis = zéro visite).
+
+### Ce que rapportent des vendeurs réels, sans triche, sans réseau (2 témoignages Reddit détaillés)
+
+- **"Goetre"** : niche de spécialité trouvée (1 seul concurrent direct). **9 mois** avant le
+  1er client. A dû sous-facturer fortement et investir 5× le temps prévu pour sécuriser cette
+  1re commande. La MÊME semaine que ce 1er avis 5 étoiles est arrivé, les commandes ont commencé
+  à rentrer toutes les 2 semaines — liste d'attente aujourd'hui.
+- **"FiftyshadesofPeaches"** : **5-6 mois** sans réseau, sans réseaux sociaux, aucune promotion
+  externe (même refusé un coupon Fiverr à 10$ offert). A maintenant ~5000 avis depuis 2018-2019.
+- **Consensus des 2** : "we all start at zero", c'est LENT (5 à 9 mois) mais ARRIVE sans triche
+  ni réseau — le déclic vient d'UN SEUL premier avis 5 étoiles qui active la recommandation
+  organique de Fiverr, pas d'un effort marketing soutenu.
+
+## VERDICT PARTIE 7
+
+**Il n'existe pas de raccourci légal.** Toute solution "rapide" identifiée est soit interdite
+par les CGU (paiement/avis arrangé hors plateforme → bannissement), soit un outil payant qui ne
+résout pas le vrai problème (Seller Plus). Le seul levier confirmé par des vendeurs réels est le
+TEMPS + un gig assez différencié/niché pour capter le premier client patient malgré zéro avis —
+ce qui ramène directement à la partie 1 de cette recherche (le mot-clé "micro interactions" :
+moins de concurrence établie = probabilité plus haute qu'un visiteur SANS avis à comparer nous
+donne une chance). Le titre déjà mis à jour EST la meilleure action déjà prise pour ce problème.
+
+**Piste légitime restée à explorer** (non creusée aujourd'hui, faute de temps) : la suggestion
+Reddit de "vendre d'abord HORS Fiverr (réseau, groupes, Twitter/Instagram) puis référer ces
+clients vers Fiverr pour qu'ils y laissent un avis" — LÉGAL car ce sont de VRAIES commandes
+avec de VRAIS clients, juste acquis par un autre canal puis complétés sur Fiverr. Ne s'applique
+à Aziz que s'il développe un minimum de présence hors Fiverr (ce qu'il dit ne pas vouloir/avoir
+actuellement) — sinon reste écarté par manque de canal de départ.
