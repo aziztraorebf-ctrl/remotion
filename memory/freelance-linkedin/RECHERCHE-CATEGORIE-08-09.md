@@ -504,3 +504,36 @@ demande réelle est trop rare) ? Comparer avec `progress bar animation`/Mohsin (
 mesuré côté Lottie/UI) — les deux marchés ont produit le même type de signal : ratio extrême,
 volume quasi nul. Ça pourrait être un pattern général plutôt qu'une vraie opportunité propre
 à chaque cas — à vérifier par un 3e exemple avant de conclure que c'est un signal fiable.
+
+---
+
+## PARTIE 3 (08/09) — 2 questions d'Aziz, 2 corrections
+
+### Un test Rive réussi débloquerait-il de nouvelles offres ?
+
+Non, et ce n'est pas une nouvelle question — déjà tranché le 05/09 dans
+`memory/tools/rive-et-polymation.md`. Le mur est structurel : on sait déjà LIRE un `.riv` dans
+Remotion (`@remotion/rive` marche en headless, vérifié), mais Polymation ne convertit jamais
+SVG → Rive (seulement Rive/Spline/Lottie entre eux). Nos SVG à centaines de calques nommés ne
+peuvent pas y entrer. Tester le MCP Rive Desktop débloquerait la capacité de CONSTRUIRE un
+composant à la main dans l'éditeur (un vrai métier, un graphe d'états/transitions à dessiner) —
+pas une extension de notre pipeline existant. Le MCP automatise des tâches répétitives DANS ce
+métier, il ne le remplace pas.
+
+### Le vendeur à 5$ trouvé par Aziz (fiverr.com/s/61bBVgb) — hypothèse "nouveau profil" infirmée
+
+Vérifié : **Haseeb (haseebakhtar581), membre depuis DÉCEMBRE 2021** — près de 4 ans
+d'ancienneté, 36 avis au total, PAS un profil construit en moins d'un mois. Les avis qui
+semblaient récents (1 semaine, 5 jours) sont ses derniers avis, pas la date de création du
+compte.
+
+Grille affichée 5/10/15$ ("Rookie/Growth/Pro Streamer Package") mais réellement payé **50-100$**
+sur ses 5 derniers avis — ratio x10-20, l'un des plus extrêmes du dossier. Catégorie confirmée :
+"Graphics for Streamers" (branding complet : overlay, panels, alertes, bannière — pas un objet
+technique isolé comme un meter). Un avis mentionne un usage d'IA "more like a TOOL than a
+generator" — probablement Recraft/Gemini + retouche, pas dessin pur.
+
+**Conclusion** : pas une preuve qu'un compte neuf perce vite sur ce marché — une preuve de plus
+que le prix affiché ne veut jamais rien dire tant qu'on n'a pas lu les avis. Cohérent avec
+Mohsin et Shapla (partie 2) : ce marché entier semble fonctionner sur des prix d'appel très bas
+et des commandes réelles bien plus chères, indépendamment de l'ancienneté du vendeur.
