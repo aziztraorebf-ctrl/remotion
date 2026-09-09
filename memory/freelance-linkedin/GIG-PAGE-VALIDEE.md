@@ -45,11 +45,18 @@ Christina et Dmitry, mot pour mot la même phrase à eux deux) :
 
 ## Titre
 
-> I will create Lottie JSON and SVG animations for your app UI
+> I will create Lottie UI animations and micro interactions for your app
+
+⭐⭐⭐ Titre révisé le 09/09 (recherche de catégorie, `memory/freelance-linkedin/RECHERCHE-CATEGORIE-08-09.md`
+et page `https://claude.ai/code/artifact/6a6e07f7-ef1f-4dd2-8e5d-7188794a8870`) : sur 12 mots-clés
+testés, « micro interactions » est le seul avec un seul acteur établi (Alan, 540 avis) et presque
+tous les autres vendeurs sous 12 avis — le profil « ni mort ni saturé » cherché. Remplace « and SVG
+animations », trop générique pour se différencier. « Icon » écarté du titre (mène vers un bassin
+saturé à 5-20 $, cf. dossier).
 
 ## Sous-titre
 
-> Animated gauges, meters, loaders and progress states for your app or website. Delivered as Lottie JSON, ready to use.
+> Micro interactions, gauges, meters and loaders for your app or website. Delivered as Lottie JSON, ready to use.
 
 ## Description
 
