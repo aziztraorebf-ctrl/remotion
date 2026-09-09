@@ -88,6 +88,15 @@ MCP ne suffisait pas à détecter le problème — seul un contrôle visuel dans
   problème est spécifique à la couche MCP ou présent aussi en API directe — non testé à ce
   jour, aucune conclusion à tirer avant un vrai comparatif.
 
+## ⛔ Vérifier l'état de financement réel via l'API AVANT toute action qui engage la relation client
+
+Avant de relancer sur un paiement ou proposer un livrable, vérifier l'état des jalons EN DIRECT
+(`list_milestones` / `get_freelancer_financials`) — jamais sur la foi d'une note mémoire, qui périme
+vite. Vécu (contrat chill-meter 44402562, 08/09) : `STATUS.md` portait une lecture erronée d'un jalon
+`NotFunded` comme "argent pas déposé", corrigée seulement après vérification API (`fundedAmount` déjà
+rempli sur les 3 jalons — `NotFunded` signifiait "pas encore actif dans la séquence", pas "pas payé").
+Une décision de relance/négociation basée sur l'ancienne lecture aurait été fausse.
+
 ## Mécanique confirmée fiable
 
 - **Flux draft → confirm** : toute écriture (`manage_proposals`, `submit_milestones`,

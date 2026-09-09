@@ -300,6 +300,27 @@ chaîne — et `checkout` détruit alors ce qui n'a pas été commité.
 doctrine) se commit dès qu'il compile, pas quand il est « fini » — le commit est la sauvegarde, pas la
 publication (on peut toujours amender ensuite).
 
+## ⛔⛔ UNE SESSION QUI OUVRE UNE BRANCHE PUIS CONTINUE SUR `master` EN PARALLÈLE = DIVERGENCE INVISIBLE JUSQU'AU `/wrap` (2026-09-09)
+
+**Vécu** : en tout début de session, un chantier (message client chill-meter) a ouvert
+`feat/skills-cadrage-livraison` et y a commité. La session a ensuite enchaîné sur un AUTRE chantier
+(recherche Fiverr) directement sur `master`, sans revenir fusionner la branche. Résultat découvert
+seulement en Phase 0 du `/wrap` : l'agent CLEANUP signale un fichier « introuvable » alors qu'il avait
+bien été commité au tout début — `git merge-base --is-ancestor <sha> HEAD` répond NON, le commit vit sur
+une branche jamais mergée. 7 fichiers en conflit à résoudre manuellement pour rattraper.
+
+**Différence avec [[feedback_registre-canonique-branche-rnd-jamais-mergee-pattern-recurrent]]** : ce
+pattern-là concerne des BRIQUES (scènes/composants) qui vivent durablement sur une branche R&D distincte.
+Ici c'est plus simple et plus sournois : une seule session, un seul repo, qui change de branche en cours
+de route pour un sous-chantier puis revient sur `master` sans y penser — aucun signal ne le montre tant
+qu'on ne cherche pas.
+
+**Règle** : `git branch --show-current` n'est pas la question qui manquait ici — je savais sur quelle
+branche j'étais à chaque instant. Ce qui manquait : un contrôle explicite, **avant `/wrap` Phase 0**, de
+savoir si TOUTES les branches touchées pendant la session sont mergées dans la branche de départ.
+→ Ajouter à la checklist Phase 0 du skill `/wrap` : `git branch --no-merged master` (ou la branche de
+départ de session) — toute branche listée qui a des commits de CETTE session doit être mergée ou son
+absence explicitement justifiée AVANT de lancer les agents.
 
 ---
 

@@ -2,11 +2,9 @@
 
 ## ⛔⛔ À TRAITER — incident git : travail perdu puis récupéré par chance (2026-08-31)
 
-Le ménage de branches du 28/08 a supprimé `feat/cfa-nuit1994-svg-mix` alors qu'elle portait
-2 fichiers jamais commités (récupérés via `git fsck --unreachable`, chance pure — un `git gc`
-les aurait perdus pour de bon). Diagnostic + 3 pistes de correctif à trancher avec Aziz :
-`memory/projects/INCIDENT-BRANCHE-SUPPRIMEE-TRAVAIL-PERDU.md`. Ne pas refaire de ménage de
-branches sans avoir lu ce fichier.
+Ménage de branches du 28/08 a failli perdre 2 fichiers jamais commités (récupérés par chance,
+`git fsck --unreachable`). Diagnostic + 3 pistes de correctif à trancher avec Aziz :
+`memory/projects/INCIDENT-BRANCHE-SUPPRIMEE-TRAVAIL-PERDU.md` — le lire AVANT tout ménage de branches.
 
 ## R&D — tester la 3D jusqu'au bout, en exploration pure (idée d'Aziz, 2026-09-03)
 
@@ -102,54 +100,33 @@ Vérifier `git status` sur la branche AVANT suppression, pas seulement ses commi
 
 ## ⭐⭐⭐ CONTRAT UPWORK chill-meter — ACTIF (1er contrat freelance)
 
-⚠️ **L'ÉTAT D'AVANCEMENT NE VIT PAS ICI** — il se périme en heures et une session parallèle y
-travaille. Source de vérité unique, à ouvrir en premier :
-→ **`memory/client-sim-tests/upwork-chill-meter/STATUS.md`**
+⚠️ **L'ÉTAT D'AVANCEMENT NE VIT PAS ICI** — il se périme en heures. Source de vérité unique,
+à ouvrir en premier : → **`memory/client-sim-tests/upwork-chill-meter/STATUS.md`**
 
 Cadre contractuel (stable) : offre v2 acceptée le 30/08, 350 $ → 297,50 $ net, 3 jalons
-(3/7/11 sept.), 2 tours de révision par jalon, dossier source + README dus.
+(3/7/11 sept.), 2 tours de révision par jalon, dossier source + README dus. État financement
+vérifié via API le 08/09 : les 3 jalons ont `fundedAmount` déjà rempli (voir `upwork-mcp.md`).
+
+⛔ **TRAVAIL EN COURS NON COMMITÉ (constaté 09/09)** : `src/projects/_rnd/chill-meter/
+ChillMeterOverlay.tsx` porte des modifs non commitées sur le timing de l'entrée jalon 2
+(spring ralenti, sync SFX thud/power-up, effet de poussière à l'impact) — visiblement en
+réponse à un retour Abigail sur l'entrée. NE PAS écraser, vérifier l'état avant de reprendre.
 
 Invariants à ne pas perdre :
 - ⛔ Ne PAS lui dire que les 6 états sont déjà rendus (atout de négociation).
 - ⛔ Relire `BRIEF-CLIENT-ORIGINAL.pdf` (gitignoré) avant toute action.
 - ⚠️ Retraits Upwork bloqués tant que les infos fiscales ne sont pas fournies.
 - ⏸️ Prospection Upwork en PAUSE par Aziz (01/09) — ne pas relancer sans sa confirmation.
+- ⛔ Ne pas montrer un livrable d'un jalon FUTUR pendant la validation du jalon en cours
+  (leçon payée le 03/09, cf. STATUS.md § LA LEÇON À GRAVER).
 
-⛔⛔ **Avant tout futur ménage de branches** : lire
-`memory/projects/INCIDENT-BRANCHE-SUPPRIMEE-TRAVAIL-PERDU.md` — une branche supprimée le 28/08
-portait 2 fichiers jamais commités, récupérés par chance seulement. Toujours vérifier
-`git status`/modifications non commitées sur une branche AVANT de la supprimer, pas seulement ses
-commits.
+⭐⭐⭐ Briques nées de ce contrat, réutilisables sur TOUT futur contrat client :
+`REVERSIBILITE-MATIERE-GENEREE.md` · `feedback_annoter-l-image-plutot-qu-expliquer-au-client.md` ·
+`CHANTIER-CADRAGE-REVISIONS-CLIENT.md` · `feedback_deleguer-un-defaut-nommer-ce-qui-ne-doit-pas-changer.md` ·
+`feedback_ameliorer-vs-remplacer-preciser-dans-le-brief.md` · `feedback_ne-pas-offrir-le-livrable-du-dernier-jalon-avant-de-fermer-le-premier.md`
 
-## 🔴 CONTRAT UPWORK chill-meter — JALON 1 ENVOYÉ le 2026-09-06, en attente de réponse
-
-**Premier contrat freelance, actif.** 350 $ → 297,50 $ net, 3 jalons (jalon 1 = 105 $, soumis
-02/09 non payé — la relance fait partie du message envoyé).
-
-✅ **Message envoyé le 06/09** avec les 5 pièces (meter mis à jour, 50 vs 75, centrage annoté,
-sa référence vs son plateau, clip video). Ses 6 demandes du 05/09 toutes traitées et MESURÉES
-(rouille en accents, icônes bleues, powered-on + le NOM de la chaîne qui s'allume — pas
-seulement la plaque —, centrage 1,5 px, ombre de contact). Détail complet :
-`memory/client-sim-tests/upwork-chill-meter/STATUS.md` (dernière section, 06/09).
-
-🔴 **ELLE A RÉPONDU LE 06/09 — 5 demandes, aucune encore codée. Délai annoncé : 24-48 h.**
-⭐⭐⭐ **REPRISE : `memory/starters/STARTER-chill-meter-revision-06-09.md`** — tout y est :
-ses 5 demandes, le verdict du jury externe 4 voix sur le flottement, et surtout le POINT
-BLOQUANT (4 essais ratés sur l'occlusion, avec la cause du 4e : pente d'arête inversée).
-Elle a reconnu qu'on avait raison sur le centrage et que sa référence IA était décalée ;
-elle a joint sa VRAIE capture de plateau, qui devient la référence.
-
-⭐⭐⭐ **3 briques nées de ce seul jalon, réutilisables sur TOUT futur contrat client** :
-- `memory/doctrines/REVERSIBILITE-MATIERE-GENEREE.md` — poser une couche EXTRAITE sur une
-  matière déjà validée, jamais la remplacer ; clipper une zone épouse sa forme, jamais un `<rect>`
-- `memory/feedbacks/feedback_annoter-l-image-plutot-qu-expliquer-au-client.md` — un désaccord
-  SPATIAL se règle par une image annotée DÈS LE 1er tour, pas après 3 messages
-- `memory/projects/CHANTIER-CADRAGE-REVISIONS-CLIENT.md` — « tout est modifiable » communique
-  un coût marginal nul ; sujet à traiter AVANT le jalon 2 (session dédiée, pas en fin de session)
-
-Branche de travail : `fix/chill-meter-ancrage-sol` (repo principal), mergée par avance rapide
-dans `rnd/chill-meter-3d` (worktree `wt-chill`) — les deux pointent sur le même commit au 06/09. ⚠️ Un worktree parallèle (`retro-gates-multi-session`) construit en ce moment les gates
-multi-session sur ce même dossier — NE PAS y toucher, chantier d'une autre session.
+⚠️ Worktree `retro-gates-multi-session` construit les gates multi-session sur ce même dossier —
+NE PAS y toucher, chantier d'une autre session.
 
 ## 🔧 SESSION D'AUDIT DU WORKSPACE — à planifier (constitué le 2026-08-27, rien d'urgent)
 
