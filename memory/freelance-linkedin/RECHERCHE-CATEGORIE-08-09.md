@@ -358,3 +358,77 @@ Exemple de titre à tester (à valider avec Aziz avant modification du gig) :
 "I will create Lottie UI animations and micro interactions for your app" — remplace
 "and SVG animations" (trop générique, dilue le focus) par "and micro interactions" (le
 terme qui a le meilleur ratio densité/opportunité mesuré).
+
+---
+
+## ⭐⭐⭐ DÉCOUVERTE MAJEURE (question d'Aziz) — le chill-meter vit dans UNE AUTRE catégorie
+
+### Correction d'abord : le chill-meter n'est PAS un fichier Lottie ni Rive
+
+⛔ J'avais dit "state machine" à propos du chill-meter dans la synthèse précédente — FAUX,
+corrigé ici. Le mot `state` dans `ChillMeterOverlay.tsx` (`state: MeterState`) est juste le nom
+de notre PROP React qui sélectionne quelle animation Remotion jouer (idle/fill25/fill75...).
+Aucun rapport avec le format "state machine" de Rive (interactivité utilisateur : clic, survol).
+Le chill-meter est du **Remotion pur**, livré en MOV/PNG alpha — ni un .json Lottie, ni un .riv
+Rive. Vérifié dans le code ET dans le brief (`BRIEF-SVG-CHILL-METER.md`) : SVG statique animé
+en interne, jamais de format de fichier interactif exporté au client.
+
+### Le vrai mot qu'Abigail a utilisé : "OVERLAY"
+
+Titre exact du contrat Upwork (vérifié via API, contract 44402562) : **"Custom Animated Max
+Chill Factor Meter OVERLAY for YouTube Reaction Videos"**. Pas "Lottie", pas "widget" de son
+côté — mais "overlay" est un mot D'USAGE (le fichier posé par-dessus une vidéo dans un
+éditeur), exactement le type de terme qu'Aziz demandait de chercher.
+
+### Testé : `animated overlay for youtube` → CATÉGORIE ENTIÈREMENT DIFFÉRENTE
+
+`og:description`: **"Graphics for Streamers by Stream Graphics Designers"** — PAS "Lottie &
+Website Animation". C'est une catégorie Fiverr séparée, orientée Twitch/YouTube/stream
+branding (panels, logo animé, intro/outro), TRÈS établie :
+- Besignerr : 1000 avis (plafond d'affichage), 10$
+- Fares : 1000 avis, 10$
+- Kong Vector : 594 avis, 235$
+- Digituscreative : 150 avis, 20$
+
+**Aucun de ces vendeurs ne mentionne un meter/gauge/tracker dans son titre** — le marché existe
+pour le BRANDING de stream (logos, panels, overlays d'ambiance), pas pour des INSTRUMENTS
+animés comme le chill-meter.
+
+### Testé : `custom animated widget for streamer` → LE MOT EST "WIDGET"
+
+Confirmation : ce marché utilise **"widget"**, pas "meter" ni "overlay" seul —
+"chat widget", "goal event widget", "chat goal event animated widget". C'est la famille
+conceptuelle du chill-meter (un indicateur dynamique affiché sur un stream) mais nommée
+différemment par ses propres vendeurs :
+- Kong Vector : 703 avis, 40$ — "chat widget and widget animation for streamers"
+- G4streamer : 125 avis, 35$ / 100 avis, 60$ (2 gigs)
+- Arek Design : 3 avis, 50$
+- Kawai Kanjo : 8 avis, 25$ — "chat goal event animated widget"
+
+⛔ Toujours ZÉRO mention de "meter"/"gauge"/"detector" explicite — même dans cette catégorie la
+plus proche conceptuellement, le vocabulaire du marché ne nomme pas l'OBJET (un compteur), il
+nomme sa FONCTION dans le stream ("chat widget", "goal event" = objectif de dons/abonnés).
+
+## CE QUE ÇA CHANGE POUR NOTRE STRATÉGIE
+
+⭐⭐⭐ **Il existe DEUX marchés Fiverr distincts pour deux types de clients différents** :
+1. **"Lottie & Website Animation"** (celui qu'on cartographie depuis le début) — clients
+   FONDATEURS DE PRODUIT qui veulent animer un élément d'interface (app, SaaS, site web).
+   C'est le marché de Christina, Alan, Oleh — et celui qu'on vise avec le gig actuel.
+2. **"Stream Graphics" / "widget"** (découvert maintenant) — clients STREAMERS/YOUTUBERS qui
+   veulent un habillage visuel pour leur chaîne (overlays, widgets, chat, alertes). C'est le
+   marché où vit RÉELLEMENT Abigail — un chill-meter est un widget/overlay de stream, pas un
+   élément d'interface produit.
+
+**Abigail n'est PAS le persona du gig Lottie/UI qu'on construit.** Elle est venue par Upwork,
+pas par ce segment Fiverr — mais si on veut vendre CE type d'objet (compteurs/trackers/jauges
+pour streamers) en volume, le bon marché Fiverr à cibler est "widget"/"stream overlay", PAS
+"micro interactions"/"Lottie & Website Animation". Ce sont deux gigs différents, deux pages
+différentes, deux vocabulaires différents — à ne pas mélanger dans un seul gig.
+
+⚠️ **Non testé encore** : la densité réelle de "widget" pour des OBJETS COMME LE CHILL-METER
+spécifiquement (pas juste chat/goal widgets génériques) — personne dans les résultats vus
+jusqu'ici ne vend un "meter"/"gauge"/"tracker" nommé comme tel pour du stream. Soit ce
+sous-créneau n'existe pas encore sous ce nom (opportunité), soit il se cache sous un autre mot
+qu'on n'a pas encore trouvé (à chercher : "stream tracker", "twitch meter", "donation goal
+meter", "hype meter").
