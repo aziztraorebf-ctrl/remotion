@@ -55,6 +55,7 @@ et `public/_shared/sfx/SFX-INDEX.md` (⛔ y sont listés les fichiers corrompus)
 | Sujet | Lien | Contenu |
 |---|---|---|
 | **Galerie des 21 mouvements de caméra** | https://aziztraorebf-ctrl.github.io/remotion/ | Une démo par geste. Sert d'appui aux piliers B2B. ⚠️ Gotchas de déploiement dans `memory/NEXT-ACTION.md` (data.json généré, .mp4 hors git). |
+| **Gig Fiverr Lottie/UI — page de recherche + texte** ⭐ | https://claude.ai/code/artifact/6758c1d3-089d-4f63-8ad1-6b0d1154ee01 | « Le vrai prix du Lottie » (05/09) : 9 vendeurs Fiverr mesurés (grilles vs commandes réellement payées) + le texte intégral du gig (titre, tiers 50/120/250, FAQ). Le texte est recopié dans `memory/freelance-linkedin/GIG-PAGE-VALIDEE.md` — cette page-ci est la SOURCE avec tout le raisonnement de marché. |
 
 ## 📦 Dépôts
 
