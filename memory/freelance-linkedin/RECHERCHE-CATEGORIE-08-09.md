@@ -537,3 +537,29 @@ generator" — probablement Recraft/Gemini + retouche, pas dessin pur.
 que le prix affiché ne veut jamais rien dire tant qu'on n'a pas lu les avis. Cohérent avec
 Mohsin et Shapla (partie 2) : ce marché entier semble fonctionner sur des prix d'appel très bas
 et des commandes réelles bien plus chères, indépendamment de l'ancienneté du vendeur.
+
+### Clarification : Haseeb a 2 gigs distincts, pas un seul mélangé
+
+Ce qui semblait "mélangé" à Aziz (panels, bannières, écrans plein-cadre type vidéo) vient de
+**2 gigs séparés** dans la même catégorie, pas d'un seul gig confus :
+1. "streaming overlays and streamer graphics" (36 avis) — STATIQUE (bannières, panels, écrans
+   offline/about-me).
+2. "animated twitch overlays screens alerts and panels" (20 avis) — les "entre-écrans" vus par
+   Aziz (Starting Soon / Be Right Back / Stream Ended, style cyberpunk/néon en boucle) + un
+   intro vidéo au portfolio.
+
+Profil : "Graphic Designer with 5 years of experience" (About me) — généraliste Photoshop/
+réseaux sociaux/posters, PAS un spécialiste technique. 56 avis au total (44★★★★★/8/1/0/3),
+rythme réel et soutenu sur 4 ans, pas fabriqué.
+
+### DÉCISION AZIZ (08/09) : abandonner la piste "gig bas prix pour bâtir des avis vite" via ce modèle
+
+Le rythme d'Haseeb vient d'un métier DIFFÉRENT du nôtre (design graphique généraliste :
+Photoshop, montage vidéo léger) où notre chaîne technique (SVG à calques, Lottie, Remotion)
+n'apporte AUCUN avantage — n'importe quel designer généraliste rivalise à égalité. Copier ce
+modèle nous ferait concourir sur un terrain qu'on ne maîtrise pas mieux que la concurrence.
+
+⭐ Le principe (bas prix, rotation rapide, pour construire des avis avant de viser plus haut)
+n'est pas rejeté en soi — seulement CE modèle précis. S'il revient, chercher un équivalent qui
+EXPLOITE notre outillage réel (ex: un loader Lottie simple, une icône animée) plutôt qu'un
+objet hors de notre métier. Non fait à ce stade — piste fermée, pas explorée plus loin.
