@@ -115,11 +115,41 @@ Invariants à ne pas perdre :
 - ⚠️ Retraits Upwork bloqués tant que les infos fiscales ne sont pas fournies.
 - ⏸️ Prospection Upwork en PAUSE par Aziz (01/09) — ne pas relancer sans sa confirmation.
 
-⭐ 2 leçons de brief transposables, nées de ce contrat :
-`feedback_deleguer-un-defaut-nommer-ce-qui-ne-doit-pas-changer.md` ·
-`feedback_ameliorer-vs-remplacer-preciser-dans-le-brief.md`
+⛔⛔ **Avant tout futur ménage de branches** : lire
+`memory/projects/INCIDENT-BRANCHE-SUPPRIMEE-TRAVAIL-PERDU.md` — une branche supprimée le 28/08
+portait 2 fichiers jamais commités, récupérés par chance seulement. Toujours vérifier
+`git status`/modifications non commitées sur une branche AVANT de la supprimer, pas seulement ses
+commits.
 
----
+## 🔴 CONTRAT UPWORK chill-meter — JALON 1 ENVOYÉ le 2026-09-06, en attente de réponse
+
+**Premier contrat freelance, actif.** 350 $ → 297,50 $ net, 3 jalons (jalon 1 = 105 $, soumis
+02/09 non payé — la relance fait partie du message envoyé).
+
+✅ **Message envoyé le 06/09** avec les 5 pièces (meter mis à jour, 50 vs 75, centrage annoté,
+sa référence vs son plateau, clip video). Ses 6 demandes du 05/09 toutes traitées et MESURÉES
+(rouille en accents, icônes bleues, powered-on + le NOM de la chaîne qui s'allume — pas
+seulement la plaque —, centrage 1,5 px, ombre de contact). Détail complet :
+`memory/client-sim-tests/upwork-chill-meter/STATUS.md` (dernière section, 06/09).
+
+🔴 **ELLE A RÉPONDU LE 06/09 — 5 demandes, aucune encore codée. Délai annoncé : 24-48 h.**
+⭐⭐⭐ **REPRISE : `memory/starters/STARTER-chill-meter-revision-06-09.md`** — tout y est :
+ses 5 demandes, le verdict du jury externe 4 voix sur le flottement, et surtout le POINT
+BLOQUANT (4 essais ratés sur l'occlusion, avec la cause du 4e : pente d'arête inversée).
+Elle a reconnu qu'on avait raison sur le centrage et que sa référence IA était décalée ;
+elle a joint sa VRAIE capture de plateau, qui devient la référence.
+
+⭐⭐⭐ **3 briques nées de ce seul jalon, réutilisables sur TOUT futur contrat client** :
+- `memory/doctrines/REVERSIBILITE-MATIERE-GENEREE.md` — poser une couche EXTRAITE sur une
+  matière déjà validée, jamais la remplacer ; clipper une zone épouse sa forme, jamais un `<rect>`
+- `memory/feedbacks/feedback_annoter-l-image-plutot-qu-expliquer-au-client.md` — un désaccord
+  SPATIAL se règle par une image annotée DÈS LE 1er tour, pas après 3 messages
+- `memory/projects/CHANTIER-CADRAGE-REVISIONS-CLIENT.md` — « tout est modifiable » communique
+  un coût marginal nul ; sujet à traiter AVANT le jalon 2 (session dédiée, pas en fin de session)
+
+Branche de travail : `fix/chill-meter-ancrage-sol` (repo principal), mergée par avance rapide
+dans `rnd/chill-meter-3d` (worktree `wt-chill`) — les deux pointent sur le même commit au 06/09. ⚠️ Un worktree parallèle (`retro-gates-multi-session`) construit en ce moment les gates
+multi-session sur ce même dossier — NE PAS y toucher, chantier d'une autre session.
 
 ## 🔧 SESSION D'AUDIT DU WORKSPACE — à planifier (constitué le 2026-08-27, rien d'urgent)
 

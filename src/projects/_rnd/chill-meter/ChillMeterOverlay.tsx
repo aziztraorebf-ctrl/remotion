@@ -10,7 +10,20 @@
 import React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, interpolate, spring, Easing } from "remotion";
 import { ChillMeterDevice, DEVICE_W, DEVICE_H, type MetalFinish, type RustPass } from "./ChillMeterDevice";
-import { GivreDefs, CRISTAUX, ECLATS, FLEURS } from "./GivrePlanche";
+import { ChillMeterRustic, RUSTIC_W, RUSTIC_H, RUSTIC_SOL_Y } from "./ChillMeterRustic";
+import { BottomIceBank, FullChillCoded } from "./EffetsEcran";
+
+/** Quel chassis on rend. "rustic" = l'image choisie par la cliente (revision 2, 04/09).
+ *  "svg" = l'ancien chassis dessine, garde tant qu'elle n'a pas valide le nouveau. */
+export type Chassis = "rustic" | "svg";
+
+/** Les effets de givre plein cadre (brume du bas, onde, neige).
+ *  ⭐ Coupes par defaut depuis le 04/09 : on montre L'OBJET dans son etat initial.
+ *  Le givre est le sujet du JALON 2, il se retravaille apres validation de la texture.
+ *  ⛔ Ne PAS supprimer ce code : il est deja ecrit et mesure, il sera rallume tel quel.
+ *  Rappel du brief (p.8) : au 75 %, la brume vient du BAS UNIQUEMENT et « the rest of
+ *  the screen should remain clear » — or la version actuelle couvre les 1920 px de large. */
+export type Effects = "off" | "on";
 
 export type MeterState =
   | "entrance"
@@ -34,272 +47,53 @@ const POS_X = 180;
 // la fenetre video. Repartition retenue : 38 px de respiration sous la video, 35 px
 // sous le meter (marge basse gardee courte mais suffisante : les glacons du givre
 // debordent vers le bas au jalon 2).
-const POS_Y = 706;
+// ⭐⭐ 06/09 (2e message, meme jour) : sa vraie capture confirmee identique (checksum),
+// mais nouvelle demande explicite « move the meter slightly lower vertically ». Marge
+// disponible avant que la ligne de sol ne touche le bas du cadre 1080 : 49 px (mesure).
+// Descente moderee et documentee, a ajuster au visionnage : +18 px.
+const POS_Y = 706 + 18;
 const SCALE = 0.373595;
 
-/** Effet de bord bas (75%) : brume + particules qui montent. */
-const BottomEdgeEffect: React.FC<{ intensity: number; frame: number; fps: number }> = ({
-  intensity,
-  frame,
-  fps,
-}) => {
-  if (intensity <= 0.001) return null;
-  const t = frame / fps;
-  return (
-    <AbsoluteFill style={{ pointerEvents: "none" }}>
-      {/* brume froide montant du bas */}
-      <div
-        style={{
-          position: "absolute",
-          left: 0,
-          right: 0,
-          bottom: 0,
-          height: 210,
-          background:
-            "linear-gradient(to top, rgba(77,184,255,0.3), rgba(143,228,255,0.16) 45%, rgba(143,228,255,0) 100%)",
-          opacity: intensity,
-        }}
-      />
-      {/* liseré givré sur l'arête basse */}
-      <div
-        style={{
-          position: "absolute",
-          left: 0,
-          right: 0,
-          bottom: 0,
-          height: 54,
-          background:
-            "linear-gradient(to top, rgba(234,247,255,0.75), rgba(234,247,255,0) 100%)",
-          opacity: intensity * 0.9,
-          filter: "blur(3px)",
-        }}
-      />
-      {/* Particules qui montent du bas — de vrais flocons, jamais des points ronds.
-          Brief p.8 : a 75 %, l'effet est sur le BORD BAS uniquement, le reste du cadre
-          doit rester clair. On borne donc leur remontee au tiers inferieur. */}
-      <svg width="100%" height="100%" style={{ position: "absolute", inset: 0 }}>
-        <GivreDefs />
-        {Array.from({ length: 26 }).map((_, i) => {
-          const seed = i + 1;
-          const speed = 20 + Math.abs(Math.sin(seed * 3.1)) * 30;
-          const phase = ((t * speed) / 100 + Math.abs(Math.sin(seed * 7.7))) % 1;
-          const x = (Math.abs(Math.sin(seed * 12.9898)) * 1920 + Math.sin(t * 0.7 + seed) * 18) % 1920;
-          // remontee bornee : 320 px max au-dessus du bord bas
-          const y = 1080 - phase * 320;
-          const size = 13 + Math.abs(Math.sin(seed * 5.4)) * 17;
-          const op = intensity * (1 - phase) * (0.3 + Math.abs(Math.sin(seed * 2.2)) * 0.45);
-          if (op < 0.02) return null;
-          const piece = CRISTAUX[i % CRISTAUX.length];
-          const rot = (t * (6 + (seed % 4) * 5) + seed * 31) % 360;
-          return (
-            <g key={i} transform={`rotate(${rot} ${x + size / 2} ${y + size / 2})`} opacity={op}>
-              <use href={`#${piece}`} x={x} y={y} width={size} height={size} />
-            </g>
-          );
-        })}
-      </svg>
-    </AbsoluteFill>
-  );
-};
+// ---- Geometrie du chassis RUSTIQUE (l'image choisie par la cliente) ----
+// Le PNG fait 1195x896 alors que l'ancien SVG faisait 1448x1086 : l'echelle differe donc,
+// mais on vise la MEME largeur a l'ecran (541 px) et le MEME centre x que le chassis valide.
+const RUSTIC_SCALE = 0.452691; // 541 / 1195
+// ⭐ Centre 450 : « use the black side strips as guides » — centre sous le cadre video
+// COMPLET (bandes noires incluses), mesure sur son plateau x 29..872.
+const RUSTIC_POS_X = 179.5;
+// ⭐ Cale sur le SOL du device (y=717 dans l'image), pas sur le bas du PNG : sa demande n°6
+// est que le meter ne FLOTTE pas. Le sol tombe donc a 706 + 717*scale = 1031.
+const RUSTIC_POS_Y = 706 + 18;
+/** y ou le chassis rustique pose au sol, dans le repere 1920x1080. */
+const RUSTIC_SOL_SCREEN = RUSTIC_POS_Y + RUSTIC_SOL_Y * RUSTIC_SCALE;
 
-/** Effet plein ecran (100%) : 4 bords givres + onde de choc + neige. */
-const FullChillEffect: React.FC<{ progress: number; frame: number; fps: number }> = ({
-  progress,
-  frame,
-  fps,
-}) => {
-  if (progress <= 0.001) return null;
-  const t = frame / fps;
+// ---- Empreinte au sol, mesuree DANS le PNG (06/09) ----
+// A y=717 (la ligne de sol), le device occupe x 131..1039 : c'est la surface qui porte,
+// pas la largeur totale du chassis (1099 px plus haut, aux epaulements).
+const SOL_EMPREINTE_X0 = 131;
+const SOL_EMPREINTE_W = 908;
+const SOL_OMBRE_H = 26;
 
-  // Onde de choc : part du compteur, monte vers la droite, s'estompe avant le visage.
-  const originX = POS_X + (DEVICE_W * SCALE) / 2;
-  const originY = POS_Y + (DEVICE_H * SCALE) / 2;
-  const waveR = interpolate(progress, [0, 1], [0, 1750], { extrapolateRight: "clamp" });
-  const waveOp = interpolate(progress, [0, 0.15, 0.62, 1], [0, 0.72, 0.34, 0], {
-    extrapolateRight: "clamp",
-  });
+/** Panneau blanc du piano — MESURE le 06/09 par segmentation couleur + RANSAC (0,4 px
+ *  de RMS). C'est le coin en pointe du panneau avant, pas une surface traversante :
+ *  il s'arrete NET a x=356. Sert de support au reflet, et documente pourquoi
+ *  l'occlusion est impossible (le meter, lui, va de x=188 a x=716). */
+const PIANO_X0 = 188;   // debut du reflet : bord gauche du meter (le panneau commence a 109)
+const PIANO_X1 = 356;   // fin MESUREE du panneau — au-dela, aucune surface de premier plan
 
-  const edge = Math.min(1, progress * 1.7);
+// ⛔ Les anciens BottomEdgeEffect / FullChillEffect (brume en linear-gradient + heptagones)
+// ont ete REMPLACES le 2026-09-04 par EffetsEcran.tsx : ils dataient de l'ancien chassis,
+// leur brume couvrait les 1920 px de large (le brief exige « bottom edge only »), et leur
+// givre s'accrochait au cadre de la fenetre video. Voir EffetsEcran.tsx pour la geometrie
+// des zones protegees. Source de verite unique : ne pas les reintroduire.
 
-  return (
-    <AbsoluteFill style={{ pointerEvents: "none" }}>
-      {/* --- givre sur les 4 bords --- */}
-      {/* Bandes de bord COURTES et concentrees : le centre du cadre (son visage) reste clair.
-          Regle du brief p.9 : "My face should never be heavily obscured." */}
-      {(
-        [
-          ["to top", "bottom", 150],
-          ["to bottom", "top", 96],
-          ["to right", "left", 128],
-          ["to left", "right", 104],
-        ] as const
-      ).map(([dir, side, size], i) => (
-        <div
-          key={i}
-          style={{
-            position: "absolute",
-            ...(side === "bottom" || side === "top"
-              ? { left: 0, right: 0, [side]: 0, height: size }
-              : { top: 0, bottom: 0, [side]: 0, width: size }),
-            background: `linear-gradient(${dir}, rgba(234,247,255,0.5), rgba(143,228,255,0.14) 38%, rgba(143,228,255,0) 100%)`,
-            opacity: edge,
-          }}
-        />
-      ))}
-
-      <svg width="100%" height="100%" style={{ position: "absolute", inset: 0 }}>
-        <GivreDefs />
-        {/* GIVRE ACCROCHE AUX BORDS — vraies pieces dessinees (planche Fable+GPT).
-            Remplace les heptagones generes par boucle : ils se lisaient comme
-            "des petits carres blancs qui arrivent de nulle part". */}
-        {Array.from({ length: 54 }).map((_, i) => {
-          const seed = i + 1;
-          const th = Math.abs(Math.sin(seed * 2.9)) * 0.5;
-          const local = Math.max(0, Math.min(1, (progress - th) / 0.4));
-          if (local <= 0) return null;
-
-          const side = i % 4;
-          const p = Math.abs(Math.sin(seed * 4.7));
-          const inset = Math.abs(Math.sin(seed * 3.3));
-
-          // Fleurs de givre : ancrees au bord, elles POUSSENT vers l'interieur.
-          // Cristaux/eclats : en derive, plus petits, plus nombreux.
-          const isFleur = i % 7 === 0;
-          const piece = isFleur
-            ? FLEURS[i % FLEURS.length]
-            : i % 5 === 0
-            ? ECLATS[i % ECLATS.length]
-            : CRISTAUX[i % CRISTAUX.length];
-
-          // grandes pieces sur les bords, plus petites vers le centre
-          const size = isFleur
-            ? 150 + inset * 110
-            : (i % 3 === 0 ? 46 + inset * 40 : 20 + inset * 22);
-
-          let x = 0;
-          let y = 0;
-          let rot = 0;
-          if (side === 0) {        // bas
-            x = p * 1920 - size / 2;
-            y = 1080 - size * (isFleur ? 1 : 0.55) - inset * 26;
-            rot = isFleur ? 0 : seed * 37;
-          } else if (side === 1) { // haut
-            x = p * 1920 - size / 2;
-            y = -size * 0.35 + inset * 30;
-            rot = isFleur ? 180 : seed * 53;
-          } else if (side === 2) { // gauche
-            x = -size * 0.3 + inset * 26;
-            y = p * 1080 - size / 2;
-            rot = isFleur ? 90 : seed * 71;
-          } else {                 // droite
-            x = 1920 - size * 0.7 - inset * 26;
-            y = p * 1080 - size / 2;
-            rot = isFleur ? 270 : seed * 29;
-          }
-
-          // le brief : ne jamais masquer lourdement son visage (zone droite-haute)
-          const faceGuard = x > 1150 && y < 640 ? 0.3 : 1;
-
-          return (
-            <g
-              key={i}
-              transform={`rotate(${rot} ${x + size / 2} ${y + size / 2})`}
-              opacity={local * (isFleur ? 0.72 : 0.85) * faceGuard}
-            >
-              <use href={`#${piece}`} x={x} y={y} width={size} height={size} />
-            </g>
-          );
-        })}
-
-        {/* Onde de choc gelee — anneaux nets, SANS blur.
-            (Un gros cercle floute est rendu comme un rectangle opaque en headless : artefact vu au 1er rendu.) */}
-        {waveR > 2 && (
-          <>
-            <circle
-              cx={originX}
-              cy={originY}
-              r={waveR}
-              fill="none"
-              stroke="#bfe9ff"
-              strokeWidth={14}
-              opacity={waveOp * 0.32}
-            />
-            <circle
-              cx={originX}
-              cy={originY}
-              r={waveR * 0.965}
-              fill="none"
-              stroke="#ffffff"
-              strokeWidth={4}
-              opacity={waveOp * 0.8}
-            />
-            <circle
-              cx={originX}
-              cy={originY}
-              r={waveR * 0.9}
-              fill="none"
-              stroke="#8fe4ff"
-              strokeWidth={2}
-              opacity={waveOp * 0.45}
-            />
-          </>
-        )}
-
-        {/* NEIGE — de VRAIS flocons dessines, plus de points ronds.
-            Regle du brief p.9 : "The strongest animation should stay concentrated along the
-            bottom half, the outer edges, and the left/center portions of the frame."
-            -> densite et taille decroissent avec la hauteur ; le haut-droite (son visage)
-            ne recoit que quelques flocons tres discrets ("a small amount CAN pass over my face"). */}
-        {Array.from({ length: 64 }).map((_, i) => {
-          const seed = i + 1;
-          const th = Math.abs(Math.sin(seed * 1.7)) * 0.3;
-          const local = Math.max(0, Math.min(1, (progress - th) / 0.5));
-          if (local <= 0) return null;
-
-          // derive : lente, portee par la rafale vers la droite, chute douce
-          const drift = t * (30 + Math.abs(Math.sin(seed * 2.4)) * 70);
-          const x = (Math.abs(Math.sin(seed * 12.9898)) * 2040 + drift) % 2040 - 60;
-          const fall = t * (14 + Math.abs(Math.sin(seed * 4.1)) * 34);
-          const baseY = Math.abs(Math.sin(seed * 78.233)) * 1080;
-          const y = (baseY + fall) % 1140 - 60;
-
-          // hauteur relative : 0 en haut, 1 en bas -> pilote densite ET taille
-          const depth = Math.min(1, Math.max(0, y / 1080));
-
-          // le tiers superieur ne garde qu'un flocon sur trois, et minuscule
-          if (depth < 0.34 && i % 3 !== 0) return null;
-
-          const size = (depth < 0.34 ? 9 : 15 + depth * 34) + Math.abs(Math.sin(seed * 5.9)) * 12 * depth;
-          const piece = CRISTAUX[i % CRISTAUX.length];
-          const rot = (t * (7 + (seed % 5) * 4) + seed * 47) % 360;
-
-          // zones protegees : son visage (droite-haut), la fenetre du clip (gauche)
-          // et LE COMPTEUR lui-meme — c'est l'instrument qu'on doit pouvoir lire.
-          const faceGuard = x > 1150 && y < 640 ? 0.22 : 1;
-          const clipGuard = x < 880 && y > 230 && y < 730 ? 0.3 : 1;
-          const meterGuard =
-            x > POS_X - 30 && x < POS_X + DEVICE_W * SCALE + 30 && y > POS_Y - 30 ? 0 : 1;
-
-          const op = local * (0.2 + depth * 0.55) * faceGuard * clipGuard * meterGuard;
-          if (op < 0.02) return null;
-
-          return (
-            <g key={i} transform={`rotate(${rot} ${x + size / 2} ${y + size / 2})`} opacity={op}>
-              <use href={`#${piece}`} x={x} y={y} width={size} height={size} />
-            </g>
-          );
-        })}
-
-      </svg>
-    </AbsoluteFill>
-  );
-};
-
-export const ChillMeterOverlay: React.FC<{ state: MeterState; metal?: MetalFinish; rust?: RustPass }> = ({
-  state,
-  metal = "flat",
-  rust = "none",
-}) => {
+export const ChillMeterOverlay: React.FC<{
+  state: MeterState;
+  metal?: MetalFinish;
+  rust?: RustPass;
+  chassis?: Chassis;
+  effects?: Effects;
+}> = ({ state, metal = "flat", rust = "none", chassis = "rustic", effects = "off" }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -319,6 +113,22 @@ export const ChillMeterOverlay: React.FC<{ state: MeterState; metal?: MetalFinis
         easing: Easing.out(Easing.quad),
       })
     : 0;
+
+  // Ombre de contact : large et pale tant que l'objet est en l'air, resserree et dense
+  // une fois pose. C'est ce couple etalement/densite qui fait lire l'appui — une ombre
+  // d'opacite constante suit l'objet sans jamais le poser.
+  const ombreEtal = isEntrance
+    ? interpolate(frame, [0, IMPACT, IMPACT + 17], [1.22, 1.0, 1.0], {
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+      })
+    : 1;
+  const ombreOpacite = isEntrance
+    ? interpolate(frame, [0, IMPACT - 6, IMPACT, IMPACT + 17], [0, 0.45, 1, 1], {
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+      })
+    : 1;
 
   // allumage juste apres l'atterrissage
   const powerOn = isEntrance
@@ -378,42 +188,183 @@ export const ChillMeterOverlay: React.FC<{ state: MeterState; metal?: MetalFinis
       extrapolateRight: "clamp",
     });
     bottomEdge = 1;
-    // le payoff se declenche quand le gauge touche 100
-    fullChill = interpolate(frame, [6 + RISE, 6 + RISE + 46], [0, 1], {
+    // Le payoff se declenche quand le gauge touche 100 et court jusqu'a la fin du clip.
+    // ⛔ Rampe LINEAIRE et LONGUE (86 frames, pas 46) : chaque effet applique deja sa
+    // propre courbe en interne. Empiler un Easing.out ici saturait `progress` a 1 en
+    // une quinzaine de frames et l'onde de choc s'eteignait avant d'avoir ete vue
+    // (mesure du 04/09 : 0,12 % du cadre a la frame 15, puis 0 %).
+    fullChill = interpolate(frame, [6 + RISE, 6 + RISE + 86], [0, 1], {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
-      easing: Easing.out(Easing.cubic),
     });
+  }
+
+  // Etat initial : l'objet seul, sans habillage de givre plein cadre.
+  if (effects === "off") {
+    bottomEdge = 0;
+    fullChill = 0;
   }
 
   return (
     // Fond TRANSPARENT — aucune couleur de fond, c'est ce qui permet l'export alpha.
     <AbsoluteFill>
-      <BottomEdgeEffect intensity={bottomEdge} frame={frame} fps={fps} />
+      {/* 75 % — la banquise du bord bas. Elle passe DERRIERE le meter : la glace monte
+          autour de l'instrument, elle ne le recouvre pas. */}
+      <BottomIceBank intensity={bottomEdge} t={frame / fps} />
 
-      <div
-        style={{
-          position: "absolute",
-          left: POS_X + entX,
-          top: POS_Y + entY + bounce,
-          width: DEVICE_W * SCALE,
-          height: DEVICE_H * SCALE,
-          transform: `scale(${SCALE})`,
-          transformOrigin: "top left",
-        }}
-      >
-        <ChillMeterDevice
-          chill={chill}
-          frost={frost}
-          powerOn={powerOn}
-          frame={frame}
-          fps={fps}
-          metal={metal}
-          rust={rust}
+      {/* Ombre de CONTACT — ce qui pose reellement l'objet sur le plateau.
+          ⛔ Sa demande n°6 (« especially once animated ») n'etait PAS un defaut
+          d'animation : mesure du 06/09, le device est immobile au pixel pres des la
+          frame 48, et le spring d'entree retombe a 0,000 px de residuel des la frame 80.
+          Il ne flottait pas au sens d'une oscillation — il ne reposait sur RIEN.
+          RUSTIC_SOL_SCREEN existait deja mais n'etait CABLE a aucun element dessine :
+          une ligne de sol qui vit comme un nombre et que rien ne materialise a l'ecran.
+          L'ombre se resserre et s'assombrit a l'atterrissage : c'est le contact qui
+          rend l'appui lisible, pas le recalage vertical (deja juste).
+
+          ⭐⭐ 06/09 — POURQUOI DEUX OMBRES ET PAS UNE.
+          L'OCCLUSION EST GEOMETRIQUEMENT IMPOSSIBLE SUR CE PLATEAU : mesure a 0,4 px
+          pres (agent dedie, 3 methodes, 5 seuils), le panneau du piano ne couvre que
+          x=109..356 alors que le meter va de x=188 a x=716. Les deux tiers droits du
+          bo1tier n'ont AUCUN element de premier plan devant eux — le banc, lui, est en
+          ARRIERE-plan (son bord superieur MONTE vers la droite, il fuit vers le fond).
+          Toute occlusion fidele au decor est donc forcement asymetrique, et une
+          asymetrie sur un objet symetrique se lit comme une AMPUTATION (4 essais rejetes,
+          dont un ou le bouton DATA etait tranche). Le jury demandait « ne pas flotter » ;
+          l'occlusion n'etait que le MOYEN qu'il proposait, pas l'exigence.
+          On ancre donc par les deux indices qui, eux, sont disponibles partout :
+
+          1. OMBRE DE CONTACT DURE (ci-dessous) — c'est l'indice le plus fort quand il
+             n'y a pas de surface d'appui visible. Une ombre unique et floue se lit comme
+             « objet en vol stationnaire » ; un vrai contact a TOUJOURS deux composantes :
+             un noyau serre et dense sur la ligne de contact (quasi net) + l'etalement
+             ambiant diffus. Seul le second existait — d'ou la sensation de flottement.
+
+             ⭐⭐ 06/09 (2e message, meme jour) : sa demande EXPLICITE — « Give it a stronger
+             shadow/contact shadow underneath so it feels more grounded [...] even if it
+             may technically be aligned to the floor line, it still visually reads like it
+             is hovering. » Elle tranche elle-meme le desaccord avec le jury externe (qui
+             rejetait « une ombre plus grasse ») : c'est SA lecture qui prime, pas la leur.
+             Noyau et etalement renforces en densite ET en etendue par rapport au 1er
+             passage — toujours positionnes SOUS la base (cf. note ci-dessous), jamais
+             recentres sur la ligne de sol. */}
+      {chassis === "rustic" && (
+        <>
+          {/* (a) NOYAU DE CONTACT — serre, dense, a peine floute. C'est LUI qui pose
+              l'objet. Il ne fait que 38 % de l'empreinte en hauteur et reste colle a la
+              ligne de sol : plus il est etroit et net, plus l'appui est credible. */}
+          <div
+            style={{
+              position: "absolute",
+              left: RUSTIC_POS_X + entX + SOL_EMPREINTE_X0 * RUSTIC_SCALE,
+              // ⛔ PAS centre sur la ligne de sol : le chassis est opaque JUSQU'A y=1030
+              // (mesure : 373 px opaques a 1030, plus que 33 a 1035). Une ombre centree
+              // sur RUSTIC_SOL_SCREEN a donc sa moitie haute CACHEE DERRIERE l'objet, et
+              // seule sa moitie basse, la plus faible, ressortait — d'ou une ombre
+              // presente dans l'alpha mais invisible a l'ecran. On la pose SOUS la base.
+              top: RUSTIC_SOL_SCREEN + 1 + bounce * 0.12,
+              width: SOL_EMPREINTE_W * RUSTIC_SCALE * ombreEtal * 0.94,
+              height: SOL_OMBRE_H * 0.52,
+              marginLeft: (SOL_EMPREINTE_W * RUSTIC_SCALE * (1 - ombreEtal * 0.94)) / 2,
+              borderRadius: "50%",
+              background:
+                "radial-gradient(ellipse at center, rgba(0,0,0,0.94) 0%, rgba(0,0,0,0.74) 55%, rgba(0,0,0,0) 88%)",
+              opacity: ombreOpacite,
+              filter: "blur(2px)",
+            }}
+          />
+          {/* (b) ETALEMENT AMBIANT — l'ombre douce d'origine, conservee telle quelle.
+              Elle seule ne posait pas l'objet, mais elle porte le volume. */}
+          <div
+            style={{
+              position: "absolute",
+              left: RUSTIC_POS_X + entX + SOL_EMPREINTE_X0 * RUSTIC_SCALE,
+              // Meme correction que le noyau : centre sur la ligne de sol, cet etalement
+              // etait aux 2/3 masque par le chassis. On le descend et on l'etire pour
+              // qu'il porte le noyau au lieu de mourir en 8 px.
+              top: RUSTIC_SOL_SCREEN - 2 + bounce * 0.12,
+              width: SOL_EMPREINTE_W * RUSTIC_SCALE * ombreEtal * 1.14,
+              height: SOL_OMBRE_H * 2.1,
+              marginLeft: (SOL_EMPREINTE_W * RUSTIC_SCALE * (1 - ombreEtal * 1.14)) / 2,
+              borderRadius: "50%",
+              background:
+                "radial-gradient(ellipse at center, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.50) 42%, rgba(0,0,0,0) 80%)",
+              opacity: ombreOpacite,
+              filter: "blur(8px)",
+            }}
+          />
+        </>
+      )}
+
+      {/* 2. REFLET SUR LE PANNEAU DU PIANO — le 2e indice d'appartenance.
+          Le panneau blanc du piano est la SEULE surface claire et lisse du plateau
+          situee devant le plan du meter : mesuree x=109..356, arete haute plate a
+          y~993 (pente reelle 0,54 deg, donc horizontale a l'oeil). C'est physiquement
+          le seul endroit ou un reflet est justifie — on ne le pose donc PAS ailleurs,
+          et surtout pas symetriquement : un reflet a droite serait invente (le banc y
+          est en arriere-plan, il ne peut rien reflechir du meter).
+          ⛔ Volontairement TRES discret : un reflet trop lu se voit comme une tache.
+          Il dit seulement « cet objet partage la lumiere de cette piece ». Il suit
+          l'entree (entX/bounce) pour rester solidaire de l'objet. */}
+      {chassis === "rustic" && (
+        <div
+          style={{
+            position: "absolute",
+            left: PIANO_X0,
+            top: RUSTIC_SOL_SCREEN - 4 + bounce * 0.12,
+            width: PIANO_X1 - PIANO_X0,
+            height: 46,
+            background:
+              "linear-gradient(to bottom, rgba(150,205,235,0.20) 0%, rgba(150,205,235,0.09) 45%, rgba(150,205,235,0) 100%)",
+            opacity: ombreOpacite * 0.85,
+            filter: "blur(6px)",
+            mixBlendMode: "screen",
+            pointerEvents: "none",
+          }}
         />
-      </div>
+      )}
 
-      <FullChillEffect progress={fullChill} frame={frame} fps={fps} />
+      {chassis === "rustic" ? (
+        <div
+          style={{
+            position: "absolute",
+            left: RUSTIC_POS_X + entX,
+            top: RUSTIC_POS_Y + entY + bounce,
+            width: RUSTIC_W * RUSTIC_SCALE,
+            height: RUSTIC_H * RUSTIC_SCALE,
+            transform: `scale(${RUSTIC_SCALE})`,
+            transformOrigin: "top left",
+          }}
+        >
+          <ChillMeterRustic chill={chill} powerOn={powerOn} frost={frost} frame={frame} fps={fps} />
+        </div>
+      ) : (
+        <div
+          style={{
+            position: "absolute",
+            left: POS_X + entX,
+            top: POS_Y + entY + bounce,
+            width: DEVICE_W * SCALE,
+            height: DEVICE_H * SCALE,
+            transform: `scale(${SCALE})`,
+            transformOrigin: "top left",
+          }}
+        >
+          <ChillMeterDevice
+            chill={chill}
+            frost={frost}
+            powerOn={powerOn}
+            frame={frame}
+            fps={fps}
+            metal={metal}
+            rust={rust}
+          />
+        </div>
+      )}
+
+      {/* 100 % — gel des 4 bords + onde de choc codee + neige, PAR-DESSUS le meter
+          (l'onde en part, elle doit donc le franchir). */}
+      <FullChillCoded progress={fullChill} t={frame / fps} />
     </AbsoluteFill>
   );
 };

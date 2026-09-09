@@ -38,16 +38,16 @@ Session sans production visuelle. Ce qui a changé et qui affecte TOUTE session 
 
 ## 💰 CONTRAT UPWORK chill-meter (AbiGirl Reacts) — révision 1 traitée, RIEN renvoyé
 
-**Premier contrat freelance signé (30/08), actif.** 350 $ → 297,50 $ net, 3 jalons (3/7/11 sept).
-Abigail a répondu au jalon 1 : structure VALIDÉE, **6 révisions demandées** — toutes traitées le
-02/09 (labels boutons restaurés, flocons du titre, bouton power recentré de 11 px, SCALE
-0.52→0.373595, passe Fable 5 sur le métal, écran en dalle noire).
-⏭️ **Tester la piste 3D d'abord, PUIS renvoyer** (décision Aziz : un envoi unique plutôt que deux
-partiels ; il ne reste qu'1 révision sur ce jalon). Vrai écart restant = le **givre** (« neige
-posée » vs « frimas adhérent »), pas le métal. ⛔ Bug ouvert : `ChillMeter-Metal-Flat/-Brushed/
--Machined` plantent (`METAL_RAMPS` vise 5 gradients morts) — à corriger avant livraison.
-Prospection Upwork en pause 1-2 jours (4 fronts déjà ouverts : ce contrat + 3 candidatures).
+**Premier contrat freelance signé (30/08), actif.** 350 $ → 297,50 $ net, 3 jalons (jalon 1 =
+105 $, soumis 02/09 non payé). 3e révision (au-delà des 2 prévues au contrat) envoyée le 06/09 :
+ses 6 demandes du 05/09 toutes traitées et mesurées — rouille en accents, icônes bleues, powered-on
++ le nom de la chaîne qui s'allume au 75 % (jalon 3 anticipé, nommé comme tel dans le message),
+centrage à 1,5 px, ombre de contact. 🔴 **Elle a répondu le 06/09** : 5 demandes, aucune codée. ⛔ Point bloquant : l'occlusion
+(4 essais ratés). ⭐ Reprise : `memory/starters/STARTER-chill-meter-revision-06-09.md`.
 → Source de vérité : `memory/client-sim-tests/upwork-chill-meter/STATUS.md`.
+→ 3 briques méthode nées de ce jalon : `memory/doctrines/REVERSIBILITE-MATIERE-GENEREE.md` ·
+`memory/feedbacks/feedback_annoter-l-image-plutot-qu-expliquer-au-client.md` ·
+`memory/projects/CHANTIER-CADRAGE-REVISIONS-CLIENT.md`.
 
 ---
 

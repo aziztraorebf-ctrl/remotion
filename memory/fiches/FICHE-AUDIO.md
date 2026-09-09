@@ -82,6 +82,14 @@ exactement les 7 bornes de plans mesurées à la main sur la référence Foster.
 Sans ce garde-fou, une salve d'apparitions rapides (une phrase qui s'écrit mot à mot) sortait
 entièrement en « COUPE ». Une vraie coupe **domine largement ses voisines** (× 2,5).
 
+⭐⭐ **Un impact fort se marque par un CREUX sonore juste avant, pas par un pic au moment de
+l'impact** (mesuré TED-Ed 2026-09-02 : la seule vraie coupe du film est le seul moment où le son
+DESCEND de -30dB, jamais où il monte). Pour un effondrement/impact : couper le lit sonore ~0.5s
+avant, laisser l'impact seul, laisser le lit revenir après. ⭐ **La durée d'un SFX ponctuel = la
+durée du geste qu'il accompagne** : un geste bref (~5 frames) → tick sec haut-perché (+9 à +32dB
+en 3-10kHz, decay médian 5 frames) ; un geste tenu (~1s, ex. un zoom qui dure) → son tenu toute sa
+durée, pas un tick. Source : `ANALYSE-CONTINUOUS-FLOW.md` §5 R7/R9 (13 événements mesurés à la main).
+
 ⚠️ **La sortie donne des CANDIDATS, pas une vérité.** Garder ce qui porte un sens narratif,
 retirer le reste : un SFX par micro-mouvement fatigue autant que pas de SFX du tout. L'outil
 dit **OÙ**, jamais **QUOI** — le choix du fichier reste un jugement.

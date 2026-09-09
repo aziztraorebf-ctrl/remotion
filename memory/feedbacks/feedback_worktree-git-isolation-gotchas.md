@@ -29,6 +29,53 @@ branche il ecrit. On ne le voit qu'en le cherchant.
 **Le reflexe** : `git branch --show-current` AVANT chaque commit d'un chantier long, pas seulement au
 debut. Une seule commande, et c'est le seul moment ou l'erreur est encore gratuite.
 
+### ⛔⛔ SUITE IMMEDIATE (2026-09-04) — « COMMITE » NE VEUT PAS DIRE « ACCESSIBLE »
+
+J'ai conclu le wrap en disant « le travail est en securite, tout est dans le commit ». **C'etait
+vrai et inutile** : la session suivante a ouvert le repo, cherche le starter, et repondu a Aziz
+« ce fichier n'existe pas ». Elle a alors lu l'ANCIEN etat (STATUS pre-rejet) et propose de
+reprendre un chantier que la cliente venait d'abandonner.
+
+⛔ **Un fichier memoire commite sur une branche que le repertoire n'a pas est INVISIBLE pour
+toutes les autres sessions.** La memoire se lit sur le DISQUE, pas dans l'historique git. Un
+starter que personne ne peut ouvrir ne sert a rien — pire, il donne a l'orchestrateur la fausse
+certitude d'avoir transmis.
+
+✅ **LE REFLEXE, en fin de session quand le repertoire est sur une AUTRE branche que la sienne** :
+apres le commit, EXTRAIRE les fichiers memoire vers le disque sans changer de branche :
+```
+for f in <fichiers memoire>; do git show <ma-branche>:"$f" > "$f"; done
+```
+Ils apparaissent alors en `M`/`??` dans le working tree partage (donc visibles par tous), sans
+toucher a l'index, sans checkout, sans risque pour la session voisine.
+⛔ Ne PAS extraire les fichiers de CODE de la meme facon : eux appartiennent a la branche et
+melangeraient deux chantiers. Uniquement `memory/` — la memoire est commune a toutes les sessions.
+
+✅ **Le test qui aurait attrape l'erreur** : avant de cloturer, faire `ls <chemin-du-starter>`
+depuis le repertoire de travail — pas `git show`. Si `ls` echoue, la session suivante echouera.
+
+### ⭐ VARIANTE (2026-09-04) — mes commits sont SAUFS, mais mes FICHIERS ont disparu
+
+Meme configuration (2 sessions, 1 repo, aucun worktree), symptome INVERSE et plus effrayant :
+mes 3 commits etaient bien sur MA branche `rnd/chill-meter-3d`, mais l'autre session avait
+bascule le REPERTOIRE sur la sienne. Au `/wrap` : `git log` ne montrait aucun de mes commits, et
+`ls memory/starters/MON-STARTER.md` repondait **No such file or directory**.
+
+⛔ **Le reflexe a NE PAS avoir** : croire que le travail est perdu et vouloir « le refaire » ou
+faire un `checkout` pour le recuperer — ce qui ecraserait le travail de l'autre session.
+✅ **Le bon reflexe, dans cet ordre** :
+1. `git branch --show-current` — on est sur QUELLE branche ?
+2. `git log --oneline -4 <ma-branche>` — mes commits existent-ils toujours ? (oui, presque toujours)
+3. `git show <ma-branche>:<chemin>` — lire un fichier SANS changer de branche
+4. `git show <ma-branche> --stat` — verifier que le commit contient bien tout
+Un fichier absent de l'arbre de travail n'est pas un fichier perdu : il est dans le commit, sur
+l'autre branche. Ne JAMAIS changer de branche pour le « retrouver » quand une autre session
+travaille dans le meme repertoire.
+
+⭐ Corollaire pour les AGENTS : un agent lance dans cette situation lira les mauvais fichiers sans
+le savoir. Lui donner explicitement la branche et la consigne `git show <branche>:<chemin>`.
+Vecu : 2 agents de wrap briefes ainsi ont travaille correctement malgre la bascule.
+
 **La reparation, quand c'est deja arrive** : ⛔ NE PAS cherry-pick ni rebase — les commits sont valides,
 seulement mal ranges. Verifier d'abord si la branche cible a du travail EXCLUSIF
 (`git log <cible>..<courante>` et l'inverse). Si la cible n'a rien d'exclusif, elle est juste en retard :

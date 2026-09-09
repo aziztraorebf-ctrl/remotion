@@ -2033,3 +2033,68 @@ ever passes between the camera and him, the camera never goes through a wall"*.
 il vit) et reste cohérente au retour — le modèle ne fige pas le sujet pour gérer le mouvement de caméra.
 C'est ce qui rend l'orbite exploitable une fois le previs corrigé.
 
+
+## ✅ 2026-09-07 — CONFIRMATION : `run_template` echoue encore, `submit_workflow` marche
+
+Re-verifie sur un cas neuf (brume/fumee pour le chill-meter). Le bug de la ligne 246 est
+TOUJOURS d'actualite et se reproduit a l'identique :
+- `run_template` + `input_overrides` sur `video_minimax_h3_i2v` : le prompt EST pris en compte,
+  mais l'image de depart reste celle de DEMO du template (souris de gaming transparente).
+  2 tentatives, 2 echecs. Sortie **640x480 carree** alors que l'image source etait 16:9 —
+  c'est le 2e symptome deja documente.
+- **Le gabarit `scripts/tools/comfy-graphs/minimax-h3-r2v-graph-template.json` + `submit_workflow`
+  a marche du 1er coup** : notre image utilisee, resolution 864x480 respectee, `dry_run`
+  valide sans aucun warning (contre 2 warnings sur chaque `run_template`).
+
+⭐ Rappel de la sequence qui marche (ne pas re-deviner) :
+1. `upload_file` -> renvoie une commande `curl PUT` a executer -> recuperer le `name`
+2. charger le gabarit R2V, remplacer SEULEMENT : `137.image` (le name), `138.value` (prompt),
+   `132.value` (duree en s), et `136.width`/`136.height` en **INT litteraux**
+3. si une seule reference : **supprimer** `136.inputs["ref_images.ref_image_1"]` ET le node `139`
+4. `submit_workflow(dry_run=true)` d'abord (gratuit), puis reel
+5. `wait_for_job` en boucle, `get_output`, puis **verifier la resolution reelle du fichier**
+   (le serveur renvoie un advisory explicite la-dessus)
+
+### Fond noir pur = pas de detourage necessaire
+Mesure sur le clip produit : coin (0,0,0) exact, zone haute a 0,5/255 de moyenne, **64 % de
+pixels quasi-noirs** — meme profil que l'asset d'explosion valide (`64,2 %`). Donc
+`mixBlendMode: "screen"` suffit pour l'integrer dans Remotion, AUCUN detourage alpha
+(Bria/rembg) n'est necessaire ni justifie. Cf. `feedback_gemini-assets-fond-transparent.md`
+et `src/projects/_rnd/vox-repro/Scene2JetsStrike.tsx` (« LE TEST CLE »).
+
+⛔ Piege de prompt rencontre : demander a la brume de « se dissoudre / thin out » vide le
+cadre en fin de clip (frame finale noire) — inutilisable en boucle. Pour un effet en `<Loop>`,
+demander une turbulence CONTINUE sans disparition.
+
+### ⭐⭐ Bria (detourage alpha payant) TESTE le 2026-09-07 — le `screen` GRATUIT gagne
+
+Test demande par Aziz (« mieux vaut ne pas dire d'emblee qu'on n'en a pas besoin ») sur le
+clip de brume : `BriaTransparentVideoBackground` -> `JoinImageWithAlpha` -> `SaveWEBM`.
+Cout mesure : **11 credits/seconde** (~57 credits pour 5,2 s).
+
+**Bria fait techniquement un travail PARFAIT** : `alpha_mode=1`, 256 valeurs d'alpha
+distinctes, 66,7 % transparent, degrades continus (1,1 % seulement de pixels pleinement
+opaques). Rien a redire sur l'outil.
+
+⛔ **MAIS le resultat compose est MOINS BON que le `screen` gratuit** — mesure sur le vrai
+plateau (zone hors objet) :
+| methode | ecart moyen | pixels modifies |
+|---|---|---|
+| `mixBlendMode: screen` (gratuit) | **+18,2** | 42,8 % |
+| alpha Bria (~57 credits) | +1,8 | 32,6 % |
+
+**CAUSE (physique, pas technique)** : une brume lumineuse est un phenomene **ADDITIF** —
+elle EMET de la lumiere. `screen` fait exactement ca. Une composition alpha REMPLACE les
+pixels du fond par ceux du clip, gris compris — d'ou un voile grisatre terne qui
+ASSOMBRIT par endroits (visible a l'oeil : volutes gris-vert sales sur le visage/l'epaule,
+ca lit comme de la salete sur l'objectif, pas comme du givre).
+
+⭐ **REGLE** : pour toute matiere LUMINEUSE (brume, fumee eclairee, particules, glow,
+explosion, onde de choc), rester en `screen` sur fond noir. L'alpha reel n'a d'interet que
+pour une matiere OPAQUE qui doit masquer ce qu'il y a derriere (un objet, un personnage).
+Ne pas repayer ce test.
+
+⛔ Gotcha technique au passage : `upload_file` refuse les .mp4 (confirme) -> passer par un
+GIF (`ffmpeg -vf "fps=24,scale=W:H,palettegen/paletteuse"`), charge par `LoadImage` puis
+`CreateVideo`. Et le `seed` de Bria est plafonne a **2147483647** — un seed H3 (bien plus
+grand) fait echouer la validation AVANT tout appel payant (aucun credit perdu).

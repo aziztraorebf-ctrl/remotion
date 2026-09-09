@@ -9,7 +9,7 @@ Claude est Expert Video Director (Remotion). Aziz est le réalisateur : il décr
 
 ## ⛔ MODÈLES API VERROUILLÉS — LIRE AVANT TOUT APPEL API (NON-NEGOTIABLE)
 
-> Ma knowledge cutoff (janvier 2026) est en retard. Les modèles ci-dessous sont les **seuls** à utiliser. En cas de doute, relire ce bloc — ne pas inventer, ne pas revenir aux modèles « plus connus » de la mémoire pré-entraînée. Liste complète des modèles interdits + gotchas : `memory/tools/gemini.md`.
+> Ma knowledge cutoff est TOUJOURS en retard sur les modeles reellement disponibles, quelle que soit sa date. Les modèles ci-dessous sont les **seuls** à utiliser. En cas de doute, relire ce bloc — ne pas inventer, ne pas revenir aux modèles « plus connus » de la mémoire pré-entraînée. Liste complète des modèles interdits + gotchas : `memory/tools/gemini.md`.
 
 | Usage | Modèle EXACT à utiliser |
 |---|---|
@@ -73,10 +73,14 @@ Ne JAMAIS dire « je ne peux pas / je n'ai pas accès » sans avoir consulté la
 > Ils sont ici pour que tout agent les reçoive. Chacun vient d'un incident réel.
 
 - ⛔⛔ **AUCUNE commande git destructive dans un répertoire partagé** — ni `checkout`, ni `reset`,
-  ni `stash`/`stash pop`. Vécu 2×: un agent a écrasé le travail d'un autre par `git checkout`
+  ni `stash`/`stash pop`. Vécu 3×: un agent a écrasé le travail d'un autre par `git checkout`
   (2026-07-01) ; un agent `/wrap` a fait un `git stash` pendant que la session avait 25 fichiers non
-  commités — `git status` est revenu VIDE, tout semblait perdu (2026-08-01). Un agent commite
-  NOMMÉMENT ses propres fichiers, jamais `git add -A`.
+  commités — `git status` est revenu VIDE, tout semblait perdu (2026-08-01) ; malgré la règle déjà
+  écrite ici, `git stash`/`stash pop` réutilisés 3× le 2026-09-03 (contrat chill-meter) pour
+  comparer un rendu à HEAD, pendant qu'une AUTRE session travaillait sur la même branche — aucun
+  dégât cette fois (vérifié), mais le risque était réel et évitable : `git show HEAD:<chemin> ><temp>`
+  ou une copie du fichier avant modification donnent la même comparaison sans jamais toucher à
+  l'index partagé. Un agent commite NOMMÉMENT ses propres fichiers, jamais `git add -A`.
 - ⛔ **NOM PROPRE à l'écran → vérifier l'orthographe (Wikipédia) AVANT le render.** « HEMETI » au
   lieu de « HEMEDTI » en ouverture d'un Acte : perte de crédibilité documentaire immédiate.
 - ⛔ **Whisper : API seulement, JAMAIS en local** (fallback ElevenLabs).
@@ -145,7 +149,7 @@ info n'est PAS trouvée en 1 grep/lecture dans `memory/doctrines/`, `feedbacks/`
 **Absolus** : SCAN templates (CATALOGUE-CARTE-VIVANTE + MAPBOX-COMPOSANTS) AVANT code · Production Brief validé Aziz AVANT code (SFX plancher 0.50, pitch 32 si 1-4 pays) · 2 appels Gemini MAX · drapeaux : `MapboxCountryFlagDecal` (source-image) sur carte avec pitch ; `useClipFlags` seulement à pitch=0 — JAMAIS `drawFlagCanvas`. Détail : `memory/doctrines/CARTO-OVERLAYS-PRINCIPES.md` · drapeau/effet vivant obligatoire. S'applique à TOUT nouveau beat, même un Short fait « comme ça ».
 
 **⛔ GEMINI = SIGNAL, JAMAIS JUGE** (les deux pipelines) : le score est consultatif. Procédure : 1 appel → vérifier chaque point contre le réel → appliquer seulement ce qui est vrai → STOP. JAMAIS de boucle Gemini→fix→Gemini. Le jugement d'Aziz prime. Outils review : `scripts/tools/REVIEW-TOOLS-INDEX.md`.
-ℹ️ **Upload VIDÉO complète à Gemini 3.1 Pro = FIABLE** (Files API, validé 2026-06-16 ; le bug "répond sans voir" du 13 juin est résolu). Permet de juger MOUVEMENT/rythme/transitions/SON — supérieur aux frames figées pour un breakdown premium. Fiabilité déjà prouvée (test archivé pour référence : `scripts/tools/_archive/gemini-video-upload-test.py`). Détail : `memory/tools/gemini-video-upload-fiable.md`. (Gemini reste SIGNAL, pas juge.)
+ℹ️ **Upload VIDÉO complète à Gemini 3.1 Pro = FIABLE** — juger MOUVEMENT/rythme/transitions/SON, supérieur aux frames figées. Détail : `memory/tools/gemini-video-upload-fiable.md`. (Gemini reste SIGNAL, pas juge.)
 
 ---
 
@@ -163,7 +167,7 @@ info n'est PAS trouvée en 1 grep/lecture dans `memory/doctrines/`, `feedbacks/`
 
 **Async PixelLab** : jamais annoncer « j'attends » sans exécuter le `sleep` Bash réel. Détail du flow (`animate_character` → `sleep 120` → `get_character()`, relance si "None yet") : `memory/doctrines/ATLAS-PIXELLAB-PLAYBOOK.md`.
 
-**Config** : Node v24.6.0, npm (pas bun), macOS. Packages : `@remotion/paths`, `@remotion/shapes`, `lucide-react`. Clés API : `.env` racine (Mapbox inclus), jamais hardcoder, détail `memory/apis-and-tools.md`. ⛔ **`scripts/tools/render-on-vercel.py` = POC ABANDONNÉ, NE PAS UTILISER** (confirmé 2026-08-02 : pointe vers un repo Vercel séparé `aziztraorebf-ctrl/remotion-renderer` figé au 2026-03-27, 3 compositions de démo `MyComp`/`GeoTest`/`NextLogo` seulement — ne verra jamais nos vraies compositions, porter est disproportionné vu nos 2.3 Go d'assets + Mapbox/deck.gl). Render >30s (D3/SVG pur, PAS Mapbox/WebGL) → `npx remotion render` classique en local. **EXCEPTION Mapbox/WebGL → `scripts/render-mapbox.sh` OBLIGATOIRE** (Vercel ne supporte pas WebGL headless). QA : `scripts/visual_review.py` (routeur multi-modèles review). Audio : `scripts/generate-narration-expressive.py` (narration ElevenLabs) + `scripts/generate-sfx-elevenlabs.py` (SFX).
+**Config** : Node v24.6.0, npm (pas bun), macOS. Packages : `@remotion/paths`, `@remotion/shapes`, `lucide-react`. Clés API : `.env` racine (Mapbox inclus), jamais hardcoder, détail `memory/apis-and-tools.md`. ⛔ **`scripts/tools/render-on-vercel.py` = POC ABANDONNÉ, NE PAS UTILISER** (tranché 2026-08-02, détail `memory/apis-and-tools.md`). Render >30s (D3/SVG pur, PAS Mapbox/WebGL) → `npx remotion render` classique en local. **EXCEPTION Mapbox/WebGL → `scripts/render-mapbox.sh` OBLIGATOIRE** (Vercel ne supporte pas WebGL headless). QA : `scripts/visual_review.py` (routeur multi-modèles review). Audio : `scripts/generate-narration-expressive.py` (narration ElevenLabs) + `scripts/generate-sfx-elevenlabs.py` (SFX).
 
 ---
 
@@ -190,4 +194,12 @@ Nommage : `beatN_v3.mp4` (wip) → `beatN_V3.mp4` (présenté) → `beatN-FINAL.
 ## Langue & emojis
 - Communication : français. Code/docs techniques : anglais.
 - **NO EMOJIS IN CODE** : interdit `.ts .tsx .js .json .yaml .env` · autorisé `.md .txt` uniquement.
+  ⭐ **Ce qui compte = ce qui est AFFICHÉ ou EXÉCUTÉ** : zéro emoji dans une string rendue à
+  l'écran, un nom de variable/fichier/clé JSON, ou une valeur de données. En **commentaire**,
+  les marqueurs de gravité `⛔ ⭐ ⚠️ ✅` sont admis — ils ne sont ni compilés ni affichés, et
+  ils se repèrent plus vite que `WARNING:` dans un fichier de 700 lignes (pratique constante
+  du repo). ⛔ Cette tolérance ne s'étend PAS aux strings : un emoji dans un `<text>` part
+  dans la vidéo livrée au client. *(Précisé le 2026-09-07 : un agent de vérification a
+  signalé 34 emojis en commentaire comme violation — faux positif qui masquait le vrai
+  risque. Une règle qu'on viole en la citant s'affaiblit et fait rater les vraies fautes.)*
 - **ACCENTS FR OBLIGATOIRES dans les strings AFFICHÉES** (texte à l'écran en JSX) : « SOUVERAINETÉ », pas « SOUVERAINETE ». NO-EMOJIS ≠ NO-ACCENTS — ne pas omettre É/È/À/Ç par confusion. Vérifier avant render (un titre amputé d'accent = faux visuel).

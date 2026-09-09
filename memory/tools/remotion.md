@@ -386,3 +386,27 @@ et regle gravee : `memory/doctrines/DOCTRINE-SOUVERAIN.md` §3.8 point 6.
 
 <!-- Section "Kimi review" supprimee 2026-04-24 : appartient a quality-reviewer, pas a remotion composition. Voir .claude/agents/quality-reviewer.md -->
 
+
+## Export video avec ALPHA (fond transparent) — 2 pieges verifies le 2026-09-07
+
+**Commande qui marche (ProRes 4444, recommande pour livraison CapCut)** :
+```bash
+npx remotion render src/index.ts <composition-id> out.mov \
+  --codec=prores --prores-profile=4444 \
+  --pixel-format=yuva444p10le --image-format=png --scale=1
+```
+⛔ `--prores-profile=4444` SEUL ne suffit pas — `--pixel-format` est une option INDEPENDANTE.
+Sans `--pixel-format=yuva444p10le` explicite, ffmpeg retombe sur `yuv422p12le` (sans alpha),
+meme avec le bon profil ProRes.
+
+**WebM VP8** (`--codec=vp8 --pixel-format=yuva420p --image-format=png`) marche aussi et
+produit un fichier bien plus petit (~200 Ko vs ~43 Mo), mais support alpha inegal dans CapCut.
+
+⛔⛔ **Piege de VERIFICATION (a ne pas refaire)** : sur un WebM VP8, `ffprobe` affiche
+`pix_fmt=yuv420p` MEME quand l'alpha est presente et correcte — VP8 la code dans un plan
+Matroska separe (`BlockAdditional`), pas dans le pixel format. Le VRAI marqueur est le tag
+conteneur `alpha_mode: "1"`. Et le decodeur ffmpeg PAR DEFAUT jette l'alpha silencieusement a
+l'extraction d'une frame : `ffmpeg -i x.webm frame.png` donne un PNG avec alpha=255 partout
+(faux negatif). Il faut forcer le decodeur `-vcodec libvpx -i x.webm frame.png` pour la lire
+correctement. Verifier ffprobe seul, ou extraire sans forcer le decodeur, fait croire a une
+regression Remotion qui n'existe pas — 2 tentatives perdues sur ce faux diagnostic.

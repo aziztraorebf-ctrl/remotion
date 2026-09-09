@@ -136,7 +136,7 @@ originSessionId: ce6f8686-595b-4c06-97cf-65f9ba224146
 
 - **Vercel Blob** : stockage assets et renders
 - **Vercel Renderer** : `remotion-renderer-khaki.vercel.app` — compositions MyComp, GeoTest
-- **yt-dlp** : `/opt/homebrew/bin/yt-dlp` — frames, audio, transcripts YouTube
+- **yt-dlp** : `yt-dlp` nu (binaire du PATH) — frames, audio, transcripts YouTube. ⛔ PAS `/opt/homebrew/bin/yt-dlp` : périmé, rend un **403**. Détail + 3 installations concurrentes : `memory/tools/yt-dlp.md`
 
 ---
 

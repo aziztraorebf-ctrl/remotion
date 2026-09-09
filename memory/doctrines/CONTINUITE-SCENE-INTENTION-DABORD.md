@@ -141,6 +141,56 @@ s'affole) est passée du 1er coup : causalité VISIBLE, pas symbolique.
 
 ---
 
+### 6. ⭐⭐ ANIMATIC JETABLE EN FORMES PRIMITIVES — trancher la MÉCANIQUE avant le coût du dessin
+(prouvé 2026-09-02/03, pièce portfolio « Le cauri », contrainte forte : morphing continu, zéro coupe)
+
+Quand une pièce a une contrainte de CONTINUITÉ ou de RYTHME difficile à juger sur une image fixe (un
+morphing sans coupe, un enchaînement de caméra, une chorégraphie d'objets), la FORME (§1) ne suffit pas
+à valider avant de coder : il faut aussi valider la **mécanique dans le temps**. Un storyboard classique
+(planche de vignettes) ne le permet pas — ce qui compte ici est justement ce qu'une image fixe ne montre
+pas. Faire un **animatic jetable** : composition Remotion minimale, formes primitives (cercles, rectangles),
+AUCUNE couleur ni détail, juste le timing et les trajectoires. Coder l'animatic est rapide (pas de dessin,
+pas d'appel LLM payant) — il sert à trancher la mécanique et le rythme AVANT de payer le coût du dessin
+final (agent `svg-dessinateur` ou équivalent).
+
+**Juger l'animatic PAR MESURE, pas au jugé** — même discipline que `feedback_comparatif-storyboard-mesurer-pas-demander` :
+- Anti-gel : échantillonner N frames sur toute la durée, hasher, vérifier qu'aucune n'est identique
+  à sa voisine (ex. cauri : 42 frames uniques / 42 échantillons).
+- Étendue de trajet : mesurer la largeur/hauteur occupée par un élément en mouvement en px ou en %
+  du cadre, pas « ça semble bouger assez ». Sert à comparer deux variantes objectivement (ex. cauri :
+  flux long 88 % de la largeur vs flux court 17 %, ratio ×5,1 — quantifie « long » vs « court »).
+- Durée totale vs cible : vérifier au chrono/ffprobe, pas à l'impression.
+
+**Corollaire — une contrainte de brief écrite AVANT d'avoir analysé une référence peut être plus dure
+que la référence elle-même.** Le brief cauri exigeait « topologies compatibles, nombre de points
+constant » entre chaque état pour garantir un morph continu. Une analyse mesurée de la référence
+(TED-Ed « 4 ways to tell a great story », zéro morph de path sur 5 minutes, une seule coupe franche,
+4 dispositifs simples : ancre fixe, iris qui emporte le fond, réassignation d'une même primitive, mise
+en file des changements) a montré que la contrainte visuelle recherchée était atteignable SANS cette
+règle technique dure. **Analyser une référence par la mesure AVANT le premier jet**, pas seulement
+après un rejet — la contrainte qu'on s'impose seul (sans avoir regardé comment d'autres résolvent le
+même problème) est souvent plus dure que nécessaire.
+
+**Corollaire — tester un dispositif de mise en scène sur l'animatic jetable, pas sur le dessin final.**
+Un dispositif peut être conceptuellement juste et pourtant mal exécuté à l'implémentation — l'écart ne
+se voit qu'en le testant, et le tester sur l'animatic jetable (cercles gris) le fait à coût quasi nul.
+Cas cauri : le dispositif IRIS (zoom qui révèle l'état suivant) a été testé directement sur l'animatic ;
+mesuré bon sur le principe (cadre fixe une majorité du temps, mouvement réservé aux transitions — conforme
+à la référence), mais un vrai défaut de SÉQUENCEMENT est apparu : le zoom de caméra et le déplacement du
+contenu bougeaient sur la MÊME fenêtre temporelle, donc se contrariaient visuellement (le contenu suivant
+apparaissait en périphérie PENDANT que le cadre reculait, au lieu d'être déjà en place et seulement
+révélé). **Décision prise sur cette mesure** : ne pas corriger sur l'animatic gris — un défaut de TIMING
+se règle mieux sur le vrai dessin (les cercles gris sont un mauvais support pour juger un timing fin) —
+mais le défaut était sinon invisible sans avoir testé le dispositif en mouvement.
+
+**How to apply** : dès qu'une pièce a une contrainte de continuité/rythme qui ne se juge pas sur une
+image fixe → animatic jetable en formes primitives (composition Remotion minimale, timing isolé dans
+un fichier séparé conçu pour SURVIVRE au dessin final) AVANT tout dessin coûteux. Juger par mesure
+(anti-gel par hash, étendue de trajet, durée). Tester chaque dispositif de mise en scène risqué
+(caméra, transition) sur cet animatic avant de l'implémenter sur le rendu final.
+
+---
+
 ## CHECKLIST (30 secondes, avant de coder/prolonger une scène)
 0. **Lisibilité** : si je devais expliquer le rapport entre 2 éléments à l'oral, la scène ne le porte pas
    → un seul monde d'objets, causalité visible (§ 5).
@@ -254,6 +304,8 @@ sans casser l'épure ; jeter le bruit). Détail : `scripts/tools/REVIEW-TOOLS-IN
 - Lié au chantier [[decode-hera-templates]] : les 3 fonds + 6 familles servent comme *réponses* à une
   intention, jamais comme catalogue où l'on « cherche quoi mettre ».
 - Cas incarné : hook Sénégal `ProtoEffect_MapDrawParchemin` + suite `ProtoEffect_Fracture`.
+- **Contrainte de continuité/rythme qui ne se juge pas sur une image fixe** → § 6 ci-dessus (animatic
+  jetable en formes primitives, mesuré par hash anti-gel + étendue de trajet, AVANT le dessin final).
 
 ## Élément visuel qui traverse une frontière de scène (continuité au raccord)
 

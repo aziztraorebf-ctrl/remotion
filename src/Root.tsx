@@ -2,6 +2,14 @@ import { CfaShortHook9x16, CFA_SHORT_HOOK_FRAMES, CFA_SHORT_HOOK_FPS } from "./p
 import { CfaNuit1994Anime16x9, CFA_NUIT_1994_FRAMES, CFA_NUIT_1994_FPS } from "./projects/_rnd/fable-svg/CfaNuit1994Anime16x9";
 import { ChillMeterShowcase, SHOWCASE_FRAMES } from "./projects/_rnd/chill-meter/ChillMeterShowcase";
 import { ChillMeterOverlay } from "./projects/_rnd/chill-meter/ChillMeterOverlay";
+import { ChillMeterPreviewSurSonPlateau } from "./projects/_rnd/chill-meter/ChillMeterPreviewSurSonPlateau";
+import { TestBrumeH3 } from "./projects/_rnd/chill-meter/TestBrumeH3";
+import { RecapClient, RECAP_DUREE } from "./projects/_rnd/chill-meter/RecapClient";
+import { Effet75Seul, Effet100Seul, OndeSeule, EFFET75_FRAMES, EFFET100_FRAMES } from "./projects/_rnd/chill-meter/EffetsEcran";
+import { ShockWave3D, SHOCKWAVE_3D_FRAMES } from "./projects/_rnd/chill-meter/ShockWave3D";
+import { ShockWave3Dv2, SHOCKWAVE_V2_FRAMES } from "./projects/_rnd/chill-meter/ShockWave3D_v2";
+import { ColdVapor3D, COLD_VAPOR_FRAMES } from "./projects/_rnd/chill-meter/ColdVapor3D";
+import { ColdVaporLayers, VAPOR_LAYERS_FRAMES } from "./projects/_rnd/chill-meter/ColdVaporLayers";
 import {
   SparkAnimationPrototype,
   SPARK_PROTOTYPE_FRAMES,
@@ -5664,6 +5672,96 @@ export const RemotionRoot: React.FC = () => {
 
       <Folder name="RND-ChillMeter">
         <Composition
+          id="ChillMeter-VaporLayers75"
+          component={ColdVaporLayers}
+          durationInFrames={VAPOR_LAYERS_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ showGuides: false }}
+        />
+        <Composition
+          id="ChillMeter-VaporLayers75-Guides"
+          component={ColdVaporLayers}
+          durationInFrames={VAPOR_LAYERS_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ showGuides: true }}
+        />
+        <Composition
+          id="ChillMeter-Vapor75"
+          component={ColdVapor3D}
+          durationInFrames={COLD_VAPOR_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "stagne" as const, showGuides: false }}
+        />
+        <Composition
+          id="ChillMeter-Vapor100"
+          component={ColdVapor3D}
+          durationInFrames={COLD_VAPOR_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "souffle" as const, showGuides: false }}
+        />
+        <Composition
+          id="ChillMeter-Vapor75-Guides"
+          component={ColdVapor3D}
+          durationInFrames={COLD_VAPOR_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "stagne" as const, showGuides: true }}
+        />
+        <Composition
+          id="ChillMeter-Vapor100-Guides"
+          component={ColdVapor3D}
+          durationInFrames={COLD_VAPOR_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "souffle" as const, showGuides: true }}
+        />
+        <Composition
+          id="ChillMeter-ShockWave3Dv2"
+          component={ShockWave3Dv2}
+          durationInFrames={SHOCKWAVE_V2_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ showAnchor: false }}
+        />
+        <Composition
+          id="ChillMeter-ShockWave3Dv2-Anchor"
+          component={ShockWave3Dv2}
+          durationInFrames={SHOCKWAVE_V2_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ showAnchor: true }}
+        />
+        <Composition
+          id="ChillMeter-ShockWave3D-Anchor"
+          component={ShockWave3D}
+          durationInFrames={SHOCKWAVE_3D_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ showAnchor: true }}
+        />
+        <Composition
+          id="ChillMeter-ShockWave3D"
+          component={ShockWave3D}
+          durationInFrames={SHOCKWAVE_3D_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ showAnchor: false }}
+        />
+        <Composition
           id="ChillMeter-Entrance"
           component={ChillMeterOverlay}
           durationInFrames={60}
@@ -5671,6 +5769,18 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
           defaultProps={{ state: "entrance" as const }}
+        />
+        {/* Clip d'allumage 4 s : l'entree (arrivee diagonale, atterrissage, rebond,
+            allumage) puis 2,5 s d'ecran allume qui respire. Meme structure que le
+            clip valide du 03/09, mais sur le chassis RUSTIQUE choisi par la cliente. */}
+        <Composition
+          id="ChillMeter-Entrance4s-Rustic"
+          component={ChillMeterOverlay}
+          durationInFrames={120}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "entrance" as const, chassis: "rustic" as const }}
         />
         <Composition
           id="ChillMeter-Idle"
@@ -5707,6 +5817,148 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
           defaultProps={{ state: "fill75" as const }}
+        />
+        {/* PREVIEW SEULEMENT (06/09) — jamais livree a la cliente. Composite le meter
+            (fond transparent, INCHANGE) par-dessus sa vraie capture, en h264 opaque,
+            pour juger en video le resultat en contexte sans depedre de l'export alpha. */}
+        <Composition
+          id="ChillMeter-PREVIEW-Fill75-sur-plateau"
+          component={ChillMeterPreviewSurSonPlateau}
+          durationInFrames={105}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill75" as const }}
+        />
+        {/* TEST INTERNE 07/09 — brume H3 en mixBlendMode screen, jamais livree */}
+        <Composition
+          id="ChillMeter-TEST-BrumeH3"
+          component={TestBrumeH3}
+          durationInFrames={105}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill75" as const, avecPlateau: true }}
+        />
+        <Composition
+          id="ChillMeter-TEST-NeigeH3"
+          component={TestBrumeH3}
+          durationInFrames={105}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill75" as const, avecPlateau: true, effet: "neige" as const }}
+        />
+        <Composition
+          id="ChillMeter-TEST-BordsPousse"
+          component={TestBrumeH3}
+          durationInFrames={105}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill100" as const, avecPlateau: true, effet: "bords-pousse" as const }}
+        />
+        {/* ⭐ LE TEST ULTIME : l'effet sur un EXTRAIT REEL de sa chaine (30 s, sans son).
+            900 frames a 30 fps. Le plateau BOUGE — c'est la seule facon de voir si
+            l'effet tient sur de la vraie video et pas sur une image fixe. */}
+        {/* RECAP des corrections client : le meter SEUL sur sa vraie video, sans effet R&D.
+            Un ID par etat a montrer — le montage se fait ensuite en ffmpeg. */}
+        {/* ⭐ LE RECAP ENVOYE A LA CLIENTE — une seule prise continue de son extrait
+            reel, cadre plein, annotations en haut. 2 chapitres marques : jalon 1 a
+            valider, puis apercu des jalons 2/3. Cf. l'en-tete de RecapClient.tsx. */}
+        <Composition
+          id="ChillMeter-RECAP-Client"
+          component={RecapClient}
+          durationInFrames={RECAP_DUREE}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ChillMeter-RECAP-Idle"
+          component={TestBrumeH3}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "idle" as const, avecPlateau: true, effet: "aucun" as const, plateauVideo: true }}
+        />
+        <Composition
+          id="ChillMeter-RECAP-Entrance"
+          component={TestBrumeH3}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "entrance" as const, avecPlateau: true, effet: "aucun" as const, plateauVideo: true }}
+        />
+        <Composition
+          id="ChillMeter-RECAP-Fill75"
+          component={TestBrumeH3}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill75" as const, avecPlateau: true, effet: "aucun" as const, plateauVideo: true }}
+        />
+        <Composition
+          id="ChillMeter-RECAP-Fill100"
+          component={TestBrumeH3}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill100" as const, avecPlateau: true, effet: "aucun" as const, plateauVideo: true }}
+        />
+        <Composition
+          id="ChillMeter-TEST-SurSaVideo"
+          component={TestBrumeH3}
+          durationInFrames={900}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{
+            state: "fill100" as const,
+            avecPlateau: true,
+            effet: "bords-blanc" as const,
+            plateauVideo: true,
+          }}
+        />
+        <Composition
+          id="ChillMeter-TEST-BordsBlanc"
+          component={TestBrumeH3}
+          durationInFrames={105}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill100" as const, avecPlateau: true, effet: "bords-blanc" as const }}
+        />
+        <Composition
+          id="ChillMeter-TEST-BordsRespire"
+          component={TestBrumeH3}
+          durationInFrames={105}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill100" as const, avecPlateau: true, effet: "bords-respire" as const }}
+        />
+        <Composition
+          id="ChillMeter-TEST-BrumeH3-fondNoir"
+          component={TestBrumeH3}
+          durationInFrames={105}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill75" as const, avecPlateau: false }}
+        />
+        <Composition
+          id="ChillMeter-PREVIEW-Idle-sur-plateau"
+          component={ChillMeterPreviewSurSonPlateau}
+          durationInFrames={90}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "idle" as const }}
         />
         <Composition
           id="ChillMeter-Fill100"
@@ -5745,6 +5997,52 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
           defaultProps={{ state: "idle" as const, metal: "machined" as const }}
+        />
+        {/* Les 2 effets d'ecran SEULS (sans le meter) — pour mesurer les zones protegees
+            sans que l'objet ne fausse le comptage de pixels. */}
+        <Composition
+          id="ChillMeter-Effet75-Seul"
+          component={Effet75Seul}
+          durationInFrames={EFFET75_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* L'onde SEULE — diagnostic : verifier qu'elle est bien dessinee et ou. */}
+        <Composition
+          id="ChillMeter-OndeSeule"
+          component={OndeSeule}
+          durationInFrames={EFFET100_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ChillMeter-Effet100-Seul"
+          component={Effet100Seul}
+          durationInFrames={EFFET100_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Les 2 paliers COMPLETS : meter + effet, tels qu'ils seront livres. */}
+        <Composition
+          id="ChillMeter-Fill75-Effets"
+          component={ChillMeterOverlay}
+          durationInFrames={105}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill75" as const, effects: "on" as const }}
+        />
+        <Composition
+          id="ChillMeter-Fill100-Effets"
+          component={ChillMeterOverlay}
+          durationInFrames={135}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ state: "fill100" as const, effects: "on" as const }}
         />
         <Composition
           id="ChillMeter-Showcase"

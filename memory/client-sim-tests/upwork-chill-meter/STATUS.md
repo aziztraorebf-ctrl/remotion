@@ -4,6 +4,258 @@
 > accepté par la cliente le 29/08, **offre v2 acceptée par Aziz le 30/08**. 350 $ → 297,50 $ net.
 > ⛔ Les décisions de ce fichier engagent contractuellement.
 
+## 🔑 ACCÈS RAPIDE — les infos qu'on recherche à CHAQUE session
+
+> ⛔ Ajouté le 06/09 : l'URL de la chaîne était bien dans ce fichier (ligne ~1225) mais enterrée
+> en bas d'un fichier de 1200+ lignes. Je l'ai cherchée avec un mauvais motif de grep et j'ai
+> conclu à tort qu'elle n'existait nulle part. **Les infos d'accès vivent en TÊTE, pas au fond.**
+
+| Quoi | Où |
+|---|---|
+| Chaîne YouTube cliente | `https://youtube.com/@abigirl_reacts` (107 K abonnés) |
+| Room Upwork (messages) | `room_bc1dd916da7ec932f9e0d1ca6719dc96` · org_uid `2091222257557754811` |
+| Contrat Upwork | id `44402562` · offre `112403774` |
+| Sa VRAIE capture de plateau (06/09) | `out/_r-and-d/chill-meter-3d/REFERENCE-CLIENTE/vraie-capture-06-09.png` |
+| Décor de travail 16:9 | `/tmp/vraie-capture-1920x1080.png` (regénérable depuis la capture) |
+| Notre ancien plateau (yt-dlp, 22/08) | `public/_shared/rnd/abigirl-decor.png` |
+| Le PNG du device (décor du meter) | `public/_client-sim/chill-meter/device-rustique.png` |
+| Brief client original (PDF 10 p.) | `memory/client-sim-tests/upwork-chill-meter/BRIEF-CLIENT-ORIGINAL.pdf` |
+
+## 📋 LES 3 JALONS — libellés officiels (tirés du contrat Upwork via MCP le 06/09)
+
+| # | Libellé exact | Montant | Échéance |
+|---|---|---|---|
+| 1 | « Static meter design approval. Clean premium base meter, not heavily frosted. » | 105 $ | 03/09 |
+| 2 | « Entrance/power-on, idle loop, 0–25%, and **50%** frost-on-meter states. » | 140 $ | 07/09 |
+| 3 | « **75%** bottom-edge effect, 100% full chill effect, final exports + React/Remotion source folder. » | 105 $ | 11/09 |
+
+⛔ Le **50 % est au jalon 2**, le **75 % au jalon 3** — ils ne sont pas ensemble. Une demande de
+"différencier 50 et 75" chevauche donc 2 jalons. Le jalon 3 contient aussi les exports finaux et
+le dossier source Remotion — c'est le jalon de LIVRAISON, pas seulement d'effets.
+
+## 🔴 ÉTAT AU 2026-09-06 (NUIT) : SA RÉPONSE REÇUE — jury externe lancé sur le flottement
+
+Abigail a répondu avec 5 demandes (taille inchangée, placement/grounding via SA VRAIE capture
+jointe, icônes bleues dès l'idle, powered-on sur MAX CHILL DETECTION, glow isolé au texte
+au 75 %) + une reconnaissance explicite qu'on avait raison sur le centrage et que sa
+référence IA était décalée. Message de confirmation envoyé (24-48h), rien d'autre à faire
+côté client tant que le travail n'est pas prêt.
+
+### ⭐⭐⭐ SA VRAIE CAPTURE (jointe au message) — LA VRAIE CAUSE DU FLOTTEMENT
+
+Mesurée : `out/_r-and-d/chill-meter-3d/REFERENCE-CLIENTE/vraie-capture-06-09.png` (2880×1608).
+Sa fenêtre vidéo finit à 66,7 % de la hauteur (contre 67,0 % sur notre plateau yt-dlp actuel)
+— **notre plateau EST déjà quasi identique en cadrage**. Ce n'est donc PAS un problème de
+cadrage général : cette capture précise montre un **premier plan que notre plateau n'a pas**
+(le piano blanc + une peluche, visibles en bas-gauche), qui recoupe exactement la zone où
+pose le meter.
+
+### ⭐⭐⭐ JURY EXTERNE 4 VOIX (06/09, `scripts/tools/jury-chill-meter-flottement.py`)
+
+GPT-6 Astra + Grok 4.6 + Gemini 3.1 Pro + Kimi K3, appelés en parallèle SANS contexte du
+repo (pour éviter tout biais), avec juste sa vraie capture + notre rendu actuel. **Verdict
+UNANIME, jamais discuté entre eux** :
+- ⛔ **L'ombre plus prononcée est REJETÉE par les 4** — mots quasi identiques : « une ombre
+  sur du vide reste une ombre sur du vide » (Kimi), « une ombre plus grasse sous un sticker
+  reste un sticker » (Grok).
+- ⭐ **La vraie cause : notre décor de production n'a pas le premier plan** (piano/peluche)
+  qui donne un repère de profondeur à cet endroit. Le meter n'a rien à quoi s'ancrer.
+- ⭐⭐⭐ **La technique proposée par les 4 : l'OCCLUSION PARTIELLE** — faire passer un bout du
+  premier plan (bord du piano, peluche) DEVANT le bas du meter. Un objet partiellement caché
+  par le décor est immédiatement lu comme faisant partie de la scène.
+- Bonus (Grok + Kimi) : les stalactites de givre qui pendent dans le vide sous l'objet
+  « crient lévitation » indépendamment du reste — défaut jamais identifié avant ce jury.
+Sorties complètes : `/tmp/da-refs/jury-flottement-{gpt6,grok,gemini,kimi}.md`.
+
+### ⛔ OCCLUSION — 4 ESSAIS RATÉS, NON RÉSOLU (06/09 nuit) — REPRENDRE ICI
+
+⛔ **3 essais ratés avant d'y arriver**, tous la même erreur de fond : poser un **rectangle**
+là où l'arête du couvercle de piano est une **diagonale**. Les 2 premiers (Claude) plaquaient
+un bandeau qui avalait 50 px de châssis et masquait les boutons. Le 3e (agent délégué) avait
+le bon contour et la bonne méthode, mais une arête posée trop bas (y≈1012) : seulement 3,7 %
+du châssis occlus → **mesurable mais invisible à l'œil**. ⭐ Rappel : un chiffre qui bouge ne
+prouve pas qu'un problème visuel est résolu — il a fallu regarder plusieurs zooms pour le voir.
+
+⛔ **PROTO4 (4e essai) EST RATÉ AUSSI — repéré par Aziz, pas par moi.** J'avais remonté
+l'arête à y≈1005-1042 et validé sur une vue plein cadre réduite : 6,9 % du châssis occlus,
+100 % des stalactites absorbées, les chiffres tombaient dans la fourchette du jury.
+**Mais le résultat est une AMPUTATION ASYMÉTRIQUE, pas une occlusion** :
+- **à GAUCHE** : le coin inférieur est tranché net en diagonale, les boutons STATUS et DATA
+  sont coupés en pleine hauteur, le bord arrondi du châssis a disparu ;
+- **à DROITE** : le châssis est intact (coin, vis, bord métallique, stalactites encore visibles).
+Preuve visuelle : `out/_r-and-d/chill-meter-3d/DEFAUT-OCCLUSION-ASYMETRIE.png` (les 2 coins
+côte à côte, même échelle).
+
+⭐⭐⭐ **LA CAUSE — j'ai INVERSÉ LA PENTE de l'arête.** Sur la photo, le rebord du couvercle de
+piano descend **vers la gauche** ; mon polygone le fait au contraire *remonter* à gauche
+(y≈1005 alors que le châssis y descend jusqu'à 1049 → ~44 px mangés de ce côté), pendant qu'à
+droite il passe sous l'objet sans rien toucher.
+
+⛔⛔ **LA LEÇON DE MÉTHODE, la plus chère de la session** : j'ai validé sur une vue PLEIN CADRE
+RÉDUITE où le défaut était invisible, et sur des chiffres qui tombaient juste. Aziz l'a vu
+**sur son téléphone, sur une image plus petite encore** — parce qu'il a COMPARÉ LES DEUX CÔTÉS
+au lieu de regarder l'ensemble. → Sur un objet symétrique, toujours comparer gauche/droite au
+même zoom ; une mesure globale (« 6,9 % occlus ») ne dit RIEN sur la répartition.
+
+**Polygone du 4e essai — ⛔ NE PAS LE REPRENDRE TEL QUEL** (pente inversée à gauche) :
+```
+140,1005  215,1002  300,1006  352,1012  430,1022  520,1030  620,1036  720,1042
+820,1050  900,1058  1000,1066  1100,1074  1920,1080  140,1080
+```
+**Ordre de rendu strict** : plateau → meter → ombre clippée → couvercle clippé.
+Détails : `feGaussianBlur stdDeviation≈2.5` sur le bord du clip (le décor est flou, une arête
+nette trahirait le découpage) · ombre de contact `rgb(12,16,26)` opacité 0.70, floutée à ≈16,
+elle-même clippée sur le même polygone, silhouette bornée à y 761-1050 pour exclure les
+stalactites.
+
+⏭️ **CE QU'IL RESTE À FAIRE SUR CE POINT** : relire l'arête réelle du couvercle sur grille
+en vérifiant **le sens de la pente** (elle descend vers la gauche), puis re-tester en comparant
+systématiquement les 2 coins bas au même zoom avant de conclure.
+⚠️ Les coordonnées valent pour CETTE frame de plateau : si le décor change, tout est à relire.
+
+### ⏭️ PLAN D'ACTION DÉCIDÉ (Aziz, 06/09)
+
+1. Basculer le décor de production vers sa vraie capture (ou une frame équivalente au même
+   premier plan) — PAS un ajustement d'ombre.
+2. Découper le morceau de piano/peluche à faire passer devant le bas du meter.
+3. ⭐⭐⭐ **Tester sur EXTRAIT VIDÉO réel (1-2 min, yt-dlp), pas seulement en statique** — et sur
+   PLUSIEURS vidéos/cadrages de sa chaîne, pas une seule. Le fond ne bouge pas dans notre
+   pipeline (frame fixe choisie), donc l'occlusion reste valable tant que le DÉCOR est le bon ;
+   le risque n'est pas le mouvement de la vidéo hôte, c'est de changer de cadrage sans refaire
+   le travail de calage.
+4. Vérifier sur les 4 états ANIMÉS (idle, 50 %, 75 %, entrée) — le meter bouge pendant
+   l'entrée, l'occlusion doit rester cohérente à toutes les frames.
+
+⭐⭐ **Corollaire stratégique (Aziz)** : ce chantier constitue une PRÉ-PRODUCTION du jalon 2
+(les états animés). Documenter la démarche (jury, décision, code) sert doublement.
+
+## ✅ ÉTAT AU 2026-09-06 (SOIR) : JALON 1 ENVOYÉ, EN ATTENTE DE SA RÉPONSE
+
+Message + 5 pièces envoyés par Aziz (via catbox/Litterbox, liens dans le message). Ses 6
+demandes du 05/09 toutes traitées, mesurées, et vérifiées sur les rendus composés sur son
+plateau — voir le double-check dans la page d'envoi. Rien à faire tant qu'elle ne répond pas.
+
+**Ce qui reste ouvert, nommé dans le message envoyé** :
+- Le placement (image 4) : sa référence AI n'est pas reproductible sur son vrai plateau (video
+  41,6 % vs 43,9 % de largeur — quasi identique ; l'écart réel est que sa vidéo finit plus haut,
+  38 % d'espace libre contre 33 %). On lui demande de trancher : taille actuelle ou plus petit
+  avec plus d'air.
+- Le nom de la chaîne qui s'allume au 75 % (au-delà de « la plaque bleuit », le NOM s'illumine)
+  et le powered-on look : livrés en avance sur les jalons 2/3, nommés comme « not locked in yet ».
+
+Branche `rnd/chill-meter-3d`, alignée sur `ef92f017` dans les 2 worktrees au soir du 06/09.
+⚠️ `retro-gates-multi-session` (autre worktree) construit en parallèle les gates multi-session —
+NE PAS y toucher.
+
+**3 briques méthode extraites de ce seul jalon** (réutilisables sur tout futur contrat) :
+`memory/doctrines/REVERSIBILITE-MATIERE-GENEREE.md` ·
+`memory/feedbacks/feedback_annoter-l-image-plutot-qu-expliquer-au-client.md` ·
+`memory/projects/CHANTIER-CADRAGE-REVISIONS-CLIENT.md`.
+
+---
+
+## 🔴🔴🔴 ETAT AU 2026-09-05 (SOIR) : SA REPONSE RECUE — 6 demandes, dont 3 HORS JALON 1
+
+> ⛔⛔ **NE PAS CODER AVANT D'AVOIR ENVOYE LE MESSAGE DE CADRAGE.** Deux de ses demandes sont
+> **inexecutables en l'etat** (deja faites et mesurees), et 3 relevent des jalons 2 et 3.
+> Son message integral : voir la conversation Upwork du 05/09 (room `bc1dd916`).
+
+### LE TRI DE SES 6 DEMANDES — verifie contre le brief contractuel et son message du 03/09
+
+| # | Demande | Verdict | Preuve |
+|---|---|---|---|
+| 1 | Metal : **remettre de la rouille chaude** en accents (fissures, vis, vents, coins) sans revenir au beige | ✅ **LEGITIME jalon 1** | Son 03/09 disait DEJA « with rust and wear **as accents** instead of the casing feeling beige or brown ». Elle demande le curseur entre 2 bornes qu'elle avait posees ENSEMBLE. Pas un revirement. |
+| 2 | Boutons : labels verts (OK) mais **icones en BLEU** | ⚠️ **REVIREMENT, mais petit** | Son 03/09 : « The icons/symbols before the words **can stay their current color** ». Le starter en avait fait un tableau de coordonnees pour ne PAS y toucher. C'est elle qui change d'avis. Executable vite. |
+| 3 | **Powered-on look** : halo bleu ecran, edge lighting, « MAX CHILL DETECTION » qui s'illumine | ⛔ **JALON 2** | Contrat : jalon 1 = « Static meter design approval ». Jalon 2 = « Entrance/**power-on**, idle loop... ». |
+| 4 | **50 % vs 75 %** : differencier, « AbiGirl Reacts » qui s'allume au 75 % | ⛔ **JALON 3** | Le 75 % est nommement dans le jalon 3 (`NotFunded`). Le 50 % est jalon 2. |
+| 5 | **Placement** : deplacer vers la gauche pour centrer sous la video | ⚠️ **DEJA FAIT ET MESURE** | 3e fois qu'elle le demande. `POS_X` 198 -> 180, ecart ramene a **0 px**, mesure. Soit elle regarde une version anterieure, soit sa notion de « centre » differe de la mesure. |
+| 6 | **Grounding** : que le meter ne flotte pas, « **especially once animated** » | ⚠️ **STATIQUE DEJA POSE** | `CALAGE.json` : SOL y=717, device s'arrete y=720. `CTRL-06b-sol.png` le montre a l'oeil : bord bas et ligne de sol colles. |
+
+### ✅ GROUNDING (#6) — MESURE LE 06/09 : elle a RAISON, mais pas pour la raison supposee. CORRIGE.
+
+⛔ **L'hypothese qui vivait ici etait FAUSSE** (« le rebond d'entree ne retombe pas a 0 »).
+Mesuree deux fois, elle est infirmee :
+- spring d'entree (damping 11) : **0,000 px de residuel des la frame 80**, sous-pixel des la 43 ;
+- sur le clip REELLEMENT envoye le 03/09 : device **immobile au pixel pres de la frame 48 a la
+  fin** (bas a y=1045 sur 72 frames consecutives).
+
+⭐⭐⭐ **LA VRAIE CAUSE, vue en REGARDANT l'image** : le device ne flottait pas au sens d'une
+oscillation — **il ne reposait sur RIEN**. Arrete a 20 px au-dessus de la bande noire, en plein
+mur rose, sans ombre ni surface. `RUSTIC_SOL_SCREEN` etait **calcule mais cable a aucun element
+dessine** : une ligne de sol vivant comme un nombre. (Meme schema que les cercles du globe D3.)
+
+✅ **CORRIGE** (commit `59141039`, branche `fix/chill-meter-ancrage-sol`) : ombre de contact
+ancree sur la ligne de sol, dimensionnee sur l'empreinte reelle mesuree dans le PNG (x 131..1039
+a y=717 = 908 px), qui se resserre en s'assombrissant a l'atterrissage. Mesure : -45 points de
+luminance sur la ligne de sol. Avant/apres : https://claude.ai/code/artifact/0b79d779-f285-47e4-a21f-401c9a3920bb
+→ Lecons : `memory/feedbacks/feedback_ligne-de-sol-calculee-mais-cablee-a-rien.md`
+
+### ⚠️ CENTRAGE (#5) — l'axe est exact, mais sa remarque reste FONDEE
+
+Mesure 06/09 : ecart **0,0 px** (fenetre video centree 450,5 / device 450,5). MAIS le device
+**deborde de 321 px SOUS la fenetre video** et empiete sur la peluche en bas a gauche.
+⛔ Repondre « c'est mesure a 0 px » serait techniquement juste et **commercialement inutile** —
+c'est la 3e fois qu'elle le demande. Quand elle dit « centrer », elle ne parle probablement pas
+de l'axe (parfait) mais du bloc qui parait trop bas / trop grand pour la zone.
+→ D'ou la capture annotee : la faire DESIGNER au lieu de decrire.
+
+### 📤 CE QU'ON LUI ENVOIE — une capture ANNOTEE (idee d'Aziz, meilleure que lui en demander une)
+
+⛔ **Ne PAS lui demander de produire une capture** : un client a qui on donne des devoirs repond
+lentement ou pas. **Lui en FOURNIR une** : le device sur son plateau, avec la **ligne de sol** et
+l'**axe de centrage** traces dessus, en UNE image. Elle repond en DESIGNANT, plus en decrivant.
+Deplace #5 et #6 du subjectif (« ca flotte ») vers le mesurable. Matiere prete :
+`out/_r-and-d/chill-meter-3d/calage/CTRL-06b-sol.png` (deja annotee, a recomposer sur le plateau).
+
+### ⭐⭐⭐ LA FORME DE L'ENVOI — DES IMAGES FIXES, ZERO ANIMATION (idee d'Aziz, 05/09 soir)
+
+⛔ **Ne PAS lui renvoyer un rendu anime pour ce tour.** Une image fixe se corrige en UN aller-retour ;
+une animation se re-rend en entier. Aujourd'hui on lui envoie du fini et elle reagit dessus — le
+cout du desaccord est maximal, et c'est ce qui a produit 4 rondes.
+
+⭐ **Ses 3 demandes « hors jalon » sont des ETATS VISUELS, pas des mouvements** — toutes jugeables
+sur image fixe, aucune ne demande d'animer quoi que ce soit :
+| Sa demande | Ce que c'est vraiment |
+|---|---|
+| Powered-on look (halo, edge lighting, « MAX CHILL DETECTION » illumine) | **1 image** |
+| Differenciation 50 % vs 75 % | **2 images COTE A COTE** |
+| Rouille en accents | **1 image** |
+⭐ Le 50/75 est un probleme de **CONTRASTE ENTRE DEUX ETATS** : ca se juge mieux sur 2 images
+juxtaposees que dans une video ou elle ne peut pas comparer.
+
+**L'envoi complet, en UNE fois, sans produire une seule frame d'animation** :
+1. La planche des etats fixes (rouille + allume + 50 % + 75 %) — elle valide la DIRECTION.
+2. La capture annotee (ligne de sol + axe de centrage) — elle DESIGNE au lieu de decrire (#5, #6).
+→ L'animation ne part qu'APRES sa validation de la direction. On ne re-rend plus rien a l'aveugle.
+
+⭐⭐ **C'est notre propre doctrine du STORYBOARD, jamais appliquee au travail client** : « le modele
+PROPOSE, on valide, PUIS on code » — deplacer le jugement de gout d'apres-render (cher) vers
+avant-code (gratuit). Sur ce contrat, 2 planches cote a cote au round 1 auraient probablement
+economise 2 rondes.
+
+### ⚖️ CE QU'ON DEMANDE EN RETOUR — la relation est a sens unique aujourd'hui
+
+**Etat financier REEL, verifie via l'API Upwork le 08/09 (contrat 44402562)** — CORRIGE : les 350 $ des 3 jalons sont TOUS `fundedAmount` renseignes (105/140/105 $), deposes en bloc a l'ouverture du contrat (30/08). Jalon 1 = `Submitted` (soumis le 05/09, en attente de SA revue, PAS de paiement de sa part). Jalons 2/3 = `state: NotFunded` mais avec `fundedAmount` deja rempli — la description du jalon 2 dit "Due after Milestone 1 approval", donc `NotFunded` ici signifie vraisemblablement "pas encore active dans la sequence", pas "l'argent n'existe pas". ⚠️ Nuance non tranchee avec certitude (l'API ne le dit pas explicitement) mais le fait solide est : l'argent des 3 jalons semble deja depose, ce qui bloque est SON APPROBATION du jalon 1, pas un depot de sa part.
+— l'argent n'est meme pas depose. Elle a eu **3 rondes** de revision la ou le contrat en prevoit 2.
+
+Les 3 contreparties a poser dans le message (courtoises, aucune agressivite) :
+1. **L'approbation du jalon 1** une fois ces retouches livrees. Un tour de plus contre la fermeture
+   du jalon : un echange, pas une faveur.
+2. **Le financement du jalon 2** avant d'attaquer les etats animes (mecanique normale d'Upwork).
+3. **Sa validation en UNE fois** — elle ecrit elle-meme « we are very close », c'est le moment de
+   lui faire dire que ces changements-la sont les derniers du jalon 1.
+⭐ Accepter #3 et #4 (jalons 2 et 3) dans le jalon 1 est une **CONCESSION REELLE**. La NOMMER, sans
+la refuser : une concession tue devient la norme, et le jalon 2 s'ouvrirait avec le meme desequilibre.
+
+### ⛔⛔ LA LECON A GRAVER — ne jamais montrer un livrable d'un jalon FUTUR
+
+**Envoyer le clip d'allumage 4 s pendant la validation du jalon 1 etait l'erreur** (constat d'Aziz,
+que je partage). En mettant un etat ANIME sous ses yeux pendant un jalon STATIQUE, on a ouvert la
+porte aux retours #3 et #4. Elle ne fait que commenter ce qu'on lui a montre.
+→ **Le perimetre d'une revision suit ce qu'on MONTRE, pas ce que le contrat dit.** Vaut pour tout
+contrat a jalons. (Le clip avait pourtant ete « explicitement cadre comme jalon 1 seulement » dans
+le message du 03/09 — **le cadrage ecrit n'a pas suffi**. Seul ne pas montrer suffit.)
+
 ## 🔴🔴 ETAT AU 2026-09-04 : CHASSIS REJETE — CHANGEMENT DE BASE, chantier en cours
 
 > ⭐⭐⭐ **REPRISE : `memory/starters/STARTER-chill-meter-device-rustique.md`** (tout le detail
@@ -51,8 +303,17 @@ protege AU CODE (clipPath), jamais par le prompt. Sa regle, dans « Important Cr
 
 ⚠️ **Le livrable contractuel n'a PAS ete touche** — tout le travail vit sur `rnd/chill-meter-3d`.
 ⚠️ **Calendrier a revoir** : le rejet rebat les jalons 2 (7 sept) et 3 (11 sept).
-⚠️ **Decision commerciale en attente** : dire ou non a Abigail que l'image vient de nous.
-⏭️ **Non traite : LE SON** (elle liste des SFX precis par palier, perimetre jamais discute).
+✅ **TRANCHE le 2026-09-05 (Aziz) : NON, sujet clos — ne plus le re-poser.** Le contrat definit
+le livrable comme le **CapCut/MOV + le JSON d'animation** : « le fichier source » n'a JAMAIS
+designe le PNG du decor. On le fournit dans le livrable de toute facon, donc la provenance de
+l'image n'a aucune portee contractuelle. Ne pas rouvrir ce faux probleme.
+⏭️ **LE SON : faisabilite LEVEE le 29/08** — 15 SFX generes, 15/15 exploitables au 1er essai,
+3 familles nommees (organic/impact/retrotech), recette dans `scripts/tools/sfx-familles-chill-meter.py`,
+fichiers dans `out/_r-and-d/chill-meter-upwork/sfx-test/` (voir § SON plus bas).
+⚠️ Ce qui reste ouvert est **COMMERCIAL uniquement** : dans les 350 $ ou non, et integre au MOV
+ou livre en piste separee (sur CapCut, integre = non coupable independamment).
+⛔ **Ne PAS re-poser la question de la FAISABILITE** — vecu le 04/09, presentee 4-5 fois comme un
+angle mort alors que `sfx-test/` etait sur le disque.
 
 <details><summary>Historique — ETAT AU 2026-09-03 : revision 2 envoyee (teinte gunmetal)</summary>
 

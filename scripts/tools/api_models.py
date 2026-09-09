@@ -29,7 +29,7 @@ script doit importer d'ici ; les anciens se migrent au fil des touches.
 
 ⚠️ VARIANTES CONSTATEES, NON TRANCHEES (releve 2026-08-20, code actif) :
   Kimi : `kimi-k2.5` (43 occ.) · `kimi-k3` (34) · `kimi-k2.6` (2) · `kimi-k26` (1, coquille probable)
-  GPT  : `openai/gpt-5.5` (15) · `openai/gpt-5.6-sol` (10)
+  GPT  : `openai/gpt-5.5` (15) · `openai/gpt-6-astra` (remplace gpt-5.6-sol le 05/09)
   Les constantes ci-dessous fixent la valeur MAJORITAIRE de chaque usage. Si un
   script a besoin d'une autre variante, c'est une decision a documenter ici,
   pas une valeur a recopier en dur.
@@ -54,7 +54,13 @@ KIMI_VISION_SVG = KIMI   # vision -> SVG one-shot, visage organique
 # --- OpenRouter -------------------------------------------------------------
 GPT_TEXT_VISION = "openai/gpt-5.5"        # texte + vision (SVG, breakdown, ideation)
 GPT_IMAGE = "gpt-5.4-image-2"             # ⛔ PAS `gpt-5.5-image` : n'existe pas
-GPT_SOL = "openai/gpt-5.6-sol"            # variante Sol (usage SVG specifique)
+# ⭐ 2026-09-05 (decision Aziz, CLAUDE.md) : `gpt-6-astra` REMPLACE `gpt-5.6-sol`.
+# Seul modele qui reussit l'anatomie AVEC reference photo et qui sait rigger un SVG.
+# ⚠️ 1,07-2,15 $/appel, 5-10 min — ne PAS en faire un defaut (Fable 5 reste le defaut SVG).
+# ⛔ Constate le 2026-09-07 : cette constante etait restee sur gpt-5.6-sol (perime), ce qui
+# a pousse un script a ecrire l'identifiant EN DUR pour contourner. Corriger la source, pas
+# le script — c'est la raison d'etre de ce fichier.
+GPT_SOL = "openai/gpt-6-astra"             # anatomie avec ref · 3D structurelle · SVG complexe
 GROK_TEXT_VISION = "x-ai/grok-4.6"        # texte + vision via OpenRouter.
 # ⛔ NE PAS deviner ce numero de version : « x-ai/grok-4.1 » a ete invente le
 # 2026-08-22 et a coute un appel en HTTP 400. Lister l'API avant de supposer.

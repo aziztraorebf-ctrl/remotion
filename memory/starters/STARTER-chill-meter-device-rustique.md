@@ -3,6 +3,10 @@
 > ⛔ **CONTRAT CLIENT ACTIF** (Abigail / AbiGirl Reacts, Upwork, 350 $ → 297,50 $ net).
 > Etat complet : `memory/client-sim-tests/upwork-chill-meter/STATUS.md`.
 > Ce starter ne couvre QUE le chantier en cours : reconstruire le device sur SA reference.
+>
+> ⚠️ **État d'avancement dépassé par STATUS.md** (jalon 1 envoyé le 06/09). Ce starter reste
+> la référence pour le CONTEXTE technique — calage JSON, positions mesurées, décision de garder
+> son PNG comme décor sans le vectoriser — mais pas pour savoir où en est le contrat.
 
 ---
 

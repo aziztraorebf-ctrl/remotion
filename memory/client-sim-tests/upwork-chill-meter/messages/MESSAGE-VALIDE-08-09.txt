@@ -1,0 +1,24 @@
+Hi Abigail,
+
+Everything from your last message is done. Here's what changed:
+Size. Unchanged, as you asked.
+Position. Moved slightly lower in the frame.
+Shadow. Much stronger and darker underneath. This is the one that does the most work: the meter now reads as sitting in the scene instead of floating above it. You'll see it form as the meter lands.
+Button icons. Blue from the very start now, at idle and 0%, not only once the meter fills. The words stay green.
+
+I also fixed something you hadn't mentioned: the frost was hanging below the meter with nothing under it. It now stops at the base.
+I tested all of this against the screenshot of your real setup, so what you see is how it will sit in your video.
+
+The video below shows these four changes happening on a clip of your own footage, at the exact size and position they'll have on screen.
+Two things in that video are a preview. You asked about "MAX CHILL DETECTION" lighting up on power-on, and about only the wording lighting up at 75%.
+
+On power-on, "MAX CHILL DETECTION" lights up blue.
+At 75%, only the wording and the two snowflakes light up. The plaque and the metal behind them stay exactly as they are, and the text stays sharp.
+
+Any change to the animation itself would come with milestone 2 or 3.
+
+One thing worth mentioning: I looked at whether part of your desk could visually overlap the bottom of the meter for extra realism.
+
+On your footage that foreground piece only covers a small portion on the left, and the meter is wider than that, so covering it unevenly would read more like a mistake than a fix. The stronger shadow and the lower position handle the floating problem more reliably.
+
+Thank you!

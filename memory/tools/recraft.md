@@ -1,6 +1,70 @@
 # Recraft — Assets SVG & Personnages
 > Pipeline SVG, styles, limites, vivid_shapes.
-> Mise a jour : 2026-04-13
+> Mise a jour : 2026-09-04 (verification API/MCP) · contenu style : 2026-04-13
+
+---
+
+## ⛔⛔ ECART MCP vs API — VERIFIE LE 2026-09-04 (ne pas se fier au MCP pour juger Recraft)
+
+**Notre MCP `recraft` n'expose que `recraftv3` et `recraftv2`.** L'API REST officielle, elle,
+sert **`recraftv4_1`** (defaut) et 4 lignes de modeles. Le MCP est donc **2 generations en
+retard**. Toute conclusion « Recraft ne sait pas faire X » tiree du MCP est a re-tester en API
+directe avant d'etre gravee.
+
+**Modeles API reels (doc officielle, 2026-09-04)** :
+`recraftv4_1` · `recraftv4_1_vector` · `recraftv4_1_pro` · `recraftv4_1_pro_vector` ·
+`recraftv4_1_utility[_vector|_pro|_pro_vector]` · `recraftv4[_vector|_pro|_pro_vector]` ·
+`recraftv4_styles[...]` · `recraftv3[_vector]` · `recraftv2[_vector]`
+
+⚠️ La regle « V3 = Style ID supporte / V4 = non supporte » plus bas date d'avril : il existe
+desormais une ligne **`recraftv4_styles`** dediee aux styles. A RE-TESTER avant de s'y fier.
+
+**14 endpoints API** (le MCP n'en expose que 6) — les 8 absents du MCP :
+| Endpoint | Ce qu'il fait | Pourquoi ca compte |
+|---|---|---|
+| `/v1/images/inpaint` | regenere une ZONE via masque | modifier une partie d'un asset sans le refaire |
+| `/v1/images/outpaint` | etend le cadre | elargir un decor existant |
+| `/v1/images/eraseRegion` | efface une zone | retirer un element parasite |
+| `/v1/images/generateBackground` | fond par prompt + masque | recomposer un arriere-plan |
+| `/v1/images/removeBackground` | detourage — **accepte le SVG en entree et ressort du SVG** | detourer un vecteur sans le rasteriser |
+| `/v1/images/generations/vector` | generation vectorielle directe | SVG sans passer par la vectorisation |
+| `/v1/images/generations/raster` | generation raster directe | — |
+| `/v1/styles` | style depuis **jusqu'a 10 images** (le MCP dit 5) | style de projet plus riche |
+
+### ⛔ TESTE LE 2026-09-04 — CE QUI MARCHE ET CE QUI NE MARCHE PAS (mesure, pas doc)
+
+Sur NOTRE cle API (contrat chill-meter) :
+| Test | Resultat |
+|---|---|
+| `generations` avec `recraftv4_1` | ✅ **MARCHE**, et **35 credits** contre **40** pour v3/v4 — moins cher ET plus recent |
+| `generations` avec `recraftv4` | ✅ marche, 40 credits |
+| `inpaint` avec `recraftv4_1` | ⛔ **`Model 'Recraft V4.1' is not available`** — l'endpoint inpaint ne sert que **V3** |
+| `inpaint` pour REECRIRE DU TEXTE | ⛔⛔ **ECHEC TOTAL** : les mots ont ete remplaces par des **taches lumineuses bleues**. Les icones voisines etaient bien preservees (le masque etait juste, verifie a l'oeil), mais le modele ne sait pas re-ecrire du texte fin. |
+
+⭐⭐ **REGLE QUI EN DECOULE** : ne JAMAIS utiliser `inpaint` pour modifier/recolorer du **TEXTE**
+dans une image. Un modele de generation ne sait pas ecrire des lettres fines de facon fiable —
+il produit des formes qui ressemblent a du texte de loin. Pour changer la couleur d'un texte
+dans une image : **superposer notre propre texte** (SVG/HTML) par-dessus, ou masquer la zone.
+`inpaint` reste valable pour de la MATIERE (metal, fond, texture), jamais pour de la typographie.
+
+⭐ Corollaire de cout : `recraftv4_1` etant moins cher que v3 en generation, il n'y a aucune
+raison de rester sur v3 pour de la generation pure. Le MCP, lui, ne propose que v3/v2 -> passer
+par l'API REST directe (`https://external.api.recraft.ai/v1/...`, cle `RECRAFT_API_KEY` du .env)
+des qu'on veut v4.1.
+
+**Vectorize — limites reelles** : entree PNG/JPG/WEBP, **max 10 Mo**, **< 16 megapixels**,
+dimension max **4096 px**, min **256 px**. Sortie SVG. Seul parametre : `response_format`.
+⭐ Il n'y a **qu'un seul** vectoriseur (pas de version "v4" de la vectorisation) — donc la
+qualite obtenue via MCP est celle de l'API. Ce point-la n'est PAS un manque du MCP.
+
+⭐ **Mesure du 2026-09-04 (contrat chill-meter)** : vectorisation d'une image IA de metal rouille
+(1195x896) -> 2362 paths, **0 groupe**, 80,8 % de pixels quasi identiques a la source. La
+GEOMETRIE et les BORDS sont fideles et sans resolution (sortie 4K nette). Ce qui se PERD est le
+**grain photographique** : la corrosion continue devient des aplats de couleur. ⛔ Conclusion
+transposable : **vectoriser une photo/image IA texturee = perdre la matiere**. Pour garder la
+matiere, utiliser le PNG tel quel et ne vectoriser que ce qui doit etre anime.
+
+---
 
 ---
 
