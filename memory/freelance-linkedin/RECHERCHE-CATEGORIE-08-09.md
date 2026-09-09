@@ -432,3 +432,75 @@ jusqu'ici ne vend un "meter"/"gauge"/"tracker" nommé comme tel pour du stream. 
 sous-créneau n'existe pas encore sous ce nom (opportunité), soit il se cache sous un autre mot
 qu'on n'a pas encore trouvé (à chercher : "stream tracker", "twitch meter", "donation goal
 meter", "hype meter").
+
+---
+
+## PARTIE 2 (08/09, suite) — le marché streamer/widget, creusé
+
+### Explication de fond posée par Aziz — pourquoi "live" change tout
+
+Question : pourquoi les acheteurs de Rive demandent du "live" plutôt que du Lottie ? Vérifié
+(pas deviné) : la différence est structurelle, pas une question d'outil.
+- **Lottie/Remotion (notre offre actuelle)** : le mouvement est ÉCRIT À L'AVANCE, frame par
+  frame, dans le fichier — le lecteur ne fait que rejouer une bande enregistrée, comme une
+  vidéo. Aucune connaissance de ce qui se passe autour de lui (pas de clic, pas de données).
+  Peut être fabriqué entièrement chez nous, en batch, sans interaction du client final.
+- **Rive (.riv)** : le fichier contient une MACHINE (états + règles de transition), pas un
+  mouvement enregistré. Le mouvement n'existe qu'au moment où l'utilisateur RÉEL interagit
+  (clic, donnée qui change) — calculé en direct dans SON navigateur. D'où "live".
+- **Conséquence sur l'outil** : le MCP Rive officiel (`rive.app/docs/editor/ai/mcp`) n'est PAS
+  headless/scriptable comme nos pipelines Remotion. Il pilote l'ÉDITEUR DESKTOP en direct
+  (Mac/Windows, Early Access) : ouvrir un fichier, prompter, attendre, taper "End Prompt" pour
+  valider. Construire une state machine reste un travail dans l'éditeur (graphe de logique),
+  pas un script qu'on lance. Le runtime JS existe pour CONSOMMER un .riv déjà fait (int  égrer
+  dans un site = code normal), mais pas pour le CONSTRUIRE par API.
+- **Pourquoi les acheteurs le veulent** : un composant branché sur la réalité du produit
+  (loader qui dure tant que le vrai chargement dure, pas un minutage fixe) plutôt qu'une
+  décoration qui tourne en boucle sans rapport avec l'état réel de l'app.
+
+→ Mis en réserve pour une montée en gamme future (crédite le plafond 650-2400$ d'Alan), pas
+une action immédiate — nécessite d'apprendre un vrai métier (logique d'états/transitions),
+pas juste un nouvel outil.
+
+### Le marché streamer, approfondi
+
+`twitch alert widget` → confirme un marché MASSIF et mûr, mot central = **"alert"** (pas
+"meter") : Doni Rachman (1000 avis), Lior (864), Kong Vector (1000), Shameel (327),
+Sakib (477). Les "widgets" ici sont surtout des NOTIFICATIONS ponctuelles (nouveau follower,
+don reçu), pas des instruments qui persistent à l'écran comme un meter.
+
+`donation goal meter` → **VRAI zéro résultat** cette fois (message honnête "we couldn't find",
+pas d'élargissement silencieux comme `animated gauge`). Le mot "meter" ne fonctionne toujours
+pas sur ce marché.
+
+⭐⭐⭐ `donation goal widget` → **SIGNAL LE PLUS FORT DE TOUTE LA RECHERCHE (partie 2)**
+
+**Shapla Khatun** (shapla360) apparaît 4 fois dans les résultats avec des gigs portant
+explicitement "**goal widget**" :
+- "I will design and code goal widget with any character" — 30$, 2 avis, **payé réellement
+  50-200$** (ratio jusqu'à x6-7, parmi les plus extrêmes de tout ce dossier)
+- "I will create and code custom stream chat widget alerts goal widget" — 65$, 5 avis
+- "I will design and code custom stream chat, event widget, goal widget" — 165$, 2 avis (3,5★)
+
+Membre depuis **août 2022** (3+ ans d'ancienneté) mais quasi aucun avis sur ces gigs précis —
+un signal de sous-exploitation, pas d'incohérence (vérifié : catégorie "Graphics for
+Streamers" confirmée dans la description du gig, cohérent avec le reste).
+
+**C'est EXACTEMENT le concept du chill-meter** (une jauge qui se remplit vers un objectif),
+sous le nom "**goal widget**" — et quasiment personne d'autre ne s'y positionne explicitement
+sous ce nom. Piste la plus proche mesurée à ce jour d'un "meter" nommé comme tel côté stream.
+
+## VERDICT PARTIE 2
+
+Le marché streamer confirme le même motif que le marché Lottie/UI : le mot qui NOMME l'objet
+("meter", "gauge") ne fonctionne jamais, mais le mot qui nomme sa FONCTION ("goal widget",
+"chat widget", "alert") ouvre une vraie case, et "goal widget" spécifiquement a un profil de
+quasi-monopole non défendu (une seule vendeuse, très peu active sur ce gig précis, ratio
+payé/affiché extrême).
+
+**Reste à trancher avant toute décision** : est-ce un marché sain à faible activité, ou un
+marché qui n'a jamais vraiment décollé (personne d'autre ne s'y met, peut-être parce que la
+demande réelle est trop rare) ? Comparer avec `progress bar animation`/Mohsin (même profil
+mesuré côté Lottie/UI) — les deux marchés ont produit le même type de signal : ratio extrême,
+volume quasi nul. Ça pourrait être un pattern général plutôt qu'une vraie opportunité propre
+à chaque cas — à vérifier par un 3e exemple avant de conclure que c'est un signal fiable.
