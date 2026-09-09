@@ -632,3 +632,29 @@ change), exactement notre livrable, pas une image de stock. Alan et Angie le fon
 (vidéo produit ou capture d'outil) ; Christina/Uzair ne le font pas malgré leur succès. Piste
 concrète pour notre propre cover : ne jamais utiliser d'illustration stock, toujours une
 boucle de NOTRE animation réelle.
+
+---
+
+## PARTIE 6 (09/09) — correction : la vidéo de couverture ne se voit qu'APRÈS le clic
+
+⛔⛔ **Correction de la partie 5** : j'avais recommandé "une boucle de notre Lottie réel" comme
+cover sans vérifier OÙ cette vidéo apparaît dans le parcours. Aziz a posé la bonne question :
+la vidéo joue-t-elle dès la grille de résultats, ou seulement après avoir cliqué ?
+
+**Vérifié sur le gig d'Alan** (`og:video`/`og:video:type: video/mp4` présents dans les
+métadonnées de la page) : la vidéo vit dans le CARROUSEL de la page du gig, en 2e position —
+le 1er élément est une image statique (poster). Il faut déjà être SUR la page (donc avoir
+déjà cliqué) et swiper pour la voir jouer. Sur les résultats de recherche scrapés plus tôt
+(les grilles de vignettes de "micro interactions"), tous les champs récupérés étaient des
+`thumbnailUrl` en `.png` statique — aucune vidéo en autoplay dans la grille elle-même.
+
+**Conséquence** : une meilleure vidéo de gig NE RÉSOUT PAS le problème du premier contact —
+celui qui décide si un visiteur clique parmi 20+ résultats dans une grille. À ce stade, tous
+les vendeurs sont à égalité : une image statique. Le mimétisme visuel repéré en partie 5
+(losanges isométriques dégradés chez Christina/Uzair) est donc le VRAI enjeu du clic, pas la
+qualité de ce qui se cache derrière.
+
+**Question restée ouverte** : qu'est-ce qui fait cliquer sur une vignette statique dans une
+grille où titre/prix/note sont déjà affichés à côté ? Pas encore explorée — nécessiterait de
+regarder les vignettes qui SORTENT du lot (comme Alan, texte pur sur fond noir) plutôt que
+celles qui s'y fondent, et comprendre pourquoi elles fonctionnent malgré tout.
