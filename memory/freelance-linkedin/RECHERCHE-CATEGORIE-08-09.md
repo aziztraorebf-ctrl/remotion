@@ -563,3 +563,40 @@ modèle nous ferait concourir sur un terrain qu'on ne maîtrise pas mieux que la
 n'est pas rejeté en soi — seulement CE modèle précis. S'il revient, chercher un équivalent qui
 EXPLOITE notre outillage réel (ex: un loader Lottie simple, une icône animée) plutôt qu'un
 objet hors de notre métier. Non fait à ce stade — piste fermée, pas explorée plus loin.
+
+---
+
+## PARTIE 4 (09/09) — "goal widget" retesté : NICHE MORTE, confirmée
+
+⛔⛔ **CORRECTION de la partie 2** : le verdict "signal le plus fort de la recherche" sur
+Shapla Khatun / "goal widget" était PRÉMATURÉ — j'avais mesuré le ratio prix affiché/payé
+sans vérifier la RÉCENCE des avis. Aziz avait l'intuition inverse ("niche morte") avant même
+de revoir les chiffres — vérifié, il avait raison.
+
+**Ses avis, datés cette fois** :
+- Gig "goal widget with any character" (2 avis) : postés il y a **2 ans** et **2 ans**.
+- Gig "chat, event widget, goal widget" (3 avis) : postés il y a **1 an**, **2 ans**, **2 ans**.
+- **0 commande en file** sur les deux gigs vérifiés.
+
+Les 5 avis "goal widget" de tout le dossier sont concentrés entre il y a 1 et 2 ans — aucune
+activité récente. Ce n'est pas un signal sous-exploité, c'est un gig à l'arrêt.
+
+**Recherche de la vraie sous-catégorie** : Fiverr a une page structurée officielle,
+`categories/video-animation/buy/animation-for-streamers/alerts-notifications`
+("Animated Twitch Alerts services"). Densité mesurée : Kong Vector (1000 avis), Doni Rachman
+(1000), Shameel (327), Ark (96) — MÊME profil dense et mature que `twitch alert widget` déjà
+testé en partie 2. **"Goal widget" n'a jamais eu sa propre sous-catégorie** — ce n'est qu'une
+mention accessoire dans le titre de quelques vendeurs isolés, noyée dans "Alerts &
+Notifications", qui est en fait un marché saturé comme les autres.
+
+## VERDICT PARTIE 4 : le marché streamer/widget est FERMÉ, pas de piste à poursuivre
+
+Le pattern "ratio extrême + volume nul" qu'on soupçonnait (Mohsin, Shapla, Haseeb) n'est
+PAS un signal d'opportunité — c'est simplement ce qui arrive à un gig ancien, peu actif ou
+à l'arrêt : peu d'avis récents, mais les rares clients passés ont payé plus cher que
+l'affiché (ce qui se voit sur n'importe quel vieux gig, actif ou non). Confondre ce motif
+avec une "niche ouverte" était une erreur de lecture — corrigée ici.
+
+**Conclusion pratique** : la piste "goal widget"/streamer est CLOSE. Le seul acquis solide
+de tout ce fil reste celui de la partie 1 (le gig Lottie/UI, titre mis à jour avec
+"micro interactions"). Ne pas rouvrir le marché streamer sans un nouveau signal concret.
