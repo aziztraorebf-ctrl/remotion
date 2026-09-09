@@ -7,6 +7,17 @@
 > 10 faux avis). Outil confirmé : Firecrawl, PAS Playwright (correction d'Aziz, 08/09 — c'est
 > Firecrawl qui a produit toute la recherche des 9 vendeurs du 05/09).
 
+## ⭐⭐⭐ À NE PAS OUBLIER — question ouverte prioritaire (posée 09/09, à traiter avant clôture)
+
+**Qu'est-ce qui fait cliquer sur une vignette STATIQUE dans une grille de résultats ?**
+Établi en partie 6 : la vidéo de cover ne joue jamais dans la grille de recherche, seulement
+après le clic (carrousel de la page du gig, poster statique en 1re position). Donc le seul
+levier au moment du clic est l'image fixe elle-même — et le mimétisme visuel documenté en
+partie 5 (losanges isométriques dégradés chez Christina/Uzair) est l'enjeu réel, pas un
+détail esthétique. Alan (texte pur sur fond noir) et Christina/Uzair (illustration stock)
+réussissent tous les deux avec des approches opposées — pourquoi ? Ne PAS clore ce dossier
+sans y être revenu. Détail complet : § PARTIE 6.
+
 ## ⛔⛔ FAIT DE MÉTHODE NOUVEAU — le compteur de résultats de RECHERCHE ment aussi
 
 Le dossier existant documentait déjà que le compteur des pages CATÉGORIE est trompeur
