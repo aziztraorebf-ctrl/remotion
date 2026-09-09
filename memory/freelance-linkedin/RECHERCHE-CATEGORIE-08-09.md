@@ -600,3 +600,35 @@ avec une "niche ouverte" était une erreur de lecture — corrigée ici.
 **Conclusion pratique** : la piste "goal widget"/streamer est CLOSE. Le seul acquis solide
 de tout ce fil reste celui de la partie 1 (le gig Lottie/UI, titre mis à jour avec
 "micro interactions"). Ne pas rouvrir le marché streamer sans un nouveau signal concret.
+
+---
+
+## PARTIE 5 (09/09) — les vignettes de couverture se ressemblent-elles ? Vérifié visuellement
+
+Question d'Aziz : il a l'impression que les photos de couverture Fiverr se ressemblent toutes.
+Vérifié en téléchargeant et comparant réellement les vignettes (pas en devinant) :
+
+**Christina (anicoremotion) et Uzair (uzasigner) — mimétisme RÉEL, confirmé visuellement** :
+mêmes losanges/carrés isométriques flottants en dégradé bleu-violet-orange, même mise en
+page (texte à gauche, formes 3D à droite, style "UX Kit Landing Page"). Probablement le même
+template Envato/Canva ou le même prompt générique ("UX kit landing page isometric") sur un
+générateur d'image.
+
+**Mais PAS universel** : Alan casse le motif avec une approche entièrement typographique
+(fond noir, gros texte blanc "UI/UX Motion for SaaS", petites icônes) — zéro forme 3D,
+zéro dégradé. Angie Expert montre une capture d'écran de l'outil Rive en train de tourner
+(process, pas résultat). Donc le mimétisme touche une PARTIE du marché (le style
+"illustration stock générique"), pas la totalité.
+
+**Pourquoi ça se ressemble** : Fiverr n'autorise qu'une image ou une COURTE vidéo en boucle
+en cover (jamais une vraie vidéo de présentation cliquable) — la vignette doit tout dire en
+une seconde dans une grille de résultats. Ce format pousse vers le réflexe le plus facile :
+un mockup stock générique plutôt qu'une pièce sur mesure.
+
+**Notre différenciateur naturel** : contrairement à Christina/Uzair qui montrent une
+illustration À PROPOS de leur métier, notre cover peut être LE PRODUIT LUI-MÊME qui joue en
+boucle silencieuse — un vrai composant Lottie (jauge qui se remplit, loader, état qui
+change), exactement notre livrable, pas une image de stock. Alan et Angie le font déjà
+(vidéo produit ou capture d'outil) ; Christina/Uzair ne le font pas malgré leur succès. Piste
+concrète pour notre propre cover : ne jamais utiliser d'illustration stock, toujours une
+boucle de NOTRE animation réelle.
