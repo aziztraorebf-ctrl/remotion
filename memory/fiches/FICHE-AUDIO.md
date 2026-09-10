@@ -95,6 +95,11 @@ retirer le reste : un SFX par micro-mouvement fatigue autant que pas de SFX du t
 dit **OÙ**, jamais **QUOI** — le choix du fichier reste un jugement.
 ⭐ Banque écoutable (SFX + 2 pages musique) : voir `memory/INDEX-LIENS.md`.
 
+⭐ **Un SFX mesuré PLUS FORT en dB peut être PERÇU comme absent (2026-09-09, chill-meter)** :
+power-up (rise ~1,8s) à -16dB, thud (transitoire net) à -19,3dB — le power-up, pourtant plus
+fort, se fondait dans l'ambiance à l'écoute. Un build-up ne se juge JAMAIS sur les dB seuls :
+toujours vérifier à l'oreille sur un vrai extrait de la destination finale.
+
 ## SI ÇA RATE 2×
 **Symptôme audio ≠ cause audio.** Avant de retoucher le son, MESURER :
 `ffmpeg -hide_banner -nostats -i <audio> -af "silencedetect=noise=-38dB:d=0.5" -f null /dev/null 2>&1 | grep silence`

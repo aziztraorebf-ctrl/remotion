@@ -4,6 +4,57 @@
 > accepté par la cliente le 29/08, **offre v2 acceptée par Aziz le 30/08**. 350 $ → 297,50 $ net.
 > ⛔ Les décisions de ce fichier engagent contractuellement.
 
+## 🟢 ÉTAT AU 2026-09-09 (SOIR, FINAL) : JALON 2 APPROUVÉ PAR AZIZ — 2 clips, prêt à envoyer
+
+**Jalon 1 approuvé par Abigail.** Elle a relancé le 09/09 avec 3 fichiers (thud, power-up,
+animation de référence loot box) pour le jalon 2 (entrance/power-on, idle, 0-25%, 50%).
+
+✅⭐⭐⭐ **DÉCISION FINALE (Aziz) : 2 clips de VALIDATION, pas de fichiers individuels.**
+11 fichiers séparés (5 livrables + 6 démos) jugés ingérables pour la cliente — remplacés par
+UN SEUL montage (`RecapJalon2.tsx`, nouveau composant) : les 4 états à la suite (Entrance →
+Idle → Fill25 → Fill50) sur son vrai plateau, avec un CARTON (4s) nommant chaque état entre
+les transitions. Décliné en 2 versions, mêmes cartons pour comparaison facile :
+- `recap-avec-son-plateau.mp4` — son complet (sa voix/musique + nos 2 SFX)
+- `recap-sans-son-plateau.mp4` — plateau coupé, nos 2 SFX (thud/power-up) restent actifs :
+  le but est de les entendre SANS la distraction de l'ambiance, pas le silence total.
+
+Les deux : ~25s, 17,3 Mo chacun (**sous la limite Upwork de 25 Mo/fichier → joindre
+directement, pas besoin de lien catbox**). Fichiers dans
+`out/_r-and-d/chill-meter-upwork/jalon2-final/`.
+
+⛔⛔ **Les 5 fichiers individuels (Entrance×2/Idle/Fill25/Fill50) et les 11 liens catbox
+générés plus tôt dans la session sont PÉRIMÉS/ABANDONNÉS** — logique retenue : les fichiers
+individuels "prêts CapCut" appartiennent au jalon 3 ("final exports" du contrat), ce tour-ci
+n'est qu'une revue de direction. Ne pas les régénérer ni les renvoyer sauf demande explicite.
+
+⛔⛔ **2 BUGS TROUVÉS ET CORRIGÉS pendant la construction du montage (leçons Remotion) :**
+1. **Une `<Sequence>` reinitialise `useCurrentFrame()` à 0** — rejouer le MEME `state` (ex.
+   `state="entrance"`) dans une nouvelle Sequence (le bloc du carton) relance l'animation
+   depuis son debut, PAS juste son dernier visuel. Repéré par Aziz à l'oreille (thud/poussière
+   rejoués pendant le carton "Idle", confus). Fix : `<Freeze frame={D-1}>` autour de l'overlay
+   dans le bloc carton, sur les 3 transitions — fige la DERNIERE frame stable au lieu de
+   relancer l'état. Vérifié par mesure (`volumedetect` sur le segment carton → -91dB, silence
+   confirmé) avant de re-livrer.
+2. `amix` avec `duration=first` cale la sortie sur le 1er flux d'entree, pas la timeline
+   video — un montage sans piste "longue" en 1er flux tronque l'audio (vécu : test isolé
+   à 4s d'audio sur 20s de vidéo). Fix : `duration=longest` + `apad=whole_dur=N`.
+
+⭐⭐ **Message validé** : `messages/MESSAGE-VALIDE-jalon2-09-09.txt` — à réécrire pour ne
+référencer QUE les 2 clips ci-dessus (la version précédente référençait encore les 11 fichiers).
+
+⭐ **Leçon transposable jalon 3** : un SFX mesuré PLUS FORT en dB peut quand même se PERCEVOIR
+comme absent — le thud est un transitoire net (facile à repérer), le power-up un rise
+progressif (~1,8s) qui se fond dans l'ambiance même à niveau élevé. Les dB seuls ne suffisent
+pas à juger un SFX de type build-up : toujours vérifier À L'OREILLE, en conditions réelles.
+
+⭐ **Extrait avec son réutilisable jalon 3** : `public/_client-sim/chill-meter/test-son-reel/
+reference-abigirl-3m37-3m57.mp4` (elle qui réagit, moitié musique moitié voix, 3:37-3:57 de
+sa vidéo la plus récente — retrouvé via transcript auto `--write-auto-sub`, le 1er essai
+1:30-2:00 était son INTRO, pas une réaction). Réutiliser pour caler les SFX 75%/100%, sauf
+si elle envoie son propre extrait.
+
+⏭️ **RESTE** : réécrire le message (ci-dessous), puis envoi effectif sur Upwork (geste d'Aziz).
+
 ## 🔑 ACCÈS RAPIDE — les infos qu'on recherche à CHAQUE session
 
 > ⛔ Ajouté le 06/09 : l'URL de la chaîne était bien dans ce fichier (ligne ~1225) mais enterrée
@@ -20,6 +71,7 @@
 | Notre ancien plateau (yt-dlp, 22/08) | `public/_shared/rnd/abigirl-decor.png` |
 | Le PNG du device (décor du meter) | `public/_client-sim/chill-meter/device-rustique.png` |
 | Brief client original (PDF 10 p.) | `memory/client-sim-tests/upwork-chill-meter/BRIEF-CLIENT-ORIGINAL.pdf` |
+| Extrait AVEC SON (elle qui parle, 3:37-3:57) + les 2 clips finaux jalon 2 | `public/_client-sim/chill-meter/test-son-reel/` (extrait source) · `out/_r-and-d/chill-meter-upwork/jalon2-final/recap-{avec,sans}-son-plateau.mp4` (clips envoyés) |
 
 ## 📋 LES 3 JALONS — libellés officiels (tirés du contrat Upwork via MCP le 06/09)
 

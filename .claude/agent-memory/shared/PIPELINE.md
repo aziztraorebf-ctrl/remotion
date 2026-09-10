@@ -36,18 +36,18 @@ Session sans production visuelle. Ce qui a changé et qui affecte TOUTE session 
 
 ---
 
-## 💰 CONTRAT UPWORK chill-meter (AbiGirl Reacts) — révision 1 traitée, RIEN renvoyé
+## 💰 CONTRAT UPWORK chill-meter (AbiGirl Reacts) — jalon 2 approuvé par Aziz (09/09), prêt à envoyer
 
-**Premier contrat freelance signé (30/08), actif.** 350 $ → 297,50 $ net, 3 jalons (jalon 1 =
-105 $, soumis 02/09 non payé). 3e révision (au-delà des 2 prévues au contrat) envoyée le 06/09 :
-ses 6 demandes du 05/09 toutes traitées et mesurées — rouille en accents, icônes bleues, powered-on
-+ le nom de la chaîne qui s'allume au 75 % (jalon 3 anticipé, nommé comme tel dans le message),
-centrage à 1,5 px, ombre de contact. 🔴 **Elle a répondu le 06/09** : 5 demandes, aucune codée. ⛔ Point bloquant : l'occlusion
-(4 essais ratés). ⭐ Reprise : `memory/starters/STARTER-chill-meter-revision-06-09.md`.
+**Premier contrat freelance signé (30/08), actif.** 350 $ → 297,50 $ net, 3 jalons. Jalon 1
+APPROUVÉ par la cliente. Jalon 2 (140 $, entrance/power-on/idle/0-25%/50%) retravaillé le 09/09 :
+entrance (diagonale, tilt, brume, SFX synchronisés), Idle (bouton qui pulse, écran qui scintille),
+livraison en 2 clips de démo montés (`RecapJalon2.tsx`) + message client réécrit — approuvé par
+Aziz, reste l'envoi effectif sur Upwork.
 → Source de vérité : `memory/client-sim-tests/upwork-chill-meter/STATUS.md`.
-→ 3 briques méthode nées de ce jalon : `memory/doctrines/REVERSIBILITE-MATIERE-GENEREE.md` ·
+→ Briques méthode nées de ce contrat : `memory/doctrines/REVERSIBILITE-MATIERE-GENEREE.md` ·
 `memory/feedbacks/feedback_annoter-l-image-plutot-qu-expliquer-au-client.md` ·
-`memory/projects/CHANTIER-CADRAGE-REVISIONS-CLIENT.md`.
+`memory/projects/CHANTIER-CADRAGE-REVISIONS-CLIENT.md` ·
+`memory/feedbacks/feedback_livraison-jalon-demo-groupee-vs-fichiers-individuels-jalon-final.md`.
 
 ---
 

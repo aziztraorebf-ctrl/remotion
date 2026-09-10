@@ -29,3 +29,18 @@ de test, pas par la logique** : l'ordre des transformations SVG est contre-intui
 - ⭐ Doute sur un empilement de transforms ? 6 lignes de SVG + `rsvg-convert`, et on sait.
 
 Lie a [[couche-complementaire-plutot-que-redessiner]], [[retournement-svg-sans-3d-passer-par-largeur-nulle]].
+
+## Le meme principe vaut en CSS `transform`, pas seulement SVG (2026-09-09, chill-meter)
+
+2e preuve, hors SVG cette fois : un `<div>` positionne en absolu (`left`/`top`) qui porte deja
+`transform: scale(...)` (origin top-left implicite), auquel j'ai voulu ajouter un `rotate()` de
+tilt EN PLUS sur le MEME element, avec un `transformOrigin` en pixels — l'objet a saute hors-cadre
+(le pivot deplace desaligne tout le positionnement calcule pour un pivot top-left). Meme fix que
+le cas SVG : **le rotate va sur un WRAPPER INTERNE separe**, avec son propre `transformOrigin` en
+`%` (relatif a SA box, pas melange d'echelle avec le scale du parent) — jamais sur l'element qui
+porte deja le placement/scale.
+
+**Principe generalise** : « une transformation composee se pose sur un wrapper distinct de
+l'element qui porte deja une autre transformation » vaut pour CSS `transform` autant que pour SVG
+`transform` — ce n'est pas un piege SVG, c'est un piege de composition de transformations, tout
+langage confondu.

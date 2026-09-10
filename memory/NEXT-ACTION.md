@@ -107,10 +107,12 @@ Cadre contractuel (stable) : offre v2 acceptée le 30/08, 350 $ → 297,50 $ net
 (3/7/11 sept.), 2 tours de révision par jalon, dossier source + README dus. État financement
 vérifié via API le 08/09 : les 3 jalons ont `fundedAmount` déjà rempli (voir `upwork-mcp.md`).
 
-⛔ **TRAVAIL EN COURS NON COMMITÉ (constaté 09/09)** : `src/projects/_rnd/chill-meter/
-ChillMeterOverlay.tsx` porte des modifs non commitées sur le timing de l'entrée jalon 2
-(spring ralenti, sync SFX thud/power-up, effet de poussière à l'impact) — visiblement en
-réponse à un retour Abigail sur l'entrée. NE PAS écraser, vérifier l'état avant de reprendre.
+✅ **JALON 2 APPROUVÉ PAR AZIZ (09/09 soir), toujours NON COMMITÉ** — entrance retravaillée
+(diagonale gauche, tilt léger, brume rouille, SFX synchronisés), bug de dosage Idle corrigé
+(bouton power + scintillement écran), livraison simplifiée en 2 clips de démo (`RecapJalon2.tsx`,
+nouveau composant) + message client réécrit et validé. Détail complet : STATUS.md § 09/09 soir.
+⏭️ Reste : commit des fichiers (`git add` nommé, PAS `-A` — 2 fichiers hors-scope traînent dans
+le repo), puis envoi effectif du message + 2 clips sur Upwork (geste d'Aziz).
 
 Invariants à ne pas perdre :
 - ⛔ Ne PAS lui dire que les 6 états sont déjà rendus (atout de négociation).

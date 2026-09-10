@@ -247,6 +247,24 @@ liée à l'ordre de layers ou à une sous-couche non identifiée par `l.id.inclu
   *Coût : bug livré à Aziz, repéré par lui (Gazoduc A3).*
 3. Toujours `muted` — Kling/Seedance generent toujours une piste audio parasite.
 
+⛔⛔ **Le meme piege vaut pour REJOUER UN COMPOSANT/STATE, pas seulement un clip video (2026-09-09,
+chill-meter jalon 2)** : mettre le MEME `state`/props dans une 2e `<Sequence>` (ex. un carton de
+transition pose par-dessus l'etat precedent) relance TOUTE son animation interne depuis 0 — SFX et
+mouvement compris, pas juste le dernier visuel. Repere a l'oreille (thud/poussiere rejoues pendant
+un carton "Idle"). **Fix : `<Freeze frame={D-1}>` autour du composant** dans le bloc qui doit
+montrer l'etat FIGE, jamais le rejouer. Verifier par mesure (`ffmpeg -af volumedetect` sur le
+segment cense etre silencieux → doit tomber a ~-91dB), pas seulement a l'oreille.
+
+⛔ **`amix` (mix audio ffmpeg) avec `duration=first` cale la sortie sur le PREMIER flux d'entree**,
+pas sur la timeline video globale — si ce flux est court, tout le mix est tronque silencieusement
+(mesure : 4s d'audio obtenues sur 20s de video). Fix : `duration=longest` + `apad=whole_dur=N`
+(N = duree totale voulue en secondes).
+
+⛔ **Poussiere/brume CSS invisible malgre un code correct (double-attenuation)** : une couleur DEJA
+translucide (`rgba(...,0.9)`) dans un `radial-gradient`, multipliee par `opacity` ET un `blur()`,
+ecrase la visibilite 2-3x. Fix : couleur OPAQUE dans le gradient, `opacity` seule pilote la
+visibilite finale.
+
 ### beatFade + OffthreadVideo
 - `beatFade` (opacity 0->1) + `OffthreadVideo` sur fond noir = double assombrissement = ecran noir ~20 frames
 - Fix : retirer opacity de l'AbsoluteFill. Le clip demarre deja sur fond noir.

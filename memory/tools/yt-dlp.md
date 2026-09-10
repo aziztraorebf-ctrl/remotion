@@ -131,3 +131,10 @@ yt-dlp -f "bestvideo[height<=1080][ext=mp4]" \
   -o "extrait.%(ext)s" "https://www.youtube.com/watch?v=<ID>"
 ```
 `bestvideo` seul = aucune piste audio, rien a demuxer ensuite.
+
+⛔ **Verifier le CONTENU du timestamp avant de telecharger un extrait de test** (2026-09-09,
+chill-meter) : un 1er extrait cible au hasard (1:30-2:00 d'une video) est tombe sur l'INTRO,
+pas une reaction — un test de niveau sonore fait dessus aurait ete faux. Fix peu couteux :
+`yt-dlp --write-auto-sub --sub-lang en --skip-download` recupere le TRANSCRIPT (quelques Ko,
+zero re-telechargement de video) pour reperer un vrai passage voulu (ex. une reaction parlee,
+pas de la musique) AVANT de decouper le segment avec `--download-sections`.

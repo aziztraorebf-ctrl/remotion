@@ -5,6 +5,7 @@ import { ChillMeterOverlay } from "./projects/_rnd/chill-meter/ChillMeterOverlay
 import { ChillMeterPreviewSurSonPlateau } from "./projects/_rnd/chill-meter/ChillMeterPreviewSurSonPlateau";
 import { TestBrumeH3 } from "./projects/_rnd/chill-meter/TestBrumeH3";
 import { RecapClient, RECAP_DUREE } from "./projects/_rnd/chill-meter/RecapClient";
+import { RecapJalon2, RECAP_JALON2_FRAMES } from "./projects/_rnd/chill-meter/RecapJalon2";
 import { Effet75Seul, Effet100Seul, OndeSeule, EFFET75_FRAMES, EFFET100_FRAMES } from "./projects/_rnd/chill-meter/EffetsEcran";
 import { ShockWave3D, SHOCKWAVE_3D_FRAMES } from "./projects/_rnd/chill-meter/ShockWave3D";
 import { ShockWave3Dv2, SHOCKWAVE_V2_FRAMES } from "./projects/_rnd/chill-meter/ShockWave3D_v2";
@@ -5873,6 +5874,29 @@ export const RemotionRoot: React.FC = () => {
           fps={30}
           width={1920}
           height={1080}
+        />
+        {/* ⭐ 09/09 : jalon 2 — 2 clips seulement (au lieu de 11 fichiers separes), les
+            4 etats a la suite sur son plateau, MEMES cartons dans les deux (comparaison
+            facile). Clip 1 : son complet (sa voix/musique + nos SFX). Clip 2 : plateau
+            coupe, nos 2 SFX (thud/power-up) restent actifs — le but est d'entendre NOS
+            sons sans la distraction de l'ambiance de son plateau, pas le silence total. */}
+        <Composition
+          id="ChillMeter-RECAP-Jalon2-AvecSonPlateau"
+          component={RecapJalon2}
+          durationInFrames={RECAP_JALON2_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ mutePlateau: false }}
+        />
+        <Composition
+          id="ChillMeter-RECAP-Jalon2-SansSonPlateau"
+          component={RecapJalon2}
+          durationInFrames={RECAP_JALON2_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ mutePlateau: true }}
         />
         <Composition
           id="ChillMeter-RECAP-Idle"

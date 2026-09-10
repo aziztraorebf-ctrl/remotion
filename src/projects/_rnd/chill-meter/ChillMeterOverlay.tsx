@@ -8,7 +8,7 @@
 // depose le fichier dans CapCut, il se cale plein cadre, le compteur ne bouge jamais d'un pixel.
 
 import React from "react";
-import { AbsoluteFill, useCurrentFrame, useVideoConfig, interpolate, spring, Easing } from "remotion";
+import { AbsoluteFill, Audio, Sequence, useCurrentFrame, useVideoConfig, interpolate, spring, staticFile, Easing } from "remotion";
 import { ChillMeterDevice, DEVICE_W, DEVICE_H, type MetalFinish, type RustPass } from "./ChillMeterDevice";
 import { ChillMeterRustic, RUSTIC_W, RUSTIC_H, RUSTIC_SOL_Y } from "./ChillMeterRustic";
 import { BottomIceBank, FullChillCoded } from "./EffetsEcran";
@@ -67,6 +67,27 @@ const RUSTIC_POS_Y = 706 + 18;
 /** y ou le chassis rustique pose au sol, dans le repere 1920x1080. */
 const RUSTIC_SOL_SCREEN = RUSTIC_POS_Y + RUSTIC_SOL_Y * RUSTIC_SCALE;
 
+// ---- Timing de l'entree (jalon 2) ----
+// ⭐ 09/09 : frame d'impact reculee de 26 -> 32 avec l'entree ralentie (stiffness 68).
+const IMPACT_FRAME = 32;
+// Thud (fichier "Heavy thud sfx.WAV") : le vrai coup d'attaque demarre a t=0,984s dans le
+// fichier (mesure ffmpeg silencedetect — le debut du WAV est un silence de padding). A 30fps
+// ca fait 29,5 frames. On demarre l'Audio 30 frames AVANT l'impact pour que l'attaque tombe
+// pile sur la frame de contact au sol (`startFrom` non utilise : on garde la queue de
+// resonance du fichier intacte, seul le point de depart de lecture compte).
+const THUD_ATTACK_FRAMES = 30; // round(0,984 * 30)
+const THUD_START_FRAME = IMPACT_FRAME - THUD_ATTACK_FRAMES;
+// Power-up (fichier "Power up sound (adjusted).WAV") : rise progressif, climax mesure vers
+// t=1,79s (54 frames), le fichier demarre quasi immediatement (0,10s de silence negligeable).
+// Sa consigne : « sync with the moment the green power button turns on and the meter powers
+// up ». Le son DOIT preceder/accompagner l'allumage (un climax qui suit l'image lue comme un
+// defaut de sync) — donc c'est l'allumage visuel qui se cale sur le son, pas l'inverse : le
+// power-up demarre PILE a l'impact (le geste d'allumage commence des que l'objet touche le
+// sol), et `powerOn` est retarde pour que le bouton s'allume au moment du climax.
+const POWERUP_START_FRAME = IMPACT_FRAME;
+const POWERUP_CLIMAX_FRAMES = 54; // round(1,79 * 30)
+const POWERON_LIT_FRAME = POWERUP_START_FRAME + POWERUP_CLIMAX_FRAMES;
+
 // ---- Empreinte au sol, mesuree DANS le PNG (06/09) ----
 // A y=717 (la ligne de sol), le device occupe x 131..1039 : c'est la surface qui porte,
 // pas la largeur totale du chassis (1099 px plus haut, aux epaulements).
@@ -93,19 +114,36 @@ export const ChillMeterOverlay: React.FC<{
   rust?: RustPass;
   chassis?: Chassis;
   effects?: Effects;
-}> = ({ state, metal = "flat", rust = "none", chassis = "rustic", effects = "off" }) => {
+  /** ⭐ 09/09 : coupe les 2 SFX de l'entrance (thud/power-up) sans toucher a l'anim
+   *  visuelle — utile pour un montage muet (clip de demo "sans son" a cote du "avec son"). */
+  muted?: boolean;
+}> = ({ state, metal = "flat", rust = "none", chassis = "rustic", effects = "off", muted = false }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
   // ---- Entree : arrive de la gauche en diagonale, atterrit, rebondit, s'allume ----
-  const landSpring = spring({ frame, fps, config: { damping: 11, stiffness: 92, mass: 0.9 } });
+  // ⭐ 09/09 (jalon 2, retour Abigail) : « please make the entrance slightly slower than
+  // the example » — stiffness baissee 92 -> 68 (meme damping/mass, juste une chute moins
+  // vive). L'IMPACT recule de 26 -> 32 pour laisser le temps de chute a la nouvelle vitesse.
+  const landSpring = spring({ frame, fps, config: { damping: 11, stiffness: 68, mass: 0.9 } });
   const isEntrance = state === "entrance";
 
   const entX = isEntrance ? interpolate(landSpring, [0, 1], [-720, 0]) : 0;
   const entY = isEntrance ? interpolate(landSpring, [0, 1], [-300, 0]) : 0;
 
-  // petit rebond apres l'impact (frame ~26)
-  const IMPACT = 26;
+  // ⭐ 09/09 : legere bascule en vol (pas un tumble complet — objet mecanique/lourd, pas
+  // un de qu'on lance). Parti de 0deg, incline pendant la chute, revient a plat pile a
+  // l'impact — la bascule EST l'indice de chute, elle doit donc disparaitre au contact.
+  const entRot = isEntrance
+    ? interpolate(frame, [0, 10, 22, IMPACT_FRAME], [-7, -4, 3, 0], {
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+        easing: Easing.inOut(Easing.quad),
+      })
+    : 0;
+
+  // petit rebond apres l'impact
+  const IMPACT = IMPACT_FRAME;
   const bounce = isEntrance
     ? interpolate(frame, [IMPACT, IMPACT + 5, IMPACT + 11, IMPACT + 17], [0, -17, 5, 0], {
         extrapolateLeft: "clamp",
@@ -130,13 +168,42 @@ export const ChillMeterOverlay: React.FC<{
       })
     : 1;
 
-  // allumage juste apres l'atterrissage
+  // ⭐ 09/09 : allumage recale sur le CLIMAX du SFX power-up (POWERON_LIT_FRAME), pas sur un
+  // delai arbitraire apres l'impact — sa consigne explicite : « sync with the moment the green
+  // power button turns on ». Montee sur 14 frames avant le climax pour que le bouton arrive
+  // a pleine intensite pile quand le son culmine, pas apres.
   const powerOn = isEntrance
-    ? interpolate(frame, [IMPACT + 8, IMPACT + 22], [0, 1], {
+    ? interpolate(frame, [POWERON_LIT_FRAME - 14, POWERON_LIT_FRAME], [0, 1], {
         extrapolateLeft: "clamp",
         extrapolateRight: "clamp",
       })
     : 1;
+
+  // ---- Brume/poussiere a l'impact ----
+  // ⭐ 09/09 (jalon 2) : sa demande explicite — « especially the dust/mist that comes up
+  // around it after impact ». Panache simple (radial-gradient anime), coherent avec le style
+  // deja en place dans ce fichier (ombres en div, pas de calque video pour un effet aussi
+  // bref et localise). Jaillit a l'impact, monte et se dissipe sur ~26 frames.
+  const dustProgress = isEntrance
+    ? interpolate(frame, [IMPACT, IMPACT + 10, IMPACT + 26], [0, 1, 1], {
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+        easing: Easing.out(Easing.quad),
+      })
+    : 0;
+  // ⭐ 09/09 : pic remonte 0,55 -> 0,85 — mesure au rendu (crop precis sur la zone), le
+  // premier reglage etait bien present mais quasi invisible a l'oeil nu (gradient qui
+  // s'estompe des 75 % du rayon x opacity x blur 9px = trop dilue pour se lire comme
+  // "poussiere qui jaillit" a la taille d'ecran normale).
+  const dustOpacity = isEntrance
+    ? interpolate(frame, [IMPACT, IMPACT + 4, IMPACT + 26], [0, 0.85, 0], {
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+        easing: Easing.out(Easing.quad),
+      })
+    : 0;
+  const dustRise = dustProgress * 46; // monte de 46px pendant la dissipation
+  const dustSpread = 0.6 + dustProgress * 0.9; // s'etale en se dissipant
 
   // ---- Niveau de chill selon l'etat ----
   let chill = 0;
@@ -325,6 +392,13 @@ export const ChillMeterOverlay: React.FC<{
       )}
 
       {chassis === "rustic" ? (
+        // ⛔ Le rotate NE VA PAS sur ce div : son `left/top` positionne l'objet en absolu
+        // avec pivot top-left implicite (comme avant le jalon 2). Un transformOrigin en px
+        // ici desaligne tout le positionnement (mesure : l'objet saute hors-cadre, cf.
+        // feedback_rotation-svg-le-rotate-va-DANS-le-groupe-qui-porte-le-translate — meme
+        // piege en CSS qu'en SVG, le rotate va DANS le groupe qui porte deja le placement).
+        // Le tilt vit sur un wrapper INTERNE avec un transformOrigin en % (relatif a SA
+        // propre box, sans melange d'echelle avec RUSTIC_SCALE).
         <div
           style={{
             position: "absolute",
@@ -336,7 +410,18 @@ export const ChillMeterOverlay: React.FC<{
             transformOrigin: "top left",
           }}
         >
-          <ChillMeterRustic chill={chill} powerOn={powerOn} frost={frost} frame={frame} fps={fps} />
+          <div
+            style={{
+              width: RUSTIC_W,
+              height: RUSTIC_H,
+              // bascule origine bas-centre (le pivot d'un objet qui incline en tombant
+              // puis se pose a plat) — en %, dans le repere natif de ce wrapper.
+              transform: `rotate(${entRot}deg)`,
+              transformOrigin: `50% ${(RUSTIC_SOL_Y / RUSTIC_H) * 100}%`,
+            }}
+          >
+            <ChillMeterRustic chill={chill} powerOn={powerOn} frost={frost} frame={frame} fps={fps} />
+          </div>
         </div>
       ) : (
         <div
@@ -362,9 +447,84 @@ export const ChillMeterOverlay: React.FC<{
         </div>
       )}
 
+      {/* Brume/poussiere a l'impact — jaillit au contact, PAR-DESSUS le meter (dans la
+          reference elle enveloppe l'objet pose, elle ne reste pas derriere). 2 panaches
+          decales (gauche/droite de l'empreinte) pour eviter un rond de fumee trop lisible. */}
+      {chassis === "rustic" && isEntrance && dustOpacity > 0.001 && (
+        <>
+          <div
+            style={{
+              position: "absolute",
+              left:
+                RUSTIC_POS_X +
+                SOL_EMPREINTE_X0 * RUSTIC_SCALE -
+                60 * dustSpread +
+                SOL_EMPREINTE_W * RUSTIC_SCALE * 0.18,
+              top: RUSTIC_SOL_SCREEN - 40 - dustRise,
+              width: 260 * dustSpread,
+              height: 170 * dustSpread,
+              borderRadius: "50%",
+              // ⭐ 09/09 : 1ere version (blanc translucide 0,9 + opacity 0,55 + blur 9px,
+              // panaches 220x150) etait quasi invisible au rendu a taille d'ecran normale
+              // — confirme present par crop precis, mais trop dilue (gradient qui s'estompe
+              // des 75 % du rayon × opacity × blur 9px). Corrige : coeur OPAQUE dans le
+              // gradient (c'est `opacity` seul qui pilote la visibilite), panaches plus
+              // grands, pic d'opacite remonte a 0,85.
+              // ⭐⭐ 09/09 (retour Aziz) : re-teintee brune/poussiereuse — un blanc-bleu pur
+              // jurait sur un objet rustique/rouille. Mesure directe sur device-rustique.png
+              // (pixels chauds R-B>25) : rouille moyenne RGB(108,81,58). La poussiere reprend
+              // cette teinte mais ECLAIRCIE et DESATUREE (une poussiere en suspension est plus
+              // pale et grise que le metal qui la genere — coeur trop sature se lirait comme
+              // de la peinture projetee, pas un nuage).
+              background:
+                "radial-gradient(ellipse at center, rgba(196,178,156,0.95) 0%, rgba(176,158,136,0.65) 45%, rgba(160,144,122,0) 75%)",
+              opacity: dustOpacity,
+              filter: "blur(9px)",
+              pointerEvents: "none",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              left:
+                RUSTIC_POS_X +
+                SOL_EMPREINTE_X0 * RUSTIC_SCALE -
+                40 * dustSpread +
+                SOL_EMPREINTE_W * RUSTIC_SCALE * 0.62,
+              top: RUSTIC_SOL_SCREEN - 30 - dustRise * 0.85,
+              width: 230 * dustSpread,
+              height: 150 * dustSpread,
+              borderRadius: "50%",
+              background:
+                "radial-gradient(ellipse at center, rgba(190,172,150,0.9) 0%, rgba(172,154,132,0.6) 45%, rgba(160,144,122,0) 75%)",
+              opacity: dustOpacity,
+              filter: "blur(9px)",
+              pointerEvents: "none",
+            }}
+          />
+        </>
+      )}
+
       {/* 100 % — gel des 4 bords + onde de choc codee + neige, PAR-DESSUS le meter
           (l'onde en part, elle doit donc le franchir). */}
       <FullChillCoded progress={fullChill} t={frame / fps} />
+
+      {/* ---- SFX jalon 2 — fichiers envoyes par Abigail le 09/09, sync mesuree en tete
+          de fichier (THUD_START_FRAME / POWERUP_START_FRAME). Uniquement sur l'entree :
+          les autres etats (idle, fillNN) ne portent pas ces sons. `Sequence from=` decale
+          le POINT DE DEPART de lecture du fichier (frame 0 de l'enfant = `from` du parent),
+          ce qu'un simple rendu conditionnel ne ferait pas — l'Audio recommencerait a 0 a
+          chaque frame plutot que de suivre une position de lecture qui avance. */}
+      {isEntrance && !muted && THUD_START_FRAME >= 0 && (
+        <Sequence from={THUD_START_FRAME} layout="none">
+          <Audio src={staticFile("_client-sim/chill-meter/sfx-abigail/thud.wav")} />
+        </Sequence>
+      )}
+      {isEntrance && !muted && (
+        <Sequence from={POWERUP_START_FRAME} layout="none">
+          <Audio src={staticFile("_client-sim/chill-meter/sfx-abigail/power-up.wav")} />
+        </Sequence>
+      )}
     </AbsoluteFill>
   );
 };

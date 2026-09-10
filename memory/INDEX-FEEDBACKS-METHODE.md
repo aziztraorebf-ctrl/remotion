@@ -64,3 +64,5 @@
 - connecteurs-tremblay-formules-cliches-a-eviter
 - ⛔⛔ vetement-solidaire-du-corps-jamais-independant · ⭐⭐ pose-manquante-chercher-registre-avant-inventer · hierarchie-figurant-heros · +6 (`grep -l stick-figure feedbacks/`) — R&D close, autorité `STICK-FIGURE-INDEX.md`
 - `memory/freelance-linkedin/` · vox-generation-vs-composition-deterministe-moat · doute-utilisateur-post-verdict-jury-llm-priorite · +9 (`ls feedbacks/ | grep methode`)
+- ⭐⭐⭐ livraison-jalon-demo-groupee-vs-fichiers-individuels-jalon-final — jalon de revue = clips de démo, fichiers individuels réservés au jalon "final exports"
+- ⭐⭐ rotation-svg-le-rotate-va-DANS-le-groupe-qui-porte-le-translate — vaut aussi en CSS transform, pas que SVG (2e preuve : chill-meter, tilt casse le cadrage)

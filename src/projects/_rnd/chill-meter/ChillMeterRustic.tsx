@@ -461,6 +461,9 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
             fill="url(#rustic_screenFloor)"
             style={{ mixBlendMode: "screen" }}
           />
+          {/* ⭐ 09/09 : meme correctif d'amplitude que le bouton power — 0,82-1,0
+              ne bougeait pas assez pour se voir (brief : « subtle screen shimmer »,
+              pas "statique juste allume"). Plancher baisse a 0,60. */}
           <rect
             x={ECRAN.x}
             y={ECRAN.y}
@@ -468,7 +471,7 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
             height={ECRAN.h}
             rx={ECRAN.r}
             fill="url(#rustic_screenGlow)"
-            opacity={0.82 + breathe * 0.18}
+            opacity={0.60 + breathe * 0.40}
             style={{ mixBlendMode: "screen" }}
           />
         </g>
@@ -480,6 +483,37 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
         <g opacity={powerOn * (0.7 + breathe * 0.3)} filter="url(#rustic_screenBloom)">
           <rect x={ECRAN.x + 60} y={CASE_Y - 32} width={ECRAN.w - 120} height={4}
                 rx={2} fill="#8fdcff" opacity={0.5} />
+        </g>
+      )}
+
+      {/* ⭐ 09/09 (retour Aziz) : « subtle screen shimmer » + « light icy movement inside
+          the meter » du brief — jamais code jusqu'ici, distinct du pulse du bouton power.
+          5 petits points glaces dans la zone haute de l'ecran (sous le titre, au-dessus de
+          la jauge), CHACUN sur sa propre phase de sin (pas synchronises sur `breathe`) :
+          un scintillement credible clignote en DESORDRE, un pulse uniforme se lirait comme
+          un 2e bouton power plutot qu'un miroitement de givre. */}
+      {powerOn > 0.01 && (
+        <g opacity={powerOn * 0.85}>
+          {[
+            { x: ECRAN.x + 140, y: 340, period: 1.7, phase: 0 },
+            { x: ECRAN.x + 310, y: 365, period: 2.3, phase: 1.1 },
+            { x: ECRAN.x + 480, y: 345, period: 1.9, phase: 2.4 },
+            { x: ECRAN.x + 640, y: 370, period: 2.6, phase: 0.6 },
+            { x: ECRAN.x + 760, y: 350, period: 2.1, phase: 3.2 },
+          ].map((pt, i) => {
+            const s = 0.5 + 0.5 * Math.sin((t * Math.PI * 2) / pt.period + pt.phase);
+            return (
+              <circle
+                key={i}
+                cx={pt.x}
+                cy={pt.y}
+                r={2.2 + s * 1.6}
+                fill="#cdeeff"
+                opacity={0.15 + s * 0.5}
+                filter="url(#rustic_softLed)"
+              />
+            );
+          })}
         </g>
       )}
 
@@ -532,14 +566,24 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
       </g>
 
       {/* ================= 4. LE VOYANT POWER ================= */}
+      {/* ⭐ 09/09 (retour Aziz, jalon 2) : amplitude de la respiration remontee — mesure
+          au rendu, l'ancien dosage (halo 0,5-0,8 · coeur 0,82-1,0) ne bougeait le pixel
+          vert que de 3 % (100,9 -> 97,9 sur 255), imperceptible en video. Le halo elargi
+          descend a 0,25 (etait 0,5) et le coeur a 0,55 (etait 0,82) : le CONTRASTE, pas
+          le pic, est ce qui se voit — un plancher plus bas fait plus que monter le pic. */}
+      {/* ⭐ 09/09 (2e passe, retour Aziz) : son brief dit litteralement « glow IN AND OUT »
+          — un vrai pulse respiratoire, pas juste une opacite qui varie sur un cercle de
+          taille fixe. Le RAYON du halo bouge maintenant avec `breathe` (1.6x a 2.3x le
+          rayon du bouton) : un halo qui grossit/retrecit se reconnait comme "vivant" bien
+          plus qu'une opacite seule, meme a amplitude d'opacite egale. */}
       {powerOn > 0.01 && (
         <g opacity={powerOn}>
           <circle
             cx={POWER.cx}
             cy={POWER.cy}
-            r={POWER.r * 2.1}
+            r={POWER.r * (1.6 + breathe * 0.7)}
             fill="url(#rustic_ledGlow)"
-            opacity={0.5 + breathe * 0.3}
+            opacity={0.35 + breathe * 0.5}
             filter="url(#rustic_softLed)"
             style={{ mixBlendMode: "screen" }}
           />
@@ -549,7 +593,7 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
             cy={POWER.cy}
             r={POWER.r * 0.82}
             fill={VERT}
-            opacity={0.82 + breathe * 0.18}
+            opacity={0.55 + breathe * 0.45}
           />
           {/* petit reflet haut-gauche : la lentille est bombee */}
           <ellipse
@@ -568,7 +612,9 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
           color/glow when the meter powers on so that area feels more alive and connected
           to the chill theme. » Le titre est grave dans SON image : on le recolore, on ne
           le redessine pas. Il respire avec l'ecran, l'allumage suit `powerOn`. */}
-      <g opacity={powerOn * (0.82 + breathe * 0.18)} clipPath="url(#clip_titre)">
+      {/* ⭐ 09/09 : meme correctif d'amplitude que le voyant power (plancher baisse, pas
+          seulement le pic remonte) — le titre respire trop peu pour se voir sinon. */}
+      <g opacity={powerOn * (0.55 + breathe * 0.45)} clipPath="url(#clip_titre)">
         <image
           href={staticFile("_client-sim/chill-meter/device-rustique.png")}
           x={0}
@@ -583,6 +629,9 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
           « light blue edge lighting around the device [...] I don't want it overly bright,
           but it should clearly feel powered on. » Une lueur froide qui court le long du
           cadre : elle nait de l'ecran allume et leche le metal autour. */}
+      {/* ⭐ 09/09 : meme correctif — l'ancien 0,20-0,30 ne bougeait quasi rien sur un
+          trait deja tres pale. Reste sous son plafond « not overly bright » (0,20 a
+          0,45 au pic, contre 0,30 avant : toujours discret, mais le mouvement se voit). */}
       {powerOn > 0.01 && (
         <rect
           x={ECRAN.x - 26}
@@ -593,7 +642,7 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
           fill="none"
           stroke="#7ad4ff"
           strokeWidth={9}
-          opacity={powerOn * (0.20 + breathe * 0.10)}
+          opacity={powerOn * (0.10 + breathe * 0.35)}
           filter="url(#rustic_screenBloom)"
         />
       )}

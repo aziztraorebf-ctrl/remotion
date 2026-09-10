@@ -4,6 +4,15 @@
 
 ## AVANT DE RENDRE
 
+### ⛔⛔ `<Sequence>` REJOUE UN STATE DEPUIS 0 · `amix duration=first` TRONQUE (2026-09-09, chill-meter)
+- ⛔ **Rejouer le MEME state/composant dans une 2e `<Sequence>` relance TOUTE son animation** (SFX
+  compris), pas juste son dernier visuel — `useCurrentFrame()` repart a 0 a chaque Sequence.
+  FIX : `<Freeze frame={D-1}>` pour figer l'etat au lieu de le rejouer. Verifier par
+  `ffmpeg -af volumedetect` sur le segment (doit tomber a ~-91dB si vraiment silencieux).
+- ⛔ **`amix ... duration=first`** cale la sortie sur le PREMIER flux d'entree, pas la timeline —
+  mesure : 4s d'audio obtenues sur 20s de video. FIX : `duration=longest` + `apad=whole_dur=N`.
+  Detail complet : `memory/tools/remotion.md` § OffthreadVideo + clips.
+
 ### ⛔⛔ MESURER UNE COULEUR — sur le RENDU, au CŒUR du glyphe (2026-08-27, repro Foster)
 - **Une couleur se valide sur le RENDU FINAL, jamais sur la valeur écrite dans le code.** La chaîne
   Chromium + h264 `yuv420p` ÉCLAIRCIT, et pas uniformément : biais mesuré **+5 R, +13 G, +21 B**.

@@ -1925,3 +1925,11 @@ c'etait une **regle d'acces**, cas non couvert jusqu'ici.
 page officielle et ce qui vient de temoignages (le « 3-7 mois avant la 1re commande » venait de fils
 Reddit = des SURVIVANTS, ceux qui ont abandonne n'ecrivent pas). **Etiqueter la source AVANT de
 conclure**, pas apres.
+
+⛔⛔ **Un SFX mesure PLUS FORT en dB peut quand meme etre PERCU comme absent (2026-09-09, chill-meter)**
+— mesure : power-up (rise progressif ~1,8s) a -16dB, thud (transitoire net) a -19,3dB. Le power-up
+est objectivement plus fort, pourtant percu comme quasi absent a l'ecoute. Cause : l'oreille detecte
+un transitoire court bien mieux qu'une montee lente, meme a niveau superieur — un build-up se fond
+dans l'ambiance, un bang ressort. **Regle : ne jamais juger un SFX de type build-up/swell sur les dB
+seuls, toujours verifier a l'oreille sur un vrai extrait de la destination finale** (pas un fond
+neutre) avant de conclure qu'un niveau est suffisant.
