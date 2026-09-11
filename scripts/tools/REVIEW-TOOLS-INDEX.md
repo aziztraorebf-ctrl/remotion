@@ -212,3 +212,39 @@ NOTRE (mesure repro Foster : 7 SFX sur 13 seulement tombaient juste).
 reference Foster, mesurees a la main une par une pendant la session.
 ⚠️ Donne des CANDIDATS, pas une verite — il dit **OU**, jamais **QUOI**.
 -> Methode complete : `memory/fiches/FICHE-AUDIO.md` § OU placer les SFX.
+
+---
+
+## ⭐⭐⭐ `motion-timing.py` — MESURER la structure d'un mouvement (zero LLM, zero cout)
+
+> Cree le 2026-09-10 apres l'incident chill-meter (1 tour de revision client perdu).
+> ⛔ **A ne pas confondre avec `motion-breakdown.py`** : celui-la fait DECRIRE le mouvement
+> par des LLM (« ca tombe vite »), et son propre en-tete dit qu'il ne donne PAS de valeurs.
+> Celui-ci MESURE : a quelle frame l'objet touche, si la chute accelere, ou partent les
+> rebonds, quand l'image se stabilise, et si les attaques SONORES coincident.
+
+```bash
+# A. Sur la REFERENCE du client, AVANT de coder -> donne les constantes a coder
+python3 scripts/tools/motion-timing.py ref-client.mp4 --max-frames 30
+
+# B. Sur NOTRE rendu, AVANT de livrer -> verifie que la structure colle
+python3 scripts/tools/motion-timing.py notre-rendu.mp4 --max-frames 55 \
+    --zone 120,700,820,1070      # si l'arriere-plan bouge (plateau filme, video dessous)
+```
+
+**Preuve qu'il attrape le vrai defaut** (meme commande sur les 2 versions du chill-meter) :
+
+| | version REJETEE par la cliente | version corrigee |
+|---|---|---|
+| Depart du rebond | f12 = **+3 ⛔ DECROCHE DU CONTACT** | f10 = +1 OK |
+| Nombre de pics | **3** (= son « moving up and down afterward ») | 2 |
+| Stabilisation | f50 (1,67 s) | f42 (1,40 s) |
+
+⛔ **Le chiffre qui compte est le DEPART du rebond, pas son sommet.** Un rebond sain part au
+contact et culmine 3-6 frames plus tard (mesure sur la reference cliente : contact f8, sommet
+f13 — ce rebond-la est exemplaire). Un seuil pose sur le sommet produit un faux positif sur
+une video parfaite ; l'outil corrige remonte la courbe jusqu'a la 1re frame de remontee.
+
+⚠️ **Limite connue** : sur un montage avec le son du plateau (voix/musique du client), la
+detection d'attaques sonores est polluee — lire alors la seule partie visuelle, ou mesurer
+sur la version sans son de plateau.
