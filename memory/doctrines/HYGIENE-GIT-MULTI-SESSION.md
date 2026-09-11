@@ -113,3 +113,22 @@ garantie d'existence.** Vérifier le chemin sur la branche courante avant de bâ
 
 *(Migré depuis `PIPELINE.md` le 2026-09-11 : ces chiffres n'existaient qu'à cet endroit, dans
 une section close destinée à la suppression.)*
+
+## 8. Dans quel arbre suis-je ? (avant d'editer un fichier de memoire)
+
+Un worktree porte **sa propre copie** de `memory/NEXT-ACTION.md`, souvent perimee. Editer la
+mauvaise, c'est ecrire dans un fichier que personne ne lira.
+
+```bash
+git rev-parse --show-toplevel    # quel arbre ?
+```
+
+⛔ Vecu 2026-07-26 : la copie du worktree `remotion-cfa` datait du 22/07 et n'avait aucune
+section CFA — alors que le projet CFA y etait le chantier actif.
+
+⭐ **Deux questions distinctes, a ne pas confondre** :
+- *Quel fichier ouvrir ?* → celui du **repo principal**, jamais la copie d'un worktree.
+- *Que vaut son contenu ?* → il est **en retard** sur les chantiers vivant ailleurs ; un commit
+  recent dans un worktree prime sur ce qu'il raconte.
+
+*(Migre depuis `memory/ROUTAGE.md` le 2026-09-11 : la commande n'existait nulle part.)*
