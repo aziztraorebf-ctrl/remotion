@@ -6,7 +6,14 @@
 
 ## spring() vs interpolate()
 
-- `spring()` = physique (rebond, inertie). Pour entrees, impacts, apparitions.
+- `spring()` = physique (rebond, inertie). Pour entrees et apparitions.
+  ⛔⛔ **PAS pour un IMPACT dont un autre element doit dependre** (SFX, poussiere, rebond,
+  allumage) : un spring n'a **pas de frame de contact connue**. Poser une constante d'impact a
+  cote = 2 horloges qui divergent en silence. Mesure du 2026-09-10 : elles avaient **20 frames
+  (0,67 s) d'ecart**, l'objet restait pose et immobile avant son propre « impact ». 1 tour de
+  revision client. ✅ Trajectoire explicite en `interpolate`, `IMPACT_FRAME = FALL_FRAMES` — le
+  contact EST la fin de la chute, par construction. Detail : `memory/fiches/FICHE-GESTE-ANIME.md`
+  § UN IMPACT NE SE DECLARE PAS.
 - `interpolate()` = lineaire/courbe. Pour progressions continues (opacite, position).
 - Spring s'applique a l'animation interne, jamais au startFrame cale sur audio.
 

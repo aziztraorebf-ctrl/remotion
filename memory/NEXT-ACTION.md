@@ -107,12 +107,8 @@ Cadre contractuel (stable) : offre v2 acceptée le 30/08, 350 $ → 297,50 $ net
 (3/7/11 sept.), 2 tours de révision par jalon, dossier source + README dus. État financement
 vérifié via API le 08/09 : les 3 jalons ont `fundedAmount` déjà rempli (voir `upwork-mcp.md`).
 
-✅ **JALON 2 APPROUVÉ PAR AZIZ (09/09 soir), toujours NON COMMITÉ** — entrance retravaillée
-(diagonale gauche, tilt léger, brume rouille, SFX synchronisés), bug de dosage Idle corrigé
-(bouton power + scintillement écran), livraison simplifiée en 2 clips de démo (`RecapJalon2.tsx`,
-nouveau composant) + message client réécrit et validé. Détail complet : STATUS.md § 09/09 soir.
-⏭️ Reste : commit des fichiers (`git add` nommé, PAS `-A` — 2 fichiers hors-scope traînent dans
-le repo), puis envoi effectif du message + 2 clips sur Upwork (geste d'Aziz).
+🔵 **JALON 2 — 2 tours de révision faits (10-11/09), branche `fix/chill-meter-entrance-impact`
+(non mergée).** État réel + prochaine action : STATUS.md (règle ci-dessus).
 
 Invariants à ne pas perdre :
 - ⛔ Ne PAS lui dire que les 6 états sont déjà rendus (atout de négociation).
@@ -313,14 +309,9 @@ Claude met a jour ce fichier en FIN DE SESSION quand :
 et sa publication dans le calendrier. Ne jamais garder de « trace historique » ici : git la conserve.
 Ce fichier a déjà dépassé 116 Ko (juillet) puis 26,5 Ko (août) faute d'appliquer cette règle en continu.
 
-## 🔧 BACKLOG — 3 fiches saturées, à SCINDER (relevé au wrap 2026-08-27)
+## 🔧 BACKLOG — fiches saturées, à SCINDER en DÉBUT de session
 
-Budget d'une fiche = **55 lignes** (contexte injecté à chaque édition). 3 fiches le dépassent au
-point qu'un simple retrait ne sert à rien — scission à faire en DÉBUT de session (pas en clôture,
-risque de rendre une fiche muette sans l'éprouver ensuite) :
-
-| Fiche | Lignes | Scission proposée |
-|---|---|---|
-| `FICHE-CLIP-GENERE.md` | 272 (5×) | sortir § previs/générateurs vers une fiche PREVIS. |
-| `FICHE-UI-PRODUIT.md` | 196 (3,6×) | sortir § MONTAGE+CURSEUR+SON vers `FICHE-ASSEMBLAGE`. |
-| `FICHE-ASSEMBLAGE.md` | 132 (2,4×) | fusionner 2 sections qui redisent le plafond Artifact 16 Mo. |
+Budget d'une fiche = **55 lignes** (contexte injecté à chaque édition). Plusieurs le dépassent.
+⛔ Scission en DÉBUT de session, jamais en clôture (risque de rendre une fiche muette sans
+l'éprouver ensuite). ⛔ Ne pas re-graver les chiffres ici (règle § worktrees) — les MESURER :
+`wc -l memory/fiches/*.md | sort -rn | head`

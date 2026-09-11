@@ -36,13 +36,20 @@ Session sans production visuelle. Ce qui a changé et qui affecte TOUTE session 
 
 ---
 
-## 💰 CONTRAT UPWORK chill-meter (AbiGirl Reacts) — jalon 2 approuvé par Aziz (09/09), prêt à envoyer
+## 💰 CONTRAT UPWORK chill-meter (AbiGirl Reacts) — jalon 2 rev2 codée (11/09), prêt à envoyer
 
 **Premier contrat freelance signé (30/08), actif.** 350 $ → 297,50 $ net, 3 jalons. Jalon 1
-APPROUVÉ par la cliente. Jalon 2 (140 $, entrance/power-on/idle/0-25%/50%) retravaillé le 09/09 :
-entrance (diagonale, tilt, brume, SFX synchronisés), Idle (bouton qui pulse, écran qui scintille),
-livraison en 2 clips de démo montés (`RecapJalon2.tsx`) + message client réécrit — approuvé par
-Aziz, reste l'envoi effectif sur Upwork.
+APPROUVÉ. Jalon 2 (140 $) : **2 tours de révision faits les 10 et 11/09**, branche
+`fix/chill-meter-entrance-impact` (non mergée).
+- rev1 (10/09) — bug racine corrigé : un `spring()` portait la position pendant qu'une CONSTANTE
+  portait l'impact → 0,67 s d'objet posé-immobile avant son propre « impact ». Retour cliente très
+  positif (« huge improvement »).
+- rev2 (11/09) — ses 4 demandes : rebond (HANG TIME, pas la hauteur), lueur bleue resserrée,
+  pause de 0,75 s mesurée depuis la FIN DU MOUVEMENT, poussière latérale découplée de l'allumage.
+- Livraison : **l'entrance SEULE** (`RecapEntranceRev2.tsx`, 6,5 s) — le 0-25 % déjà accepté en
+  silence n'est pas remontré. Message rédigé, reste l'envoi manuel (bug `attachments` du MCP).
+⚠️ Jalon 3 (75 %/100 % + exports + dossier source) : échéance contractuelle 11/09 DÉPASSÉE. Ses
+SFX pour 75/100 % n'ont jamais été fournis — à demander.
 → Source de vérité : `memory/client-sim-tests/upwork-chill-meter/STATUS.md`.
 → Briques méthode nées de ce contrat : `memory/doctrines/REVERSIBILITE-MATIERE-GENEREE.md` ·
 `memory/feedbacks/feedback_annoter-l-image-plutot-qu-expliquer-au-client.md` ·

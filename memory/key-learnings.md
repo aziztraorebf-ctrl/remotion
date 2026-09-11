@@ -2009,3 +2009,41 @@ you saw, since that part wasn't what you flagged »), (2) prevenir honnetement d
 change dans la lecture, (3) cadrer la revision comme triviale (« a quick adjustment on my
 end »), (4) demander un CHIFFRE ou une direction (« just say how much »), pas une appreciation.
 Un retour ainsi cadre est actionnable du premier coup.
+
+## ⛔⛔⭐⭐⭐ 2026-09-11 — UN CORRECTIF DONT L'EFFET N'EST PAS MESURÉ N'EST PAS UN CORRECTIF
+
+**Vécu (chill-meter, rev2)** : la cliente signale une lueur bleue qui bave sur le métal. Diagnostic
+immédiat et plausible : le bloom de la réglette lumineuse. Je l'ai clippé, le code était propre, ça
+« devait » marcher. **Mesure après fix : 0,14 point de réduction sur 3,66.** Autrement dit rien. La
+vraie cause était ailleurs : l'edge-lighting, un trait de 9 px tracé **26 px EN DEHORS de l'écran**
+avec un flou par-dessus. Une fois resserré : +3,66 → **-1,28**.
+
+⛔ **La règle** : entre « j'ai appliqué le correctif » et « le défaut a disparu » il y a une MESURE,
+et elle n'est pas optionnelle. Un correctif plausible appliqué sur une cause fausse produit un code
+plus compliqué, un défaut intact, et la conviction d'avoir réglé le problème — le pire des 3 états.
+⭐ **Le chiffre qui ne bouge pas EST le signal** : il ne dit pas « doser plus fort », il dit
+**« ce n'est pas là »**. C'est lui qui a fait chercher ailleurs et trouver.
+⚠️ Face de la même règle que « un chiffre qui bouge ne prouve pas qu'un problème visuel est résolu »
+(occlusion chill-meter, 06/09) : la mesure est **nécessaire, jamais suffisante**.
+
+## ⭐⭐ 2026-09-11 — NE PAS REDONNER À JUGER CE QUI EST ACCEPTÉ EN SILENCE
+
+Pour la rev2 du jalon 2, ses 4 demandes portaient **toutes** sur l'entrance. Le réflexe « montrer
+l'ensemble pour le contexte » aurait remontré le 0-25 %, **déjà vu et non commenté** au tour
+précédent. Décision (Aziz) : n'envoyer QUE l'entrance.
+⭐ **Un élément qu'un client a vu et n'a pas critiqué est validé. Le remontrer rouvre une porte
+fermée** — il le regarde à neuf, trouve quelque chose, et un tour de révision part sur un acquis.
+C'est le pendant côté LIVRAISON de « ne pas toucher à ce que le client n'a pas critiqué » (10/09),
+qui vaut côté CODE. ⚠️ Vaut pour une révision ciblée, pas pour une livraison finale.
+
+## ⛔ 2026-09-11 — 2 PIÈGES D'OUTILLAGE PAYÉS DANS LA MÊME SESSION
+
+1. ⛔ **`sed` sur une ligne portant un commentaire = code corrompu en silence.**
+   `sed 's/^const X = [0-9]*;/const X = 22;/'` sur `const X = 17; // note` a produit
+   `const X = 22 7;` — le fichier ne compilait plus, **les rendus ont échoué sans que je le voie**
+   (j'ai cru qu'ils tournaient). ✅ Pour remplacer une valeur : Python + `re.sub` ancrée sur `[^;]*;`.
+   ⭐ Corollaire : **un rendu lancé n'est pas un rendu réussi** — vérifier le fichier sur disque.
+2. ⛔ **Mesurer un objet sur un plateau FILMÉ par seuil absolu accroche le décor, pas l'objet.**
+   3 faux résultats successifs (le cadre de sa vidéo, le châssis en vol pris pour de la poussière,
+   la poussière prise pour un 2e rebond). ✅ Toujours mesurer par **différence à une frame de repos**,
+   jamais par détection de seuil sur l'image brute.

@@ -4,7 +4,54 @@
 > accepté par la cliente le 29/08, **offre v2 acceptée par Aziz le 30/08**. 350 $ → 297,50 $ net.
 > ⛔ Les décisions de ce fichier engagent contractuellement.
 
-## 🟡 ÉTAT AU 2026-09-10 : RÉVISION 1 DU JALON 2 CODÉE — à valider par Aziz avant envoi
+## 🟡 ÉTAT AU 2026-09-11 : RÉVISION 2 DU JALON 2 CODÉE — à valider par Aziz avant envoi
+
+**Abigail a répondu très positivement à la rev1** (« huge improvement », « very very impressed »,
+« definitely something we can work with now »). La cause racine corrigée le 10/09 (spring +
+IMPACT_FRAME) est validée par elle. Restent **4 demandes mineures, toutes dans l'ENTRANCE**.
+
+✅ **FAIT** (commit `62ddd11e`, branche `fix/chill-meter-entrance-impact`, NON mergée) :
+
+1. **REBOND plus visible** — la cause n'était PAS la hauteur mais la COURBE. Essais à 22/26/28 px
+   sans palier : RIEN de visible. À 30 fps, un aller-retour qui monte en 3 frames et retombe sans
+   marquer son sommet passe sous le seuil de lecture. Fix = **HANG TIME** (montée 3f / suspension
+   3f / chute 5f) ; hauteur 17 → 20 px seulement. Vérifié : le châssis tient sa hauteur f12→f15,
+   immobile dès f20.
+
+2. **LUEUR BLEUE qui bavait sur le métal** — ⛔ 1er diagnostic FAUX : j'ai clippé le bloom de la
+   réglette, réduction mesurée **0,14 point sur 3,66** (rien). Vraie cause : l'**edge-lighting**,
+   trait de 9 px tracé **26 px EN DEHORS de l'écran** + flou. Resserré au bord de la dalle (-8),
+   affiné à 5 px, intensité -1/3. Mesure : +3,66 → **-1,28**. ⚠️ NON supprimé : elle avait demandé
+   « edge lighting around the device » le 05/09 — arbitrage entre 2 de ses demandes, signalé dans
+   le message pour qu'elle tranche.
+
+3. **PAUSE avant allumage** — piège tranché par la mesure : l'allumage était **DÉJÀ à 0,47 s du
+   contact**, donc dans sa fourchette « half a second », alors qu'elle le trouvait trop rapide.
+   Sa référence perceptive est la **FIN DU MOUVEMENT**, pas le contact. Pause = 0,75 s après
+   SETTLE. Allumage f23 → f43.
+
+4. **POUSSIÈRE LATÉRALE** — 2 erreurs corrigées par Aziz. (a) câblée pour mourir à l'allumage =
+   lecture trop littérale (la pause de 0,75 s est trop courte pour qu'une dissipation se PERÇOIVE) ;
+   découplée, meurt à 2,00 s, soit 0,57 s APRÈS l'allumage. (b) rendue translucide pour durer sans
+   envahir → invisible. Niveau franc (0,78 → 0,68) puis extinction courte ; la dispersion est
+   portée par `dustSideSpread`.
+
+✅ **FORMAT D'ENVOI : l'ENTRANCE SEULE** (`RecapEntranceRev2.tsx` — entrance + carton d'ouverture,
+6,5 s, 5,5 Mo). Ses 4 demandes sont toutes dans l'entrance ; le 0-25 %, **déjà vu et non
+commenté**, n'est pas remontré. ⭐ Principe : **ne pas redonner à juger ce qui est accepté en
+silence**. Clips : `out/_r-and-d/chill-meter-upwork/jalon2-rev3/envoi-final/`.
+
+✅ **Vérifié le 11/09 : rien n'a jamais été envoyé via le MCP Upwork** (lecture seule). L'envoi
+reste un geste manuel d'Aziz (bug `attachments` connu, 2 occurrences).
+
+⚠️ **Elle est en week-end jusqu'au lundi** — réponses possiblement lentes, annoncé par elle.
+
+⏭️ **RESTE** : envoi manuel du message + 2 clips → sa validation → soumettre le jalon 2.
+Jalon 3 (échéance contractuelle 11/09, DÉPASSÉE) = 75 % / 100 % + exports finaux + dossier source
+Remotion. ⚠️ Ses SFX pour le 75 %/100 % n'ont jamais été fournis — les demander dans le prochain
+message.
+
+## 🗄️ ÉTAT AU 2026-09-10 (archivé) : RÉVISION 1 DU JALON 2
 
 **Abigail a répondu le 10/09 (message positif, un seul point rejeté : l'ENTRANCE).**
 Elle valide implicitement idle / 25 % / 50 % (aucune critique), remercie la pédagogie des

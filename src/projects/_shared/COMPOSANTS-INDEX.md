@@ -409,3 +409,30 @@ import { SourceTag } from '../../_shared/components/overlays/SourceTag'
 | `GroundShadow` (proto, inline — à extraire, 2026-08-26) | `_shared/_demos/devices/DeviceInScene.tsx` (l. ~191-228) | "un objet 3D doit lire POSÉ dans le décor, pas superposé par-dessus" — ombre en **TROIS couches** DOM, pas une ellipse floue : (1) occlusion ambiante large et pâle, (2) projection décalée du côté opposé à la key light, (3) contact serré et sombre juste sous l'objet. ⭐ C'est la couche 1 qui fait basculer la lecture vers « posé ». Mesure : la référence a un creux de luminosité PROGRESSIF (122 niveaux) là où une ellipse simple saute (7→203→50 en quelques px). ⛔ Le décalage suppose la key en HAUT-DROITE : changer de décor = tourner le RIG, pas l'ombre. |
 | `Flatten` + `FlatLights` (proto, 3 copies divergentes — à factoriser, 2026-08-26) | `_shared/_demos/devices/FlatDeviceMotion.tsx` (l. ~75-111) | "un objet 3D doit cohabiter avec un fond DESSINÉ sans se lire comme une photo collée au milieu d'un dessin" — on n'échange PAS les matériaux (ce serait perdre la hiérarchie châssis/touches/trackpad) : on annule ce qui fait photo (`metalness=0`, `roughness=1`, `envMapIntensity=0`) par `traverse()`, + éclairage à ambiante dominante (2.5) et une seule directionnelle douce. ⛔ L'ÉCRAN est EXCLU (repéré par sa `map`) : il doit rester émissif. ⭐ Traitement RETENU au banc du 2026-08-26. |
 | `useVideoTexture` (proto, inline — à extraire, 2026-08-26) | `_shared/_demos/devices/DeviceHeroShot.tsx` (l. ~48-100) | "montrer l'UI EN TRAIN DE VIVRE dans l'appareil, pas une capture figée" — `THREE.VideoTexture` alimentée par un `<video>` créé en DOM, **frame-driven** (`currentTime = frame/fps`) donc le rendu reste déterministe. `muted` + `playsInline` obligatoires en headless, `delayRender`/`continueRender` autour du chargement. ⛔ La texture DOIT être construite HORS du `<ThreeCanvas>` (les effets React d'un enfant du canvas ne sont jamais flushés avant capture). |
+
+
+## ⭐⭐ LIVRAISON CLIENT — montages de présentation (catégorie nouvelle, 2026-09-11)
+
+> Répond au cas « je dois montrer un livrable à un client non-technique sans qu'il ait à lire un
+> message à côté ». Née du contrat Upwork chill-meter (3 tours de révision, format explicitement
+> remercié 2× par la cliente).
+
+### `CartonRecapClient` *(proto — 3 copies divergentes, à extraire)*
+`_rnd/chill-meter/RecapJalon2Rev1.tsx` (carton de TRANSITION) · `RecapEntranceRev2.tsx` (carton
+d'OUVERTURE). **Fond semi-transparent (rgba ~0.83) sur la vidéo qui CONTINUE de tourner dessous**
+— jamais un carton plein cadre, qui produit une coupure sèche.
+
+⛔⛔ **LE PIÈGE DU `<Freeze>`** : rejouer le même `state` dans une 2e `<Sequence>` le relance
+depuis SA frame 0 (Remotion remet `useCurrentFrame()` à 0 par Sequence) — l'animation rejouait
+donc thud + poussière PENDANT le carton. `<Freeze frame={D-1}>` fige la dernière frame.
+Bug vécu, corrigé, **vérifié par `volumedetect` (-91 dB sur le segment carton)**.
+
+⭐ **OUVERTURE vs TRANSITION, la subtilité qui compte** : un carton de TRANSITION doit tenir
+l'état précédent (donc `<Freeze>`) ; un carton d'OUVERTURE ne doit **RIEN** figer — l'animation
+doit démarrer vierge, sinon on voit l'objet posé avant qu'il ne tombe.
+
+⭐ **Durée 75-120 frames (2,5-4 s)** — à 1,5 s les cartons n'étaient pas lus (mesuré 09/09).
+⭐ **Doctrine éditoriale** : ne remontrer QUE ce qui a changé. Ne jamais redonner à juger ce que
+le client a accepté en silence (cf. `memory/key-learnings.md` § 2026-09-11).
+⚠️ **3 copies recopiées, zéro import croisé** — signal d'extraction (cf. feedback
+`outil-re-improvise-2-fois-dans-la-session-extraire-tout-de-suite`), pas de réutilisation prouvée.
