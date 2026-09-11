@@ -309,12 +309,20 @@ def main() -> int:
             if len(closes) > 4:
                 alertes.append(f"        · … et {len(closes) - 4} autre(s)")
 
+    # ⚠️ NOMMER LE FICHIER : la chaine charge DEUX CLAUDE.md (projet + global
+    # ~/.claude/). Un message qui dit juste « CLAUDE.md » a fait croire a un
+    # depassement du global alors que c'est le projet qui est vise (11/09).
+    # Et le `+1` comptait une ligne finale vide inexistante : 206 annonce pour
+    # 205 reelles. Un instrument de mesure se lit a l'unite pres ou il ne sert
+    # a rien.
     claude = REPO / "CLAUDE.md"
     if claude.exists():
-        n = claude.read_text(encoding="utf-8").count("\n") + 1
+        n = len(claude.read_text(encoding="utf-8").rstrip("\n").split("\n"))
         if n > 200:
-            alertes.append(f"  ⚠️  CLAUDE.md : {n} lignes — au-dela de ~200 l'adherence baisse "
-                           f"(doc officielle). Deplacer vers une doctrine pointee.")
+            alertes.append(
+                f"  ⚠️  CLAUDE.md du PROJET (remotion/) : {n} lignes — repere d'adherence "
+                f"~200 (pas une limite technique : elle est a 4 MiB). Deplacer vers une "
+                f"doctrine pointee si l'ecart se creuse.")
 
     for m in memory_sections_hors_borne():
         alertes.append(f"  ⚠️  MEMORY.md : {m}")
