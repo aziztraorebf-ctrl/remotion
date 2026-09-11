@@ -619,12 +619,12 @@ export const ChillMeterOverlay: React.FC<{
           chaque frame plutot que de suivre une position de lecture qui avance. */}
       {isEntrance && !muted && THUD_START_FRAME >= 0 && (
         <Sequence from={THUD_START_FRAME} layout="none">
-          <Audio src={staticFile("_client-sim/chill-meter/sfx-abigail/thud-v2.mp3")} />
+          <Audio src={staticFile("_client-sim/chill-meter/sfx-abigail/thud-v2.wav")} />
         </Sequence>
       )}
       {isEntrance && !muted && (
         <Sequence from={POWERUP_START_FRAME} layout="none">
-          <Audio src={staticFile("_client-sim/chill-meter/sfx-abigail/power-on-v2.mp3")} />
+          <Audio src={staticFile("_client-sim/chill-meter/sfx-abigail/power-on-v2.wav")} />
         </Sequence>
       )}
       {/* ⭐ 10/09 : son de charge 0-25 %, envoye par Abigail avec ce retour. Il comblait un
@@ -633,7 +633,7 @@ export const ChillMeterOverlay: React.FC<{
           depart direct ; son climax (1,02 s = f31) tombe dans la montee du gauge (6 -> 48). */}
       {state === "fill25" && !muted && (
         <Sequence from={FILL25_SFX_START_FRAME} layout="none">
-          <Audio src={staticFile("_client-sim/chill-meter/sfx-abigail/fill-0-25-v2.mp3")} />
+          <Audio src={staticFile("_client-sim/chill-meter/sfx-abigail/fill-0-25-v2.wav")} />
         </Sequence>
       )}
     </AbsoluteFill>
