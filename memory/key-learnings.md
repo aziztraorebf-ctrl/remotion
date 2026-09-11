@@ -1933,3 +1933,56 @@ un transitoire court bien mieux qu'une montee lente, meme a niveau superieur —
 dans l'ambiance, un bang ressort. **Regle : ne jamais juger un SFX de type build-up/swell sur les dB
 seuls, toujours verifier a l'oreille sur un vrai extrait de la destination finale** (pas un fond
 neutre) avant de conclure qu'un niveau est suffisant.
+
+## ⛔⛔⭐⭐⭐ 2026-09-10 — « spring() + IMPACT_FRAME constant » = 2 horloges qui divergent (chill-meter jalon 2)
+
+**Symptome client** (Abigail, retour jalon 2) : « feels like the meter is being MOVED ACROSS
+THE SCREEN WITH A MOUSE, sliding in as a flat image, slightly readjusting, then moving up and
+down afterward » + « the dust comes in later, when the meter goes UP ».
+
+**Cause racine MESUREE (pas devinee)** : l'entree utilisait `spring({damping:11, stiffness:68,
+mass:0.9})` pour porter entX/entY, mais l'impact etait code en dur `IMPACT_FRAME = 32`.
+Simulation du spring : la progression atteint 1.0 des la **frame ~11-12** (entY < 2px).
+=> l'objet est POSE et IMMOBILE pendant 20 frames (0,67 s) avant que « l'impact » ne se declenche.
+Rebond, poussiere, thud et allumage sont donc tous cables sur un objet deja au sol.
+
+**La lecon generale** : des qu'un `spring()` porte la POSITION et qu'une CONSTANTE porte
+l'EVENEMENT d'impact, les deux horloges divergent silencieusement — et **tout reglage de
+dosage (amplitude du rebond, opacite de la poussiere, niveau du SFX) est inutile**, parce que
+le probleme n'est pas le dosage mais le DECALAGE. Le symptome se lit comme un probleme de
+"feel", ce qui pousse a re-doser en boucle (piege du protocole 2+ echecs).
+
+⭐ **FIX doctrinal** : l'impact ne se declare pas, il se DEDUIT. Soit une trajectoire explicite
+en `interpolate` (chute -> contact a frame connue -> rebond), soit deriver la frame de contact
+du spring lui-meme. JAMAIS une constante posee a cote d'un spring.
+
+⭐ **Verif obligatoire avant de livrer une chute** : simuler/mesurer a QUELLE FRAME la position
+atteint le sol, et confirmer que rebond+poussiere+SFX partent de CETTE frame-la. 3 lignes de
+python, evite un tour de revision client.
+
+⭐ **Autre symptome du meme bug** : le spring DEPASSE (overshoot mesure +5,1 px a f15 puis
+retour) = le « slightly readjusting after it arrives » qu'elle decrit. Un spring sous-amorti
+sur une position d'atterrissage donne un micro-recalage qui detruit la lecture « pose net ».
+
+### ⭐⭐⭐ Regle de METHODE tiree du meme incident : verifier la COINCIDENCE, pas la presence
+
+**Ce qu'on a mal verifie** (et qui a coute un tour de revision client) : avant l'envoi, on a
+controle chaque element SEPAREMENT — la poussiere est-elle assez visible ? le thud assez fort ?
+le rebond existe-t-il ? Trois « oui ». Ce qu'on n'a JAMAIS verifie, c'est si ces trois oui
+tombaient AU MEME INSTANT. Un defaut de SYNCHRO est invisible a l'inspection piece par piece :
+il ne se voit qu'en regardant l'ensemble tourner, ou en le MESURANT.
+
+⛔ **Sur tout evenement qui doit « frapper » (impact, coup, apparition brutale, coupe rythmee) :
+verifier la COINCIDENCE des elements, jamais leur presence individuelle.** La checklist
+« chaque element est-il present et bien dose ? » passe au vert sur une animation cassee.
+
+⛔⛔ **Piege aggravant, vecu ici : appliquer une correction client SANS verifier qu'elle
+n'aggrave pas un defaut preexistant.** Elle a demande « un peu plus lent » -> on a ralenti la
+chute -> le ralentissement a AGRANDI le trou entre l'atterrissage reel et l'impact code en dur.
+La correction demandee a empire le vrai defaut, qu'on n'avait pas identifie. Avant d'appliquer
+un reglage demande, se demander : « sur quoi d'autre ce reglage tire-t-il ? »
+
+⭐ **Pourquoi Aziz ne pouvait pas l'attraper a la validation** : le defaut durait < 1 s, noye
+dans un montage de 4 etats enchaines avec cartons. Reperer un decalage de 0,67 s a l'oeil nu,
+sans comparaison cote a cote, est tres difficile. **Le filet est cote Claude** : ne pas livrer
+a la validation d'Aziz un rendu dont la coherence temporelle n'a pas ete mesuree en amont.

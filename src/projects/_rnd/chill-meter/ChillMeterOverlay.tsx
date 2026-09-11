@@ -8,7 +8,7 @@
 // depose le fichier dans CapCut, il se cale plein cadre, le compteur ne bouge jamais d'un pixel.
 
 import React from "react";
-import { AbsoluteFill, Audio, Sequence, useCurrentFrame, useVideoConfig, interpolate, spring, staticFile, Easing } from "remotion";
+import { AbsoluteFill, Audio, Sequence, useCurrentFrame, useVideoConfig, interpolate, staticFile, Easing } from "remotion";
 import { ChillMeterDevice, DEVICE_W, DEVICE_H, type MetalFinish, type RustPass } from "./ChillMeterDevice";
 import { ChillMeterRustic, RUSTIC_W, RUSTIC_H, RUSTIC_SOL_Y } from "./ChillMeterRustic";
 import { BottomIceBank, FullChillCoded } from "./EffetsEcran";
@@ -67,26 +67,61 @@ const RUSTIC_POS_Y = 706 + 18;
 /** y ou le chassis rustique pose au sol, dans le repere 1920x1080. */
 const RUSTIC_SOL_SCREEN = RUSTIC_POS_Y + RUSTIC_SOL_Y * RUSTIC_SCALE;
 
-// ---- Timing de l'entree (jalon 2) ----
-// ⭐ 09/09 : frame d'impact reculee de 26 -> 32 avec l'entree ralentie (stiffness 68).
-const IMPACT_FRAME = 32;
-// Thud (fichier "Heavy thud sfx.WAV") : le vrai coup d'attaque demarre a t=0,984s dans le
-// fichier (mesure ffmpeg silencedetect — le debut du WAV est un silence de padding). A 30fps
-// ca fait 29,5 frames. On demarre l'Audio 30 frames AVANT l'impact pour que l'attaque tombe
-// pile sur la frame de contact au sol (`startFrom` non utilise : on garde la queue de
-// resonance du fichier intacte, seul le point de depart de lecture compte).
-const THUD_ATTACK_FRAMES = 30; // round(0,984 * 30)
+// ---- Timing de l'entree (jalon 2, REECRIT le 10/09 apres retour Abigail) ----
+// ⛔⛔ CE QUI N'ALLAIT PAS (mesure, pas devine) : l'entree etait portee par un `spring()`
+// pendant que l'impact etait une CONSTANTE (IMPACT_FRAME = 32). Simulation du spring
+// (damping 11, stiffness 68, mass 0.9) : la position atteignait le sol des la frame ~11-12.
+// L'objet restait donc POSE ET IMMOBILE 20 frames (0,67 s) avant que « l'impact » ne parte.
+// Rebond, poussiere, thud et allumage etaient tous cables sur un objet deja arrete.
+// Son retour mot pour mot : « sliding in as a flat image, slightly readjusting, then moving
+// up and down afterward » + « the dust comes in later, when the meter goes UP ». Elle
+// decrivait exactement ce decalage. Le spring depassait aussi de +5,1 px a f15 avant de
+// revenir : c'est son « slightly readjusting after it arrives ».
+// ⭐ FIX : plus AUCUN spring sur la position. Trajectoire explicite en `interpolate`, ou la
+// frame de contact est connue et ou TOUT (rebond, poussiere, SFX, allumage) en decoule.
+// Une seule horloge. Voir memory/key-learnings.md § 2026-09-10.
+//
+// ---- Mecanique MESUREE sur sa video de reference (loot box, 30 fps, cycle 1) ----
+//   chute visible ~f3 -> contact f10  = 7 frames (0,23 s) — TRES rapide
+//   un rebond unique, court et de faible amplitude : f10 -> f16 (6 frames)
+//   stabilise ~f18 · poussiere qui jaillit DES f10-11, au contact
+// Sa demande du 10/09 : « a little faster from the left on a diagonal path » (elle revient
+// sur son « slightly slower » du 09/09, qui rendait la chute irreelle). On adopte donc la
+// cadence de la reference, a peine etiree pour laisser lire le chassis.
+const FALL_FRAMES = 9; // chute : f0 -> f9 (0,30 s) — proche des 7 frames de la reference
+const IMPACT_FRAME = FALL_FRAMES; // le contact EST la fin de la chute, par construction
+// Rebond unique et amorti : il part A l'impact (plus aucun delai) et meurt en 7 frames.
+// Amplitude volontairement faible (reference : le loot box decolle a peine) — c'est
+// l'ecrasement/redressement qui porte le poids, pas la hauteur du saut.
+const REBOND_FRAMES = 7;
+const REBOND_H = 9; // px, contre 17 avant : un rebond haut lit comme un « saut », pas un poids
+// Fin de la mise au repos (rebond + dissipation de l'ecrasement).
+const SETTLE_FRAME = IMPACT_FRAME + REBOND_FRAMES;
+
+// ---- SFX v2 (nouveaux fichiers envoyes par Abigail le 10/09) ----
+// Attaques mesurees par profil RMS (fenetre 20 ms, seuil 25 % du max) :
+//   thud sound.mp3      : attaque 0,100 s = 3,0 frames · climax 0,160 s
+//   power switch on.mp3 : attaque 0,060 s = 1,8 frames (quasi instantane)
+//   0-25%.mp3           : attaque 0,020 s · climax 1,020 s
+// Bien plus nets que les v1 (dont le thud avait 0,98 s de silence de padding) : ils se calent
+// au contact sans gymnastique.
+const THUD_ATTACK_FRAMES = 3; // round(0,100 * 30)
 const THUD_START_FRAME = IMPACT_FRAME - THUD_ATTACK_FRAMES;
-// Power-up (fichier "Power up sound (adjusted).WAV") : rise progressif, climax mesure vers
-// t=1,79s (54 frames), le fichier demarre quasi immediatement (0,10s de silence negligeable).
-// Sa consigne : « sync with the moment the green power button turns on and the meter powers
-// up ». Le son DOIT preceder/accompagner l'allumage (un climax qui suit l'image lue comme un
-// defaut de sync) — donc c'est l'allumage visuel qui se cale sur le son, pas l'inverse : le
-// power-up demarre PILE a l'impact (le geste d'allumage commence des que l'objet touche le
-// sol), et `powerOn` est retarde pour que le bouton s'allume au moment du climax.
-const POWERUP_START_FRAME = IMPACT_FRAME;
-const POWERUP_CLIMAX_FRAMES = 54; // round(1,79 * 30)
-const POWERON_LIT_FRAME = POWERUP_START_FRAME + POWERUP_CLIMAX_FRAMES;
+// ⭐ Sa consigne du 10/09, explicite : « make sure the power-on sound begins right as the
+// meter lights up blue, (where it says "MAX CHILL DETECTION") » — elle change d'indice de
+// synchro (avant : le bouton vert, juge trop subtil). L'allumage du bandeau devient donc la
+// reference, et le son demarre PILE dessus (attaque quasi nulle, aucune avance a prendre).
+// L'allumage suit la mise au repos : l'objet se pose, puis s'allume — il ne s'allume pas en
+// vol, ce qui casserait la lecture « livre puis mis en marche ».
+// ⛔ 10/09 (mesure sur rendu rev2) : avec LIT = SETTLE+3, la montee de 5 frames demarrait a
+// f14 alors que l'objet n'est au repos qu'a f16 — le bandeau s'allumait donc PENDANT la fin
+// du rebond. Sa sequence est explicite : « tossed in, lands, rebounds once, then settles »,
+// l'allumage vient APRES. Decale pour que la montee commence a SETTLE + 2.
+const POWERON_LIT_FRAME = SETTLE_FRAME + 7;
+const POWERUP_START_FRAME = POWERON_LIT_FRAME - 2; // round(0,060 * 30) = 1,8 -> 2
+// Charge 0-25 % : le gauge demarre sa montee a la frame 6 (cf. RISE plus bas), attaque du
+// fichier a 0,020 s (< 1 frame) — le son part donc avec le mouvement, sans avance a prendre.
+const FILL25_SFX_START_FRAME = 6;
 
 // ---- Empreinte au sol, mesuree DANS le PNG (06/09) ----
 // A y=717 (la ligne de sol), le device occupe x 131..1039 : c'est la surface qui porte,
@@ -121,48 +156,90 @@ export const ChillMeterOverlay: React.FC<{
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // ---- Entree : arrive de la gauche en diagonale, atterrit, rebondit, s'allume ----
-  // ⭐ 09/09 (jalon 2, retour Abigail) : « please make the entrance slightly slower than
-  // the example » — stiffness baissee 92 -> 68 (meme damping/mass, juste une chute moins
-  // vive). L'IMPACT recule de 26 -> 32 pour laisser le temps de chute a la nouvelle vitesse.
-  const landSpring = spring({ frame, fps, config: { damping: 11, stiffness: 68, mass: 0.9 } });
+  // ---- Entree : lancee de la gauche en diagonale, touche, rebondit une fois, se pose ----
+  // ⛔ Le `spring()` a ete RETIRE (10/09) : il portait la position pendant qu'une constante
+  // portait l'impact — deux horloges qui divergeaient de 20 frames. Detail en tete de fichier.
+  // Tout ce qui suit part de IMPACT_FRAME, qui est desormais la VRAIE frame de contact.
   const isEntrance = state === "entrance";
+  const IMPACT = IMPACT_FRAME;
 
-  const entX = isEntrance ? interpolate(landSpring, [0, 1], [-720, 0]) : 0;
-  const entY = isEntrance ? interpolate(landSpring, [0, 1], [-300, 0]) : 0;
-
-  // ⭐ 09/09 : legere bascule en vol (pas un tumble complet — objet mecanique/lourd, pas
-  // un de qu'on lance). Parti de 0deg, incline pendant la chute, revient a plat pile a
-  // l'impact — la bascule EST l'indice de chute, elle doit donc disparaitre au contact.
-  const entRot = isEntrance
-    ? interpolate(frame, [0, 10, 22, IMPACT_FRAME], [-7, -4, 3, 0], {
+  // Chute : acceleration franche (easing.in = part lentement, arrive vite), comme un objet
+  // lance qui prend de la vitesse en tombant. `Easing.in(Easing.quad)` est la courbe de la
+  // gravite — c'est elle qui donne le poids, pas l'amplitude du rebond.
+  // ⭐ Sa demande du 10/09 : « a little faster from the left on a diagonal path ».
+  const fallT = isEntrance
+    ? interpolate(frame, [0, IMPACT], [0, 1], {
         extrapolateLeft: "clamp",
         extrapolateRight: "clamp",
-        easing: Easing.inOut(Easing.quad),
+        easing: Easing.in(Easing.quad),
       })
+    : 1;
+
+  // Diagonale : la composante X arrive PILE en meme temps que la Y (donc au contact), sinon
+  // l'objet finit sa course laterale apres s'etre pose = le « sliding » qu'elle a vu.
+  // ⛔ Aucun depassement : il atterrit DIRECTEMENT a sa position finale approuvee — sa
+  // demande explicite « without that extra little shift/readjustment after it arrives ».
+  const entX = isEntrance ? interpolate(fallT, [0, 1], [-760, 0]) : 0;
+
+  // Rebond : demarre A l'impact (aucun delai), une seule fois, amorti. C'est la SUITE de la
+  // chute sur le meme axe Y, pas un mouvement separe — d'ou l'addition dans `entY`.
+  // Sa demande : « a natural weighted rebound and settle from impact, not just a separate
+  // up-and-down movement ».
+  const rebond = isEntrance
+    ? interpolate(
+        frame,
+        [IMPACT, IMPACT + 3, IMPACT + REBOND_FRAMES],
+        [0, -REBOND_H, 0],
+        {
+          extrapolateLeft: "clamp",
+          extrapolateRight: "clamp",
+          easing: Easing.out(Easing.quad),
+        },
+      )
     : 0;
 
-  // petit rebond apres l'impact
-  const IMPACT = IMPACT_FRAME;
-  const bounce = isEntrance
-    ? interpolate(frame, [IMPACT, IMPACT + 5, IMPACT + 11, IMPACT + 17], [0, -17, 5, 0], {
+  // Y = hauteur de chute puis rebond, sur une seule et meme courbe continue.
+  const entY = isEntrance ? interpolate(fallT, [0, 1], [-320, 0]) + rebond : 0;
+
+  // Bascule en vol : le chassis est incline pendant la chute et se remet a plat PILE au
+  // contact (pas de tumble complet — c'est un panneau vu de face, le faire tourner montrerait
+  // une tranche qu'on n'a pas dessinee ; explique a Abigail le 10/09, non conteste).
+  const entRot = isEntrance
+    ? interpolate(frame, [0, IMPACT * 0.6, IMPACT], [-9, -5, 0], {
         extrapolateLeft: "clamp",
         extrapolateRight: "clamp",
         easing: Easing.out(Easing.quad),
       })
     : 0;
 
+  // Ecrasement a l'impact : le chassis se tasse (scaleY < 1) sur 2 frames puis se redresse.
+  // ⭐ C'est CA qui fait lire le poids et l'appui — bien plus que la hauteur du rebond.
+  // Tres bref et tres faible (2 %) : sur un objet metallique rigide, un ecrasement visible
+  // lirait comme du caoutchouc.
+  const squash = isEntrance
+    ? interpolate(
+        frame,
+        [IMPACT - 1, IMPACT + 1, IMPACT + 4, SETTLE_FRAME],
+        [1, 0.98, 1.008, 1],
+        {
+          extrapolateLeft: "clamp",
+          extrapolateRight: "clamp",
+          easing: Easing.out(Easing.quad),
+        },
+      )
+    : 1;
+
   // Ombre de contact : large et pale tant que l'objet est en l'air, resserree et dense
   // une fois pose. C'est ce couple etalement/densite qui fait lire l'appui — une ombre
   // d'opacite constante suit l'objet sans jamais le poser.
   const ombreEtal = isEntrance
-    ? interpolate(frame, [0, IMPACT, IMPACT + 17], [1.22, 1.0, 1.0], {
+    ? interpolate(frame, [0, IMPACT, SETTLE_FRAME], [1.22, 1.0, 1.0], {
         extrapolateLeft: "clamp",
         extrapolateRight: "clamp",
       })
     : 1;
   const ombreOpacite = isEntrance
-    ? interpolate(frame, [0, IMPACT - 6, IMPACT, IMPACT + 17], [0, 0.45, 1, 1], {
+    ? interpolate(frame, [0, IMPACT - 3, IMPACT, SETTLE_FRAME], [0, 0.45, 1, 1], {
         extrapolateLeft: "clamp",
         extrapolateRight: "clamp",
       })
@@ -172,8 +249,12 @@ export const ChillMeterOverlay: React.FC<{
   // delai arbitraire apres l'impact — sa consigne explicite : « sync with the moment the green
   // power button turns on ». Montee sur 14 frames avant le climax pour que le bouton arrive
   // a pleine intensite pile quand le son culmine, pas apres.
+  // ⭐ 10/09 : montee resserree 14 -> 5 frames. Elle a change d'indice de synchro (« right as
+  // the meter lights up blue, where it says MAX CHILL DETECTION ») : un allumage etale sur
+  // une demi-seconde n'a pas d'instant identifiable auquel accrocher le son. Une montee
+  // courte donne un « il s'allume MAINTENANT » net, sur lequel le SFX tombe.
   const powerOn = isEntrance
-    ? interpolate(frame, [POWERON_LIT_FRAME - 14, POWERON_LIT_FRAME], [0, 1], {
+    ? interpolate(frame, [POWERON_LIT_FRAME - 5, POWERON_LIT_FRAME], [0, 1], {
         extrapolateLeft: "clamp",
         extrapolateRight: "clamp",
       })
@@ -184,8 +265,15 @@ export const ChillMeterOverlay: React.FC<{
   // around it after impact ». Panache simple (radial-gradient anime), coherent avec le style
   // deja en place dans ce fichier (ombres en div, pas de calque video pour un effet aussi
   // bref et localise). Jaillit a l'impact, monte et se dissipe sur ~26 frames.
+  // ⛔⛔ 10/09 — SON REPROCHE LE PLUS PRECIS : « the dust comes in later, when the meter goes
+  // UP, so the timing does not feel lined up with the landing ». Cause reelle : la poussiere
+  // etait bien calee sur IMPACT, mais IMPACT valait 32 alors que l'objet touchait a f~12 —
+  // elle jaillissait donc pendant le faux rebond tardif. IMPACT est maintenant la vraie frame
+  // de contact, la poussiere part donc AU contact sans rien changer d'autre que l'horloge.
+  // Montee raccourcie (10 -> 5 frames) : une poussiere d'impact jaillit, elle ne monte pas
+  // en fondu. Sa demande : « right at the moment of INITIAL impact ».
   const dustProgress = isEntrance
-    ? interpolate(frame, [IMPACT, IMPACT + 10, IMPACT + 26], [0, 1, 1], {
+    ? interpolate(frame, [IMPACT, IMPACT + 5, IMPACT + 24], [0, 1, 1], {
         extrapolateLeft: "clamp",
         extrapolateRight: "clamp",
         easing: Easing.out(Easing.quad),
@@ -195,15 +283,26 @@ export const ChillMeterOverlay: React.FC<{
   // premier reglage etait bien present mais quasi invisible a l'oeil nu (gradient qui
   // s'estompe des 75 % du rayon x opacity x blur 9px = trop dilue pour se lire comme
   // "poussiere qui jaillit" a la taille d'ecran normale).
+  // ⭐ 10/09 : pic avance a IMPACT+2 (au lieu de +4) — le jaillissement doit etre SIMULTANE du
+  // coup, pas consecutif. 2 frames = le temps que la matiere soit chassee, pas plus.
+  // ⭐ 10/09 : pic 0,85 -> 0,95. Elle insiste deux fois sur cet element (« ESPECIALLY the
+  // dust/mist » le 09/09, puis le timing le 10/09) — c'est le detail de la reference auquel
+  // elle tient le plus. Releve sans exces : au-dela, le panache masque le bas du chassis.
   const dustOpacity = isEntrance
-    ? interpolate(frame, [IMPACT, IMPACT + 4, IMPACT + 26], [0, 0.85, 0], {
+    ? interpolate(frame, [IMPACT, IMPACT + 2, IMPACT + 24], [0, 0.95, 0], {
         extrapolateLeft: "clamp",
         extrapolateRight: "clamp",
         easing: Easing.out(Easing.quad),
       })
     : 0;
   const dustRise = dustProgress * 46; // monte de 46px pendant la dissipation
-  const dustSpread = 0.6 + dustProgress * 0.9; // s'etale en se dissipant
+  // ⛔ 10/09 — MESURE sur le rendu rev1 : avec un depart a 0,6, le panache naissait ETROIT et
+  // ne debordait lateralement qu'en s'elargissant — la poussiere n'apparaissait sur les ailes
+  // qu'a f12 alors que le contact est a f9/f10. Soit 2-3 frames de retard : exactement le
+  // defaut qu'elle a signale, en plus petit. Une poussiere d'impact est CHASSEE horizontalement
+  // par le choc : elle est large des la premiere frame, puis monte et se dissipe.
+  // Depart releve 0,6 -> 1,05, l'etalement ne fait plus que prolonger un panache deja ouvert.
+  const dustSpread = 1.05 + dustProgress * 0.55;
 
   // ---- Niveau de chill selon l'etat ----
   let chill = 0;
@@ -282,7 +381,8 @@ export const ChillMeterOverlay: React.FC<{
       {/* Ombre de CONTACT — ce qui pose reellement l'objet sur le plateau.
           ⛔ Sa demande n°6 (« especially once animated ») n'etait PAS un defaut
           d'animation : mesure du 06/09, le device est immobile au pixel pres des la
-          frame 48, et le spring d'entree retombe a 0,000 px de residuel des la frame 80.
+          frame 48 (mesure faite du temps du spring d'entree, retire le 10/09 ; la
+          trajectoire explicite qui l'a remplace est posee des la frame 16).
           Il ne flottait pas au sens d'une oscillation — il ne reposait sur RIEN.
           RUSTIC_SOL_SCREEN existait deja mais n'etait CABLE a aucun element dessine :
           une ligne de sol qui vit comme un nombre et que rien ne materialise a l'ecran.
@@ -329,7 +429,7 @@ export const ChillMeterOverlay: React.FC<{
               // sur RUSTIC_SOL_SCREEN a donc sa moitie haute CACHEE DERRIERE l'objet, et
               // seule sa moitie basse, la plus faible, ressortait — d'ou une ombre
               // presente dans l'alpha mais invisible a l'ecran. On la pose SOUS la base.
-              top: RUSTIC_SOL_SCREEN + 1 + bounce * 0.12,
+              top: RUSTIC_SOL_SCREEN + 1 + rebond * 0.12,
               width: SOL_EMPREINTE_W * RUSTIC_SCALE * ombreEtal * 0.94,
               height: SOL_OMBRE_H * 0.52,
               marginLeft: (SOL_EMPREINTE_W * RUSTIC_SCALE * (1 - ombreEtal * 0.94)) / 2,
@@ -349,7 +449,7 @@ export const ChillMeterOverlay: React.FC<{
               // Meme correction que le noyau : centre sur la ligne de sol, cet etalement
               // etait aux 2/3 masque par le chassis. On le descend et on l'etire pour
               // qu'il porte le noyau au lieu de mourir en 8 px.
-              top: RUSTIC_SOL_SCREEN - 2 + bounce * 0.12,
+              top: RUSTIC_SOL_SCREEN - 2 + rebond * 0.12,
               width: SOL_EMPREINTE_W * RUSTIC_SCALE * ombreEtal * 1.14,
               height: SOL_OMBRE_H * 2.1,
               marginLeft: (SOL_EMPREINTE_W * RUSTIC_SCALE * (1 - ombreEtal * 1.14)) / 2,
@@ -372,13 +472,13 @@ export const ChillMeterOverlay: React.FC<{
           est en arriere-plan, il ne peut rien reflechir du meter).
           ⛔ Volontairement TRES discret : un reflet trop lu se voit comme une tache.
           Il dit seulement « cet objet partage la lumiere de cette piece ». Il suit
-          l'entree (entX/bounce) pour rester solidaire de l'objet. */}
+          l'entree (entX/rebond) pour rester solidaire de l'objet. */}
       {chassis === "rustic" && (
         <div
           style={{
             position: "absolute",
             left: PIANO_X0,
-            top: RUSTIC_SOL_SCREEN - 4 + bounce * 0.12,
+            top: RUSTIC_SOL_SCREEN - 4 + rebond * 0.12,
             width: PIANO_X1 - PIANO_X0,
             height: 46,
             background:
@@ -403,7 +503,7 @@ export const ChillMeterOverlay: React.FC<{
           style={{
             position: "absolute",
             left: RUSTIC_POS_X + entX,
-            top: RUSTIC_POS_Y + entY + bounce,
+            top: RUSTIC_POS_Y + entY,
             width: RUSTIC_W * RUSTIC_SCALE,
             height: RUSTIC_H * RUSTIC_SCALE,
             transform: `scale(${RUSTIC_SCALE})`,
@@ -416,7 +516,9 @@ export const ChillMeterOverlay: React.FC<{
               height: RUSTIC_H,
               // bascule origine bas-centre (le pivot d'un objet qui incline en tombant
               // puis se pose a plat) — en %, dans le repere natif de ce wrapper.
-              transform: `rotate(${entRot}deg)`,
+              // ⭐ 10/09 : l'ecrasement d'impact partage ce pivot au SOL — un objet qui
+              // encaisse se tasse VERS le sol, il ne se comprime pas vers son centre.
+              transform: `rotate(${entRot}deg) scaleY(${squash})`,
               transformOrigin: `50% ${(RUSTIC_SOL_Y / RUSTIC_H) * 100}%`,
             }}
           >
@@ -428,7 +530,7 @@ export const ChillMeterOverlay: React.FC<{
           style={{
             position: "absolute",
             left: POS_X + entX,
-            top: POS_Y + entY + bounce,
+            top: POS_Y + entY,
             width: DEVICE_W * SCALE,
             height: DEVICE_H * SCALE,
             transform: `scale(${SCALE})`,
@@ -517,12 +619,21 @@ export const ChillMeterOverlay: React.FC<{
           chaque frame plutot que de suivre une position de lecture qui avance. */}
       {isEntrance && !muted && THUD_START_FRAME >= 0 && (
         <Sequence from={THUD_START_FRAME} layout="none">
-          <Audio src={staticFile("_client-sim/chill-meter/sfx-abigail/thud.wav")} />
+          <Audio src={staticFile("_client-sim/chill-meter/sfx-abigail/thud-v2.mp3")} />
         </Sequence>
       )}
       {isEntrance && !muted && (
         <Sequence from={POWERUP_START_FRAME} layout="none">
-          <Audio src={staticFile("_client-sim/chill-meter/sfx-abigail/power-up.wav")} />
+          <Audio src={staticFile("_client-sim/chill-meter/sfx-abigail/power-on-v2.mp3")} />
+        </Sequence>
+      )}
+      {/* ⭐ 10/09 : son de charge 0-25 %, envoye par Abigail avec ce retour. Il comblait un
+          manque qu'on lui avait signale le 09/09 (« those two states stay silent for now »).
+          Cale sur le DEBUT de la montee du gauge (frame 6, cf. RISE) : attaque a 0,020 s, donc
+          depart direct ; son climax (1,02 s = f31) tombe dans la montee du gauge (6 -> 48). */}
+      {state === "fill25" && !muted && (
+        <Sequence from={FILL25_SFX_START_FRAME} layout="none">
+          <Audio src={staticFile("_client-sim/chill-meter/sfx-abigail/fill-0-25-v2.mp3")} />
         </Sequence>
       )}
     </AbsoluteFill>
