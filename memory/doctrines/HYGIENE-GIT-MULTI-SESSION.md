@@ -93,3 +93,23 @@ git diff origin/master..master | grep "^+" | grep -E "claimToken|sk-|ghp_|AIza"
 
 5 stashs recensés le 08/09, dont 3 annotés « PAS mon travail » / « mis de côté par une session
 concurrente » (juillet). ⛔ Ne jamais dropper un stash qu'on n'a pas créé — confirmer avec Aziz.
+
+## 7. Les mesures qui fondent ces gates (audit du 2026-09-08)
+
+Chiffres relevés le jour où les gates ont été posés. Ils ne sont pas décoratifs : c'est
+l'ampleur constatée qui justifie qu'un gate existe plutôt qu'une règle écrite.
+
+- **Index des composants** — `scripts/tools/audit-composants-index.py`, lancé par le gate
+  `index-composants-gate.sh` (PostToolUse sur `COMPOSANTS-INDEX.md`) : **16 fantômes**
+  (indexés, absents du disque), **11 non-importables**, **3 collisions** de noms. Un catalogue
+  qui ment fait chercher une brique qui n'existe pas, puis la recoder.
+- **Rapatriement** — **35 fichiers** récupérés de l'auto-memory (hors git, donc non sauvegardés)
+  et **10 leçons** récupérées de branches jamais mergées. Elles étaient citées dans `MEMORY.md`
+  et introuvables sur la branche courante : l'index référence l'union de ce qui a été appris,
+  un worktree n'en porte qu'une intersection.
+
+⭐ Ces deux mesures disent la même chose sous deux angles : **une référence n'est pas une
+garantie d'existence.** Vérifier le chemin sur la branche courante avant de bâtir dessus.
+
+*(Migré depuis `PIPELINE.md` le 2026-09-11 : ces chiffres n'existaient qu'à cet endroit, dans
+une section close destinée à la suppression.)*

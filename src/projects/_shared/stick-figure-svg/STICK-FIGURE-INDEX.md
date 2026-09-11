@@ -237,7 +237,7 @@ fichier (chaque cas est différent, pas une seule formule magique) :
   MAIN que la pose source produit (donnée géométrique objective) puis résoudre par IK 2 segments
   (brique n°2) l'angle qui atteint cette même position sur le moteur cible ; (3) le sens de coude (+1
   ou -1 par bras) se RÉSOUT en testant les 4 combinaisons contre un critère de dégagement de la tête,
-  jamais deviné. Résultat mesuré : 0.00u d'écart sur mains/hanche/épaule entre les 2 moteurs.
+  jamais deviné. Résultat mesuré : 0.00u d'écart sur mains/hanche/épaule entre les 2 moteurs. Commit : `14990278` (repo principal — le worktree `remotion-cfa` où ce travail est parfois situé n'existe plus, vérifié 2026-09-11).
   ⚠️ **Le degré de liberté manquant qui a fait échouer 2 tentatives avant de réussir** : `Figure` a un
   paramètre `headTuck` (« rentre la tête vers le buste ») qui manquait totalement à `Stick` — sans
   lui, la tête reste colinéaire avec hanche/épaule dans une pose à plat et tombe droit dans l'axe du
