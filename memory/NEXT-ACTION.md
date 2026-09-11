@@ -234,9 +234,9 @@ chacun, liseré au lieu d'écrire) → `memory/fiches/FICHE-STORYBOARD.md`.
 
 Mécanisme 2 (Extracteur) codé et validé (~30 briques indexées) — `doctrines/STUDIO-REUTILISABLE-GATE.md`.
 Mécanisme 1 (Gardien) : pas codé, volontairement, rien d'urgent.
-⚠️ **Dette CTA Short CFA** : worktree `remotion-cfa` jamais mergé, `SceneCta.tsx:152` dit encore
-"EN DESCRIPTION" alors que le rendu publié a été patché en aval par splice ffmpeg — le fix n'est PAS
-dans la source. À trancher : resync la source ou fermer le worktree (sinon un re-render y réintroduit le bug).
+✅ **Dette CTA Short CFA — RESOLUE** (verifie 2026-09-11) : la source dit bien « VIDEO COMPLETE EN
+BIO » (`src/projects/souverain/cfa-short-9x16/SceneCta.tsx:152`, repo principal). La note precedente
+la disait bloquee dans un worktree `remotion-cfa` qui **n'existe plus** — un re-render ne reintroduit rien.
 
 ---
 

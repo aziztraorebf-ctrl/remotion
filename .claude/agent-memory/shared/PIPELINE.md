@@ -105,7 +105,7 @@ les RENDANT). → V4 : Aziz apporte des SVG libres de droits vus de face.
 ## ÉTAT DES PROJETS VIVANTS
 
 ### War-Map Sahel AES — ⛔ ABANDONNÉ VOLONTAIREMENT (Aziz, 2026-08-17)
-> ⛔ **Ne plus le compter dans le reste-à-faire** (`memory/NEXT-ACTION.md:600`). La V6 ne sera ni
+> ⛔ **Ne plus le compter dans le reste-à-faire** (`memory/NEXT-ACTION.md` § AES). La V6 ne sera ni
 > assemblée ni republiée. Ce qui suit est conservé UNIQUEMENT pour le gotcha des 2 compositions.
 **Source de vérité** : `memory/episodes/warmap-sahel/STATUS.md` (bandeau 2026-08-06 soir).
 Vidéo longue publiée 2026-08-04, ÉCHEC (5 vues/24h, VPH 0.19). Script réécrit (V6), audio généré +
