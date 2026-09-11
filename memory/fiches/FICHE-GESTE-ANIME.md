@@ -5,6 +5,41 @@
 > ⚠️ Si ce que tu lis ne correspond PAS au réel sous tes yeux : **c'est la FICHE qui a tort**,
 > corrige-la. Valeurs relevées le 2026-08-27, appliquées et vérifiées au rendu le 2026-08-28.
 
+## ⛔⛔⭐⭐⭐ UN IMPACT NE SE DÉCLARE PAS, IL SE DÉDUIT (2026-09-10, 1 tour de révision client)
+
+**La règle** : dès qu'un objet TOMBE, FRAPPE ou ATTERRIT — jamais une constante d'impact posée
+à côté d'un `spring()` qui porte la position. Ce sont **deux horloges qui divergent en
+silence**, et aucun réglage d'intensité ne rattrape un décalage.
+
+**Ce que ça a coûté** : entrée portée par `spring({damping:11, stiffness:68, mass:0.9})` +
+`IMPACT_FRAME = 32` écrit en dur. Simulation : la position atteignait le sol dès la **frame
+~11**. L'objet restait donc posé, immobile, **0,67 s** avant que rebond + poussière + thud +
+allumage ne se déclenchent. La cliente l'a vu tout de suite (« it slides in as a flat image,
+slightly readjusting, then moving up and down afterward » · « the dust comes in later, when
+the meter goes UP »), nous non — parce qu'on avait vérifié la PRÉSENCE de chaque élément, pas
+leur COÏNCIDENCE.
+
+⭐ **FIX structurel** : trajectoire explicite en `interpolate`, où `IMPACT_FRAME = FALL_FRAMES`
+— le contact EST la fin de la chute, par construction. Une seule horloge, tout en découle.
+
+⭐⭐ **AVANT DE LIVRER une chute, MESURER — c'est outillé depuis le 10/09** :
+```bash
+python3 scripts/tools/motion-timing.py <video.mp4> --max-frames 55 [--zone x0,y0,x1,y1]
+```
+Sort la frame de contact, si la chute accélère, le **DÉPART** des rebonds (pas leur sommet),
+la stabilisation, et l'écart des attaques sonores au contact. **Le lancer aussi sur la
+référence du client AVANT de coder** : ça donne les constantes au lieu de les faire deviner.
+Validé : il distingue la version rejetée (rebond +3 frames, 3 pics) de la corrigée (+1, 2 pics).
+
+⛔ **Corollaire — appliquer un réglage demandé sans voir sur quoi d'autre il tire.** Elle avait
+demandé « slightly slower » ; ralentir la chute a **agrandi** le trou entre l'atterrissage réel
+et l'impact codé en dur. La correction demandée a empiré le vrai défaut, jamais identifié.
+
+⛔ **Corollaire — ne pas toucher à ce que le client n'a PAS critiqué.** En corrigeant le timing
+j'ai aussi baissé la HAUTEUR du rebond (17 → 9 px) « pour faire sobre ». Elle n'avait jamais
+parlé de la hauteur. Une valeur que le client a **vue et laissée passer** est le seul point de
+référence validé qu'on ait : la changer en même temps qu'autre chose ajoute une inconnue.
+
 ## ⭐ POURQUOI CETTE FICHE EXISTE (preuve, pas conviction)
 
 Le 2026-08-28, l'animation d'un logo client a été jugée « excellente » par Aziz — écrasement à
