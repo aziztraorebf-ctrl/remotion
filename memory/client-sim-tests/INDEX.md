@@ -22,6 +22,10 @@ lien-vs-pièce-jointe dans un STATUS, « résumé ≠ source » dans un feedback
 ailleurs. Trois endroits pour une seule tâche. **Tout nouvel acquis d'un test client va dans la
 fiche**, pas seulement dans le récit du test.
 
+## Composants réutilisables
+
+Registre SaaS/dashboard, distinct du cartographique/narratif : `src/projects/_client-sim/CLIENT-SIM-COMPOSANTS-INDEX.md`.
+
 ## Tests réalisés
 
 - 🔴🔴 **chill-meter / AbiGirl (CONTRAT ACTIF)** — 2026-09-04 : **chassis REJETE par la cliente**,

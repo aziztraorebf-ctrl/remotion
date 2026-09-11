@@ -5,6 +5,9 @@
 > par scène lui-même, on délègue l'AUDIT à des agents — un par scène + un transversal — puis Aziz valide
 > le backlog priorisé AVANT que d'autres agents appliquent les corrections. 3 passes distinctes, jamais fusionnées :
 > **AUDIT (lecture seule) → VALIDATION Aziz (goût) → CORRECTION (agents dédiés)**.
+>
+> ⛔ **PÉRIMÈTRE** : une vidéo MULTI-SCÈNES déjà avancée ou produite. Ne PAS lancer sur un tout premier jet ni sur une scène unique — l'audit n'a alors rien à comparer, et le coût de N agents ne se justifie pas.
+> *(Garde-fou migré depuis `memory/ROUTAGE.md` le 2026-09-11 : il n'existait qu'à cet endroit.)*
 
 ## POURQUOI CETTE MÉTHODE (contexte War-Map Sahel AES, prouvée 2026-06-27)
 Après avoir refait l'Acte 1 (sceau AES, SFX, mix-and-match SVG) et produit le SVG-insert CFA, on a réalisé
