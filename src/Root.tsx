@@ -6,6 +6,7 @@ import { ChillMeterPreviewSurSonPlateau } from "./projects/_rnd/chill-meter/Chil
 import { TestBrumeH3 } from "./projects/_rnd/chill-meter/TestBrumeH3";
 import { RecapClient, RECAP_DUREE } from "./projects/_rnd/chill-meter/RecapClient";
 import { RecapJalon2, RECAP_JALON2_FRAMES } from "./projects/_rnd/chill-meter/RecapJalon2";
+import { RecapJalon2Rev1, RECAP_REV1_FRAMES } from "./projects/_rnd/chill-meter/RecapJalon2Rev1";
 import { Effet75Seul, Effet100Seul, OndeSeule, EFFET75_FRAMES, EFFET100_FRAMES } from "./projects/_rnd/chill-meter/EffetsEcran";
 import { ShockWave3D, SHOCKWAVE_3D_FRAMES } from "./projects/_rnd/chill-meter/ShockWave3D";
 import { ShockWave3Dv2, SHOCKWAVE_V2_FRAMES } from "./projects/_rnd/chill-meter/ShockWave3D_v2";
@@ -5893,6 +5894,30 @@ export const RemotionRoot: React.FC = () => {
           id="ChillMeter-RECAP-Jalon2-SansSonPlateau"
           component={RecapJalon2}
           durationInFrames={RECAP_JALON2_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ mutePlateau: true }}
+        />
+        {/* ⭐ 10/09 — REVISION 1 du jalon 2, apres son retour du 10/09. Ne remontre QUE ce
+            qui a change : l'entrance refaite + le fill 0-25 % (animation inchangee, mais
+            elle a joint un 3e son pour cet etat). L'idle et le 25-50 %, qu'elle a acceptes
+            sans commentaire, ne sont PAS remontres — elle demande de limiter les
+            allers-retours, les remettre en jeu rouvrirait des discussions closes.
+            Les 2 compositions ci-dessus restent la trace de ce qui a ete envoye le 09/09. */}
+        <Composition
+          id="ChillMeter-RECAP-Rev1-AvecSonPlateau"
+          component={RecapJalon2Rev1}
+          durationInFrames={RECAP_REV1_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ mutePlateau: false }}
+        />
+        <Composition
+          id="ChillMeter-RECAP-Rev1-SansSonPlateau"
+          component={RecapJalon2Rev1}
+          durationInFrames={RECAP_REV1_FRAMES}
           fps={30}
           width={1920}
           height={1080}

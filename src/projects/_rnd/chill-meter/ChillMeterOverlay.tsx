@@ -91,10 +91,16 @@ const RUSTIC_SOL_SCREEN = RUSTIC_POS_Y + RUSTIC_SOL_Y * RUSTIC_SCALE;
 const FALL_FRAMES = 9; // chute : f0 -> f9 (0,30 s) — proche des 7 frames de la reference
 const IMPACT_FRAME = FALL_FRAMES; // le contact EST la fin de la chute, par construction
 // Rebond unique et amorti : il part A l'impact (plus aucun delai) et meurt en 7 frames.
-// Amplitude volontairement faible (reference : le loot box decolle a peine) — c'est
-// l'ecrasement/redressement qui porte le poids, pas la hauteur du saut.
+// ⛔ Ce qui etait FAUX dans l'entree precedente n'etait pas la hauteur du rebond mais son
+// DEPART (20 frames apres la pose). L'ecrasement ajoute au contact renforce la lecture du
+// poids, il ne remplace PAS le rebond : les deux se cumulent.
 const REBOND_FRAMES = 7;
-const REBOND_H = 9; // px, contre 17 avant : un rebond haut lit comme un « saut », pas un poids
+const REBOND_H = 17; // ⭐ 10/09 (decision Aziz) : valeur d'origine CONSERVEE. Elle n'a jamais critique la
+// hauteur du rebond — seulement son TIMING (il partait 20 frames apres la pose). On ne touche
+// donc pas a une valeur qu'elle a vue et laissee passer : c'est notre seul point de reference
+// valide, et changer une variable non contestee ajoute une inconnue dans un tour de revision.
+// ⚠️ Ces 17 px se lisent differemment qu'avant : ils arrivent desormais AU MILIEU d'un
+// enchainement (impact + ecrasement + poussiere) au lieu d'etre le seul mouvement a l'ecran.
 // Fin de la mise au repos (rebond + dissipation de l'ecrasement).
 const SETTLE_FRAME = IMPACT_FRAME + REBOND_FRAMES;
 
