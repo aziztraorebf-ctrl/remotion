@@ -18,6 +18,7 @@
 - ⛔⛔⭐⭐⭐ gate-bloque-une-citation-client-ne-pas-deformer-la-source — corriger le gate
 - ⛔⛔⭐⭐⭐ transcript-auto-insuffisant-extraire-les-frames · gate-contourne-par-outil-alternatif · semantic-test-gate-pas-signal-informatif · regle-ecrite-insuffisante-sans-gate-outille · generaliser-un-seul-cas-isoler-la-condition-pas-juste-l-effet · +15 (`grep -l methode feedbacks/`)
 - ⛔⛔⭐⭐⭐ tester-le-script-nest-pas-tester-le-branchement — un gate n'existe que vu se déclencher SEUL
+- ⛔⛔⭐⭐⭐ gate-jamais-vu-se-declencher-est-indiscernable-dun-gate-mort — silencieux ≠ sain : le tester sur un cas POSITIF (7 sections ratées, 31 % d'un fichier, 6 semaines)
 - ⭐⭐⭐ comparatif-storyboard-mesurer-pas-demander — PIL, pas planche vignettes
 - ⛔⛔⭐⭐⭐ convergence-modeles-sur-brief-biaise-nest-pas-une-preuve — ils renvoient mon cadrage (2 cas, même chantier)
 - ⭐⭐⭐ convergence-llm-tester-en-retirant-le-contexte · brief-souffle-la-reponse-par-son-vocabulaire · metaphore-dans-le-monde-du-sujet
