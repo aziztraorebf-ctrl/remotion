@@ -4,7 +4,55 @@
 > accepté par la cliente le 29/08, **offre v2 acceptée par Aziz le 30/08**. 350 $ → 297,50 $ net.
 > ⛔ Les décisions de ce fichier engagent contractuellement.
 
-## 🟢 ÉTAT AU 2026-09-09 (SOIR, FINAL) : JALON 2 APPROUVÉ PAR AZIZ — 2 clips, prêt à envoyer
+## 🟡 ÉTAT AU 2026-09-10 : RÉVISION 1 DU JALON 2 CODÉE — à valider par Aziz avant envoi
+
+**Abigail a répondu le 10/09 (message positif, un seul point rejeté : l'ENTRANCE).**
+Elle valide implicitement idle / 25 % / 50 % (aucune critique), remercie la pédagogie des
+messages, et **assume sa propre erreur** (« that part is on me » — son « slightly slower »
+du 09/09 rendait le mouvement irréel, elle demande maintenant plus RAPIDE).
+⚠️ Elle mentionne vouloir rester proche du nombre de révisions incluses — à lire comme une
+main tendue (« for both of us ») et non comme une menace : c'est Aziz qui avait évoqué le
+compte des rounds au tour précédent, elle reprend son cadre.
+
+⛔⛔ **CAUSE RACINE DU REJET — un BUG, pas du dosage** (mesurée, cf. `memory/key-learnings.md`
+§ 2026-09-10) : l'entrée était portée par un `spring()` pendant que l'impact était la constante
+`IMPACT_FRAME = 32`. Le meter touchait le sol dès la frame ~11-12 → il restait **posé et
+immobile 0,67 s** avant que rebond / poussière / thud / allumage ne se déclenchent. D'où ses
+mots exacts : « sliding in as a flat image », « slightly readjusting », « moving up and down
+afterward », « the dust comes in later, when the meter goes UP ».
+⭐ **Aucun réglage d'intensité n'aurait sauvé ce rendu** — le défaut était un DÉCALAGE.
+
+✅ **CE QUI A ÉTÉ FAIT (branche `fix/chill-meter-entrance-impact`, 3 commits)** :
+- `spring()` retiré. Trajectoire explicite en `interpolate` : chute accélérée
+  `Easing.in(quad)` sur 9 frames, contact = fin de chute par construction, tout en découle.
+- X et Y arrivent ENSEMBLE au contact (plus de course latérale après la pose), atterrissage
+  direct en position approuvée, **zéro dépassement**.
+- Rebond unique amorti qui part À l'impact, amplitude 17 → 9 px. Écrasement bref (2 %) pivoté
+  au sol : c'est lui qui porte le poids, pas la hauteur du rebond.
+- Poussière au contact, **départ déjà large** (`dustSpread` 0,6 → 1,05 — mesure sur rendu :
+  un panache étroit mettait 2-3 frames à déborder, soit le même défaut en plus petit), pic
+  0,85 → 0,95 (elle insiste 2× sur cet élément).
+- Allumage APRÈS la mise au repos (sa séquence : « lands, rebounds once, then settles »).
+
+✅ **SFX v2** (3 nouveaux fichiers, attaques mesurées par profil RMS) :
+`thud-v2.mp3` 0,100 s · `power-on-v2.mp3` 0,060 s · `fill-0-25-v2.mp3` 0,020 s.
+Bien plus nets que les v1 (dont le thud portait 0,98 s de silence de padding).
+- Power-on calé sur l'allumage du bandeau « MAX CHILL DETECTION » — **sa nouvelle consigne
+  explicite**, le bouton vert étant jugé trop subtil.
+- ⭐ Le son 0-25 % comble un manque qu'on lui avait signalé le 09/09 : il est branché sur `fill25`.
+ℹ️ Les 3 fichiers ne sont PAS dans git (`.gitignore` exclut `*.mp3` ET `*.wav` — aucun média
+audio n'est versionné dans ce repo, les v1 non plus). Ils vivent sur disque dans
+`public/_client-sim/chill-meter/sfx-abigail/`.
+
+📏 **VÉRIFIÉ AU RENDU** (pas seulement dans le code) : contact f9-10, chute accélérée
+(+54/+44/+50/+56/+56/+76 px par frame), **zéro déplacement après la pose**, thud qui monte à
+f10-12, power-on à f24 = pile l'allumage. Sur son vrai plateau.
+
+⏭️ **RESTE** : validation d'Aziz sur `out/_r-and-d/chill-meter-upwork/jalon2-rev1/
+comparaison-avant-apres.mp4` (côte à côte avant/après) → puis décider du format de livraison
+(clip entrance seul ? ou récap complet des 4 états ?) → message → envoi Upwork.
+
+## 🗄️ ÉTAT AU 2026-09-09 (archivé — ce qui a été envoyé et qui a reçu le retour ci-dessus)
 
 **Jalon 1 approuvé par Abigail.** Elle a relancé le 09/09 avec 3 fichiers (thud, power-up,
 animation de référence loot box) pour le jalon 2 (entrance/power-on, idle, 0-25%, 50%).
