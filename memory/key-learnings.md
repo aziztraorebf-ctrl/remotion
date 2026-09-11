@@ -1986,3 +1986,26 @@ un reglage demande, se demander : « sur quoi d'autre ce reglage tire-t-il ? »
 dans un montage de 4 etats enchaines avec cartons. Reperer un decalage de 0,67 s a l'oeil nu,
 sans comparaison cote a cote, est tres difficile. **Le filet est cote Claude** : ne pas livrer
 a la validation d'Aziz un rendu dont la coherence temporelle n'a pas ete mesuree en amont.
+
+### ⭐⭐ Corollaire (2026-09-10, chill-meter) : NE PAS TOUCHER A CE QUE LE CLIENT N'A PAS CRITIQUE
+
+En corrigeant le TIMING du rebond (le vrai defaut), j'ai aussi baisse sa HAUTEUR (17 -> 9 px)
+« pour faire plus sobre ». Or elle n'avait jamais critique la hauteur. Aziz a tranche : remettre
+17. ⭐ **Une valeur que le client a VUE et LAISSEE PASSER est un point de reference valide** —
+le seul qu'on ait. La changer en meme temps qu'on corrige autre chose ajoute une inconnue dans
+un tour de revision, et empeche de savoir ce qui a produit l'amelioration.
+⛔ Vaut aussi dans l'autre sens : quand un client demande un reglage (ici « plus lent »),
+verifier sur quoi d'autre ce reglage tire — le « plus lent » du 09/09 avait AGGRANDI le trou
+entre l'atterrissage reel et l'impact code en dur.
+
+### ⭐⭐ Laisser UN curseur ouvert quand il reste du subjectif — mais l'AFFIRMER, pas le quemander
+
+Quand tout le mesurable est corrige et qu'il reste UN parametre de pur gout, le signaler au
+client coute moins cher que de deviner (un aller-retour evite si ca ne lui parle pas).
+⛔ MAIS la formulation decide de l'effet : « dites-moi si ca vous convient » ouvre une porte
+vague, invite a chercher un probleme, et fait douter du travail. ✅ Le gabarit qui marche :
+(1) AFFIRMER le choix + le justifier (« I kept X at exactly the height it had in the version
+you saw, since that part wasn't what you flagged »), (2) prevenir honnetement de ce qui a
+change dans la lecture, (3) cadrer la revision comme triviale (« a quick adjustment on my
+end »), (4) demander un CHIFFRE ou une direction (« just say how much »), pas une appreciation.
+Un retour ainsi cadre est actionnable du premier coup.

@@ -143,3 +143,45 @@ aller fermer — sinon elle envoie une session future refaire un travail déjà 
 ⏭️ **La vraie cible restante** : les filtres **COMPOSITES** (ombre portée, lueur — `feOffset`+
 `feMerge`, `feColorMatrix`). Avec `pattern` et `use`/`symbol`, c'est tout ce qui ne traverse plus.
 ⚠️ Coût mesuré faible : 8 filtres composites non portés sur Khartoum = ~1 % d'écart total.
+
+## ⭐⭐ STATE MACHINE — FABRICATION prouvée (2026-09-10), mais capacité ≠ livrable
+
+**Ce qui est acquis** : on peut FABRIQUER une state machine Lottie via ce MCP (pas juste en lire
+une en production comme le 30/08) — `add_state_machine`/`add_state`/`add_transition`/
+`add_pointer_interaction` posés sur un bouton test (2 états Idle/Tap, transition sur Click,
+retour auto). Exporté par Aziz depuis Creator (export reste MANUEL, cf. § plus haut), rejoué en
+dehors de Creator par le lecteur officiel `@lottiefiles/dotlottie-wc`, cycle complet vérifié par
+Aziz en vidéo (4 taps, Idle→Tap→Idle à chaque fois, capturé frame par frame).
+
+⛔⛔ **2 bugs d'API ont failli faire conclure « ça ne marche pas » — piégeants, à ne pas refaire** :
+1. Poser `state-machine-id` en ATTRIBUT HTML statique démarre la state machine AVANT la fin du
+   chargement async du fichier → échec **silencieux**, aucune erreur, aucun event. Un id bidon
+   produit EXACTEMENT le même symptôme qu'un id valide (signature d'un bug de timing, pas de
+   contenu). FIX : ne jamais mettre l'attribut ; démarrer manuellement dans le handler `load` (ou,
+   plus fiable encore car `load` peut se déclencher avant l'attache du listener sur un fichier
+   minuscule, en POLLANT `customElements.get(...)` puis l'existence de `player.dotLottie`).
+2. Les méthodes `stateMachineLoad`/`stateMachineStart`/`stateMachineGetCurrentState` ne sont PAS
+   sur l'élément DOM lui-même (`player.stateMachineLoad` → `undefined`, échoue silencieusement en
+   exception non catchée) mais sur `player.dotLottie.stateMachineLoad(...)`. Chercher les méthodes
+   sur le mauvais objet plante sans un seul message d'erreur visible à l'écran — vérifier avec
+   `Object.getOwnPropertyNames` sur l'objet réel avant de conclure « la feature n'existe pas ».
+3. Chargement CDN du web component : le build par défaut (`dist/dotlottie-wc.js`) est un module ES
+   qui importe un bare specifier `"lit/decorators.js"` non résolu par un navigateur nu → toute la
+   cascade d'imports casse. Utiliser le build **`dist/dotlottie-wc.min.js`** (bundle autonome,
+   zéro import externe, vérifié par grep) chargé en `<script type="module" src="...">`.
+
+⛔⛔ **CE QUE ÇA NE PROUVE PAS — ne pas sur-vendre (objection d'Aziz, retenue)** : le cas testé est
+un « Hello World » (2 états, 1 transition, 3 calques). AUCUNE des dimensions d'un vrai brief n'a
+été éprouvée : states multiples (5-8, idle/hover/loading/success/error/disabled), inputs
+numériques pilotés par de vraies données, guards combinant plusieurs inputs, calques densément
+imbriqués, intégration dans un VRAI contexte framework (React/Vue, bundler, CSP client, état
+applicatif Redux/Zustand à synchroniser) plutôt qu'une page HTML nue qu'on contrôle entièrement.
+Le temps de debug qu'il a fallu (~2h + 1 agent dédié) pour UN bouton à 2 états est lui-même un
+signal : rien ne dit que la difficulté est linéaire avec la complexité d'un cas réel.
+→ **Statut correct : preuve de MÉCANISME (le tuyau existe), PAS un livrable prêt à vendre.**
+Cf. `client-sim-tests/lottie-ui-lcd/CE-QUI-PASSE-EN-LOTTIE.md` § « prouver une capacité ≠ produire
+un livrable ». Avant d'en faire un axe d'offre B2B (`doctrines/PILIERS-B2B.md`) : retester sur UN
+cas à 4-5 états avec guards + une vraie intégration React (au moins un CodeSandbox/StackBlitz, pas
+juste du HTML statique).
+
+Fichier de référence (test 2 états) : `src/projects/_client-sim/lottie-ui/out/state-test/`.

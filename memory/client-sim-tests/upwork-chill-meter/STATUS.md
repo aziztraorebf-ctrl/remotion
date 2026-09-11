@@ -48,9 +48,29 @@ audio n'est versionné dans ce repo, les v1 non plus). Ils vivent sur disque dan
 (+54/+44/+50/+56/+56/+76 px par frame), **zéro déplacement après la pose**, thud qui monte à
 f10-12, power-on à f24 = pile l'allumage. Sur son vrai plateau.
 
-⏭️ **RESTE** : validation d'Aziz sur `out/_r-and-d/chill-meter-upwork/jalon2-rev1/
-comparaison-avant-apres.mp4` (côte à côte avant/après) → puis décider du format de livraison
-(clip entrance seul ? ou récap complet des 4 états ?) → message → envoi Upwork.
+✅ **REBOND : valeur d'origine 17 px CONSERVÉE (décision Aziz).** J'avais baissé à 9 px en même
+temps que je corrigeais le timing — **sur-correction**. Elle n'a JAMAIS critiqué la hauteur du
+rebond, seulement son TIMING. ⭐ Règle : ne pas toucher à une valeur que la cliente a vue et
+laissée passer — c'est le seul point de référence validé qu'on a, et changer une variable non
+contestée ajoute une inconnue dans un tour de révision. Vérifié au rendu : rebond visible
+f10-f14, stabilisation nette ensuite.
+
+✅ **ENVOI FAIT MANUELLEMENT PAR AZIZ le 10/09** (pièces jointes via l'interface Upwork, pas le
+MCP — bug attachments connu). Message archivé :
+`messages/MESSAGE-VALIDE-jalon2-rev1-09-10.txt`.
+Clips : `out/_r-and-d/chill-meter-upwork/jalon2-rev1/envoi/recap-rev1-{Avec,Sans}SonPlateau.mp4`
+(10,6 s · 7,8 Mo chacun · limite Upwork 25 Mo).
+
+⭐ **1 POINT LAISSÉ OUVERT VOLONTAIREMENT dans le message** : la hauteur du rebond est le seul
+paramètre restant qui soit purement subjectif (tout le reste était objectivement faux et est
+objectivement corrigé). Plutôt que de deviner, le message l'assume et propose un réglage chiffré
+(« If you'd like the bounce to carry further... just say how much »). Formulation qui AFFIRME le
+choix au lieu de demander une validation — ne pas écrire « dites-moi si ça vous convient », qui
+invite à chercher un problème et fait douter du travail.
+
+⏭️ **RESTE** : attendre sa réponse. Si elle valide → jalon 2 à soumettre sur Upwork (bouton
+milestone), puis jalon 3 = « final exports » (les fichiers individuels prêts CapCut + les états
+75 %/100 % avec leurs SFX, qu'elle n'a pas encore envoyés).
 
 ## 🗄️ ÉTAT AU 2026-09-09 (archivé — ce qui a été envoyé et qui a reçu le retour ci-dessus)
 
