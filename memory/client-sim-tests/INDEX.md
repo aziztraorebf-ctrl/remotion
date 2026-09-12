@@ -28,10 +28,11 @@ Registre SaaS/dashboard, distinct du cartographique/narratif : `src/projects/_cl
 
 ## Tests réalisés
 
-- 🔴🔴 **chill-meter / AbiGirl (CONTRAT ACTIF)** — 2026-09-04 : **chassis REJETE par la cliente**,
-  changement de base en cours. Elle exige comme design une image qui est **la notre** (generation
-  Gemini du 02/09 qu'on lui avait jointe). Decision : son PNG comme decor + nos couches animees.
-  Calage mesure et verifie. ⭐ **Reprise : `memory/starters/STARTER-chill-meter-device-rustique.md`**
+- 🟢 **chill-meter / AbiGirl (CONTRAT ACTIF)** — état en temps réel :
+  `memory/client-sim-tests/upwork-chill-meter/STATUS.md`.
+  ⛔ **Ne pas recopier l'état du contrat ici** : il se périme en heures (cette ligne a annoncé
+  « châssis REJETÉ » pendant 7 jours alors que le jalon 1 était approuvé). Règle déjà appliquée
+  dans `NEXT-ACTION.md` — le STATUS fait foi, l'index ne fait que pointer.
 
 - **Upwork « Appstore promo video »** — 2026-09-01, candidature envoyée (15 $, app kids education,
   20-30s à partir d'un screen recording de l'app). Portfolio 6 pièces joint MANUELLEMENT par Aziz

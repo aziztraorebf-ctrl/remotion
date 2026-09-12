@@ -274,6 +274,9 @@ Nos procédés SONT des skills exécutables. Quand un procédé démarre, **LANC
 
 | Quand Aziz / un agent veut... | LANCER ce skill / système |
 |---|---|
+| **Un brief CLIENT arrive** (Upwork/Fiverr/mail) — flou, ou contrat gagné, ou révision cliente | skill `cadrer-brief-client` — mesurer la source AVANT de doser, classer FAISABLE / FAISABLE AUTREMENT / IMPOSSIBLE, borner les révisions. ⛔ le TRI de l'annonce est en amont : `memory/fiches/FICHE-BRIEF-CLIENT.md` |
+| **Un livrable client part** (clips, exports, jalon) | skill `livrer-client` — ⛔ Phase 0 : le rendu est-il POSTÉRIEUR aux corrections ? puis codec/alpha, vérif contre les MOTS du brief, empaquetage, envoi |
+| Doute sur lequel des deux lancer | skill `client` (aiguilleur) |
 | Préproduction Short Souverain (90s éco/géopo Afrique) | `souverain-preproduction` |
 | Préproduction épisode Atlas (carto, géo, richesse) | `atlas-video-preproduction` |
 | Préproduction vidéo narrative (Seedance, personnages) | `video-narrative-preproduction` |
