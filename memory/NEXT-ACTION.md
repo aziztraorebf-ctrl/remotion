@@ -107,12 +107,8 @@ Cadre contractuel (stable) : offre v2 acceptée le 30/08, 350 $ → 297,50 $ net
 (3/7/11 sept.), 2 tours de révision par jalon, dossier source + README dus. État financement
 vérifié via API le 08/09 : les 3 jalons ont `fundedAmount` déjà rempli (voir `upwork-mcp.md`).
 
-✅ **JALON 2 APPROUVÉ PAR AZIZ (09/09 soir), toujours NON COMMITÉ** — entrance retravaillée
-(diagonale gauche, tilt léger, brume rouille, SFX synchronisés), bug de dosage Idle corrigé
-(bouton power + scintillement écran), livraison simplifiée en 2 clips de démo (`RecapJalon2.tsx`,
-nouveau composant) + message client réécrit et validé. Détail complet : STATUS.md § 09/09 soir.
-⏭️ Reste : commit des fichiers (`git add` nommé, PAS `-A` — 2 fichiers hors-scope traînent dans
-le repo), puis envoi effectif du message + 2 clips sur Upwork (geste d'Aziz).
+🔵 **JALON 2 — 2 tours de révision faits (10-11/09), branche `fix/chill-meter-entrance-impact`
+(non mergée).** État réel + prochaine action : STATUS.md (règle ci-dessus).
 
 Invariants à ne pas perdre :
 - ⛔ Ne PAS lui dire que les 6 états sont déjà rendus (atout de négociation).
@@ -130,6 +126,15 @@ Invariants à ne pas perdre :
 ⚠️ Worktree `retro-gates-multi-session` construit les gates multi-session sur ce même dossier —
 NE PAS y toucher, chantier d'une autre session.
 
+## ⛔ DÉCISION EN ATTENTE — 5e occurrence du pattern « registre / worktree fantôme » (11/09)
+
+`feedback_registre-canonique-branche-rnd-jamais-mergee-pattern-recurrent.md` portait sa propre
+clause : « à soumettre à Aziz si un 5e cas survient ». **Le 5e est arrivé** (ROUTAGE pointait un
+worktree `remotion-cfa` supprimé ; 12 jours après que PIPELINE ait noté la correction).
+Le rustinage au coup par coup a échoué 5 fois. Option outillée à trancher : refuser dans
+`check-links.py` tout chemin de navigation contenant un segment de worktree absent de
+`git worktree list`.
+
 ## 🔧 SESSION D'AUDIT DU WORKSPACE — à planifier (constitué le 2026-08-27, rien d'urgent)
 
 **1. ⭐⭐⭐ Outiller le protocole des 2 échecs** (point le plus rentable). Règle déjà écrite
@@ -139,7 +144,7 @@ indépendantes à tort). ⛔ Mais rien ne compte les tentatives — pattern
 `regle-ecrite-insuffisante-sans-gate-outille`. Base : `.claude/hooks/circuit-breaker.sh` compte déjà
 les éditions répétées d'un fichier ; reste à définir « tentative sur le même problème » et le seuil
 de délégation. Détail : `feedback_transparence-lue-comme-bug.md` § extension 2026-08-29.
-**2.** Audit des ~90 skills (demandé 11/07, non urgent). **3.** Vérifier que les gates ne meurent
+**2.** **3.** Vérifier que les gates ne meurent
 pas en silence (le circuit-breaker était mort le 12/07 sans que personne le remarque).
 
 ---
@@ -238,9 +243,6 @@ chacun, liseré au lieu d'écrire) → `memory/fiches/FICHE-STORYBOARD.md`.
 
 Mécanisme 2 (Extracteur) codé et validé (~30 briques indexées) — `doctrines/STUDIO-REUTILISABLE-GATE.md`.
 Mécanisme 1 (Gardien) : pas codé, volontairement, rien d'urgent.
-⚠️ **Dette CTA Short CFA** : worktree `remotion-cfa` jamais mergé, `SceneCta.tsx:152` dit encore
-"EN DESCRIPTION" alors que le rendu publié a été patché en aval par splice ffmpeg — le fix n'est PAS
-dans la source. À trancher : resync la source ou fermer le worktree (sinon un re-render y réintroduit le bug).
 
 ---
 
@@ -274,31 +276,12 @@ dense (pointeur dans `ROUTAGE.md`). Détail : `episodes/warmap-sahel/STATUS.md`.
 - **Activer les routines /schedule** — NON FAIT, re-signaler en début de session jusqu'à confirmation
   d'Aziz. 2 routines cloud Postiz (`postiz-weekly-check.py` jeudi 9h, `postiz-weekly-report.py`
   samedi 10h), ajouter `POSTIZ_API_KEY`. Supprimer cette ligne une fois confirmé.
-- **Audit des skills du workspace** — demandé 11/07, jamais fait. 88 dossiers `~/.claude/skills/`,
+- **Audit des skills du workspace** — demandé 11/07, jamais fait. `ls ~/.claude/skills | wc -l` dossiers (⛔ mesurer, ne pas graver le compte),
   suspicion de redondance (génériques vs spécifiques Remotion, doublons fonctionnels).
 
 ---
 
-## 💡 BACKLOG (rien d'actif — ne pas lancer sans décision d'Aziz)
-
-- **Carrousel « Good News »** — pipeline prêt, jamais relancé : `scripts/prepare-goodnews-weekly.py`.
-- **Carousels Instagram** — Or Africain + Thiaroye prêts, Mansa Moussa à refaire. Reco : Sénégal Pétrole.
-- **Système hook + CTA commentaire** — checklist hook 20s + template CTA 30-60s, jamais construits.
-- **Xénophobie SA** — angle validé (« double face »), données 2026 intégrées, gate demande TubeLab →
-  `episodes/souverain/xenophobie-sa-EXPLORATION/`.
-- **Pipeline Shorts automatisé trending** — pas maintenant, revenir quand le long format est en place.
-- **Peste 1347 mid-form horizontal** — concept validé → `projects/peste-1347-midform.md`,
-  `episodes/peste-1347/STATUS.md`.
-- **`GeoFlowConnection`** — composant EXISTE et est publié (Soudan Actes 3/4/5). ⚠️ 2 fichiers du
-  même nom, contrats opposés : `warmap/_shared/` (publié) vs `_shared/mapbox/` (dormant) →
-  `INTENTION-FORME-INDEX.md`.
-- **Patterns `_reference-atlas-poc/` non portés** : `AtlasParcheminGlobe.tsx` · `AnimatedCaravan.tsx`.
-- **Vox Papercraft** — pipeline officialisé. Reste : halo détourage, noms d'États, photo halftone,
-  séquence multi-plans → `doctrines/REVERSE-STYLE-VIDEO-VERS-ASSETS.md`.
-- **R&D D3 16:9** — moteur agnostique ratio, prouvé sur Soudan → `_rnd/d3-16x9/README.md`.
-- **Seedance personnage** — technique prouvée mais ÉCARTÉE (coût ~6.85$/clip). SVG reste le défaut.
-
----
+## 💡 BACKLOG dormant → `memory/backlogs/BACKLOG.md` § SECTION 3
 
 ## Regles de mise a jour de ce fichier
 
@@ -313,14 +296,9 @@ Claude met a jour ce fichier en FIN DE SESSION quand :
 et sa publication dans le calendrier. Ne jamais garder de « trace historique » ici : git la conserve.
 Ce fichier a déjà dépassé 116 Ko (juillet) puis 26,5 Ko (août) faute d'appliquer cette règle en continu.
 
-## 🔧 BACKLOG — 3 fiches saturées, à SCINDER (relevé au wrap 2026-08-27)
+## 🔧 BACKLOG — fiches saturées, à SCINDER en DÉBUT de session
 
-Budget d'une fiche = **55 lignes** (contexte injecté à chaque édition). 3 fiches le dépassent au
-point qu'un simple retrait ne sert à rien — scission à faire en DÉBUT de session (pas en clôture,
-risque de rendre une fiche muette sans l'éprouver ensuite) :
-
-| Fiche | Lignes | Scission proposée |
-|---|---|---|
-| `FICHE-CLIP-GENERE.md` | 272 (5×) | sortir § previs/générateurs vers une fiche PREVIS. |
-| `FICHE-UI-PRODUIT.md` | 196 (3,6×) | sortir § MONTAGE+CURSEUR+SON vers `FICHE-ASSEMBLAGE`. |
-| `FICHE-ASSEMBLAGE.md` | 132 (2,4×) | fusionner 2 sections qui redisent le plafond Artifact 16 Mo. |
+Budget d'une fiche = **55 lignes** (contexte injecté à chaque édition). Plusieurs le dépassent.
+⛔ Scission en DÉBUT de session, jamais en clôture (risque de rendre une fiche muette sans
+l'éprouver ensuite). ⛔ Ne pas re-graver les chiffres ici (règle § worktrees) — les MESURER :
+`wc -l memory/fiches/*.md | sort -rn | head`

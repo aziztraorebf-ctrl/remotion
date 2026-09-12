@@ -199,6 +199,23 @@ n'apporte rien. Détail + mesures + gotchas : `memory/tools/minimax-h3-comfy-clo
 tient pas une direction demandée. Porter la direction en SVG déterministe par-dessus (impulsions le
 long du tracé, flèche, dégradé qui progresse) — c'est ce que fait `ProtoInsertMatiereConduite`.
 
+### ⭐⭐ Faire RESSENTIR le POIDS d'un objet qui ATTERRIT  ← ⭐ CATÉGORIE NOUVELLE (2026-09-11)
+- **un objet lancé qui tombe, frappe et se pose avec du poids** → `EntranceAtterrissagePondere`
+  *(proto)* — `_rnd/chill-meter/ChillMeterOverlay.tsx`. **UNE SEULE horloge** :
+  `IMPACT_FRAME = FALL_FRAMES`, le contact EST la fin de la chute, et TOUT en découle (rebond,
+  poussière, SFX, allumage). ⛔ **4 valeurs payées par 3 tours de révision client** :
+  (1) **zéro `spring()` sur la position** — un spring + une constante d'impact = 2 horloges qui
+  divergent (mesuré : 20 frames d'objet posé-immobile avant son propre « impact ») ;
+  (2) chute en `Easing.in(quad)` — c'est l'**accélération** qui donne le poids, pas l'amplitude ;
+  (3) ⭐⭐ **HANG TIME** : rebond en 3 temps (montée 3f / **suspension 3f** / chute 5f). Le PALIER
+  rend le rebond lisible, pas sa hauteur — essais à 22/26/28 px sans palier = rien de visible ;
+  (4) écrasement `scaleY 0.98` **pivoté au SOL** (`transformOrigin` au sol, pas au centre) : un
+  objet qui encaisse se tasse VERS le sol. À 2 % — au-delà ça lit caoutchouc sur du métal.
+  ⚠️ Extraction juste = un HOOK `useAtterrissagePondere(...)`, pas un composant (les offsets sont
+  calés sur la géométrie du châssis). L'entrée d'intention vaut plus que le code.
+  ⛔ Ne pas confondre avec `ImpactStamp` (COMPOSANTS:351) : registre dramatique (flash + shake),
+  et son fichier vit dans un worktree **jamais mergé** — nom non vérifié.
+
 ### Faire RESSENTIR le TEMPS / une séquence  ← (catégorie renforcée)
 - **le temps passe alors que le sujet ne bouge pas** → `CalendrierMural` (proto) —
   `_client-sim/vector-plat/OuvertureBureauMixte.tsx`. Il **se POSE** (spring, jamais un fade) puis ses
@@ -233,6 +250,7 @@ long du tracé, flèche, dégradé qui progresse) — c'est ce que fait `ProtoIn
 | La scène doit avoir un SOL (pas un fond noir) | reflet miroir flouté masqué | `GroundReflection` (opacity ~0.58, blur ~2 — LISIBLE) | idem |
 | Un objet qui se dissout / s'évapore dramatiquement | particules radiales ("Thanos") | `ParticleDissolve` + `ParticleField` | svg-library/elements/effects |
 | Un objet est **consommé / validé sur place** (récompense, action réussie) | gerbe de losanges qui naissent vite et s'effacent lentement, **l'objet ne glisse pas** | ⭐ `Etincelles` *(proto)* — `_client-sim/repro-redeem/ReproRedeem.tsx`. ⛔ Ne pas confondre avec `ParticleDissolve` : intention INVERSE (là un objet se DÉFAIT dramatiquement, ici une action RÉUSSIT — registre UI/récompense). Déterministe, zéro `Math.random` | `_client-sim/repro-redeem` |
+| Un impact a **soulevé de la matière** (atterrissage, choc au sol) | 2 étages à extinctions DÉCALÉES : panache central + voiles latéraux qui s'écartent | ⭐ `PoussiereImpact2Etages` *(proto)* — `_rnd/chill-meter/ChillMeterOverlay.tsx`. ⭐⭐ **Ce qui fait lire « ça se dissipe » n'est PAS la baisse d'opacité, c'est l'ÉCARTEMENT** — une poussière réelle ne devient pas transparente sur place. ⛔ Sur un plateau FILMÉ (bruit vidéo, décor chargé), **0,30 d'opacité est sous le seuil de visibilité** : garder un niveau franc (0,78→0,68) + extinction courte, la dissipation portée par le spread (0,75→2,25). ⛔ Naître LARGE (spread 1,05, pas 0,6) : une poussière d'impact est chassée horizontalement, un départ étroit coûte 2-3 frames de retard apparent. ⛔ Les 2 étages doivent s'éteindre à des moments DIFFÉRENTS, sinon le latéral est noyé. Teinte = celle du matériau qui la génère, éclaircie/désaturée | `_rnd/chill-meter` |
 
 ### Faire RESSENTIR du TEXTE / mettre l'EMPHASE  ← ⭐ CATÉGORIE NOUVELLE (manquait)
 | Intention | Forme | Réponse(s) | Catalogue |

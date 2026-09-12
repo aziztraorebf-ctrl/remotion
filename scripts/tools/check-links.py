@@ -64,6 +64,21 @@ REPO_REL_RE = re.compile(r"\]\((?:\.\./)+Workspace/remotion/([A-Za-z0-9_./-]+\.\
 # à check-links.py jusqu'à découverte accidentelle, car ni PATH_RE ni REPO_REL_RE ne le couvraient.
 SHORT_REL_RE = re.compile(r"\]\(((?!https?://|\.\./)[A-Za-z0-9_./-]+\.(?:tsx|ts|md|py|sh|json))\)")
 
+# Nom de fichier NU en backticks, SANS son dossier : `feedback_x.md`, `STARTER-y.md`.
+# ⛔ ANGLE MORT CORRIGE LE 2026-09-11. Un pointeur ecrit sans son dossier est
+# INTROUVABLE pour qui le suit a la lettre, et invisible pour ce script qui ne
+# verifiait que les chemins ecrits en entier. Cas reel : ROUTAGE citait
+# `feedback_hook-retention-premiere-minute.md` alors que le fichier vit dans
+# memory/feedbacks/. 8 autres cas trouves le meme jour dans la chaine de demarrage.
+# On resout le nom dans les dossiers usuels : trouve ailleurs -> on le signale
+# comme INCOMPLET (pas mort) ; introuvable partout -> vrai lien mort.
+NOM_NU_RE = re.compile(r"`((?:feedback_|STARTER-|FICHE-)[A-Za-z0-9_.-]+\.md)`")
+DOSSIERS_USUELS = ("memory/feedbacks", "memory/starters", "memory/fiches",
+                   "memory/doctrines", "memory/tools", "memory/projects")
+
+
+incomplets = []   # (label, ligne, nom_nu, chemin_complet_a_ecrire) — fichier EXISTANT, chemin mal ecrit
+
 
 def scan_file(path, label=None, base_dir=None):
     """Retourne la liste des (ligne, chemin_cite, existe?) pour un fichier.
@@ -89,6 +104,13 @@ def scan_file(path, label=None, base_dir=None):
                     continue
                 target = os.path.join(ROOT, c)
                 results.append((i, c, os.path.exists(target), label))
+            for nom in NOM_NU_RE.findall(line):
+                if os.path.exists(os.path.join(resolve_dir, nom)):
+                    continue          # resout depuis le dossier du fichier : OK
+                trouve = next((d for d in DOSSIERS_USUELS
+                               if os.path.exists(os.path.join(ROOT, d, nom))), None)
+                if trouve:
+                    incomplets.append((label, i, nom, f"{trouve}/{nom}"))
             for c in SHORT_REL_RE.findall(line):
                 if "*" in c or "|" in c:
                     continue
@@ -158,6 +180,13 @@ def main():
                     broken.append((label, ln, cited))
 
     print(f"check-links: {checked} chemins verifies dans {len(files)} fichier(s) de navigation.")
+    if incomplets:
+        print(f"\n{len(incomplets)} POINTEUR(S) INCOMPLET(S) — le fichier EXISTE, "
+              f"le chemin est ecrit sans son dossier :")
+        for label, ln, nom, complet in incomplets:
+            print(f"  {label}:{ln}  ->  `{nom}`   ECRIRE : `{complet}`")
+        print("  ⛔ Un pointeur sans dossier est introuvable pour qui le suit a la lettre.")
+
     if not broken:
         print("OK — aucun lien mort.")
         return 0

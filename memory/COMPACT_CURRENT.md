@@ -1,5 +1,9 @@
 # COMPACT CURRENT — État session 2026-06-25
 
+> ⚠️ **FICHIER MÉCANIQUE**, écrit par `scripts/atlas-session.py` et le skill `checkpoint`.
+> Son contenu est **figé au 2026-06-25** et dépassé par `memory/NEXT-ACTION.md`.
+> ⛔ Ne pas s'y fier pour « où on en était » sans vérifier sa date.
+
 > Résumé dense de l'état réel du projet après la session du jour. Remplace tout historique antérieur.
 > En cas de contradiction avec un autre fichier, vérifier le livrable réel (code/render) — ce fichier peut être en retard.
 

@@ -172,3 +172,16 @@ de notre usage (candidatures ponctuelles, réfléchies).
 `out/PORTFOLIO-UPWORK/README.md` — 6 pièces vidéo couvrant 5 registres visuels, retraitées
 pour un usage anglophone générique (narration coupée, textes FR corrigés). Base à réutiliser
 et enrichir pour toute candidature future, pas seulement celle qui l'a produit.
+
+## ⭐ GARDE-FOU — ne jamais envoyer depuis le MCP sur un contrat actif (2026-09-11)
+
+Vérifier après coup qu'aucun envoi n'a eu lieu via le MCP est une vérification **utile, pas de la
+paranoïa** (fait par Aziz le 11/09 sur le contrat chill-meter : confirmé lecture seule uniquement).
+
+Les envois client de ce contrat passent TOUS par l'interface Upwork **manuellement** (bug
+`attachments` confirmé 2×) : un `send_message` parti du MCP créerait un message **sans ses pièces
+jointes**, dans un fil contractuel.
+
+⛔ Ne jamais appeler `upwork__send_message` / `upwork__submit_milestones` sur un contrat actif sans
+demande explicite d'Aziz **dans le tour courant**. Une validation de brouillon n'est pas une
+autorisation d'envoi.

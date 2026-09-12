@@ -120,7 +120,14 @@ if [ -n "$BASH_CMD" ]; then
   # hook documente deja 4 fois (.svg 08-17, index.html, timing.ts, brief-client
   # 08-23). Le motif doit vivre dans la branche BASH, avant tout filtre.
   if printf '%s' "$BASH_CMD" | grep -qE 'animate_scene|svg2lottie|livrer_piece|verifier_fidelite|group_layers|finir_piece|lottie-ui/tools'; then
-    add_fiche "FICHE-GESTE-ANIME.md" "FICHE GESTE ANIME" "bash-lottie"
+    # ⭐ 11/09 : pointe vers FICHE-RIG-ET-LOTTIE (extraite de GESTE-ANIME le meme jour).
+    # Le contenu rig/Lottie vit la ; GESTE-ANIME ne garde que le mouvement Remotion pur.
+    add_fiche "FICHE-RIG-ET-LOTTIE.md" "FICHE RIG ET LOTTIE" "bash-lottie"
+  fi
+  # ⭐ 11/09 : mesurer la structure temporelle d'un mouvement (frame de contact, hang time,
+  # coincidence son/image). La fiche porte la regle « un impact ne se declare pas, il se deduit ».
+  if printf '%s' "$BASH_CMD" | grep -qE 'motion-timing|motion-breakdown'; then
+    add_fiche "FICHE-GESTE-ANIME.md" "FICHE GESTE ANIME" "bash-motion"
   fi
   # SCENE CREEE EN BASH : on rebascule sur la branche fichier avec le corps de la commande
   # (le heredoc) comme CONTENT. Sans ca, une scene ecrite en Bash n'a jamais ses fiches.

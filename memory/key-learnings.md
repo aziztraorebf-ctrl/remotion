@@ -1933,3 +1933,117 @@ un transitoire court bien mieux qu'une montee lente, meme a niveau superieur —
 dans l'ambiance, un bang ressort. **Regle : ne jamais juger un SFX de type build-up/swell sur les dB
 seuls, toujours verifier a l'oreille sur un vrai extrait de la destination finale** (pas un fond
 neutre) avant de conclure qu'un niveau est suffisant.
+
+## ⛔⛔⭐⭐⭐ 2026-09-10 — « spring() + IMPACT_FRAME constant » = 2 horloges qui divergent (chill-meter jalon 2)
+
+**Symptome client** (Abigail, retour jalon 2) : « feels like the meter is being MOVED ACROSS
+THE SCREEN WITH A MOUSE, sliding in as a flat image, slightly readjusting, then moving up and
+down afterward » + « the dust comes in later, when the meter goes UP ».
+
+**Cause racine MESUREE (pas devinee)** : l'entree utilisait `spring({damping:11, stiffness:68,
+mass:0.9})` pour porter entX/entY, mais l'impact etait code en dur `IMPACT_FRAME = 32`.
+Simulation du spring : la progression atteint 1.0 des la **frame ~11-12** (entY < 2px).
+=> l'objet est POSE et IMMOBILE pendant 20 frames (0,67 s) avant que « l'impact » ne se declenche.
+Rebond, poussiere, thud et allumage sont donc tous cables sur un objet deja au sol.
+
+**La lecon generale** : des qu'un `spring()` porte la POSITION et qu'une CONSTANTE porte
+l'EVENEMENT d'impact, les deux horloges divergent silencieusement — et **tout reglage de
+dosage (amplitude du rebond, opacite de la poussiere, niveau du SFX) est inutile**, parce que
+le probleme n'est pas le dosage mais le DECALAGE. Le symptome se lit comme un probleme de
+"feel", ce qui pousse a re-doser en boucle (piege du protocole 2+ echecs).
+
+⭐ **FIX doctrinal** : l'impact ne se declare pas, il se DEDUIT. Soit une trajectoire explicite
+en `interpolate` (chute -> contact a frame connue -> rebond), soit deriver la frame de contact
+du spring lui-meme. JAMAIS une constante posee a cote d'un spring.
+
+⭐ **Verif obligatoire avant de livrer une chute** : simuler/mesurer a QUELLE FRAME la position
+atteint le sol, et confirmer que rebond+poussiere+SFX partent de CETTE frame-la. 3 lignes de
+python, evite un tour de revision client.
+
+⭐ **Autre symptome du meme bug** : le spring DEPASSE (overshoot mesure +5,1 px a f15 puis
+retour) = le « slightly readjusting after it arrives » qu'elle decrit. Un spring sous-amorti
+sur une position d'atterrissage donne un micro-recalage qui detruit la lecture « pose net ».
+
+### ⭐⭐⭐ Regle de METHODE tiree du meme incident : verifier la COINCIDENCE, pas la presence
+
+**Ce qu'on a mal verifie** (et qui a coute un tour de revision client) : avant l'envoi, on a
+controle chaque element SEPAREMENT — la poussiere est-elle assez visible ? le thud assez fort ?
+le rebond existe-t-il ? Trois « oui ». Ce qu'on n'a JAMAIS verifie, c'est si ces trois oui
+tombaient AU MEME INSTANT. Un defaut de SYNCHRO est invisible a l'inspection piece par piece :
+il ne se voit qu'en regardant l'ensemble tourner, ou en le MESURANT.
+
+⛔ **Sur tout evenement qui doit « frapper » (impact, coup, apparition brutale, coupe rythmee) :
+verifier la COINCIDENCE des elements, jamais leur presence individuelle.** La checklist
+« chaque element est-il present et bien dose ? » passe au vert sur une animation cassee.
+
+⛔⛔ **Piege aggravant, vecu ici : appliquer une correction client SANS verifier qu'elle
+n'aggrave pas un defaut preexistant.** Elle a demande « un peu plus lent » -> on a ralenti la
+chute -> le ralentissement a AGRANDI le trou entre l'atterrissage reel et l'impact code en dur.
+La correction demandee a empire le vrai defaut, qu'on n'avait pas identifie. Avant d'appliquer
+un reglage demande, se demander : « sur quoi d'autre ce reglage tire-t-il ? »
+
+⭐ **Pourquoi Aziz ne pouvait pas l'attraper a la validation** : le defaut durait < 1 s, noye
+dans un montage de 4 etats enchaines avec cartons. Reperer un decalage de 0,67 s a l'oeil nu,
+sans comparaison cote a cote, est tres difficile. **Le filet est cote Claude** : ne pas livrer
+a la validation d'Aziz un rendu dont la coherence temporelle n'a pas ete mesuree en amont.
+
+### ⭐⭐ Corollaire (2026-09-10, chill-meter) : NE PAS TOUCHER A CE QUE LE CLIENT N'A PAS CRITIQUE
+
+En corrigeant le TIMING du rebond (le vrai defaut), j'ai aussi baisse sa HAUTEUR (17 -> 9 px)
+« pour faire plus sobre ». Or elle n'avait jamais critique la hauteur. Aziz a tranche : remettre
+17. ⭐ **Une valeur que le client a VUE et LAISSEE PASSER est un point de reference valide** —
+le seul qu'on ait. La changer en meme temps qu'on corrige autre chose ajoute une inconnue dans
+un tour de revision, et empeche de savoir ce qui a produit l'amelioration.
+⛔ Vaut aussi dans l'autre sens : quand un client demande un reglage (ici « plus lent »),
+verifier sur quoi d'autre ce reglage tire — le « plus lent » du 09/09 avait AGGRANDI le trou
+entre l'atterrissage reel et l'impact code en dur.
+
+### ⭐⭐ Laisser UN curseur ouvert quand il reste du subjectif — mais l'AFFIRMER, pas le quemander
+
+Quand tout le mesurable est corrige et qu'il reste UN parametre de pur gout, le signaler au
+client coute moins cher que de deviner (un aller-retour evite si ca ne lui parle pas).
+⛔ MAIS la formulation decide de l'effet : « dites-moi si ca vous convient » ouvre une porte
+vague, invite a chercher un probleme, et fait douter du travail. ✅ Le gabarit qui marche :
+(1) AFFIRMER le choix + le justifier (« I kept X at exactly the height it had in the version
+you saw, since that part wasn't what you flagged »), (2) prevenir honnetement de ce qui a
+change dans la lecture, (3) cadrer la revision comme triviale (« a quick adjustment on my
+end »), (4) demander un CHIFFRE ou une direction (« just say how much »), pas une appreciation.
+Un retour ainsi cadre est actionnable du premier coup.
+
+## ⛔⛔⭐⭐⭐ 2026-09-11 — UN CORRECTIF DONT L'EFFET N'EST PAS MESURÉ N'EST PAS UN CORRECTIF
+
+**Vécu (chill-meter, rev2)** : la cliente signale une lueur bleue qui bave sur le métal. Diagnostic
+immédiat et plausible : le bloom de la réglette lumineuse. Je l'ai clippé, le code était propre, ça
+« devait » marcher. **Mesure après fix : 0,14 point de réduction sur 3,66.** Autrement dit rien. La
+vraie cause était ailleurs : l'edge-lighting, un trait de 9 px tracé **26 px EN DEHORS de l'écran**
+avec un flou par-dessus. Une fois resserré : +3,66 → **-1,28**.
+
+⛔ **La règle** : entre « j'ai appliqué le correctif » et « le défaut a disparu » il y a une MESURE,
+et elle n'est pas optionnelle. Un correctif plausible appliqué sur une cause fausse produit un code
+plus compliqué, un défaut intact, et la conviction d'avoir réglé le problème — le pire des 3 états.
+⭐ **Le chiffre qui ne bouge pas EST le signal** : il ne dit pas « doser plus fort », il dit
+**« ce n'est pas là »**. C'est lui qui a fait chercher ailleurs et trouver.
+⚠️ Face de la même règle que « un chiffre qui bouge ne prouve pas qu'un problème visuel est résolu »
+(occlusion chill-meter, 06/09) : la mesure est **nécessaire, jamais suffisante**.
+
+## ⭐⭐ 2026-09-11 — NE PAS REDONNER À JUGER CE QUI EST ACCEPTÉ EN SILENCE
+
+Pour la rev2 du jalon 2, ses 4 demandes portaient **toutes** sur l'entrance. Le réflexe « montrer
+l'ensemble pour le contexte » aurait remontré le 0-25 %, **déjà vu et non commenté** au tour
+précédent. Décision (Aziz) : n'envoyer QUE l'entrance.
+⭐ **Un élément qu'un client a vu et n'a pas critiqué est validé. Le remontrer rouvre une porte
+fermée** — il le regarde à neuf, trouve quelque chose, et un tour de révision part sur un acquis.
+C'est le pendant côté LIVRAISON de « ne pas toucher à ce que le client n'a pas critiqué » (10/09),
+qui vaut côté CODE. ⚠️ Vaut pour une révision ciblée, pas pour une livraison finale.
+
+## ⛔ 2026-09-11 — 2 PIÈGES D'OUTILLAGE PAYÉS DANS LA MÊME SESSION
+
+1. ⛔ **`sed` sur une ligne portant un commentaire = code corrompu en silence.**
+   `sed 's/^const X = [0-9]*;/const X = 22;/'` sur `const X = 17; // note` a produit
+   `const X = 22 7;` — le fichier ne compilait plus, **les rendus ont échoué sans que je le voie**
+   (j'ai cru qu'ils tournaient). ✅ Pour remplacer une valeur : Python + `re.sub` ancrée sur `[^;]*;`.
+   ⭐ Corollaire : **un rendu lancé n'est pas un rendu réussi** — vérifier le fichier sur disque.
+2. ⛔ **Mesurer un objet sur un plateau FILMÉ par seuil absolu accroche le décor, pas l'objet.**
+   3 faux résultats successifs (le cadre de sa vidéo, le châssis en vol pris pour de la poussière,
+   la poussière prise pour un 2e rebond). ✅ Toujours mesurer par **différence à une frame de repos**,
+   jamais par détection de seuil sur l'image brute.

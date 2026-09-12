@@ -79,8 +79,8 @@ FICHIERS_ACTION = [
     REPO / "memory" / "NEXT-ACTION.md",
     REPO / ".claude" / "agent-memory" / "shared" / "PIPELINE.md",
 ]
-MARQUEURS_CLOS = ("✅", "ABANDONN", "LIVRÉE", "LIVREE", "RÉSOLU", "RESOLU",
-                  "CONCLUE", "[COMPLETE]", "FAIT PAR")
+MARQUEURS_CLOS = ("✅", "🏁", "ABANDONN", "LIVRÉE", "LIVREE", "RÉSOLU", "RESOLU",
+                  "TERMINÉ", "TERMINE", "CLOS", "CONCLUE", "[COMPLETE]", "FAIT PAR")
 
 
 def tokens(n_car: int) -> int:
@@ -89,12 +89,27 @@ def tokens(n_car: int) -> int:
 
 
 def sections_closes(path: Path) -> list[str]:
+    """Titres de section portant un marqueur de cloture, dans un fichier d'ACTION.
+
+    ⛔ ANGLE MORT CORRIGE LE 2026-09-11. Le test etait `line.startswith("## ")`,
+    qui ne matche QUE le niveau 2 : `"### "` ne commence pas par `"## "` (le 3e
+    caractere est un '#', pas une espace). Or dans PIPELINE.md les sections de
+    projet sont toutes en `###`. Consequence mesuree : 7 sections closes depuis
+    4 a 6 semaines (7 787 o, 31 % du fichier) n'ont JAMAIS ete signalees, et le
+    fichier a continue de grossir en en accumulant une 8e.
+    Le gate existait, la regle existait — l'instrument ne regardait pas au bon
+    niveau. Un gate qu'on n'a pas vu se declencher sur un cas reel n'est pas
+    un gate teste.
+    """
     if not path.exists():
         return []
     out = []
     for line in path.read_text(encoding="utf-8").split("\n"):
-        if line.startswith("## ") and any(m in line for m in MARQUEURS_CLOS):
-            out.append(line[3:].strip()[:70])
+        if not line.startswith("##"):        # H2, H3, H4...
+            continue
+        titre = line.lstrip("#").strip()
+        if any(m in line for m in MARQUEURS_CLOS):
+            out.append(titre[:70])
     return out
 
 
@@ -294,12 +309,20 @@ def main() -> int:
             if len(closes) > 4:
                 alertes.append(f"        · … et {len(closes) - 4} autre(s)")
 
+    # ⚠️ NOMMER LE FICHIER : la chaine charge DEUX CLAUDE.md (projet + global
+    # ~/.claude/). Un message qui dit juste « CLAUDE.md » a fait croire a un
+    # depassement du global alors que c'est le projet qui est vise (11/09).
+    # Et le `+1` comptait une ligne finale vide inexistante : 206 annonce pour
+    # 205 reelles. Un instrument de mesure se lit a l'unite pres ou il ne sert
+    # a rien.
     claude = REPO / "CLAUDE.md"
     if claude.exists():
-        n = claude.read_text(encoding="utf-8").count("\n") + 1
+        n = len(claude.read_text(encoding="utf-8").rstrip("\n").split("\n"))
         if n > 200:
-            alertes.append(f"  ⚠️  CLAUDE.md : {n} lignes — au-dela de ~200 l'adherence baisse "
-                           f"(doc officielle). Deplacer vers une doctrine pointee.")
+            alertes.append(
+                f"  ⚠️  CLAUDE.md du PROJET (remotion/) : {n} lignes — repere d'adherence "
+                f"~200 (pas une limite technique : elle est a 4 MiB). Deplacer vers une "
+                f"doctrine pointee si l'ecart se creuse.")
 
     for m in memory_sections_hors_borne():
         alertes.append(f"  ⚠️  MEMORY.md : {m}")

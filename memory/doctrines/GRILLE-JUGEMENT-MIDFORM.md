@@ -102,3 +102,16 @@ muet et lister ce qui reste) coûte 5 minutes et n'a pas été fait.
   qui a remplacé un score LLM par des assertions déterministes.
 - **Valider la grille sur une 2e vidéo.** Tant qu'elle n'a servi qu'au CFA, ses seuils sont des
   hypothèses, pas une norme.
+
+## Deux modes — trancher AVANT d'écrire le brief
+
+Le mode se choisit **avant** le brief, jamais après.
+
+| Le fond est… | Mode | Outil |
+|---|---|---|
+| **NON validé** — on chasse un défaut | **CORRECTIF** | `scripts/tools/da-brief.py` downstream |
+| **VALIDÉ** — on veut monter en gamme | **PREMIUM** | mandat « elle est bonne, comment devient-elle excellente », écart mesuré contre les refs externes ci-dessus, défauts connus explicitement HORS périmètre |
+
+⛔ Vécu 2026-07-29 : un brief CORRECTIF lancé sur une vidéo déjà VALIDÉE a cherché une cicatrice de coupe inexistante — appel gaspillé, recadrage d'Aziz.
+
+*(Branche CORRECTIF migrée depuis `memory/ROUTAGE.md` le 2026-09-11 : elle n'existait qu'à cet endroit.)*

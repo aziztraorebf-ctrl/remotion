@@ -4,7 +4,122 @@
 > accepté par la cliente le 29/08, **offre v2 acceptée par Aziz le 30/08**. 350 $ → 297,50 $ net.
 > ⛔ Les décisions de ce fichier engagent contractuellement.
 
-## 🟢 ÉTAT AU 2026-09-09 (SOIR, FINAL) : JALON 2 APPROUVÉ PAR AZIZ — 2 clips, prêt à envoyer
+## 🟡 ÉTAT AU 2026-09-11 : RÉVISION 2 DU JALON 2 CODÉE — à valider par Aziz avant envoi
+
+**Abigail a répondu très positivement à la rev1** (« huge improvement », « very very impressed »,
+« definitely something we can work with now »). La cause racine corrigée le 10/09 (spring +
+IMPACT_FRAME) est validée par elle. Restent **4 demandes mineures, toutes dans l'ENTRANCE**.
+
+✅ **FAIT** (commit `62ddd11e`, branche `fix/chill-meter-entrance-impact`, NON mergée) :
+
+1. **REBOND plus visible** — la cause n'était PAS la hauteur mais la COURBE. Essais à 22/26/28 px
+   sans palier : RIEN de visible. À 30 fps, un aller-retour qui monte en 3 frames et retombe sans
+   marquer son sommet passe sous le seuil de lecture. Fix = **HANG TIME** (montée 3f / suspension
+   3f / chute 5f) ; hauteur 17 → 20 px seulement. Vérifié : le châssis tient sa hauteur f12→f15,
+   immobile dès f20.
+
+2. **LUEUR BLEUE qui bavait sur le métal** — ⛔ 1er diagnostic FAUX : j'ai clippé le bloom de la
+   réglette, réduction mesurée **0,14 point sur 3,66** (rien). Vraie cause : l'**edge-lighting**,
+   trait de 9 px tracé **26 px EN DEHORS de l'écran** + flou. Resserré au bord de la dalle (-8),
+   affiné à 5 px, intensité -1/3. Mesure : +3,66 → **-1,28**. ⚠️ NON supprimé : elle avait demandé
+   « edge lighting around the device » le 05/09 — arbitrage entre 2 de ses demandes, signalé dans
+   le message pour qu'elle tranche.
+
+3. **PAUSE avant allumage** — piège tranché par la mesure : l'allumage était **DÉJÀ à 0,47 s du
+   contact**, donc dans sa fourchette « half a second », alors qu'elle le trouvait trop rapide.
+   Sa référence perceptive est la **FIN DU MOUVEMENT**, pas le contact. Pause = 0,75 s après
+   SETTLE. Allumage f23 → f43.
+
+4. **POUSSIÈRE LATÉRALE** — 2 erreurs corrigées par Aziz. (a) câblée pour mourir à l'allumage =
+   lecture trop littérale (la pause de 0,75 s est trop courte pour qu'une dissipation se PERÇOIVE) ;
+   découplée, meurt à 2,00 s, soit 0,57 s APRÈS l'allumage. (b) rendue translucide pour durer sans
+   envahir → invisible. Niveau franc (0,78 → 0,68) puis extinction courte ; la dispersion est
+   portée par `dustSideSpread`.
+
+✅ **FORMAT D'ENVOI : l'ENTRANCE SEULE** (`RecapEntranceRev2.tsx` — entrance + carton d'ouverture,
+6,5 s, 5,5 Mo). Ses 4 demandes sont toutes dans l'entrance ; le 0-25 %, **déjà vu et non
+commenté**, n'est pas remontré. ⭐ Principe : **ne pas redonner à juger ce qui est accepté en
+silence**. Clips : `out/_r-and-d/chill-meter-upwork/jalon2-rev3/envoi-final/`.
+
+✅ **Vérifié le 11/09 : rien n'a jamais été envoyé via le MCP Upwork** (lecture seule). L'envoi
+reste un geste manuel d'Aziz (bug `attachments` connu, 2 occurrences).
+
+⚠️ **Elle est en week-end jusqu'au lundi** — réponses possiblement lentes, annoncé par elle.
+
+⏭️ **RESTE** : envoi manuel du message + 2 clips → sa validation → soumettre le jalon 2.
+Jalon 3 (échéance contractuelle 11/09, DÉPASSÉE) = 75 % / 100 % + exports finaux + dossier source
+Remotion. ⚠️ Ses SFX pour le 75 %/100 % n'ont jamais été fournis — les demander dans le prochain
+message.
+
+## 🗄️ ÉTAT AU 2026-09-10 (archivé) : RÉVISION 1 DU JALON 2
+
+**Abigail a répondu le 10/09 (message positif, un seul point rejeté : l'ENTRANCE).**
+Elle valide implicitement idle / 25 % / 50 % (aucune critique), remercie la pédagogie des
+messages, et **assume sa propre erreur** (« that part is on me » — son « slightly slower »
+du 09/09 rendait le mouvement irréel, elle demande maintenant plus RAPIDE).
+⚠️ Elle mentionne vouloir rester proche du nombre de révisions incluses — à lire comme une
+main tendue (« for both of us ») et non comme une menace : c'est Aziz qui avait évoqué le
+compte des rounds au tour précédent, elle reprend son cadre.
+
+⛔⛔ **CAUSE RACINE DU REJET — un BUG, pas du dosage** (mesurée, cf. `memory/key-learnings.md`
+§ 2026-09-10) : l'entrée était portée par un `spring()` pendant que l'impact était la constante
+`IMPACT_FRAME = 32`. Le meter touchait le sol dès la frame ~11-12 → il restait **posé et
+immobile 0,67 s** avant que rebond / poussière / thud / allumage ne se déclenchent. D'où ses
+mots exacts : « sliding in as a flat image », « slightly readjusting », « moving up and down
+afterward », « the dust comes in later, when the meter goes UP ».
+⭐ **Aucun réglage d'intensité n'aurait sauvé ce rendu** — le défaut était un DÉCALAGE.
+
+✅ **CE QUI A ÉTÉ FAIT (branche `fix/chill-meter-entrance-impact`, 3 commits)** :
+- `spring()` retiré. Trajectoire explicite en `interpolate` : chute accélérée
+  `Easing.in(quad)` sur 9 frames, contact = fin de chute par construction, tout en découle.
+- X et Y arrivent ENSEMBLE au contact (plus de course latérale après la pose), atterrissage
+  direct en position approuvée, **zéro dépassement**.
+- Rebond unique amorti qui part À l'impact, amplitude 17 → 9 px. Écrasement bref (2 %) pivoté
+  au sol : c'est lui qui porte le poids, pas la hauteur du rebond.
+- Poussière au contact, **départ déjà large** (`dustSpread` 0,6 → 1,05 — mesure sur rendu :
+  un panache étroit mettait 2-3 frames à déborder, soit le même défaut en plus petit), pic
+  0,85 → 0,95 (elle insiste 2× sur cet élément).
+- Allumage APRÈS la mise au repos (sa séquence : « lands, rebounds once, then settles »).
+
+✅ **SFX v2** (3 nouveaux fichiers, attaques mesurées par profil RMS) :
+`thud-v2.mp3` 0,100 s · `power-on-v2.mp3` 0,060 s · `fill-0-25-v2.mp3` 0,020 s.
+Bien plus nets que les v1 (dont le thud portait 0,98 s de silence de padding).
+- Power-on calé sur l'allumage du bandeau « MAX CHILL DETECTION » — **sa nouvelle consigne
+  explicite**, le bouton vert étant jugé trop subtil.
+- ⭐ Le son 0-25 % comble un manque qu'on lui avait signalé le 09/09 : il est branché sur `fill25`.
+ℹ️ Les 3 fichiers ne sont PAS dans git (`.gitignore` exclut `*.mp3` ET `*.wav` — aucun média
+audio n'est versionné dans ce repo, les v1 non plus). Ils vivent sur disque dans
+`public/_client-sim/chill-meter/sfx-abigail/`.
+
+📏 **VÉRIFIÉ AU RENDU** (pas seulement dans le code) : contact f9-10, chute accélérée
+(+54/+44/+50/+56/+56/+76 px par frame), **zéro déplacement après la pose**, thud qui monte à
+f10-12, power-on à f24 = pile l'allumage. Sur son vrai plateau.
+
+✅ **REBOND : valeur d'origine 17 px CONSERVÉE (décision Aziz).** J'avais baissé à 9 px en même
+temps que je corrigeais le timing — **sur-correction**. Elle n'a JAMAIS critiqué la hauteur du
+rebond, seulement son TIMING. ⭐ Règle : ne pas toucher à une valeur que la cliente a vue et
+laissée passer — c'est le seul point de référence validé qu'on a, et changer une variable non
+contestée ajoute une inconnue dans un tour de révision. Vérifié au rendu : rebond visible
+f10-f14, stabilisation nette ensuite.
+
+✅ **ENVOI FAIT MANUELLEMENT PAR AZIZ le 10/09** (pièces jointes via l'interface Upwork, pas le
+MCP — bug attachments connu). Message archivé :
+`messages/MESSAGE-VALIDE-jalon2-rev1-09-10.txt`.
+Clips : `out/_r-and-d/chill-meter-upwork/jalon2-rev1/envoi/recap-rev1-{Avec,Sans}SonPlateau.mp4`
+(10,6 s · 7,8 Mo chacun · limite Upwork 25 Mo).
+
+⭐ **1 POINT LAISSÉ OUVERT VOLONTAIREMENT dans le message** : la hauteur du rebond est le seul
+paramètre restant qui soit purement subjectif (tout le reste était objectivement faux et est
+objectivement corrigé). Plutôt que de deviner, le message l'assume et propose un réglage chiffré
+(« If you'd like the bounce to carry further... just say how much »). Formulation qui AFFIRME le
+choix au lieu de demander une validation — ne pas écrire « dites-moi si ça vous convient », qui
+invite à chercher un problème et fait douter du travail.
+
+⏭️ **RESTE** : attendre sa réponse. Si elle valide → jalon 2 à soumettre sur Upwork (bouton
+milestone), puis jalon 3 = « final exports » (les fichiers individuels prêts CapCut + les états
+75 %/100 % avec leurs SFX, qu'elle n'a pas encore envoyés).
+
+## 🗄️ ÉTAT AU 2026-09-09 (archivé — ce qui a été envoyé et qui a reçu le retour ci-dessus)
 
 **Jalon 1 approuvé par Abigail.** Elle a relancé le 09/09 avec 3 fichiers (thud, power-up,
 animation de référence loot box) pour le jalon 2 (entrance/power-on, idle, 0-25%, 50%).

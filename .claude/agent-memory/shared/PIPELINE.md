@@ -14,35 +14,34 @@
 
 ---
 
-## 🔧 SYSTÈME — chantier mémoire/sécurité du 2026-09-08 (CLOS, ne pas rouvrir)
+## 🔧 SYSTÈME — chantier mémoire/gates du 2026-09-11 (CLOS)
 
-Session sans production visuelle. Ce qui a changé et qui affecte TOUTE session future :
+Chaîne de démarrage **154 950 → 132 482 o (-14 %)**. PIPELINE -31 % (7 sections closes, migrées
+avant suppression). ROUTAGE 39 683 → 36 639 o (14 lignes rendues à leur rôle de pointeur, marge
+317 → 3 361 o). NEXT-ACTION 19 773 → 18 594 o.
 
-- 🔐 **15 `claimToken` purgés** du dépôt PUBLIC (exposés depuis le 20/05, 4 sur des pages encore
-  vivantes dont une page CLIENT). ⛔ Tokens here.now antérieurs au 08/09 = **BRÛLÉS**, republier
-  sous un nouveau slug → `memory/tools/here-now-hosting.md`. Nouveau gate `secret-write-guard.sh`
-  (PreToolUse, **position 1**, ne skippe pas les `.md`).
-- 📚 **`audit-composants-index.py`** + gate `index-composants-gate.sh` (PostToolUse sur
-  `COMPOSANTS-INDEX.md`) : 16 fantômes, 11 non-importables, 3 collisions détectés à chaque écriture.
-  ⛔ `GeminiRig` existe en 2 versions aux signatures incompatibles.
-- 🧠 **MEMORY.md 16989 → 10462 o** (~60 leçons extraites vers `memory/INDEX-FEEDBACKS-METHODE.md`) ·
-  **NEXT-ACTION 25511 → 19447 o** · `check-poids-contexte.py` réaligné sur `BUDGET.md` (il tolérait
-  25000 quand la politique dit 15000 : le plafond n'existait pas).
-- 💾 **35 fichiers rapatriés** de l'auto-memory (hors git, non sauvegardés) + **10 leçons
-  récupérées** de branches non mergées — elles étaient citées dans MEMORY.md et introuvables.
-- ⛔ **295 commits non poussés depuis 18 jours** → poussés. `origin/master` est à jour.
-- 📄 Doctrine `memory/doctrines/HYGIENE-GIT-MULTI-SESSION.md` (worktrees, merge concurrent,
-  commandes destructives, push). Plan Vault+MCP en réserve : `memory/starters/STARTER-vault-mcp.md`.
+⛔ **4 angles morts de gates corrigés** — tous du même type : condition juste, périmètre trop
+étroit. `sections_closes()` ne voyait que les titres `##` (7 sections closes en `###` ratées
+4-6 semaines) · `check-links` ne voyait pas les chemins sans dossier (16 cas) ni les branches ·
+l'alerte poids ne disait pas QUEL `CLAUDE.md`. Outil né de là : `scripts/tools/test-gate.py`.
 
----
+⭐ 3 skills client (`cadrer-brief-client`, `livrer-client`, `client`) **enfin routés** dans
+ROUTAGE §2 — ils étaient écrits, mergés et cités nulle part.
 
-## 💰 CONTRAT UPWORK chill-meter (AbiGirl Reacts) — jalon 2 approuvé par Aziz (09/09), prêt à envoyer
+## 💰 CONTRAT UPWORK chill-meter (AbiGirl Reacts) — jalon 2 rev2 codée (11/09), prêt à envoyer
 
 **Premier contrat freelance signé (30/08), actif.** 350 $ → 297,50 $ net, 3 jalons. Jalon 1
-APPROUVÉ par la cliente. Jalon 2 (140 $, entrance/power-on/idle/0-25%/50%) retravaillé le 09/09 :
-entrance (diagonale, tilt, brume, SFX synchronisés), Idle (bouton qui pulse, écran qui scintille),
-livraison en 2 clips de démo montés (`RecapJalon2.tsx`) + message client réécrit — approuvé par
-Aziz, reste l'envoi effectif sur Upwork.
+APPROUVÉ. Jalon 2 (140 $) : **2 tours de révision faits les 10 et 11/09**, branche
+`fix/chill-meter-entrance-impact` (non mergée).
+- rev1 (10/09) — bug racine corrigé : un `spring()` portait la position pendant qu'une CONSTANTE
+  portait l'impact → 0,67 s d'objet posé-immobile avant son propre « impact ». Retour cliente très
+  positif (« huge improvement »).
+- rev2 (11/09) — ses 4 demandes : rebond (HANG TIME, pas la hauteur), lueur bleue resserrée,
+  pause de 0,75 s mesurée depuis la FIN DU MOUVEMENT, poussière latérale découplée de l'allumage.
+- Livraison : **l'entrance SEULE** (`RecapEntranceRev2.tsx`, 6,5 s) — le 0-25 % déjà accepté en
+  silence n'est pas remontré. Message rédigé, reste l'envoi manuel (bug `attachments` du MCP).
+⚠️ Jalon 3 (75 %/100 % + exports + dossier source) : échéance contractuelle 11/09 DÉPASSÉE. Ses
+SFX pour 75/100 % n'ont jamais été fournis — à demander.
 → Source de vérité : `memory/client-sim-tests/upwork-chill-meter/STATUS.md`.
 → Briques méthode nées de ce contrat : `memory/doctrines/REVERSIBILITE-MATIERE-GENEREE.md` ·
 `memory/feedbacks/feedback_annoter-l-image-plutot-qu-expliquer-au-client.md` ·
@@ -97,63 +96,6 @@ les RENDANT). → V4 : Aziz apporte des SVG libres de droits vus de face.
 
 ## ÉTAT DES PROJETS VIVANTS
 
-### War-Map Sahel AES — ⛔ ABANDONNÉ VOLONTAIREMENT (Aziz, 2026-08-17)
-> ⛔ **Ne plus le compter dans le reste-à-faire** (`memory/NEXT-ACTION.md:600`). La V6 ne sera ni
-> assemblée ni republiée. Ce qui suit est conservé UNIQUEMENT pour le gotcha des 2 compositions.
-**Source de vérité** : `memory/episodes/warmap-sahel/STATUS.md` (bandeau 2026-08-06 soir).
-Vidéo longue publiée 2026-08-04, ÉCHEC (5 vues/24h, VPH 0.19). Script réécrit (V6), audio généré +
-validé Aziz, retiming complet des constantes de timing fait et vérifié (check-frame-continuity.py, 0
-trou/0 chevauchement). **RIEN commité**, aucun render complet fait. Reste : render + assemblage +
-validation Aziz + republication.
-
-⛔⛔ **Piège trouvé cette session, même famille que Soudan Actes 3/4 ci-dessous** : `Root.tsx` enregistre
-2 compositions quasi-identiques pour l'Acte 1 (`SahelActe1-Final` et `SahelActe1-Refonte`) — SEULE
-`SahelActe1-Refonte` correspond au FINAL réellement publié (vérifié pixel par pixel contre
-`out/PRET-PUBLICATION/warmap-sahel-aes-FINAL.mp4`, MD5 confirmé). `SahelActe1-Final` affiche un vieux
-carton titre orphelin ("Tout a changé en trois ans") absent du FINAL — seul indice visuel entre les
-deux. Détail : `feedback_deux-compositions-remotion-verifier-vs-livrable-reel.md`.
-
-### Soudan mid-form — 🏁 TERMINÉ, v7 promue FINAL (2026-07-31)
-**Source de vérité** : `memory/episodes/soudan-midform/STATUS.md`.
-6/6 actes codés. Livrable final : `out/PRET-PUBLICATION/soudan-midform-FINAL.mp4` (10min36).
-Titre, miniature, description, programmation (2026-08-20) : FAITS. **Reste** : Short Soudan
-(boucle NotebookLM) — n'existe pas encore.
-
-> ⛔⛔ **Fichiers actifs des Actes 3/4 — vérifié 2026-07-30 par date de commit + contenu du montage
-> final réel** (le v4-MIX contient `a3-section1.mp4` + `a3-insert.mp4`, noms qui correspondent aux
-> compositions Globe D3, produits par le commit `828e1d27` du 22/07) :
-> - ✅ **ACTIFS** : `src/projects/_rnd/d3-16x9/*Globe.tsx` (Section1/Insert Acte 3, B1-B4/B6 Acte 4,
->   Actes 5 et 6).
-> - ⛔ **PÉRIMÉS** : `src/projects/warmap/soudan-acte3/SoudanActe3.tsx` et
->   `soudan-acte4/SoudanActe4.tsx` (Mapbox) — existent encore sur disque et compilent (importés dans
->   Root.tsx), mais ne sont plus la source du montage final. Ne pas les rouvrir.
-> ⚠️ Une note antérieure de ce fichier (datée du 22/07, supprimée à ce ménage) affirmait l'inverse en
-> citant Root.tsx comme preuve — Root.tsx importe les DEUX versions (elles compilent toutes les
-> deux), ce qui ne suffit pas à trancher laquelle est montée. Vérifier le contenu réel du dossier
-> `wip/passe-finale-v4/` (noms de fichiers + date de commit du composant), pas seulement Root.tsx.
-
-### Franc CFA mid-form — 🏁 TERMINÉ
-`out/PRET-PUBLICATION/franc-cfa-midform-FINAL.mp4` (4 min 28, −17,2 LUFS). Les 3 fixes du visionnage
-sont appliqués et validés (Guinée visible, sac de riz retiré, pings audibles). Musique
-`music-A-ambient-souverain`, volume 0.0716, fenêtre 19,6→259,7 s, aucune boucle.
-⛔ Grain et creux d'animation ÉCARTÉS APRÈS TEST — ne pas rouvrir.
-⚠️ Worktree `remotion-cfa` sur `feat/cfa-nuit1994-svg-mix`, **non mergé**, `node_modules` non
-ignoré : **jamais `git add -A`** dedans.
-
-### Scènes à personnages — R&D CLOSE, socle complet
-Mergé dans `master` le 2026-07-29. 7 tests tranchés, 3 registres validés (CONTEMPLATIF /
-SCHÉMATIQUE / DÉMONSTRATIF). 2 verdicts durables : **le modèle dessine le DÉCOR, nous animons les
-PERSONNAGES** · **Fable 5 = modèle SVG par défaut** (2 tests aveugles gagnés contre Opus).
-Doctrine : `memory/doctrines/SCENE-DEMONSTRATIVE-PERSONNAGE.md`.
-⚠️ Bug `BRAS_LAG` non corrigé au socle — décision d'Aziz en attente (corriger obligerait à
-revalider 6 planches).
-✅ **CORRIGÉ 2026-08-30** : ce worktree `remotion-cfa` et la branche `rnd/stick-figures-gestes`
-**n'existent plus** (vérifié : `git worktree list` ne montre que le repo principal, `git branch -a`
-ne trouve pas la branche). La note ci-dessous était périmée depuis le nettoyage des 23 branches
-du 28/08. ⛔ Ne pas la relire comme un chantier ouvert.
-✅ 2026-08-03 : nouveau travail (héritage de pose 2e cas + portage P_SOL) fait et **commité dans le
-repo principal** (`14990278`, branche courante, PAS ce worktree) — distinct des 6 scènes sources,
-voir `src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` brique n°7 + `NEXT-ACTION.md`.
 
 ⭐⭐ **GAZODUC** — Actes 1+2+4+5 FINAUX. **Acte 3 en cours** (2026-08-18) :
   · Segment C (105,8→123,1 s) ✅ **FINAL** — `acte3-segmentC-verrou-FINAL.mp4` (le verrou croisé)
@@ -243,27 +185,6 @@ défaut geste Anansi que le Poster Vector V1) → attend verdict Aziz : (a) rég
 Whiteboard Doodle avec Anansi en pose basse/repliée comme le Poster Vector avant de retenter le
 même correctif V2, (b) accepter le geste tel quel et trancher entre les 2 registres visuels sur la
 base de la couleur sélective/decor, ou (c) explorer une autre piste.**
-
-### ✅ Flowdesk (test client simulé) — CLOS 2026-08-06 (corrigé au wrap du 2026-08-15)
-Hors registre Souverain (positionnement freelance). **V4 hybride 2A+2B = livrable final validé**
-(render complet 49.1s / 1474 frames, aucun gel) : `out/_client-sim/flowdesk/abstrait-v4-FINAL.mp4`.
-⚠️ Ce bloc annonçait « EN COURS / décision EN ATTENTE d'Aziz » pendant 9 jours alors que 3 fichiers
-concordants le donnaient clos — corrigé au wrap.
-⚠️ Reste vrai et utile : **pas de branche dédiée** (sur `feat/gazoduc-acte1-hook-globe`, hérité d'un
-autre chantier). Source de vérité : `memory/episodes/_client-sim/flowdesk/STATUS.md`.
-⭐ Ce registre client-sim est le **seul matériau non-géopolitique du repo** → directement pertinent
-pour le cut vente freelance (cf. `memory/projects/SHOWCASE-CAPACITES.md` § Benchmark ÉLARGI).
-
-### ✅ NorthShield (test client simulé) — CLOS 2026-08-08
-Hors registre Souverain. Direction B (100% abstraite) rejetée sur le fond (2026-08-07). Storyboard
-V3 mixte codé/assemblé (7 panneaux), refondu à 5 panneaux (2026-08-08) après retour détaillé
-d'Aziz sur le 1er montage (P2/P3 supprimés, compteur P1 agrandi, deltas visibles P4, disque/anneau
-P5+P6, bug LaptopMockup `width*1.3` corrigé, curseur actif + pic d'anomalie dramatisé en P6).
-Validation Aziz directe obtenue ("la v3 est bonne") — pas de passage formel par Stage 6
-quality-reviewer, la validation humaine prime. Livrable final :
-`out/_client-sim/noteshield/FINAL/northshield-v3-FINAL.mp4`. Améliorations mineures identifiées
-mais non traitées (trou VirtualCursor ~4s en P6, bonus P7) — décision Aziz de clore tel quel.
-Source de vérité : `memory/episodes/_client-sim/noteshield/STATUS.md`.
 
 ### 💤 Dormants
 Hannibal (Beat 2 Phase C non codée) · Xénophobie SA (gelé, gate audience)

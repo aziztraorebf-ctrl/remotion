@@ -14,7 +14,7 @@ scaleMul **1.22 → 4.4** ; 4.4 = pays plein cadre/courbure plate (raccord vers 
 2 régions · 1.5 = dézoom « tout le système ». Deltas lon/lat par segment : 4-12°.
 ⭐ Le zoom max DÉBORDE du cadre (Soudan A6 : 1792px sur 1920). **Un globe qui garde des marges constantes = signal visuel du bug §2.**
 ⛔⛔ `camAt()` applique un easeInOut PAR SEGMENT → **arrêt complet à chaque keypoint** (piège n°1). Pour tout NOUVEAU
-mouvement, utiliser `camAtContinu()` du même fichier. `camAt()` est conservée telle quelle car 12 fichiers en dépendent
+mouvement, utiliser `camAtContinu()` du même fichier. `camAt()` est conservée telle quelle car **27 fichiers** en dépendent (re-mesuré 2026-09-11 : `grep -rlE '\bcamAt\(' src | wc -l` — inclut le moteur war-map, absent de la liste ci-dessous)
 (Soudan A3-A6 publiés, Gazoduc Acte 1, protos) — ne PAS la corriger en place sans re-render de ces 12.
 **Ne pas réécrire une variante maison** : importer `BorderPulse`, `GlowBorder`, `THEMES.*` depuis
 `SoudanActe3GlobeProto16x9.tsx` / `SoudanActe3GlobeInsert.tsx`.

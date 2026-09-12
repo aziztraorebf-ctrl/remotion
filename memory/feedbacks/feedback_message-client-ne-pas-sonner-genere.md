@@ -115,6 +115,31 @@ activite clavier/souris, est incompatible avec des agents qui tournent en fond)
 priorite a l'honnetete du texte sur le ton commercial, meme si ca ferme une porte plus tot dans
 l'echange.
 
+## 3sexies. ⛔⛔ DECRIRE LE RESULTAT, JAMAIS NOTRE PROCESSUS
+
+Un message de livraison raconte **ce que le client va voir**, pas comment on y est arrive.
+Zero mention des essais rates, des diagnostics faux, des pistes abandonnees, du nombre
+d'iterations, de la difficulte rencontree.
+
+⛔ « J'ai d'abord pense que ca venait du bloom, mesure, ce n'etait pas ca, la vraie cause etait
+   l'edge-lighting » → c'est notre journal de bord, pas son information
+✅ « The blue light no longer spills onto the metal casing » → ce qu'il peut verifier a l'ecran
+
+**Why (Aziz, 2026-09-11, chill-meter rev2)** : un brouillon decrivait le chemin de diagnostic de
+chacune des 4 corrections. Pour un client, **c'est le RESULTAT qui compte**. Raconter le processus
+fait 3 choses, les 3 mauvaises : (a) ca fait porter au client la charge de juger notre methode
+alors qu'il n'a demande qu'un rendu ; (b) ca exhibe les erreurs intermediaires, ce qui **cree un
+doute retroactif sur ce qui a ete livre avant** ; (c) ca allonge un message dont chaque ligne
+devrait etre verifiable a l'ecran.
+
+⭐ **Ce qui reste legitime de dire** : un ARBITRAGE entre deux de ses propres demandes (ici :
+resserrer l'edge-lighting sans le supprimer, parce qu'elle l'avait demande le 05/09) — c'est une
+decision qui l'engage, pas une peripetie interne. Et un choix laisse ouvert, affirme et chiffre
+(cf. `memory/key-learnings.md` § « laisser UN curseur ouvert »).
+⚠️ Ne pas confondre avec la pedagogie qu'elle a explicitement remerciee (09/09 et 11/09) :
+expliquer CE QUI A CHANGE et pourquoi ca se lit mieux est utile ; derouler COMMENT on l'a trouve
+ne l'est pas.
+
 ## 4. Regles de forme qui decoulent des 3 precedentes
 
 - **Repondre a ce qui est demande, rien de plus.** Si l'autre ne pose aucune question, 2-3 lignes
@@ -133,3 +158,5 @@ Relire le brouillon et verifier : (1) aucun `—` ni `–` · (2) aucune phrase 
 (5) aucun point deja explique et confirme par l'autre plus haut dans le fil · (6) aucun terme qui
 vient de notre vocabulaire interne (nom de fichier, nom de variante, nom de jalon/passe) ·
 (7) singulier "I" partout, zero "we"/"our" · (8) aucune concession offerte qu'on ne tiendrait pas.
+- [ ] **(9)** aucune phrase qui raconte notre PROCESSUS, nos essais ou nos diagnostics
+      intermediaires — seulement le resultat visible et les arbitrages qui l'engagent (§ 3sexies)

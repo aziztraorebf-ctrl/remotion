@@ -291,6 +291,21 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
           <clipPath id="clip_ic_CALIBRATE"><rect x={665} y={ICONE_Y0} width={26} height={ICONE_Y1 - ICONE_Y0} /></clipPath>
           <clipPath id="clip_ic_ABOUT"><rect x={879} y={ICONE_Y0} width={26} height={ICONE_Y1 - ICONE_Y0} /></clipPath>
           <clipPath id="clip_titre"><rect x={TITRE.x0} y={TITRE.y0} width={TITRE.x1 - TITRE.x0} height={TITRE.y1 - TITRE.y0} /></clipPath>
+          {/* ⭐⭐ 11/09 (demande n°2 de son retour) : « some of the blue glow from the screen
+              is SPILLING ONTO THE METAL PARTS around the display. I'd like that glow tightened
+              up so it stays WITHIN and BEHIND the actual screen area. »
+              Cause mesuree : le halo de la reglette passe par `rustic_screenBloom`, dont la
+              region de filtre est volontairement large (x=-25%, y=-40%, w=150%, h=180%) pour
+              laisser respirer un flou de 6 px — ce debord est justement ce qui bave sur le
+              metal, puisque RIEN ne le contenait aux bords reels de la dalle.
+              Ce clip borne la lueur a la dalle exacte (memes x/y/w/h/r que ECRAN). Le flou
+              continue d'exister A L'INTERIEUR, il est juste coupe net au bord de l'ecran.
+              ⛔ Ne PAS l'appliquer au edge-lighting du contour (4quater) : celui-la est
+              CENSE lecher le metal, c'est sa fonction (« light blue edge lighting AROUND
+              the device » — sa propre demande du 05/09). Les deux effets sont distincts. */}
+          <clipPath id="clip_ecran">
+            <rect x={ECRAN.x} y={ECRAN.y} width={ECRAN.w} height={ECRAN.h} rx={ECRAN.r} />
+          </clipPath>
           {/* ⭐⭐⭐ 06/09 — LES STALACTITES QUI PENDENT DANS LE VIDE (jury : « crient
               levitation », defaut independant de l'occlusion). Mesure : a 75 %, le givre
               (`givre-75.png`) redescend jusqu'a y=750 (35 px sous RUSTIC_SOL_Y=717) ; a
@@ -480,9 +495,11 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
       {/* Lueur ciblee : la reglette de graduations et le bandeau du titre s'allument,
           au lieu d'un voile uniforme sur toute la dalle. */}
       {powerOn > 0.01 && (
-        <g opacity={powerOn * (0.7 + breathe * 0.3)} filter="url(#rustic_screenBloom)">
-          <rect x={ECRAN.x + 60} y={CASE_Y - 32} width={ECRAN.w - 120} height={4}
-                rx={2} fill="#8fdcff" opacity={0.5} />
+        <g clipPath="url(#clip_ecran)">
+          <g opacity={powerOn * (0.7 + breathe * 0.3)} filter="url(#rustic_screenBloom)">
+            <rect x={ECRAN.x + 60} y={CASE_Y - 32} width={ECRAN.w - 120} height={4}
+                  rx={2} fill="#8fdcff" opacity={0.5} />
+          </g>
         </g>
       )}
 
@@ -632,17 +649,32 @@ export const ChillMeterRustic: React.FC<RusticProps> = ({ chill, powerOn, frost 
       {/* ⭐ 09/09 : meme correctif — l'ancien 0,20-0,30 ne bougeait quasi rien sur un
           trait deja tres pale. Reste sous son plafond « not overly bright » (0,20 a
           0,45 au pic, contre 0,30 avant : toujours discret, mais le mouvement se voit). */}
+      {/* ⛔⛔ 11/09 — LA VRAIE SOURCE de son « blue glow SPILLING ONTO THE METAL PARTS ».
+          Mesure : apres avoir clippe le bloom de la reglette, l'exces de bleu sur le metal
+          n'avait baisse que de 0,14 point sur 3,66 — donc ce n'etait PAS la cause. Ce
+          trait-ci l'est : 9 px d'epaisseur tracee 26 px EN DEHORS de la dalle, plus un flou
+          de 6 px par-dessus. C'est litteralement de la lumiere peinte sur le metal.
+          ⚠️ ARBITRAGE entre deux de ses demandes :
+            05/09 — « light blue edge lighting AROUND the device » (cet effet, volontaire)
+            11/09 — le glow « from the screen » ne doit pas baver sur le metal
+          Elle vise le glow DE L'ECRAN, pas l'edge-lighting du chassis — mais celui-ci
+          debordait tellement qu'il se lisait comme le meme defaut. On ne le SUPPRIME donc
+          pas (ce serait defaire une demande qu'elle n'a pas retiree), on le RESSERRE :
+          il epouse desormais le bord de la dalle (-8 au lieu de -26), trait affine 9 -> 5 px,
+          et intensite baissee d'un tiers. Il reste lisible comme un contour allume, il ne
+          projette plus une nappe sur le metal. Si elle en veut encore moins, la marche
+          suivante est de le supprimer — mais c'est a elle de le demander. */}
       {powerOn > 0.01 && (
         <rect
-          x={ECRAN.x - 26}
-          y={ECRAN.y - 26}
-          width={ECRAN.w + 52}
-          height={ECRAN.h + 52}
-          rx={ECRAN.r + 22}
+          x={ECRAN.x - 8}
+          y={ECRAN.y - 8}
+          width={ECRAN.w + 16}
+          height={ECRAN.h + 16}
+          rx={ECRAN.r + 6}
           fill="none"
           stroke="#7ad4ff"
-          strokeWidth={9}
-          opacity={powerOn * (0.10 + breathe * 0.35)}
+          strokeWidth={5}
+          opacity={powerOn * (0.07 + breathe * 0.22)}
           filter="url(#rustic_screenBloom)"
         />
       )}
