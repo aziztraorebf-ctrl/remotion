@@ -126,6 +126,15 @@ Invariants à ne pas perdre :
 ⚠️ Worktree `retro-gates-multi-session` construit les gates multi-session sur ce même dossier —
 NE PAS y toucher, chantier d'une autre session.
 
+## ⛔ DÉCISION EN ATTENTE — 5e occurrence du pattern « registre / worktree fantôme » (11/09)
+
+`feedback_registre-canonique-branche-rnd-jamais-mergee-pattern-recurrent.md` portait sa propre
+clause : « à soumettre à Aziz si un 5e cas survient ». **Le 5e est arrivé** (ROUTAGE pointait un
+worktree `remotion-cfa` supprimé ; 12 jours après que PIPELINE ait noté la correction).
+Le rustinage au coup par coup a échoué 5 fois. Option outillée à trancher : refuser dans
+`check-links.py` tout chemin de navigation contenant un segment de worktree absent de
+`git worktree list`.
+
 ## 🔧 SESSION D'AUDIT DU WORKSPACE — à planifier (constitué le 2026-08-27, rien d'urgent)
 
 **1. ⭐⭐⭐ Outiller le protocole des 2 échecs** (point le plus rentable). Règle déjà écrite
@@ -135,7 +144,7 @@ indépendantes à tort). ⛔ Mais rien ne compte les tentatives — pattern
 `regle-ecrite-insuffisante-sans-gate-outille`. Base : `.claude/hooks/circuit-breaker.sh` compte déjà
 les éditions répétées d'un fichier ; reste à définir « tentative sur le même problème » et le seuil
 de délégation. Détail : `feedback_transparence-lue-comme-bug.md` § extension 2026-08-29.
-**2.** Audit des ~90 skills (demandé 11/07, non urgent). **3.** Vérifier que les gates ne meurent
+**2.** **3.** Vérifier que les gates ne meurent
 pas en silence (le circuit-breaker était mort le 12/07 sans que personne le remarque).
 
 ---
@@ -234,9 +243,6 @@ chacun, liseré au lieu d'écrire) → `memory/fiches/FICHE-STORYBOARD.md`.
 
 Mécanisme 2 (Extracteur) codé et validé (~30 briques indexées) — `doctrines/STUDIO-REUTILISABLE-GATE.md`.
 Mécanisme 1 (Gardien) : pas codé, volontairement, rien d'urgent.
-✅ **Dette CTA Short CFA — RESOLUE** (verifie 2026-09-11) : la source dit bien « VIDEO COMPLETE EN
-BIO » (`src/projects/souverain/cfa-short-9x16/SceneCta.tsx:152`, repo principal). La note precedente
-la disait bloquee dans un worktree `remotion-cfa` qui **n'existe plus** — un re-render ne reintroduit rien.
 
 ---
 
@@ -270,31 +276,12 @@ dense (pointeur dans `ROUTAGE.md`). Détail : `episodes/warmap-sahel/STATUS.md`.
 - **Activer les routines /schedule** — NON FAIT, re-signaler en début de session jusqu'à confirmation
   d'Aziz. 2 routines cloud Postiz (`postiz-weekly-check.py` jeudi 9h, `postiz-weekly-report.py`
   samedi 10h), ajouter `POSTIZ_API_KEY`. Supprimer cette ligne une fois confirmé.
-- **Audit des skills du workspace** — demandé 11/07, jamais fait. 88 dossiers `~/.claude/skills/`,
+- **Audit des skills du workspace** — demandé 11/07, jamais fait. `ls ~/.claude/skills | wc -l` dossiers (⛔ mesurer, ne pas graver le compte),
   suspicion de redondance (génériques vs spécifiques Remotion, doublons fonctionnels).
 
 ---
 
-## 💡 BACKLOG (rien d'actif — ne pas lancer sans décision d'Aziz)
-
-- **Carrousel « Good News »** — pipeline prêt, jamais relancé : `scripts/prepare-goodnews-weekly.py`.
-- **Carousels Instagram** — Or Africain + Thiaroye prêts, Mansa Moussa à refaire. Reco : Sénégal Pétrole.
-- **Système hook + CTA commentaire** — checklist hook 20s + template CTA 30-60s, jamais construits.
-- **Xénophobie SA** — angle validé (« double face »), données 2026 intégrées, gate demande TubeLab →
-  `episodes/souverain/xenophobie-sa-EXPLORATION/`.
-- **Pipeline Shorts automatisé trending** — pas maintenant, revenir quand le long format est en place.
-- **Peste 1347 mid-form horizontal** — concept validé → `projects/peste-1347-midform.md`,
-  `episodes/peste-1347/STATUS.md`.
-- **`GeoFlowConnection`** — composant EXISTE et est publié (Soudan Actes 3/4/5). ⚠️ 2 fichiers du
-  même nom, contrats opposés : `warmap/_shared/` (publié) vs `_shared/mapbox/` (dormant) →
-  `INTENTION-FORME-INDEX.md`.
-- **Patterns `_reference-atlas-poc/` non portés** : `AtlasParcheminGlobe.tsx` · `AnimatedCaravan.tsx`.
-- **Vox Papercraft** — pipeline officialisé. Reste : halo détourage, noms d'États, photo halftone,
-  séquence multi-plans → `doctrines/REVERSE-STYLE-VIDEO-VERS-ASSETS.md`.
-- **R&D D3 16:9** — moteur agnostique ratio, prouvé sur Soudan → `_rnd/d3-16x9/README.md`.
-- **Seedance personnage** — technique prouvée mais ÉCARTÉE (coût ~6.85$/clip). SVG reste le défaut.
-
----
+## 💡 BACKLOG dormant → `memory/backlogs/BACKLOG.md` § SECTION 3
 
 ## Regles de mise a jour de ce fichier
 

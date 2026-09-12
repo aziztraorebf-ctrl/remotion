@@ -149,6 +149,31 @@ zéro texte, l'animation EST le message, le viewer regarde jusqu'à la fin.
 
 ---
 
+## SECTION 3 — Dormants (migrés de `NEXT-ACTION.md` le 2026-09-11)
+
+> ⛔ Rien d'actif ici — ne pas lancer sans décision d'Aziz. Migrés parce qu'un backlog de
+> chantiers en pause n'est pas une recommandation active : il occupait 1 559 o dans le fichier
+> des priorités, qui était à 437 o de son plafond dur.
+
+- **Carrousel « Good News »** — pipeline prêt, jamais relancé : `scripts/prepare-goodnews-weekly.py`.
+- **Carousels Instagram** — Or Africain + Thiaroye prêts, Mansa Moussa à refaire. Reco : Sénégal Pétrole.
+- **Système hook + CTA commentaire** — checklist hook 20s + template CTA 30-60s, jamais construits.
+- **Xénophobie SA** — angle validé (« double face »), données 2026 intégrées, gate demande TubeLab →
+  `episodes/souverain/xenophobie-sa-EXPLORATION/`.
+- **Pipeline Shorts automatisé trending** — pas maintenant, revenir quand le long format est en place.
+- **Peste 1347 mid-form horizontal** — concept validé → `projects/peste-1347-midform.md`,
+  `episodes/peste-1347/STATUS.md`.
+- **`GeoFlowConnection`** — composant EXISTE et est publié (Soudan Actes 3/4/5). ⚠️ 2 fichiers du
+  même nom, contrats opposés : `warmap/_shared/` (publié) vs `_shared/mapbox/` (dormant) →
+  `INTENTION-FORME-INDEX.md`.
+- **Patterns `_reference-atlas-poc/` non portés** : `AtlasParcheminGlobe.tsx` · `AnimatedCaravan.tsx`.
+- **Vox Papercraft** — pipeline officialisé. Reste : halo détourage, noms d'États, photo halftone,
+  séquence multi-plans → `doctrines/REVERSE-STYLE-VIDEO-VERS-ASSETS.md`.
+- **R&D D3 16:9** — moteur agnostique ratio, prouvé sur Soudan → `_rnd/d3-16x9/README.md`.
+- **Seedance personnage** — technique prouvée mais ÉCARTÉE (coût ~6.85$/clip). SVG reste le défaut.
+
+---
+
 ## Backlogs archivés (déjà réalisés au moment de la fusion 2026-07-11)
 
 Ces 2 fichiers n'ont PAS été fusionnés ci-dessus car leur contenu était déjà entièrement réalisé/périmé :

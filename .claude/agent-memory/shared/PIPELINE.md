@@ -14,6 +14,20 @@
 
 ---
 
+## 🔧 SYSTÈME — chantier mémoire/gates du 2026-09-11 (CLOS)
+
+Chaîne de démarrage **154 950 → 132 482 o (-14 %)**. PIPELINE -31 % (7 sections closes, migrées
+avant suppression). ROUTAGE 39 683 → 36 639 o (14 lignes rendues à leur rôle de pointeur, marge
+317 → 3 361 o). NEXT-ACTION 19 773 → 18 594 o.
+
+⛔ **4 angles morts de gates corrigés** — tous du même type : condition juste, périmètre trop
+étroit. `sections_closes()` ne voyait que les titres `##` (7 sections closes en `###` ratées
+4-6 semaines) · `check-links` ne voyait pas les chemins sans dossier (16 cas) ni les branches ·
+l'alerte poids ne disait pas QUEL `CLAUDE.md`. Outil né de là : `scripts/tools/test-gate.py`.
+
+⭐ 3 skills client (`cadrer-brief-client`, `livrer-client`, `client`) **enfin routés** dans
+ROUTAGE §2 — ils étaient écrits, mergés et cités nulle part.
+
 ## 💰 CONTRAT UPWORK chill-meter (AbiGirl Reacts) — jalon 2 rev2 codée (11/09), prêt à envoyer
 
 **Premier contrat freelance signé (30/08), actif.** 350 $ → 297,50 $ net, 3 jalons. Jalon 1
