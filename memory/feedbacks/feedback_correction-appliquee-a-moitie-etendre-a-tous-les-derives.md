@@ -54,3 +54,26 @@ saut de 2 frames est invisible sur une planche de vignettes échantillonnées.
 Liens : [[verifier-son-propre-souvenir-comme-un-verdict-llm]] ·
 [[camera-a-coups-easeinout-par-segment-pas-un-dosage]] ·
 [[recouvrement-est-un-probleme-d-ancre-pas-de-dosage]]
+
+## Variante MÉMOIRE (2026-09-11) — une correction NOTÉE n'est pas une correction APPLIQUÉE
+
+Ce qui précède traite du code (une valeur dérivée corrigée, ses sœurs oubliées). Le même piège
+existe dans les fichiers de navigation, **en pire, parce que rien ne casse**.
+
+**Le fait** : `PIPELINE.md:157` portait, **depuis le 2026-08-30**, la correction « le worktree
+`remotion-cfa` n'existe plus ». `ROUTAGE.md:37` a continué **12 jours** à router vers ce
+worktree. La correction était juste, datée, écrite — dans UN seul des deux fichiers qui
+portaient l'affirmation.
+
+**Pourquoi c'est pire que dans le code** : un fix partiel en code déplace le symptôme (on finit
+par le voir). Un fix partiel en mémoire ne produit **aucun symptôme** — les deux fichiers se
+contredisent en silence, et celui qui est lu en premier gagne.
+
+⭐ **La règle, étendue** : quand on corrige une AFFIRMATION (pas seulement une valeur), `grep`
+le fait corrigé dans TOUTE la chaîne de navigation (`CLAUDE.md`, `MEMORY.md`, `ROUTAGE.md`,
+`NEXT-ACTION.md`, `PIPELINE.md`, les `STATUS.md`) avant de commiter. Le terme à grep est **le
+nom de l'objet faux** (ici `remotion-cfa`), pas la formulation de la correction.
+
+⭐ **Corollaire de lecture** : trouver une note datée qui corrige quelque chose ne prouve pas que
+la correction a circulé. Une correction vue à un endroit est une raison de la **chercher
+ailleurs**, pas de la croire propagée.

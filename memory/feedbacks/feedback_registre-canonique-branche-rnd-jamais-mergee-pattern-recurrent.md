@@ -43,6 +43,24 @@ la branche R&D — le socle réutilisable peut déjà être mergé, seule une d�
 comme le cas n°4 l'a montré). `git worktree add <path> <branche>` ou `git show <branche>:<chemin>`
 seulement si le contenu recherché est confirmé absent de `HEAD`.
 
+## 5e occurrence — 2026-09-11 — VARIANTE INÉDITE : le conteneur a disparu, le pointeur a survécu
+
+`ROUTAGE.md:37` pointait le registre stick-figure vers `remotion-cfa/src/projects/_shared/
+stick-figure-svg/` — un worktree qui **N'EXISTE PLUS** (vérifié : `ls`, `git worktree list`,
+`git branch -a --list "*stick*"` tous négatifs). Le fichier vit dans le repo principal.
+`NEXT-ACTION.md` décrivait en plus une « dette CTA Short CFA » comme bloquée dans ce même
+worktree fantôme — alors qu'elle était **déjà résolue** (`SceneCta.tsx:152`). Deux notes de la
+chaîne de démarrage, lues à CHAQUE session, envoyaient vers un arbre mort.
+
+⭐ **La variante, à ajouter à la méthode de vérification** : les 4 premiers cas étaient « le
+fichier existe ailleurs (branche non mergée) ». Le 5e est l'inverse — **le worktree a été
+supprimé et le pointeur lui a survécu**. Un pointeur vers un worktree ne se périme pas par son
+contenu mais par la **disparition du conteneur**. Donc `git log --all` ne suffit plus :
+ajouter `git worktree list` au triptyque de vérification.
+
+⛔⛔ **LA CLAUSE CI-DESSOUS EST ÉCHUE.** Le rustinage au coup par coup a échoué 5 fois.
+Soumis à Aziz le 2026-09-11.
+
 **Question ouverte, non tranchée** (à soumettre à Aziz si un 5e cas survient) : arrêter le rustinage au
 coup par coup — soit merger systématiquement les branches R&D contenant un registre validé dans les
 48h suivant sa validation par Aziz, soit créer un script de garde qui liste au démarrage de session

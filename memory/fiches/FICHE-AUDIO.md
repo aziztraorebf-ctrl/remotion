@@ -16,7 +16,7 @@ régénère seul. Limite dure 5000 char/appel.
 **4. Réglages verrouillés** : source **Harmonie** `obmcfXCePmPgsNsLIWIj` (V3, stab 0.30) → STS **GéoAfrique**
 `z3gESu49naEZW8Af2Upm` (`eleven_multilingual_sts_v2`, **stability 0.45** — 0.30 bave, 0.5+ avale des syllabes).
 Musique : `fal-ai/minimax-music/v2.6`, `{prompt, is_instrumental:true}`, PAS de `reference_audio_url`.
-**5. GÉNÉRER un SFX** — ⛔ d'abord `public/_shared/sfx/SFX-INDEX.md` (**160 SFX déjà produits**, catalogue
+**5. GÉNÉRER un SFX** — ⛔ d'abord `public/_shared/sfx/SFX-INDEX.md` (**49 SFX partagés, 28 catalogués** — re-mesuré 2026-09-11 : `find public/_shared/sfx -type f \( -name '*.mp3' -o -name '*.wav' \) | wc -l`. ~116 autres existent mais sont scopés PROJET, non réutilisables), catalogue
 par catégorie) : ne générer que ce qui manque. API `POST /v1/sound-generation`, prompts en ANGLAIS,
 `prompt_influence` **0.4-0.6**, `duration_seconds` 0.5-30. Modèle : `scripts/generate-sfx-elevenlabs.py`.
 ⭐ **Un SFX sort exploitable du 1er coup, y compris sur de la matière neuve** (givre, glace, métal qui gèle) :

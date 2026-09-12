@@ -11,7 +11,7 @@ manquante entre les deux — elles arrivent au bon moment, sans bloquer.
 Cause d'échec n°1 mesurée par audit (2026-08-17) : **« brique existante non trouvée »**
 (6 cas documentés, ~20 itérations perdues). Les règles existaient ; elles n'étaient pas retrouvées.
 
-## Les fiches actuelles (13)
+## Les fiches actuelles (14)
 | Fiche | Se déclenche quand | Source du déclenchement |
 |---|---|---|
 | `FICHE-SVG-DESSINE.md` | on écrit du SVG dessiné dans un `.tsx` | ≥4 primitives OU un `d={`/`d="M`, avec ≥2 primitives (garde-fou anti-icône) |
@@ -19,6 +19,7 @@ Cause d'échec n°1 mesurée par audit (2026-08-17) : **« brique existante non 
 | `FICHE-CAMERA.md` | on touche du code de caméra (D3, Mapbox ou SVG) | ≥2 motifs parmi `camAt`, `scaleMul`, `getCam`, `lerpCam`, `camFor`, `jumpTo`, `bearing`, `pitch:`, `interpolate(` |
 | `FICHE-SHORT-VERTICAL.md` | on travaille sur une composition 9:16 | chemin contenant `short`/`9x16`/`vertical`, ou dimensions verticales |
 | `FICHE-STORYBOARD.md` | on écrit un brief/breakdown, on lance un storyboard, **ou on reprend un STORYBOARD/PLAN hérité** | fichier `PROMPT-*`, `breakdown*` (**casse indifférente**, `-i` ajouté 2026-08-18) ou **`STORYBOARD-*`/`PLAN-*.md\|.txt`**, OU commande `storyboard-dual-gen`/`openrouter-img2img`/`openrouter-vision-breakdown`/`da-brief.py`/`da-compare.py` |
+| `FICHE-RIG-ET-LOTTIE.md` | on rigge / exporte vers Lottie (chaîne SVG→Lottie) | commande `animate_scene`/`svg2lottie`/`livrer_piece`/`verifier_fidelite`/`group_layers`/`finir_piece`/`lottie-ui/tools` (hook L122) — extraite de `FICHE-GESTE-ANIME` le 2026-09-11 |
 | `FICHE-PACKAGING.md` | on prépare le **titre / la miniature / la description** | commande `jury-titres`/`jury-thumbnail`/`gemini-thumbnail-(create\|edit)`/`gemini-cover-vertical`, OU fichier `thumbnails-library/*.{svg,tsx}` |
 | `FICHE-ASSEMBLAGE.md` | on rend ou on concatène | commande `ffmpeg`/`render-mapbox.sh`/`remotion render`/`-FINAL.mp4`/`upload-to-blob`/`concat=` |
 | `FICHE-MOCKUP-3D.md` | `_demos/devices/`, `PhoneModel`, `LaptopModel`, `GridBackdrop`, `FlatDevice`… | Mockup d'appareil 3D + UI plaquée dedans. Scindée de FICHE-UI-PRODUIT le 2026-08-26 (problème d'ADRESSAGE : elle ne se déclenchait jamais sur le code qu'elle documente). |
@@ -38,8 +39,8 @@ déclenche les trois premières).
 Chaque fiche n'est injectée **qu'une fois par fichier et par session** (sentinelles dans
 `$TMPDIR/fiche-inject-<session_id>/`). **Ne jamais retirer ce mécanisme.**
 
-**Coût RE-MESURÉ le 2026-09-02** (`wc -c memory/fiches/FICHE-*.md`) : les **13** fiches pèsent
-**186 986 octets ≈ 46 700 tokens** si toutes injectées ; en pratique ~2-3 se déclenchent par fichier.
+**Coût RE-MESURÉ le 2026-09-11** (`ls memory/fiches/FICHE-*.md | wc -l` · `cat memory/fiches/FICHE-*.md | wc -c`) : les **14** fiches pèsent
+**200 894 octets ≈ 50 200 tokens** si toutes injectées ; en pratique ~2-3 se déclenchent par fichier.
 ⛔⛔ Le chiffre précédent (11 fiches / 105 554 o, relevé le 23/08) était **faux de 77 %** : 2 fiches
 n'étaient pas comptées, dont la plus grosse (`FICHE-GESTE-ANIME`, 275 l.). C'est exactement ce que
 ce paragraphe interdit — « ne JAMAIS déduire ce chiffre, le re-mesurer ». Re-mesurer à CHAQUE wrap :
@@ -58,6 +59,36 @@ estimation de ce coût doit être re-mesurée par `wc -c`, jamais déduite.** Si
 re-mesurer — le coût croît avec le nombre de fiches qui matchent le même fichier, pas avec leur nombre total.
 
 ## ⛔ COMMENT ÉVITER QUE CES FICHES PÉRIMENT
+
+### ⛔⛔ Un `[OK]` de `check-fiches.py` ne prouve PAS que tous les chemins existent
+
+Il prouve que ceux **que sa regex voit** existent. `PATH_RE` n'ancre que
+`src|public|scripts|memory|out|tests|.claude` : un pointeur écrit `assets/scripts/...` ou `~/...`
+sort du filtre et n'est jamais testé. Mesuré le 2026-09-11 : 14 fiches toutes `[OK]`, et pourtant
+`assets/scripts/capture-template.mjs` (FICHE-UI-PRODUIT) était mort.
+
+⭐ **Même famille que l'angle mort de `sections_closes()` corrigé le même jour** : la condition
+était juste, le PÉRIMÈTRE trop étroit (`startswith("## ")` ne matchait que le niveau 2 — les 7
+sections closes étaient en `###`, 7 787 o accumulés 4-6 semaines sans une alerte).
+
+⭐ **La règle : un vérificateur se juge sur ce qu'il RATE, pas sur ce qu'il valide.** Lire sa regex
+avant de croire son `[OK]`. Pour l'éprouver dans les deux sens :
+`python3 scripts/tools/test-gate.py <hook.sh> --bloque "<cas>" --passe "<cas>"`.
+
+### ⛔ Un CHIFFRE périme en silence — graver la commande à côté
+
+`check-fiches.py` teste l'EXISTENCE d'un chemin, jamais la VALEUR d'un nombre. Mesuré le
+2026-09-11 : « 160 SFX déjà produits » pour **49** réels · « 12 fichiers dépendent de `camAt()` »
+pour **27** · « les 13 fiches » pour **14**.
+
+Les deux premiers poussaient dans la direction dangereuse : le premier fait **chercher** une
+bibliothèque 3× plus fournie qu'elle n'est (au lieu de générer), le second sous-estime de 2× le
+seul argument qui protège `camAt()` d'une modification en place.
+
+⭐ **Ne jamais graver un chiffre seul : graver la commande qui le re-mesure à côté.** C'est déjà
+la doctrine du § Budget (« on ne corrige plus le chiffre, on MESURE ») — elle vaut pour TOUT
+chiffre d'une fiche, pas seulement le comptage de lignes.
+
 Le projet a déjà 4 cas documentés de fiche qui ment : un catalogue déclarant « inexistant » un
 composant qui existait, un registre « canonique » vivant sur une branche jamais mergée (4×), un fix
 écrit en mémoire mais jamais appliqué au code, deux compositions quasi identiques dont une seule
@@ -126,6 +157,14 @@ fiche, une méthode explicitement « REMPLACÉE », une glose qui répète son p
 ⚠️ Ce README n'est PAS injecté par le hook — il ne coûte aucun contexte, le budget ne s'y applique pas.
 
 ## Ajouter une fiche
+
+⛔⛔ **Inscrire la fiche au tableau « Les fiches actuelles » ET re-mesurer le compte + le poids.**
+2 occurrences du même oubli : `FICHE-GESTE-ANIME` absente du tableau « pendant tout son cycle de
+vie » (2026-09-02), puis `FICHE-RIG-ET-LOTTIE` créée le 2026-09-11, branchée dans le hook, et
+absente du tableau le jour même — le titre annonçait « (13) » pour 14 fiches.
+⭐ Une fiche branchée dans le hook mais absente du tableau est **invisible** à qui lit le README
+pour savoir ce qui existe.
+
 1. Écrire `FICHE-<MOMENT>.md` ici (≤55 lignes — c'est un budget de contexte, pas une doctrine).
    Structure : briques existantes → interdits déjà payés (avec leur coût) → réflexes → « si ça rate 2× ».
 2. Ajouter son déclencheur dans `.claude/hooks/fiche-inject.sh` (fonction `add_fiche`).

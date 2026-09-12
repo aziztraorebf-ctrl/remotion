@@ -18,8 +18,10 @@ FR plus expressif apparu ailleurs (Hume Octave toujours en réserve, pas de chan
    à 100%). Usage direct pour nous : le STS bave sur certains "é" toniques (doctrine
    [[pipeline-voix-vivante-valide]] § MÉTHODE AUDIT AUDIO) et on re-tire actuellement au hasard jusqu'à un
    bon résultat. Avec seed : re-tirer plusieurs seeds SYSTÉMATIQUEMENT sur le segment fragile et garder
-   celui qui marche, au lieu de tirages non reproductibles. `generate-narration-expressive.py` n'a pas ce
-   paramètre — à ajouter si un mot continue de baver après reformulation.
+   celui qui marche, au lieu de tirages non reproductibles. ✅ **BRANCHÉ** — `scripts/generate-narration-expressive.py:146`
+   (`sts_geoafrique(..., seed=)`). La doctrine d'usage vit dans sa docstring L147-157 : le seed rend
+   le tirage REJOUABLE, pas identique. *(Corrigé 2026-09-11 : la note disait encore « à ajouter »
+   sur une capacité déjà présente — une dette payée mais non refermée fait re-coder ce qui existe.)*
 
 2. **Bouton "Enhance" (UI ElevenLabs)** — un LLM côté EL génère automatiquement des tags pertinents sur un
    texte brut. Pas un remplacement du jugement éditorial (registre documentaire = tags sobres, éviter
