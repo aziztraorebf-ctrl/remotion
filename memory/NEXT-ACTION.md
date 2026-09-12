@@ -126,7 +126,11 @@ Invariants à ne pas perdre :
 ⚠️ Worktree `retro-gates-multi-session` construit les gates multi-session sur ce même dossier —
 NE PAS y toucher, chantier d'une autre session.
 
-## ⛔ DÉCISION EN ATTENTE — 5e occurrence du pattern « registre / worktree fantôme » (11/09)
+## ⛔⛔⭐⭐⭐ PRIORITAIRE — 5e occurrence du pattern « registre / worktree fantôme » (11/09)
+
+**À traiter avant tout chantier de confort.** Un pointeur mort vers un dossier de travail
+supprimé envoie l'IA sur une piste fantôme à CHAQUE session qui le lit — ce n'est pas un
+détail, c'est une source d'erreur qui se répète.
 
 `feedback_registre-canonique-branche-rnd-jamais-mergee-pattern-recurrent.md` portait sa propre
 clause : « à soumettre à Aziz si un 5e cas survient ». **Le 5e est arrivé** (ROUTAGE pointait un
@@ -134,6 +138,9 @@ worktree `remotion-cfa` supprimé ; 12 jours après que PIPELINE ait noté la co
 Le rustinage au coup par coup a échoué 5 fois. Option outillée à trancher : refuser dans
 `check-links.py` tout chemin de navigation contenant un segment de worktree absent de
 `git worktree list`.
+
+⭐ **Prompt de reprise complet, avec les 2 options détaillées** :
+`memory/starters/STARTER-fiabiliser-pointeurs-worktree.md`
 
 ## 🔧 SESSION D'AUDIT DU WORKSPACE — à planifier (constitué le 2026-08-27, rien d'urgent)
 
